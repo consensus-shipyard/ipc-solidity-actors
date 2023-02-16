@@ -6,5 +6,5 @@ enum Status {
     Active,
     Inactive,
     Terminating,
-    Killed,
+    Killed
 }

@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
 import "./SubnetId.sol";
-import "./enums/ConsensusType.sol";
-struct SubentActorConstructorParams {
+import "../enums/ConsensusType.sol";
+struct SubnetActorConstructorParams {
     // Parent subnet identifier
     SubnetID parent;
 
     // Human-readable name for the subnet
     string name;
 
-    uint64 ipcGatewayAddr;
+    address ipcGatewayAddr;
 
     // @notice Consensus implemented in the subnet
     ConsensusType Consensus;
