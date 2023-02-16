@@ -1,6 +1,6 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-import "./SubnetId.sol";
+import "./Subnet.sol";
 import "../enums/ConsensusType.sol";
 struct SubnetActorConstructorParams {
     /// @notice Parent subnet identifier
