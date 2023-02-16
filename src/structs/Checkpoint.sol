@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-import "./SubnetId.sol";
+
+import "./Subnet.sol";
 
 struct Checkpoint {
     CheckData data;
@@ -20,12 +21,16 @@ struct CrossMsgMeta {
     CrossMsg msgsCid;
     uint64 nonce;
     uint256 value;
-    uint256 fee; 
+    uint256 fee;
 }
 
 struct CrossMsg {
     StorableMsg msg;
     bool wrapped;
+}
+
+struct CrossMsgs {
+    CrossMsg[] msgs;
 }
 
 struct StorableMsg {

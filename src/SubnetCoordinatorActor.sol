@@ -1,80 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-enum Status {
-    Active,
-    Inactive,
-    Killed
-}
-
-struct SubnetID {
-    string parent;
-    address actor;
-}
-
-struct Subnet {
-    SubnetID id;
-    uint256 stake;
-    mapping(uint256 => CrossMsg) topDownMsgs;
-    uint256 nonce;
-    uint256 circSupply;
-    Status status;
-    Checkpoint prevCheckpoint;
-}
-
-struct Checkpoint {
-    CheckData data;
-    bytes sig;
-}
-
-struct CheckData {
-    SubnetID source;
-    bytes tipSet;
-    int256 epoch;
-    bytes prevCheck; // Checkpoint
-    ChildCheck[] children;
-    CrossMsgMeta crossMsgs;
-}
-
-struct ChildCheck {
-    SubnetID source;
-    bytes[] checks;
-}
-
-struct CrossMsgMeta {
-    bytes msgsCid;
-    uint256 nonce;
-    uint256 value;
-    uint256 fee;
-}
-
-struct IPCAddress {
-    SubnetID subnetId;
-    address rawAddress;
-}
-
-struct StorableMsg {
-    IPCAddress from;
-    IPCAddress to;
-    bytes4 method;
-    bytes params;
-    uint256 value;
-    uint256 nonce;
-}
-
-struct CrossMsg {
-    StorableMsg msg;
-    bool wrapped;
-}
-
-struct CrossMsgs {
-    CrossMsg[] msgs;
-}
-
-struct PostBoxItem {
-    CrossMsg crossMsg;
-    address[] owners;
-}
+import "./structs/Checkpoint.sol";
+import "./structs/Postbox.sol";
+import "./enums/Status.sol";
 
 uint constant DEFAULT_CHECKPOINT_PERIOD = 10;
 
@@ -87,7 +16,7 @@ contract SubnetCoordinatorActor {
 
     /// @notice Minimum stake required to create a new subnet
     uint256 private minStake;
-    
+
     /// @notice List of subnets
     /// SubnetID => Subnet
     mapping(bytes => Subnet) private subnets;

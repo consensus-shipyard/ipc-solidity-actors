@@ -3,7 +3,7 @@ pragma solidity ^0.8.16;
 import "./enums/ConsensusType.sol";
 import "./enums/Status.sol";
 import "./structs/Checkpoint.sol";
-import "./structs/SubnetId.sol";
+import "./structs/Subnet.sol";
 import "./structs/Validator.sol";
 import "./structs/SubnetActorConstructorParams.sol";
 
@@ -23,7 +23,7 @@ contract SubnetActor {
     /// @notice Total collateral currently deposited in the SCA from the subnet
     uint256 private totalStake;
     /// @notice validator address to stake amount
-    mapping (address => uint256) private stake;
+    mapping(address => uint256) private stake;
     /// @notice current status of the subnet
     Status private status;
     /// @notice genesis block number
