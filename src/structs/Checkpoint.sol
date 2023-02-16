@@ -11,7 +11,7 @@ struct CheckData {
     SubnetID source;
     bytes tipSet;
     uint64 epoch;
-    Checkpoint[] prevCheck;
+    bytes prevCheck;
     Checkpoint[] children;
     CrossMsgMeta crossMsgs;
 }

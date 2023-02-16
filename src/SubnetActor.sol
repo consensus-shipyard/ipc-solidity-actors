@@ -1,6 +1,5 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.16;
-import "./interfaces/ISubnetActor.sol";
 import "./enums/ConsensusType.sol";
 import "./enums/Status.sol";
 import "./structs/Checkpoint.sol";
@@ -18,7 +17,7 @@ contract SubnetActor {
     /// @notice Address of the IPC gateway for the subnet
     address private ipcGatewayAddr;
     /// @notice Type of consensus algorithm.
-    ConsensusType private Consensus;
+    ConsensusType private consensus;
     /// @notice The minimum stake required to be a validator in this subnet
     uint256 private minValidatorStake;
     /// @notice Total collateral currently deposited in the SCA from the subnet
@@ -44,6 +43,14 @@ contract SubnetActor {
     uint64 private minValidators;
 
     constructor(SubnetActorConstructorParams memory params) {
-        
+        parentId = params.parent;
+        name = params.name;
+        ipcGatewayAddr = params.ipcGatewayAddr;
+        consensus = params.consensus;
+        minValidatorStake = params.minValidatorStake;
+        minValidators = params.minValidators;
+        finalityThreshold = params.finalityThreshold;
+        checkPeriod = params.checkPeriod;
+        genesis = params.genesis;
     }
 }
