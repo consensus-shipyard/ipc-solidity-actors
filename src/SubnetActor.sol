@@ -42,15 +42,15 @@ contract SubnetActor {
     // to be able to validate new blocks.
     uint64 private minValidators;
 
-    constructor(SubnetActorConstructorParams memory params) {
-        parentId = params.parent;
-        name = params.name;
-        ipcGatewayAddr = params.ipcGatewayAddr;
-        consensus = params.consensus;
-        minValidatorStake = params.minValidatorStake;
-        minValidators = params.minValidators;
-        finalityThreshold = params.finalityThreshold;
-        checkPeriod = params.checkPeriod;
-        genesis = params.genesis;
+    constructor(SubnetID memory _parentId, string memory _name, address _ipcGatewayAddr, ConsensusType _consensus, uint256 _minValidatorStake, uint64 _minValidators, uint64 _finalityThreshold, uint64 _checkPeriod, uint64 _genesis) {
+        parentId = _parentId;
+        name = _name;
+        ipcGatewayAddr = _ipcGatewayAddr;
+        consensus = _consensus;
+        minValidatorStake = _minValidatorStake;
+        minValidators = _minValidators;
+        finalityThreshold = _finalityThreshold;
+        checkPeriod = _checkPeriod;
+        genesis = _genesis;
     }
 }

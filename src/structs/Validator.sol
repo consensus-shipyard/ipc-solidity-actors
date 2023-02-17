@@ -6,5 +6,5 @@ struct Validator {
     address addr;
 
     /// @notice validator's subnet address
-    string net_addr;
+    string netAddr;
 }

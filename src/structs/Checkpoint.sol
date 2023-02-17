@@ -19,7 +19,7 @@ struct CheckData {
 
 struct CrossMsgMeta {
     CrossMsg msgsCid;
-    uint64 nonce;
+    uint256 nonce;
     uint256 value;
     uint256 fee;
 }
@@ -36,10 +36,10 @@ struct CrossMsgs {
 struct StorableMsg {
     IPCAddress from;
     IPCAddress to;
+    uint256 value;
+    uint256 nonce;
     uint64 method;
     bytes params;
-    uint256 value;
-    uint64 nonce;
 }
 
 struct IPCAddress {
