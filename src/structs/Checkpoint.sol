@@ -13,8 +13,13 @@ struct CheckData {
     bytes tipSet;
     uint64 epoch;
     bytes prevCheck;
-    Checkpoint[] children;
+    ChildCheck[] children;
     CrossMsgMeta crossMsgs;
+}
+
+struct ChildCheck {
+    SubnetID source;
+    bytes[] checks;
 }
 
 struct CrossMsgMeta {
@@ -25,7 +30,7 @@ struct CrossMsgMeta {
 }
 
 struct CrossMsg {
-    StorableMsg msg;
+    StorableMsg message;
     bool wrapped;
 }
 
