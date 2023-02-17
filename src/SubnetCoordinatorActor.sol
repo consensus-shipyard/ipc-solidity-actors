@@ -5,10 +5,10 @@ import "./structs/Checkpoint.sol";
 import "./structs/Postbox.sol";
 import "./enums/Status.sol";
 
-uint constant DEFAULT_CHECKPOINT_PERIOD = 10;
-uint constant MIN_COLLATERAL_AMOUNT = 10 ^ 18;
-
 contract SubnetCoordinatorActor {
+    uint constant DEFAULT_CHECKPOINT_PERIOD = 10;
+    uint constant MIN_COLLATERAL_AMOUNT = 10 ^ 18;
+
     /// @notice ID of the current network
     SubnetID private networkName;
 
