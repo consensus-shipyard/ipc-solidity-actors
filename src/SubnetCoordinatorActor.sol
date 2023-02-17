@@ -6,14 +6,15 @@ import "./structs/Postbox.sol";
 import "./enums/Status.sol";
 
 contract SubnetCoordinatorActor {
-    uint constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    uint constant MIN_COLLATERAL_AMOUNT = 10 ^ 18;
+    uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
+    uint256 constant MIN_COLLATERAL_AMOUNT = 1 ether;
+    uint256 constant MAX_NONCE = type(uint256).max;
 
     /// @notice ID of the current network
     SubnetID private networkName;
 
     /// @notice Number of active subnets spawned from this one
-    uint256 private totalSubnets;
+    uint64 private totalSubnets;
 
     /// @notice Minimum stake required to create a new subnet
     uint256 private minStake;
@@ -23,7 +24,7 @@ contract SubnetCoordinatorActor {
     mapping(bytes => Subnet) private subnets;
 
     /// @notice Checkpoint period in number of epochs for the subnet
-    uint256 private checkPeriod;
+    uint64 private checkPeriod;
 
     /// @notice Checkpoint templates in the SCA per epoch
     mapping(int256 => Checkpoint) private checkpoints;
@@ -56,11 +57,12 @@ contract SubnetCoordinatorActor {
     uint256 private appliedBottomUpNonce;
     uint256 private appliedTopDownNonce;
 
-    constructor(string memory _networkName, uint _checkpointPeriod) {
+    constructor(string memory _networkName, uint64 _checkpointPeriod) {
         networkName = SubnetID(_networkName, address(0));
         minStake = MIN_COLLATERAL_AMOUNT;
         checkPeriod = _checkpointPeriod > DEFAULT_CHECKPOINT_PERIOD
             ? _checkpointPeriod
             : DEFAULT_CHECKPOINT_PERIOD;
+        appliedBottomUpNonce = MAX_NONCE;
     }
 }
