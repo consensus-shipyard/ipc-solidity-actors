@@ -13,24 +13,22 @@ contract SubnetActorTest is Test {
     address private constant IPC_GATEWAY_ADDR = address(1024);
     string private constant NETWORK_NAME = "test";
 
-    function setUp() public {
-        SubnetID memory parentId = SubnetID("/root", address(0));
-        sa = new SubnetActor(parentId, NETWORK_NAME, IPC_GATEWAY_ADDR, ConsensusType.Dummy, 10, 10, 10, 10, 10);
-    }
 
-
-    function testDeployment() public view {
-
-        require(keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked("test")));
-        require(sa.ipcGatewayAddr() == IPC_GATEWAY_ADDR);
+    function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minValidatorStake, uint64 _minValidators, uint64 _finalityTreshold, uint64 _checkPeriod, uint64 _genesis) public {
+        
+        SubnetID memory parentId = SubnetID("/root", _ipcGatewayAddr);
+        sa = new SubnetActor(parentId, _networkName, _ipcGatewayAddr, ConsensusType.Dummy, _minValidatorStake, _minValidators, _finalityTreshold, _checkPeriod, _genesis);
+    
+        require(keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_networkName)));
+        require(sa.ipcGatewayAddr() == _ipcGatewayAddr);
         require(sa.consensus() == ConsensusType.Dummy);
-        require(sa.minValidatorStake() == 10);
-        require(sa.minValidators() == 10);
-        require(sa.finalityThreshold() == 10);
-        require(sa.checkPeriod() == 10);
-        require(sa.genesis() == 10);
+        require(sa.minValidatorStake() == _minValidatorStake);
+        require(sa.minValidators() == _minValidators);
+        require(sa.finalityThreshold() == _finalityTreshold);
+        require(sa.checkPeriod() == _checkPeriod);
+        require(sa.genesis() == _genesis);
         (string memory parent, address actor) = sa.parentId();
         require(keccak256(abi.encodePacked(parent)) == keccak256(abi.encodePacked("/root")));
-        require(actor == address(0));
+        require(actor == _ipcGatewayAddr);
     }
 }

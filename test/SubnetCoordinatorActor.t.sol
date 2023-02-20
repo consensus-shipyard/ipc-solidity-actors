@@ -13,11 +13,12 @@ contract SubnetActorTest is Test {
 
     SubnetCoordinatorActor sca;
 
-    function setUp() public {
-        sca = new SubnetCoordinatorActor("/root", DEFAULT_CHECKPOINT_PERIOD);
-    }
 
-    function testDeployment() public view {
+    function testDeployment(uint64 checkpointPeriod) public {
+        vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
+
+        sca = new SubnetCoordinatorActor("/root", checkpointPeriod);
+    
         (string memory parent, address actor) = sca.networkName();
 
         require(
@@ -25,7 +26,7 @@ contract SubnetActorTest is Test {
         );
         require(actor == address(0));
         require(sca.minStake() == MIN_COLLATERAL_AMOUNT);
-        require(sca.checkPeriod() == DEFAULT_CHECKPOINT_PERIOD);
+        require(sca.checkPeriod() == checkpointPeriod);
         require(sca.appliedBottomUpNonce() == MAX_NONCE);
     }
 }
