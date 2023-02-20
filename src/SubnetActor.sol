@@ -5,8 +5,9 @@ import "./enums/Status.sol";
 import "./structs/Checkpoint.sol";
 import "./structs/Subnet.sol";
 import "./structs/Validator.sol";
+import "./interfaces/ISubnetActor.sol";
 
-contract SubnetActor {
+contract SubnetActor is ISubnetActor {
     /// @notice Human-readable name of the subnet.
     string public name;
     /// @notice ID of the parent subnet
@@ -39,7 +40,17 @@ contract SubnetActor {
     // to be able to validate new blocks.
     uint64 public minValidators;
 
-    constructor(SubnetID memory _parentId, string memory _name, address _ipcGatewayAddr, ConsensusType _consensus, uint256 _minValidatorStake, uint64 _minValidators, uint64 _finalityThreshold, uint64 _checkPeriod, uint64 _genesis) {
+    constructor(
+        SubnetID memory _parentId,
+        string memory _name,
+        address _ipcGatewayAddr,
+        ConsensusType _consensus,
+        uint256 _minValidatorStake,
+        uint64 _minValidators,
+        uint64 _finalityThreshold,
+        uint64 _checkPeriod,
+        uint64 _genesis
+    ) {
         parentId = _parentId;
         name = _name;
         ipcGatewayAddr = _ipcGatewayAddr;
@@ -49,5 +60,25 @@ contract SubnetActor {
         finalityThreshold = _finalityThreshold;
         checkPeriod = _checkPeriod;
         genesis = _genesis;
+    }
+
+    function join(address validator) external {
+        revert("MethodNotImplemented");
+    }
+
+    function leave() external {
+        revert("MethodNotImplemented");
+    }
+
+    function kill() external {
+        revert("MethodNotImplemented");
+    }
+
+    function submitCheckpoint(bytes memory checkpoint) external {
+        revert("MethodNotImplemented");
+    }
+
+    function reward() external {
+        revert("MethodNotImplemented");
     }
 }

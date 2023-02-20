@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
-import "../structs/Checkpoint.sol";
-
 interface ISubnetCoordinatorActor {
     /// Register is called by subnet actors to put the required collateral
     /// and register the subnet to the hierarchy.
