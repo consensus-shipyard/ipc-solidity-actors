@@ -1,4 +1,5 @@
-pragma solidity ^0.8.10;
+// SPDX-License-Identifier: UNLICENSED
+pragma solidity ^0.8.7;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
@@ -13,7 +14,7 @@ contract SubnetActorTest is Test {
     SubnetCoordinatorActor sca;
 
     function setUp() public {
-        sca = new SubnetCoordinatorActor("/root", 10);
+        sca = new SubnetCoordinatorActor("/root", DEFAULT_CHECKPOINT_PERIOD);
     }
 
     function testDeployment() public view {
