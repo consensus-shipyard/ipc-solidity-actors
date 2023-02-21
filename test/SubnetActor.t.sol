@@ -6,13 +6,11 @@ import "forge-std/console.sol";
 
 import "../src/SubnetActor.sol";
 
-contract SubnetActorTest is Test {
-
-    SubnetActor sa;
-
+contract SubnetActorDeploymentTest is Test {
     address private constant IPC_GATEWAY_ADDR = address(1024);
     string private constant NETWORK_NAME = "test";
 
+    SubnetActor sa;
 
     function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minValidatorStake, uint64 _minValidators, int64 _finalityTreshold, int64 _checkPeriod, bytes calldata _genesis) public {
         
