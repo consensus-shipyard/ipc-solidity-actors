@@ -7,14 +7,14 @@ import "forge-std/console.sol";
 import "../src/SubnetCoordinatorActor.sol";
 
 contract SubnetActorTest is Test {
-    uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    uint256 constant MIN_COLLATERAL_AMOUNT = 1 ether;
-    uint256 constant MAX_NONCE = type(uint256).max;
+    int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
+    uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
+    uint64 constant MAX_NONCE = type(uint64).max;
 
     SubnetCoordinatorActor sca;
 
 
-    function testDeployment(uint64 checkpointPeriod) public {
+    function testDeployment(int64 checkpointPeriod) public {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
 
         sca = new SubnetCoordinatorActor("/root", checkpointPeriod);
