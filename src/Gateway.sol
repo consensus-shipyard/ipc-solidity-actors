@@ -4,9 +4,9 @@ pragma solidity ^0.8.7;
 import "./structs/Checkpoint.sol";
 import "./structs/Postbox.sol";
 import "./enums/Status.sol";
-import "./interfaces/ISubnetCoordinatorActor.sol";
+import "./interfaces/IGateway.sol";
 
-contract SubnetCoordinatorActor is ISubnetCoordinatorActor {
+contract Gateway is IGateway {
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
