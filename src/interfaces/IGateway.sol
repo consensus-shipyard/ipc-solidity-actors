@@ -1,13 +1,14 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
+import "../structs/Checkpoint.sol";
 interface IGateway {
     /// Register is called by subnet actors to put the required collateral
     /// and register the subnet to the hierarchy.
-    function register() external;
+    function register() external payable;
 
     /// AddStake adds stake to the collateral of a subnet.
-    function addStake() external;
+    function addStake() external payable;
 
     /// Release stake recovers some collateral of the subnet
     function releaseStake(uint amount) external;
@@ -18,7 +19,7 @@ interface IGateway {
 
     /// CommitChildCheck propagates the commitment of a checkpoint from a child subnet,
     /// process the cross-messages directed to the subnet.
-    function commitChildCheck(bytes memory checkpoint) external;
+    function commitChildCheck(Checkpoint calldata checkpoint) external;
 
     /// Fund injects new funds from an account of the parent chain to a subnet.
     ///

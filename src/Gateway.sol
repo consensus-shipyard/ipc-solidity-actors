@@ -5,6 +5,7 @@ import "./structs/Checkpoint.sol";
 import "./structs/Postbox.sol";
 import "./enums/Status.sol";
 import "./interfaces/IGateway.sol";
+import "./interfaces/ISubnetActor.sol";
 
 contract Gateway is IGateway {
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
@@ -67,24 +68,109 @@ contract Gateway is IGateway {
         appliedBottomUpNonce = MAX_NONCE;
     }
 
-    function register() external {
-        revert("MethodNotImplemented");
+    function register() external payable {
+        require(
+            msg.value >= minStake,
+            "call to register doesn't include enough funds"
+        );
+
+        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
+        bytes memory subnetIdBytes = abi.encode(subnetId);
+
+        Subnet storage subnet = subnets[subnetIdBytes];
+
+        require(
+            keccak256(subnetIdBytes) != keccak256(abi.encode(subnet.id)),
+            "subnet is already registered"
+        );
+
+        subnet.id = subnetId;
+        subnet.stake = msg.value;
+        subnet.status = Status.Active;
+        subnet.nonce = 0;
+        subnet.circSupply = 0;
+
+        totalSubnets += 1;
     }
 
-    function addStake() external {
-        revert("MethodNotImplemented");
+    function addStake() external payable {
+        require(msg.value > 0, "no stake to add");
+
+        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
+        bytes memory subnetIdBytes = abi.encode(subnetId);
+
+        Subnet storage subnet = subnets[subnetIdBytes];
+
+        require(
+            keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id)),
+            "subnet is not registered"
+        );
+
+        subnet.stake += msg.value;
     }
 
     function releaseStake(uint amount) external {
-        revert("MethodNotImplemented");
+        require(amount > 0, "no funds to release in params");
+
+        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
+        bytes memory subnetIdBytes = abi.encode(subnetId);
+
+        Subnet storage subnet = subnets[subnetIdBytes];
+
+        require(
+            keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id)),
+            "subnet is not registered"
+        );
+        require(
+            subnet.stake >= amount,
+            "subnet actor not allowed to release so many funds"
+        );
+        require(
+            address(this).balance >= amount,
+            "something went really wrong! the actor doesn't have enough balance to release"
+        );
+
+        subnet.stake -= amount;
+
+        if (subnet.stake < minStake) {
+            subnet.status = Status.Inactive;
+        }
+
+        (bool released, ) = payable(subnet.id.actor).call{value: amount}("");
+        require(released, "failed to release stake");
     }
 
     function kill() external {
-        revert("MethodNotImplemented");
+        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
+        bytes memory subnetIdBytes = abi.encode(subnetId);
+
+        Subnet storage subnet = subnets[subnetIdBytes];
+
+        require(
+            keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id)),
+            "subnet is not registered"
+        );
+        require(
+            address(this).balance >= subnet.stake,
+            "something went really wrong! the actor doesn't have enough balance to release"
+        );
+        require(
+            subnet.circSupply == 0,
+            "cannot kill a subnet that still holds user funds in its circ. supply"
+        );
+
+        uint256 stake = subnet.stake;
+
+        totalSubnets -= 1;
+
+        delete subnets[subnetIdBytes];
+
+        (bool killed, ) = payable(msg.sender).call{value: stake}("");
+        require(killed, "failed to kill subnet");
     }
 
-    function commitChildCheck(bytes memory checkpoint) external {
-        revert("MethodNotImplemented");
+    function commitChildCheck(Checkpoint calldata checkpoint) external {
+
     }
 
     function fund(bytes memory subnetId) external {
