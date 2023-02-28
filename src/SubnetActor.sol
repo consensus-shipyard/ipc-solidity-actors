@@ -6,11 +6,13 @@ import "./structs/Checkpoint.sol";
 import "./structs/Subnet.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./interfaces/IGateway.sol";
+import "./lib/CheckpointHelper.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 
 contract SubnetActor is ISubnetActor, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
+    using CheckpointHelper for mapping(int64 => Checkpoint);
     /// @notice Human-readable name of the subnet.
     string public name;
     /// @notice ID of the parent subnet
@@ -35,7 +37,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     int64 public checkPeriod;
     /// @notice block number to corresponding checkpoint at that block
     mapping(int64 => Checkpoint) public checkpoints;
-    /// @notice keccak256 hashed message data to set of validators who voted for the checkpoint
+    /// @notice keccak256 hashed message data to set of validators who voted for the
     mapping(bytes32 => EnumerableSet.AddressSet) windowChecks;
     /// @notice List of validators in the subnet
     EnumerableSet.AddressSet private validators;
@@ -145,13 +147,17 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         require(checkpoints[checkpoint.data.epoch].signature.length != 0, "cannot submit checkpoint for epoch");
         require(checkpoint.data.epoch % checkPeriod != 0, "epoch in checkpoint doesn't correspond with a signing window");
         require(keccak256(abi.encode(checkpoint.data.source)) == keccak256(abi.encode(parentId)), "submitting checkpoint with the wrong source");
-        require(keccak256(abi.encode(checkpoint.data)) == checkpoint.data.prevHash, "checkpoint data hash is the same as prevHash");
+        
+        bytes32 prevcheckpointHash = keccak256(abi.encode(checkpoints.getPrevCheckpoint(checkpoint.data.epoch, checkPeriod)));
+        require(keccak256(abi.encode(checkpoint.data)) == prevcheckpointHash, "checkpoint data hash is the same as prevHash");
         
         bytes32 messageHash = keccak256(
             abi.encodePacked("\x19Ethereum Signed Message:\n32", 
                 keccak256(abi.encode(checkpoint.data))
             )
         );
+        // bytes32 messageHash = keccak256(abi.encode(checkpoint.data));
+          
         require(_recoverSigner(messageHash, checkpoint.signature) == msg.sender, "invalid signature");
 
         bytes32 cid = keccak256(abi.encode(checkpoint.data));

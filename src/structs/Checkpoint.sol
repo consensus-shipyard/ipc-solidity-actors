@@ -23,19 +23,15 @@ struct ChildCheck {
 }
 
 struct CrossMsgMeta {
-    CrossMsgs msgsCid;
     uint64 nonce;
     uint256 value;
     uint256 fee;
+    CrossMsg[] msgs;
 }
 
 struct CrossMsg {
     StorableMsg message;
     bool wrapped;
-}
-
-struct CrossMsgs {
-    CrossMsg[] msgs;
 }
 
 struct StorableMsg {

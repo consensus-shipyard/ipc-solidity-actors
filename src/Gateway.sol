@@ -74,17 +74,11 @@ contract Gateway is IGateway {
             "call to register doesn't include enough funds"
         );
 
-        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
-        bytes memory subnetIdBytes = abi.encode(subnetId);
+        (bool registered, Subnet storage subnet) = getSubnet(msg.sender);
 
-        Subnet storage subnet = subnets[subnetIdBytes];
+        require(registered == false, "subnet is already registered");
 
-        require(
-            keccak256(subnetIdBytes) != keccak256(abi.encode(subnet.id)),
-            "subnet is already registered"
-        );
-
-        subnet.id = subnetId;
+        subnet.id = SubnetID(networkName.parent, msg.sender);
         subnet.stake = msg.value;
         subnet.status = Status.Active;
         subnet.nonce = 0;
@@ -96,15 +90,9 @@ contract Gateway is IGateway {
     function addStake() external payable {
         require(msg.value > 0, "no stake to add");
 
-        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
-        bytes memory subnetIdBytes = abi.encode(subnetId);
+        (bool registered, Subnet storage subnet) = getSubnet(msg.sender);
 
-        Subnet storage subnet = subnets[subnetIdBytes];
-
-        require(
-            keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id)),
-            "subnet is not registered"
-        );
+        require(registered, "subnet is not registered");
 
         subnet.stake += msg.value;
     }
@@ -112,15 +100,9 @@ contract Gateway is IGateway {
     function releaseStake(uint amount) external {
         require(amount > 0, "no funds to release in params");
 
-        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
-        bytes memory subnetIdBytes = abi.encode(subnetId);
+        (bool registered, Subnet storage subnet) = getSubnet(msg.sender);
 
-        Subnet storage subnet = subnets[subnetIdBytes];
-
-        require(
-            keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id)),
-            "subnet is not registered"
-        );
+        require(registered, "subnet is not registered");
         require(
             subnet.stake >= amount,
             "subnet actor not allowed to release so many funds"
@@ -141,15 +123,9 @@ contract Gateway is IGateway {
     }
 
     function kill() external {
-        SubnetID memory subnetId = SubnetID(networkName.parent, msg.sender);
-        bytes memory subnetIdBytes = abi.encode(subnetId);
+        (bool registered, Subnet storage subnet) = getSubnet(msg.sender);
 
-        Subnet storage subnet = subnets[subnetIdBytes];
-
-        require(
-            keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id)),
-            "subnet is not registered"
-        );
+        require(registered, "subnet is not registered");
         require(
             address(this).balance >= subnet.stake,
             "something went really wrong! the actor doesn't have enough balance to release"
@@ -163,14 +139,103 @@ contract Gateway is IGateway {
 
         totalSubnets -= 1;
 
-        delete subnets[subnetIdBytes];
+        delete subnets[abi.encode(subnet.id)];
 
         (bool killed, ) = payable(msg.sender).call{value: stake}("");
         require(killed, "failed to kill subnet");
     }
 
-    function commitChildCheck(Checkpoint calldata checkpoint) external {
+    function commitChildCheck(
+        Checkpoint calldata commit
+    ) external returns (uint) {
+        require(
+            commit.data.source.actor == msg.sender,
+            "source in checkpoint doesn't belong to subnet"
+        );
 
+        (bool registered, Subnet storage subnet) = getSubnet(msg.sender);
+
+        require(registered, "subnet is not registered");
+
+        require(
+            subnet.status == Status.Active,
+            "can't commit checkpoint for an inactive subnet"
+        );
+
+        require(
+            subnet.prevCheckpoint.data.epoch <= commit.data.epoch,
+            "checkpoint being committed belongs to the past"
+        );
+
+        require(
+            keccak256(abi.encode(subnet.prevCheckpoint.data)) ==
+                commit.data.prevHash,
+            "previous checkpoint not consistente with previous one"
+        );
+
+        int64 epoch = (int64(uint64(block.number)) / checkPeriod + 1) *
+            checkPeriod;
+
+        Checkpoint storage checkpoint = checkpoints[epoch];
+
+        uint fee;
+        // cross message
+        if (
+            keccak256(abi.encode(commit.data.crossMsgs.msgsCid)) !=
+            keccak256(new bytes(0))
+        ) {
+            bottomUpMsgMeta[bottomUpNonce] = commit.data.crossMsgs;
+            bottomUpMsgMeta[bottomUpNonce].nonce = bottomUpNonce;
+            bottomUpNonce += 1;
+
+            subnet.circSupply -= commit.data.crossMsgs.value;
+            fee = commit.data.crossMsgs.fee;
+        }
+
+        uint foundIndex;
+        bool found;
+
+        ChildCheck[] memory cpChildChecks = checkpoint.data.children;
+        for (
+            uint childIndex = 0;
+            childIndex < cpChildChecks.length;
+            childIndex++
+        ) {
+            ChildCheck memory childCheck = cpChildChecks[childIndex];
+            if (
+                keccak256(abi.encode(childCheck.source)) ==
+                keccak256(abi.encode(commit.data.source))
+            ) {
+                for (
+                    uint checkIndex = 0;
+                    checkIndex < childCheck.checks.length;
+                    checkIndex++
+                ) {
+                    require(
+                        keccak256(childCheck.checks[checkIndex]) ==
+                            keccak256(abi.encode(commit.data)),
+                        "child checkpoint being committed already exists"
+                    );
+                }
+
+                found = true;
+                foundIndex = childIndex;
+                break;
+            }
+        }
+
+        if (!found) {
+            foundIndex = cpChildChecks.length;
+            checkpoint.data.children[foundIndex].source = commit.data.source;
+        }
+
+        checkpoint.data.children[foundIndex].checks.push(
+            abi.encode(commit.data)
+        );
+
+        subnet.prevCheckpoint = commit;
+
+        return fee;
     }
 
     function fund(bytes memory subnetId) external {
@@ -208,5 +273,15 @@ contract Gateway is IGateway {
         uint256 feeAmount
     ) external {
         revert("MethodNotImplemented");
+    }
+
+    function getSubnet(
+        address subnetAddress
+    ) internal view returns (bool found, Subnet storage subnet) {
+        SubnetID memory subnetId = SubnetID(networkName.parent, subnetAddress);
+        bytes memory subnetIdBytes = abi.encode(subnetId);
+
+        subnet = subnets[subnetIdBytes];
+        found = keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id));
     }
 }

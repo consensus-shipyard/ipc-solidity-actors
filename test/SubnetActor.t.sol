@@ -7,6 +7,7 @@ import "forge-std/console.sol";
 import "../src/SubnetActor.sol";
 import "../src/Gateway.sol";
 import "../src/enums/Status.sol";
+import "../src/structs/Subnet.sol";
 
 contract SubnetActorTest is Test {
 
@@ -127,6 +128,33 @@ contract SubnetActorTest is Test {
         vm.prank(validator1);
         vm.expectRevert("this subnet can only be killed when all validators have left");
         sa.kill();
+    }
+
+    function test_SubmitCheckpoint_Works() public {
+        address validator = address(100);
+        _join(validator);
+
+        ChildCheck[] memory children;
+        bytes[] memory checks;
+        (string memory parent, address actor) = sa.parentId();
+        SubnetID memory subnet = SubnetID(parent, actor);
+        IPCAddress memory from = IPCAddress({subnetId: subnet, rawAddress: address(1)});
+        IPCAddress memory to = IPCAddress({subnetId: subnet, rawAddress: address(2)});
+        
+        StorableMsg memory storableMsg = StorableMsg({from: from, to: to, method: 0, value: 0, nonce: 0, params: bytes("")});
+
+        CrossMsg[] memory crossMsgs;
+        crossMsgs[0] = CrossMsg({wrapped: false, message: storableMsg});
+
+        CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({value: 0, nonce: 0, fee: 0, msgs: crossMsgs});
+        children[0] = ChildCheck({source: subnet, checks: checks});
+        CheckData memory data = CheckData({source: subnet, tipSet: bytes(""), epoch: 10, prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
+       
+       
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
+        
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encode(v, r, s)});
+        sa.submitCheckpoint(checkpoint);
     }
 
     function _join(address _validator) internal {

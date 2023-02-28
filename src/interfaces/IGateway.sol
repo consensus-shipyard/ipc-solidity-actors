@@ -2,6 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "../structs/Checkpoint.sol";
+
 interface IGateway {
     /// Register is called by subnet actors to put the required collateral
     /// and register the subnet to the hierarchy.
@@ -19,7 +20,9 @@ interface IGateway {
 
     /// CommitChildCheck propagates the commitment of a checkpoint from a child subnet,
     /// process the cross-messages directed to the subnet.
-    function commitChildCheck(Checkpoint calldata checkpoint) external;
+    function commitChildCheck(
+        Checkpoint memory checkpoint
+    ) external returns (uint);
 
     /// Fund injects new funds from an account of the parent chain to a subnet.
     ///
