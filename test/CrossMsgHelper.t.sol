@@ -56,7 +56,6 @@ contract CrossMsgHelperTest is Test {
 
     function test_CreateReleaseMsg_Works(
         uint256 releaseAmount,
-        uint64 nonce,
         address sender
     ) public {
         address[] memory route = new address[](2);
@@ -69,8 +68,7 @@ contract CrossMsgHelperTest is Test {
         CrossMsg memory releaseMsg = CrossMsgHelper.createReleaseMsg(
             subnetId,
             sender,
-            releaseAmount,
-            nonce
+            releaseAmount
         );
 
         address[] memory parentRoute = new address[](1);
@@ -84,7 +82,7 @@ contract CrossMsgHelperTest is Test {
         );
         require(releaseMsg.message.to.rawAddress == sender);
         require(releaseMsg.message.value == releaseAmount);
-        require(releaseMsg.message.nonce == nonce);
+        require(releaseMsg.message.nonce == 0);
         require(releaseMsg.message.method == METHOD_SEND);
         require(keccak256(releaseMsg.message.params) == keccak256(EMPTY_BYTES));
         require(releaseMsg.wrapped == false);
@@ -92,7 +90,6 @@ contract CrossMsgHelperTest is Test {
 
     function test_CreateReleaseMsg_Fails_SubnetNoParent(
         uint256 releaseAmount,
-        uint64 nonce,
         address sender
     ) public {
         address[] memory route = new address[](1);
@@ -101,7 +98,7 @@ contract CrossMsgHelperTest is Test {
 
         vm.expectRevert("error getting parent for subnet addr");
 
-        CrossMsgHelper.createReleaseMsg(subnetId, sender, releaseAmount, nonce);
+        CrossMsgHelper.createReleaseMsg(subnetId, sender, releaseAmount);
     }
 
     function test_CreateFundMsg_Works(

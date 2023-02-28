@@ -39,8 +39,7 @@ library CrossMsgHelper {
     function createReleaseMsg(
         SubnetID calldata subnet,
         address signer,
-        uint256 value,
-        uint64 nonce
+        uint256 value
     ) public pure returns (CrossMsg memory) {
         return
             CrossMsg({
@@ -54,7 +53,7 @@ library CrossMsgHelper {
                         rawAddress: signer
                     }),
                     value: value,
-                    nonce: nonce,
+                    nonce: 0,
                     method: METHOD_SEND,
                     params: EMPTY_BYTES
                 }),

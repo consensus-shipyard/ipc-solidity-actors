@@ -11,66 +11,22 @@ import "../src/lib/CheckpointMappingHelper.sol";
 
 contract CheckpointMappingHelperTest is Test {
     using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for Checkpoint;
-    using CheckpointMappingHelper for mapping(int64 => Checkpoint);
+    using CheckpointHelper for BottomUpCheckpoint;
+    using CheckpointMappingHelper for mapping(uint64 => BottomUpCheckpoint);
 
-    int64 constant BLOCKS_PER_EPOCH = 10;
+    uint64 constant BLOCKS_PER_EPOCH = 10;
 
-    int64 constant EPOCH_ONE = 0 * BLOCKS_PER_EPOCH;
-    int64 constant EPOCH_TWO = 1 * BLOCKS_PER_EPOCH;
-    int64 constant EPOCH_THREE = 2 * BLOCKS_PER_EPOCH;
-    int64 constant NON_EXISTING_EPOCH = 100000;
+    uint64 constant EPOCH_ONE = 0 * BLOCKS_PER_EPOCH;
+    uint64 constant EPOCH_TWO = 1 * BLOCKS_PER_EPOCH;
+    uint64 constant EPOCH_THREE = 2 * BLOCKS_PER_EPOCH;
+    uint64 constant NON_EXISTING_EPOCH = 100000;
 
-    mapping(int64 => Checkpoint) public checkpoints;
-
-    function test_GetPrevCheckpointHash_Works_NegativeEpoch() public {
-        createCheckpoint(EPOCH_ONE, 5);
-
-        bytes32 emptyHash = checkpoints.getPrevCheckpointHash(-100, -10);
-
-        require(emptyHash == checkpoints[NON_EXISTING_EPOCH].toHash());
-    }
-
-    function test_GetPrevCheckpointHash_Works_Empty(
-        int8 nonExistingEpoch
-    ) public view {
-        bytes32 emptyHash = checkpoints.getPrevCheckpointHash(
-            nonExistingEpoch,
-            BLOCKS_PER_EPOCH
-        );
-
-        require(emptyHash == checkpoints[nonExistingEpoch].toHash());
-    }
-
-    function test_GetPrevCheckpointHash_Works_EpochOne() public {
-        createCheckpoint(EPOCH_ONE, 5);
-        createCheckpoint(EPOCH_TWO, 15);
-
-        bytes32 prevCheckpointHash = checkpoints.getPrevCheckpointHash(
-            EPOCH_TWO,
-            BLOCKS_PER_EPOCH
-        );
-
-        require(prevCheckpointHash == checkpoints[EPOCH_ONE].toHash());
-    }
-
-    function test_GetPrevCheckpointHash_Works_EpochTwo() public {
-        createCheckpoint(EPOCH_ONE, 5);
-        createCheckpoint(EPOCH_TWO, 15);
-        createCheckpoint(EPOCH_THREE, 25);
-
-        bytes32 prevCheckpointHash = checkpoints.getPrevCheckpointHash(
-            EPOCH_THREE,
-            BLOCKS_PER_EPOCH
-        );
-
-        require(prevCheckpointHash == checkpoints[EPOCH_TWO].toHash());
-    }
+    mapping(uint64 => BottomUpCheckpoint) public checkpoints;
 
     function test_GetCheckpointPerEpoch_Works_SameEpochNextBlock() public {
         createCheckpoint(EPOCH_ONE, 5);
 
-        (bool exists, int epoch, Checkpoint storage checkpoint) = checkpoints
+        (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint) = checkpoints
             .getCheckpointPerEpoch(8, BLOCKS_PER_EPOCH);
 
         require(exists);
@@ -81,7 +37,7 @@ contract CheckpointMappingHelperTest is Test {
     function test_GetCheckpointPerEpoch_Works_SameEpochPreviousBlock() public {
         createCheckpoint(EPOCH_ONE, 5);
 
-        (bool exists, int epoch, Checkpoint storage checkpoint) = checkpoints
+        (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint) = checkpoints
             .getCheckpointPerEpoch(3, BLOCKS_PER_EPOCH);
 
         require(exists);
@@ -93,7 +49,7 @@ contract CheckpointMappingHelperTest is Test {
         createCheckpoint(EPOCH_ONE, 5);
         createCheckpoint(EPOCH_TWO, 12);
 
-        (bool exists, int epoch, Checkpoint storage checkpoint) = checkpoints
+        (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint) = checkpoints
             .getCheckpointPerEpoch(12, BLOCKS_PER_EPOCH);
 
         require(exists);
@@ -102,7 +58,7 @@ contract CheckpointMappingHelperTest is Test {
     }
 
     function test_GetCheckpointPerEpoch_Works_FutureEpoch(
-        int64 futureEpoch
+        uint64 futureEpoch
     ) public {
         vm.assume(
             futureEpoch > EPOCH_THREE && futureEpoch % BLOCKS_PER_EPOCH == 0
@@ -113,12 +69,12 @@ contract CheckpointMappingHelperTest is Test {
 
         for (
             uint nextBlock = 0;
-            nextBlock < uint64(BLOCKS_PER_EPOCH);
+            nextBlock < BLOCKS_PER_EPOCH;
             nextBlock++
         ) {
-            uint256 futureBlockNumber = uint64(futureEpoch) + nextBlock;
+            uint256 futureBlockNumber = futureEpoch + nextBlock;
 
-            (bool exists, int64 epoch, ) = checkpoints.getCheckpointPerEpoch(
+            (bool exists, uint64 epoch, ) = checkpoints.getCheckpointPerEpoch(
                 futureBlockNumber,
                 BLOCKS_PER_EPOCH
             );
@@ -128,28 +84,16 @@ contract CheckpointMappingHelperTest is Test {
         }
     }
 
-    function test_GetCheckpointPerEpoch_Works_NegativePeriod() public {
-        createCheckpoint(EPOCH_ONE, 5);
-
-        (bool exists, int epoch, Checkpoint storage checkpoint) = checkpoints
-            .getCheckpointPerEpoch(5, -10);
-
-        require(exists);
-        require(epoch == EPOCH_ONE);
-        require(checkpoint.toHash() == checkpoints[EPOCH_ONE].toHash());
-    }
-
     function createCheckpoint(
-        int64 epoch,
+        uint64 epoch,
         uint64 blockNumber
-    ) internal returns (Checkpoint storage cp) {
+    ) internal returns (BottomUpCheckpoint storage cp) {
         cp = checkpoints[epoch];
 
         address[] memory route = new address[](1);
         route[0] = makeAddr("root");
 
-        cp.data.source = SubnetID(route).createSubnetId(address(100));
-        cp.data.epoch = int64(blockNumber);
-        cp.signature = new bytes(blockNumber);
+        cp.source = SubnetID(route).createSubnetId(address(100));
+        cp.epoch = blockNumber;
     }
 }
