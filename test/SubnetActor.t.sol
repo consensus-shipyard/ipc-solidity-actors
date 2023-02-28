@@ -335,6 +335,13 @@ contract SubnetActorTest is Test {
     function test_SubmitCheckpoint_Fails_OutsideOfSigningWindow() public {
         address validator = vm.addr(100);
         _join(validator);
+        address validator2 = vm.addr(101);
+        _join(validator2);
+        address validator3 = vm.addr(102);
+        _join(validator3);
+
+        CheckData memory data = _createCheckData(100);
+        SubnetID memory subnet = sa.getParent().setActor(address(sa));
 
         CheckData memory data = _createCheckData(125); 
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
