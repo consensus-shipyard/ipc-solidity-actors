@@ -8,8 +8,10 @@ import "../src/SubnetActor.sol";
 import "../src/Gateway.sol";
 import "../src/enums/Status.sol";
 import "../src/structs/Subnet.sol";
-
+import "../src/lib/SubnetIDHelper.sol";
 contract SubnetActorTest is Test {
+
+    using SubnetIDHelper for SubnetID;
 
     SubnetActor sa;
     Gateway gw;
@@ -20,21 +22,26 @@ contract SubnetActorTest is Test {
     uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
-    int64 private constant DEFAULT_CHECK_PERIOD = 1;
+    int64 private constant DEFAULT_CHECK_PERIOD = 50;
     bytes private constant GENESIS = new bytes(0);
 
     function setUp() public
     {
+        address[] memory path = new address[](1);
+        path[0] = address(0);
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD);
 
-        gw = new Gateway("/root", DEFAULT_CHECKPOINT_PERIOD);
-        SubnetID memory parentId = SubnetID("/root", address(gw));
+        path[0] = address(gw);
+        SubnetID memory parentId = SubnetID(path);
         sa = new SubnetActor(parentId, DEFAULT_NETWORK_NAME, address(gw), ConsensusType.Dummy, DEFAULT_MIN_VALIDATOR_STAKE, DEFAULT_MIN_VALIDATORS, DEFAULT_FINALITY_TRESHOLD, DEFAULT_CHECK_PERIOD, GENESIS);
     
     }
 
     function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minValidatorStake, uint64 _minValidators, int64 _finalityTreshold, int64 _checkPeriod, bytes calldata _genesis) public {
         
-        SubnetID memory parentId = SubnetID("/root", _ipcGatewayAddr);
+        address[] memory path = new address[](1);
+        path[0] = address(_ipcGatewayAddr);
+        SubnetID memory parentId = SubnetID(path);
         sa = new SubnetActor(parentId, _networkName, _ipcGatewayAddr, ConsensusType.Dummy, _minValidatorStake, _minValidators, _finalityTreshold, _checkPeriod, _genesis);
     
         require(keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_networkName)));
@@ -45,9 +52,10 @@ contract SubnetActorTest is Test {
         require(sa.finalityThreshold() == _finalityTreshold);
         require(sa.checkPeriod() == _checkPeriod);
         require(keccak256(sa.genesis()) == keccak256(_genesis));
-        (string memory parent, address actor) = sa.parentId();
-        require(keccak256(abi.encodePacked(parent)) == keccak256(abi.encodePacked("/root")));
-        require(actor == _ipcGatewayAddr);
+
+        SubnetID memory subnet = sa.getParent();
+        require(subnet.isRoot());
+        require(subnet.getActor() == _ipcGatewayAddr);
     }
 
     function test_Join_Fail_NoAddressZero() public payable {
@@ -131,29 +139,32 @@ contract SubnetActorTest is Test {
     }
 
     function test_SubmitCheckpoint_Works() public {
-        address validator = address(100);
+        address validator = vm.addr(100);
         _join(validator);
 
-        ChildCheck[] memory children;
-        bytes[] memory checks;
-        (string memory parent, address actor) = sa.parentId();
-        SubnetID memory subnet = SubnetID(parent, actor);
+        SubnetID memory subnet = sa.getParent().setActor(address(sa));
+
         IPCAddress memory from = IPCAddress({subnetId: subnet, rawAddress: address(1)});
         IPCAddress memory to = IPCAddress({subnetId: subnet, rawAddress: address(2)});
         
         StorableMsg memory storableMsg = StorableMsg({from: from, to: to, method: 0, value: 0, nonce: 0, params: bytes("")});
 
-        CrossMsg[] memory crossMsgs;
+        CrossMsg[] memory crossMsgs = new CrossMsg[](1);
         crossMsgs[0] = CrossMsg({wrapped: false, message: storableMsg});
 
         CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({value: 0, nonce: 0, fee: 0, msgs: crossMsgs});
+
+        ChildCheck[] memory children = new ChildCheck[](1);
+        bytes[] memory checks = new bytes[](0);
         children[0] = ChildCheck({source: subnet, checks: checks});
-        CheckData memory data = CheckData({source: subnet, tipSet: bytes(""), epoch: 10, prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
-       
+
+        CheckData memory data = CheckData({source: subnet, tipSet: new bytes(0), epoch: 100, prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
        
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
         
-        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encode(v, r, s)});
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.prank(validator);
         sa.submitCheckpoint(checkpoint);
     }
 

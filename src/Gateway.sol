@@ -6,14 +6,21 @@ import "./structs/Postbox.sol";
 import "./enums/Status.sol";
 import "./interfaces/IGateway.sol";
 import "./interfaces/ISubnetActor.sol";
+import "./lib/StorableMsgHelper.sol";
+import "./lib/SubnetIDHelper.sol";
 
-contract Gateway is IGateway {
+import "openzeppelin-contracts/security/ReentrancyGuard.sol";
+
+contract Gateway is IGateway , ReentrancyGuard {
+
+    using SubnetIDHelper for SubnetID;
+
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
 
     /// @notice ID of the current network
-    SubnetID public networkName;
+    SubnetID private networkName;
 
     /// @notice Number of active subnets spawned from this one
     uint64 public totalSubnets;
@@ -39,7 +46,7 @@ contract Gateway is IGateway {
     /// @notice Postbox keeps track for an EOA of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
     /// postbox id => PostBoxItem
-    mapping(uint256 => PostBoxItem) public postbox;
+    mapping(uint64 => PostBoxItem) private postbox;
 
     /// @notice Latest nonce of a cross message sent from subnet.
     uint64 public nonce;
@@ -59,13 +66,17 @@ contract Gateway is IGateway {
     uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
-    constructor(string memory _networkName, int64 _checkpointPeriod) {
-        networkName = SubnetID(_networkName, address(0));
+    constructor(address[] memory _path, int64 _checkpointPeriod) {
+        networkName = SubnetID(_path);
         minStake = MIN_COLLATERAL_AMOUNT;
         checkPeriod = _checkpointPeriod > DEFAULT_CHECKPOINT_PERIOD
             ? _checkpointPeriod
             : DEFAULT_CHECKPOINT_PERIOD;
         appliedBottomUpNonce = MAX_NONCE;
+    }
+
+    function getNetworkName() external view returns (SubnetID memory) {
+        return networkName;
     }
 
     function register() external payable {
@@ -78,7 +89,8 @@ contract Gateway is IGateway {
 
         require(registered == false, "subnet is already registered");
 
-        subnet.id = SubnetID(networkName.parent, msg.sender);
+
+        subnet.id = networkName.setActor(msg.sender);
         subnet.stake = msg.value;
         subnet.status = Status.Active;
         subnet.nonce = 0;
@@ -118,7 +130,7 @@ contract Gateway is IGateway {
             subnet.status = Status.Inactive;
         }
 
-        (bool released, ) = payable(subnet.id.actor).call{value: amount}("");
+        (bool released, ) = payable(subnet.id.getActor()).call{value: amount}("");
         require(released, "failed to release stake");
     }
 
@@ -149,7 +161,7 @@ contract Gateway is IGateway {
         Checkpoint calldata commit
     ) external returns (uint) {
         require(
-            commit.data.source.actor == msg.sender,
+            commit.data.source.getActor() == msg.sender,
             "source in checkpoint doesn't belong to subnet"
         );
 
@@ -166,12 +178,13 @@ contract Gateway is IGateway {
             subnet.prevCheckpoint.data.epoch <= commit.data.epoch,
             "checkpoint being committed belongs to the past"
         );
-
-        require(
-            keccak256(abi.encode(subnet.prevCheckpoint.data)) ==
-                commit.data.prevHash,
-            "previous checkpoint not consistente with previous one"
-        );
+        if(commit.data.prevHash != bytes32(0)) {
+            require(
+                keccak256(abi.encode(subnet.prevCheckpoint.data)) ==
+                    commit.data.prevHash,
+                "previous checkpoint not consistent with previous one"
+            );
+        }
 
         int64 epoch = (int64(uint64(block.number)) / checkPeriod + 1) *
             checkPeriod;
@@ -181,7 +194,7 @@ contract Gateway is IGateway {
         uint fee;
         // cross message
         if (
-            keccak256(abi.encode(commit.data.crossMsgs.msgsCid)) !=
+            keccak256(abi.encode(commit.data.crossMsgs.msgs)) !=
             keccak256(new bytes(0))
         ) {
             bottomUpMsgMeta[bottomUpNonce] = commit.data.crossMsgs;
@@ -276,9 +289,9 @@ contract Gateway is IGateway {
     }
 
     function getSubnet(
-        address subnetAddress
+        address _actor
     ) internal view returns (bool found, Subnet storage subnet) {
-        SubnetID memory subnetId = SubnetID(networkName.parent, subnetAddress);
+        SubnetID memory subnetId = networkName.setActor(_actor);
         bytes memory subnetIdBytes = abi.encode(subnetId);
 
         subnet = subnets[subnetIdBytes];

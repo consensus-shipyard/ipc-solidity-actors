@@ -7,16 +7,18 @@ import "./structs/Subnet.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./interfaces/IGateway.sol";
 import "./lib/CheckpointHelper.sol";
+import "./lib/SubnetIDHelper.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 
 contract SubnetActor is ISubnetActor, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
+    using SubnetIDHelper for SubnetID;
     using CheckpointHelper for mapping(int64 => Checkpoint);
     /// @notice Human-readable name of the subnet.
     string public name;
     /// @notice ID of the parent subnet
-    SubnetID public parentId;
+    SubnetID private parentId;
     /// @notice Address of the IPC gateway for the subnet
     address public ipcGatewayAddr;
     /// @notice Type of consensus algorithm.
@@ -63,6 +65,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         }
     }
 
+    function getParent() external view returns (SubnetID memory) {
+        return parentId;
+    }
+
     function validatorCount() public returns (uint) {
         return validators.length();
     }
@@ -104,11 +110,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         if(status == Status.Instantiated) {
             if(totalStake >= minValidatorStake) {
-                (bool success1,) = parentId.actor.call{value: totalStake}(abi.encodeWithSignature("register()"));
+                (bool success1,) = parentId.getActor().call{value: totalStake}(abi.encodeWithSignature("register()"));
                 require(success1);
             }
         } else {
-            (bool success2, ) = parentId.actor.call{value: msg.value}(abi.encodeWithSignature("addStake()"));
+            (bool success2, ) = parentId.getActor().call{value: msg.value}(abi.encodeWithSignature("addStake()"));
             require(success2);
         }
     }
@@ -124,7 +130,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         if(status == Status.Terminating) return;
         
-        IGateway(parentId.actor).releaseStake(amount);
+        IGateway(parentId.getActor()).releaseStake(amount);
     
         (bool success, ) = msg.sender.call{value: amount}("");
         require(success);
@@ -138,33 +144,30 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         status = Status.Terminating;
 
-        IGateway(parentId.actor).kill();
+        IGateway(parentId.getActor()).kill();
     }
 
     function submitCheckpoint(Checkpoint calldata checkpoint) external {
         require(validators.contains(msg.sender), "not validator");
         require(status == Status.Active, "submitting checkpoints is not allowed while subnet is not active");
-        require(checkpoints[checkpoint.data.epoch].signature.length != 0, "cannot submit checkpoint for epoch");
-        require(checkpoint.data.epoch % checkPeriod != 0, "epoch in checkpoint doesn't correspond with a signing window");
-        require(keccak256(abi.encode(checkpoint.data.source)) == keccak256(abi.encode(parentId)), "submitting checkpoint with the wrong source");
+        require(checkpoints[checkpoint.data.epoch].signature.length == 0, "cannot submit checkpoint for epoch");
+        require(checkpoint.data.epoch % checkPeriod == 0, "epoch in checkpoint doesn't correspond with a signing window");
+        require(keccak256(abi.encode(checkpoint.data.source)) == keccak256(abi.encode(parentId.setActor(address(this)))), "submitting checkpoint with the wrong source");
         
-        bytes32 prevcheckpointHash = keccak256(abi.encode(checkpoints.getPrevCheckpoint(checkpoint.data.epoch, checkPeriod)));
-        require(keccak256(abi.encode(checkpoint.data)) == prevcheckpointHash, "checkpoint data hash is the same as prevHash");
-        
-        bytes32 messageHash = keccak256(
-            abi.encodePacked("\x19Ethereum Signed Message:\n32", 
-                keccak256(abi.encode(checkpoint.data))
-            )
-        );
-        // bytes32 messageHash = keccak256(abi.encode(checkpoint.data));
-          
+        Checkpoint memory prevCheckpoint = checkpoints.getPrevCheckpoint(checkpoint.data.epoch, checkPeriod);
+        if(prevCheckpoint.signature.length > 0) {
+            bytes32 prevcheckpointHash = keccak256(abi.encode(prevCheckpoint));
+            require(checkpoint.data.prevHash == prevcheckpointHash, "checkpoint data hash is not the same as prevHash");
+        }
+   
+        bytes32 messageHash = keccak256(abi.encode(checkpoint.data));
         require(_recoverSigner(messageHash, checkpoint.signature) == msg.sender, "invalid signature");
 
         bytes32 cid = keccak256(abi.encode(checkpoint.data));
-
         require(!windowChecks[cid].contains(msg.sender), "miner has already voted the checkpoint");
     
         windowChecks[cid].add(msg.sender);
+        
         uint sum = 0;
         for(uint i = 0; i < windowChecks[cid].length(); i++) {
             sum += stake[windowChecks[cid].at(i)];
@@ -176,7 +179,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         bool hasMajority = sum >= (totalStake  * 2 / 3);
         if(!hasMajority) return;
 
-        IGateway(parentId.actor).commitChildCheck(checkpoint);
+        IGateway(parentId.getActor()).commitChildCheck(checkpoint);
 
     }
 

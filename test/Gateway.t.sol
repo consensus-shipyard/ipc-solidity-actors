@@ -5,8 +5,10 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import "../src/Gateway.sol";
+import "../src/lib/SubnetIDHelper.sol";
 
 contract GatewayDeploymentTest is Test {
+    using SubnetIDHelper for SubnetID;
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
@@ -15,20 +17,21 @@ contract GatewayDeploymentTest is Test {
     Gateway gw;
 
     function setUp() public {
-        gw = new Gateway("/root", DEFAULT_CHECKPOINT_PERIOD);
+        address[] memory path = new address[](1);
+        path[0] = address(0);
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD);
     }
 
     function testDeployment(int64 checkpointPeriod) public {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
+        address[] memory path = new address[](1);
+        path[0] = address(0);
+        gw = new Gateway(path, checkpointPeriod);
 
-        gw = new Gateway("/root", checkpointPeriod);
+        SubnetID memory networkName = gw.getNetworkName();
 
-        (string memory parent, address actor) = gw.networkName();
+        require(networkName.isRoot());
 
-        require(
-            keccak256(abi.encode(parent)) == keccak256(abi.encode("/root"))
-        );
-        require(actor == address(0));
         require(gw.minStake() == MIN_COLLATERAL_AMOUNT);
         require(gw.checkPeriod() == checkpointPeriod);
         require(gw.appliedBottomUpNonce() == MAX_NONCE);
@@ -248,7 +251,7 @@ contract GatewayDeploymentTest is Test {
 
         require(
             keccak256(abi.encode(id)) ==
-                keccak256(abi.encode(SubnetID("", address(0))))
+                keccak256(abi.encode(SubnetID(new address[](0))))
         );
         require(stake == 0);
         require(nonce == 0);
@@ -295,10 +298,9 @@ contract GatewayDeploymentTest is Test {
             Status status
         ) = _getSubnet(subnetAddress);
 
-        (string memory parent, ) = gw.networkName();
-        bytes memory subnetId = abi.encode(SubnetID(parent, subnetAddress));
+        SubnetID memory parentNetwork = gw.getNetworkName();
 
-        require(keccak256(abi.encode(id)) == keccak256(subnetId));
+        require(keccak256(abi.encode(id)) == keccak256(abi.encode(parentNetwork.setActor(subnetAddress))));
         require(stake == collateral);
         require(nonce == 0);
         require(circSupply == 0);
@@ -308,8 +310,8 @@ contract GatewayDeploymentTest is Test {
     function _getSubnet(
         address subnetAddress
     ) internal view returns (SubnetID memory, uint, uint, uint, Status) {
-        (string memory parent, ) = gw.networkName();
-        bytes memory subnetId = abi.encode(SubnetID(parent, subnetAddress));
+        SubnetID memory subnet = gw.getNetworkName().setActor(subnetAddress);
+        bytes memory subnetId = abi.encode(subnet);
 
         (
             SubnetID memory id,

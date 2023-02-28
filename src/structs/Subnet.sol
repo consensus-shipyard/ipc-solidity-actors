@@ -6,9 +6,7 @@ import "../enums/Status.sol";
 
 struct SubnetID {
     /// @notice parent path of the subnet
-    string parent;
-    /// @notice deployed subnet actor address
-    address actor;
+    address[] route;
 }
 
 struct Subnet {
