@@ -150,7 +150,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     function submitCheckpoint(Checkpoint calldata checkpoint) external {
         require(validators.contains(msg.sender), "not validator");
         require(status == Status.Active, "submitting checkpoints is not allowed while subnet is not active");
-        require(checkpoints[checkpoint.data.epoch].signature.length == 0, "cannot submit checkpoint for epoch");
         require(checkpoint.data.epoch % checkPeriod == 0, "epoch in checkpoint doesn't correspond with a signing window");
         require(keccak256(abi.encode(checkpoint.data.source)) == keccak256(abi.encode(parentId.setActor(address(this)))), "submitting checkpoint with the wrong source");
         
@@ -164,20 +163,29 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         require(_recoverSigner(messageHash, checkpoint.signature) == msg.sender, "invalid signature");
 
         bytes32 cid = keccak256(abi.encode(checkpoint.data));
-        require(!windowChecks[cid].contains(msg.sender), "miner has already voted the checkpoint");
-    
-        windowChecks[cid].add(msg.sender);
+        EnumerableSet.AddressSet storage voters = windowChecks[cid];
+        require(!voters.contains(msg.sender), "miner has already voted the checkpoint");
         
+        voters.add(msg.sender);
+
         uint sum = 0;
-        for(uint i = 0; i < windowChecks[cid].length(); i++) {
-            sum += stake[windowChecks[cid].at(i)];
+        for(uint i = 0; i < voters.length(); i++) {
+            sum += stake[voters.at(i)];
             unchecked {
                 ++i;
             }
         }
 
-        bool hasMajority = sum >= (totalStake  * 2 / 3);
-        if(!hasMajority) return;
+        bool hasMajority = sum > (totalStake  / 2);
+        if(hasMajority == false) return;
+
+        // store the commitment on vote majority
+        require(checkpoints[checkpoint.data.epoch].signature.length == 0, "cannot submit checkpoint for epoch");
+        checkpoints[checkpoint.data.epoch] = checkpoint;
+        //clear the votes
+        for(uint i = 0; i < voters.length(); i++) {
+            voters.remove(voters.at(i));
+        }
 
         IGateway(parentId.getActor()).commitChildCheck(checkpoint);
 

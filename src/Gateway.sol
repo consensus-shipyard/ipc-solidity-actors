@@ -8,12 +8,14 @@ import "./interfaces/IGateway.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./lib/StorableMsgHelper.sol";
 import "./lib/SubnetIDHelper.sol";
+import "./lib/CheckpointHelper.sol";
 
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 
-contract Gateway is IGateway , ReentrancyGuard {
-
+contract Gateway is IGateway, ReentrancyGuard {
     using SubnetIDHelper for SubnetID;
+
+    using CheckpointHelper for mapping(int64 => Checkpoint);
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -89,7 +91,6 @@ contract Gateway is IGateway , ReentrancyGuard {
 
         require(registered == false, "subnet is already registered");
 
-
         subnet.id = networkName.setActor(msg.sender);
         subnet.stake = msg.value;
         subnet.status = Status.Active;
@@ -130,7 +131,9 @@ contract Gateway is IGateway , ReentrancyGuard {
             subnet.status = Status.Inactive;
         }
 
-        (bool released, ) = payable(subnet.id.getActor()).call{value: amount}("");
+        (bool released, ) = payable(subnet.id.getActor()).call{value: amount}(
+            ""
+        );
         require(released, "failed to release stake");
     }
 
@@ -159,7 +162,7 @@ contract Gateway is IGateway , ReentrancyGuard {
 
     function commitChildCheck(
         Checkpoint calldata commit
-    ) external returns (uint) {
+    ) external returns (uint fee) {
         require(
             commit.data.source.getActor() == msg.sender,
             "source in checkpoint doesn't belong to subnet"
@@ -178,7 +181,7 @@ contract Gateway is IGateway , ReentrancyGuard {
             subnet.prevCheckpoint.data.epoch <= commit.data.epoch,
             "checkpoint being committed belongs to the past"
         );
-        if(commit.data.prevHash != bytes32(0)) {
+        if (commit.data.prevHash != bytes32(0)) {
             require(
                 keccak256(abi.encode(subnet.prevCheckpoint.data)) ==
                     commit.data.prevHash,
@@ -186,12 +189,6 @@ contract Gateway is IGateway , ReentrancyGuard {
             );
         }
 
-        int64 epoch = (int64(uint64(block.number)) / checkPeriod + 1) *
-            checkPeriod;
-
-        Checkpoint storage checkpoint = checkpoints[epoch];
-
-        uint fee;
         // cross message
         if (
             keccak256(abi.encode(commit.data.crossMsgs.msgs)) !=
@@ -201,13 +198,29 @@ contract Gateway is IGateway , ReentrancyGuard {
             bottomUpMsgMeta[bottomUpNonce].nonce = bottomUpNonce;
             bottomUpNonce += 1;
 
+            require(
+                subnet.circSupply >= commit.data.crossMsgs.value,
+                "wtf! we can't release funds below circ, supply. something went really wrong"
+            );
+
             subnet.circSupply -= commit.data.crossMsgs.value;
             fee = commit.data.crossMsgs.fee;
         }
 
-        uint foundIndex;
-        bool found;
+        (
+            bool cpExists,
+            int64 currentEpoch,
+            Checkpoint storage checkpoint
+        ) = checkpoints.getCheckpointPerEpoch(block.number, checkPeriod);
 
+        // create checkpoint if not exists
+        if (cpExists == false) {
+            checkpoint.data.source = networkName;
+            checkpoint.data.epoch = currentEpoch;
+        }
+
+        uint childCheckIndex;
+        bool hasChildCheck;
         ChildCheck[] memory cpChildChecks = checkpoint.data.children;
         for (
             uint childIndex = 0;
@@ -225,30 +238,30 @@ contract Gateway is IGateway , ReentrancyGuard {
                     checkIndex++
                 ) {
                     require(
-                        keccak256(childCheck.checks[checkIndex]) ==
+                        keccak256(childCheck.checks[checkIndex]) !=
                             keccak256(abi.encode(commit.data)),
                         "child checkpoint being committed already exists"
                     );
                 }
 
-                found = true;
-                foundIndex = childIndex;
+                hasChildCheck = true;
+                childCheckIndex = childIndex;
                 break;
             }
         }
 
-        if (!found) {
-            foundIndex = cpChildChecks.length;
-            checkpoint.data.children[foundIndex].source = commit.data.source;
+        if (hasChildCheck == false) {
+            checkpoint.data.children.push(
+                ChildCheck({source: commit.data.source, checks: new bytes[](0)})
+            );
+            childCheckIndex = checkpoint.data.children.length - 1;
         }
 
-        checkpoint.data.children[foundIndex].checks.push(
+        checkpoint.data.children[childCheckIndex].checks.push(
             abi.encode(commit.data)
         );
 
         subnet.prevCheckpoint = commit;
-
-        return fee;
     }
 
     function fund(bytes memory subnetId) external {

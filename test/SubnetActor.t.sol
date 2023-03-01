@@ -142,7 +142,112 @@ contract SubnetActorTest is Test {
         address validator = vm.addr(100);
         _join(validator);
 
-        SubnetID memory subnet = sa.getParent().setActor(address(sa));
+        CheckData memory data = _createCheckData(100);
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
+        
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.prank(validator);
+        sa.submitCheckpoint(checkpoint);
+    }
+
+    function test_SubmitCheckpoint_Fails_InvalidSignture() public {
+        address validator = vm.addr(100);
+        _join(validator);
+
+        CheckData memory data = _createCheckData(100);
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(200, keccak256(abi.encode(data)));
+        
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.prank(validator);
+        vm.expectRevert("invalid signature");
+        sa.submitCheckpoint(checkpoint);
+    }
+
+    function test_SubmitCheckpoint_Fails_InvalidValidator() public {
+        address validator = vm.addr(100);
+        _join(validator);
+
+        CheckData memory data = _createCheckData(100);
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
+        
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.prank(vm.addr(200));
+        vm.expectRevert("not validator");
+        sa.submitCheckpoint(checkpoint);
+    }
+
+    function test_SubmitCheckpoint_Fails_SubnetInactive() public {
+        address validator = vm.addr(100);
+                
+        vm.startPrank(validator);
+        vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE / 2);
+        (bool success, ) = address(sa).call{value: DEFAULT_MIN_VALIDATOR_STAKE / 2}(abi.encodeWithSignature("join(address)", validator));
+        require(success);
+
+        CheckData memory data = _createCheckData(100); 
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
+        
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.expectRevert("submitting checkpoints is not allowed while subnet is not active");
+        sa.submitCheckpoint(checkpoint);
+    }
+
+    function test_SubmitCheckpoint_Fails_CheckpointAlreadyCommited() public {
+        address validator = vm.addr(100);
+        _join(validator);
+
+        CheckData memory data = _createCheckData(100); 
+
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+        vm.startPrank(validator);
+        sa.submitCheckpoint(checkpoint);
+
+        vm.expectRevert("cannot submit checkpoint for epoch");
+        sa.submitCheckpoint(checkpoint);
+    }
+
+    function test_SubmitCheckpoint_Fails_OutsideOfSigningWindow() public {
+        address validator = vm.addr(100);
+        _join(validator);
+
+        CheckData memory data = _createCheckData(125); 
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
+        
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.prank(validator);
+        vm.expectRevert("epoch in checkpoint doesn't correspond with a signing window");
+        sa.submitCheckpoint(checkpoint);
+    }
+
+    function test_SubmitCheckpoint_Fails_ValidatorAlreadyVoted() public {
+        address validator = vm.addr(100);
+        _join(validator);
+
+        address validator2 = vm.addr(200);
+        _join(validator2);
+
+
+        CheckData memory data = _createCheckData(100); 
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
+        
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.startPrank(validator);
+        sa.submitCheckpoint(checkpoint);
+
+        vm.expectRevert("miner has already voted the checkpoint");
+        sa.submitCheckpoint(checkpoint);
+    }
+
+
+    function _createCheckData(int64 epoch) internal returns (CheckData memory data){
+         SubnetID memory subnet = sa.getParent().setActor(address(sa));
 
         IPCAddress memory from = IPCAddress({subnetId: subnet, rawAddress: address(1)});
         IPCAddress memory to = IPCAddress({subnetId: subnet, rawAddress: address(2)});
@@ -158,14 +263,7 @@ contract SubnetActorTest is Test {
         bytes[] memory checks = new bytes[](0);
         children[0] = ChildCheck({source: subnet, checks: checks});
 
-        CheckData memory data = CheckData({source: subnet, tipSet: new bytes(0), epoch: 100, prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
-       
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
-        
-        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
-
-        vm.prank(validator);
-        sa.submitCheckpoint(checkpoint);
+        data = CheckData({source: subnet, tipSet: new bytes(0), epoch: epoch, prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
     }
 
     function _join(address _validator) internal {
