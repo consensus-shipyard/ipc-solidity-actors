@@ -19,7 +19,7 @@ struct CheckData {
 
 struct ChildCheck {
     SubnetID source;
-    bytes[] checks;
+    bytes32[] checks;
 }
 
 struct CrossMsgMeta {

@@ -68,6 +68,12 @@ contract Gateway is IGateway, ReentrancyGuard {
     uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
+    // epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
+    mapping(int64 => mapping(bytes32 => uint256[2])) private children;
+    // epoch => SubnetID => check => exists
+    mapping(int64 => mapping(bytes32 => mapping(bytes32 => bool)))
+        private checks;
+
     constructor(address[] memory _path, int64 _checkpointPeriod) {
         networkName = SubnetID(_path);
         minStake = MIN_COLLATERAL_AMOUNT;
@@ -208,58 +214,45 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
 
         (
-            bool cpExists,
+            bool checkpointExists,
             int64 currentEpoch,
             Checkpoint storage checkpoint
         ) = checkpoints.getCheckpointPerEpoch(block.number, checkPeriod);
 
         // create checkpoint if not exists
-        if (cpExists == false) {
+        if (checkpointExists == false) {
             checkpoint.data.source = networkName;
             checkpoint.data.epoch = currentEpoch;
         }
 
-        uint childCheckIndex;
-        bool hasChildCheck;
-        ChildCheck[] memory cpChildChecks = checkpoint.data.children;
-        for (
-            uint childIndex = 0;
-            childIndex < cpChildChecks.length;
-            childIndex++
-        ) {
-            ChildCheck memory childCheck = cpChildChecks[childIndex];
-            if (
-                keccak256(abi.encode(childCheck.source)) ==
-                keccak256(abi.encode(commit.data.source))
-            ) {
-                for (
-                    uint checkIndex = 0;
-                    checkIndex < childCheck.checks.length;
-                    checkIndex++
-                ) {
-                    require(
-                        keccak256(childCheck.checks[checkIndex]) !=
-                            keccak256(abi.encode(commit.data)),
-                        "child checkpoint being committed already exists"
-                    );
-                }
+        bytes32 subnetIdHash = keccak256(abi.encode(commit.data.source));
+        bytes32 commitHash = keccak256(abi.encode(commit.data));
 
-                hasChildCheck = true;
-                childCheckIndex = childIndex;
-                break;
-            }
-        }
+        uint[2] memory child = children[currentEpoch][subnetIdHash];
+        uint childIndex = child[0]; // index at checkpoint.data.children for the given subnet
+        bool childExists = child[1] == 1; // 0 - no, 1 - yes
+        bool childCheckExists = checks[currentEpoch][subnetIdHash][commitHash];
 
-        if (hasChildCheck == false) {
-            checkpoint.data.children.push(
-                ChildCheck({source: commit.data.source, checks: new bytes[](0)})
-            );
-            childCheckIndex = checkpoint.data.children.length - 1;
-        }
-
-        checkpoint.data.children[childCheckIndex].checks.push(
-            abi.encode(commit.data)
+        require(
+            childCheckExists == false,
+            "child checkpoint being committed already exists"
         );
+
+        if (childExists == false) {
+            checkpoint.data.children.push(
+                ChildCheck({
+                    source: commit.data.source,
+                    checks: new bytes32[](0)
+                })
+            );
+            childIndex = checkpoint.data.children.length - 1;
+        }
+
+        checkpoint.data.children[childIndex].checks.push(commitHash);
+
+        children[currentEpoch][subnetIdHash][0] = childIndex;
+        children[currentEpoch][subnetIdHash][1] = 1;
+        checks[currentEpoch][subnetIdHash][commitHash] = true;
 
         subnet.prevCheckpoint = commit;
     }

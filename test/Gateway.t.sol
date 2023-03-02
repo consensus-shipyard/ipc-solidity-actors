@@ -271,85 +271,47 @@ contract GatewayDeploymentTest is Test {
         // TODO: implement once cross msg is implemented
     }
 
-    function test_CommitChildCheck_Works() public {
+    function test_CommitChildCheck_Works(uint64 blockNumber) public {
         address subnetAddress = address(100);
+        vm.assume(blockNumber < type(uint64).max / 2 - 9);
+
+        vm.roll(blockNumber);
 
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
 
         _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
         
-        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, 19);
+        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, blockNumber + 9);
+
         Checkpoint memory commit = _commitChildCheck(subnetAddress, checkpoint);
 
         ChildCheck memory child = commit.data.children[0];
 
         require(child.checks.length == 1);
-        require(keccak256(child.checks[0]) == keccak256(abi.encode(checkpoint.data)));
+        require(child.checks[0] == keccak256(abi.encode(checkpoint.data)));
     }
 
-    function test_CommitChildCheck_Fail_NotConsistentWithPrevOne() public {
+    function test_CommitChildCheck_Works_SameSubnet(uint64 blockNumber) public {
         address subnetAddress = address(100);
-
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-
-        _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
-        
-        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, 19);
-        Checkpoint memory commit = _commitChildCheck(subnetAddress, checkpoint);
-
-        ChildCheck memory child = commit.data.children[0];
-
-        require(child.checks.length == 1);
-        require(keccak256(child.checks[0]) == keccak256(abi.encode(checkpoint.data)));
-        
-        vm.expectRevert("previous checkpoint not consistent with previous one");
-
-        checkpoint.data.prevHash = bytes32("0x1");
-        gw.commitChildCheck(checkpoint);
-    }
-
-    function test_CommitChildCheck_Fail_CheckpointAlreadyExists() public {
-        address subnetAddress = address(100);
-
+        vm.assume(blockNumber < type(uint64).max / 2 - 11);
+        vm.roll(blockNumber);
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
         
         _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
 
-        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, 19);
+        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, blockNumber + 9);
         Checkpoint memory commit = _commitChildCheck(subnetAddress, checkpoint);
 
         ChildCheck memory child = commit.data.children[0];
 
         require(child.checks.length == 1);
-        require(keccak256(child.checks[0]) == keccak256(abi.encode(checkpoint.data)));
-
-        vm.expectRevert("child checkpoint being committed already exists");
-
-        gw.commitChildCheck(checkpoint);
-    }
-
-    function test_CommitChildCheck_Works_SameSubnet() public {
-        address subnetAddress = address(100);
-
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-        
-        _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
-
-        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, 19);
-        Checkpoint memory commit = _commitChildCheck(subnetAddress, checkpoint);
-
-        ChildCheck memory child = commit.data.children[0];
-
-        require(child.checks.length == 1);
-        require(keccak256(child.checks[0]) == keccak256(abi.encode(checkpoint.data)));
+        require(child.checks[0] == keccak256(abi.encode(checkpoint.data)));
 
         vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
 
-        Checkpoint memory checkpoint2 = _createCheckpoint(subnetAddress, 21);
+        Checkpoint memory checkpoint2 = _createCheckpoint(subnetAddress, blockNumber + 11);
 
         checkpoint2.data.prevHash = keccak256(abi.encode(checkpoint.data));
         Checkpoint memory commit2 = _commitChildCheck(subnetAddress, checkpoint2);
@@ -357,19 +319,138 @@ contract GatewayDeploymentTest is Test {
         ChildCheck memory child2 = commit2.data.children[0];
         
         require(child2.checks.length == 2);
-        require(keccak256(child2.checks[1]) == keccak256(abi.encode(checkpoint2.data)));
+        require(child2.checks[1] == keccak256(abi.encode(checkpoint2.data)));
+    }
+    
+    function test_CommitChildCheck_Works_SecondSubnet(uint64 blockNumber) public {
+        address firstSubnetAddress = address(100);
+        address secondSubnetAddress = address(101);
+        vm.assume(blockNumber < type(uint64).max / 2 - 9);
+
+        vm.roll(blockNumber);
+        vm.startPrank(firstSubnetAddress);
+        vm.deal(firstSubnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        _registerSubnet(MIN_COLLATERAL_AMOUNT, firstSubnetAddress);
+
+        Checkpoint memory checkpoint = _createCheckpoint(firstSubnetAddress, blockNumber + 9);
+        Checkpoint memory commit = _commitChildCheck(firstSubnetAddress, checkpoint);
+
+        ChildCheck memory child = commit.data.children[0];
+
+        require(child.checks.length == 1);
+        require(child.checks[0] == keccak256(abi.encode(checkpoint.data)));
+
+        vm.stopPrank();
+        vm.startPrank(secondSubnetAddress);
+        vm.deal(secondSubnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        _registerSubnet(MIN_COLLATERAL_AMOUNT, secondSubnetAddress);
+
+        Checkpoint memory checkpoint2 = _createCheckpoint(secondSubnetAddress, blockNumber + 9);
+        Checkpoint memory commit2 = _commitChildCheck(secondSubnetAddress, checkpoint2);
+
+        require(commit2.data.children.length == 2);
+
+        ChildCheck memory child2 = commit2.data.children[1];
+
+        require(child2.checks.length == 1);
+        require(child2.checks[0] == keccak256(abi.encode(checkpoint2.data)));
     }
 
-    function test_CommitChildCheck_Fails_WrongSubnet() public {
-        address subnetAddress = address(100);
-        address subnetAddressInvalid = address(101);
 
+    function test_CommitChildCheck_Fail_NotConsistentWithPrevOne(uint64 blockNumber) public {
+        address subnetAddress = address(100);
+        vm.assume(blockNumber < type(uint64).max / 2 - 9);
+        vm.roll(blockNumber);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        
+        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, blockNumber + 9);
+        Checkpoint memory commit = _commitChildCheck(subnetAddress, checkpoint);
+
+        ChildCheck memory child = commit.data.children[0];
+
+        require(child.checks.length == 1);
+        require(child.checks[0] == keccak256(abi.encode(checkpoint.data)));
+        
+        vm.expectRevert("previous checkpoint not consistent with previous one");
+
+        checkpoint.data.prevHash = bytes32("0x1");
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fail_CheckpointAlreadyExists(uint64 blockNumber) public {
+        address subnetAddress = address(100);
+        vm.assume(blockNumber < type(uint64).max / 2 - 9);
+        vm.roll(blockNumber);
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
         
         _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
 
-        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, 19);
+        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, blockNumber + 9);
+        Checkpoint memory commit = _commitChildCheck(subnetAddress, checkpoint);
+
+        ChildCheck memory child = commit.data.children[0];
+
+        require(child.checks.length == 1);
+        require(child.checks[0] == keccak256(abi.encode(checkpoint.data)));
+
+        vm.expectRevert("child checkpoint being committed already exists");
+
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fail_InactiveSubnet(uint64 blockNumber) public {
+        address subnetAddress = address(100);
+        vm.assume(blockNumber < type(uint64).max / 2 - 9);
+        vm.roll(blockNumber);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        gw.releaseStake(MIN_COLLATERAL_AMOUNT);
+
+        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, blockNumber + 9);
+        
+        vm.expectRevert("can't commit checkpoint for an inactive subnet");
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fail_BelongsToThePast(uint64 blockNumber) public {
+        address subnetAddress = address(100);
+        vm.assume(blockNumber < type(uint64).max / 2 - 9);
+        vm.roll(blockNumber);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, blockNumber + 9);
+        Checkpoint memory commit = _commitChildCheck(subnetAddress, checkpoint);
+
+        Checkpoint memory pastCheckpoint = _createCheckpoint(subnetAddress, blockNumber + 8);
+
+        vm.expectRevert("checkpoint being committed belongs to the past");
+        gw.commitChildCheck(pastCheckpoint);
+    }
+
+    function test_CommitChildCheck_Fails_WrongSubnet(uint64 blockNumber) public {
+        address subnetAddress = address(100);
+        vm.assume(blockNumber < type(uint64).max / 2 - 9);
+        vm.roll(blockNumber);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        
+        _registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        Checkpoint memory checkpoint = _createCheckpoint(subnetAddress, blockNumber + 9);
+        
+        address subnetAddressInvalid = address(101);
 
         vm.stopPrank();
         vm.startPrank(subnetAddressInvalid);
@@ -379,45 +460,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function test_CommitChildCheck_Works_SecondSubnet() public {
-        address firstSubnetAddress = address(100);
-        address secondSubnetAddress = address(103);
-
-        vm.startPrank(firstSubnetAddress);
-        vm.deal(firstSubnetAddress, MIN_COLLATERAL_AMOUNT);
-
-        _registerSubnet(MIN_COLLATERAL_AMOUNT, firstSubnetAddress);
-
-        Checkpoint memory checkpoint = _createCheckpoint(firstSubnetAddress, 19);
-        Checkpoint memory commit = _commitChildCheck(firstSubnetAddress, checkpoint);
-
-        ChildCheck memory child = commit.data.children[0];
-
-        require(child.checks.length == 1);
-        require(keccak256(child.checks[0]) == keccak256(abi.encode(checkpoint.data)));
-
-        vm.stopPrank();
-        vm.startPrank(secondSubnetAddress);
-        vm.deal(secondSubnetAddress, MIN_COLLATERAL_AMOUNT);
-
-        _registerSubnet(MIN_COLLATERAL_AMOUNT, secondSubnetAddress);
-
-        Checkpoint memory checkpoint2 = _createCheckpoint(secondSubnetAddress, 19);
-        Checkpoint memory commit2 = _commitChildCheck(secondSubnetAddress, checkpoint2);
-
-        require(commit2.data.children.length == 2);
-
-        ChildCheck memory child2 = commit2.data.children[1];
-
-        require(child2.checks.length == 1);
-        require(keccak256(child2.checks[0]) == keccak256(abi.encode(checkpoint2.data)));
-    }
-
     function _commitChildCheck(address subnetAddress, Checkpoint memory commit) internal returns(Checkpoint memory){
-        uint256 blockNumber = 10;
-
-        vm.roll(blockNumber);
-
         gw.commitChildCheck(commit);
 
         int64 epoch = (int64(uint64(block.number)) / gw.checkPeriod()) *
@@ -425,7 +468,7 @@ contract GatewayDeploymentTest is Test {
 
         (CheckData memory data, bytes memory signature) = gw.checkpoints(epoch);
         
-        require(data.epoch == DEFAULT_CHECKPOINT_PERIOD);
+        require(data.epoch == epoch);
 
         bool matchedSubnetId;
         for (uint childIndex = 0; childIndex < data.children.length; childIndex++) {
@@ -441,14 +484,14 @@ contract GatewayDeploymentTest is Test {
         return Checkpoint(data, signature);
     }
 
-    function _createCheckpoint(address subnetAddress, int64 epoch) internal view returns(Checkpoint memory) {
+    function _createCheckpoint(address subnetAddress, uint64 blockNumber) internal view returns(Checkpoint memory) {
         SubnetID memory subnetId = gw.getNetworkName().setActor(subnetAddress);
 
         CrossMsg[] memory crossMsgs = new CrossMsg[](0);
         ChildCheck[] memory children = new ChildCheck[](0);
 
         CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({value: 0, nonce: 0, fee: 0, msgs: crossMsgs});
-        CheckData memory data = CheckData({source: subnetId, tipSet: new bytes(0), epoch: epoch, prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
+        CheckData memory data = CheckData({source: subnetId, tipSet: new bytes(0), epoch: int64(blockNumber), prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
         Checkpoint memory checkpoint = Checkpoint({data: data, signature: new bytes(0)});
 
         return checkpoint;

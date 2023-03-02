@@ -260,7 +260,7 @@ contract SubnetActorTest is Test {
         CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({value: 0, nonce: 0, fee: 0, msgs: crossMsgs});
 
         ChildCheck[] memory children = new ChildCheck[](1);
-        bytes[] memory checks = new bytes[](0);
+        bytes32[] memory checks = new bytes32[](0);
         children[0] = ChildCheck({source: subnet, checks: checks});
 
         data = CheckData({source: subnet, tipSet: new bytes(0), epoch: epoch, prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
