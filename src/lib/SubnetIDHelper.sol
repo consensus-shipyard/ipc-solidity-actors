@@ -3,6 +3,8 @@ pragma solidity ^0.8.7;
 
 import "../structs/Subnet.sol";
 
+/// @title Helper library for manipulating SubnetID struct
+/// @author LimeChain team
 library SubnetIDHelper {
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
         require(subnet.route.length != 0, "error getting parent for subnet addr");

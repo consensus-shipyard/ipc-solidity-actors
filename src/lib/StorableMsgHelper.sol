@@ -5,6 +5,8 @@ import "../structs/Checkpoint.sol";
 import "../constants/Constants.sol";
 import "../lib/SubnetIDHelper.sol";
 
+/// @title Helper library for manipulating StorableMsg struct
+/// @author LimeChain team
 library StorableMsgHelper {
     using SubnetIDHelper for SubnetID;
     function newReleaseMsg(SubnetID calldata subnet, address signer, uint256 value, uint64 nonce) public pure returns (StorableMsg memory) {

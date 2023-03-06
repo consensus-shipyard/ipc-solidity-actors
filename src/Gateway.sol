@@ -11,9 +11,13 @@ import "./lib/SubnetIDHelper.sol";
 import "./lib/CheckpointHelper.sol";
 
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
+import "openzeppelin-contracts/utils/Address.sol";
 
+/// @title Gateway Contract
+/// @author LimeChain team
 contract Gateway is IGateway, ReentrancyGuard {
     using SubnetIDHelper for SubnetID;
+    using Address for address payable;
 
     using CheckpointHelper for mapping(int64 => Checkpoint);
 
@@ -116,7 +120,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         subnet.stake += msg.value;
     }
 
-    function releaseStake(uint amount) external {
+    function releaseStake(uint amount) external nonReentrant {
         require(amount > 0, "no funds to release in params");
 
         (bool registered, Subnet storage subnet) = getSubnet(msg.sender);
@@ -137,10 +141,7 @@ contract Gateway is IGateway, ReentrancyGuard {
             subnet.status = Status.Inactive;
         }
 
-        (bool released, ) = payable(subnet.id.getActor()).call{value: amount}(
-            ""
-        );
-        require(released, "failed to release stake");
+        payable(subnet.id.getActor()).sendValue(amount);
     }
 
     function kill() external {
@@ -162,8 +163,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         delete subnets[abi.encode(subnet.id)];
 
-        (bool killed, ) = payable(msg.sender).call{value: stake}("");
-        require(killed, "failed to kill subnet");
+        payable(msg.sender).sendValue(stake);
     }
 
     function commitChildCheck(

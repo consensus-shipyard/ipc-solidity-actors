@@ -4,6 +4,8 @@ pragma solidity ^0.8.7;
 import "./Checkpoint.sol";
 import "../enums/Status.sol";
 
+/// @title Subnet id struct
+/// @author LimeChain team
 struct SubnetID {
     /// @notice parent path of the subnet
     address[] route;

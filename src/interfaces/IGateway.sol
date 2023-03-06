@@ -3,6 +3,8 @@ pragma solidity ^0.8.7;
 
 import "../structs/Checkpoint.sol";
 
+/// @title Gateway interface
+/// @author LimeChain team
 interface IGateway {
     /// Register is called by subnet actors to put the required collateral
     /// and register the subnet to the hierarchy.

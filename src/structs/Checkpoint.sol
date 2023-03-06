@@ -3,6 +3,8 @@ pragma solidity ^0.8.7;
 
 import "./Subnet.sol";
 
+/// @title Checkpoint struct and related structs
+/// @author LimeChain team
 struct Checkpoint {
     CheckData data;
     bytes signature;

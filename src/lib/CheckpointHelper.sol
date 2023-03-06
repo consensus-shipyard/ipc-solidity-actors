@@ -3,6 +3,8 @@ pragma solidity ^0.8.7;
 
 import "../structs/Checkpoint.sol";
 
+/// @title Helper library for manipulating Checkpoint struct
+/// @author LimeChain team
 library CheckpointHelper {
     error CheckpointNotFound(int64 epoch);
 
