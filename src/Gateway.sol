@@ -9,8 +9,11 @@ import "./interfaces/ISubnetActor.sol";
 import "./lib/SubnetIDHelper.sol";
 import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
+<<<<<<< HEAD
 import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
+=======
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 <<<<<<< HEAD
@@ -21,6 +24,7 @@ import "fevmate/utils/FilAddress.sol";
 /// @title Gateway Contract
 /// @author LimeChain team
 contract Gateway is IGateway, ReentrancyGuard {
+<<<<<<< HEAD
     using FilAddress for address;
     using FilAddress for address payable;
     using AccountHelper for address;
@@ -33,6 +37,12 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     using CheckpointHelper for mapping(int64 => Checkpoint);
 >>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
+=======
+    using Address for address payable;
+    using SubnetIDHelper for SubnetID;
+    using CheckpointHelper for Checkpoint;
+    using CheckpointMappingHelper for mapping(int64 => Checkpoint);
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -93,6 +103,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
+<<<<<<< HEAD
     /// @notice fee amount charged per cross message
     uint256 public crossMsgFee;
 
@@ -112,6 +123,15 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     constructor(address[] memory path, int64 checkpointPeriod, uint256 msgFee) {
+=======
+    /// epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
+    mapping(int64 => mapping(bytes32 => uint256[2])) internal children;
+    /// epoch => SubnetID => check => exists
+    mapping(int64 => mapping(bytes32 => mapping(bytes32 => bool)))
+        internal checks;
+
+    constructor(address[] memory path, int64 checkpointPeriod) {
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
         networkName = SubnetID(path);
         minStake = MIN_COLLATERAL_AMOUNT;
         checkPeriod = checkpointPeriod > DEFAULT_CHECKPOINT_PERIOD
@@ -261,7 +281,11 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         // cross message
         if (commit.hasCrossMsgMeta()) {
+<<<<<<< HEAD
             if (commit.data.crossMsgs.msgsHash != EMPTY_HASH) {
+=======
+            if (commit.data.crossMsgs.msgs.length > 0) {
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
                 bottomUpMsgMeta[bottomUpNonce] = commit.data.crossMsgs;
                 bottomUpMsgMeta[bottomUpNonce].nonce = bottomUpNonce;
                 bottomUpNonce += 1;
@@ -321,7 +345,14 @@ contract Gateway is IGateway, ReentrancyGuard {
         subnet.prevCheckpoint = commit;
 
         if (fee > 0) {
+<<<<<<< HEAD
             distributeRewards(msg.sender, fee);
+=======
+            payable(msg.sender).functionCallWithValue(
+                abi.encodeWithSignature("reward()"),
+                fee
+            );
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
         }
     }
 
@@ -396,6 +427,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     function getSubnet(
         address actor
     ) internal view returns (bool found, Subnet storage subnet) {
+<<<<<<< HEAD
         SubnetID memory subnetId = networkName.createSubnetId(actor);
 
         return getSubnet(subnetId);
@@ -414,5 +446,11 @@ contract Gateway is IGateway, ReentrancyGuard {
             abi.encodeWithSignature("reward()"),
             amount
         );
+=======
+        SubnetID memory subnetId = networkName.setActor(actor);
+
+        subnet = subnets[subnetId.toHash()];
+        found = subnetId.toHash() == subnet.id.toHash();
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     }
 }

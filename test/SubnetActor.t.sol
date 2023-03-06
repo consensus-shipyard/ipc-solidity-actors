@@ -61,7 +61,18 @@ contract SubnetActorTest is Test {
 
         SubnetID memory subnet = sa.getParent();
         require(subnet.isRoot());
+<<<<<<< HEAD
         require(subnet.toHash() == parentId.toHash());
+=======
+        require(subnet.getActor() == _ipcGatewayAddr);
+    }
+
+    function test_Join_Fail_NoMinColalteral() public payable {
+        address validator = vm.addr(100);
+        vm.prank(validator);
+        vm.expectRevert("a minimum collateral is required to join the subnet");
+        sa.join();
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     }
 
     function test_Join_Works(uint256 amount) public payable {

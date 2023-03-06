@@ -37,8 +37,13 @@ library SubnetIDHelper {
         return keccak256(abi.encode(subnet));
     }
 
+<<<<<<< HEAD
     function createSubnetId(SubnetID memory subnet, address actor) public pure returns (SubnetID memory newSubnet) {
         require(subnet.route.length != 0, "cannot set actor for empty subnet");
+=======
+    function setActor(SubnetID memory subnet, address actor) public pure returns (SubnetID memory newSubnet) {
+        require(subnet.route.length >= 1, "cannot set actor for empty subnet");
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
         newSubnet.route = new address[](subnet.route.length + 1);
         for(uint i = 0; i < subnet.route.length; i++) {
