@@ -19,11 +19,16 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
 <<<<<<< HEAD
+<<<<<<< HEAD
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
 =======
     using CheckpointHelper for mapping(int64 => Checkpoint);
 >>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
+=======
+    using CheckpointHelper for Checkpoint;
+    using CheckpointMappingHelper for mapping(int64 => Checkpoint);
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     using Address for address payable;
 
     /// @notice Human-readable name of the subnet.
@@ -92,10 +97,14 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         int64 _checkPeriod,
         bytes memory _genesis
     ) {
+<<<<<<< HEAD
         require(
             _minValidatorStake > 0,
             "minValidatorStake must be greater than 0"
         );
+=======
+        require(_minValidatorStake > 0, "minValidatorStake must be greater than 0");
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
         require(_minValidators > 0, "minValidators must be greater than 0");
         parentId = _parentId;
         name = _name;
@@ -110,18 +119,22 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     receive() external payable onlyGateway {}
 =======
     receive() external payable {}
+=======
+    receive() external payable onlyGateway {}
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
-    function join(address _validator) external payable mutateState {
-        require(_validator != address(0), "validator address cannot be zero");
+    function join() external payable mutateState {
         require(
-            msg.value != 0,
+            msg.value > 0,
             "a minimum collateral is required to join the subnet"
         );
 >>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
 
+<<<<<<< HEAD
     function join() external payable mutateState {
         require(
             msg.value > 0,
@@ -135,6 +148,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             !validators.contains(msg.sender) &&
             (consensus != ConsensusType.Delegated || validators.length() == 0)
         ) validators.add(msg.sender);
+=======
+        stake[msg.sender] += msg.value;
+        totalStake += msg.value;
+        if(!validators.contains(msg.sender) && stake[msg.sender] >= minValidatorStake)
+            validators.add(msg.sender);
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
         if (status == Status.Instantiated) {
             if (totalStake >= minValidatorStake) {
@@ -180,6 +199,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     }
 
     function kill() external mutateState {
+        require(address(this).balance == 0, "there is still collateral in the subnet");
         require(
 <<<<<<< HEAD
             address(this).balance == 0,
@@ -213,6 +233,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         );
         require(
 <<<<<<< HEAD
+<<<<<<< HEAD
             checkpoint.data.source.toHash() ==
                 parentId.createSubnetId(address(this)).toHash(),
             "submitting checkpoint with the wrong source"
@@ -235,6 +256,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 =======
             keccak256(abi.encode(checkpoint.data.source)) ==
                 keccak256(abi.encode(parentId.setActor(address(this)))),
+=======
+            checkpoint.data.source.toHash() ==
+                parentId.setActor(address(this)).toHash(),
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
             "submitting checkpoint with the wrong source"
         );
 
@@ -243,15 +268,19 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             checkPeriod
         );
         if (prevCheckpoint.signature.length > 0) {
-            bytes32 prevcheckpointHash = keccak256(abi.encode(prevCheckpoint));
+            bytes32 prevcheckpointHash = prevCheckpoint.toHash();
             require(
                 checkpoint.data.prevHash == prevcheckpointHash,
                 "checkpoint data hash is not the same as prevHash"
             );
         }
 
+<<<<<<< HEAD
         bytes32 messageHash = keccak256(abi.encode(checkpoint.data));
 >>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
+=======
+        bytes32 messageHash = checkpoint.toHash();
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
         require(
             _recoverSigner(messageHash, checkpoint.signature) == msg.sender,
             "invalid signature"
@@ -270,7 +299,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         for (uint i = 0; i < voters.length(); ) {
 =======
 
-        bytes32 cid = keccak256(abi.encode(checkpoint.data));
+        bytes32 cid = checkpoint.toHash();
         EnumerableSet.AddressSet storage voters = windowChecks[cid];
         require(
             !voters.contains(msg.sender),
@@ -333,13 +362,17 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     }
 
     function reward() public payable onlyGateway nonReentrant {
-        require(msg.value != 0, "no rewards sent for distribution");
-
         uint validatorLength = validators.length();
         require(validatorLength != 0, "no validators in subnet");
+<<<<<<< HEAD
 
         uint rewardAmount = msg.value / validatorLength;
 >>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
+=======
+        require(address(this).balance >= validatorLength, "we neeed to distribute at least one wei to each validator");
+        
+        uint rewardAmount = address(this).balance / validatorLength;
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
         for (uint i = 0; i < validatorLength; ) {
             payable(validators.at(i)).sendValue(rewardAmount);
@@ -397,15 +430,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return ecrecover(_ethSignedMessageHash, v, r, s);
     }
 
-    function _splitSignature(bytes memory sig)
-        internal
-        pure
-        returns (
-            bytes32 r,
-            bytes32 s,
-            uint8 v
-        )
-    {
+    function _splitSignature(
+        bytes memory sig
+    ) internal pure returns (bytes32 r, bytes32 s, uint8 v) {
         require(sig.length == 65, "invalid signature length");
 
         assembly {

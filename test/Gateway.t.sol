@@ -110,7 +110,7 @@ contract GatewayDeploymentTest is Test {
         gw.register{value: MIN_COLLATERAL_AMOUNT}();
     }
 
-    function test_AddStake_Works_SingleStaking(
+    function testAddStake_Works_SingleStaking(
         uint256 stakeAmount,
         uint256 registerAmount,
         address subnetAddress
@@ -133,7 +133,7 @@ contract GatewayDeploymentTest is Test {
         require(totalStaked == totalAmount);
     }
 
-    function test_AddStake_Works_MultipleStakings(uint8 numberOfStakes) public {
+    function testAddStake_Works_MultipleStakings(uint8 numberOfStakes) public {
         vm.assume(numberOfStakes > 0);
 
         address subnetAddress = address(1);
@@ -160,7 +160,11 @@ contract GatewayDeploymentTest is Test {
         require(totalStake == expectedStakedAmount);
     }
 
+<<<<<<< HEAD
     function test_AddStake_Fail_ZeroAmount() public {
+=======
+    function testAddStake_Fail_ZeroAmount() public {
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert("no stake to add");
@@ -168,7 +172,7 @@ contract GatewayDeploymentTest is Test {
         gw.addStake{value: 0}();
     }
 
-    function test_AddStake_Fail_SubnetNotExists() public {
+    function testAddStake_Fail_SubnetNotExists() public {
         vm.expectRevert("subnet is not registered");
 
         gw.addStake{value: 1}();
@@ -313,7 +317,7 @@ contract GatewayDeploymentTest is Test {
         gw.kill();
     }
 
-    function test_CommitChildCheck_Works(uint64 blockNumber) public {
+    function testCommitChildCheck_Works(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
 
@@ -334,7 +338,7 @@ contract GatewayDeploymentTest is Test {
         require(child.checks[0] == checkpoint.toHash());
     }
 
-    function test_CommitChildCheck_Works_SameSubnet(uint64 blockNumber) public {
+    function testCommitChildCheck_Works_SameSubnet(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 11);
         vm.roll(blockNumber);
@@ -355,7 +359,11 @@ contract GatewayDeploymentTest is Test {
 
         Checkpoint memory checkpoint2 = createCheckpoint(subnetAddress, blockNumber + 11);
 
+<<<<<<< HEAD
         checkpoint2.data.prevHash = checkpoint.toHash();
+=======
+        checkpoint2.data.prevHash = keccak256(abi.encode(checkpoint.data));
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
         Checkpoint memory commit2 = commitChildCheck(checkpoint2);
         
         ChildCheck memory child2 = commit2.data.children[0];
@@ -364,7 +372,7 @@ contract GatewayDeploymentTest is Test {
         require(child2.checks[1] == checkpoint2.toHash());
     }
     
-    function test_CommitChildCheck_Works_SecondSubnet(uint64 blockNumber) public {
+    function testCommitChildCheck_Works_SecondSubnet(uint64 blockNumber) public {
         address firstSubnetAddress = address(100);
         address secondSubnetAddress = address(101);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
@@ -401,7 +409,7 @@ contract GatewayDeploymentTest is Test {
     }
 
 
-    function test_CommitChildCheck_Fail_NotConsistentWithPrevOne(uint64 blockNumber) public {
+    function testCommitChildCheck_Fail_NotConsistentWithPrevOne(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
         vm.roll(blockNumber);
@@ -424,7 +432,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function test_CommitChildCheck_Fail_CheckpointAlreadyExists(uint64 blockNumber) public {
+    function testCommitChildCheck_Fail_CheckpointAlreadyExists(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
         vm.roll(blockNumber);
@@ -446,7 +454,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function test_CommitChildCheck_Fail_InactiveSubnet(uint64 blockNumber) public {
+    function testCommitChildCheck_Fail_InactiveSubnet(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
         vm.roll(blockNumber);
@@ -463,7 +471,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function test_CommitChildCheck_Fail_BelongsToThePast(uint64 blockNumber) public {
+    function testCommitChildCheck_Fail_BelongsToThePast(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
         vm.roll(blockNumber);
@@ -473,7 +481,11 @@ contract GatewayDeploymentTest is Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
 
         Checkpoint memory checkpoint = createCheckpoint(subnetAddress, blockNumber + 9);
+<<<<<<< HEAD
         commitChildCheck(checkpoint);
+=======
+        Checkpoint memory commit = commitChildCheck(checkpoint);
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
         Checkpoint memory pastCheckpoint = createCheckpoint(subnetAddress, blockNumber + 8);
 
@@ -481,7 +493,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(pastCheckpoint);
     }
 
-    function test_CommitChildCheck_Fails_WrongSubnet(uint64 blockNumber) public {
+    function testCommitChildCheck_Fails_WrongSubnet(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
         vm.roll(blockNumber);
@@ -502,6 +514,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
+<<<<<<< HEAD
     function test_Fund_Works_EthAccountSingleFunding() public {
         address validatorAddress = address(100);
         address funderAddress = address(101);
@@ -728,6 +741,8 @@ contract GatewayDeploymentTest is Test {
         release(callerAddress, releaseAmount, crossMsgFee, 0);
     }
 
+=======
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     function commitChildCheck(Checkpoint memory commit) internal returns(Checkpoint memory){
         gw.commitChildCheck(commit);
 
@@ -752,6 +767,7 @@ contract GatewayDeploymentTest is Test {
         return Checkpoint(data, signature);
     }
 
+<<<<<<< HEAD
     function fund(address funderAddress, uint256 fundAmount) internal {
         uint fundAmountWithSubtractedFee = fundAmount - gw.crossMsgFee();
 
@@ -831,6 +847,10 @@ contract GatewayDeploymentTest is Test {
 
     function createCheckpoint(address subnetAddress, uint64 blockNumber) internal view returns(Checkpoint memory) {
         SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+=======
+    function createCheckpoint(address subnetAddress, uint64 blockNumber) internal view returns(Checkpoint memory) {
+        SubnetID memory subnetId = gw.getNetworkName().setActor(subnetAddress);
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
         ChildCheck[] memory children = new ChildCheck[](0);
 
@@ -880,7 +900,11 @@ contract GatewayDeploymentTest is Test {
     function getSubnet(
         address subnetAddress
     ) internal view returns (SubnetID memory, uint, uint, uint, Status) {
+<<<<<<< HEAD
         SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+=======
+        SubnetID memory subnetId = gw.getNetworkName().setActor(subnetAddress);
+>>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
         (
             SubnetID memory id,
