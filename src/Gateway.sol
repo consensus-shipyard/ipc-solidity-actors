@@ -13,7 +13,10 @@ import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
+<<<<<<< HEAD
 import "fevmate/utils/FilAddress.sol";
+=======
+>>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -22,8 +25,14 @@ contract Gateway is IGateway, ReentrancyGuard {
     using FilAddress for address payable;
     using AccountHelper for address;
     using SubnetIDHelper for SubnetID;
+<<<<<<< HEAD
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
+=======
+    using Address for address payable;
+
+    using CheckpointHelper for mapping(int64 => Checkpoint);
+>>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
