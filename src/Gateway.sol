@@ -8,18 +8,18 @@ import "./interfaces/IGateway.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./lib/StorableMsgHelper.sol";
 import "./lib/SubnetIDHelper.sol";
+import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
-
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
 contract Gateway is IGateway, ReentrancyGuard {
-    using SubnetIDHelper for SubnetID;
     using Address for address payable;
-
-    using CheckpointHelper for mapping(int64 => Checkpoint);
+    using SubnetIDHelper for SubnetID;
+    using CheckpointHelper for Checkpoint;
+    using CheckpointMappingHelper for mapping(int64 => Checkpoint);
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -36,7 +36,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     /// @notice List of subnets
     /// SubnetID => Subnet
-    mapping(bytes => Subnet) public subnets;
+    mapping(bytes32 => Subnet) public subnets;
 
     /// @notice Checkpoint period in number of epochs for the subnet
     int64 public checkPeriod;
@@ -72,17 +72,17 @@ contract Gateway is IGateway, ReentrancyGuard {
     uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
-    // epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
-    mapping(int64 => mapping(bytes32 => uint256[2])) private children;
-    // epoch => SubnetID => check => exists
+    /// epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
+    mapping(int64 => mapping(bytes32 => uint256[2])) internal children;
+    /// epoch => SubnetID => check => exists
     mapping(int64 => mapping(bytes32 => mapping(bytes32 => bool)))
-        private checks;
+        internal checks;
 
-    constructor(address[] memory _path, int64 _checkpointPeriod) {
-        networkName = SubnetID(_path);
+    constructor(address[] memory path, int64 checkpointPeriod) {
+        networkName = SubnetID(path);
         minStake = MIN_COLLATERAL_AMOUNT;
-        checkPeriod = _checkpointPeriod > DEFAULT_CHECKPOINT_PERIOD
-            ? _checkpointPeriod
+        checkPeriod = checkpointPeriod > DEFAULT_CHECKPOINT_PERIOD
+            ? checkpointPeriod
             : DEFAULT_CHECKPOINT_PERIOD;
         appliedBottomUpNonce = MAX_NONCE;
     }
@@ -161,7 +161,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         totalSubnets -= 1;
 
-        delete subnets[abi.encode(subnet.id)];
+        delete subnets[subnet.id.toHash()];
 
         payable(msg.sender).sendValue(stake);
     }
@@ -189,20 +189,18 @@ contract Gateway is IGateway, ReentrancyGuard {
         );
         if (commit.data.prevHash != bytes32(0)) {
             require(
-                keccak256(abi.encode(subnet.prevCheckpoint.data)) ==
-                    commit.data.prevHash,
+                subnet.prevCheckpoint.toHash() == commit.data.prevHash,
                 "previous checkpoint not consistent with previous one"
             );
         }
 
         // cross message
-        if (
-            keccak256(abi.encode(commit.data.crossMsgs.msgs)) !=
-            keccak256(new bytes(0))
-        ) {
-            bottomUpMsgMeta[bottomUpNonce] = commit.data.crossMsgs;
-            bottomUpMsgMeta[bottomUpNonce].nonce = bottomUpNonce;
-            bottomUpNonce += 1;
+        if (commit.hasCrossMsgMeta()) {
+            if (commit.data.crossMsgs.msgs.length > 0) {
+                bottomUpMsgMeta[bottomUpNonce] = commit.data.crossMsgs;
+                bottomUpMsgMeta[bottomUpNonce].nonce = bottomUpNonce;
+                bottomUpNonce += 1;
+            }
 
             require(
                 subnet.circSupply >= commit.data.crossMsgs.value,
@@ -225,13 +223,13 @@ contract Gateway is IGateway, ReentrancyGuard {
             checkpoint.data.epoch = currentEpoch;
         }
 
-        bytes32 subnetIdHash = keccak256(abi.encode(commit.data.source));
-        bytes32 commitHash = keccak256(abi.encode(commit.data));
+        bytes32 commitSource = commit.data.source.toHash();
+        bytes32 commitData = commit.toHash();
 
-        uint[2] memory child = children[currentEpoch][subnetIdHash];
+        uint[2] memory child = children[currentEpoch][commitSource];
         uint childIndex = child[0]; // index at checkpoint.data.children for the given subnet
         bool childExists = child[1] == 1; // 0 - no, 1 - yes
-        bool childCheckExists = checks[currentEpoch][subnetIdHash][commitHash];
+        bool childCheckExists = checks[currentEpoch][commitSource][commitData];
 
         require(
             childCheckExists == false,
@@ -248,13 +246,20 @@ contract Gateway is IGateway, ReentrancyGuard {
             childIndex = checkpoint.data.children.length - 1;
         }
 
-        checkpoint.data.children[childIndex].checks.push(commitHash);
+        checkpoint.data.children[childIndex].checks.push(commitData);
 
-        children[currentEpoch][subnetIdHash][0] = childIndex;
-        children[currentEpoch][subnetIdHash][1] = 1;
-        checks[currentEpoch][subnetIdHash][commitHash] = true;
+        children[currentEpoch][commitSource][0] = childIndex;
+        children[currentEpoch][commitSource][1] = 1;
+        checks[currentEpoch][commitSource][commitData] = true;
 
         subnet.prevCheckpoint = commit;
+
+        if (fee > 0) {
+            payable(msg.sender).functionCallWithValue(
+                abi.encodeWithSignature("reward()"),
+                fee
+            );
+        }
     }
 
     function fund(bytes memory subnetId) external {
@@ -295,12 +300,11 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function getSubnet(
-        address _actor
+        address actor
     ) internal view returns (bool found, Subnet storage subnet) {
-        SubnetID memory subnetId = networkName.setActor(_actor);
-        bytes memory subnetIdBytes = abi.encode(subnetId);
+        SubnetID memory subnetId = networkName.setActor(actor);
 
-        subnet = subnets[subnetIdBytes];
-        found = keccak256(subnetIdBytes) == keccak256(abi.encode(subnet.id));
+        subnet = subnets[subnetId.toHash()];
+        found = subnetId.toHash() == subnet.id.toHash();
     }
 }

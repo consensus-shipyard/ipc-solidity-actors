@@ -38,7 +38,9 @@ contract SubnetActorTest is Test {
     }
 
     function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minValidatorStake, uint64 _minValidators, int64 _finalityTreshold, int64 _checkPeriod, bytes calldata _genesis) public {
-        
+        vm.assume(_minValidatorStake > 0);
+        vm.assume(_minValidators > 0);
+
         address[] memory path = new address[](1);
         path[0] = address(_ipcGatewayAddr);
         SubnetID memory parentId = SubnetID(path);
@@ -58,19 +60,11 @@ contract SubnetActorTest is Test {
         require(subnet.getActor() == _ipcGatewayAddr);
     }
 
-    function test_Join_Fail_NoAddressZero() public payable {
-        address validator = address(0);
-
-        vm.prank(validator);
-        vm.expectRevert("validator address cannot be zero");
-        sa.join(validator);
-    }
-
     function test_Join_Fail_NoMinColalteral() public payable {
-        address validator = address(1);
+        address validator = vm.addr(100);
         vm.prank(validator);
         vm.expectRevert("a minimum collateral is required to join the subnet");
-        sa.join(validator);
+        sa.join();
     }
 
     function test_Join_Works(uint256 amount) public payable {
@@ -80,7 +74,7 @@ contract SubnetActorTest is Test {
 
         vm.prank(validator);
         vm.deal(validator, amount);
-        (bool success, ) = address(sa).call{value: amount}(abi.encodeWithSignature("join(address)", validator));
+        (bool success, ) = address(sa).call{value: amount}(abi.encodeWithSignature("join()"));
         require(success);
         
         require(sa.stake(validator) == amount);
@@ -184,7 +178,7 @@ contract SubnetActorTest is Test {
                 
         vm.startPrank(validator);
         vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE / 2);
-        (bool success, ) = address(sa).call{value: DEFAULT_MIN_VALIDATOR_STAKE / 2}(abi.encodeWithSignature("join(address)", validator));
+        (bool success, ) = address(sa).call{value: DEFAULT_MIN_VALIDATOR_STAKE / 2}(abi.encodeWithSignature("join()"));
         require(success);
 
         CheckData memory data = _createCheckData(100); 
@@ -192,7 +186,7 @@ contract SubnetActorTest is Test {
         
         Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
 
-        vm.expectRevert("submitting checkpoints is not allowed while subnet is not active");
+        vm.expectRevert("not validator");
         sa.submitCheckpoint(checkpoint);
     }
 
@@ -271,7 +265,7 @@ contract SubnetActorTest is Test {
 
         vm.prank(_validator);
         vm.deal(_validator, amount);
-        (bool success, ) = address(sa).call{value: amount}(abi.encodeWithSignature("join(address)", _validator));
+        (bool success, ) = address(sa).call{value: amount}(abi.encodeWithSignature("join()"));
         require(success);
     }
 

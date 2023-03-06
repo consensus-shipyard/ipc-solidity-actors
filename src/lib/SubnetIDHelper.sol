@@ -29,6 +29,10 @@ library SubnetIDHelper {
         return route;
     }
 
+    function toHash(SubnetID memory subnet) public pure returns(bytes32) {
+        return keccak256(abi.encode(subnet));
+    }
+
     function setActor(SubnetID memory subnet, address actor) public pure returns (SubnetID memory newSubnet) {
         require(subnet.route.length >= 1, "cannot set actor for empty subnet");
 

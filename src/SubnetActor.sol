@@ -6,6 +6,7 @@ import "./structs/Checkpoint.sol";
 import "./structs/Subnet.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./interfaces/IGateway.sol";
+import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
 import "./lib/SubnetIDHelper.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
@@ -17,7 +18,8 @@ import "openzeppelin-contracts/utils/Address.sol";
 contract SubnetActor is ISubnetActor, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for mapping(int64 => Checkpoint);
+    using CheckpointHelper for Checkpoint;
+    using CheckpointMappingHelper for mapping(int64 => Checkpoint);
     using Address for address payable;
 
     /// @notice Human-readable name of the subnet.
@@ -86,6 +88,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         int64 _checkPeriod,
         bytes memory _genesis
     ) {
+        require(_minValidatorStake > 0, "minValidatorStake must be greater than 0");
+        require(_minValidators > 0, "minValidators must be greater than 0");
         parentId = _parentId;
         name = _name;
         ipcGatewayAddr = _ipcGatewayAddr;
@@ -98,18 +102,18 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         status = Status.Instantiated;
     }
 
-    receive() external payable {}
+    receive() external payable onlyGateway {}
 
-    function join(address _validator) external payable mutateState {
-        require(_validator != address(0), "validator address cannot be zero");
+    function join() external payable mutateState {
         require(
-            msg.value != 0,
+            msg.value > 0,
             "a minimum collateral is required to join the subnet"
         );
 
-        stake[_validator] += msg.value;
+        stake[msg.sender] += msg.value;
         totalStake += msg.value;
-        validators.add(_validator);
+        if(!validators.contains(msg.sender) && stake[msg.sender] >= minValidatorStake)
+            validators.add(msg.sender);
 
         if (status == Status.Instantiated) {
             if (totalStake >= minValidatorStake) {
@@ -143,6 +147,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     }
 
     function kill() external mutateState {
+        require(address(this).balance == 0, "there is still collateral in the subnet");
         require(
             status != Status.Terminating && status != Status.Killed,
             "the subnet is already in a killed or terminating state"
@@ -168,8 +173,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             "epoch in checkpoint doesn't correspond with a signing window"
         );
         require(
-            keccak256(abi.encode(checkpoint.data.source)) ==
-                keccak256(abi.encode(parentId.setActor(address(this)))),
+            checkpoint.data.source.toHash() ==
+                parentId.setActor(address(this)).toHash(),
             "submitting checkpoint with the wrong source"
         );
 
@@ -178,20 +183,20 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             checkPeriod
         );
         if (prevCheckpoint.signature.length > 0) {
-            bytes32 prevcheckpointHash = keccak256(abi.encode(prevCheckpoint));
+            bytes32 prevcheckpointHash = prevCheckpoint.toHash();
             require(
                 checkpoint.data.prevHash == prevcheckpointHash,
                 "checkpoint data hash is not the same as prevHash"
             );
         }
 
-        bytes32 messageHash = keccak256(abi.encode(checkpoint.data));
+        bytes32 messageHash = checkpoint.toHash();
         require(
             _recoverSigner(messageHash, checkpoint.signature) == msg.sender,
             "invalid signature"
         );
 
-        bytes32 cid = keccak256(abi.encode(checkpoint.data));
+        bytes32 cid = checkpoint.toHash();
         EnumerableSet.AddressSet storage voters = windowChecks[cid];
         require(
             !voters.contains(msg.sender),
@@ -226,12 +231,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     }
 
     function reward() public payable onlyGateway nonReentrant {
-        require(msg.value != 0, "no rewards sent for distribution");
-
         uint validatorLength = validators.length();
         require(validatorLength != 0, "no validators in subnet");
-
-        uint rewardAmount = msg.value / validatorLength;
+        require(address(this).balance >= validatorLength, "we neeed to distribute at least one wei to each validator");
+        
+        uint rewardAmount = address(this).balance / validatorLength;
 
         for (uint i = 0; i < validatorLength; ) {
             payable(validators.at(i)).sendValue(rewardAmount);
@@ -262,15 +266,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return ecrecover(_ethSignedMessageHash, v, r, s);
     }
 
-    function _splitSignature(bytes memory sig)
-        internal
-        pure
-        returns (
-            bytes32 r,
-            bytes32 s,
-            uint8 v
-        )
-    {
+    function _splitSignature(
+        bytes memory sig
+    ) internal pure returns (bytes32 r, bytes32 s, uint8 v) {
         require(sig.length == 65, "invalid signature length");
 
         assembly {
