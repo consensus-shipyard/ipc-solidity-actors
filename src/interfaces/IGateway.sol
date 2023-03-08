@@ -2,6 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "../structs/Checkpoint.sol";
+import "../structs/Subnet.sol";
 
 /// @title Gateway interface
 /// @author LimeChain team
@@ -22,9 +23,9 @@ interface IGateway {
 
     /// CommitChildCheck propagates the commitment of a checkpoint from a child subnet,
     /// process the cross-messages directed to the subnet.
-    function commitChildCheck(
-        Checkpoint memory checkpoint
-    ) external returns (uint);
+    function commitChildCheck(Checkpoint memory checkpoint)
+        external
+        returns (uint);
 
     /// Fund injects new funds from an account of the parent chain to a subnet.
     ///
@@ -52,7 +53,9 @@ interface IGateway {
     /// included in the message by the actor). Only actors are allowed to send arbitrary
     /// cross-messages as a side-effect of their execution. For plain token exchanges
     /// fund and release have to be used.
-    function sendCross(bytes memory toSubnetId, bytes memory crossMsg) external;
+    function sendCross(SubnetID memory destination, CrossMsg memory crossMsg)
+        external
+        payable;
 
     /// ApplyMessage triggers the execution of a cross-subnet message validated through the consensus.
     ///
@@ -67,18 +70,14 @@ interface IGateway {
     /// Whitelist a series of addresses as propagator of a cross net message.
     /// This is basically adding this list of addresses to the `PostBoxItem::owners`.
     /// Only existing owners can perform this operation.
-    function whitelistPropagator(
-        uint256 postboxId,
-        address[] memory owners
-    ) external;
+    function whitelistPropagator(uint256 postboxId, address[] memory owners)
+        external;
 
     function propagate(uint256 postboxId) external;
 
     /// Commit the cross message to storage. It outputs a flag signaling
     /// if the committed messages was bottom-up and some funds need to be
     /// burnt or if a top-down message fee needs to be distributed.
-    function commitCrossMessage(
-        bytes memory crossMessage,
-        uint256 feeAmount
-    ) external;
+    function commitCrossMessage(CrossMsg memory crossMessage, uint256 fee)
+        external returns (bool burn, uint256 topDownFee);
 }

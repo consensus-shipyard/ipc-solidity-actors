@@ -6,52 +6,170 @@ import "../structs/Subnet.sol";
 /// @title Helper library for manipulating SubnetID struct
 /// @author LimeChain team
 library SubnetIDHelper {
-    function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
-        require(subnet.route.length != 0, "error getting parent for subnet addr");
-
-        address[] memory route = new address[](subnet.route.length - 1);
-        for(uint i = 0; i < subnet.route.length - 1; i++) {
-            route[i] = subnet.route[i];
-        }
-        route[route.length - 1] = subnet.route[route.length];
-        
-        return SubnetID({
-            route: route
-        });
+    function newReleaseMsg(
+        SubnetID calldata subnet,
+        address signer,
+        uint256 value,
+        uint64 nonce
+    ) public pure returns (StorableMsg memory) {
+        return
+            StorableMsg({
+                from: IPCAddress({subnetId: subnet, rawAddress: signer}),
+                to: IPCAddress({subnetId: subnet, rawAddress: signer}),
+                value: value,
+                nonce: nonce,
+                method: 0,
+                params: bytes("")
+            });
     }
 
-    function toString(SubnetID memory subnet) public pure returns (string memory) {
+    function newFundMsg(
+        SubnetID calldata subnet,
+        address signer,
+        uint256 value
+    ) public pure returns (StorableMsg memory) {
+        require(
+            subnet.route.length >= 1,
+            "error getting parent for subnet addr"
+        );
+
+        SubnetID memory parent = getParentSubnet(subnet);
+        require(
+            parent.route[parent.route.length - 1] != address(0),
+            "error creating fund cross-message"
+        );
+
+        return
+            StorableMsg({
+                from: IPCAddress({subnetId: parent, rawAddress: signer}),
+                to: IPCAddress({subnetId: subnet, rawAddress: signer}),
+                value: value,
+                nonce: 0,
+                method: 0,
+                params: bytes("")
+            });
+    }
+
+    function getParentSubnet(SubnetID calldata subnet)
+        public
+        pure
+        returns (SubnetID memory parent)
+    {
+        require(
+            subnet.route.length != 0,
+            "error getting parent for subnet addr"
+        );
+
+        parent.route = new address[](subnet.route.length - 1);
+        for (uint i = 0; i < subnet.route.length - 1; i++) {
+            parent.route[i] = subnet.route[i];
+        }
+
+    }
+
+    function toString(SubnetID calldata subnet)
+        public
+        pure
+        returns (string memory)
+    {
         string memory route = "/root";
-        for(uint i = 0; i < subnet.route.length; i++) {
+        for (uint i = 0; i < subnet.route.length; i++) {
             route = string(abi.encodePacked(route, "/", subnet.route[i]));
         }
 
         return route;
     }
 
-    function toHash(SubnetID memory subnet) public pure returns(bytes32) {
+    function toHash(SubnetID calldata subnet) public pure returns (bytes32) {
         return keccak256(abi.encode(subnet));
     }
 
-    function setActor(SubnetID memory subnet, address actor) public pure returns (SubnetID memory newSubnet) {
+    function setActor(SubnetID calldata subnet, address actor)
+        public
+        pure
+        returns (SubnetID memory newSubnet)
+    {
         require(subnet.route.length >= 1, "cannot set actor for empty subnet");
 
         newSubnet.route = new address[](subnet.route.length + 1);
-        for(uint i = 0; i < subnet.route.length; i++) {
+        for (uint i = 0; i < subnet.route.length; i++) {
             newSubnet.route[i] = subnet.route[i];
         }
 
         newSubnet.route[newSubnet.route.length - 1] = actor;
     }
 
-    function getActor(SubnetID memory subnet) public pure returns (address) {
-        if(subnet.route.length == 0)
-            return address(0);
+    function getActor(SubnetID calldata subnet) public pure returns (address) {
+        if (subnet.route.length == 0) return address(0);
 
         return subnet.route[subnet.route.length - 1];
     }
 
-    function isRoot(SubnetID memory subnet) public pure returns (bool) {
+    function isRoot(SubnetID calldata subnet) public pure returns (bool) {
         return subnet.route.length == 1;
+    }
+
+    function equals(SubnetID calldata subnet1, SubnetID calldata subnet2)
+        public
+        pure
+        returns (bool)
+    {
+        if (subnet1.route.length != subnet2.route.length) return false;
+
+        for (uint i = 0; i < subnet1.route.length; i++) {
+            if (subnet1.route[i] != subnet2.route[i]) return false;
+        }
+
+        return true;
+    }
+
+    function commonParent(SubnetID calldata subnet1, SubnetID calldata subnet2)
+        public
+        pure
+        returns (SubnetID memory)
+    {
+        uint i = 0;
+        while (
+            i < subnet1.route.length &&
+            i < subnet2.route.length &&
+            subnet1.route[i] == subnet2.route[i]
+        ) {
+            i++;
+        }
+
+        address[] memory route = new address[](i);
+        for (uint j = 0; j < i; j++) {
+            route[j] = subnet1.route[j];
+        }
+
+        return SubnetID({route: route});
+    }
+
+    function down(SubnetID calldata subnet1, SubnetID calldata subnet2)
+        public
+        pure
+        returns (SubnetID memory)
+    {
+        uint i = 0;
+        while (
+            i < subnet1.route.length &&
+            i < subnet2.route.length &&
+            subnet1.route[i] == subnet2.route[i]
+        ) {
+            i++;
+        }
+        if (i == 0) return SubnetID({route: new address[](0)});
+
+        address[] memory route = new address[](i + 1);
+        for (uint j = 0; j < route.length; j++) {
+            route[j] = subnet1.route[j];
+        }
+
+        route[route.length - 1] = subnet2.route[route.length - 1];
+        return SubnetID({route: route});
+    }
+
+    function isBottomUp(SubnetID calldata from, SubnetID calldata to) public pure returns (bool){
+        return from.route.length - 1 > commonParent(from, to).route.length;
     }
 }
