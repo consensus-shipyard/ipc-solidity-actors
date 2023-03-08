@@ -98,13 +98,19 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         bytes memory _genesis
     ) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> adea5c2 (refactor: join method and formatting)
         require(
             _minValidatorStake > 0,
             "minValidatorStake must be greater than 0"
         );
+<<<<<<< HEAD
 =======
         require(_minValidatorStake > 0, "minValidatorStake must be greater than 0");
 >>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
+=======
+>>>>>>> adea5c2 (refactor: join method and formatting)
         require(_minValidators > 0, "minValidators must be greater than 0");
         parentId = _parentId;
         name = _name;
@@ -148,12 +154,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             !validators.contains(msg.sender) &&
             (consensus != ConsensusType.Delegated || validators.length() == 0)
         ) validators.add(msg.sender);
+<<<<<<< HEAD
 =======
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
         if(!validators.contains(msg.sender) && stake[msg.sender] >= minValidatorStake)
             validators.add(msg.sender);
 >>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
+=======
+>>>>>>> adea5c2 (refactor: join method and formatting)
 
         if (status == Status.Instantiated) {
             if (totalStake >= minValidatorStake) {
@@ -199,7 +208,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     }
 
     function kill() external mutateState {
-        require(address(this).balance == 0, "there is still collateral in the subnet");
+        require(
+            address(this).balance == 0,
+            "there is still collateral in the subnet"
+        );
         require(
 <<<<<<< HEAD
             address(this).balance == 0,
@@ -365,12 +377,20 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         uint validatorLength = validators.length();
         require(validatorLength != 0, "no validators in subnet");
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         uint rewardAmount = msg.value / validatorLength;
 >>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
 =======
         require(address(this).balance >= validatorLength, "we neeed to distribute at least one wei to each validator");
         
+=======
+        require(
+            address(this).balance >= validatorLength,
+            "we neeed to distribute at least one wei to each validator"
+        );
+
+>>>>>>> adea5c2 (refactor: join method and formatting)
         uint rewardAmount = address(this).balance / validatorLength;
 >>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
@@ -430,9 +450,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return ecrecover(_ethSignedMessageHash, v, r, s);
     }
 
-    function _splitSignature(
-        bytes memory sig
-    ) internal pure returns (bytes32 r, bytes32 s, uint8 v) {
+    function _splitSignature(bytes memory sig)
+        internal
+        pure
+        returns (
+            bytes32 r,
+            bytes32 s,
+            uint8 v
+        )
+    {
         require(sig.length == 65, "invalid signature length");
 
         assembly {
