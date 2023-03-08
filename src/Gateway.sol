@@ -6,7 +6,6 @@ import "./structs/Postbox.sol";
 import "./enums/Status.sol";
 import "./interfaces/IGateway.sol";
 import "./interfaces/ISubnetActor.sol";
-import "./lib/StorableMsgHelper.sol";
 import "./lib/SubnetIDHelper.sol";
 import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
@@ -101,7 +100,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         require(registered == false, "subnet is already registered");
 
-        subnet.id = networkName.setActor(msg.sender);
+        subnet.id = networkName.createSubnetId(msg.sender);
         subnet.stake = msg.value;
         subnet.status = Status.Active;
         subnet.nonce = 0;
@@ -262,49 +261,12 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
-    function fund(bytes memory subnetId) external {
-        revert("MethodNotImplemented");
-    }
-
-    function release() external {
-        revert("MethodNotImplemented");
-    }
-
-    function sendCross(
-        bytes memory toSubnetId,
-        bytes memory crossMsg
-    ) external {
-        revert("MethodNotImplemented");
-    }
-
-    function applyMessage(bytes memory crossMsg) external {
-        revert("MethodNotImplemented");
-    }
-
-    function whitelistPropagator(
-        uint256 postboxId,
-        address[] memory owners
-    ) external {
-        revert("MethodNotImplemented");
-    }
-
-    function propagate(uint256 postboxId) external {
-        revert("MethodNotImplemented");
-    }
-
-    function commitCrossMessage(
-        bytes memory crossMessage,
-        uint256 feeAmount
-    ) external {
-        revert("MethodNotImplemented");
-    }
-
     function getSubnet(
         address actor
     ) internal view returns (bool found, Subnet storage subnet) {
-        SubnetID memory subnetId = networkName.setActor(actor);
+        SubnetID memory subnetId = networkName.createSubnetId(actor);
 
         subnet = subnets[subnetId.toHash()];
-        found = subnetId.toHash() == subnet.id.toHash();
+        found = subnet.id.route.length != 0;
     }
 }

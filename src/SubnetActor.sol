@@ -46,8 +46,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     int64 public checkPeriod;
     /// @notice block number to corresponding checkpoint at that block
     mapping(int64 => Checkpoint) public checkpoints;
-    /// @notice keccak256 hashed message data to set of validators who voted for the
-    mapping(bytes32 => EnumerableSet.AddressSet) windowChecks;
+    /// @notice keccak256 hashed message data to set of validators who voted for the checkpoint
+    mapping(bytes32 => EnumerableSet.AddressSet) private windowChecks;
     /// @notice List of validators in the subnet
     EnumerableSet.AddressSet private validators;
     /// @notice Minimal number of validators required for the subnet
@@ -88,7 +88,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         int64 _checkPeriod,
         bytes memory _genesis
     ) {
-        require(_minValidatorStake > 0, "minValidatorStake must be greater than 0");
+        require(
+            _minValidatorStake > 0,
+            "minValidatorStake must be greater than 0"
+        );
         require(_minValidators > 0, "minValidators must be greater than 0");
         parentId = _parentId;
         name = _name;
@@ -112,18 +115,21 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
-        if(!validators.contains(msg.sender) && stake[msg.sender] >= minValidatorStake)
-            validators.add(msg.sender);
+        if (
+            stake[msg.sender] >= minValidatorStake &&
+            !validators.contains(msg.sender) &&
+            (consensus != ConsensusType.Delegated || validators.length() == 0)
+        ) validators.add(msg.sender);
 
         if (status == Status.Instantiated) {
             if (totalStake >= minValidatorStake) {
-                payable(parentId.getActor()).functionCallWithValue(
+                payable(ipcGatewayAddr).functionCallWithValue(
                     abi.encodeWithSignature("register()"),
                     totalStake
                 );
             }
         } else {
-            payable(parentId.getActor()).functionCallWithValue(
+            payable(ipcGatewayAddr).functionCallWithValue(
                 abi.encodeWithSignature("addStake()"),
                 msg.value
             );
@@ -141,13 +147,16 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         if (status == Status.Terminating) return;
 
-        IGateway(parentId.getActor()).releaseStake(amount);
+        IGateway(ipcGatewayAddr).releaseStake(amount);
 
         payable(msg.sender).sendValue(amount);
     }
 
     function kill() external mutateState {
-        require(address(this).balance == 0, "there is still collateral in the subnet");
+        require(
+            address(this).balance == 0,
+            "there is still collateral in the subnet"
+        );
         require(
             status != Status.Terminating && status != Status.Killed,
             "the subnet is already in a killed or terminating state"
@@ -159,7 +168,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         status = Status.Terminating;
 
-        IGateway(parentId.getActor()).kill();
+        IGateway(ipcGatewayAddr).kill();
     }
 
     function submitCheckpoint(Checkpoint calldata checkpoint) external {
@@ -174,30 +183,30 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         );
         require(
             checkpoint.data.source.toHash() ==
-                parentId.setActor(address(this)).toHash(),
+                parentId.createSubnetId(address(this)).toHash(),
             "submitting checkpoint with the wrong source"
         );
 
-        Checkpoint memory prevCheckpoint = checkpoints.getPrevCheckpoint(
+        bytes32 prevHash = checkpoints.getPrevCheckpointHash(
             checkpoint.data.epoch,
             checkPeriod
         );
-        if (prevCheckpoint.signature.length > 0) {
-            bytes32 prevcheckpointHash = prevCheckpoint.toHash();
-            require(
-                checkpoint.data.prevHash == prevcheckpointHash,
-                "checkpoint data hash is not the same as prevHash"
-            );
-        }
+
+        require(
+            checkpoint.data.prevHash == prevHash ||
+                checkpoint.data.prevHash ==
+                CheckpointHelper.EMPTY_CHECKPOINT_DATA_HASH,
+            "checkpoint data hash is not the same as prevHash"
+        );
 
         bytes32 messageHash = checkpoint.toHash();
+
         require(
             _recoverSigner(messageHash, checkpoint.signature) == msg.sender,
             "invalid signature"
         );
 
-        bytes32 cid = checkpoint.toHash();
-        EnumerableSet.AddressSet storage voters = windowChecks[cid];
+        EnumerableSet.AddressSet storage voters = windowChecks[messageHash];
         require(
             !voters.contains(msg.sender),
             "miner has already voted the checkpoint"
@@ -206,14 +215,14 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         voters.add(msg.sender);
 
         uint sum = 0;
-        for (uint i = 0; i < voters.length(); i++) {
+        for (uint i = 0; i < voters.length(); ) {
             sum += stake[voters.at(i)];
             unchecked {
                 ++i;
             }
         }
 
-        bool hasMajority = sum > (totalStake / 2);
+        bool hasMajority = sum > (totalStake * 2 / 3);
         if (hasMajority == false) return;
 
         // store the commitment on vote majority
@@ -223,18 +232,26 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         );
         checkpoints[checkpoint.data.epoch] = checkpoint;
         //clear the votes
-        for (uint i = 0; i < voters.length(); i++) {
-            voters.remove(voters.at(i));
+        address[] memory votersArray = voters.values();
+        for (uint i = 0; i < votersArray.length; ) {
+            (bool success) = voters.remove(votersArray[i]);
+            require(success, "failed to remove voter");
+            unchecked {
+                ++i;
+            }
         }
 
-        IGateway(parentId.getActor()).commitChildCheck(checkpoint);
+        IGateway(ipcGatewayAddr).commitChildCheck(checkpoint);
     }
 
     function reward() public payable onlyGateway nonReentrant {
         uint validatorLength = validators.length();
         require(validatorLength != 0, "no validators in subnet");
-        require(address(this).balance >= validatorLength, "we neeed to distribute at least one wei to each validator");
-        
+        require(
+            address(this).balance >= validatorLength,
+            "we need to distribute at least one wei to each validator"
+        );
+
         uint rewardAmount = address(this).balance / validatorLength;
 
         for (uint i = 0; i < validatorLength; ) {
@@ -249,12 +266,28 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return parentId;
     }
 
-    function validatorCount() external returns (uint) {
+    function validatorCount() external view returns (uint) {
         return validators.length();
     }
 
-    function validatorAt(uint index) external returns (address) {
+    function validatorAt(uint index) external view returns (address) {
         return validators.at(index);
+    }
+
+    function windowCheckCount(bytes32 checkpointHash)
+        external
+        view
+        returns (uint)
+    {
+        return windowChecks[checkpointHash].length();
+    }
+
+    function windowCheckAt(bytes32 checkpointHash, uint index)
+        external
+        view
+        returns (address)
+    {
+        return windowChecks[checkpointHash].at(index);
     }
 
     function _recoverSigner(

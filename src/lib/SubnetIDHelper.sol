@@ -2,18 +2,20 @@
 pragma solidity ^0.8.7;
 
 import "../structs/Subnet.sol";
+import "openzeppelin-contracts/utils/Strings.sol";
 
 /// @title Helper library for manipulating SubnetID struct
 /// @author LimeChain team
 library SubnetIDHelper {
+    using Strings for address;
+
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
-        require(subnet.route.length != 0, "error getting parent for subnet addr");
+        require(subnet.route.length > 1, "error getting parent for subnet addr");
 
         address[] memory route = new address[](subnet.route.length - 1);
-        for(uint i = 0; i < subnet.route.length - 1; i++) {
+        for(uint i = 0; i < route.length; i++) {
             route[i] = subnet.route[i];
         }
-        route[route.length - 1] = subnet.route[route.length];
         
         return SubnetID({
             route: route
@@ -23,7 +25,9 @@ library SubnetIDHelper {
     function toString(SubnetID memory subnet) public pure returns (string memory) {
         string memory route = "/root";
         for(uint i = 0; i < subnet.route.length; i++) {
-            route = string(abi.encodePacked(route, "/", subnet.route[i]));
+            route = string.concat(route, "/");
+            route = string.concat(route, subnet.route[i].toHexString());
+
         }
 
         return route;
@@ -33,8 +37,8 @@ library SubnetIDHelper {
         return keccak256(abi.encode(subnet));
     }
 
-    function setActor(SubnetID memory subnet, address actor) public pure returns (SubnetID memory newSubnet) {
-        require(subnet.route.length >= 1, "cannot set actor for empty subnet");
+    function createSubnetId(SubnetID memory subnet, address actor) public pure returns (SubnetID memory newSubnet) {
+        require(subnet.route.length != 0, "cannot set actor for empty subnet");
 
         newSubnet.route = new address[](subnet.route.length + 1);
         for(uint i = 0; i < subnet.route.length; i++) {
@@ -45,7 +49,7 @@ library SubnetIDHelper {
     }
 
     function getActor(SubnetID memory subnet) public pure returns (address) {
-        if(subnet.route.length == 0)
+        if(subnet.route.length <= 1)
             return address(0);
 
         return subnet.route[subnet.route.length - 1];
