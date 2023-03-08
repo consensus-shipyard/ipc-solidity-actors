@@ -4,49 +4,35 @@ pragma solidity ^0.8.7;
 import "../structs/Checkpoint.sol";
 import "../constants/Constants.sol";
 import "../lib/SubnetIDHelper.sol";
+import "../enums/IPCMsgType.sol";
 
 /// @title Helper library for manipulating StorableMsg struct
 /// @author LimeChain team
 library StorableMsgHelper {
     using SubnetIDHelper for SubnetID;
-    function newReleaseMsg(SubnetID calldata subnet, address signer, uint256 value, uint64 nonce) public pure returns (StorableMsg memory) {
-        
-        return StorableMsg({
-            from: IPCAddress({
-                subnetId: subnet,
-                rawAddress: signer
-            }),
-            to: IPCAddress({
-                subnetId: subnet,
-                rawAddress: signer
-            }),
-            value: value,
-            nonce: nonce,
-            method: 0,
-            params: bytes("")
-        });
+
+    function applyType(StorableMsg calldata storableMsg, SubnetID calldata curr)
+        public
+        pure
+        returns (IPCMsgType)
+    {
+        if (
+            curr.commonParent(storableMsg.to.subnetId).equals(
+                storableMsg.from.subnetId.commonParent(storableMsg.to.subnetId)
+            ) && ipcType(storableMsg) == IPCMsgType.BottomUp
+        ) return IPCMsgType.BottomUp;
+
+        return IPCMsgType.TopDown;
     }
 
-    function newFundMsg(SubnetID calldata subnet, address signer, uint256 value) public pure returns (StorableMsg memory) {
-        require(subnet.route.length >= 1, "error getting parent for subnet addr");
-        
-        SubnetID memory parent = subnet.getParentSubnet();
-        require(parent.getActor() != address(0), "error creating fund cross-message");
-
-        return StorableMsg({
-            from: IPCAddress({
-                subnetId: parent,
-                rawAddress: signer
-            }),
-            to: IPCAddress({
-                subnetId: subnet,
-                rawAddress: signer
-            }),
-            value: value,
-            nonce: 0,
-            method: 0,
-            params: bytes("")
-        });
+    function ipcType(StorableMsg calldata storableMsg)
+        public
+        pure
+        returns (IPCMsgType)
+    {
+        return
+            storableMsg.from.subnetId.isBottomUp(storableMsg.to.subnetId)
+                ? IPCMsgType.BottomUp
+                : IPCMsgType.TopDown;
     }
-
 }
