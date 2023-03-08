@@ -88,7 +88,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         int64 _checkPeriod,
         bytes memory _genesis
     ) {
-        require(_minValidatorStake > 0, "minValidatorStake must be greater than 0");
+        require(
+            _minValidatorStake > 0,
+            "minValidatorStake must be greater than 0"
+        );
         require(_minValidators > 0, "minValidators must be greater than 0");
         parentId = _parentId;
         name = _name;
@@ -112,8 +115,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
-        if(!validators.contains(msg.sender) && stake[msg.sender] >= minValidatorStake)
-            validators.add(msg.sender);
+        if (
+            stake[msg.sender] >= minValidatorStake &&
+            !validators.contains(msg.sender) &&
+            (consensus != ConsensusType.Delegated || validators.length() == 0)
+        ) validators.add(msg.sender);
 
         if (status == Status.Instantiated) {
             if (totalStake >= minValidatorStake) {
@@ -147,7 +153,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     }
 
     function kill() external mutateState {
-        require(address(this).balance == 0, "there is still collateral in the subnet");
+        require(
+            address(this).balance == 0,
+            "there is still collateral in the subnet"
+        );
         require(
             status != Status.Terminating && status != Status.Killed,
             "the subnet is already in a killed or terminating state"
@@ -233,8 +242,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     function reward() public payable onlyGateway nonReentrant {
         uint validatorLength = validators.length();
         require(validatorLength != 0, "no validators in subnet");
-        require(address(this).balance >= validatorLength, "we neeed to distribute at least one wei to each validator");
-        
+        require(
+            address(this).balance >= validatorLength,
+            "we neeed to distribute at least one wei to each validator"
+        );
+
         uint rewardAmount = address(this).balance / validatorLength;
 
         for (uint i = 0; i < validatorLength; ) {
@@ -266,9 +278,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return ecrecover(_ethSignedMessageHash, v, r, s);
     }
 
-    function _splitSignature(
-        bytes memory sig
-    ) internal pure returns (bytes32 r, bytes32 s, uint8 v) {
+    function _splitSignature(bytes memory sig)
+        internal
+        pure
+        returns (
+            bytes32 r,
+            bytes32 s,
+            uint8 v
+        )
+    {
         require(sig.length == 65, "invalid signature length");
 
         assembly {
