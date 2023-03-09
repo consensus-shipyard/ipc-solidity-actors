@@ -2,10 +2,12 @@
 pragma solidity ^0.8.7;
 
 import "../structs/Subnet.sol";
-
+import "openzeppelin-contracts/utils/Strings.sol";
 /// @title Helper library for manipulating SubnetID struct
 /// @author LimeChain team
 library SubnetIDHelper {
+    using Strings for address;
+
     function newReleaseMsg(
         SubnetID calldata subnet,
         address signer,
@@ -74,7 +76,8 @@ library SubnetIDHelper {
     {
         string memory route = "/root";
         for (uint i = 0; i < subnet.route.length; i++) {
-            route = string(abi.encodePacked(route, "/", subnet.route[i]));
+            route = string.concat(route, "/");
+            route = string.concat(route, subnet.route[i].toHexString());
         }
 
         return route;
@@ -106,7 +109,7 @@ library SubnetIDHelper {
     }
 
     function isRoot(SubnetID calldata subnet) public pure returns (bool) {
-        return subnet.route.length == 1;
+        return subnet.route.length == 1 && subnet.route[0] == address(0);
     }
 
     function equals(SubnetID calldata subnet1, SubnetID calldata subnet2)
@@ -136,6 +139,7 @@ library SubnetIDHelper {
         ) {
             i++;
         }
+        if (i == 0) return SubnetID({route: new address[](0)});
 
         address[] memory route = new address[](i);
         for (uint j = 0; j < i; j++) {
@@ -161,15 +165,40 @@ library SubnetIDHelper {
         if (i == 0) return SubnetID({route: new address[](0)});
 
         address[] memory route = new address[](i + 1);
-        for (uint j = 0; j < route.length; j++) {
+        for (uint j = 0; j < i; j++) {
+            route[j] = subnet1.route[j];
+        }
+        if(i < subnet2.route.length)
+            route[i] = subnet2.route[i];
+
+        return SubnetID({route: route});
+    }
+
+    function up(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (SubnetID memory) {
+        if(isRoot(subnet1)) return SubnetID({route: new address[](0)});
+        if(isRoot(subnet2)) return SubnetID({route: new address[](0)});
+
+        uint i = 0;
+        while (
+            i < subnet1.route.length &&
+            i < subnet2.route.length &&
+            subnet1.route[i] == subnet2.route[i]
+        ) {
+            i++;
+        }
+        if (i == 0) return SubnetID({route: new address[](0)});
+
+        address[] memory route = new address[](i - 1);
+        for (uint j = 0; j < i - 1; j++) {
             route[j] = subnet1.route[j];
         }
 
-        route[route.length - 1] = subnet2.route[route.length - 1];
         return SubnetID({route: route});
     }
 
     function isBottomUp(SubnetID calldata from, SubnetID calldata to) public pure returns (bool){
-        return from.route.length - 1 > commonParent(from, to).route.length;
+        SubnetID memory commonParent = commonParent(from, to);
+        if(commonParent.route.length == 0) return true;
+        return from.route.length > commonParent.route.length;
     }
 }

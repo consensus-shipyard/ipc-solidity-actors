@@ -9,6 +9,7 @@ import "../src/lib/SubnetIDHelper.sol";
 
 contract GatewayDeploymentTest is Test {
     using SubnetIDHelper for SubnetID;
+    using StorableMsgHelper for StorableMsg;
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
@@ -17,8 +18,9 @@ contract GatewayDeploymentTest is Test {
     Gateway gw;
 
     function setUp() public {
-        address[] memory path = new address[](1);
-        path[0] = address(0);
+        address[] memory path = new address[](2);
+        path[0] = vm.addr(456);
+        path[1] = vm.addr(123);
         gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD);
     }
 
@@ -440,25 +442,100 @@ contract GatewayDeploymentTest is Test {
     }
 
     function testCommitChildCheck_Fails_WrongSubnet(uint64 blockNumber) public {
-        address subnetAddress = address(100);
+        address subnetAddress = vm.addr(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 9);
         vm.roll(blockNumber);
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-        
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
-
         Checkpoint memory checkpoint = createCheckpoint(subnetAddress, blockNumber + 9);
-        
-        address subnetAddressInvalid = address(101);
 
-        vm.stopPrank();
+        address subnetAddressInvalid = vm.addr(101);
         vm.startPrank(subnetAddressInvalid);
-
+        vm.deal(subnetAddressInvalid, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddressInvalid);
+        
         vm.expectRevert("source in checkpoint doesn't belong to subnet");
         
         gw.commitChildCheck(checkpoint);
     }
+
+    function test_SendCross_Fails_NotRegistered() public {
+        address caller = vm.addr(100);
+        vm.prank(caller);
+        vm.expectRevert("subnet is not registered");
+        gw.sendCross(SubnetID({route: new address[](0)}), CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: 0, nonce: 0, method: 0, params: new bytes(0)}), wrapped: false}));
+    }
+
+    function test_SendCross_Fails_NoDestination() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        vm.expectRevert("no destination for cross-message explicitly set");
+        gw.sendCross(SubnetID({route: new address[](0)}), CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: 0, nonce: 0, method: 0, params: new bytes(0)}), wrapped: false}));
+    }
+
+    function test_SendCross_Fails_NoCurrentNetwork() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destination = gw.getNetworkName();
+        vm.expectRevert("destination is the current network, you are better off with a good ol' message, no cross needed");
+        gw.sendCross(destination, CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: 0, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true}));
+    }
+
+    function test_SendCross_Fails_DifferentMessageValue() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 10);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destination = gw.getNetworkName().setActor(caller);
+        vm.expectRevert("the funds in cross-msg params are not equal to the ones sent in the message");
+        gw.sendCross{value: 10}(destination, CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: 5, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true}));
+    }
+    function test_SendCross_Fails_InvalidToAddr() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 10);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destination = gw.getNetworkName().setActor(caller);
+        vm.expectRevert("invalid to addr");
+        gw.sendCross{value: 10}(destination, CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: address(0)}), value: 10, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true}));
+    }
+
+    function test_SendCross_Fails_NotEnoughGas() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destination = gw.getNetworkName().setActor(caller);
+        vm.expectRevert("invalid to addr");
+        gw.sendCross{value: CROSS_MSG_FEE}(destination, CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: address(0)}), value: CROSS_MSG_FEE, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true}));
+    }
+
+    function test_SendCross_Works_TopDown() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destination = gw.getNetworkName().setActor(caller);
+        CrossMsg memory crossMsg = CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: CROSS_MSG_FEE + 1, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true});
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
+
+        require(crossMsg.message.applyType(gw.getNetworkName()) == IPCMsgType.TopDown);
+    }
+
+    function test_SendCross_Works_BottomUp() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destination = gw.getNetworkName().up(gw.getNetworkName());
+        CrossMsg memory crossMsg = CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: CROSS_MSG_FEE + 1, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true});
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
+
+        require(crossMsg.message.applyType(gw.getNetworkName()) == IPCMsgType.BottomUp);
+    }
+    
 
     function commitChildCheck(Checkpoint memory commit) internal returns(Checkpoint memory){
         gw.commitChildCheck(commit);
