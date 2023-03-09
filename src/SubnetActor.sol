@@ -63,6 +63,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     // to be able to validate new blocks.
     uint64 public minValidators;
 
+    uint8 public majorityPercentage;
+
     modifier onlyGateway() {
         require(
             msg.sender == ipcGatewayAddr,
@@ -95,7 +97,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         uint64 _minValidators,
         int64 _finalityThreshold,
         int64 _checkPeriod,
-        bytes memory _genesis
+        bytes memory _genesis,
+        uint8 _majorityPercentage
     ) {
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -112,6 +115,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 =======
 >>>>>>> adea5c2 (refactor: join method and formatting)
         require(_minValidators > 0, "minValidators must be greater than 0");
+        require(_majorityPercentage <= 100, "majorityPercentage must be <= 100");
         parentId = _parentId;
         name = _name;
         ipcGatewayAddr = _ipcGatewayAddr;
@@ -121,6 +125,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         finalityThreshold = _finalityThreshold;
         checkPeriod = _checkPeriod;
         genesis = _genesis;
+        majorityPercentage = _majorityPercentage;
         status = Status.Instantiated;
     }
 
@@ -330,10 +335,14 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
         bool hasMajority = sum > (totalStake * 2 / 3);
 =======
         bool hasMajority = sum > (totalStake / 2);
 >>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
+=======
+        bool hasMajority = sum > totalStake * majorityPercentage / 100;
+>>>>>>> fc58e58 (feat: send cross implementation, commitCrossMessage implementation)
         if (hasMajority == false) return;
 
         // store the commitment on vote majority

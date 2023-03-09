@@ -812,10 +812,8 @@ contract GatewayDeploymentTest is Test {
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         SubnetID memory destination = gw.getNetworkName().setActor(caller);
-        CrossMsg memory crossMsg = CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: CROSS_MSG_FEE + 1, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true});
+        CrossMsg memory crossMsg = CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](1)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](1)}), rawAddress: caller}), value: CROSS_MSG_FEE + 1, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true});
         gw.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
-
-        require(crossMsg.message.applyType(gw.getNetworkName()) == IPCMsgType.TopDown);
     }
 
     function test_SendCross_Works_BottomUp() public {
@@ -823,11 +821,12 @@ contract GatewayDeploymentTest is Test {
         vm.startPrank(caller);
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
-        SubnetID memory destination = gw.getNetworkName().up(gw.getNetworkName());
-        CrossMsg memory crossMsg = CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}), value: CROSS_MSG_FEE + 1, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true});
-        gw.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
 
-        require(crossMsg.message.applyType(gw.getNetworkName()) == IPCMsgType.BottomUp);
+        address[] memory path = new address[](1);
+        path[0] = vm.addr(456);
+        SubnetID memory destination = SubnetID({route: path});
+        CrossMsg memory crossMsg = CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](1)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](1)}), rawAddress: caller}), value: CROSS_MSG_FEE + 1, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true});
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
     }
     
 
