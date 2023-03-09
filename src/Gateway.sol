@@ -272,7 +272,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         SubnetID memory destination,
         CrossMsg memory crossMsg
     ) external payable isRegistered {
-        require(destination.route.length > 0 && destination.isRoot() == false, "no destination for cross-message explicitly set");
+        require(destination.route.length > 0, "no destination for cross-message explicitly set");
         require(!destination.equals(networkName), "destination is the current network, you are better off with a good ol' message, no cross needed") ;
         require(crossMsg.message.value == msg.value, "the funds in cross-msg params are not equal to the ones sent in the message");
         require(crossMsg.message.to.rawAddress != address(0), "invalid to addr");
@@ -283,7 +283,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         uint256 balance = msg.value - CROSS_MSG_FEE;
 
-        (bool burn, uint256 topDownFee) = commitCrossMessage(crossMsg, CROSS_MSG_FEE);
+        (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg, CROSS_MSG_FEE);
 
         _crossMsgSideEffects(crossMsg, burn, topDownFee);
     }
@@ -303,10 +303,10 @@ contract Gateway is IGateway, ReentrancyGuard {
         revert("MethodNotImplemented");
     }
 
-    function commitCrossMessage(
+    function _commitCrossMessage(
         CrossMsg memory crossMessage,
         uint256 fee
-    ) public returns (bool burn, uint256 topDownFee) {
+    ) internal returns (bool burn, uint256 topDownFee) {
         SubnetID memory to = crossMessage.message.to.subnetId;
         require(to.route.length > 0, "error getting subnet from msg");
         require(

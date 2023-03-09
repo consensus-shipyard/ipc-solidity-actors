@@ -109,7 +109,7 @@ library SubnetIDHelper {
     }
 
     function isRoot(SubnetID calldata subnet) public pure returns (bool) {
-        return subnet.route.length == 1 && subnet.route[0] == address(0);
+        return subnet.route.length == 1;
     }
 
     function equals(SubnetID calldata subnet1, SubnetID calldata subnet2)

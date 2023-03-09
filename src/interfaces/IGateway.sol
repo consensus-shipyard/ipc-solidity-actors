@@ -74,10 +74,4 @@ interface IGateway {
         external;
 
     function propagate(uint256 postboxId) external;
-
-    /// Commit the cross message to storage. It outputs a flag signaling
-    /// if the committed messages was bottom-up and some funds need to be
-    /// burnt or if a top-down message fee needs to be distributed.
-    function commitCrossMessage(CrossMsg memory crossMessage, uint256 fee)
-        external returns (bool burn, uint256 topDownFee);
 }
