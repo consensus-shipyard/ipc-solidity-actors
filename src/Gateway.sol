@@ -11,8 +11,10 @@ import "./lib/SubnetIDHelper.sol";
 import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
 import "./lib/StorableMsgHelper.sol";
+import "./lib/PostBoxItemHelper.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
+import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "forge-std/console.sol";
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -22,6 +24,8 @@ contract Gateway is IGateway, ReentrancyGuard {
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
     using StorableMsgHelper for StorableMsg;
+    using PostBoxItemHelper for PostBoxItem;
+    using EnumerableSet for EnumerableSet.AddressSet;
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -54,7 +58,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice Postbox keeps track for an EOA of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
     /// postbox id => PostBoxItem
-    mapping(uint64 => PostBoxItem) private postbox;
+    mapping(uint256 => PostBoxItem) private postbox;
 
     /// @notice Latest nonce of a cross message sent from subnet.
     uint64 public nonce;
@@ -293,14 +297,40 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function whitelistPropagator(
-        uint256 postboxId,
-        address[] memory owners
+        uint256 _postboxId,
+        address[] memory _owners
     ) external {
-        revert("MethodNotImplemented");
+        PostBoxItem storage postBoxItem = postbox[_postboxId];
+        require(postBoxItem.hasOwners, "postbox item cannot add owner for now");
+        require(postBoxItem.owners.contains(msg.sender), "not owner");
+
+        //update postbox item with new owners
+        for (uint256 i = 0; i < _owners.length; i++) {
+            postBoxItem.owners.add(_owners[i]);
+        }
+        
+        //generate new hash of the updated postbox item
+        uint256 newCid = uint256(postBoxItem.toHash());
+
+        //create new postbox item in storage
+        PostBoxItem storage newPostBoxItem = postbox[newCid];
+
+        //transfer all the data from old postbox item to new one
+        newPostBoxItem.hasOwners = postBoxItem.hasOwners;
+        for(uint256 i = 0; i < postBoxItem.owners.length(); i++) {
+            newPostBoxItem.owners.add(postBoxItem.owners.at(i));
+        }
+        newPostBoxItem.crossMsg = postBoxItem.crossMsg;
+
+        //delete old postbox item
+        delete postbox[_postboxId];
     }
 
-    function propagate(uint256 postboxId) external {
-        revert("MethodNotImplemented");
+    function propagate(uint256 _postboxId) external payable {
+        require(msg.value > CROSS_MSG_FEE);
+        PostBoxItem storage postBoxItem = postbox[_postboxId];
+        require(postBoxItem.hasOwners && postBoxItem.owners.contains(msg.sender), "owner not match");
+        _commitCrossMessage(postBoxItem.crossMsg, CROSS_MSG_FEE);
     }
 
     function _commitCrossMessage(

@@ -73,5 +73,5 @@ interface IGateway {
     function whitelistPropagator(uint256 postboxId, address[] memory owners)
         external;
 
-    function propagate(uint256 postboxId) external;
+    function propagate(uint256 postboxId) external payable;
 }

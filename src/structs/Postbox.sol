@@ -2,10 +2,12 @@
 pragma solidity ^0.8.7;
 
 import "./Checkpoint.sol";
+import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
-/// @title postbox item struct
+/// @title Postbox struct and related structs
 /// @author LimeChain team
 struct PostBoxItem {
     CrossMsg crossMsg;
-    address[] owners;
+    EnumerableSet.AddressSet owners;
+    bool hasOwners;
 }
