@@ -4,6 +4,6 @@ pragma solidity ^0.8.7;
 /// @title IPC Message type enum
 /// @author LimeChain team
 enum IPCMsgType {
-    BottomUp,
-    TopDown
+    TopDown,
+    BottomUp
 }

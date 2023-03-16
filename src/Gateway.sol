@@ -13,11 +13,13 @@ import "./lib/CheckpointHelper.sol";
 import "./lib/StorableMsgHelper.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
+import "fevmate/utils/FilAddress.sol";
 import "forge-std/console.sol";
+
 /// @title Gateway Contract
 /// @author LimeChain team
 contract Gateway is IGateway, ReentrancyGuard {
-    using Address for address payable;
+    using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
@@ -109,7 +111,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         require(registered == false, "subnet is already registered");
 
-        subnet.id = networkName.setActor(msg.sender);
+        subnet.id = networkName.createSubnetId(msg.sender);
         subnet.stake = msg.value;
         subnet.status = Status.Active;
         subnet.nonce = 0;
@@ -253,19 +255,11 @@ contract Gateway is IGateway, ReentrancyGuard {
         subnet.prevCheckpoint = commit;
 
         if (fee > 0) {
-            payable(msg.sender).functionCallWithValue(
+            Address.functionCallWithValue(payable(msg.sender),
                 abi.encodeWithSignature("reward()"),
                 fee
             );
         }
-    }
-
-    function fund(bytes memory subnetId) external {
-        revert("MethodNotImplemented");
-    }
-
-    function release() external {
-        revert("MethodNotImplemented");
     }
 
     function sendCross(
@@ -281,69 +275,53 @@ contract Gateway is IGateway, ReentrancyGuard {
         crossMsg.message.to = IPCAddress(destination, crossMsg.message.to.rawAddress);
         crossMsg.message.from = IPCAddress(networkName, msg.sender);
 
-        uint256 balance = msg.value - CROSS_MSG_FEE;
-
         (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg, CROSS_MSG_FEE);
 
         _crossMsgSideEffects(crossMsg, burn, topDownFee);
     }
 
-    function applyMessage(bytes memory crossMsg) external {
-        revert("MethodNotImplemented");
-    }
-
-    function whitelistPropagator(
-        uint256 postboxId,
-        address[] memory owners
-    ) external {
-        revert("MethodNotImplemented");
-    }
-
-    function propagate(uint256 postboxId) external {
-        revert("MethodNotImplemented");
-    }
-
     function _commitCrossMessage(
-        CrossMsg memory crossMessage,
-        uint256 fee
+        CrossMsg memory _crossMessage,
+        uint256 _fee
     ) internal returns (bool burn, uint256 topDownFee) {
-        SubnetID memory to = crossMessage.message.to.subnetId;
+        SubnetID memory to = _crossMessage.message.to.subnetId;
         require(to.route.length > 0, "error getting subnet from msg");
         require(
-            !crossMessage.message.to.subnetId.equals(networkName),
+            !_crossMessage.message.to.subnetId.equals(networkName),
             "should already be committed"
         );
 
-        if(crossMessage.message.applyType(networkName) == IPCMsgType.BottomUp) {
-            console.log("bottom up");
-            SubnetID memory from = crossMessage.message.from.subnetId;
-            console.log("from: %s", from.toString());
+        if(_crossMessage.message.applyType(networkName) == IPCMsgType.BottomUp) {
+            SubnetID memory from = _crossMessage.message.from.subnetId;
             require(from.route.length > 0, "error getting subnet from msg");
             SubnetID memory nearestCommonParent = to.commonParent(from);
-            console.log("nearestCommonParent: %s", nearestCommonParent.toString());
             if(nearestCommonParent.equals(networkName)) {
-                console.log('nearestCommonParent.equals(networkName)');
-                topDownFee = fee;
-                _commitTopDownMsg(crossMessage);
-            } else {
-                console.log('not nearestCommonParent.equals(networkName)');
-                burn = crossMessage.message.value > 0;
-                _commitBottomUpMsg(crossMessage, fee, _getCurrentEpoch());
+                console.log("nearest common parent");
+                // message has already reached common parent, send it down
+                topDownFee = _fee;
+                _commitTopDownMsg(_crossMessage);
             }
-        } else if(crossMessage.message.applyType(networkName) == IPCMsgType.TopDown) {
-            console.log("top down");
+            else {
+                console.log("not near common parent");
+                // propagate bottom-up message up
+                burn = _crossMessage.message.value > 0;
+                _commitBottomUpMsg(_crossMessage, _fee);
+            }
+        } else {
+            console.log("here");
+            // top down message path
             appliedTopDownNonce += 1;
-            _commitTopDownMsg(crossMessage);
-        } 
+            _commitTopDownMsg(_crossMessage);
+        }
+        
     }
 
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
         StorableMsg memory storableMsg = crossMessage.message;
         SubnetID memory to  = storableMsg.to.subnetId;
+        console.log("to: %s", to.toString());
         SubnetID memory subId = networkName.down(to);
-        console.log("networkName: ", networkName.toString());
-        console.log("to: ", to.toString());
-        console.log("subId: ", subId.toString());
+        console.log("subId: %s", subId.toString());
         require(subId.route.length > 0, "couldn't compute the next subnet in route");
         (bool found, Subnet storage subnet) = getSubnet(subId.getActor());
         require(found, "subnet not found");
@@ -355,8 +333,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     
     function _commitBottomUpMsg(
         CrossMsg memory crossMessage,
-        uint256 fee,
-        int64 epoch
+        uint256 fee
     ) internal {
         (,,Checkpoint storage checkpoint ) = checkpoints.getCheckpointPerEpoch(block.number, checkPeriod);
         CrossMsgMeta storage meta = checkpoint.data.crossMsgs;
@@ -367,31 +344,23 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function _crossMsgSideEffects(CrossMsg memory crossMsg, bool burn, uint256 fee) internal nonReentrant {
-        console.log("crossMsgSideEffects");
         if(burn)
-            console.log("burning funds");
             payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
         if(fee == 0) return;
-        console.log("fee: ", fee);
         
         SubnetID memory down = networkName.down(crossMsg.message.to.subnetId);
-        console.log("distribute network: ", down.toString());
-        console.log("distribute actor: ", down.getActor());
         if(down.route.length == 0 || down.getActor() == address(0)) return;
 
         payable(down.getActor()).sendValue(fee);
     }
 
-    function _getCurrentEpoch() internal view returns (int64 epoch) {
-        epoch = (int64(uint64(block.number)) / checkPeriod) * checkPeriod;
-    }
-
     function getSubnet(
         address actor
     ) internal view returns (bool found, Subnet storage subnet) {
-        SubnetID memory subnetId = networkName.setActor(actor);
+        SubnetID memory subnetId = networkName.createSubnetId(actor);
 
         subnet = subnets[subnetId.toHash()];
         found = subnet.id.route.length > 0;
+        console.log("found: %s", found);
     }
 }

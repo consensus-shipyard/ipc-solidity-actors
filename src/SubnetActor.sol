@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
+
 import "./enums/ConsensusType.sol";
 import "./enums/Status.sol";
 import "./structs/Checkpoint.sol";
@@ -53,6 +54,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     /// @notice Minimal number of validators required for the subnet
     // to be able to validate new blocks.
     uint64 public minValidators;
+
+    uint8 public majorityPercentage;
 
     modifier onlyGateway() {
         require(
@@ -137,20 +140,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
                 msg.value
             );
         }
-    }
-        } else {
-            payable(ipcGatewayAddr).functionCallWithValue(
-                abi.encodeWithSignature("addStake()"),
-                msg.value
-            );
-=======
-    function join(address _validator) external payable mutateState {
-        require(_validator != address(0), "validator address cannot be zero");
-        require(msg.value != 0, "a minimum collateral is required to join the subnet");
-
-        stake[_validator] += msg.value;
-        totalStake += msg.value;
-        validators.add(_validator);
+    } 
 
     function leave() external mutateState nonReentrant {
         require(stake[msg.sender] != 0, "caller has no stake in subnet");
@@ -340,8 +330,5 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         // implicitly return (r, s, v)
     }
-        }
-    }
 
-    receive() external payable {}
 }

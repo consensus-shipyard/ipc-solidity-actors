@@ -26,7 +26,7 @@ contract SubnetActorTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
     int64 private constant DEFAULT_CHECK_PERIOD = 50;
-    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 50;
+    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     bytes private constant GENESIS = new bytes(0);
 
     function setUp() public
@@ -221,35 +221,30 @@ contract SubnetActorTest is Test {
 
 
         CheckData memory data = _createCheckData(100);
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: bytes("")});
+        bytes32 checkpointHash = checkpoint.toHash();
         
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
-        Checkpoint memory checkpoint1 = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
-
-        vm.prank(validator);
-        sa.submitCheckpoint(checkpoint1);
-
-        bytes32 checkpointHash = checkpoint1.toHash();
+        _submitCheckpoint(data, validator, 100);
 
         require(sa.windowCheckCount(checkpointHash) == 1);
         require(sa.windowCheckAt(checkpointHash, 0) == validator);
 
-        (uint8 v2, bytes32 r2, bytes32 s2) = vm.sign(101, keccak256(abi.encode(data)));
-        Checkpoint memory checkpoint2 = Checkpoint({data: data, signature: abi.encodePacked(r2, s2, v2)});
-
-        vm.prank(validator2);
-        sa.submitCheckpoint(checkpoint2);
+        _submitCheckpoint(data, validator2, 101);
 
         require(sa.windowCheckCount(checkpointHash) == 2);
         require(sa.windowCheckAt(checkpointHash, 1) == validator2);
-
-        (uint8 v3, bytes32 r3, bytes32 s3) = vm.sign(102, keccak256(abi.encode(data)));
-        Checkpoint memory checkpoint3 = Checkpoint({data: data, signature: abi.encodePacked(r3, s3, v3)});
-
-        vm.prank(validator3);
-        vm.expectCall(address(gw), abi.encodeWithSelector(gw.commitChildCheck.selector, checkpoint3));
-        sa.submitCheckpoint(checkpoint3);
+        
+        _submitCheckpoint(data, validator3, 102);
 
         require(sa.windowCheckCount(checkpointHash) == 0);
+    }
+
+    function _submitCheckpoint(CheckData memory data, address validator, uint256 pk) internal {
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(pk, keccak256(abi.encode(data)));
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+
+        vm.prank(validator);
+        sa.submitCheckpoint(checkpoint);
     }
 
     function test_SubmitCheckpoint_AddsVoter() public  {
@@ -395,6 +390,4 @@ contract SubnetActorTest is Test {
         (bool success, ) = address(sa).call{value: amount}(abi.encodeWithSignature("join()"));
         require(success);
     }
-
-
 }

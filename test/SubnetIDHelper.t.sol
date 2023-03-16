@@ -14,6 +14,7 @@ contract SubnetIDHelperTest is Test {
     address ROOT_ADDRESS;
     address SUBNET_ONE_ADDRESS;
     address SUBNET_TWO_ADDRESS;
+    address SUBNET_THREE_ADDRESS;
 
     bytes32 constant EMPTY_SUBNET_ID_HASH =
         0x2b88776ddf4d5290d360b934e1785b2f98fc538a5a4d0dc8dab162167e24841c;
@@ -75,6 +76,66 @@ contract SubnetIDHelperTest is Test {
             subnetId.getParentSubnet().toHash() ==
                 SubnetID(expectedRoute).toHash()
         );
+    }
+
+    function test_CommonParent_Works() public view {
+        address[] memory route1 = new address[](3);
+        route1[0] = ROOT_ADDRESS;
+        route1[1] = SUBNET_ONE_ADDRESS;
+        route1[2] = SUBNET_TWO_ADDRESS;
+        SubnetID memory subnetId1 = SubnetID(route1);
+
+        address[] memory route2 = new address[](3);
+        route2[0] = ROOT_ADDRESS;
+        route2[1] = SUBNET_ONE_ADDRESS;
+        route2[2] = SUBNET_THREE_ADDRESS;
+        SubnetID memory subnetId2 = SubnetID(route2);
+
+        address[] memory expectedRoute = new address[](2);
+        expectedRoute[0] = ROOT_ADDRESS;
+        expectedRoute[1] = SUBNET_ONE_ADDRESS;
+
+        require(
+            subnetId1.commonParent(subnetId2).toHash() ==
+                SubnetID(expectedRoute).toHash()
+        );
+    }
+
+    function test_CommonParent_EmptySubnetOnNoCommonParent() public view {
+        address[] memory route1 = new address[](3);
+        route1[0] = ROOT_ADDRESS;
+        route1[1] = SUBNET_ONE_ADDRESS;
+        route1[2] = SUBNET_TWO_ADDRESS;
+        SubnetID memory subnetId1 = SubnetID(route1);
+
+        address[] memory route2 = new address[](1);
+        route2[0] = SUBNET_THREE_ADDRESS;
+        SubnetID memory subnetId2 = SubnetID(route2);
+
+        require(
+            subnetId1.commonParent(subnetId2).toHash() == EMPTY_SUBNET_ID_HASH
+        );
+    }
+
+    function test_Down_Works() public view {
+        address[] memory route1 = new address[](1);
+        route1[0] = ROOT_ADDRESS;
+        SubnetID memory subnetId1 = SubnetID(route1);
+
+        address[] memory route2 = new address[](2);
+        route2[0] = ROOT_ADDRESS;
+        route2[1] = SUBNET_ONE_ADDRESS;
+        SubnetID memory subnetId2 = SubnetID(route2);
+
+        address[] memory dest = new address[](3);
+        dest[0] = ROOT_ADDRESS;
+        dest[1] = SUBNET_ONE_ADDRESS;
+        dest[2] = SUBNET_THREE_ADDRESS;
+        SubnetID memory destSubnetId = SubnetID(dest);
+
+        require(subnetId1.down(destSubnetId).equals(subnetId2));
+        require(subnetId2.down(destSubnetId).equals(destSubnetId));
+
     }
 
     function test_ToString_Works_NoRoutes() public view {
@@ -174,7 +235,7 @@ contract SubnetIDHelperTest is Test {
         route[1] = SUBNET_ONE_ADDRESS;
 
         require(SubnetID(route).isRoot() == false);
-    }   
+    }
 
     function test_IsRoot_Works_RootSubnet() public view {
         address[] memory route = new address[](1);
@@ -182,4 +243,52 @@ contract SubnetIDHelperTest is Test {
 
         require(SubnetID(route).isRoot() == true);
     }
+
+    function test_IsBottomUp_False() public view {
+        address[] memory sub1 = new address[](2);
+        sub1[0] = ROOT_ADDRESS;
+        sub1[1] = SUBNET_ONE_ADDRESS;
+        SubnetID memory sub1Id = SubnetID(sub1);
+
+        address[] memory sub2 = new address[](3);
+        sub2[0] = ROOT_ADDRESS;
+        sub2[1] = SUBNET_ONE_ADDRESS;
+        sub2[2] = SUBNET_TWO_ADDRESS;
+        SubnetID memory sub2Id = SubnetID(sub2);
+
+        require(sub1Id.isBottomUp(sub2Id) == false);
+        require(sub2Id.isBottomUp(sub2Id) == false);
+
+        address[] memory sub3 = new address[](4);
+        sub3[0] = ROOT_ADDRESS;
+        sub3[1] = SUBNET_ONE_ADDRESS;
+        sub3[2] = SUBNET_TWO_ADDRESS;
+        sub3[3] = SUBNET_THREE_ADDRESS;
+        SubnetID memory sub3Id = SubnetID(sub3);
+
+        require(sub2Id.isBottomUp(sub3Id) == false);
+    }
+
+
+    function test_IsBottomUp_True() public view {
+        address[] memory sub1 = new address[](2);
+        sub1[0] = ROOT_ADDRESS;
+        sub1[1] = SUBNET_ONE_ADDRESS;
+        SubnetID memory sub1Id = SubnetID(sub1);
+
+        address[] memory sub2 = new address[](1);
+        sub2[0] = ROOT_ADDRESS;
+        SubnetID memory sub2Id = SubnetID(sub2);
+
+        require(sub1Id.isBottomUp(sub2Id) == true);
+
+        address[] memory sub3 = new address[](2);
+        sub3[0] = ROOT_ADDRESS;
+        sub3[1] = SUBNET_TWO_ADDRESS;
+        sub3[2] = SUBNET_TWO_ADDRESS;
+        SubnetID memory sub3Id = SubnetID(sub3);
+
+        require(sub1Id.isBottomUp(sub3Id) == true);
+    }
+ 
 }
