@@ -26,6 +26,7 @@ contract SubnetActorTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
     int64 private constant DEFAULT_CHECK_PERIOD = 50;
+    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 50;
     bytes private constant GENESIS = new bytes(0);
 
     function setUp() public
@@ -36,18 +37,19 @@ contract SubnetActorTest is Test {
 
         path[0] = address(gw);
         SubnetID memory parentId = SubnetID(path);
-        sa = new SubnetActor(parentId, DEFAULT_NETWORK_NAME, address(gw), ConsensusType.Dummy, DEFAULT_MIN_VALIDATOR_STAKE, DEFAULT_MIN_VALIDATORS, DEFAULT_FINALITY_TRESHOLD, DEFAULT_CHECK_PERIOD, GENESIS);
+        sa = new SubnetActor(parentId, DEFAULT_NETWORK_NAME, address(gw), ConsensusType.Dummy, DEFAULT_MIN_VALIDATOR_STAKE, DEFAULT_MIN_VALIDATORS, DEFAULT_FINALITY_TRESHOLD, DEFAULT_CHECK_PERIOD, GENESIS, DEFAULT_MAJORITY_PERCENTAGE);
     
     }
 
-    function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minValidatorStake, uint64 _minValidators, int64 _finalityTreshold, int64 _checkPeriod, bytes calldata _genesis) public {
+    function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minValidatorStake, uint64 _minValidators, int64 _finalityTreshold, int64 _checkPeriod, bytes calldata _genesis, uint8 _majorityPercentage) public {
         vm.assume(_minValidatorStake > 0);
         vm.assume(_minValidators > 0);
+        vm.assume(_majorityPercentage <= 100);
 
         address[] memory path = new address[](1);
         path[0] = address(_ipcGatewayAddr);
         SubnetID memory parentId = SubnetID(path);
-        sa = new SubnetActor(parentId, _networkName, _ipcGatewayAddr, ConsensusType.Dummy, _minValidatorStake, _minValidators, _finalityTreshold, _checkPeriod, _genesis);
+        sa = new SubnetActor(parentId, _networkName, _ipcGatewayAddr, ConsensusType.Dummy, _minValidatorStake, _minValidators, _finalityTreshold, _checkPeriod, _genesis, _majorityPercentage);
     
         require(keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_networkName)));
         require(sa.ipcGatewayAddr() == _ipcGatewayAddr);
@@ -134,7 +136,7 @@ contract SubnetActorTest is Test {
         address[] memory path = new address[](1);
         path[0] = address(gw);
         SubnetID memory parentId = SubnetID(path);
-        sa = new SubnetActor(parentId, DEFAULT_NETWORK_NAME, address(gw), ConsensusType.Delegated, DEFAULT_MIN_VALIDATOR_STAKE, DEFAULT_MIN_VALIDATORS, DEFAULT_FINALITY_TRESHOLD, DEFAULT_CHECK_PERIOD, GENESIS);
+        sa = new SubnetActor(parentId, DEFAULT_NETWORK_NAME, address(gw), ConsensusType.Delegated, DEFAULT_MIN_VALIDATOR_STAKE, DEFAULT_MIN_VALIDATORS, DEFAULT_FINALITY_TRESHOLD, DEFAULT_CHECK_PERIOD, GENESIS, DEFAULT_MAJORITY_PERCENTAGE);
     
         address validator = vm.addr(1235);
         _join(validator);
@@ -393,5 +395,6 @@ contract SubnetActorTest is Test {
         (bool success, ) = address(sa).call{value: amount}(abi.encodeWithSignature("join()"));
         require(success);
     }
+
 
 }

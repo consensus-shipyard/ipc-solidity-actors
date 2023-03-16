@@ -86,13 +86,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         uint64 _minValidators,
         int64 _finalityThreshold,
         int64 _checkPeriod,
-        bytes memory _genesis
+        bytes memory _genesis,
+        uint8 _majorityPercentage
     ) {
         require(
             _minValidatorStake > 0,
             "minValidatorStake must be greater than 0"
         );
         require(_minValidators > 0, "minValidators must be greater than 0");
+        require(_majorityPercentage <= 100, "majorityPercentage must be <= 100");
         parentId = _parentId;
         name = _name;
         ipcGatewayAddr = _ipcGatewayAddr;
@@ -102,6 +104,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         finalityThreshold = _finalityThreshold;
         checkPeriod = _checkPeriod;
         genesis = _genesis;
+        majorityPercentage = _majorityPercentage;
         status = Status.Instantiated;
     }
 
@@ -135,6 +138,19 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             );
         }
     }
+        } else {
+            payable(ipcGatewayAddr).functionCallWithValue(
+                abi.encodeWithSignature("addStake()"),
+                msg.value
+            );
+=======
+    function join(address _validator) external payable mutateState {
+        require(_validator != address(0), "validator address cannot be zero");
+        require(msg.value != 0, "a minimum collateral is required to join the subnet");
+
+        stake[_validator] += msg.value;
+        totalStake += msg.value;
+        validators.add(_validator);
 
     function leave() external mutateState nonReentrant {
         require(stake[msg.sender] != 0, "caller has no stake in subnet");
@@ -222,7 +238,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             }
         }
 
-        bool hasMajority = sum > (totalStake * 2 / 3);
+        bool hasMajority = sum > totalStake * majorityPercentage / 100;
         if (hasMajority == false) return;
 
         // store the commitment on vote majority
@@ -324,4 +340,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         // implicitly return (r, s, v)
     }
+        }
+    }
+
+    receive() external payable {}
 }
