@@ -26,13 +26,9 @@ contract SubnetActorTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
     int64 private constant DEFAULT_CHECK_PERIOD = 50;
-<<<<<<< HEAD
     bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
-=======
-    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 50;
-    bytes private constant GENESIS = new bytes(0);
->>>>>>> fc58e58 (feat: send cross implementation, commitCrossMessage implementation)
+    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
 
     function setUp() public
     {
@@ -68,10 +64,7 @@ contract SubnetActorTest is Test {
 
         SubnetID memory subnet = sa.getParent();
         require(subnet.isRoot());
-<<<<<<< HEAD
         require(subnet.toHash() == parentId.toHash());
-=======
-        require(subnet.getActor() == _ipcGatewayAddr);
     }
 
     function test_Join_Fail_NoMinColalteral() public payable {
@@ -79,7 +72,6 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.expectRevert("a minimum collateral is required to join the subnet");
         sa.join();
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     }
 
     function test_Join_Works(uint256 amount) public payable {
@@ -237,6 +229,8 @@ contract SubnetActorTest is Test {
         _join(validator3);
 
         CheckData memory data = _createCheckData(100);
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: bytes("")});
+        bytes32 checkpointHash = checkpoint.toHash();
         
         Checkpoint memory checkpoint1 = signCheckpoint(100, data);
 

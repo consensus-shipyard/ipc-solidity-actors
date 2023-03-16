@@ -9,52 +9,22 @@ import "./interfaces/ISubnetActor.sol";
 import "./lib/SubnetIDHelper.sol";
 import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
-<<<<<<< HEAD
-<<<<<<< HEAD
 import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
-=======
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
-=======
 import "./lib/StorableMsgHelper.sol";
->>>>>>> 95663b1 (feat: send cross implementation, commitCrossMessage implementation)
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
-<<<<<<< HEAD
-<<<<<<< HEAD
-import "fevmate/utils/FilAddress.sol";
-=======
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
-
-=======
 import "forge-std/console.sol";
->>>>>>> 417915b (fix: subnet id helper, logs and simplification)
 /// @title Gateway Contract
 /// @author LimeChain team
 contract Gateway is IGateway, ReentrancyGuard {
-<<<<<<< HEAD
     using FilAddress for address;
     using FilAddress for address payable;
     using AccountHelper for address;
     using SubnetIDHelper for SubnetID;
-<<<<<<< HEAD
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
-=======
-    using Address for address payable;
-
-    using CheckpointHelper for mapping(int64 => Checkpoint);
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
-=======
-    using Address for address payable;
-    using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for Checkpoint;
-    using CheckpointMappingHelper for mapping(int64 => Checkpoint);
-<<<<<<< HEAD
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
-=======
     using StorableMsgHelper for StorableMsg;
->>>>>>> 95663b1 (feat: send cross implementation, commitCrossMessage implementation)
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -115,7 +85,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
-<<<<<<< HEAD
     /// @notice fee amount charged per cross message
     uint256 public crossMsgFee;
 
@@ -133,23 +102,14 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         _;
     }
-
-    constructor(address[] memory path, int64 checkpointPeriod, uint256 msgFee) {
-=======
-    /// epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
-    mapping(int64 => mapping(bytes32 => uint256[2])) internal children;
-    /// epoch => SubnetID => check => exists
-    mapping(int64 => mapping(bytes32 => mapping(bytes32 => bool)))
-        internal checks;
-
+    
     modifier isRegistered() {
         (bool registered, ) = getSubnet(msg.sender);
         require(registered, "subnet is not registered");
         _;
     }
 
-    constructor(address[] memory path, int64 checkpointPeriod) {
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
+    constructor(address[] memory path, int64 checkpointPeriod, uint256 msgFee) {
         networkName = SubnetID(path);
         minStake = MIN_COLLATERAL_AMOUNT;
         checkPeriod = checkpointPeriod > DEFAULT_CHECKPOINT_PERIOD
@@ -289,11 +249,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         // cross message
         if (commit.hasCrossMsgMeta()) {
-<<<<<<< HEAD
             if (commit.data.crossMsgs.msgsHash != EMPTY_HASH) {
-=======
-            if (commit.data.crossMsgs.msgs.length > 0) {
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
                 bottomUpMsgMeta[bottomUpNonce] = commit.data.crossMsgs;
                 bottomUpMsgMeta[bottomUpNonce].nonce = bottomUpNonce;
                 bottomUpNonce += 1;
@@ -353,14 +309,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         subnet.prevCheckpoint = commit;
 
         if (fee > 0) {
-<<<<<<< HEAD
             distributeRewards(msg.sender, fee);
-=======
-            payable(msg.sender).functionCallWithValue(
-                abi.encodeWithSignature("reward()"),
-                fee
-            );
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
         }
     }
 
@@ -391,30 +340,8 @@ contract Gateway is IGateway, ReentrancyGuard {
     function release() external payable signableOnly {
         require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
 
-<<<<<<< HEAD
         (, int64 epoch, Checkpoint storage checkpoint) = checkpoints
             .getCheckpointPerEpoch(block.timestamp, checkPeriod);
-=======
-    function sendCross(
-        SubnetID memory destination,
-        CrossMsg memory crossMsg
-    ) external payable isRegistered {
-        require(destination.route.length > 0, "no destination for cross-message explicitly set");
-        require(!destination.equals(networkName), "destination is the current network, you are better off with a good ol' message, no cross needed") ;
-        require(crossMsg.message.value == msg.value, "the funds in cross-msg params are not equal to the ones sent in the message");
-        require(crossMsg.message.to.rawAddress != address(0), "invalid to addr");
-        require(msg.value > CROSS_MSG_FEE, "not enough gas to pay cross-message");
-
-        crossMsg.message.to = IPCAddress(destination, crossMsg.message.to.rawAddress);
-        crossMsg.message.from = IPCAddress(networkName, msg.sender);
-
-        uint256 balance = msg.value - CROSS_MSG_FEE;
-
-        (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg, CROSS_MSG_FEE);
-
-        _crossMsgSideEffects(crossMsg, burn, topDownFee);
-    }
->>>>>>> 95663b1 (feat: send cross implementation, commitCrossMessage implementation)
 
         uint256 releaseAmount = msg.value - crossMsgFee;
 
@@ -434,8 +361,6 @@ contract Gateway is IGateway, ReentrancyGuard {
             require(prevMsgsHash == EMPTY_HASH, "no msgmeta found for cid");
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
         if (crossMsgExistInRegistry[epoch][crossMsgHash] == false) {
             crossMsgRegistry[epoch].push(crossMsg);
 
@@ -454,51 +379,68 @@ contract Gateway is IGateway, ReentrancyGuard {
         nonce += 1;
 
         payable(BURNT_FUNDS_ACTOR).sendValue(releaseAmount);
-=======
-    function commitCrossMessage(
-=======
+
+    }
+    function sendCross(
+        SubnetID memory destination,
+        CrossMsg memory crossMsg
+    ) external payable isRegistered {
+        require(destination.route.length > 0, "no destination for cross-message explicitly set");
+        require(!destination.equals(networkName), "destination is the current network, you are better off with a good ol' message, no cross needed") ;
+        require(crossMsg.message.value == msg.value, "the funds in cross-msg params are not equal to the ones sent in the message");
+        require(crossMsg.message.to.rawAddress != address(0), "invalid to addr");
+        require(msg.value > CROSS_MSG_FEE, "not enough gas to pay cross-message");
+
+        crossMsg.message.to = IPCAddress(destination, crossMsg.message.to.rawAddress);
+        crossMsg.message.from = IPCAddress(networkName, msg.sender);
+
+        (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg, CROSS_MSG_FEE);
+
+        _crossMsgSideEffects(crossMsg, burn, topDownFee);
+    }
+
     function _commitCrossMessage(
->>>>>>> fc58e58 (feat: send cross implementation, commitCrossMessage implementation)
         CrossMsg memory crossMessage,
         uint256 fee
     ) internal returns (bool burn, uint256 topDownFee) {
-        SubnetID memory to = crossMessage.message.to.subnetId;
+        SubnetID memory to = _crossMessage.message.to.subnetId;
         require(to.route.length > 0, "error getting subnet from msg");
         require(
-            !crossMessage.message.to.subnetId.equals(networkName),
+            !_crossMessage.message.to.subnetId.equals(networkName),
             "should already be committed"
         );
 
-        if(crossMessage.message.applyType(networkName) == IPCMsgType.BottomUp) {
-            console.log("bottom up");
-            SubnetID memory from = crossMessage.message.from.subnetId;
-            console.log("from: %s", from.toString());
+        if(_crossMessage.message.applyType(networkName) == IPCMsgType.BottomUp) {
+            SubnetID memory from = _crossMessage.message.from.subnetId;
             require(from.route.length > 0, "error getting subnet from msg");
             SubnetID memory nearestCommonParent = to.commonParent(from);
-            console.log("nearestCommonParent: %s", nearestCommonParent.toString());
             if(nearestCommonParent.equals(networkName)) {
-                console.log('nearestCommonParent.equals(networkName)');
-                topDownFee = fee;
-                _commitTopDownMsg(crossMessage);
-            } else {
-                console.log('not nearestCommonParent.equals(networkName)');
-                burn = crossMessage.message.value > 0;
-                _commitBottomUpMsg(crossMessage, fee, _getCurrentEpoch());
+                console.log("nearest common parent");
+                // message has already reached common parent, send it down
+                topDownFee = _fee;
+                _commitTopDownMsg(_crossMessage);
             }
-        } else if(crossMessage.message.applyType(networkName) == IPCMsgType.TopDown) {
-            console.log("top down");
+            else {
+                console.log("not near common parent");
+                // propagate bottom-up message up
+                burn = _crossMessage.message.value > 0;
+                _commitBottomUpMsg(_crossMessage, _fee);
+            }
+        } else {
+            console.log("here");
+            // top down message path
             appliedTopDownNonce += 1;
-            _commitTopDownMsg(crossMessage);
-        } 
+            _commitTopDownMsg(_crossMessage);
+        }
+        
     }
 
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
         StorableMsg memory storableMsg = crossMessage.message;
         SubnetID memory to  = storableMsg.to.subnetId;
+        console.log("to: %s", to.toString());
         SubnetID memory subId = networkName.down(to);
-        console.log("networkName: ", networkName.toString());
-        console.log("to: ", to.toString());
-        console.log("subId: ", subId.toString());
+        console.log("subId: %s", subId.toString());
         require(subId.route.length > 0, "couldn't compute the next subnet in route");
         (bool found, Subnet storage subnet) = getSubnet(subId.getActor());
         require(found, "subnet not found");
@@ -510,8 +452,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     
     function _commitBottomUpMsg(
         CrossMsg memory crossMessage,
-        uint256 fee,
-        int64 epoch
+        uint256 fee
     ) internal {
         (,,Checkpoint storage checkpoint ) = checkpoints.getCheckpointPerEpoch(block.number, checkPeriod);
         CrossMsgMeta storage meta = checkpoint.data.crossMsgs;
@@ -522,30 +463,19 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function _crossMsgSideEffects(CrossMsg memory crossMsg, bool burn, uint256 fee) internal nonReentrant {
-        console.log("crossMsgSideEffects");
         if(burn)
-            console.log("burning funds");
             payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
         if(fee == 0) return;
-        console.log("fee: ", fee);
         
         SubnetID memory down = networkName.down(crossMsg.message.to.subnetId);
-        console.log("distribute network: ", down.toString());
-        console.log("distribute actor: ", down.getActor());
         if(down.route.length == 0 || down.getActor() == address(0)) return;
 
         payable(down.getActor()).sendValue(fee);
     }
 
-    function _getCurrentEpoch() internal view returns (int64 epoch) {
-        epoch = (int64(uint64(block.number)) / checkPeriod) * checkPeriod;
->>>>>>> 95663b1 (feat: send cross implementation, commitCrossMessage implementation)
-    }
-
     function getSubnet(
         address actor
     ) internal view returns (bool found, Subnet storage subnet) {
-<<<<<<< HEAD
         SubnetID memory subnetId = networkName.createSubnetId(actor);
 
         return getSubnet(subnetId);
@@ -564,11 +494,5 @@ contract Gateway is IGateway, ReentrancyGuard {
             abi.encodeWithSignature("reward()"),
             amount
         );
-=======
-        SubnetID memory subnetId = networkName.setActor(actor);
-
-        subnet = subnets[subnetId.toHash()];
-        found = subnetId.toHash() == subnet.id.toHash();
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     }
 }
