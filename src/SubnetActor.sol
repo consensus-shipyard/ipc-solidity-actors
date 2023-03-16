@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
+
 import "./enums/ConsensusType.sol";
 import "./enums/Status.sol";
 import "./structs/Checkpoint.sol";
@@ -18,17 +19,8 @@ import "openzeppelin-contracts/utils/Address.sol";
 contract SubnetActor is ISubnetActor, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
-<<<<<<< HEAD
-<<<<<<< HEAD
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
-=======
-    using CheckpointHelper for mapping(int64 => Checkpoint);
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
-=======
-    using CheckpointHelper for Checkpoint;
-    using CheckpointMappingHelper for mapping(int64 => Checkpoint);
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     using Address for address payable;
 
     /// @notice Human-readable name of the subnet.
@@ -100,20 +92,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         bytes memory _genesis,
         uint8 _majorityPercentage
     ) {
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> adea5c2 (refactor: join method and formatting)
         require(
             _minValidatorStake > 0,
             "minValidatorStake must be greater than 0"
         );
-<<<<<<< HEAD
-=======
-        require(_minValidatorStake > 0, "minValidatorStake must be greater than 0");
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
-=======
->>>>>>> adea5c2 (refactor: join method and formatting)
         require(_minValidators > 0, "minValidators must be greater than 0");
         require(_majorityPercentage <= 100, "majorityPercentage must be <= 100");
         parentId = _parentId;
@@ -128,24 +110,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         majorityPercentage = _majorityPercentage;
         status = Status.Instantiated;
     }
-
-<<<<<<< HEAD
-<<<<<<< HEAD
     receive() external payable onlyGateway {}
-=======
-    receive() external payable {}
-=======
-    receive() external payable onlyGateway {}
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
-    function join() external payable mutateState {
-        require(
-            msg.value > 0,
-            "a minimum collateral is required to join the subnet"
-        );
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
-
-<<<<<<< HEAD
     function join() external payable mutateState {
         require(
             msg.value > 0,
@@ -159,33 +125,16 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             !validators.contains(msg.sender) &&
             (consensus != ConsensusType.Delegated || validators.length() == 0)
         ) validators.add(msg.sender);
-<<<<<<< HEAD
-=======
-        stake[msg.sender] += msg.value;
-        totalStake += msg.value;
-        if(!validators.contains(msg.sender) && stake[msg.sender] >= minValidatorStake)
-            validators.add(msg.sender);
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
-=======
->>>>>>> adea5c2 (refactor: join method and formatting)
 
         if (status == Status.Instantiated) {
             if (totalStake >= minValidatorStake) {
-<<<<<<< HEAD
                 payable(ipcGatewayAddr).functionCallWithValue(
-=======
-                payable(parentId.getActor()).functionCallWithValue(
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
                     abi.encodeWithSignature("register()"),
                     totalStake
                 );
             }
         } else {
-<<<<<<< HEAD
             payable(ipcGatewayAddr).functionCallWithValue(
-=======
-            payable(parentId.getActor()).functionCallWithValue(
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
                 abi.encodeWithSignature("addStake()"),
                 msg.value
             );
@@ -203,11 +152,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         if (status == Status.Terminating) return;
 
-<<<<<<< HEAD
         IGateway(ipcGatewayAddr).releaseStake(amount);
-=======
-        IGateway(parentId.getActor()).releaseStake(amount);
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
 
         payable(msg.sender).sendValue(amount);
     }
@@ -218,13 +163,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             "there is still collateral in the subnet"
         );
         require(
-<<<<<<< HEAD
-            address(this).balance == 0,
-            "there is still collateral in the subnet"
-        );
-        require(
-=======
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
             status != Status.Terminating && status != Status.Killed,
             "the subnet is already in a killed or terminating state"
         );
@@ -249,8 +187,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             "epoch in checkpoint doesn't correspond with a signing window"
         );
         require(
-<<<<<<< HEAD
-<<<<<<< HEAD
             checkpoint.data.source.toHash() ==
                 parentId.createSubnetId(address(this)).toHash(),
             "submitting checkpoint with the wrong source"
@@ -268,15 +204,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             "checkpoint data hash is not the same as prevHash"
         );
 
-        bytes32 messageHash = checkpoint.toHash();
-
-=======
-            keccak256(abi.encode(checkpoint.data.source)) ==
-                keccak256(abi.encode(parentId.setActor(address(this)))),
-=======
+        require(
             checkpoint.data.source.toHash() ==
                 parentId.setActor(address(this)).toHash(),
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
             "submitting checkpoint with the wrong source"
         );
 
@@ -292,17 +222,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             );
         }
 
-<<<<<<< HEAD
-        bytes32 messageHash = keccak256(abi.encode(checkpoint.data));
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
-=======
         bytes32 messageHash = checkpoint.toHash();
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
+        
         require(
             _recoverSigner(messageHash, checkpoint.signature) == msg.sender,
             "invalid signature"
         );
-<<<<<<< HEAD
 
         EnumerableSet.AddressSet storage voters = windowChecks[messageHash];
         require(
@@ -314,35 +239,13 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         uint sum = 0;
         for (uint i = 0; i < voters.length(); ) {
-=======
-
-        bytes32 cid = checkpoint.toHash();
-        EnumerableSet.AddressSet storage voters = windowChecks[cid];
-        require(
-            !voters.contains(msg.sender),
-            "miner has already voted the checkpoint"
-        );
-
-        voters.add(msg.sender);
-
-        uint sum = 0;
-        for (uint i = 0; i < voters.length(); i++) {
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
             sum += stake[voters.at(i)];
             unchecked {
                 ++i;
             }
         }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
-        bool hasMajority = sum > (totalStake * 2 / 3);
-=======
-        bool hasMajority = sum > (totalStake / 2);
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
-=======
         bool hasMajority = sum > totalStake * majorityPercentage / 100;
->>>>>>> fc58e58 (feat: send cross implementation, commitCrossMessage implementation)
         if (hasMajority == false) return;
 
         // store the commitment on vote majority
@@ -352,7 +255,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         );
         checkpoints[checkpoint.data.epoch] = checkpoint;
         //clear the votes
-<<<<<<< HEAD
         address[] memory votersArray = voters.values();
         for (uint i = 0; i < votersArray.length; ) {
             (bool success) = voters.remove(votersArray[i]);
@@ -368,40 +270,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     function reward() public payable onlyGateway nonReentrant {
         uint validatorLength = validators.length();
         require(validatorLength != 0, "no validators in subnet");
-        require(
-            address(this).balance >= validatorLength,
-            "we need to distribute at least one wei to each validator"
-        );
 
-        uint rewardAmount = address(this).balance / validatorLength;
-=======
-        for (uint i = 0; i < voters.length(); i++) {
-            voters.remove(voters.at(i));
-        }
-
-        IGateway(parentId.getActor()).commitChildCheck(checkpoint);
-    }
-
-    function reward() public payable onlyGateway nonReentrant {
-        uint validatorLength = validators.length();
-        require(validatorLength != 0, "no validators in subnet");
-<<<<<<< HEAD
-<<<<<<< HEAD
-
-        uint rewardAmount = msg.value / validatorLength;
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
-=======
         require(address(this).balance >= validatorLength, "we neeed to distribute at least one wei to each validator");
-        
-=======
-        require(
-            address(this).balance >= validatorLength,
-            "we neeed to distribute at least one wei to each validator"
-        );
 
->>>>>>> adea5c2 (refactor: join method and formatting)
         uint rewardAmount = address(this).balance / validatorLength;
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
 
         for (uint i = 0; i < validatorLength; ) {
             payable(validators.at(i)).sendValue(rewardAmount);
@@ -413,15 +285,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
     function getParent() external view returns (SubnetID memory) {
         return parentId;
-    }
-
-<<<<<<< HEAD
-    function validatorCount() external view returns (uint) {
-        return validators.length();
-    }
-
-    function validatorAt(uint index) external view returns (address) {
-        return validators.at(index);
     }
 
     function windowCheckCount(bytes32 checkpointHash)
@@ -440,7 +303,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return windowChecks[checkpointHash].at(index);
     }
 
-=======
     function validatorCount() external returns (uint) {
         return validators.length();
     }
@@ -449,7 +311,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return validators.at(index);
     }
 
->>>>>>> 25e841e (feat: address library helper, SA formatting and method reordering, top level natspec comments)
     function _recoverSigner(
         bytes32 _ethSignedMessageHash,
         bytes memory _signature
@@ -490,4 +351,5 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
         // implicitly return (r, s, v)
     }
+
 }
