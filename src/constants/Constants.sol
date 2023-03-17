@@ -10,3 +10,6 @@ address constant STORAGE_MARKET_ACTOR = address(5);
 address constant VERIFIED_REGISTRY_ACTOR = address(6);
 address constant DATACAP_TOKEN_ACTOR = address(7);
 address constant BURNT_FUNDS_ACTOR = address(99);
+address constant MULTISIG_ACTOR = address(98);
+bytes32 constant EMPTY_HASH = bytes32("");
+bytes constant EMPTY_BYTES = bytes("");

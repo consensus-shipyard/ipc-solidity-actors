@@ -8,21 +8,24 @@ import "../src/Gateway.sol";
 import "../src/SubnetActor.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
+import "../src/lib/CrossMsgHelper.sol";
 
 contract GatewayDeploymentTest is Test {
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for Checkpoint;
+    using CrossMsgHelper for CrossMsg;
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
     address constant PAYABLE_SUBNET_ADDRESS = address(10);
+    address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
     string private constant DEFAULT_NETWORK_NAME = "test";
     uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
     int64 private constant DEFAULT_CHECK_PERIOD = 50;
-    bytes private constant GENESIS = new bytes(0);
+    bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
 
     Gateway gw;
@@ -299,7 +302,7 @@ contract GatewayDeploymentTest is Test {
         sa.join{value: MIN_COLLATERAL_AMOUNT}();
 
         vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount);
+        vm.deal(funderAddress, fundAmount + 1);
 
         fund(funderAddress, fundAmount);
 
@@ -499,31 +502,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function commitChildCheck(Checkpoint memory commit) internal returns(Checkpoint memory){
-        gw.commitChildCheck(commit);
-
-        int64 epoch = (int64(uint64(block.number)) / gw.checkPeriod()) *
-            gw.checkPeriod();
-
-        (CheckData memory data, bytes memory signature) = gw.checkpoints(epoch);
-        
-        require(data.epoch == epoch);
-
-        bool matchedSubnetId;
-        for (uint childIndex = 0; childIndex < data.children.length; childIndex++) {
-            if(
-                data.children[childIndex].source.toHash() ==
-                commit.data.source.toHash()
-            ) {
-                matchedSubnetId = true;
-            }
-        }
-        require(matchedSubnetId == true);
-
-        return Checkpoint(data, signature);
-    }
-
-    function test_Fund_Works_SingleFunding() public {
+    function test_Fund_Works_EthAccountSingleFunding() public {
         address validatorAddress = address(100);
         address funderAddress = address(101);
         uint fundAmount = 1 ether;
@@ -533,9 +512,37 @@ contract GatewayDeploymentTest is Test {
         sa.join{value: MIN_COLLATERAL_AMOUNT}();
 
         vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount);
-
+        vm.deal(funderAddress, fundAmount + 1);
+        
         fund(funderAddress, fundAmount);
+    }
+
+    function test_Fund_Works_BLSAccountSingleFunding() public {
+        address validatorAddress = address(100);
+        uint fundAmount = 1 ether;
+
+        vm.prank(validatorAddress);
+        vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT);
+        sa.join{value: MIN_COLLATERAL_AMOUNT}();
+
+        vm.startPrank(BLS_ACCOUNT_ADDREESS);
+        vm.deal(BLS_ACCOUNT_ADDREESS, fundAmount + 1);
+        
+        fund(BLS_ACCOUNT_ADDREESS, fundAmount);
+    }
+
+    function test_Fund_Works_MultisigSingleFunding() public {
+        address validatorAddress = address(100);
+        uint fundAmount = 1 ether;
+
+        vm.prank(validatorAddress);
+        vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT);
+        sa.join{value: MIN_COLLATERAL_AMOUNT}();
+
+        vm.startPrank(MULTISIG_ACTOR);
+        vm.deal(MULTISIG_ACTOR, fundAmount + 1);
+        
+        fund(MULTISIG_ACTOR, fundAmount);
     }
 
     function test_Fund_Works_MultipleFundings() public {
@@ -551,7 +558,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.startPrank(funderAddress);
         for (uint i = 0; i < numberOfFunds; i++) {
-            vm.deal(funderAddress, fundAmount);
+            vm.deal(funderAddress, fundAmount + 1);
 
             fund(funderAddress, fundAmount);   
         }
@@ -567,7 +574,7 @@ contract GatewayDeploymentTest is Test {
         sa.join{value: MIN_COLLATERAL_AMOUNT}();
 
         vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount);
+        vm.deal(funderAddress, fundAmount + 1);
 
         address[] memory wrongPath = new address[](3);
         wrongPath[0] = address(1);
@@ -576,6 +583,25 @@ contract GatewayDeploymentTest is Test {
         vm.expectRevert("couldn't compute the next subnet in route");
 
         gw.fund{value: fundAmount}(SubnetID(wrongPath));
+    }
+
+    function test_Fund_Fails_InvalidAccount() public {
+        address validatorAddress = address(100);
+        address invalidAccount = address(sa);
+        uint fundAmount = 1 ether;
+
+        vm.prank(validatorAddress);
+        vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT);
+        sa.join{value: MIN_COLLATERAL_AMOUNT}();
+
+        vm.startPrank(invalidAccount);
+        vm.deal(invalidAccount, fundAmount + 1);
+
+        (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
+
+        vm.expectRevert("the caller is not an account nor a multi-sig");
+
+        gw.fund{value: fundAmount}(subnetId);
     }
 
     function test_Fund_Fails_InsufficientAmount() public {
@@ -587,6 +613,7 @@ contract GatewayDeploymentTest is Test {
         sa.join{value: MIN_COLLATERAL_AMOUNT}();
 
         vm.startPrank(funderAddress);
+        vm.deal(funderAddress, 1 ether);
 
         (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
 
@@ -611,8 +638,58 @@ contract GatewayDeploymentTest is Test {
         gw.release{value: 0}();
     }
 
+    function test_Release_Fails_InvalidAccount() public {
+        address[] memory path = new address[](2);
+        path[0] = address(1);
+        path[1] = address(2);
+        
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, CROSS_MSG_FEE);
+
+        address invalidAccount = address(sa);
+
+        vm.startPrank(invalidAccount);
+        vm.deal(invalidAccount, 1 ether);
+        vm.expectRevert("the caller is not an account nor a multi-sig");
+
+        gw.release{value: 1 ether}();
+    }
+
+    function test_Release_Works_BLSAccount(uint256 releaseAmount, uint256 crossMsgFee) public {
+        vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
+        vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
+
+        address[] memory path = new address[](2);
+        path[0] = makeAddr("root");
+        path[1] = makeAddr("subnet_one");
+        
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, crossMsgFee);
+
+        vm.roll(0);
+        vm.startPrank(BLS_ACCOUNT_ADDREESS);
+        vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
+
+        release(BLS_ACCOUNT_ADDREESS, releaseAmount, crossMsgFee, 0);
+    }
+
+    function test_Release_Works_Multisig(uint256 releaseAmount, uint256 crossMsgFee) public {
+        vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
+        vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
+
+        address[] memory path = new address[](2);
+        path[0] = makeAddr("root");
+        path[1] = makeAddr("subnet_one");
+        
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, crossMsgFee);
+
+        vm.roll(0);
+        vm.startPrank(MULTISIG_ACTOR);
+        vm.deal(MULTISIG_ACTOR, releaseAmount + 1);
+
+        release(MULTISIG_ACTOR, releaseAmount, crossMsgFee, 0);
+    }
+
     function test_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(releaseAmount > 0);
+        vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
 
         address[] memory path = new address[](2);
@@ -625,7 +702,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.roll(0);
         vm.startPrank(callerAddress);
-        vm.deal(callerAddress, releaseAmount);
+        vm.deal(callerAddress, releaseAmount + 1);
 
         release(callerAddress, releaseAmount, crossMsgFee, 0);
     }
@@ -644,11 +721,35 @@ contract GatewayDeploymentTest is Test {
 
         vm.roll(0);
         vm.startPrank(callerAddress);
-        vm.deal(callerAddress, 2 * releaseAmount);
+        vm.deal(callerAddress, 2 * releaseAmount + 1);
 
         release(callerAddress, releaseAmount, crossMsgFee, 0);
         
         release(callerAddress, releaseAmount, crossMsgFee, 0);
+    }
+
+    function commitChildCheck(Checkpoint memory commit) internal returns(Checkpoint memory){
+        gw.commitChildCheck(commit);
+
+        int64 epoch = (int64(uint64(block.number)) / gw.checkPeriod()) *
+            gw.checkPeriod();
+
+        (CheckData memory data, bytes memory signature) = gw.checkpoints(epoch);
+        
+        require(data.epoch == epoch);
+
+        bool matchedSubnetId;
+        for (uint childIndex = 0; childIndex < data.children.length; childIndex++) {
+            if(
+                data.children[childIndex].source.toHash() ==
+                commit.data.source.toHash()
+            ) {
+                matchedSubnetId = true;
+            }
+        }
+        require(matchedSubnetId == true);
+
+        return Checkpoint(data, signature);
     }
 
     function fund(address funderAddress, uint256 fundAmount) internal {
@@ -713,8 +814,8 @@ contract GatewayDeploymentTest is Test {
             require(storableMsg.value == releaseAmountWithSubtractedFee);
             require(keccak256(abi.encode(storableMsg.from)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName(), rawAddress: BURNT_FUNDS_ACTOR}))));
             require(keccak256(abi.encode(storableMsg.to)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName().getParentSubnet(), rawAddress: callerAddress}))));
-            require(gw.crossMsgExistInRegistry(epoch, keccak256(abi.encode(CrossMsg(storableMsg, wrapped)))) == true);
-            require(keccak256(abi.encode(crossMsg)) == keccak256(abi.encode(CrossMsg(storableMsg, wrapped))));
+            require(gw.crossMsgExistInRegistry(epoch, CrossMsg(storableMsg, wrapped).toHash()) == true);
+            require(crossMsg.toHash() == CrossMsg(storableMsg, wrapped).toHash());
         }
 
         require(gw.nonce() == expectedNonce);
@@ -730,9 +831,9 @@ contract GatewayDeploymentTest is Test {
 
         ChildCheck[] memory children = new ChildCheck[](0);
 
-        CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({msgsHash: bytes32(""), value: 0, nonce: 0, fee: 0});
-        CheckData memory data = CheckData({source: subnetId, tipSet: new bytes(0), epoch: int64(blockNumber), prevHash: bytes32(0), children: children, crossMsgs: crossMsgMeta });
-        Checkpoint memory checkpoint = Checkpoint({data: data, signature: new bytes(0)});
+        CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({msgsHash: EMPTY_HASH, value: 0, nonce: 0, fee: 0});
+        CheckData memory data = CheckData({source: subnetId, tipSet: EMPTY_BYTES, epoch: int64(blockNumber), prevHash: EMPTY_HASH, children: children, crossMsgs: crossMsgMeta });
+        Checkpoint memory checkpoint = Checkpoint({data: data, signature: EMPTY_BYTES});
 
         return checkpoint;
     }

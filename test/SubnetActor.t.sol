@@ -26,7 +26,7 @@ contract SubnetActorTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
     int64 private constant DEFAULT_CHECK_PERIOD = 50;
-    bytes private constant GENESIS = new bytes(0);
+    bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
 
     function setUp() public
@@ -369,13 +369,13 @@ contract SubnetActorTest is Test {
     function _createCheckData(int64 epoch) internal view returns (CheckData memory data){
         SubnetID memory subnet = sa.getParent().createSubnetId(address(sa));
 
-        CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({msgsHash: bytes32(""), value: 0, nonce: 0, fee: 0});
+        CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({msgsHash: EMPTY_HASH, value: 0, nonce: 0, fee: 0});
 
         ChildCheck[] memory children = new ChildCheck[](1);
         bytes32[] memory checks = new bytes32[](0);
         children[0] = ChildCheck({source: subnet, checks: checks});
 
-        data = CheckData({source: subnet, tipSet: new bytes(0), epoch: epoch, prevHash: CheckpointHelper.EMPTY_CHECKPOINT_DATA_HASH, children: children, crossMsgs: crossMsgMeta });
+        data = CheckData({source: subnet, tipSet: EMPTY_BYTES, epoch: epoch, prevHash: CheckpointHelper.EMPTY_CHECKPOINT_DATA_HASH, children: children, crossMsgs: crossMsgMeta });
     }
 
     function _join(address _validator) internal {

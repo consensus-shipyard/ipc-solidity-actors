@@ -69,11 +69,12 @@ library SubnetIDHelper {
 
         uint i = 0;
         while (
-            i < subnet1.route.length &&
             i < subnet2.route.length &&
             subnet1.route[i] == subnet2.route[i]
         ) {
-            i++;
+            unchecked {
+                i++;
+            }
         }
 
         if (i == 0) {
@@ -82,11 +83,14 @@ library SubnetIDHelper {
 
         address[] memory route = new address[](i + 1);
 
-        for (uint j = 0; j < i; j++) {
+        for (uint j = 0; j < i; ) {
             route[j] = subnet1.route[j];
+            unchecked {
+                j++;
+            }
         }
 
-        if (i >= subnet2.route.length) route[i] = subnet1.route[i];
+        if (i < subnet1.route.length) route[i] = subnet1.route[i];
 
         return SubnetID({route: route});
     }
