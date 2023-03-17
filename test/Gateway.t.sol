@@ -696,26 +696,32 @@ contract GatewayDeploymentTest is Test {
         uint expectedBurntBalance = BURNT_FUNDS_ACTOR.balance + releaseAmountWithSubtractedFee;
         uint expectedCheckpointDataFee = cpDataBefore.crossMsgs.fee + crossMsgFee;
         uint expectedCheckpointDataValue = cpDataBefore.crossMsgs.value + releaseAmount;
-        uint expectedRegistryLenght = gw.getMsgsRegistryLength(cpDataBefore.crossMsgs.msgsHash) + 1;
+        uint expectedRegistryLength = gw.getCrossMsgsLength(cpDataBefore.crossMsgs.msgsHash) + 1;
 
         gw.release{value: releaseAmount}();
 
         (CheckData memory cpDataAfter, ) = gw.checkpoints(epoch);
 
-        for (uint i = 0; i < gw.getMsgsRegistryLength(cpDataAfter.crossMsgs.msgsHash); i++) {
-            (StorableMsg memory crossMsg, bool wrapped) = gw.checkMsgRegistry(cpDataAfter.crossMsgs.msgsHash, i);
+        require(cpDataAfter.crossMsgs.fee == expectedCheckpointDataFee);
+        require(cpDataAfter.crossMsgs.value == expectedCheckpointDataValue);
 
-            require(crossMsg.nonce == i);
-            require(crossMsg.value == releaseAmountWithSubtractedFee);
-            require(keccak256(abi.encode(crossMsg.from)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName(), rawAddress: BURNT_FUNDS_ACTOR}))));
-            require(keccak256(abi.encode(crossMsg.to)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName().getParentSubnet(), rawAddress: callerAddress}))));
-            require(gw.crossMsgExistInRegistry(epoch, keccak256(abi.encode(CrossMsg(crossMsg, wrapped)))) == true);
+        for (uint i = 0; i < expectedRegistryLength; i++) {
+            (StorableMsg memory storableMsg, bool wrapped) = gw.crossMsgRegistry(epoch, i);
+            CrossMsg memory crossMsg = gw.getCrossMsg(cpDataAfter.crossMsgs.msgsHash, i);
+
+            require(storableMsg.nonce == i);
+            require(storableMsg.value == releaseAmountWithSubtractedFee);
+            require(keccak256(abi.encode(storableMsg.from)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName(), rawAddress: BURNT_FUNDS_ACTOR}))));
+            require(keccak256(abi.encode(storableMsg.to)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName().getParentSubnet(), rawAddress: callerAddress}))));
+            require(gw.crossMsgExistInRegistry(epoch, keccak256(abi.encode(CrossMsg(storableMsg, wrapped)))) == true);
+            require(keccak256(abi.encode(crossMsg)) == keccak256(abi.encode(CrossMsg(storableMsg, wrapped))));
         }
 
         require(gw.nonce() == expectedNonce);
-        require(cpDataAfter.crossMsgs.fee == expectedCheckpointDataFee);
-        require(cpDataAfter.crossMsgs.value == expectedCheckpointDataValue);
-        require(gw.getMsgsRegistryLength(cpDataAfter.crossMsgs.msgsHash) == expectedRegistryLenght);
+        require(gw.getCrossMsgsLength(cpDataBefore.crossMsgs.msgsHash) == 0);
+        require(gw.getCrossMsgsLength(cpDataAfter.crossMsgs.msgsHash) == expectedRegistryLength);
+        require(gw.crossMsgCidRegistry(epoch) == cpDataAfter.crossMsgs.msgsHash);
+        require(gw.crossMsgEpochRegistry(cpDataAfter.crossMsgs.msgsHash) == epoch);
         require(BURNT_FUNDS_ACTOR.balance == expectedBurntBalance);
     }
 

@@ -44,12 +44,17 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice Checkpoint templates in the GW per epoch
     mapping(int64 => Checkpoint) public checkpoints;
 
-    /// @notice Indicates if a given crossMsg already exists in the current checkpoint
-    /// epoch => cross msg => exists
+    /// @notice Stores information about the list of messages and child msgMetas being propagated in checkpoints to the top of the hierarchy.
+    mapping(int64 => CrossMsg[]) public crossMsgRegistry;
+
+    /// @notice Indicates if a crossMsg already exists for a given epoch(checkpoint)
     mapping(int64 => mapping(bytes32 => bool)) public crossMsgExistInRegistry;
 
-    /// @notice Stores information about the list of messages and child msgMetas being propagated in checkpoints to the top of the hierarchy.
-    mapping(bytes32 => CrossMsg[]) public checkMsgRegistry;
+    /// @notice Stores a pointer to CrossMsg[] in crossMsgRegistry variable for the given epoch
+    mapping(int64 => bytes32) public crossMsgCidRegistry;
+
+    /// @notice Stores an epoch for the given pointer to CrossMsg[]
+    mapping(bytes32 => int64) public crossMsgEpochRegistry;
 
     uint256 public lastPostboxId;
     /// @notice Postbox keeps track for an EOA of all the cross-net messages triggered by
@@ -93,10 +98,21 @@ contract Gateway is IGateway, ReentrancyGuard {
         crossMsgFee = msgFee;
     }
 
-    function getMsgsRegistryLength(
+    // TODO: extract msgsHash from the real CID
+    function getCrossMsgsLength(
         bytes32 msgsHash
     ) external view returns (uint256) {
-        return checkMsgRegistry[msgsHash].length;
+        int64 epoch = crossMsgEpochRegistry[msgsHash];
+        return crossMsgRegistry[epoch].length;
+    }
+
+    // TODO: extract msgsHash from the real CID
+    function getCrossMsg(
+        bytes32 msgsHash,
+        uint256 index
+    ) external view returns (CrossMsg memory) {
+        int64 epoch = crossMsgEpochRegistry[msgsHash];
+        return crossMsgRegistry[epoch][index];
     }
 
     function getSubnetTopDownMsgsLength(
@@ -339,22 +355,20 @@ contract Gateway is IGateway, ReentrancyGuard {
         bytes32 crossMsgHash = keccak256(abi.encode(crossMsg));
 
         if (
-            checkpoint.hasCrossMsgMeta() &&
-            checkMsgRegistry[prevMsgsHash].length == 0
+            checkpoint.hasCrossMsgMeta() && crossMsgRegistry[epoch].length == 0
         ) {
             require(prevMsgsHash == bytes32(""), "no msgmeta found for cid");
         }
-        
+
         if (crossMsgExistInRegistry[epoch][crossMsgHash] == false) {
-            checkMsgRegistry[prevMsgsHash].push(crossMsg);
+            crossMsgRegistry[epoch].push(crossMsg);
 
-            newMsgsHash = keccak256(abi.encode(checkMsgRegistry[prevMsgsHash]));
-
-            checkMsgRegistry[newMsgsHash] = checkMsgRegistry[prevMsgsHash];
-
-            delete checkMsgRegistry[prevMsgsHash];
+            newMsgsHash = keccak256(abi.encode(crossMsgRegistry[epoch]));
         }
 
+        crossMsgEpochRegistry[prevMsgsHash] = -1;
+        crossMsgEpochRegistry[newMsgsHash] = epoch;
+        crossMsgCidRegistry[epoch] = newMsgsHash;
         crossMsgExistInRegistry[epoch][crossMsgHash] = true;
 
         checkpoint.data.crossMsgs.msgsHash = newMsgsHash;
