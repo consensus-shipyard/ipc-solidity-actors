@@ -11,10 +11,10 @@ library CheckpointHelper {
         keccak256(
             abi.encode(
                 CrossMsgMeta({
+                    msgsHash: bytes32(""),
                     nonce: 0,
                     value: 0,
-                    fee: 0,
-                    msgs: new CrossMsg[](0)
+                    fee: 0
                 })
             )
         );
@@ -29,10 +29,10 @@ library CheckpointHelper {
                     prevHash: bytes32(0),
                     children: new ChildCheck[](0),
                     crossMsgs: CrossMsgMeta({
+                        msgsHash: bytes32(""),
                         nonce: 0,
                         value: 0,
-                        fee: 0,
-                        msgs: new CrossMsg[](0)
+                        fee: 0
                     })
                 })
             )

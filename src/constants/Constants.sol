@@ -10,4 +10,3 @@ address constant STORAGE_MARKET_ACTOR = address(5);
 address constant VERIFIED_REGISTRY_ACTOR = address(6);
 address constant DATACAP_TOKEN_ACTOR = address(7);
 address constant BURNT_FUNDS_ACTOR = address(99);
-uint256 constant CROSS_MSG_FEE = 100 * 10**9;

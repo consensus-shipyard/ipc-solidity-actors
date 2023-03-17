@@ -58,4 +58,36 @@ library SubnetIDHelper {
     function isRoot(SubnetID memory subnet) public pure returns (bool) {
         return subnet.route.length == 1;
     }
+
+    function down(
+        SubnetID calldata subnet1,
+        SubnetID calldata subnet2
+    ) public pure returns (SubnetID memory) {
+        if (subnet1.route.length <= subnet2.route.length) {
+            return SubnetID({route: new address[](0)});
+        }
+
+        uint i = 0;
+        while (
+            i < subnet1.route.length &&
+            i < subnet2.route.length &&
+            subnet1.route[i] == subnet2.route[i]
+        ) {
+            i++;
+        }
+
+        if (i == 0) {
+            return SubnetID({route: new address[](0)});
+        }
+
+        address[] memory route = new address[](i + 1);
+
+        for (uint j = 0; j < i; j++) {
+            route[j] = subnet1.route[j];
+        }
+
+        if (i >= subnet2.route.length) route[i] = subnet1.route[i];
+
+        return SubnetID({route: route});
+    }
 }

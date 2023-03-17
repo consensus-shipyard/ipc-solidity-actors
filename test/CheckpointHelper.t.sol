@@ -22,7 +22,7 @@ contract CheckpointHelperTest is Test {
         checkpoint.data.epoch = 10;
 
         // checkpoint with epoch = 10
-        bytes32 expected = 0xe13e6ce468f1108376290016582facd126f48f28ef238d0551f5b7a98d8ee334;
+        bytes32 expected = 0xeb38f3be9a69f7b48ad5fecc6e052d96a0c77c986204d4c96c556f22d472cb08;
 
         require(expected == checkpoint.toHash());
     }

@@ -27,12 +27,13 @@ contract SubnetActorTest is Test {
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
     int64 private constant DEFAULT_CHECK_PERIOD = 50;
     bytes private constant GENESIS = new bytes(0);
+    uint256 constant CROSS_MSG_FEE = 10 gwei;
 
     function setUp() public
     {
         address[] memory path = new address[](1);
         path[0] = address(0);
-        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD);
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, CROSS_MSG_FEE);
 
         path[0] = address(gw);
         SubnetID memory parentId = SubnetID(path);
@@ -366,17 +367,9 @@ contract SubnetActorTest is Test {
 
 
     function _createCheckData(int64 epoch) internal view returns (CheckData memory data){
-         SubnetID memory subnet = sa.getParent().createSubnetId(address(sa));
+        SubnetID memory subnet = sa.getParent().createSubnetId(address(sa));
 
-        IPCAddress memory from = IPCAddress({subnetId: subnet, rawAddress: address(1)});
-        IPCAddress memory to = IPCAddress({subnetId: subnet, rawAddress: address(2)});
-        
-        StorableMsg memory storableMsg = StorableMsg({from: from, to: to, method: 0, value: 0, nonce: 0, params: bytes("")});
-
-        CrossMsg[] memory crossMsgs = new CrossMsg[](1);
-        crossMsgs[0] = CrossMsg({wrapped: false, message: storableMsg});
-
-        CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({value: 0, nonce: 0, fee: 0, msgs: crossMsgs});
+        CrossMsgMeta memory crossMsgMeta = CrossMsgMeta({msgsHash: bytes32(""), value: 0, nonce: 0, fee: 0});
 
         ChildCheck[] memory children = new ChildCheck[](1);
         bytes32[] memory checks = new bytes32[](0);
