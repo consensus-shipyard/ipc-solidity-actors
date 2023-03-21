@@ -289,7 +289,38 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_Kill_Fail_CircSupplyMoreThanZero() public {
-        // TODO: implement once cross msg is implemented
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+
+        address receiver = vm.addr(101);
+
+        SubnetID memory from = gw.getNetworkName().createSubnetId(caller);
+        SubnetID memory destination = from.createSubnetId(receiver);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: SubnetID({route: new address[](1)}),
+                    rawAddress: caller
+                }),
+                to: IPCAddress({
+                    subnetId: SubnetID({route: new address[](1)}),
+                    rawAddress: caller
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: 0,
+                params: new bytes(0)
+            }),
+            wrapped: true
+        });
+
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
+
+        vm.expectRevert("cannot kill a subnet that still holds user funds in its circ. supply");
+        gw.kill();
     }
 
     function testCommitChildCheck_Works(uint64 blockNumber) public {
