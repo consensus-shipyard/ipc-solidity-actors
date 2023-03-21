@@ -12,8 +12,11 @@ library SubnetIDHelper {
         require(subnet.route.length > 1, "error getting parent for subnet addr");
 
         address[] memory route = new address[](subnet.route.length - 1);
-        for(uint i = 0; i < route.length; i++) {
+        for (uint i = 0; i < route.length; ) {
             route[i] = subnet.route[i];
+            unchecked {
+                ++i;
+            }
         }
         
         return SubnetID({
@@ -25,9 +28,12 @@ library SubnetIDHelper {
         SubnetID calldata subnet
     ) public pure returns (string memory) {
         string memory route = "/root";
-        for (uint i = 0; i < subnet.route.length; i++) {
+        for (uint i = 0; i < subnet.route.length; ) {
             route = string.concat(route, "/");
             route = string.concat(route, subnet.route[i].toHexString());
+            unchecked {
+                ++i;
+            }
         }
 
         return route;
@@ -48,7 +54,7 @@ library SubnetIDHelper {
         for (uint i = 0; i < subnet.route.length; ) {
             newSubnet.route[i] = subnet.route[i];
             unchecked {
-                i++;
+                ++i;
             }
         }
 
@@ -72,8 +78,11 @@ library SubnetIDHelper {
     {
         if (subnet1.route.length != subnet2.route.length) return false;
 
-        for (uint i = 0; i < subnet1.route.length; i++) {
+        for (uint i = 0; i < subnet1.route.length; ) {
             if (subnet1.route[i] != subnet2.route[i]) return false;
+            unchecked {
+                ++i;
+            }
         }
 
         return true;
@@ -110,50 +119,37 @@ library SubnetIDHelper {
         return SubnetID({route: route});
     }
 
-    function down(SubnetID calldata subnet1, SubnetID calldata subnet2)
-        public
-        pure
-        returns (SubnetID memory)
-    {
-        uint i = 0;
-        while (
-            i < subnet1.route.length &&
-            i < subnet2.route.length &&
-            subnet1.route[i] == subnet2.route[i]
-        ) {
-            i++;
+    function down(
+        SubnetID calldata subnet1,
+        SubnetID calldata subnet2
+    ) public pure returns (SubnetID memory) {
+        if (subnet1.route.length <= subnet2.route.length) {
+            return SubnetID({route: new address[](0)});
         }
-        if (i == 0) return SubnetID({route: new address[](0)});
-
-        address[] memory route = new address[](i);
-        for (uint j = 0; j < i; j++) {
-            route[j] = subnet1.route[j];
-        }
-        if(i < subnet2.route.length)
-            route[i] = subnet2.route[i];
-
-        return SubnetID({route: route});
-    }
-
-    function up(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (SubnetID memory) {
-        if(isRoot(subnet1)) return SubnetID({route: new address[](0)});
-        if(isRoot(subnet2)) return SubnetID({route: new address[](0)});
 
         uint i = 0;
         while (
-            i < subnet1.route.length &&
             i < subnet2.route.length &&
             subnet1.route[i] == subnet2.route[i]
         ) {
-            i++;
+            unchecked {
+                i++;
+            }
         }
-        if (i == 0) return SubnetID({route: new address[](0)});
 
-        address[] memory route = new address[](i - 1);
-        for (uint j = 0; j < i - 1; j++) {
+        if (i == 0) {
+            return SubnetID({route: new address[](0)});
+        }
+
+        address[] memory route = new address[](i + 1);
+
+        for (uint j = 0; j <= i; ) {
             route[j] = subnet1.route[j];
+            unchecked {
+                j++;
+            }
         }
-
+        
         return SubnetID({route: route});
     }
 
