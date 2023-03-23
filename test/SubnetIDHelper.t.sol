@@ -131,10 +131,10 @@ contract SubnetIDHelperTest is Test {
         dest[0] = ROOT_ADDRESS;
         dest[1] = SUBNET_ONE_ADDRESS;
         dest[2] = SUBNET_THREE_ADDRESS;
-        SubnetID memory destSubnetId = SubnetID(dest);
+        SubnetID memory sub3Id = SubnetID(dest);
 
-        require(subnetId1.down(destSubnetId).equals(subnetId2));
-        require(subnetId2.down(destSubnetId).equals(destSubnetId));
+        require(subnetId2.down(subnetId1).equals(subnetId2));
+        require(sub3Id.down(subnetId1).equals(subnetId2));
 
     }
 

@@ -439,7 +439,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         StorableMsg memory storableMsg = crossMessage.message;
         SubnetID memory to  = storableMsg.to.subnetId;
         console.log("to: %s", to.toString());
-        SubnetID memory subId = networkName.down(to);
+        SubnetID memory subId = to.down(networkName);
         console.log("subId: %s", subId.toString());
         require(subId.route.length > 0, "couldn't compute the next subnet in route");
         (bool found, Subnet storage subnet) = getSubnet(subId.getActor());
@@ -467,7 +467,7 @@ contract Gateway is IGateway, ReentrancyGuard {
             payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
         if(fee == 0) return;
         
-        SubnetID memory down = networkName.down(crossMsg.message.to.subnetId);
+        SubnetID memory down = crossMsg.message.to.subnetId.down(networkName);
         if(down.route.length == 0 || down.getActor() == address(0)) return;
 
         payable(down.getActor()).sendValue(fee);
