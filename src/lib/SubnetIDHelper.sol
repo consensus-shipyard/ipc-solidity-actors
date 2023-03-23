@@ -124,9 +124,11 @@ library SubnetIDHelper {
         SubnetID calldata subnet1,
         SubnetID calldata subnet2
     ) public pure returns (SubnetID memory) {
+        if (subnet1.route.length <= subnet2.route.length) {
+            return SubnetID({route: new address[](0)});
+        }
         uint i = 0;
         while (
-            i < subnet1.route.length &&
             i < subnet2.route.length &&
             subnet1.route[i] == subnet2.route[i]
         ) {
@@ -143,7 +145,7 @@ library SubnetIDHelper {
                 ++j;
             }
         }
-        if (i < subnet2.route.length) route[i] = subnet2.route[i];
+        if (i < subnet1.route.length) route[i] = subnet1.route[i];
 
         return SubnetID({route: route});
     }
