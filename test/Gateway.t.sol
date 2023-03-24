@@ -806,6 +806,9 @@ contract GatewayDeploymentTest is Test {
         require(cpDataAfter.crossMsgs.fee == expectedCheckpointDataFee);
         require(cpDataAfter.crossMsgs.value == expectedCheckpointDataValue);
 
+        int64 _epoch = epoch;
+        address _callerAddress = callerAddress;
+
         for (uint i = 0; i < expectedRegistryLength; i++) {
             (StorableMsg memory storableMsg, bool wrapped) = gw.crossMsgRegistry(epoch, i);
             CrossMsg memory crossMsg = gw.getCrossMsg(cpDataAfter.crossMsgs.msgsHash, i);
@@ -813,8 +816,8 @@ contract GatewayDeploymentTest is Test {
             require(storableMsg.nonce == i);
             require(storableMsg.value == releaseAmountWithSubtractedFee);
             require(keccak256(abi.encode(storableMsg.from)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName(), rawAddress: BURNT_FUNDS_ACTOR}))));
-            require(keccak256(abi.encode(storableMsg.to)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName().getParentSubnet(), rawAddress: callerAddress}))));
-            require(gw.crossMsgExistInRegistry(epoch, CrossMsg(storableMsg, wrapped).toHash()) == true);
+            require(keccak256(abi.encode(storableMsg.to)) == keccak256(abi.encode(IPCAddress({subnetId: gw.getNetworkName().getParentSubnet(), rawAddress: _callerAddress}))));
+            require(gw.crossMsgExistInRegistry(_epoch, CrossMsg(storableMsg, wrapped).toHash()) == true);
             require(crossMsg.toHash() == CrossMsg(storableMsg, wrapped).toHash());
         }
 

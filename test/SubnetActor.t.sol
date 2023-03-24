@@ -218,11 +218,9 @@ contract SubnetActorTest is Test {
         address validator3 = vm.addr(102);
         _join(validator3);
 
-
         CheckData memory data = _createCheckData(100);
         
-        (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
-        Checkpoint memory checkpoint1 = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
+        Checkpoint memory checkpoint1 = signCheckpoint(100, data);
 
         vm.prank(validator);
         sa.submitCheckpoint(checkpoint1);
@@ -232,8 +230,7 @@ contract SubnetActorTest is Test {
         require(sa.windowCheckCount(checkpointHash) == 1);
         require(sa.windowCheckAt(checkpointHash, 0) == validator);
 
-        (uint8 v2, bytes32 r2, bytes32 s2) = vm.sign(101, keccak256(abi.encode(data)));
-        Checkpoint memory checkpoint2 = Checkpoint({data: data, signature: abi.encodePacked(r2, s2, v2)});
+        Checkpoint memory checkpoint2 = signCheckpoint(101, data);
 
         vm.prank(validator2);
         sa.submitCheckpoint(checkpoint2);
@@ -241,14 +238,18 @@ contract SubnetActorTest is Test {
         require(sa.windowCheckCount(checkpointHash) == 2);
         require(sa.windowCheckAt(checkpointHash, 1) == validator2);
 
-        (uint8 v3, bytes32 r3, bytes32 s3) = vm.sign(102, keccak256(abi.encode(data)));
-        Checkpoint memory checkpoint3 = Checkpoint({data: data, signature: abi.encodePacked(r3, s3, v3)});
+        Checkpoint memory checkpoint3 = signCheckpoint(102, data);
 
         vm.prank(validator3);
         vm.expectCall(address(gw), abi.encodeWithSelector(gw.commitChildCheck.selector, checkpoint3));
         sa.submitCheckpoint(checkpoint3);
 
         require(sa.windowCheckCount(checkpointHash) == 0);
+    }
+
+    function signCheckpoint(uint pk, CheckData memory data) internal pure returns(Checkpoint memory) {
+        (uint8 v, bytes32 r, bytes32 s) = vm.sign(pk, keccak256(abi.encode(data)));
+        return Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});
     }
 
     function test_SubmitCheckpoint_AddsVoter() public  {
