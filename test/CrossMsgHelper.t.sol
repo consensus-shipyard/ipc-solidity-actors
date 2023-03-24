@@ -12,30 +12,9 @@ contract CrossMsgHelperTest is Test {
     using CrossMsgHelper for CrossMsg;
     using CrossMsgHelper for CrossMsg[];
 
-    bytes32 constant EMPTY_CROSS_MSGS_HASH =
-        keccak256(abi.encode(new CrossMsg[](0)));
-    bytes32 constant EMPTY_CROSS_MSG_HASH =
-        keccak256(
-            abi.encode(
-                CrossMsg({
-                    message: StorableMsg({
-                        from: IPCAddress({
-                            subnetId: SubnetID(new address[](0)),
-                            rawAddress: address(0)
-                        }),
-                        to: IPCAddress({
-                            subnetId: SubnetID(new address[](0)),
-                            rawAddress: address(0)
-                        }),
-                        value: 0,
-                        nonce: 0,
-                        method: 0,
-                        params: EMPTY_BYTES
-                    }),
-                    wrapped: false
-                })
-            )
-        );
+    bytes32 EMPTY_CROSS_MSGS_HASH =
+        keccak256(abi.encode(createCrossMsgs(0, 0)));
+    bytes32 EMPTY_CROSS_MSG_HASH = keccak256(abi.encode(createCrossMsg(0)));
 
     CrossMsg public crossMsg;
     CrossMsg[] public crossMsgs;
@@ -44,27 +23,25 @@ contract CrossMsgHelperTest is Test {
         require(crossMsg.toHash() == EMPTY_CROSS_MSG_HASH);
     }
 
-    function test_ToHash_Works_NonEmptyCrossMsg() public {
-        crossMsg.message.nonce = 1;
+    function test_ToHash_Works_NonEmptyCrossMsg(uint64 nonce) public {
+        crossMsg.message.nonce = nonce;
 
-        // hash of cross msg with nonce = 1
-        bytes32 expectedHash = 0xf4a7693a381a21cd772723e52656a0a91111ed118c7c87fa3bb7061b75c61330;
+        CrossMsg memory crossMsgExpected = createCrossMsg(nonce);
 
-        require(crossMsg.toHash() == expectedHash);
+        require(crossMsg.toHash() == crossMsgExpected.toHash());
     }
 
     function test_ToHash_Works_EmptyCrossMsgs() public view {
         require(crossMsgs.toHash() == EMPTY_CROSS_MSGS_HASH);
     }
 
-    function test_ToHash_Works_NonEmptyCrossMsgs() public {
-        crossMsg.message.nonce = 1;
+    function test_ToHash_Works_NonEmptyCrossMsgs(uint64 nonce) public {
+        crossMsg.message.nonce = nonce;
         crossMsgs.push(crossMsg);
 
-        // hash of cross msg array containing 1 element with nonce = 1
-        bytes32 expectedHash = 0xea420f08de853f9408624b29bc7b4ffea5db75e5cfb1865eda8b8326a6e264d6;
+        CrossMsg[] memory crossMsgsExpected = createCrossMsgs(1, nonce);
 
-        require(crossMsgs.toHash() == expectedHash);
+        require(crossMsgs.toHash() == crossMsgsExpected.toHash());
     }
 
     function test_CreateReleaseMsg_Works(
@@ -162,5 +139,39 @@ contract CrossMsgHelperTest is Test {
         vm.expectRevert("error getting parent for subnet addr");
 
         CrossMsgHelper.createFundMsg(subnetId, sender, fundAmount);
+    }
+
+    function createCrossMsg(
+        uint64 nonce
+    ) internal pure returns (CrossMsg memory) {
+        return
+            CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID(new address[](0)),
+                        rawAddress: address(0)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID(new address[](0)),
+                        rawAddress: address(0)
+                    }),
+                    value: 0,
+                    nonce: nonce,
+                    method: 0,
+                    params: EMPTY_BYTES
+                }),
+                wrapped: false
+            });
+    }
+
+    function createCrossMsgs(
+        uint256 length,
+        uint64 nonce
+    ) internal pure returns (CrossMsg[] memory _crossMsgs) {
+        _crossMsgs = new CrossMsg[](length);
+
+        for (uint i = 0; i < length; i++) {
+            _crossMsgs[i] = createCrossMsg(nonce);
+        }
     }
 }

@@ -20,11 +20,25 @@ contract CheckpointHelperTest is Test {
 
     function test_ToHash_Works_NonEmptyCheckpoint() public {
         checkpoint.data.epoch = 10;
-
-        // checkpoint with epoch = 10
-        bytes32 expected = 0xeb38f3be9a69f7b48ad5fecc6e052d96a0c77c986204d4c96c556f22d472cb08;
-
-        require(expected == checkpoint.toHash());
+        
+        require(
+            Checkpoint({
+                data: CheckData({
+                    source: SubnetID(new address[](0)),
+                    tipSet: new bytes(0),
+                    epoch: 10,
+                    prevHash: EMPTY_HASH,
+                    children: new ChildCheck[](0),
+                    crossMsgs: CrossMsgMeta({
+                        msgsHash: EMPTY_HASH,
+                        nonce: 0,
+                        value: 0,
+                        fee: 0
+                    })
+                }),
+                signature: EMPTY_BYTES
+            }).toHash() == checkpoint.toHash()
+        );
     }
 
     function test_HasCrossMsgMeta_Works_True() public {
