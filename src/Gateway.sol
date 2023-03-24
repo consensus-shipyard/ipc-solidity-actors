@@ -203,7 +203,7 @@ contract Gateway is IGateway, ReentrancyGuard {
             }
 
             require(
-                subnet.circSupply >= commit.data.crossMsgs.value,
+                subnet.circSupply >= commit.data.crossMsgs.value + commit.data.crossMsgs.fee,
                 "wtf! we can't release funds below circ, supply. something went really wrong"
             );
 
@@ -319,9 +319,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
         StorableMsg memory storableMsg = crossMessage.message;
         SubnetID memory to  = storableMsg.to.subnetId;
-        console.log("to: %s", to.toString());
         SubnetID memory subId = to.down(networkName);
-        console.log("subId: %s", subId.toString());
         require(subId.route.length > 0, "couldn't compute the next subnet in route");
         (bool found, Subnet storage subnet) = getSubnet(subId.getActor());
         require(found, "subnet not found");
