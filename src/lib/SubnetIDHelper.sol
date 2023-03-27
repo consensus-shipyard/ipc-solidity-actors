@@ -83,15 +83,13 @@ library SubnetIDHelper {
 
         address[] memory route = new address[](i + 1);
 
-        for (uint j = 0; j < i; ) {
+        for (uint j = 0; j <= i; ) {
             route[j] = subnet1.route[j];
             unchecked {
                 j++;
             }
         }
-
-        if (i < subnet1.route.length) route[i] = subnet1.route[i];
-
+        
         return SubnetID({route: route});
     }
 }
