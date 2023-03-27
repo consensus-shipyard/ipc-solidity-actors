@@ -36,6 +36,10 @@ struct CrossMsg {
     bool wrapped;
 }
 
+struct ApplyMsgParams {
+    CrossMsg crossMsg;
+}
+
 struct StorableMsg {
     IPCAddress from;
     IPCAddress to;

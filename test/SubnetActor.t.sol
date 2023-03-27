@@ -10,6 +10,7 @@ import "../src/enums/Status.sol";
 import "../src/structs/Subnet.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
+import "../src/constants/Constants.sol";
 
 contract SubnetActorTest is Test {
 
@@ -33,7 +34,7 @@ contract SubnetActorTest is Test {
     {
         address[] memory path = new address[](1);
         path[0] = address(0);
-        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD);
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, CROSS_MSG_FEE);
 
         path[0] = address(gw);
         SubnetID memory parentId = SubnetID(path);

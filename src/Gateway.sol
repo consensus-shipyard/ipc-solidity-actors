@@ -11,6 +11,7 @@ import "./lib/SubnetIDHelper.sol";
 import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
 import "./lib/StorableMsgHelper.sol";
+import "./lib/CrossMsgHelper.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 import "fevmate/utils/FilAddress.sol";
@@ -19,11 +20,14 @@ import "forge-std/console.sol";
 /// @title Gateway Contract
 /// @author LimeChain team
 contract Gateway is IGateway, ReentrancyGuard {
+
+    using FilAddress for address;
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
     using StorableMsgHelper for StorableMsg;
+    using CrossMsgHelper for CrossMsg;
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -48,7 +52,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice Checkpoint templates in the SCA per epoch
     mapping(int64 => Checkpoint) public checkpoints;
 
-    /// @notice Stores information about the list of messages and child msgMetas being propagated in checkpoints to the top of the hierarchy.
     /// FIXME: refactor with custom getter and make it private?
     mapping(bytes => CrossMsg[]) public checkMsgRegistry;
 
@@ -76,11 +79,16 @@ contract Gateway is IGateway, ReentrancyGuard {
     uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
+    /// @notice fee amount charged per cross message
+    uint256 public crossMsgFee;
+
     /// epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(int64 => mapping(bytes32 => uint256[2])) internal children;
     /// epoch => SubnetID => check => exists
     mapping(int64 => mapping(bytes32 => mapping(bytes32 => bool)))
         internal checks;
+
+    mapping(uint64 => bytes4) public methodSelectors;
 
     modifier isRegistered() {
         (bool registered, ) = getSubnet(msg.sender);
@@ -88,13 +96,22 @@ contract Gateway is IGateway, ReentrancyGuard {
         _;
     }
 
-    constructor(address[] memory path, int64 checkpointPeriod) {
+    constructor(address[] memory path, int64 checkpointPeriod, uint256 msgFee) {
         networkName = SubnetID(path);
         minStake = MIN_COLLATERAL_AMOUNT;
         checkPeriod = checkpointPeriod > DEFAULT_CHECKPOINT_PERIOD
             ? checkpointPeriod
             : DEFAULT_CHECKPOINT_PERIOD;
         appliedBottomUpNonce = MAX_NONCE;
+        crossMsgFee = msgFee;
+
+        methodSelectors[2] = IGateway.register.selector;
+        methodSelectors[3] = IGateway.addStake.selector;
+        methodSelectors[4] = IGateway.releaseStake.selector;
+        methodSelectors[5] = IGateway.kill.selector;
+        methodSelectors[6] = IGateway.commitChildCheck.selector;
+        methodSelectors[9] = IGateway.sendCross.selector;
+        methodSelectors[10] = IGateway.applyMsg.selector;
     }
 
     function getNetworkName() external view returns (SubnetID memory) {
@@ -262,7 +279,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
-    function sendCross(
+ function sendCross(
         SubnetID memory destination,
         CrossMsg memory crossMsg
     ) external payable isRegistered {
@@ -275,12 +292,12 @@ contract Gateway is IGateway, ReentrancyGuard {
         crossMsg.message.to = IPCAddress(destination, crossMsg.message.to.rawAddress);
         crossMsg.message.from = IPCAddress(networkName, msg.sender);
 
-        (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg, CROSS_MSG_FEE);
+        (bool burn, uint256 topDownFee) = commitCrossMessage(crossMsg, CROSS_MSG_FEE);
 
-        _crossMsgSideEffects(crossMsg, burn, topDownFee);
+        crossMsgSideEffects(crossMsg, burn, topDownFee);
     }
 
-    function _commitCrossMessage(
+    function commitCrossMessage(
         CrossMsg memory _crossMessage,
         uint256 _fee
     ) internal returns (bool burn, uint256 topDownFee) {
@@ -299,24 +316,22 @@ contract Gateway is IGateway, ReentrancyGuard {
                 console.log("nearest common parent");
                 // message has already reached common parent, send it down
                 topDownFee = _fee;
-                _commitTopDownMsg(_crossMessage);
+                commitTopDownMsg(_crossMessage);
             }
             else {
-                console.log("not near common parent");
                 // propagate bottom-up message up
                 burn = _crossMessage.message.value > 0;
-                _commitBottomUpMsg(_crossMessage, _fee);
+                commitBottomUpMsg(_crossMessage, _fee);
             }
         } else {
-            console.log("here");
             // top down message path
             appliedTopDownNonce += 1;
-            _commitTopDownMsg(_crossMessage);
+            commitTopDownMsg(_crossMessage);
         }
         
     }
 
-    function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
+    function commitTopDownMsg(CrossMsg memory crossMessage) internal {
         StorableMsg memory storableMsg = crossMessage.message;
         SubnetID memory to  = storableMsg.to.subnetId;
         SubnetID memory subId = to.down(networkName);
@@ -329,7 +344,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         subnet.circSupply += crossMessage.message.value;
     }
     
-    function _commitBottomUpMsg(
+    function commitBottomUpMsg(
         CrossMsg memory crossMessage,
         uint256 fee
     ) internal {
@@ -341,7 +356,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         nonce += 1;
     }
 
-    function _crossMsgSideEffects(CrossMsg memory crossMsg, bool burn, uint256 fee) internal nonReentrant {
+    function crossMsgSideEffects(CrossMsg memory crossMsg, bool burn, uint256 fee) internal nonReentrant {
         if(burn)
             payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
         if(fee == 0) return;
@@ -352,13 +367,43 @@ contract Gateway is IGateway, ReentrancyGuard {
         payable(down.getActor()).sendValue(fee);
     }
 
-    function getSubnet(
+    function applyMsg(ApplyMsgParams calldata applyMsgParams) external returns (bool success){
+        CrossMsg calldata crossMsg = applyMsgParams.crossMsg;
+        require(crossMsg.message.to.rawAddress != address(0), "error getting raw address from msg");
+        require(crossMsg.message.to.subnetId.route.length > 0, "error getting subnet from msg");
+        require(crossMsg.message.to.subnetId.equals(networkName), "the message being applied doesn't belong to this subnet");
+        require(methodSelectors[crossMsg.message.method] != bytes4(0), "method not found");
+
+        if(crossMsg.message.applyType(networkName) == IPCMsgType.BottomUp) {
+            bottomUpStateTransition(crossMsg.message);
+        }
+        else {
+            require(appliedTopDownNonce == crossMsg.message.nonce, "the top-down message being applied doesn't hold the subsequent nonce");
+            appliedTopDownNonce += 1;
+        }
+
+        // execute the message
+        success = crossMsg.execute(methodSelectors[crossMsg.message.method]);   
+
+        //todo postbox
+    }
+
+    function bottomUpStateTransition(StorableMsg calldata storableMsg) internal {
+        if(appliedBottomUpNonce == 2**64 - 1 && storableMsg.nonce == 0) {
+            appliedBottomUpNonce = 0;
+        } else if(appliedBottomUpNonce + 1 == storableMsg.nonce) {
+            appliedBottomUpNonce += 1;
+        }
+
+        require(appliedBottomUpNonce == storableMsg.nonce, "the bottom-up message being applied doesn't hold the subsequent nonce");
+    }
+
+   function getSubnet(
         address actor
     ) internal view returns (bool found, Subnet storage subnet) {
         SubnetID memory subnetId = networkName.createSubnetId(actor);
 
         subnet = subnets[subnetId.toHash()];
         found = subnet.id.route.length > 0;
-        console.log("found: %s", found);
     }
 }

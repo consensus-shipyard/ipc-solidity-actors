@@ -40,4 +40,6 @@ interface IGateway {
     function sendCross(SubnetID memory destination, CrossMsg memory crossMsg)
         external
         payable;
+
+    function applyMsg(ApplyMsgParams calldata applyMsgParams) external returns (bool);
 }

@@ -6,6 +6,7 @@ import "forge-std/console.sol";
 
 import "../src/Gateway.sol";
 import "../src/lib/SubnetIDHelper.sol";
+import "../src/constants/Constants.sol";
 
 contract GatewayDeploymentTest is Test {
     using SubnetIDHelper for SubnetID;
@@ -34,13 +35,13 @@ contract GatewayDeploymentTest is Test {
         address[] memory path2 = new address[](2);
         path2[0] = ROOTNET_ADDRESS;
         path2[1] = CHILD_NETWORK_ADDRESS;
-        gw2 = new Gateway(path2, DEFAULT_CHECKPOINT_PERIOD);
+        gw2 = new Gateway(path2, DEFAULT_CHECKPOINT_PERIOD, CROSS_MSG_FEE);
         vm.makePersistent(address(gw2));
 
         vm.selectFork(network1ForkId);
         address[] memory path = new address[](1);
         path[0] = ROOTNET_ADDRESS;
-        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD);
+        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, CROSS_MSG_FEE);
         vm.makePersistent(address(gw));
 
     }
@@ -49,7 +50,7 @@ contract GatewayDeploymentTest is Test {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
         address[] memory path = new address[](1);
         path[0] = ROOTNET_ADDRESS;
-        gw = new Gateway(path, checkpointPeriod);
+        gw = new Gateway(path, checkpointPeriod, CROSS_MSG_FEE);
 
         SubnetID memory networkName = gw.getNetworkName();
 
