@@ -62,7 +62,7 @@ library SubnetIDHelper {
     }
 
     function getActor(SubnetID calldata subnet) public pure returns (address) {
-        if (subnet.route.length == 0) return address(0);
+        if (subnet.route.length <= 1) return address(0);
 
         return subnet.route[subnet.route.length - 1];
     }
@@ -95,27 +95,24 @@ library SubnetIDHelper {
     {
         uint i = 0;
         while (
+            i < subnet1.route.length &&
             i < subnet2.route.length &&
             subnet1.route[i] == subnet2.route[i]
         ) {
             unchecked {
-                i++;
+                ++i;
             }
         }
+        if (i == 0) return SubnetID({route: new address[](0)});
 
-        if (i == 0) {
-            return SubnetID({route: new address[](0)});
-        }
-
-        address[] memory route = new address[](i + 1);
-
-        for (uint j = 0; j <= i; ) {
+        address[] memory route = new address[](i);
+        for (uint j = 0; j < i; ) {
             route[j] = subnet1.route[j];
             unchecked {
-                j++;
+                ++j;
             }
         }
-        
+
         return SubnetID({route: route});
     }
 
@@ -154,8 +151,8 @@ library SubnetIDHelper {
     }
 
     function isBottomUp(SubnetID calldata from, SubnetID calldata to) public pure returns (bool){
-        SubnetID memory commonParent = commonParent(from, to);
-        if(commonParent.route.length == 0) return true;
-        return from.route.length > commonParent.route.length;
+        SubnetID memory parent = commonParent(from, to);
+        if(parent.route.length == 0) return false;
+        return from.route.length > parent.route.length;
     }
 }

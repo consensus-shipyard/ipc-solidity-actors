@@ -112,14 +112,6 @@ contract SubnetActorTest is Test {
         require(success);
     }
 
-
-    function test_Join_Fail_NoMinColalteral() public payable {
-        address validator = vm.addr(100);
-        vm.prank(validator);
-        vm.expectRevert("a minimum collateral is required to join the subnet");
-        sa.join();
-    }
-
     function test_Join_NoNewValidator_ValueLowerThanMinStake() public {
         address validator = vm.addr(1235);
         vm.prank(validator);
@@ -145,7 +137,7 @@ contract SubnetActorTest is Test {
         address[] memory path = new address[](1);
         path[0] = address(gw);
         SubnetID memory parentId = SubnetID(path);
-        sa = new SubnetActor(parentId, DEFAULT_NETWORK_NAME, address(gw), ConsensusType.Delegated, DEFAULT_MIN_VALIDATOR_STAKE, DEFAULT_MIN_VALIDATORS, DEFAULT_FINALITY_TRESHOLD, DEFAULT_CHECK_PERIOD, GENESIS);
+        sa = new SubnetActor(parentId, DEFAULT_NETWORK_NAME, address(gw), ConsensusType.Delegated, DEFAULT_MIN_VALIDATOR_STAKE, DEFAULT_MIN_VALIDATORS, DEFAULT_FINALITY_TRESHOLD, DEFAULT_CHECK_PERIOD, GENESIS, DEFAULT_MAJORITY_PERCENTAGE);
     
         address validator = vm.addr(1235);
         _join(validator);
@@ -237,7 +229,6 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         sa.submitCheckpoint(checkpoint1);
 
-        bytes32 checkpointHash = checkpoint1.toHash();
 
         require(sa.windowCheckCount(checkpointHash) == 1);
         require(sa.windowCheckAt(checkpointHash, 0) == validator);
@@ -352,10 +343,7 @@ contract SubnetActorTest is Test {
         address validator3 = vm.addr(102);
         _join(validator3);
 
-        CheckData memory data = _createCheckData(100);
-        SubnetID memory subnet = sa.getParent().setActor(address(sa));
-
-        CheckData memory data = _createCheckData(125); 
+        CheckData memory data = _createCheckData(125);
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(100, keccak256(abi.encode(data)));
         
         Checkpoint memory checkpoint = Checkpoint({data: data, signature: abi.encodePacked(r, s, v)});

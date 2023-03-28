@@ -204,24 +204,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             "checkpoint data hash is not the same as prevHash"
         );
 
-        require(
-            checkpoint.data.source.toHash() ==
-                parentId.setActor(address(this)).toHash(),
-            "submitting checkpoint with the wrong source"
-        );
-
-        Checkpoint memory prevCheckpoint = checkpoints.getPrevCheckpoint(
-            checkpoint.data.epoch,
-            checkPeriod
-        );
-        if (prevCheckpoint.signature.length > 0) {
-            bytes32 prevcheckpointHash = prevCheckpoint.toHash();
-            require(
-                checkpoint.data.prevHash == prevcheckpointHash,
-                "checkpoint data hash is not the same as prevHash"
-            );
-        }
-
         bytes32 messageHash = checkpoint.toHash();
         
         require(
@@ -303,11 +285,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         return windowChecks[checkpointHash].at(index);
     }
 
-    function validatorCount() external returns (uint) {
+    function validatorCount() external view returns (uint) {
         return validators.length();
     }
 
-    function validatorAt(uint index) external returns (address) {
+    function validatorAt(uint index) external view returns (address) {
         return validators.at(index);
     }
 

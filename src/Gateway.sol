@@ -12,6 +12,7 @@ import "./lib/CheckpointHelper.sol";
 import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
 import "./lib/StorableMsgHelper.sol";
+import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 import "forge-std/console.sol";
@@ -323,25 +324,13 @@ contract Gateway is IGateway, ReentrancyGuard {
         );
 
         // commit top-down message.
-        (bool exist, Subnet storage subnet) = getSubnet(
-            crossMsg.message.to.subnetId.down(networkName)
-        );
-
-        require(exist, "couldn't compute the next subnet in route");
-
-        crossMsg.message.nonce = subnet.nonce;
-        subnet.nonce += 1;
-        subnet.circSupply += crossMsg.message.value;
-        subnet.topDownMsgs.push(crossMsg);
+        _commitTopDownMsg(crossMsg);
 
         distributeRewards(subnetId.getActor(), crossMsgFee);
     }
 
     function release() external payable signableOnly {
         require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
-
-        (, int64 epoch, Checkpoint storage checkpoint) = checkpoints
-            .getCheckpointPerEpoch(block.timestamp, checkPeriod);
 
         uint256 releaseAmount = msg.value - crossMsgFee;
 
@@ -351,7 +340,92 @@ contract Gateway is IGateway, ReentrancyGuard {
             releaseAmount,
             nonce
         );
-        bytes32 crossMsgHash = CrossMsgHelper.toHash(crossMsg);
+
+        _commitBottomUpMsg(crossMsg);
+
+        payable(BURNT_FUNDS_ACTOR).sendValue(releaseAmount);
+
+    }
+    function sendCross(
+        SubnetID memory destination,
+        CrossMsg memory crossMsg
+    ) external payable isRegistered {
+        require(destination.route.length > 0, "no destination for cross-message explicitly set");
+        require(!destination.equals(networkName), "destination is the current network, you are better off with a good ol' message, no cross needed") ;
+        require(crossMsg.message.value == msg.value, "the funds in cross-msg params are not equal to the ones sent in the message");
+        require(crossMsg.message.to.rawAddress != address(0), "invalid to addr");
+        require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
+
+        crossMsg.message.to = IPCAddress(destination, crossMsg.message.to.rawAddress);
+        crossMsg.message.from = IPCAddress(networkName, msg.sender);
+
+        (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg);
+
+        if(burn)
+            payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
+
+        if(topDownFee == 0) return;
+        
+        SubnetID memory down = crossMsg.message.to.subnetId.down(networkName);
+        if(down.route.length == 0 || down.getActor() == address(0)) return;
+
+        payable(down.getActor()).sendValue(topDownFee);
+    }
+
+    function _commitCrossMessage(
+        CrossMsg memory crossMessage
+    ) internal returns (bool burn, uint256 topDownFee) {
+        SubnetID memory to = crossMessage.message.to.subnetId;
+        require(to.route.length > 0, "error getting subnet from msg");
+        require(
+            !crossMessage.message.to.subnetId.equals(networkName),
+            "should already be committed"
+        );
+
+        if(crossMessage.message.applyType(networkName) == IPCMsgType.BottomUp) {
+            SubnetID memory from = crossMessage.message.from.subnetId;
+            require(from.route.length > 0, "error getting subnet from msg");
+            SubnetID memory nearestCommonParent = to.commonParent(from);
+            if(nearestCommonParent.equals(networkName)) {
+                console.log("nearest common parent");
+                // message has already reached common parent, send it down
+                topDownFee = crossMsgFee;
+                _commitTopDownMsg(crossMessage);
+            }
+            else {
+                console.log("not near common parent");
+                // propagate bottom-up message up
+                burn = crossMessage.message.value > 0;
+                _commitBottomUpMsg(crossMessage);
+            }
+        } else {
+            console.log("here");
+            // top down message path
+            appliedTopDownNonce += 1;
+            _commitTopDownMsg(crossMessage);
+        }
+        
+    }
+
+    function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
+        (bool exist, Subnet storage subnet) = getSubnet(
+            crossMessage.message.to.subnetId.down(networkName)
+        );
+
+        require(exist, "couldn't compute the next subnet in route");
+
+        crossMessage.message.nonce = subnet.nonce;
+        subnet.nonce += 1;
+        subnet.circSupply += crossMessage.message.value;
+        subnet.topDownMsgs.push(crossMessage);
+    }
+    
+    function _commitBottomUpMsg(CrossMsg memory crossMessage) internal {
+        (, int64 epoch, Checkpoint storage checkpoint) = checkpoints
+            .getCheckpointPerEpoch(block.timestamp, checkPeriod);
+
+        console.log("epoch: ", uint64(epoch));
+        bytes32 crossMsgHash = CrossMsgHelper.toHash(crossMessage);
         bytes32 prevMsgsHash = checkpoint.data.crossMsgs.msgsHash;
         bytes32 newMsgsHash = prevMsgsHash;
 
@@ -362,7 +436,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
 
         if (crossMsgExistInRegistry[epoch][crossMsgHash] == false) {
-            crossMsgRegistry[epoch].push(crossMsg);
+            crossMsgRegistry[epoch].push(crossMessage);
 
             newMsgsHash = CrossMsgHelper.toHash(crossMsgRegistry[epoch]);
         }
@@ -377,98 +451,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         checkpoint.data.crossMsgs.fee += crossMsgFee;
 
         nonce += 1;
-
-        payable(BURNT_FUNDS_ACTOR).sendValue(releaseAmount);
-
-    }
-    function sendCross(
-        SubnetID memory destination,
-        CrossMsg memory crossMsg
-    ) external payable isRegistered {
-        require(destination.route.length > 0, "no destination for cross-message explicitly set");
-        require(!destination.equals(networkName), "destination is the current network, you are better off with a good ol' message, no cross needed") ;
-        require(crossMsg.message.value == msg.value, "the funds in cross-msg params are not equal to the ones sent in the message");
-        require(crossMsg.message.to.rawAddress != address(0), "invalid to addr");
-        require(msg.value > CROSS_MSG_FEE, "not enough gas to pay cross-message");
-
-        crossMsg.message.to = IPCAddress(destination, crossMsg.message.to.rawAddress);
-        crossMsg.message.from = IPCAddress(networkName, msg.sender);
-
-        (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg, CROSS_MSG_FEE);
-
-        _crossMsgSideEffects(crossMsg, burn, topDownFee);
-    }
-
-    function _commitCrossMessage(
-        CrossMsg memory crossMessage,
-        uint256 fee
-    ) internal returns (bool burn, uint256 topDownFee) {
-        SubnetID memory to = _crossMessage.message.to.subnetId;
-        require(to.route.length > 0, "error getting subnet from msg");
-        require(
-            !_crossMessage.message.to.subnetId.equals(networkName),
-            "should already be committed"
-        );
-
-        if(_crossMessage.message.applyType(networkName) == IPCMsgType.BottomUp) {
-            SubnetID memory from = _crossMessage.message.from.subnetId;
-            require(from.route.length > 0, "error getting subnet from msg");
-            SubnetID memory nearestCommonParent = to.commonParent(from);
-            if(nearestCommonParent.equals(networkName)) {
-                console.log("nearest common parent");
-                // message has already reached common parent, send it down
-                topDownFee = _fee;
-                _commitTopDownMsg(_crossMessage);
-            }
-            else {
-                console.log("not near common parent");
-                // propagate bottom-up message up
-                burn = _crossMessage.message.value > 0;
-                _commitBottomUpMsg(_crossMessage, _fee);
-            }
-        } else {
-            console.log("here");
-            // top down message path
-            appliedTopDownNonce += 1;
-            _commitTopDownMsg(_crossMessage);
-        }
-        
-    }
-
-    function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
-        StorableMsg memory storableMsg = crossMessage.message;
-        SubnetID memory to  = storableMsg.to.subnetId;
-        SubnetID memory subId = to.down(networkName);
-        require(subId.route.length > 0, "couldn't compute the next subnet in route");
-        (bool found, Subnet storage subnet) = getSubnet(subId.getActor());
-        require(found, "subnet not found");
-        crossMessage.message.nonce = subnet.nonce;
-        subnet.topDownMsgs.push(crossMessage);
-        subnet.nonce += 1;
-        subnet.circSupply += crossMessage.message.value;
-    }
-    
-    function _commitBottomUpMsg(
-        CrossMsg memory crossMessage,
-        uint256 fee
-    ) internal {
-        (,,Checkpoint storage checkpoint ) = checkpoints.getCheckpointPerEpoch(block.number, checkPeriod);
-        CrossMsgMeta storage meta = checkpoint.data.crossMsgs;
-        meta.msgs.push(crossMessage);
-        meta.value += crossMessage.message.value + fee;
-        meta.fee += fee;
-        nonce += 1;
-    }
-
-    function _crossMsgSideEffects(CrossMsg memory crossMsg, bool burn, uint256 fee) internal nonReentrant {
-        if(burn)
-            payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
-        if(fee == 0) return;
-        
-        SubnetID memory down = crossMsg.message.to.subnetId.down(networkName);
-        if(down.route.length == 0 || down.getActor() == address(0)) return;
-
-        payable(down.getActor()).sendValue(fee);
     }
 
     function getSubnet(
