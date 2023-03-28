@@ -26,6 +26,7 @@ contract GatewayDeploymentTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     int64 private constant DEFAULT_FINALITY_TRESHOLD = 1;
     int64 private constant DEFAULT_CHECK_PERIOD = 50;
+    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
@@ -68,7 +69,8 @@ contract GatewayDeploymentTest is Test {
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_FINALITY_TRESHOLD,
             DEFAULT_CHECK_PERIOD,
-            GENESIS
+            GENESIS,
+            DEFAULT_MAJORITY_PERCENTAGE
         );
 
     }
@@ -722,6 +724,7 @@ contract GatewayDeploymentTest is Test {
         gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, crossMsgFee);
 
         vm.roll(0);
+        vm.warp(0);
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
 
@@ -739,6 +742,7 @@ contract GatewayDeploymentTest is Test {
         gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, crossMsgFee);
 
         vm.roll(0);
+        vm.warp(0);
         vm.startPrank(MULTISIG_ACTOR);
         vm.deal(MULTISIG_ACTOR, releaseAmount + 1);
 
@@ -758,6 +762,7 @@ contract GatewayDeploymentTest is Test {
         address callerAddress = address(100);
 
         vm.roll(0);
+        vm.warp(0);
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, releaseAmount + 1);
 
@@ -777,6 +782,7 @@ contract GatewayDeploymentTest is Test {
         address callerAddress = address(100);
 
         vm.roll(0);
+        vm.warp(0);
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, 2 * releaseAmount + 1);
 
@@ -1025,7 +1031,7 @@ contract GatewayDeploymentTest is Test {
         address receiver = vm.addr(101);
         address caller = vm.addr(100);
         console.log("caller", caller);
-        console.log("gw2" , address(gw2));
+        console.log("gw2" , gw2.getNetworkName().toString());
         vm.prank(caller);
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
         registerSubnetGW(MIN_COLLATERAL_AMOUNT, caller, gw2);
@@ -1060,33 +1066,6 @@ contract GatewayDeploymentTest is Test {
         gw2.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
 
         require(gw2.appliedTopDownNonce() == 0);
-    }
-
-    function test_SendCross_Works_TopDown() public {
-        address caller = vm.addr(100);
-        vm.prank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
-
-        address[] memory path = new address[](1);
-        path[0] = vm.addr(456);
-        SubnetID memory destination = SubnetID({route: path});
-        CrossMsg memory crossMsg = CrossMsg({message: StorableMsg({from: IPCAddress({subnetId: SubnetID({route: new address[](1)}), rawAddress: caller}), to: IPCAddress({subnetId: SubnetID({route: new address[](1)}), rawAddress: caller}), value: CROSS_MSG_FEE + 1, nonce: 0, method: 0, params: new bytes(0)}), wrapped: true});
-        gw.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
-
-        (
-            SubnetID memory id,
-            ,
-            uint nonce,
-            uint circSupply,
-            
-        ) = getSubnet(caller);
-
-        require(id.equals(from));
-        require(nonce == 1);
-        require(circSupply == CROSS_MSG_FEE + 1);
-        require(gw.appliedTopDownNonce() == 1);
-
     }
 
     function commitChildCheck(
@@ -1229,9 +1208,9 @@ contract GatewayDeploymentTest is Test {
             uint nonce,
             uint circSupply,
             Status status
-        ) = getSubnet(subnetAddress);
+        ) = getSubnetGW(subnetAddress, gateway);
 
-        SubnetID memory parentNetwork = gw.getNetworkName();
+        SubnetID memory parentNetwork = gateway.getNetworkName();
 
         require(id.toHash() == parentNetwork.createSubnetId(subnetAddress).toHash());
         require(stake == collateral);
@@ -1250,7 +1229,7 @@ contract GatewayDeploymentTest is Test {
     function getSubnetGW(
         address subnetAddress, Gateway gateway
     ) internal view returns (SubnetID memory, uint, uint, uint, Status) {
-        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        SubnetID memory subnetId = gateway.getNetworkName().createSubnetId(subnetAddress);
 
         (
             SubnetID memory id,

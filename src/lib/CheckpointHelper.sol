@@ -8,7 +8,6 @@ import "../constants/Constants.sol";
 /// @title Helper library for manipulating Checkpoint struct
 /// @author LimeChain team
 library CheckpointHelper {
-<<<<<<< HEAD
     bytes32 private constant EMPTY_CROSSMSG_HASH =
         keccak256(
             abi.encode(
@@ -35,8 +34,6 @@ library CheckpointHelper {
             )
         );
 
-=======
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     function toHash(
         Checkpoint memory checkpoint
     ) public pure returns (bytes32) {
@@ -48,19 +45,6 @@ library CheckpointHelper {
     ) public pure returns (bool) {
         return
             keccak256(abi.encode(checkpoint.data.crossMsgs)) !=
-<<<<<<< HEAD
             EMPTY_CROSSMSG_HASH;
-=======
-            keccak256(
-                abi.encode(
-                    CrossMsgMeta({
-                        nonce: 0,
-                        value: 0,
-                        fee: 0,
-                        msgs: new CrossMsg[](0)
-                    })
-                )
-            );
->>>>>>> 177836e (feat: add toHash() function to CP & SubetID structs, fix condition in cross msg in GW, refactor join method and tests, fix interfaces)
     }
 }
