@@ -5,7 +5,6 @@ import "../structs/Checkpoint.sol";
 import "../constants/Constants.sol";
 import "../lib/SubnetIDHelper.sol";
 import "../enums/IPCMsgType.sol";
-import "forge-std/console.sol";
 
 /// @title Helper library for manipulating StorableMsg struct
 /// @author LimeChain team
