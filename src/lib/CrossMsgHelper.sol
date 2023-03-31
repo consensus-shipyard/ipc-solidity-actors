@@ -67,4 +67,16 @@ library CrossMsgHelper {
     ) internal pure returns (bytes32) {
         return keccak256(abi.encode(crossMsgs));
     }
+
+    function execute(
+        CrossMsg calldata crossMsg,
+        bytes4 methodSelector
+    ) public returns (bool success) {
+        bytes memory params = crossMsg.wrapped
+            ? abi.encode(crossMsg)
+            : crossMsg.message.params;
+        (success, ) = crossMsg.message.to.rawAddress.call{
+            value: crossMsg.message.value
+        }(abi.encodeWithSelector(methodSelector, params));
+    }
 }

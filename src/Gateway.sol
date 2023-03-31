@@ -23,6 +23,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     using FilAddress for address payable;
     using AccountHelper for address;
     using SubnetIDHelper for SubnetID;
+    using CrossMsgHelper for CrossMsg;
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
     using StorableMsgHelper for StorableMsg;
@@ -89,6 +90,8 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice fee amount charged per cross message
     uint256 public crossMsgFee;
 
+    mapping(uint64 => bytes4) public methodSelectors;
+
     /// epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(int64 => mapping(bytes32 => uint256[2])) internal children;
     /// epoch => SubnetID => check => exists
@@ -114,6 +117,14 @@ contract Gateway is IGateway, ReentrancyGuard {
             : DEFAULT_CHECKPOINT_PERIOD;
         appliedBottomUpNonce = MAX_NONCE;
         crossMsgFee = msgFee;
+
+        methodSelectors[2] = IGateway.register.selector;
+        methodSelectors[3] = IGateway.addStake.selector;
+        methodSelectors[4] = IGateway.releaseStake.selector;
+        methodSelectors[5] = IGateway.kill.selector;
+        methodSelectors[6] = IGateway.commitChildCheck.selector;
+        methodSelectors[9] = IGateway.sendCross.selector;
+        methodSelectors[10] = IGateway.applyMsg.selector;
     }
 
     function getCrossMsgsLength(
@@ -381,6 +392,57 @@ contract Gateway is IGateway, ReentrancyGuard {
         );
 
         _crossMsgSideEffects(crossMsg, shouldBurn, shouldDistributeRewards);
+    }
+
+    function applyMsg(
+        CrossMsg calldata crossMsg
+    ) external returns (bool success) {
+        require(
+            crossMsg.message.to.rawAddress != address(0),
+            "error getting raw address from msg"
+        );
+        require(
+            crossMsg.message.to.subnetId.route.length > 0,
+            "error getting subnet from msg"
+        );
+        require(
+            crossMsg.message.to.subnetId.equals(networkName),
+            "the message being applied doesn't belong to this subnet"
+        );
+        require(
+            methodSelectors[crossMsg.message.method] != bytes4(0),
+            "method not found"
+        );
+
+        if (crossMsg.message.applyType(networkName) == IPCMsgType.BottomUp) {
+            _bottomUpStateTransition(crossMsg.message);
+        } else {
+            require(
+                appliedTopDownNonce == crossMsg.message.nonce,
+                "the top-down message being applied doesn't hold the subsequent nonce"
+            );
+            appliedTopDownNonce += 1;
+        }
+
+        // execute the message
+        success = crossMsg.execute(methodSelectors[crossMsg.message.method]);
+
+        //todo postbox
+    }
+
+    function _bottomUpStateTransition(
+        StorableMsg calldata storableMsg
+    ) internal {
+        if (appliedBottomUpNonce == 2 ** 64 - 1 && storableMsg.nonce == 0) {
+            appliedBottomUpNonce = 0;
+        } else if (appliedBottomUpNonce + 1 == storableMsg.nonce) {
+            appliedBottomUpNonce += 1;
+        }
+
+        require(
+            appliedBottomUpNonce == storableMsg.nonce,
+            "the bottom-up message being applied doesn't hold the subsequent nonce"
+        );
     }
 
     /// Commit the cross message to storage. It outputs a flag signaling
