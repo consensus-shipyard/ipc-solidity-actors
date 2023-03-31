@@ -15,7 +15,6 @@ import "./lib/StorableMsgHelper.sol";
 import "./lib/PostboxItemHelper.sol";
 import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Gateway Contract
@@ -440,6 +439,46 @@ contract Gateway is IGateway, ReentrancyGuard {
         postboxHasOwner[postboxId][postboxItem.owners[0]] = true;
 
         return new bytes(uint256(postboxId));
+    }
+
+    function whitelistPropagator(
+        uint256 _postboxId,
+        address[] memory _owners
+    ) external {
+        PostBoxItem storage postBoxItem = postbox[_postboxId];
+        require(postBoxItem.hasOwners, "postbox item cannot add owner for now");
+        require(postBoxItem.owners.contains(msg.sender), "not owner");
+
+        //update postbox item with new owners
+        for (uint256 i = 0; i < _owners.length; i++) {
+            postBoxItem.owners.add(_owners[i]);
+        }
+
+        //generate new hash of the updated postbox item
+        uint256 newCid = uint256(postBoxItem.toHash());
+
+        //create new postbox item in storage
+        PostBoxItem storage newPostBoxItem = postbox[newCid];
+
+        //transfer all the data from old postbox item to new one
+        newPostBoxItem.hasOwners = postBoxItem.hasOwners;
+        for (uint256 i = 0; i < postBoxItem.owners.length(); i++) {
+            newPostBoxItem.owners.add(postBoxItem.owners.at(i));
+        }
+        newPostBoxItem.crossMsg = postBoxItem.crossMsg;
+
+        //delete old postbox item
+        delete postbox[_postboxId];
+    }
+
+    function propagate(uint256 _postboxId) external payable {
+        require(msg.value > crossMsgFee);
+        PostBoxItem storage postBoxItem = postbox[_postboxId];
+        require(
+            postBoxItem.hasOwners && postBoxItem.owners.contains(msg.sender),
+            "owner not match"
+        );
+        _commitCrossMessage(postBoxItem.crossMsg);
     }
 
     function _bottomUpStateTransition(

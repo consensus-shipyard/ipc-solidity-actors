@@ -66,5 +66,13 @@ interface IGateway {
     /// - Determines the type of cross-message.
     /// - Performs the corresponding state changes.
     /// - And updated the latest nonce applied for future checks.
-    function applyMsg(CrossMsg calldata crossMsg) external returns (bytes memory);
+    function applyMsg(CrossMsg calldata crossMsg) external returns (bool);
+    
+    /// Whitelist a series of addresses as propagator of a cross net message.
+    /// This is basically adding this list of addresses to the `PostBoxItem::owners`.
+    /// Only existing owners can perform this operation.
+    function whitelistPropagator(uint256 postboxId, address[] memory owners)
+        external;
+
+    function propagate(uint256 postboxId) external payable;
 }
