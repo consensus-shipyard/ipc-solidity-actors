@@ -22,12 +22,6 @@ jobs:
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
 
-      - name: Spawn anvil instances
-        run: |
-          anvil &
-          anvil -p 8546 &
-          sleep 2
-
       - name: Run tests
         run: forge test -vvv --via-ir
         

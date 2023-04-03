@@ -106,8 +106,13 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     modifier isRegistered() {
-        (bool registered, ) = getSubnet(msg.sender);
+        (bool registered, ) = _getSubnet(msg.sender);
         require(registered, "subnet is not registered");
+        _;
+    }
+
+    modifier hasFee() {
+        require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
         _;
     }
 
@@ -138,8 +143,8 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     function getSubnetTopDownMsgsLength(
         SubnetID memory subnetId
-    ) public view returns (uint) {
-        (, Subnet storage subnet) = getSubnet(subnetId);
+    ) external view returns (uint) {
+        (, Subnet storage subnet) = _getSubnet(subnetId);
 
         return subnet.topDownMsgs.length;
     }
@@ -147,8 +152,8 @@ contract Gateway is IGateway, ReentrancyGuard {
     function getSubnetTopDownMsg(
         SubnetID memory subnetId,
         uint index
-    ) public view returns (CrossMsg memory) {
-        (, Subnet storage subnet) = getSubnet(subnetId);
+    ) external view returns (CrossMsg memory) {
+        (, Subnet storage subnet) = _getSubnet(subnetId);
         return subnet.topDownMsgs[index];
     }
 
@@ -162,7 +167,7 @@ contract Gateway is IGateway, ReentrancyGuard {
             "call to register doesn't include enough funds"
         );
 
-        (bool registered, Subnet storage subnet) = getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
         require(registered == false, "subnet is already registered");
 
@@ -178,14 +183,14 @@ contract Gateway is IGateway, ReentrancyGuard {
     function addStake() external payable isRegistered {
         require(msg.value > 0, "no stake to add");
 
-        (, Subnet storage subnet) = getSubnet(msg.sender);
+        (, Subnet storage subnet) = _getSubnet(msg.sender);
         subnet.stake += msg.value;
     }
 
     function releaseStake(uint amount) external nonReentrant isRegistered {
         require(amount > 0, "no funds to release in params");
 
-        (, Subnet storage subnet) = getSubnet(msg.sender);
+        (, Subnet storage subnet) = _getSubnet(msg.sender);
         require(
             subnet.stake >= amount,
             "subnet actor not allowed to release so many funds"
@@ -205,7 +210,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function kill() external isRegistered {
-        (, Subnet storage subnet) = getSubnet(msg.sender);
+        (, Subnet storage subnet) = _getSubnet(msg.sender);
         require(
             address(this).balance >= subnet.stake,
             "something went really wrong! the actor doesn't have enough balance to release"
@@ -227,7 +232,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     function commitChildCheck(
         Checkpoint calldata commit
     ) external isRegistered returns (uint fee) {
-        (, Subnet storage subnet) = getSubnet(msg.sender);
+        (, Subnet storage subnet) = _getSubnet(msg.sender);
         require(
             commit.data.source.getActor().normalize() == msg.sender,
             "source in checkpoint doesn't belong to subnet"
@@ -315,9 +320,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
-    function fund(SubnetID calldata subnetId) external payable signableOnly {
-        require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
-
+    function fund(SubnetID calldata subnetId) external payable signableOnly hasFee {
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(
             subnetId,
             msg.sender,
@@ -330,9 +333,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         distributeRewards(subnetId.getActor(), crossMsgFee);
     }
 
-    function release() external payable signableOnly {
-        require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
-
+    function release() external payable signableOnly hasFee {
         uint256 releaseAmount = msg.value - crossMsgFee;
 
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(
@@ -350,7 +351,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     function sendCross(
         SubnetID memory destination,
         CrossMsg memory crossMsg
-    ) external payable signableOnly {
+    ) external payable signableOnly hasFee {
         require(
             destination.route.length > 0,
             "no destination for cross-message explicitly set"
@@ -367,7 +368,6 @@ contract Gateway is IGateway, ReentrancyGuard {
             crossMsg.message.to.rawAddress != address(0),
             "invalid to addr"
         );
-        require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
 
         crossMsg.message.to = IPCAddress(
             destination,
@@ -418,7 +418,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
-        (bool exist, Subnet storage subnet) = getSubnet(
+        (bool exist, Subnet storage subnet) = _getSubnet(
             crossMessage.message.to.subnetId.down(networkName)
         );
 
@@ -463,15 +463,15 @@ contract Gateway is IGateway, ReentrancyGuard {
         nonce += 1;
     }
 
-    function getSubnet(
+    function _getSubnet(
         address actor
     ) internal view returns (bool found, Subnet storage subnet) {
         SubnetID memory subnetId = networkName.createSubnetId(actor);
 
-        return getSubnet(subnetId);
+        return _getSubnet(subnetId);
     }
 
-    function getSubnet(
+    function _getSubnet(
         SubnetID memory subnetId
     ) internal view returns (bool found, Subnet storage subnet) {
         subnet = subnets[subnetId.toHash()];
