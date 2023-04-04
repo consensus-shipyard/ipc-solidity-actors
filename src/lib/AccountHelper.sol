@@ -2,6 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "../constants/Constants.sol";
+import "fevmate/utils/FilAddress.sol";
 
 /// @title Helper library for checking account type
 /// @author LimeChain team

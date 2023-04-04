@@ -4,11 +4,14 @@ pragma solidity ^0.8.7;
 import "../structs/Checkpoint.sol";
 import "../constants/Constants.sol";
 import "../lib/SubnetIDHelper.sol";
+import "openzeppelin-contracts/utils/Address.sol";
+import "fevmate/utils/FilAddress.sol";
 
 /// @title Helper library for manipulating StorableMsg struct
 /// @author LimeChain team
 library CrossMsgHelper {
     using SubnetIDHelper for SubnetID;
+    using FilAddress for address;
 
     function createReleaseMsg(
         SubnetID calldata subnet,
@@ -29,7 +32,7 @@ library CrossMsgHelper {
                     }),
                     value: value,
                     nonce: nonce,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: EMPTY_BYTES
                 }),
                 wrapped: false
@@ -51,7 +54,7 @@ library CrossMsgHelper {
                     to: IPCAddress({subnetId: subnet, rawAddress: signer}),
                     value: value,
                     nonce: 0,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: EMPTY_BYTES
                 }),
                 wrapped: false
@@ -71,12 +74,22 @@ library CrossMsgHelper {
     function execute(
         CrossMsg calldata crossMsg,
         bytes4 methodSelector
-    ) public returns (bool success) {
-        bytes memory params = crossMsg.wrapped
-            ? abi.encode(crossMsg)
-            : crossMsg.message.params;
-        (success, ) = crossMsg.message.to.rawAddress.call{
-            value: crossMsg.message.value
-        }(abi.encodeWithSelector(methodSelector, params));
+    ) public returns (bytes memory) {
+        bytes memory data = "";
+        bytes memory params = crossMsg.message.params;
+
+        if (crossMsg.wrapped) {
+            params = abi.encode(crossMsg);
+        }
+        if (crossMsg.message.method != METHOD_SEND) {
+            data = abi.encodeWithSelector(methodSelector, params);
+        }
+
+        return
+            Address.functionCallWithValue(
+                crossMsg.message.to.rawAddress.normalize(),
+                data,
+                crossMsg.message.value
+            );
     }
 }
