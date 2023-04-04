@@ -8,6 +8,5 @@ import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 /// @author LimeChain team
 struct PostboxItem {
     CrossMsg crossMsg;
-    EnumerableSet.AddressSet owners;
-    bool hasOwners;
+    address[] owners;
 }
