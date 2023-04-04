@@ -12,8 +12,10 @@ import "./lib/CheckpointHelper.sol";
 import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
 import "./lib/StorableMsgHelper.sol";
+import "./lib/PostboxItemHelper.sol";
 import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
+import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Gateway Contract
@@ -27,6 +29,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
     using StorableMsgHelper for StorableMsg;
+    using PostboxItemHelper for PostboxItem;
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -63,11 +66,12 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice Stores an epoch for the given pointer to CrossMsg[]
     mapping(bytes32 => int64) public crossMsgEpochRegistry;
 
-    uint256 public lastPostboxId;
     /// @notice Postbox keeps track for an EOA of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
-    /// postbox id => PostBoxItem
-    mapping(uint64 => PostBoxItem) private postbox;
+    /// postbox id => PostboxItem
+    mapping(bytes32 => PostboxItem) public postbox;
+    /// postbox id => set of owners
+    mapping(bytes32 => mapping(address => bool)) private postboxHasOwner;
 
     /// @notice Latest nonce of a cross message sent from subnet.
     uint64 public nonce;
@@ -159,6 +163,12 @@ contract Gateway is IGateway, ReentrancyGuard {
     ) external view returns (CrossMsg memory) {
         Subnet storage subnet = subnets[subnetId.toHash()];
         return subnet.topDownMsgs[index];
+    }
+
+    function getPostboxOwnersLength(
+        bytes32 postboxId
+    ) external view returns (uint256) {
+        return postbox[postboxId].owners.length;
     }
 
     function getNetworkName() external view returns (SubnetID memory) {
@@ -336,7 +346,9 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
-    function fund(SubnetID calldata subnetId) external payable signableOnly hasFee {
+    function fund(
+        SubnetID calldata subnetId
+    ) external payable signableOnly hasFee {
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(
             subnetId,
             msg.sender,
@@ -398,7 +410,8 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     function applyMsg(
         CrossMsg calldata crossMsg
-    ) external returns (bool success) {
+    ) external returns (bytes memory) {
+        require(msg.sender.isSystemActor(), "caller not the system actor");
         require(
             crossMsg.message.to.rawAddress != address(0),
             "error getting raw address from msg"
@@ -407,37 +420,39 @@ contract Gateway is IGateway, ReentrancyGuard {
             crossMsg.message.to.subnetId.route.length > 0,
             "error getting subnet from msg"
         );
-        require(
-            crossMsg.message.to.subnetId.equals(networkName),
-            "the message being applied doesn't belong to this subnet"
-        );
-        require(
-            methodSelectors[crossMsg.message.method] != bytes4(0),
-            "method not found"
-        );
 
-        if (crossMsg.message.applyType(networkName) == IPCMsgType.BottomUp) {
-            _bottomUpStateTransition(crossMsg.message);
-        } else {
-            require(
-                appliedTopDownNonce == crossMsg.message.nonce,
-                "the top-down message being applied doesn't hold the subsequent nonce"
-            );
-            appliedTopDownNonce += 1;
+        IPCMsgType applyType = crossMsg.message.applyType(networkName);
+
+        if (crossMsg.message.to.subnetId.equals(networkName)) {
+            if (applyType == IPCMsgType.BottomUp) {
+                _bottomUpStateTransition(crossMsg.message);
+            }
+
+            if (applyType == IPCMsgType.TopDown) {
+                _topDownStateTransition(crossMsg.message);
+            }
+
+            return crossMsg.execute(methodSelectors[crossMsg.message.method]);
         }
 
-        // execute the message
-        success = crossMsg.execute(methodSelectors[crossMsg.message.method]);
+        PostboxItem memory postboxItem = PostboxItemHelper.createItem(crossMsg);
+        bytes32 postboxId = postboxItem.toHash();
 
-        //todo postbox
+        postbox[postboxId] = postboxItem;
+        postboxHasOwner[postboxId][postboxItem.owners[0]] = true;
+
+        return new bytes(uint256(postboxId));
     }
 
     function _bottomUpStateTransition(
         StorableMsg calldata storableMsg
     ) internal {
-        if (appliedBottomUpNonce == 2 ** 64 - 1 && storableMsg.nonce == 0) {
+        if (appliedBottomUpNonce == MAX_NONCE && storableMsg.nonce == 0) {
             appliedBottomUpNonce = 0;
-        } else if (appliedBottomUpNonce + 1 == storableMsg.nonce) {
+        } else if (
+            storableMsg.nonce > appliedBottomUpNonce &&
+            storableMsg.nonce == appliedBottomUpNonce + 1
+        ) {
             appliedBottomUpNonce += 1;
         }
 
@@ -445,6 +460,24 @@ contract Gateway is IGateway, ReentrancyGuard {
             appliedBottomUpNonce == storableMsg.nonce,
             "the bottom-up message being applied doesn't hold the subsequent nonce"
         );
+    }
+
+    function _topDownStateTransition(
+        StorableMsg calldata storableMsg
+    ) internal {
+        if (storableMsg.method == METHOD_SEND) {
+            require(
+                address(this).balance >= storableMsg.value,
+                "not enough balance to mint new tokens as part of the cross-message"
+            );
+        }
+
+        require(
+            appliedTopDownNonce == storableMsg.nonce,
+            "the top-down message being applied doesn't hold the subsequent nonce"
+        );
+
+        appliedTopDownNonce += 1;
     }
 
     function _commitCrossMessage(

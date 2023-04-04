@@ -5,7 +5,7 @@ import "./Checkpoint.sol";
 
 /// @title postbox item struct
 /// @author LimeChain team
-struct PostBoxItem {
+struct PostboxItem {
     CrossMsg crossMsg;
     address[] owners;
 }

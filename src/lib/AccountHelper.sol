@@ -2,6 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "../constants/Constants.sol";
+import "fevmate/utils/FilAddress.sol";
 
 /// @title Helper library for checking account type
 /// @author LimeChain team
@@ -21,5 +22,9 @@ library AccountHelper {
 
     function isMultisig(address _address) internal pure returns (bool) {
         return _address == MULTISIG_ACTOR;
+    }
+
+    function isSystemActor(address _address) internal pure returns (bool) {
+        return _address == FilAddress.SYSTEM_ACTOR;
     }
 }

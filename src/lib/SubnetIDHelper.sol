@@ -154,4 +154,8 @@ library SubnetIDHelper {
         if(parent.route.length == 0) return false;
         return from.route.length > parent.route.length;
     }
+
+    function isEmpty(SubnetID calldata subnetId) internal pure returns(bool) {
+        return subnetId.route.length > 0;
+    }
 }

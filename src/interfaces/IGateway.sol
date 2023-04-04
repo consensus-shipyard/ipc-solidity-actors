@@ -66,5 +66,5 @@ interface IGateway {
     /// - Determines the type of cross-message.
     /// - Performs the corresponding state changes.
     /// - And updated the latest nonce applied for future checks.
-    function applyMsg(CrossMsg calldata crossMsg) external returns (bool);
+    function applyMsg(CrossMsg calldata crossMsg) external returns (bytes memory);
 }
