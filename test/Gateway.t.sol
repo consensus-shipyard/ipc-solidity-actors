@@ -7,6 +7,7 @@ import "../src/Gateway.sol";
 import "../src/SubnetActor.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
+import "../src/lib/PostboxItemHelper.sol";
 import "../src/lib/CrossMsgHelper.sol";
 
 contract GatewayDeploymentTest is Test {
@@ -14,6 +15,7 @@ contract GatewayDeploymentTest is Test {
     using CheckpointHelper for Checkpoint;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
+    using PostboxItemHelper for PostboxItem;
 
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -29,12 +31,16 @@ contract GatewayDeploymentTest is Test {
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
     address constant CHILD_NETWORK_ADDRESS_2 = address(11);
+    address constant SYSTEM_ACTOR = 0xfF00000000000000000000000000000000000000;
+    
 
     Gateway gw;
     Gateway gw2;
     SubnetActor sa;
 
     address public constant ROOTNET_ADDRESS = address(1);
+
+    mapping(uint256 => PostboxItem) private postBox;
 
     function setUp() public {
     
@@ -1035,6 +1041,7 @@ contract GatewayDeploymentTest is Test {
         require(crossMsg.message.applyType(gw2.getNetworkName()) == IPCMsgType.BottomUp);
 
         vm.prank(caller);
+        
         gw2.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
 
         require(gw2.appliedTopDownNonce() == 0);
@@ -1333,6 +1340,112 @@ contract GatewayDeploymentTest is Test {
         require(gw2.appliedTopDownNonce() == 1);
         require(keccak256(result) == keccak256(EMPTY_BYTES));
         require(crossMsg.message.to.rawAddress.balance == crossMsg.message.value);
+    }
+
+    function setupWhiteListMethod(address receiver, address caller) internal returns (bytes32) {
+        vm.prank(receiver);
+        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: caller
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName().createSubnetId(receiver),
+                    rawAddress: receiver
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: 2,
+                params: new bytes(0)
+            }),
+            wrapped: false
+        });
+
+        vm.deal(caller, CROSS_MSG_FEE + 2);
+        vm.prank(SYSTEM_ACTOR);
+        gw.applyMsg(crossMsg);
+
+        return PostboxItemHelper.createItem(crossMsg).toHash();
+    }
+
+    function test_WhitelistPropagator_Fails_NotOwner() public {
+        address caller = vm.addr(100);
+        address receiver = vm.addr(101);
+
+        bytes32 postBoxItemId = setupWhiteListMethod(receiver, caller);
+        
+        address[] memory owners = new address[](1);
+        owners[0] = caller;
+
+        vm.prank(receiver);
+        vm.expectRevert("not owner");
+        gw.whitelistPropagator(postBoxItemId, owners);
+    }
+
+    function test_WhitelistPropagator_Fails_PostboxItemDoesNotExist() public {
+        address caller = vm.addr(100);
+        address receiver = vm.addr(101);
+ 
+        setupWhiteListMethod(receiver, caller);
+
+        address[] memory owners = new address[](1);
+        owners[0] = caller;
+
+        vm.expectRevert("postbox item does not exist");
+        gw.whitelistPropagator(bytes32(0), owners);
+    }
+
+    function test_WhitelistPropagator_Works() public {
+        address caller = vm.addr(100);
+        address receiver = vm.addr(101);
+
+        vm.prank(receiver);
+        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: caller
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName().createSubnetId(receiver),
+                    rawAddress: receiver
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: 2,
+                params: new bytes(0)
+            }),
+            wrapped: false
+        });
+
+        vm.deal(caller, CROSS_MSG_FEE + 2);
+        vm.prank(SYSTEM_ACTOR);
+        gw.applyMsg(crossMsg);
+
+        bytes32 postBoxItemId = PostboxItemHelper.createItem(crossMsg).toHash();
+        console.log(uint256(postBoxItemId));
+        address[] memory ownersToAdd = new address[](1);
+        ownersToAdd[0] = receiver;
+
+        vm.prank(caller);
+        gw.whitelistPropagator(postBoxItemId, ownersToAdd);
+
+        address[] memory newOwners = new address[](2);
+        newOwners[0] = caller;
+        newOwners[1] = receiver;
+        bytes32 newPostBoxId = PostboxItemHelper.createItem(crossMsg, newOwners).toHash();
+        
+        uint256 ownerCount = gw.getPostboxOwnersLength(newPostBoxId);
+        require(ownerCount == 2);
+        CrossMsg memory msgFromPostbox = gw.postbox(newPostBoxId);
+        require(msgFromPostbox.toHash() == crossMsg.toHash());
     }
 
     function commitChildCheck(

@@ -106,6 +106,16 @@ contract Gateway is IGateway, ReentrancyGuard {
         _;
     }
 
+    modifier onlyPostboxOwner(bytes32 postboxId) {
+        require(postboxHasOwner[postboxId][msg.sender], "not owner");
+        _;
+    }
+
+    modifier onlyValidPostboxId(bytes32 postboxId) {
+        require(!postbox[postboxId].isEmpty(), "postbox item does not exist");
+        _;
+    }
+
     modifier hasFee() {
         require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
         _;
@@ -444,43 +454,61 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function whitelistPropagator(
-        uint256 _postboxId,
-        address[] memory _owners
-    ) external {
-        PostBoxItem storage postBoxItem = postbox[_postboxId];
-        require(postBoxItem.hasOwners, "postbox item cannot add owner for now");
-        require(postBoxItem.owners.contains(msg.sender), "not owner");
+        bytes32 postboxId,
+        address[] calldata owners
+    ) external onlyValidPostboxId(postboxId) onlyPostboxOwner(postboxId) {
+        PostboxItem storage postBoxItem = postbox[postboxId];
 
         //update postbox item with new owners
-        for (uint256 i = 0; i < _owners.length; i++) {
-            postBoxItem.owners.add(_owners[i]);
+        for (uint256 i = 0; i < owners.length; ) {
+            if (!postboxHasOwner[postboxId][owners[i]]) {
+                postBoxItem.owners.push(owners[i]);
+                postboxHasOwner[postboxId][owners[i]] = true;
+                unchecked {
+                    ++i;
+                }
+            }
         }
 
-        //generate new hash of the updated postbox item
-        uint256 newCid = uint256(postBoxItem.toHash());
+        bytes32 newPostboxId = postBoxItem.toHash();
+        console.log(uint256(newPostboxId));
 
-        //create new postbox item in storage
-        PostBoxItem storage newPostBoxItem = postbox[newCid];
+        postbox[newPostboxId] = postBoxItem;
 
-        //transfer all the data from old postbox item to new one
-        newPostBoxItem.hasOwners = postBoxItem.hasOwners;
-        for (uint256 i = 0; i < postBoxItem.owners.length(); i++) {
-            newPostBoxItem.owners.add(postBoxItem.owners.at(i));
+        for (uint256 i = 0; i < postBoxItem.owners.length; ) {
+            postboxHasOwner[newPostboxId][postBoxItem.owners[i]] = true;
+            delete postboxHasOwner[postboxId][postBoxItem.owners[i]];
+            unchecked {
+                ++i;
+            }
         }
-        newPostBoxItem.crossMsg = postBoxItem.crossMsg;
 
-        //delete old postbox item
-        delete postbox[_postboxId];
+        delete postbox[postboxId];
     }
 
-    function propagate(uint256 _postboxId) external payable {
-        require(msg.value > crossMsgFee);
-        PostBoxItem storage postBoxItem = postbox[_postboxId];
-        require(
-            postBoxItem.hasOwners && postBoxItem.owners.contains(msg.sender),
-            "owner not match"
+    function propagate(
+        bytes32 postboxId
+    )
+        external
+        payable
+        hasFee
+        onlyValidPostboxId(postboxId)
+        onlyPostboxOwner(postboxId)
+    {
+        PostboxItem storage postBoxItem = postbox[postboxId];
+
+        (bool burn, bool hasMessageFee) = _commitCrossMessage(
+            postBoxItem.crossMsg
         );
-        _commitCrossMessage(postBoxItem.crossMsg);
+        _crossMsgSideEffects(postBoxItem.crossMsg, burn, hasMessageFee);
+
+        for (uint256 i = 0; i < postBoxItem.owners.length; i++) {
+            delete postboxHasOwner[postboxId][postBoxItem.owners[i]];
+        }
+
+        delete postbox[postboxId];
+
+        payable(msg.sender).sendValue(msg.value - crossMsgFee);
     }
 
     function _bottomUpStateTransition(
@@ -572,6 +600,8 @@ contract Gateway is IGateway, ReentrancyGuard {
 
             distributeRewards(toSubnetId.getActor(), crossMsgFee);
         }
+
+        return (false, true);
     }
 
     /// @notice commit topdown messages for their execution in the subnet
