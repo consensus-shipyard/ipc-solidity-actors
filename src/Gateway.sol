@@ -103,11 +103,9 @@ contract Gateway is IGateway, ReentrancyGuard {
         internal checks;
 
     modifier signableOnly() {
-        require(
-            msg.sender.isAccount() || msg.sender.isMultisig(),
-            "the caller is not an account nor a multi-sig"
+        require(msg.sender.isAccount(),
+            "the caller is not an account"
         );
-
         _;
     }
 

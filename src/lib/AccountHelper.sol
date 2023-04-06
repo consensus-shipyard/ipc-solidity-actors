@@ -20,9 +20,6 @@ library AccountHelper {
             ADDRESS_CODEHASH == keccak256(_address.code);
     }
 
-    function isMultisig(address _address) internal pure returns (bool) {
-        return _address == MULTISIG_ACTOR;
-    }
 
     function isSystemActor(address _address) internal pure returns (bool) {
         return _address == FilAddress.SYSTEM_ACTOR;
