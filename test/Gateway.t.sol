@@ -784,10 +784,10 @@ contract GatewayDeploymentTest is Test {
     function test_SendCross_Fails_NoDestination() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 1);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         vm.expectRevert("no destination for cross-message explicitly set");
-        gw.sendCross(
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(
             SubnetID({route: new address[](0)}),
             CrossMsg({
                 message: StorableMsg({
@@ -799,7 +799,7 @@ contract GatewayDeploymentTest is Test {
                         subnetId: SubnetID({route: new address[](0)}),
                         rawAddress: caller
                     }),
-                    value: 0,
+                    value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: 0,
                     params: new bytes(0)
@@ -812,13 +812,13 @@ contract GatewayDeploymentTest is Test {
     function test_SendCross_Fails_NoCurrentNetwork() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 1);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         SubnetID memory destination = gw.getNetworkName();
         vm.expectRevert(
             "destination is the current network, you are better off with a good ol' message, no cross needed"
         );
-        gw.sendCross(
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(
             destination,
             CrossMsg({
                 message: StorableMsg({
@@ -830,7 +830,7 @@ contract GatewayDeploymentTest is Test {
                         subnetId: SubnetID({route: new address[](0)}),
                         rawAddress: caller
                     }),
-                    value: 0,
+                    value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: 0,
                     params: new bytes(0)
@@ -843,7 +843,7 @@ contract GatewayDeploymentTest is Test {
     function test_SendCross_Fails_DifferentMessageValue() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 11);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         SubnetID memory destination = gw.getNetworkName().createSubnetId(
             caller
@@ -851,7 +851,7 @@ contract GatewayDeploymentTest is Test {
         vm.expectRevert(
             "the funds in cross-msg params are not equal to the ones sent in the message"
         );
-        gw.sendCross{value: 10}(
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(
             destination,
             CrossMsg({
                 message: StorableMsg({
@@ -876,13 +876,13 @@ contract GatewayDeploymentTest is Test {
     function test_SendCross_Fails_InvalidToAddr() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 11);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         SubnetID memory destination = gw.getNetworkName().createSubnetId(
             caller
         );
         vm.expectRevert("invalid to addr");
-        gw.sendCross{value: 10}(
+        gw.sendCross{value: CROSS_MSG_FEE + 1}(
             destination,
             CrossMsg({
                 message: StorableMsg({
@@ -894,7 +894,7 @@ contract GatewayDeploymentTest is Test {
                         subnetId: SubnetID({route: new address[](0)}),
                         rawAddress: address(0)
                     }),
-                    value: 10,
+                    value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: 0,
                     params: new bytes(0)
@@ -912,7 +912,7 @@ contract GatewayDeploymentTest is Test {
         SubnetID memory destination = gw.getNetworkName().createSubnetId(
             caller
         );
-        vm.expectRevert("invalid to addr");
+        vm.expectRevert("not enough gas to pay cross-message");
         gw.sendCross{value: CROSS_MSG_FEE}(
             destination,
             CrossMsg({
