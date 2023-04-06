@@ -705,6 +705,10 @@ contract GatewayDeploymentTest is Test {
         release(BLS_ACCOUNT_ADDREESS, releaseAmount, crossMsgFee, 0);
     }
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 33a37e1 (fix: tests and remove multisig checks)
     function test_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
         vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
@@ -753,6 +757,7 @@ contract GatewayDeploymentTest is Test {
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         vm.expectRevert("error getting subnet from msg");
+
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
             SubnetID({route: new address[](0)}),
             CrossMsg({
@@ -891,7 +896,7 @@ contract GatewayDeploymentTest is Test {
                         subnetId: SubnetID({route: new address[](0)}),
                         rawAddress: address(0)
                     }),
-                    value: CROSS_MSG_FEE,
+                    value: 0,
                     nonce: 0,
                     method: 0,
                     params: new bytes(0)

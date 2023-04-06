@@ -19,4 +19,8 @@ library AccountHelper {
             ADDRESS_CODEHASH == _address.codehash &&
             ADDRESS_CODEHASH == keccak256(_address.code);
     }
+
+    function isSystemActor(address _address) internal pure returns (bool) {
+        return _address == FilAddress.SYSTEM_ACTOR;
+    }
 }

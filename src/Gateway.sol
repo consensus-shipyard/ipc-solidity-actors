@@ -103,8 +103,14 @@ contract Gateway is IGateway, ReentrancyGuard {
         internal checks;
 
     modifier signableOnly() {
+<<<<<<< HEAD
         require(msg.sender.isAccount(), "the caller is not an account");
 
+=======
+        require(msg.sender.isAccount(),
+            "the caller is not an account"
+        );
+>>>>>>> 33a37e1 (fix: tests and remove multisig checks)
         _;
     }
 
