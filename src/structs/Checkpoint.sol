@@ -12,11 +12,19 @@ struct Checkpoint {
 
 struct CheckData {
     SubnetID source;
-    bytes tipSet;
+    bytes proof;
     int64 epoch;
     bytes32 prevHash;
     ChildCheck[] children;
-    CrossMsgMeta crossMsgs;
+    BatchCrossMsgs batchCrossMsgs;
+}
+struct BatchCrossMsgs {
+    uint256 fee;
+    CrossMsg[] crossMsgs;
+}
+struct TopDownCheckpoint {
+    int64 epoch;
+    CrossMsg[] topDownMsgs;
 }
 
 struct ChildCheck {
