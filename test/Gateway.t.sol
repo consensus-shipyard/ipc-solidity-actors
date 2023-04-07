@@ -639,7 +639,7 @@ contract GatewayDeploymentTest is Test {
 
         (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
 
-        vm.expectRevert("the caller is not an account nor a multi-sig");
+        vm.expectRevert("the caller is not an account");
 
         gw.fund{value: fundAmount}(subnetId);
     }
@@ -689,7 +689,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.startPrank(invalidAccount);
         vm.deal(invalidAccount, 1 ether);
-        vm.expectRevert("the caller is not an account nor a multi-sig");
+        vm.expectRevert("the caller is not an account");
 
         gw.release{value: 1 ether}();
     }
