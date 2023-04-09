@@ -76,18 +76,13 @@ library SubnetIDHelper {
         pure
         returns (bool)
     {
-        if (subnet1.route.length != subnet2.route.length) return false;
-
-        for (uint i = 0; i < subnet1.route.length; ) {
-            if (subnet1.route[i] != subnet2.route[i]) return false;
-            unchecked {
-                ++i;
-            }
-        }
-
-        return true;
+       return toHash(subnet1) == toHash(subnet2);
     }
 
+    /// @notice find the common route of 2 paths indicated by subnetIds. 
+    /// Ex: subnet1 (r1 ->r2 -> r3)
+    /// subnet2 (r1 -> r2 -> r4)
+    /// output subnetID: r1 -> r2
     function commonParent(SubnetID calldata subnet1, SubnetID calldata subnet2)
         public
         pure
@@ -116,6 +111,10 @@ library SubnetIDHelper {
         return SubnetID({route: route});
     }
 
+    /// @notice get a path from subnet1 going down towards subnet2.
+    /// Effectively finds the common parent and appends an element from the second subnet.
+    /// Ex: s1 (r1 -> r2) s2(r1->r2->r3->r4->r5)
+    /// output: r1->r2->r3
     function down(
         SubnetID calldata subnet1,
         SubnetID calldata subnet2

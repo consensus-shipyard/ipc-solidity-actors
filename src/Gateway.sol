@@ -15,7 +15,6 @@ import "./lib/StorableMsgHelper.sol";
 import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
-import "forge-std/console.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -105,12 +104,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         _;
     }
 
-    modifier isRegistered() {
-        (bool registered, ) = _getSubnet(msg.sender);
-        require(registered, "subnet is not registered");
-        _;
-    }
-
     modifier hasFee() {
         require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
         _;
@@ -144,7 +137,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     function getSubnetTopDownMsgsLength(
         SubnetID memory subnetId
     ) external view returns (uint) {
-        (, Subnet storage subnet) = _getSubnet(subnetId);
+        Subnet storage subnet = subnets[subnetId.toHash()];
 
         return subnet.topDownMsgs.length;
     }
@@ -153,7 +146,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         SubnetID memory subnetId,
         uint index
     ) external view returns (CrossMsg memory) {
-        (, Subnet storage subnet) = _getSubnet(subnetId);
+        Subnet storage subnet = subnets[subnetId.toHash()];
         return subnet.topDownMsgs[index];
     }
 
@@ -167,9 +160,10 @@ contract Gateway is IGateway, ReentrancyGuard {
             "call to register doesn't include enough funds"
         );
 
-        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
+        SubnetID memory id = networkName.createSubnetId(msg.sender);
+        Subnet storage subnet = subnets[id.toHash()];
 
-        require(registered == false, "subnet is already registered");
+        require(_subnetExists(subnet) == false, "subnet is already registered");
 
         subnet.id = networkName.createSubnetId(msg.sender);
         subnet.stake = msg.value;
@@ -180,21 +174,23 @@ contract Gateway is IGateway, ReentrancyGuard {
         totalSubnets += 1;
     }
 
-    function addStake() external payable isRegistered {
+    function addStake() external payable {
         require(msg.value > 0, "no stake to add");
 
-        (, Subnet storage subnet) = _getSubnet(msg.sender);
+        SubnetID memory id = networkName.createSubnetId(msg.sender);
+        Subnet storage subnet = subnets[id.toHash()];
+
+        require(_subnetExists(subnet), "subnet is not registered");
+
         subnet.stake += msg.value;
     }
 
-    function releaseStake(uint amount) external nonReentrant isRegistered {
+    function releaseStake(uint amount) external nonReentrant {
         require(amount > 0, "no funds to release in params");
 
-        (, Subnet storage subnet) = _getSubnet(msg.sender);
-        require(
-            subnet.stake >= amount,
-            "subnet actor not allowed to release so many funds"
-        );
+        SubnetID memory id = networkName.createSubnetId(msg.sender);
+        Subnet storage subnet = subnets[id.toHash()];
+
         require(
             address(this).balance >= amount,
             "something went really wrong! the actor doesn't have enough balance to release"
@@ -209,8 +205,12 @@ contract Gateway is IGateway, ReentrancyGuard {
         payable(subnet.id.getActor()).sendValue(amount);
     }
 
-    function kill() external isRegistered {
-        (, Subnet storage subnet) = _getSubnet(msg.sender);
+    function kill() external {
+        SubnetID memory id = networkName.createSubnetId(msg.sender);
+        Subnet storage subnet = subnets[id.toHash()];
+
+        require(_subnetExists(subnet), "subnet is not registered");
+
         require(
             address(this).balance >= subnet.stake,
             "something went really wrong! the actor doesn't have enough balance to release"
@@ -231,8 +231,13 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     function commitChildCheck(
         Checkpoint calldata commit
-    ) external isRegistered returns (uint fee) {
-        (, Subnet storage subnet) = _getSubnet(msg.sender);
+    ) external returns (uint fee) {
+        
+        SubnetID memory id = networkName.createSubnetId(msg.sender);
+        Subnet storage subnet = subnets[id.toHash()];
+
+        require(_subnetExists(subnet), "subnet is not registered");
+
         require(
             commit.data.source.getActor().normalize() == msg.sender,
             "source in checkpoint doesn't belong to subnet"
@@ -353,10 +358,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         CrossMsg memory crossMsg
     ) external payable signableOnly hasFee {
         require(
-            destination.route.length > 0,
-            "no destination for cross-message explicitly set"
-        );
-        require(
             !destination.equals(networkName),
             "destination is the current network, you are better off with a good ol' message, no cross needed"
         );
@@ -369,10 +370,7 @@ contract Gateway is IGateway, ReentrancyGuard {
             "invalid to addr"
         );
 
-        crossMsg.message.to = IPCAddress(
-            destination,
-            crossMsg.message.to.rawAddress
-        );
+        crossMsg.message.to.subnetId = destination;
         crossMsg.message.from = IPCAddress(networkName, msg.sender);
 
         (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg);
@@ -418,11 +416,8 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
-        (bool exist, Subnet storage subnet) = _getSubnet(
-            crossMessage.message.to.subnetId.down(networkName)
-        );
-
-        require(exist, "couldn't compute the next subnet in route");
+        Subnet storage subnet = subnets[crossMessage.message.to.subnetId.down(networkName).toHash()];
+        require(_subnetExists(subnet), "couldn't compute the next subnet in route");
 
         crossMessage.message.nonce = subnet.nonce;
         subnet.nonce += 1;
@@ -434,7 +429,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         (, int64 epoch, Checkpoint storage checkpoint) = checkpoints
             .getCheckpointPerEpoch(block.timestamp, checkPeriod);
 
-        console.log("epoch: ", uint64(epoch));
         bytes32 crossMsgHash = CrossMsgHelper.toHash(crossMessage);
         bytes32 prevMsgsHash = checkpoint.data.crossMsgs.msgsHash;
         bytes32 newMsgsHash = prevMsgsHash;
@@ -463,19 +457,8 @@ contract Gateway is IGateway, ReentrancyGuard {
         nonce += 1;
     }
 
-    function _getSubnet(
-        address actor
-    ) internal view returns (bool found, Subnet storage subnet) {
-        SubnetID memory subnetId = networkName.createSubnetId(actor);
-
-        return _getSubnet(subnetId);
-    }
-
-    function _getSubnet(
-        SubnetID memory subnetId
-    ) internal view returns (bool found, Subnet storage subnet) {
-        subnet = subnets[subnetId.toHash()];
-        found = subnet.id.route.length > 0;
+    function _subnetExists(Subnet memory subnet) internal pure returns (bool) {
+        return subnet.id.route.length > 0;
     }
 
     function distributeRewards(address to, uint256 amount) internal {
