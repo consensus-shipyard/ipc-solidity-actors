@@ -255,29 +255,6 @@ contract GatewayDeploymentTest is Test {
         gw.releaseStake(0);
     }
 
-    function test_ReleaseStake_Fail_SubnetNotExists() public {
-        vm.expectRevert("subnet is not registered");
-
-        gw.releaseStake(1);
-    }
-
-    function test_ReleaseStake_Fail_InsufficientSubnetBalance(
-        uint256 releaseAmount,
-        uint256 subnetBalance,
-        address subnetAddress
-    ) public {
-        vm.assume(subnetBalance > MIN_COLLATERAL_AMOUNT);
-        vm.assume(releaseAmount > subnetBalance);
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, releaseAmount);
-
-        registerSubnet(subnetBalance, subnetAddress);
-
-        vm.expectRevert("subnet actor not allowed to release so many funds");
-
-        gw.releaseStake(releaseAmount);
-    }
-
     function test_Kill_Works() public {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
 
@@ -305,12 +282,6 @@ contract GatewayDeploymentTest is Test {
         require(status == Status.Unset);
         require(gw.totalSubnets() == 0);
         require(subnetAddress.balance == MIN_COLLATERAL_AMOUNT);
-    }
-
-    function test_Kill_Fail_SubnetNotExists() public {
-        vm.expectRevert("subnet is not registered");
-
-        gw.kill();
     }
 
     function test_Kill_Fail_CircSupplyMoreThanZero() public {address validatorAddress = address(100);

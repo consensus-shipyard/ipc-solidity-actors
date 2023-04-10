@@ -471,8 +471,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
 
         bytes32 newPostboxId = postBoxItem.toHash();
-        console.log(uint256(newPostboxId));
-
         postbox[newPostboxId] = postBoxItem;
 
         for (uint256 i = 0; i < postBoxItem.owners.length; ) {
