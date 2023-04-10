@@ -47,53 +47,6 @@ contract StorableMsgHelperTest is Test {
         require(storableMsg.toHash() == expectedHash, "Hashes should be equal");
     }
 
-    function test_ipcType_BottomUp() public pure {
-        address[] memory from = new address[](2);
-        from[0] = address(1);
-        from[1] = address(2);
-        address[] memory to = new address[](1);
-        to[0] = address(1);
-        StorableMsg memory storableMsg = StorableMsg({
-            from: IPCAddress({
-                subnetId: SubnetID({route: from}),
-                rawAddress: address(3)
-            }),
-            to: IPCAddress({
-                subnetId: SubnetID({route: to}),
-                rawAddress: address(3)
-            }),
-            value: 1,
-            nonce: 1,
-            method: 1,
-            params: bytes("dfasfgsd")
-        });
-        require(storableMsg.ipcType() == IPCMsgType.BottomUp, "Should be BottomUp");
-    }
-
-    function test_ipcType_TopDown() public pure {
-        address[] memory from = new address[](1);
-        from[0] = address(1);
-        address[] memory to = new address[](2);
-        to[0] = address(1);
-        to[1] = address(2);
-        StorableMsg memory storableMsg = StorableMsg({
-            from: IPCAddress({
-                subnetId: SubnetID({route: from}),
-                rawAddress: address(3)
-            }),
-            to: IPCAddress({
-                subnetId: SubnetID({route: to}),
-                rawAddress: address(3)
-            }),
-            value: 1,
-            nonce: 1,
-            method: 1,
-            params: bytes("dfasfgsd")
-        });
-
-        require(storableMsg.ipcType() == IPCMsgType.TopDown, "Should be TopDown");
-    }
-
     function test_applyType_TopDown() public pure {
         address[] memory from = new address[](1);
         from[0] = address(1);

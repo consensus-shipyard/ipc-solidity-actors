@@ -785,7 +785,7 @@ contract GatewayDeploymentTest is Test {
         vm.startPrank(caller);
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
-        vm.expectRevert("no destination for cross-message explicitly set");
+        vm.expectRevert("error getting subnet from msg");
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
             SubnetID({route: new address[](0)}),
             CrossMsg({

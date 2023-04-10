@@ -32,26 +32,22 @@ library StorableMsgHelper {
         );
 
     function applyType(
-        StorableMsg calldata storableMsg,
-        SubnetID calldata curr
+        StorableMsg calldata message,
+        SubnetID calldata currentSubnet
     ) public pure returns (IPCMsgType) {
-        SubnetID memory sto = storableMsg.to.subnetId;
-        SubnetID memory sfrom = storableMsg.from.subnetId;
+        SubnetID memory toSubnet = message.to.subnetId;
+        SubnetID memory fromSubnet = message.from.subnetId;
+        SubnetID memory currentParentSubnet = currentSubnet.commonParent(toSubnet);
+        SubnetID memory messageParentSubnet = fromSubnet.commonParent(toSubnet);
+
         if (
-            curr.commonParent(sto).equals(sfrom.commonParent(sto)) &&
-            ipcType(storableMsg) == IPCMsgType.BottomUp
-        ) return IPCMsgType.BottomUp;
+            currentParentSubnet.equals(messageParentSubnet) &&
+            fromSubnet.route.length > messageParentSubnet.route.length
+        ) {
+            return IPCMsgType.BottomUp;
+        }
 
         return IPCMsgType.TopDown;
-    }
-
-    function ipcType(
-        StorableMsg calldata storableMsg
-    ) public pure returns (IPCMsgType) {
-        SubnetID memory sto = storableMsg.to.subnetId;
-        SubnetID memory sfrom = storableMsg.from.subnetId;
-
-        return sfrom.isBottomUp(sto) ? IPCMsgType.BottomUp : IPCMsgType.TopDown;
     }
 
     function toHash(
