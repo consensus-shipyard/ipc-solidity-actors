@@ -705,10 +705,6 @@ contract GatewayDeploymentTest is Test {
         release(BLS_ACCOUNT_ADDREESS, releaseAmount, crossMsgFee, 0);
     }
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 33a37e1 (fix: tests and remove multisig checks)
     function test_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
         vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
@@ -1042,6 +1038,302 @@ contract GatewayDeploymentTest is Test {
         gw2.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
 
         require(gw2.appliedTopDownNonce() == 0);
+    }
+
+        function test_ApplyMsg_Fails_NotSystemActor() public {
+        address nonSystemActor = address(100);
+        vm.startPrank(nonSystemActor);
+        vm.deal(nonSystemActor, 1 ether);
+
+        vm.expectRevert("caller not the system actor");
+
+        gw.applyMsg(CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(0)
+                }),
+                to: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(0)
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: 0,
+                params: new bytes(0)
+            }),
+            wrapped: true
+        }));
+    }
+
+    function test_ApplyMsg_Fails_NoDestinationAddress() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.expectRevert("error getting raw address from msg");
+
+        gw.applyMsg(CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(0)
+                }),
+                to: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(0)
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: 0,
+                params: EMPTY_BYTES
+            }),
+            wrapped: true
+        }));
+    }
+
+    function test_ApplyMsg_Fails_SenderHasNoBalance() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+
+        SubnetID memory toSubnet = gw2.getNetworkName();
+        vm.expectRevert("not enough balance to mint new tokens as part of the cross-message");
+
+        gw.applyMsg(CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(0)
+                }),
+                to: IPCAddress({
+                    subnetId: toSubnet,
+                    rawAddress: address(1)
+                }),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: true
+        }));
+    }
+
+
+    function test_ApplyMsg_Fails_NoDestinationSubnet() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.expectRevert("error getting subnet from msg");
+
+        gw.applyMsg(CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(0)
+                }),
+                to: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(1)
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: true
+        }));
+    }
+
+    function test_ApplyMsg_Fails_BottomUpInvalidNonce() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.deal(address(gw), 1 ether);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw2.getNetworkName(),
+                    rawAddress: address(1)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(2)
+                }),
+                value: 1,
+                nonce: 10,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        vm.expectRevert("the bottom-up message being applied doesn't hold the subsequent nonce");
+        gw.applyMsg(crossMsg);
+    }
+
+    function test_ApplyMsg_Works_BottomUpTargetSubnet_ZeroNonce() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.deal(address(gw), 1 ether);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw2.getNetworkName(),
+                    rawAddress: address(0)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(1)
+                }),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        vm.expectCall(crossMsg.message.to.rawAddress, crossMsg.message.value, EMPTY_BYTES);
+
+        bytes memory result = gw.applyMsg(crossMsg);
+
+        require(keccak256(result) == keccak256(EMPTY_BYTES));
+        require(crossMsg.message.to.rawAddress.balance == crossMsg.message.value);
+        require(gw.appliedBottomUpNonce() == 0);
+    }
+
+    function test_ApplyMsg_Works_BottomUpTargetSubnet_IncrementNonce() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.deal(address(gw), 1 ether);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw2.getNetworkName(),
+                    rawAddress: address(0)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(1)
+                }),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        gw.applyMsg(crossMsg);
+
+        crossMsg.message.nonce = 1;
+
+        gw.applyMsg(crossMsg);
+
+        require(gw.appliedBottomUpNonce() == 1);
+    }
+
+    function test_ApplyMsg_Works_BottomUpNotTargetSubnet() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.deal(address(gw2), 1 ether);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw2.getNetworkName(),
+                    rawAddress: address(0)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(1)
+                }),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: new bytes(0)
+            }),
+            wrapped: false
+        });
+
+        bytes memory result = gw2.applyMsg(crossMsg);
+        bytes32 postboxId = abi.decode(result, (bytes32));
+
+        CrossMsg memory pbCrossMsg = gw2.postbox(postboxId);
+
+        require(gw2.getPostboxOwnersLength(postboxId) == 1);
+        require(gw2.getPostboxOwner(postboxId, 0) == crossMsg.message.from.rawAddress);
+        require(pbCrossMsg.toHash() == crossMsg.toHash());
+    }
+
+    function test_ApplyMsg_Works_TopDownTargetSubnet() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.deal(address(gw2), 1 ether);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(1)
+                }),
+                to: IPCAddress({
+                    subnetId: gw2.getNetworkName(),
+                    rawAddress: address(2)
+                }),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        vm.expectCall(crossMsg.message.to.rawAddress, crossMsg.message.value, EMPTY_BYTES);
+
+        bytes memory result = gw2.applyMsg(crossMsg);
+
+        require(gw2.appliedTopDownNonce() == 1);
+        require(keccak256(result) == keccak256(EMPTY_BYTES));
+        require(crossMsg.message.to.rawAddress.balance == crossMsg.message.value);
+    }
+
+    function test_ApplyMsg_Works_TopDownNotTargetSubnet() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.deal(address(gw2), 1 ether);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(1)
+                }),
+                to: IPCAddress({
+                    subnetId: gw2.getNetworkName(),
+                    rawAddress: address(2)
+                }),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        vm.expectCall(crossMsg.message.to.rawAddress, crossMsg.message.value, EMPTY_BYTES);
+
+        bytes memory result = gw2.applyMsg(crossMsg);
+
+        require(gw2.appliedTopDownNonce() == 1);
+        require(keccak256(result) == keccak256(EMPTY_BYTES));
+        require(crossMsg.message.to.rawAddress.balance == crossMsg.message.value);
     }
 
     function commitChildCheck(

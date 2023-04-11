@@ -141,6 +141,87 @@ contract CrossMsgHelperTest is Test {
         CrossMsgHelper.createFundMsg(subnetId, sender, fundAmount);
     }
 
+    function test_Execute_Works_SendValue() public {
+        address sender = address(this);
+        address recipient = address(100);
+
+        crossMsg.message.to.rawAddress = recipient;
+        crossMsg.message.method = METHOD_SEND;
+        crossMsg.message.value = 1;
+
+        vm.deal(sender, 1 ether);
+
+        bytes memory result = crossMsg.execute(bytes4(0));
+
+        require(keccak256(result) == keccak256(EMPTY_BYTES));
+        require(recipient.balance == 1);
+        require(sender.balance == 1 ether - 1);
+    }
+
+    function test_Execute_Works_FunctionCallWithValue() public {
+        address sender = address(this);
+        address recipient = address(this);
+
+        crossMsg.message.to.rawAddress = recipient;
+        crossMsg.message.method = 1111;
+        crossMsg.message.value = 1;
+        crossMsg.message.params = EMPTY_BYTES;
+
+        vm.deal(sender, 1 ether);
+
+        vm.expectCall(
+            recipient,
+            crossMsg.message.value,
+            crossMsg.message.params
+        );
+
+        bytes memory result = crossMsg.execute(this.callback.selector);
+        bytes memory decoded = abi.decode(result, (bytes));
+
+        require(keccak256(decoded) == keccak256(crossMsg.message.params));
+    }
+
+    function test_Execute_Works_FunctionCall_Wrapped() public {
+        address sender = address(this);
+        address recipient = address(this);
+
+        crossMsg.message.to.rawAddress = recipient;
+        crossMsg.message.method = 1111;
+        crossMsg.message.value = 0;
+        crossMsg.message.params = EMPTY_BYTES;
+        crossMsg.wrapped = true;
+
+        vm.deal(sender, 1 ether);
+
+        vm.expectCall(
+            recipient,
+            crossMsg.message.value,
+            crossMsg.message.params
+        );
+
+        bytes memory result = crossMsg.execute(this.callback.selector);
+        bytes memory decoded = abi.decode(result, (bytes));
+
+        CrossMsg memory decodedCrossMsg = abi.decode(decoded, (CrossMsg));
+
+        require(decodedCrossMsg.toHash() == crossMsg.toHash());
+    }
+
+    function test_Execute_Fails_InvalidMethod() public {
+        vm.expectRevert("Address: low-level call with value failed");
+
+        crossMsg.message.to.rawAddress = address(this);
+        crossMsg.message.method = 1111;
+
+        crossMsg.execute(bytes4(0));
+    }
+
+    function callback(
+        bytes calldata params
+    ) public payable returns (bytes memory) {
+        return params;
+    }
+
     function createCrossMsg(
         uint64 nonce
     ) internal pure returns (CrossMsg memory) {
