@@ -62,7 +62,6 @@ contract GatewayDeploymentTest is Test {
             GENESIS,
             DEFAULT_MAJORITY_PERCENTAGE
         );
-
     }
 
     function testDeployment(int64 checkpointPeriod) public {
@@ -908,13 +907,12 @@ contract GatewayDeploymentTest is Test {
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
 
-        address receiver = vm.addr(101);
+        address receiver = address(101);
         vm.prank(receiver);
         vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+        sa.join{value: MIN_COLLATERAL_AMOUNT}();
 
-
-        SubnetID memory destination = gw.getNetworkName().createSubnetId(receiver);
+        SubnetID memory destination = gw.getNetworkName().createSubnetId(address(sa));
         SubnetID memory from = gw.getNetworkName().createSubnetId(caller);
 
         CrossMsg memory crossMsg = CrossMsg({
@@ -944,8 +942,9 @@ contract GatewayDeploymentTest is Test {
             uint nonce,
             uint circSupply,
             
-        ) = getSubnet(receiver);
+        ) = getSubnet(address(sa));
 
+        require(receiver.balance > 0);
         require(crossMsg.message.applyType(gw.getNetworkName()) == IPCMsgType.TopDown);
         require(id.equals(destination));
         require(nonce == 1);

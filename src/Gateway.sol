@@ -358,7 +358,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         CrossMsg memory crossMsg
     ) external payable signableOnly hasFee {
         require(
-            !destination.equals(networkName),
+            destination.equals(networkName) == false,
             "destination is the current network, you are better off with a good ol' message, no cross needed"
         );
         require(
@@ -370,30 +370,33 @@ contract Gateway is IGateway, ReentrancyGuard {
             "invalid to addr"
         );
 
+        // we disregard the "to" of the message. the caller is the one set as the "from" of the message.
         crossMsg.message.to.subnetId = destination;
-        crossMsg.message.from = IPCAddress(networkName, msg.sender);
+        crossMsg.message.from.subnetId = networkName;
+        crossMsg.message.from.rawAddress = msg.sender;
 
-        (bool burn, uint256 topDownFee) = _commitCrossMessage(crossMsg);
+        // commit cross-message for propagation
+        (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(
+            crossMsg
+        );
 
-        if (burn) payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
-
-        if (topDownFee == 0) return;
-
-        SubnetID memory down = crossMsg.message.to.subnetId.down(networkName);
-        if (down.route.length == 0 || down.getActor() == address(0)) return;
-
-        payable(down.getActor()).sendValue(topDownFee);
+        _crossMsgSideEffects(crossMsg, shouldBurn, shouldDistributeRewards);
     }
 
+    /// Commit the cross message to storage. It outputs a flag signaling
+    /// if the committed messages was bottom-up and some funds need to be
+    /// burnt or if a top-down message fee needs to be distributed.
     function _commitCrossMessage(
         CrossMsg memory crossMessage
-    ) internal returns (bool, uint256) {
+    ) internal returns (bool shouldBurn, bool shouldDistributeRewards) {
         SubnetID memory to = crossMessage.message.to.subnetId;
+
         require(to.route.length > 0, "error getting subnet from msg");
         require(to.equals(networkName) == false, "should already be committed");
 
         SubnetID memory from = crossMessage.message.from.subnetId;
         IPCMsgType applyType = crossMessage.message.applyType(networkName);
+
         bool shouldCommitBottomUp;
 
         if (applyType == IPCMsgType.BottomUp) {
@@ -403,15 +406,45 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         if (shouldCommitBottomUp) {
             _commitBottomUpMsg(crossMessage);
-            return (crossMessage.message.value > 0, 0);
+            shouldBurn = crossMessage.message.value > 0;
+
+            return (
+                shouldBurn = crossMessage.message.value > 0,
+                shouldDistributeRewards = false
+            );
         }
 
         appliedTopDownNonce += applyType == IPCMsgType.TopDown ? 1 : 0;
         _commitTopDownMsg(crossMessage);
 
-        return (false, crossMsgFee);
+        return (shouldBurn = false, shouldDistributeRewards = true);
     }
 
+    /// transaction side-effects from the commitment of a cross-net message. It burns funds
+    /// and propagates the corresponding rewards.
+    function _crossMsgSideEffects(
+        CrossMsg memory crossMsg,
+        bool shouldBurn,
+        bool shouldDistributeRewards
+    ) internal {
+        if (shouldBurn)
+            payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
+
+        if (shouldDistributeRewards) {
+            SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(
+                networkName
+            );
+
+            if (
+                toSubnetId.route.length == 0 ||
+                toSubnetId.getActor() == address(0)
+            ) return;
+
+            distributeRewards(toSubnetId.getActor(), crossMsgFee);
+        }
+    }
+
+    /// commit topdown messages for their execution in the subnet
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
         SubnetID memory subnetId = crossMessage.message.to.subnetId.down(
             networkName
@@ -427,6 +460,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         subnet.topDownMsgs.push(crossMessage);
     }
 
+    /// commit bottomup messages for their execution in the subnet
     function _commitBottomUpMsg(CrossMsg memory crossMessage) internal {
         (, int64 epoch, Checkpoint storage checkpoint) = checkpoints
             .getCheckpointPerEpoch(block.number, checkPeriod);
@@ -457,10 +491,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         checkpoint.data.crossMsgs.fee += crossMsgFee;
 
         nonce += 1;
-    }
-
-    function _subnetExists(Subnet memory subnet) internal pure returns (bool) {
-        return subnet.id.route.length > 0;
     }
 
     function _getSubnet(
