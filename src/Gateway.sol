@@ -103,14 +103,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         internal checks;
 
     modifier signableOnly() {
-<<<<<<< HEAD
         require(msg.sender.isAccount(), "the caller is not an account");
-
-=======
-        require(msg.sender.isAccount(),
-            "the caller is not an account"
-        );
->>>>>>> 33a37e1 (fix: tests and remove multisig checks)
         _;
     }
 
@@ -173,6 +166,18 @@ contract Gateway is IGateway, ReentrancyGuard {
         bytes32 postboxId
     ) external view returns (uint256) {
         return postbox[postboxId].owners.length;
+    }
+
+    function getPostboxOwner(
+        bytes32 postboxId,
+        uint256 index
+    ) external view returns (address) {
+        require(
+            index < postbox[postboxId].owners.length,
+            "owner index out of range"
+        );
+
+        return postbox[postboxId].owners[index];
     }
 
     function getNetworkName() external view returns (SubnetID memory) {
@@ -422,6 +427,12 @@ contract Gateway is IGateway, ReentrancyGuard {
             crossMsg.message.to.subnetId.route.length > 0,
             "error getting subnet from msg"
         );
+        if (crossMsg.message.method == METHOD_SEND) {
+            require(
+                address(this).balance >= crossMsg.message.value,
+                "not enough balance to mint new tokens as part of the cross-message"
+            );
+        }
 
         IPCMsgType applyType = crossMsg.message.applyType(networkName);
 
@@ -443,7 +454,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         postbox[postboxId] = postboxItem;
         postboxHasOwner[postboxId][postboxItem.owners[0]] = true;
 
-        return new bytes(uint256(postboxId));
+        return abi.encode(postboxId);
     }
 
     function _bottomUpStateTransition(
@@ -467,13 +478,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     function _topDownStateTransition(
         StorableMsg calldata storableMsg
     ) internal {
-        if (storableMsg.method == METHOD_SEND) {
-            require(
-                address(this).balance >= storableMsg.value,
-                "not enough balance to mint new tokens as part of the cross-message"
-            );
-        }
-
         require(
             appliedTopDownNonce == storableMsg.nonce,
             "the top-down message being applied doesn't hold the subsequent nonce"
@@ -505,7 +509,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         if (shouldCommitBottomUp) {
             _commitBottomUpMsg(crossMessage);
-            
+
             return (
                 shouldBurn = crossMessage.message.value > 0,
                 shouldDistributeRewards = false

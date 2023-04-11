@@ -75,21 +75,22 @@ library CrossMsgHelper {
         CrossMsg calldata crossMsg,
         bytes4 methodSelector
     ) public returns (bytes memory) {
-        bytes memory data = "";
+        uint256 value = crossMsg.message.value;
+        address recipient = crossMsg.message.to.rawAddress.normalize();
+
+        if (crossMsg.message.method == METHOD_SEND) {
+            Address.sendValue(payable(recipient), value);
+            return new bytes(0);
+        }
+
         bytes memory params = crossMsg.message.params;
 
         if (crossMsg.wrapped) {
             params = abi.encode(crossMsg);
         }
-        if (crossMsg.message.method != METHOD_SEND) {
-            data = abi.encodeWithSelector(methodSelector, params);
-        }
 
-        return
-            Address.functionCallWithValue(
-                crossMsg.message.to.rawAddress.normalize(),
-                data,
-                crossMsg.message.value
-            );
+        bytes memory data = abi.encodeWithSelector(methodSelector, params);
+
+        return Address.functionCallWithValue(recipient, data, value);
     }
 }
