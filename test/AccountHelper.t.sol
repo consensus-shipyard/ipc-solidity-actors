@@ -53,14 +53,6 @@ contract AccountHelperTest is Test {
         require(BLS_ADDREESS.isAccount() == true);
     }
 
-    function test_IsMultisig_Works() public pure {
-        require(MULTISIG_ACTOR.isMultisig() == true);
-    }
-
-    function test_IsMultisig_Fails_EthAccount() public pure {
-        require(ETH_ADDRESS.isMultisig() == false);
-    }
-
     function activateAccount(address account) internal {
         vm.deal(account, 1 ether);
     }

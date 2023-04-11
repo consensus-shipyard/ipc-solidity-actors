@@ -579,20 +579,6 @@ contract GatewayDeploymentTest is Test {
         fund(BLS_ACCOUNT_ADDREESS, fundAmount);
     }
 
-    function test_Fund_Works_MultisigSingleFunding() public {
-        address validatorAddress = address(100);
-        uint fundAmount = 1 ether;
-
-        vm.prank(validatorAddress);
-        vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT);
-        sa.join{value: MIN_COLLATERAL_AMOUNT}();
-
-        vm.startPrank(MULTISIG_ACTOR);
-        vm.deal(MULTISIG_ACTOR, fundAmount + 1);
-        
-        fund(MULTISIG_ACTOR, fundAmount);
-    }
-
     function test_Fund_Works_MultipleFundings() public {
         uint8 numberOfFunds = 10;
         uint fundAmount = 1 ether;
@@ -647,7 +633,7 @@ contract GatewayDeploymentTest is Test {
 
         (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
 
-        vm.expectRevert("the caller is not an account nor a multi-sig");
+        vm.expectRevert("the caller is not an account");
 
         gw.fund{value: fundAmount}(subnetId);
     }
@@ -697,7 +683,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.startPrank(invalidAccount);
         vm.deal(invalidAccount, 1 ether);
-        vm.expectRevert("the caller is not an account nor a multi-sig");
+        vm.expectRevert("the caller is not an account");
 
         gw.release{value: 1 ether}();
     }
@@ -718,24 +704,6 @@ contract GatewayDeploymentTest is Test {
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
 
         release(BLS_ACCOUNT_ADDREESS, releaseAmount, crossMsgFee, 0);
-    }
-
-    function test_Release_Works_Multisig(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
-        vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
-
-        address[] memory path = new address[](2);
-        path[0] = makeAddr("root");
-        path[1] = makeAddr("subnet_one");
-        
-        gw = new Gateway(path, DEFAULT_CHECKPOINT_PERIOD, crossMsgFee);
-
-        vm.roll(0);
-        vm.warp(0);
-        vm.startPrank(MULTISIG_ACTOR);
-        vm.deal(MULTISIG_ACTOR, releaseAmount + 1);
-
-        release(MULTISIG_ACTOR, releaseAmount, crossMsgFee, 0);
     }
 
     function test_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
