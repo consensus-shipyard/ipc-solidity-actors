@@ -406,8 +406,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         if (shouldCommitBottomUp) {
             _commitBottomUpMsg(crossMessage);
-            shouldBurn = crossMessage.message.value > 0;
-
+            
             return (
                 shouldBurn = crossMessage.message.value > 0,
                 shouldDistributeRewards = false
