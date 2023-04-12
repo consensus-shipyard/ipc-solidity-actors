@@ -76,6 +76,8 @@ library SubnetIDHelper {
         pure
         returns (bool)
     {
+       if (subnet1.route.length != subnet2.route.length) return false;
+       
        return toHash(subnet1) == toHash(subnet2);
     }
 
