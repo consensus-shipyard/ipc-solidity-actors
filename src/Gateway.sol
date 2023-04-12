@@ -598,8 +598,6 @@ contract Gateway is IGateway, ReentrancyGuard {
 
             distributeRewards(toSubnetId.getActor(), crossMsgFee);
         }
-
-        return (false, true);
     }
 
     /// @notice commit topdown messages for their execution in the subnet
