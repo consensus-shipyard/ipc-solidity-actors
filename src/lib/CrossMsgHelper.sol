@@ -80,7 +80,7 @@ library CrossMsgHelper {
 
         if (crossMsg.message.method == METHOD_SEND) {
             Address.sendValue(payable(recipient), value);
-            return new bytes(0);
+            return EMPTY_BYTES;
         }
 
         bytes memory params = crossMsg.message.params;
