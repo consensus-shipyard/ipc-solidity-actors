@@ -69,9 +69,15 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice Postbox keeps track for an EOA of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
     /// postbox id => PostboxItem
-    mapping(bytes32 => PostboxItem) public postbox;
+    mapping(uint256 => PostboxItem) public postbox;
     /// postbox id => set of owners
-    mapping(bytes32 => mapping(address => bool)) private postboxHasOwner;
+    mapping(uint256 => mapping(address => bool)) private postboxHasOwner;
+    /// auto-incremented postbox id => postbox cid
+    mapping(uint256 => bytes32) public postboxIdToCid;
+    /// postbox cid to auto-incremented postbox id
+    mapping(bytes32 => uint256) public postboxCidToId;
+    /// @notice holds the last auto-incremented postbox id
+    uint256 public lastPostboxId;
 
     /// @notice Latest nonce of a cross message sent from subnet.
     uint64 public nonce;
@@ -163,21 +169,20 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function getPostboxOwnersLength(
-        bytes32 postboxId
+        bytes32 postboxCid
     ) external view returns (uint256) {
+        uint256 postboxId = postboxCidToId[postboxCid];
         return postbox[postboxId].owners.length;
     }
 
     function getPostboxOwner(
-        bytes32 postboxId,
+        bytes32 postboxCid,
         uint256 index
     ) external view returns (address) {
-        require(
-            index < postbox[postboxId].owners.length,
-            "owner index out of range"
-        );
-
-        return postbox[postboxId].owners[index];
+        uint256 postboxId = postboxCidToId[postboxCid];
+        address[] memory owners = postbox[postboxId].owners;
+        require(index < owners.length, "owner index out of range");
+        return owners[index];
     }
 
     function getNetworkName() external view returns (SubnetID memory) {
@@ -449,12 +454,16 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
 
         PostboxItem memory postboxItem = PostboxItemHelper.createItem(crossMsg);
-        bytes32 postboxId = postboxItem.toHash();
+        bytes32 postboxCid = postboxItem.toHash();
 
-        postbox[postboxId] = postboxItem;
-        postboxHasOwner[postboxId][postboxItem.owners[0]] = true;
+        lastPostboxId++;
 
-        return abi.encode(postboxId);
+        postbox[lastPostboxId] = postboxItem;
+        postboxHasOwner[lastPostboxId][postboxItem.owners[0]] = true;
+        postboxIdToCid[lastPostboxId] = postboxCid;
+        postboxCidToId[postboxCid] = lastPostboxId;
+
+        return abi.encode(postboxCid);
     }
 
     function _bottomUpStateTransition(

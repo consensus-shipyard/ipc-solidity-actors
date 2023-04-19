@@ -1261,12 +1261,13 @@ contract GatewayDeploymentTest is Test {
         });
 
         bytes memory result = gw2.applyMsg(crossMsg);
-        bytes32 postboxId = abi.decode(result, (bytes32));
+        bytes32 postboxCid = abi.decode(result, (bytes32));
+        uint256 postboxId = gw2.postboxCidToId(postboxCid);
 
         CrossMsg memory pbCrossMsg = gw2.postbox(postboxId);
 
-        require(gw2.getPostboxOwnersLength(postboxId) == 1);
-        require(gw2.getPostboxOwner(postboxId, 0) == crossMsg.message.from.rawAddress);
+        require(gw2.getPostboxOwnersLength(postboxCid) == 1);
+        require(gw2.getPostboxOwner(postboxCid, 0) == crossMsg.message.from.rawAddress);
         require(pbCrossMsg.toHash() == crossMsg.toHash());
     }
 
