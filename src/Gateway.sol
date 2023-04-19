@@ -106,13 +106,19 @@ contract Gateway is IGateway, ReentrancyGuard {
         _;
     }
 
-    modifier onlyPostboxOwner(bytes32 postboxId) {
+    modifier onlyPostboxOwner(bytes32 postboxCid) {
+        uint256 postboxId = postboxCidToId[postboxCid];
+
         require(postboxHasOwner[postboxId][msg.sender], "not owner");
         _;
     }
 
-    modifier onlyValidPostboxId(bytes32 postboxId) {
-        require(!postbox[postboxId].isEmpty(), "postbox item does not exist");
+    modifier onlyValidPostboxId(bytes32 postboxCid) {
+        uint256 postboxId = postboxCidToId[postboxCid];
+
+        PostboxItem memory postboxItem = postbox[postboxId];
+
+        require(!postboxItem.isEmpty(), "postbox item does not exist");
         _;
     }
 
@@ -454,57 +460,58 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function whitelistPropagator(
-        bytes32 postboxId,
+        bytes32 postboxCid,
         address[] calldata owners
-    ) external onlyValidPostboxId(postboxId) onlyPostboxOwner(postboxId) {
-        PostboxItem storage postBoxItem = postbox[postboxId];
+    ) external onlyValidPostboxId(postboxCid) onlyPostboxOwner(postboxCid) {
+        uint256 postboxId = postboxCidToId[postboxCid];
 
-        //update postbox item with new owners
+        PostboxItem storage postboxItem = postbox[postboxId];
+
+        // update postbox item with the new owners
         for (uint256 i = 0; i < owners.length; ) {
-            if (!postboxHasOwner[postboxId][owners[i]]) {
-                postBoxItem.owners.push(owners[i]);
-                postboxHasOwner[postboxId][owners[i]] = true;
-                unchecked {
-                    ++i;
-                }
+            address owner = owners[i];
+
+            if (postboxHasOwner[postboxId][owner] == false) {
+                postboxHasOwner[postboxId][owner] = true;
+                postboxItem.owners.push(owner);
             }
-        }
-
-        bytes32 newPostboxId = postBoxItem.toHash();
-        postbox[newPostboxId] = postBoxItem;
-
-        for (uint256 i = 0; i < postBoxItem.owners.length; ) {
-            postboxHasOwner[newPostboxId][postBoxItem.owners[i]] = true;
-            delete postboxHasOwner[postboxId][postBoxItem.owners[i]];
             unchecked {
-                ++i;
+                i++;
             }
         }
 
-        delete postbox[postboxId];
+        delete postboxCidToId[postboxCid];
+
+        bytes32 newPostboxCid = postboxItem.toHash();
+        postboxIdToCid[postboxId] = newPostboxCid;
+        postboxCidToId[newPostboxCid] = postboxId;
     }
 
     function propagate(
-        bytes32 postboxId
+        bytes32 postboxCid
     )
         external
         payable
         hasFee
-        onlyValidPostboxId(postboxId)
-        onlyPostboxOwner(postboxId)
+        onlyValidPostboxId(postboxCid)
+        onlyPostboxOwner(postboxCid)
     {
+        uint256 postboxId = postboxCidToId[postboxCid];
         PostboxItem storage postBoxItem = postbox[postboxId];
 
-        (bool burn, bool hasMessageFee) = _commitCrossMessage(
+        (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(
             postBoxItem.crossMsg
         );
-        _crossMsgSideEffects(postBoxItem.crossMsg, burn, hasMessageFee);
 
-        for (uint256 i = 0; i < postBoxItem.owners.length; i++) {
-            delete postboxHasOwner[postboxId][postBoxItem.owners[i]];
-        }
+        _crossMsgSideEffects(
+            postBoxItem.crossMsg,
+            shouldBurn,
+            shouldDistributeRewards
+        );
 
         delete postbox[postboxId];
+        delete postboxIdToCid[postboxId];
+        delete postboxCidToId[postboxCid];
 
         payable(msg.sender).sendValue(msg.value - crossMsgFee);
     }

@@ -1400,23 +1400,95 @@ contract GatewayDeploymentTest is Test {
         vm.prank(SYSTEM_ACTOR);
         gw.applyMsg(crossMsg);
 
-        bytes32 postBoxItemId = PostboxItemHelper.createItem(crossMsg).toHash();
-        console.log(uint256(postBoxItemId));
+        bytes32 postBoxItemCid = PostboxItemHelper.createItem(crossMsg).toHash();
+
         address[] memory ownersToAdd = new address[](1);
         ownersToAdd[0] = receiver;
 
         vm.prank(caller);
-        gw.whitelistPropagator(postBoxItemId, ownersToAdd);
+        gw.whitelistPropagator(postBoxItemCid, ownersToAdd);
 
         address[] memory newOwners = new address[](2);
         newOwners[0] = caller;
         newOwners[1] = receiver;
-        bytes32 newPostBoxId = PostboxItemHelper.createItem(crossMsg, newOwners).toHash();
+        bytes32 newPostboxCid = PostboxItem(crossMsg, newOwners).toHash();
         
-        uint256 ownerCount = gw.getPostboxOwnersLength(newPostBoxId);
+        uint256 ownerCount = gw.getPostboxOwnersLength(newPostboxCid);
+        uint256 postboxId = gw.postboxCidToId(newPostboxCid);
+
         require(ownerCount == 2);
-        CrossMsg memory msgFromPostbox = gw.postbox(newPostBoxId);
+        CrossMsg memory msgFromPostbox = gw.postbox(postboxId);
         require(msgFromPostbox.toHash() == crossMsg.toHash());
+    }
+
+    function test_Propagate_Works() external {
+        address owner = address(1);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, 1 ether);
+
+        vm.deal(address(gw2), 1 ether);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw2.getNetworkName(),
+                    rawAddress: owner
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(2)
+                }),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: new bytes(0)
+            }),
+            wrapped: false
+        });
+
+        bytes memory result = gw2.applyMsg(crossMsg);
+        bytes32 postboxCid = abi.decode(result, (bytes32));
+        uint256 postboxId = gw2.postboxCidToId(postboxCid);
+
+        CrossMsg memory pbCrossMsg = gw2.postbox(postboxId);
+
+        require(gw2.getPostboxOwnersLength(postboxCid) == 1);
+        require(gw2.getPostboxOwner(postboxCid, 0) == crossMsg.message.from.rawAddress);
+        require(pbCrossMsg.toHash() == crossMsg.toHash());
+
+        vm.stopPrank();
+        vm.startPrank(owner);
+        vm.deal(owner, 1 ether);
+
+        gw2.propagate{value: 1 ether}(postboxCid);
+
+        require(owner.balance == 1 ether - gw2.crossMsgFee());
+        require(gw2.postboxCidToId(postboxCid) == 0);
+        require(gw2.postboxIdToCid(postboxId) == EMPTY_HASH);
+    }
+
+
+    function test_Propagate_Fails_NotOwner() public {
+        address caller = vm.addr(100);
+        address receiver = vm.addr(101);
+        address notOwner = vm.addr(102);
+
+        bytes32 postboxItemCid = setupWhiteListMethod(receiver, caller);
+        
+        address[] memory owners = new address[](1);
+        owners[0] = caller;
+
+        vm.prank(notOwner);
+        vm.deal(notOwner, 1 ether);
+        vm.expectRevert("not owner");
+        gw.propagate{value: 1 ether}(postboxItemCid);
+    }
+
+    function test_Propagate_Fails_PostboxItemDoesNotExist() public {
+        vm.prank(vm.addr(100));
+        vm.deal(vm.addr(100), 1 ether);
+        vm.expectRevert("postbox item does not exist");
+        gw.propagate{value: 1 ether}(bytes32(0));
     }
 
     function commitChildCheck(
