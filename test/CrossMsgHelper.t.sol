@@ -208,7 +208,7 @@ contract CrossMsgHelperTest is Test {
     }
 
     function test_Execute_Fails_InvalidMethod() public {
-        vm.expectRevert("Address: low-level call with value failed");
+        vm.expectRevert("Address: low-level call failed");
 
         crossMsg.message.to.rawAddress = address(this);
         crossMsg.message.method = 1111;

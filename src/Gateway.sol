@@ -37,10 +37,10 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice minimum amount of wei to register a subnet
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
 
-    /// @maximum possible value for nonce
+    /// @notice maximum possible value for nonce
     uint64 constant MAX_NONCE = type(uint64).max;
 
-    /// @notice ID of the current network
+    /// @notice path to the current network
     SubnetID private networkName;
 
     /// @notice Number of active subnets spawned from this one
@@ -138,6 +138,8 @@ contract Gateway is IGateway, ReentrancyGuard {
         methodSelectors[4] = IGateway.releaseStake.selector;
         methodSelectors[5] = IGateway.kill.selector;
         methodSelectors[6] = IGateway.commitChildCheck.selector;
+        methodSelectors[7] = IGateway.fund.selector;
+        methodSelectors[8] = IGateway.release.selector;
         methodSelectors[9] = IGateway.sendCross.selector;
         methodSelectors[10] = IGateway.applyMsg.selector;
     }
