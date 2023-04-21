@@ -162,7 +162,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     function getSubnetTopDownMsgsLength(
         SubnetID memory subnetId
     ) external view returns (uint) {
-        (, Subnet memory subnet) = _getSubnet(subnetId);
+        (, Subnet storage subnet) = _getSubnet(subnetId);
 
         return subnet.topDownMsgs.length;
     }
@@ -171,7 +171,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         SubnetID memory subnetId,
         uint index
     ) external view returns (CrossMsg memory) {
-        (, Subnet memory subnet) = _getSubnet(subnetId);
+        (, Subnet storage subnet) = _getSubnet(subnetId);
 
         return subnet.topDownMsgs[index];
     }
