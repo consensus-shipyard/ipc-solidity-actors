@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
-// address constant SYSTEM_ACTOR = address(0);
 address constant INIT_ACTOR = address(1);
 address constant REWARD_ACTOR = address(2);
 address constant CRON_ACTOR = address(3);

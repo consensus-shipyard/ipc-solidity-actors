@@ -1040,7 +1040,7 @@ contract GatewayDeploymentTest is Test {
         require(gw2.appliedTopDownNonce() == 0);
     }
 
-        function test_ApplyMsg_Fails_NotSystemActor() public {
+    function test_ApplyMsg_Fails_NotSystemActor() public {
         address nonSystemActor = address(100);
         vm.startPrank(nonSystemActor);
         vm.deal(nonSystemActor, 1 ether);

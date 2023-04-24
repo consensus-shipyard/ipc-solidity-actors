@@ -188,7 +188,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         uint256 index
     ) external view returns (address) {
         uint256 postboxId = postboxCidToId[postboxCid];
-        address[] memory owners = postbox[postboxId].owners;
+        address[] storage owners = postbox[postboxId].owners;
         require(index < owners.length, "owner index out of range");
         return owners[index];
     }
@@ -439,7 +439,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         _crossMsgSideEffects(crossMsg, shouldBurn, shouldDistributeRewards);
     }
 
-    /// @notice executes a cross message if it's destination is the current network, otherwise adds it to the postbox to be propagated further
+    /// @notice executes a cross message if its destination is the current network, otherwise adds it to the postbox to be propagated further
     function applyMsg(
         CrossMsg calldata crossMsg
     ) external returns (bytes memory) {
@@ -489,13 +489,15 @@ contract Gateway is IGateway, ReentrancyGuard {
     function _bottomUpStateTransition(
         StorableMsg calldata storableMsg
     ) internal {
-        if (appliedBottomUpNonce == MAX_NONCE && storableMsg.nonce == 0) {
-            appliedBottomUpNonce = 0;
-        } else if (
+        if (
             storableMsg.nonce > appliedBottomUpNonce &&
             storableMsg.nonce == appliedBottomUpNonce + 1
         ) {
             appliedBottomUpNonce += 1;
+        } else if (
+            appliedBottomUpNonce == MAX_NONCE && storableMsg.nonce == 0
+        ) {
+            appliedBottomUpNonce = 0;
         }
 
         require(
