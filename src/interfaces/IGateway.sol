@@ -74,5 +74,6 @@ interface IGateway {
     function whitelistPropagator(bytes32 postboxCid, address[] calldata owners)
         external;
 
+    /// Propagates the stored postbox item for the given cid
     function propagate(bytes32 postboxCid) external payable;
 }
