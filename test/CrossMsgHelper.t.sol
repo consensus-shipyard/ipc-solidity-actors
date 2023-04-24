@@ -75,7 +75,7 @@ contract CrossMsgHelperTest is Test {
         require(releaseMsg.message.to.rawAddress == sender);
         require(releaseMsg.message.value == releaseAmount);
         require(releaseMsg.message.nonce == nonce);
-        require(releaseMsg.message.method == 0);
+        require(releaseMsg.message.method == METHOD_SEND);
         require(keccak256(releaseMsg.message.params) == keccak256(EMPTY_BYTES));
         require(releaseMsg.wrapped == false);
     }
@@ -123,7 +123,7 @@ contract CrossMsgHelperTest is Test {
         require(fundMsg.message.to.rawAddress == sender);
         require(fundMsg.message.value == fundAmount);
         require(fundMsg.message.nonce == 0);
-        require(fundMsg.message.method == 0);
+        require(fundMsg.message.method == METHOD_SEND);
         require(keccak256(fundMsg.message.params) == keccak256(EMPTY_BYTES));
         require(fundMsg.wrapped == false);
     }
@@ -151,7 +151,7 @@ contract CrossMsgHelperTest is Test {
 
         vm.deal(sender, 1 ether);
 
-        bytes memory result = crossMsg.execute(bytes4(0));
+        bytes memory result = crossMsg.execute();
 
         require(keccak256(result) == keccak256(EMPTY_BYTES));
         require(recipient.balance == 1);
@@ -163,7 +163,7 @@ contract CrossMsgHelperTest is Test {
         address recipient = address(this);
 
         crossMsg.message.to.rawAddress = recipient;
-        crossMsg.message.method = 1111;
+        crossMsg.message.method = this.callback.selector;
         crossMsg.message.value = 1;
         crossMsg.message.params = EMPTY_BYTES;
 
@@ -175,7 +175,7 @@ contract CrossMsgHelperTest is Test {
             crossMsg.message.params
         );
 
-        bytes memory result = crossMsg.execute(this.callback.selector);
+        bytes memory result = crossMsg.execute();
         bytes memory decoded = abi.decode(result, (bytes));
 
         require(keccak256(decoded) == keccak256(crossMsg.message.params));
@@ -186,7 +186,7 @@ contract CrossMsgHelperTest is Test {
         address recipient = address(this);
 
         crossMsg.message.to.rawAddress = recipient;
-        crossMsg.message.method = 1111;
+        crossMsg.message.method = this.callback.selector;
         crossMsg.message.value = 0;
         crossMsg.message.params = EMPTY_BYTES;
         crossMsg.wrapped = true;
@@ -199,7 +199,7 @@ contract CrossMsgHelperTest is Test {
             crossMsg.message.params
         );
 
-        bytes memory result = crossMsg.execute(this.callback.selector);
+        bytes memory result = crossMsg.execute();
         bytes memory decoded = abi.decode(result, (bytes));
 
         CrossMsg memory decodedCrossMsg = abi.decode(decoded, (CrossMsg));
@@ -211,9 +211,9 @@ contract CrossMsgHelperTest is Test {
         vm.expectRevert("Address: low-level call failed");
 
         crossMsg.message.to.rawAddress = address(this);
-        crossMsg.message.method = 1111;
+        crossMsg.message.method = bytes4("1");
 
-        crossMsg.execute(bytes4(0));
+        crossMsg.execute();
     }
 
     function callback(
@@ -238,7 +238,7 @@ contract CrossMsgHelperTest is Test {
                     }),
                     value: 0,
                     nonce: nonce,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: EMPTY_BYTES
                 }),
                 wrapped: false

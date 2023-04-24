@@ -768,7 +768,7 @@ contract GatewayDeploymentTest is Test {
                     }),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: new bytes(0)
                 }),
                 wrapped: false
@@ -799,7 +799,7 @@ contract GatewayDeploymentTest is Test {
                     }),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: new bytes(0)
                 }),
                 wrapped: true
@@ -832,7 +832,7 @@ contract GatewayDeploymentTest is Test {
                     }),
                     value: 5,
                     nonce: 0,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: new bytes(0)
                 }),
                 wrapped: true
@@ -863,7 +863,7 @@ contract GatewayDeploymentTest is Test {
                     }),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: new bytes(0)
                 }),
                 wrapped: true
@@ -894,7 +894,7 @@ contract GatewayDeploymentTest is Test {
                     }),
                     value: 0,
                     nonce: 0,
-                    method: 0,
+                    method: METHOD_SEND,
                     params: new bytes(0)
                 }),
                 wrapped: true
@@ -928,7 +928,7 @@ contract GatewayDeploymentTest is Test {
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
-                method: 0,
+                method: METHOD_SEND,
                 params: new bytes(0)
             }),
             wrapped: true
@@ -986,7 +986,7 @@ contract GatewayDeploymentTest is Test {
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
-                method: 0,
+                method: METHOD_SEND,
                 params: new bytes(0)
             }),
             wrapped: true
@@ -1026,7 +1026,7 @@ contract GatewayDeploymentTest is Test {
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
-                method: 0,
+                method: METHOD_SEND,
                 params: new bytes(0)
             }),
             wrapped: true
@@ -1059,7 +1059,7 @@ contract GatewayDeploymentTest is Test {
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
-                method: 0,
+                method: METHOD_SEND,
                 params: new bytes(0)
             }),
             wrapped: true
@@ -1084,7 +1084,7 @@ contract GatewayDeploymentTest is Test {
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
-                method: 0,
+                method: METHOD_SEND,
                 params: EMPTY_BYTES
             }),
             wrapped: true

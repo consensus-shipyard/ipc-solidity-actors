@@ -72,8 +72,7 @@ library CrossMsgHelper {
     }
 
     function execute(
-        CrossMsg calldata crossMsg,
-        bytes4 methodSelector
+        CrossMsg calldata crossMsg
     ) public returns (bytes memory) {
         uint256 value = crossMsg.message.value;
         address recipient = crossMsg.message.to.rawAddress.normalize();
@@ -89,9 +88,9 @@ library CrossMsgHelper {
             params = abi.encode(crossMsg);
         }
 
-        bytes memory data = abi.encodeWithSelector(methodSelector, params);
+        bytes memory data = abi.encodeWithSelector(crossMsg.message.method, params);
 
-        if(crossMsg.message.value > 0)
+        if(value > 0)
             return Address.functionCallWithValue(recipient, data, value);
 
         return Address.functionCall(recipient, data);

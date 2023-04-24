@@ -105,9 +105,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice fee amount charged per cross message
     uint256 public crossMsgFee;
 
-    /// @notice method number in cross message to function selector
-    mapping(uint64 => bytes4) public methodSelectors;
-
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(int64 => mapping(bytes32 => uint256[2])) internal children;
     /// @notice epoch => SubnetID => check => exists
@@ -132,16 +129,6 @@ contract Gateway is IGateway, ReentrancyGuard {
             : DEFAULT_CHECKPOINT_PERIOD;
         appliedBottomUpNonce = MAX_NONCE;
         crossMsgFee = msgFee;
-
-        methodSelectors[2] = IGateway.register.selector;
-        methodSelectors[3] = IGateway.addStake.selector;
-        methodSelectors[4] = IGateway.releaseStake.selector;
-        methodSelectors[5] = IGateway.kill.selector;
-        methodSelectors[6] = IGateway.commitChildCheck.selector;
-        methodSelectors[7] = IGateway.fund.selector;
-        methodSelectors[8] = IGateway.release.selector;
-        methodSelectors[9] = IGateway.sendCross.selector;
-        methodSelectors[10] = IGateway.applyMsg.selector;
     }
 
     function getCrossMsgsLength(
@@ -470,7 +457,7 @@ contract Gateway is IGateway, ReentrancyGuard {
                 _topDownStateTransition(crossMsg.message);
             }
 
-            return crossMsg.execute(methodSelectors[crossMsg.message.method]);
+            return crossMsg.execute();
         }
 
         PostboxItem memory postboxItem = PostboxItemHelper.createItem(crossMsg);

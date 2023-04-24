@@ -53,7 +53,7 @@ contract PostboxItemHelperTest is Test {
                 }),
                 value: 0,
                 nonce: 0,
-                method: 0,
+                method: METHOD_SEND,
                 params: EMPTY_BYTES
             }),
             wrapped: false
