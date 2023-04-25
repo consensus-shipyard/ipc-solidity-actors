@@ -444,59 +444,51 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     /// @notice whitelist a series of addresses as propagator of a cross net message
-    /// @param postboxCid - the cid of the postbox item
+    /// @param postboxId - the id of the cross-net message
     /// @param owners - list of addresses to be added as owners
     function whitelistPropagator(
-        bytes32 postboxCid,
+        bytes32 postboxId,
         address[] calldata owners
     ) external {
-        (uint256 postboxId, PostboxItem storage postboxItem) = _getSafePostboxItem(postboxCid);
+        require(postboxHasOwner[postboxId][msg.sender], "not owner");
 
-        // update postbox item with the new owners
+        CrossMsg storage crossMsg = postbox[postboxId];
+
+        require(crossMsg.isEmpty() == false, "postbox item does not exist");
+
+        // update postbox with the new owners
         for (uint256 i = 0; i < owners.length; ) {
             address owner = owners[i];
 
             if (postboxHasOwner[postboxId][owner] == false) {
                 postboxHasOwner[postboxId][owner] = true;
-                postboxItem.owners.push(owner);
             }
             unchecked {
                 i++;
             }
         }
-
-        delete postboxCidToId[postboxCid];
-
-        bytes32 newPostboxCid = postboxItem.toHash();
-        postboxIdToCid[postboxId] = newPostboxCid;
-        postboxCidToId[newPostboxCid] = postboxId;
     }
 
-    /// @notice propagates the populated cross net message for the given cid
-    /// @param postboxCid - the cid of the postbox item
-    function propagate(bytes32 postboxCid) external payable {
+    /// @notice propagates the populated cross net message for the given id
+    /// @param postboxId - the id of the cross-net message
+    function propagate(bytes32 postboxId) external payable {
         require(
             msg.value >= crossMsgFee,
             "not enough gas to pay cross-message"
         );
+        require(postboxHasOwner[postboxId][msg.sender], "not owner");
 
-        (uint256 postboxId, PostboxItem storage postboxItem) = _getSafePostboxItem(
-            postboxCid
-        );
+        CrossMsg storage crossMsg = postbox[postboxId];
+
+        require(crossMsg.isEmpty() == false, "postbox item does not exist");
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(
-            postboxItem.crossMsg
+            crossMsg
         );
 
-        _crossMsgSideEffects(
-            postboxItem.crossMsg,
-            shouldBurn,
-            shouldDistributeRewards
-        );
+        _crossMsgSideEffects(crossMsg, shouldBurn, shouldDistributeRewards);
 
         delete postbox[postboxId];
-        delete postboxIdToCid[postboxId];
-        delete postboxCidToId[postboxCid];
 
         uint256 feeReminder = msg.value - crossMsgFee;
 
@@ -643,22 +635,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         checkpoint.data.crossMsgs.fee += crossMsgFee;
 
         nonce += 1;
-    }
-
-    function _getSafePostboxItem(
-        bytes32 postboxCid
-    )
-        internal
-        view
-        returns (uint256 postboxId, PostboxItem storage postboxItem)
-    {
-        postboxId = postboxCidToId[postboxCid];
-
-        require(postboxHasOwner[postboxId][msg.sender], "not owner");
-
-        postboxItem = postbox[postboxId];
-
-        require(postboxItem.isEmpty() == false, "postbox item does not exist");
     }
 
     function _getSubnet(
