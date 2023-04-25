@@ -2,7 +2,6 @@
 pragma solidity ^0.8.7;
 
 import "./structs/Checkpoint.sol";
-import "./structs/Postbox.sol";
 import "./enums/Status.sol";
 import "./interfaces/IGateway.sol";
 import "./interfaces/ISubnetActor.sol";
@@ -12,10 +11,8 @@ import "./lib/CheckpointHelper.sol";
 import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
 import "./lib/StorableMsgHelper.sol";
-import "./lib/PostboxItemHelper.sol";
 import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Gateway Contract
@@ -29,7 +26,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     using CheckpointHelper for Checkpoint;
     using CheckpointMappingHelper for mapping(int64 => Checkpoint);
     using StorableMsgHelper for StorableMsg;
-    using PostboxItemHelper for PostboxItem;
 
     /// @notice default period in number of blocks between checkpoint submissions
     int64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
@@ -71,18 +67,12 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice Stores an epoch for the given pointer to CrossMsg[]
     mapping(bytes32 => int64) public crossMsgEpochRegistry;
 
-    /// @notice Postbox keeps track for an EOA of all the cross-net messages triggered by
+    /// @notice Postbox keeps track of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
-    /// postbox id => PostboxItem
-    mapping(uint256 => PostboxItem) public postbox;
-    /// @notice postbox id => set of owners
-    mapping(uint256 => mapping(address => bool)) private postboxHasOwner;
-    /// @notice auto-incremented postbox id => postbox cid
-    mapping(uint256 => bytes32) public postboxIdToCid;
-    /// @notice postbox cid to auto-incremented postbox id
-    mapping(bytes32 => uint256) public postboxCidToId;
-    /// @notice holds the last auto-incremented postbox id
-    uint256 public lastPostboxId;
+    /// cross-net message id => CrossMsg
+    mapping(bytes32 => CrossMsg) public postbox;
+    /// @notice cross-net message id => set of owners
+    mapping(bytes32 => mapping(address => bool)) public postboxHasOwner;
 
     /// @notice Latest nonce of a cross message sent from subnet.
     uint64 public nonce;
@@ -161,23 +151,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         (, Subnet storage subnet) = _getSubnet(subnetId);
 
         return subnet.topDownMsgs[index];
-    }
-
-    function getPostboxOwnersLength(
-        bytes32 postboxCid
-    ) external view returns (uint256) {
-        uint256 postboxId = postboxCidToId[postboxCid];
-        return postbox[postboxId].owners.length;
-    }
-
-    function getPostboxOwner(
-        bytes32 postboxCid,
-        uint256 index
-    ) external view returns (address) {
-        uint256 postboxId = postboxCidToId[postboxCid];
-        address[] storage owners = postbox[postboxId].owners;
-        require(index < owners.length, "owner index out of range");
-        return owners[index];
     }
 
     function getNetworkName() external view returns (SubnetID memory) {
@@ -448,6 +421,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         IPCMsgType applyType = crossMsg.message.applyType(networkName);
 
+        // If the cross-message destination is the current network.
         if (crossMsg.message.to.subnetId.equals(networkName)) {
             if (applyType == IPCMsgType.BottomUp) {
                 _bottomUpStateTransition(crossMsg.message);
@@ -460,17 +434,13 @@ contract Gateway is IGateway, ReentrancyGuard {
             return crossMsg.execute();
         }
 
-        PostboxItem memory postboxItem = PostboxItemHelper.createItem(crossMsg);
-        bytes32 postboxCid = postboxItem.toHash();
+        // when the destination is not the current network we add it to the postbox for further propagation
+        bytes32 cid = crossMsg.toHash();
 
-        lastPostboxId++;
+        postbox[cid] = crossMsg;
+        postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
 
-        postbox[lastPostboxId] = postboxItem;
-        postboxHasOwner[lastPostboxId][postboxItem.owners[0]] = true;
-        postboxIdToCid[lastPostboxId] = postboxCid;
-        postboxCidToId[postboxCid] = lastPostboxId;
-
-        return abi.encode(postboxCid);
+        return abi.encode(cid);
     }
 
     function _bottomUpStateTransition(
