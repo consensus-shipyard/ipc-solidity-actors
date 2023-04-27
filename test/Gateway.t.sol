@@ -915,9 +915,10 @@ contract GatewayDeploymentTest is Test {
 
     function test_WhitelistPropagator_Fails_NotOwner() public {
         address caller = vm.addr(100);
+        vm.deal(caller, 1 ether);
         address receiver = vm.addr(101);
 
-        bytes32 postBoxItemId = setupWhiteListMethod(receiver, caller);
+        bytes32 postBoxItemId = setupWhiteListMethod(caller);
         
         address[] memory owners = new address[](1);
         owners[0] = caller;
@@ -929,9 +930,8 @@ contract GatewayDeploymentTest is Test {
 
     function test_WhitelistPropagator_Fails_PostboxItemDoesNotExist() public {
         address caller = vm.addr(100);
-        address receiver = vm.addr(101);
- 
-        setupWhiteListMethod(receiver, caller);
+        vm.deal(caller, 1 ether);
+        setupWhiteListMethod(caller);
 
         address[] memory owners = new address[](1);
         owners[0] = caller;
@@ -943,12 +943,10 @@ contract GatewayDeploymentTest is Test {
 
     function test_Propagate_Works_WithFeeRemainder() external {
         address caller = vm.addr(100);
-        address receiver = vm.addr(101);
 
         vm.deal(caller, 1 ether);
 
-        bytes32 postboxId = setupWhiteListMethod(receiver, caller);
-        
+        bytes32 postboxId = setupWhiteListMethod(caller);
 
         vm.expectCall(caller, 1 ether - gw.crossMsgFee(), new bytes(0));
 
@@ -960,25 +958,25 @@ contract GatewayDeploymentTest is Test {
 
     function test_Propagate_Works_NoFeeReminder() external {
         address caller = vm.addr(100);
-        address receiver = vm.addr(101);
         uint fee = gw.crossMsgFee();
         vm.deal(caller, fee);
+        require(caller.balance == fee, "caller.balance == fee");
+        console.log("caller.balance before", caller.balance);
 
-        bytes32 postboxId = setupWhiteListMethod(receiver, caller);
+        bytes32 postboxId = setupWhiteListMethod(caller);
         
         vm.prank(caller);
-
         gw.propagate{value: fee}(postboxId);
-
-        require(caller.balance == 0);
+        console.log("caller.balance after", caller.balance);
+        require(caller.balance == 0, "caller.balance == 0");
     }
 
     function test_Propagate_Fails_NotOwner() public {
         address caller = vm.addr(100);
-        address receiver = vm.addr(101);
+        vm.deal(caller, 1 ether);
         address notOwner = vm.addr(102);
 
-        bytes32 postboxItemCid = setupWhiteListMethod(receiver, caller);
+        bytes32 postboxItemCid = setupWhiteListMethod(caller);
         
         address[] memory owners = new address[](1);
         owners[0] = caller;
@@ -996,12 +994,9 @@ contract GatewayDeploymentTest is Test {
         gw.propagate{value: 1 ether}(bytes32(0));
     }
 
-    function setupWhiteListMethod(address receiver, address caller) internal returns (bytes32) {
-        vm.prank(receiver);
-        vm.deal(receiver, MIN_COLLATERAL_AMOUNT + 1);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
-        addValidator(receiver);
-
+    function setupWhiteListMethod(address caller) internal returns (bytes32) {
+    
+        registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
                 from: IPCAddress({
@@ -1009,8 +1004,8 @@ contract GatewayDeploymentTest is Test {
                     rawAddress: caller
                 }),
                 to: IPCAddress({
-                    subnetId: gw.getNetworkName().createSubnetId(receiver),
-                    rawAddress: receiver
+                    subnetId: gw.getNetworkName().createSubnetId(address(this)),
+                    rawAddress: address(this)
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
@@ -1020,13 +1015,14 @@ contract GatewayDeploymentTest is Test {
             wrapped: false
         });
 
-        // vm.deal(caller, CROSS_MSG_FEE + 2);
+        // we add a validator with 10 times as much weight as the default validator. 
+        // This way we have 10/11 votes and we reach majority, setting the message in postbox
+        addValidator(caller, 1000);
+
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = crossMsg;
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
-        addValidator(receiver);
-        vm.prank(TOPDOWN_VALIDATOR_1);
-        vm.deal(TOPDOWN_VALIDATOR_1, 1);
+        vm.prank(caller);
         gw.submitTopDownCheckpoint(checkpoint);
 
         return crossMsg.toHash();
@@ -1207,10 +1203,14 @@ contract GatewayDeploymentTest is Test {
     }
 
     function addValidator(address validator) internal {
+        addValidator(validator, 100);
+    }
+
+    function addValidator(address validator, uint256 weigth) internal{
         address[] memory validators = new address[](1);
         validators[0] = validator;
         uint256[] memory weights = new uint256[](1);
-        weights[0] = 100;
+        weights[0] = weigth;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
         gw.setMembership(validators, weights);
