@@ -147,10 +147,4 @@ library SubnetIDHelper {
         
         return SubnetID({route: route});
     }
-
-    function isBottomUp(SubnetID calldata from, SubnetID calldata to) public pure returns (bool){
-        SubnetID memory parent = commonParent(from, to);
-        if(parent.route.length == 0) return false;
-        return from.route.length > parent.route.length;
-    }
 }

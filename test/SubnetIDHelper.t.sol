@@ -374,8 +374,8 @@ contract SubnetIDHelperTest is Test {
         sub2[2] = SUBNET_TWO_ADDRESS;
         SubnetID memory sub2Id = SubnetID({route: sub2});
 
-        require(sub1Id.isBottomUp(sub2Id) == false);
-        require(sub2Id.isBottomUp(sub2Id) == false);
+        require(isBottomUp(sub1Id,sub2Id) == false);
+        require(isBottomUp(sub2Id,sub2Id) == false);
 
         address[] memory sub3 = new address[](4);
         sub3[0] = ROOT_ADDRESS;
@@ -384,7 +384,7 @@ contract SubnetIDHelperTest is Test {
         sub3[3] = SUBNET_THREE_ADDRESS;
         SubnetID memory sub3Id = SubnetID({route: sub3});
 
-        require(sub2Id.isBottomUp(sub3Id) == false);
+        require(isBottomUp(sub2Id, sub3Id) == false);
     }
 
 
@@ -398,7 +398,7 @@ contract SubnetIDHelperTest is Test {
         sub2[0] = ROOT_ADDRESS;
         SubnetID memory sub2Id = SubnetID({route: sub2});
 
-        require(sub1Id.isBottomUp(sub2Id) == true);
+        require(isBottomUp(sub1Id,sub2Id) == true);
 
         address[] memory sub3 = new address[](3);
         sub3[0] = ROOT_ADDRESS;
@@ -406,7 +406,7 @@ contract SubnetIDHelperTest is Test {
         sub3[2] = SUBNET_THREE_ADDRESS;
         SubnetID memory sub3Id = SubnetID({route: sub3});
 
-        require(sub1Id.isBottomUp(sub3Id) == true);
+        require(isBottomUp(sub1Id,sub3Id) == true);
     }
  
     function test_Equals_Works_Empty() public view {
@@ -428,5 +428,11 @@ contract SubnetIDHelperTest is Test {
 
         require(SubnetID({route: route}).equals(SubnetID({route: route})) == true);
         require(SubnetID({route: route}).equals(SubnetID({route: route2})) == false);
+    }
+
+    function isBottomUp(SubnetID memory from, SubnetID memory to) public pure returns (bool){
+        SubnetID memory parent = from.commonParent(to);
+        if(parent.route.length == 0) return false;
+        return from.route.length > parent.route.length;
     }
 }

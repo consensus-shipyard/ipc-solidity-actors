@@ -39,7 +39,7 @@ contract CheckpointHelperTest is Test {
     function test_Sorted_SingleElement() public {
         checkpoint.crossMsgs = new CrossMsg[](1);
         checkpoint.crossMsgs[0].message.nonce = 10;
-        require(checkpoint.isSorted());
+        require(isSorted(checkpoint));
     }
 
     function test_Sorted_True() public {
@@ -47,7 +47,7 @@ contract CheckpointHelperTest is Test {
         checkpoint.crossMsgs[0].message.nonce = 10;
         checkpoint.crossMsgs[1].message.nonce = 20;
         checkpoint.crossMsgs[2].message.nonce = 30;
-        require(checkpoint.isSorted());
+        require(isSorted(checkpoint));
     }
 
     function test_Sorted_False() public {
@@ -55,7 +55,24 @@ contract CheckpointHelperTest is Test {
         checkpoint.crossMsgs[0].message.nonce = 10;
         checkpoint.crossMsgs[1].message.nonce = 20;
         checkpoint.crossMsgs[2].message.nonce = 10;
-        require(checkpoint.isSorted() == false);
+        require(isSorted(checkpoint) == false);
+    }
+
+    function isSorted(
+        BottomUpCheckpoint memory checkpoint
+    ) public pure returns (bool) {
+        if (checkpoint.crossMsgs.length < 2) return true;
+        for (uint i = 1; i < checkpoint.crossMsgs.length; ) {
+            if (
+                checkpoint.crossMsgs[i].message.nonce <=
+                checkpoint.crossMsgs[i - 1].message.nonce
+            ) return false;
+
+            unchecked {
+                ++i;
+            }
+        }
+        return true;
     }
 
 }

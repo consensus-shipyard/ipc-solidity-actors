@@ -623,7 +623,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice executes a cross message if its destination is the current network, otherwise adds it to the postbox to be propagated further
     function _applyMsg(
         CrossMsg memory crossMsg
-    ) internal returns (bytes memory) {
+    ) internal {
         require(
             crossMsg.message.to.rawAddress != address(0),
             "error getting raw address from msg"
@@ -653,7 +653,8 @@ contract Gateway is IGateway, ReentrancyGuard {
                 appliedTopDownNonce += 1;
             }
 
-            return crossMsg.execute();
+            crossMsg.execute();
+            return;
         }
 
         // when the destination is not the current network we add it to the postbox for further propagation
@@ -662,7 +663,6 @@ contract Gateway is IGateway, ReentrancyGuard {
         postbox[cid] = crossMsg;
         postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
 
-        return abi.encode(cid);
     }
 
     function _applyMessages(CrossMsg[] memory crossMsgs) internal {
