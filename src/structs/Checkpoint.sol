@@ -10,6 +10,7 @@ struct BottomUpCheckpoint {
     uint64 epoch;
     uint256 fee;
     CrossMsg[] crossMsgs;
+    ChildCheck[] children;
     bytes32 prevHash;
 }
 

@@ -22,7 +22,8 @@ contract CheckpointHelperTest is Test {
                 epoch: 10,
                 crossMsgs: new CrossMsg[](0),
                 fee: 0,
-                prevHash: EMPTY_HASH
+                prevHash: EMPTY_HASH,
+                children: new ChildCheck[](0)
             }).toHash() == checkpoint.toHash()
         );
     }

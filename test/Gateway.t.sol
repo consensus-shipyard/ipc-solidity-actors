@@ -1280,7 +1280,7 @@ contract GatewayDeploymentTest is Test {
 
     function createCheckpoint(address subnetAddress, uint64 blockNumber) internal view returns(BottomUpCheckpoint memory) {
         SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: blockNumber, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH});
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: blockNumber, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
 
         return checkpoint;
     }

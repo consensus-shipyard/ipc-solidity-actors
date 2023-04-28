@@ -381,7 +381,7 @@ contract SubnetActorTest is Test {
                 }),
                 wrapped: false
             });
-        checkpoint = BottomUpCheckpoint({source: source, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: crossMsgs, prevHash: EMPTY_HASH});
+        checkpoint = BottomUpCheckpoint({source: source, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: crossMsgs, prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
 
     }
 

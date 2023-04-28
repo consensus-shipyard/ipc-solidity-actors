@@ -100,6 +100,13 @@ contract Gateway is IGateway, ReentrancyGuard {
     mapping(bytes32 => mapping(address => bool))
         private hasValidatorVotedForCommit;
 
+    /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
+    mapping(uint64 => mapping(bytes32 => uint256[2])) internal children;
+
+    /// @notice epoch => SubnetID => check => exists
+    mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool)))
+        internal checks;
+
     bool initialized = false;
 
     modifier signableOnly() {
@@ -242,12 +249,12 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
-    function commitChildCheck(BottomUpCheckpoint calldata checkpoint) external {
+    function commitChildCheck(BottomUpCheckpoint calldata commit) external {
         require(initialized, "not initialized");
-        require(checkpoint.isSorted(), "cross messages not ordered by nonce");
+        require(commit.isSorted(), "cross messages not ordered by nonce");
 
         require(
-            checkpoint.source.getActor().normalize() == msg.sender,
+            commit.source.getActor().normalize() == msg.sender,
             "source in checkpoint doesn't belong to subnet"
         );
 
@@ -261,22 +268,72 @@ contract Gateway is IGateway, ReentrancyGuard {
         );
 
         require(
-            subnet.prevCheckpoint.epoch + bottomUpCheckPeriod ==
-                checkpoint.epoch,
+            subnet.prevCheckpoint.epoch + bottomUpCheckPeriod == commit.epoch,
             "checkpoint being committed belongs to the past"
         );
 
+        if (commit.prevHash != EMPTY_HASH) {
+            require(
+                subnet.prevCheckpoint.toHash() == commit.prevHash,
+                "previous checkpoint not consistent with previous one"
+            );
+        }
+
+        (
+            bool checkpointExists,
+            uint64 currentEpoch,
+            BottomUpCheckpoint storage checkpoint
+        ) = bottomUpCheckpoints.getCheckpointPerEpoch(
+                block.number,
+                bottomUpCheckPeriod
+            );
+
+        // create checkpoint if not exists
+        if (checkpointExists == false) {
+            checkpoint.source = networkName;
+            checkpoint.epoch = currentEpoch;
+        }
+
+        bytes32 commitSource = commit.source.toHash();
+        bytes32 commitData = commit.toHash();
+
+        uint[2] memory child = children[currentEpoch][commitSource];
+        uint childIndex = child[0]; // index at checkpoint.data.children for the given subnet
+        bool childExists = child[1] == 1; // 0 - no, 1 - yes
+        bool childCheckExists = checks[currentEpoch][commitSource][commitData];
+
+        require(
+            childCheckExists == false,
+            "child checkpoint being committed already exists"
+        );
+
+        if (childExists == false) {
+            checkpoint.children.push(
+                ChildCheck({
+                    source: commit.source,
+                    checks: new bytes32[](0)
+                })
+            );
+            childIndex = checkpoint.children.length - 1;
+        }
+
+        checkpoint.children[childIndex].checks.push(commitData);
+
+        children[currentEpoch][commitSource][0] = childIndex;
+        children[currentEpoch][commitSource][1] = 1;
+        checks[currentEpoch][commitSource][commitData] = true;
+
         uint256 totaValue = 0;
-        for (uint i = 0; i < checkpoint.crossMsgs.length; ) {
-            totaValue += checkpoint.crossMsgs[i].message.value;
+        for (uint i = 0; i < commit.crossMsgs.length; ) {
+            totaValue += commit.crossMsgs[i].message.value;
             unchecked {
                 ++i;
             }
         }
 
-        totaValue += checkpoint.fee;
+        totaValue += commit.fee;
 
-        bottomUpNonce += checkpoint.crossMsgs.length > 0 ? 1 : 0;
+        bottomUpNonce += commit.crossMsgs.length > 0 ? 1 : 0;
 
         require(
             subnet.circSupply >= totaValue,
@@ -285,11 +342,11 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         subnet.circSupply -= totaValue;
 
-        subnet.prevCheckpoint = checkpoint;
+        subnet.prevCheckpoint = commit;
 
-        _applyMessages(checkpoint.crossMsgs);
+        _applyMessages(commit.crossMsgs);
 
-        _distributeRewards(msg.sender, checkpoint.fee);
+        _distributeRewards(msg.sender, commit.fee);
     }
 
     /// @notice fund - commit a top-down message releasing funds in a child subnet. There is an associated fee that gets distributed to validators in the subnet as well

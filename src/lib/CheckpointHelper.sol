@@ -28,7 +28,8 @@ library CheckpointHelper {
                     epoch: 0,
                     crossMsgs: new CrossMsg[](0),
                     fee: 0,
-                    prevHash: EMPTY_HASH
+                    prevHash: EMPTY_HASH,
+                    children: new ChildCheck[](0)
                 })
             )
         );
