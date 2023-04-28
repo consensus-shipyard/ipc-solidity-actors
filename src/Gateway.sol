@@ -123,13 +123,12 @@ contract Gateway is IGateway, ReentrancyGuard {
         SubnetID networkName;
         uint64 bottomUpCheckPeriod;
         uint64 topDownCheckPeriod;
-        uint64 genesisEpoch;
         uint256 msgFee;
         uint8 majorityPercentage;
     }
 
     constructor(ConstructorParams memory params) {
-        require(majorityPercentage <= 100);
+        require(params.majorityPercentage <= 100);
         networkName = params.networkName;
         minStake = MIN_COLLATERAL_AMOUNT;
         bottomUpCheckPeriod = params.bottomUpCheckPeriod < MIN_CHECKPOINT_PERIOD
@@ -251,7 +250,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {
         require(initialized, "not initialized");
-        require(commit.isSorted(), "cross messages not ordered by nonce");
 
         require(
             commit.source.getActor().normalize() == msg.sender,
@@ -269,7 +267,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         require(
             subnet.prevCheckpoint.epoch + bottomUpCheckPeriod == commit.epoch,
-            "checkpoint being committed belongs to the past"
+            "wrong epoch set for checkpoint"
         );
 
         if (commit.prevHash != EMPTY_HASH) {
@@ -309,10 +307,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         if (childExists == false) {
             checkpoint.children.push(
-                ChildCheck({
-                    source: commit.source,
-                    checks: new bytes32[](0)
-                })
+                ChildCheck({source: commit.source, checks: new bytes32[](0)})
             );
             childIndex = checkpoint.children.length - 1;
         }
@@ -331,7 +326,7 @@ contract Gateway is IGateway, ReentrancyGuard {
             }
         }
 
-        totaValue += commit.fee;
+        totaValue += commit.fee + checkpoint.fee; // add fee that is already in checkpoint as well. For example from release message interacting with the same checkpoint
 
         bottomUpNonce += commit.crossMsgs.length > 0 ? 1 : 0;
 
@@ -672,6 +667,13 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     function _applyMessages(CrossMsg[] memory crossMsgs) internal {
         for (uint i = 0; i < crossMsgs.length; ) {
+            if (i >= 1) {
+                require(
+                    crossMsgs[i].message.nonce <=
+                        crossMsgs[i - 1].message.nonce,
+                    "cross messages not ordered by nonce"
+                );
+            }
             _applyMsg(crossMsgs[i]);
             unchecked {
                 ++i;

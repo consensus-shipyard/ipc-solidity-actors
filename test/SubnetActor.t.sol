@@ -37,7 +37,6 @@ contract SubnetActorTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            genesisEpoch: 0,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
@@ -50,7 +49,7 @@ contract SubnetActorTest is Test {
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(gw),
             consensus: ConsensusType.Dummy,
-            minValidatorStake: DEFAULT_MIN_VALIDATOR_STAKE,
+            minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
@@ -63,8 +62,8 @@ contract SubnetActorTest is Test {
         
     }
 
-    function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minValidatorStake, uint64 _minValidators, uint64 _checkPeriod, bytes calldata _genesis, uint8 _majorityPercentage) public {
-        vm.assume(_minValidatorStake > DEFAULT_MIN_VALIDATOR_STAKE);
+    function testDeployment(string calldata _networkName, address _ipcGatewayAddr, uint256 _minActivationCollateral, uint64 _minValidators, uint64 _checkPeriod, bytes calldata _genesis, uint8 _majorityPercentage) public {
+        vm.assume(_minActivationCollateral > DEFAULT_MIN_VALIDATOR_STAKE);
         vm.assume(_checkPeriod > DEFAULT_CHECKPOINT_PERIOD);
         vm.assume(_majorityPercentage <= 100);
 
@@ -76,7 +75,7 @@ contract SubnetActorTest is Test {
             name: _networkName,
             ipcGatewayAddr: _ipcGatewayAddr,
             consensus: ConsensusType.Dummy,
-            minValidatorStake: _minValidatorStake,
+            minActivationCollateral: _minActivationCollateral,
             minValidators: _minValidators,
             bottomUpCheckPeriod: _checkPeriod,
             topDownCheckPeriod: _checkPeriod,
@@ -88,7 +87,7 @@ contract SubnetActorTest is Test {
 
         require(keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_networkName)), "keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_networkName))");
         require(sa.ipcGatewayAddr() == _ipcGatewayAddr, "sa.ipcGatewayAddr() == _ipcGatewayAddr");
-        require(sa.minValidatorStake() == _minValidatorStake, "sa.minValidatorStake() == _minValidatorStake");
+        require(sa.minActivationCollateral() == _minActivationCollateral, "sa.minActivationCollateral() == _minActivationCollateral");
         require(sa.minValidators() == _minValidators, "sa.minValidators() == _minValidators");
         require(sa.bottomUpCheckPeriod() == _checkPeriod, "sa.bottomUpCheckPeriod() == _checkPeriod");
         require(sa.topDownCheckPeriod() == _checkPeriod, "sa.topDownCheckPeriod() == _checkPeriod");
@@ -174,7 +173,7 @@ contract SubnetActorTest is Test {
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(gw),
             consensus: ConsensusType.Delegated,
-            minValidatorStake: DEFAULT_MIN_VALIDATOR_STAKE,
+            minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,

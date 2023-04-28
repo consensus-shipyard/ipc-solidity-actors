@@ -50,7 +50,6 @@ contract GatewayDeploymentTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            genesisEpoch: 0,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
@@ -72,7 +71,7 @@ contract GatewayDeploymentTest is Test {
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(gw),
             consensus: ConsensusType.Dummy,
-            minValidatorStake: MIN_COLLATERAL_AMOUNT,
+            minActivationCollateral: MIN_COLLATERAL_AMOUNT,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
@@ -92,7 +91,6 @@ contract GatewayDeploymentTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: checkpointPeriod,
             topDownCheckPeriod: checkpointPeriod,
-            genesisEpoch: 0,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
@@ -493,7 +491,6 @@ contract GatewayDeploymentTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            genesisEpoch: 0,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
@@ -517,7 +514,6 @@ contract GatewayDeploymentTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            genesisEpoch: 0,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
@@ -544,7 +540,6 @@ contract GatewayDeploymentTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            genesisEpoch: 0,
             msgFee: crossMsgFee,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
@@ -570,7 +565,6 @@ contract GatewayDeploymentTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            genesisEpoch: 0,
             msgFee: crossMsgFee,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
@@ -598,7 +592,6 @@ contract GatewayDeploymentTest is Test {
             networkName: SubnetID({route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            genesisEpoch: 0,
             msgFee: crossMsgFee,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });

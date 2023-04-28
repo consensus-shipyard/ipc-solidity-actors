@@ -38,7 +38,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     /// @notice Type of consensus algorithm.
     ConsensusType public consensus;
     /// @notice The minimum stake required to be a validator in this subnet
-    uint256 public minValidatorStake;
+    uint256 public minActivationCollateral;
     /// @notice Total collateral currently deposited in the GW from the subnet
     uint256 public totalStake;
     /// @notice validator address to stake amount
@@ -90,12 +90,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
     modifier mutateState() {
         _;
-        if (status == Status.Instantiated && totalStake >= minValidatorStake) {
+        if (status == Status.Instantiated && totalStake >= minActivationCollateral) {
             status = Status.Active;
-        } else if (status == Status.Active && totalStake < minValidatorStake) {
+        } else if (status == Status.Active && totalStake < minActivationCollateral) {
             status = Status.Inactive;
         } else if (
-            status == Status.Inactive && totalStake >= minValidatorStake
+            status == Status.Inactive && totalStake >= minActivationCollateral
         ) {
             status = Status.Active;
         } else if (status == Status.Terminating && totalStake == 0) {
@@ -108,7 +108,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         string name;
         address ipcGatewayAddr;
         ConsensusType consensus;
-        uint256 minValidatorStake;
+        uint256 minActivationCollateral;
         uint64 minValidators;
         uint64 bottomUpCheckPeriod;
         uint64 topDownCheckPeriod;
@@ -126,9 +126,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         name = params.name;
         ipcGatewayAddr = params.ipcGatewayAddr;
         consensus = params.consensus;
-        minValidatorStake = params.minValidatorStake < MIN_COLLATERAL_AMOUNT
+        minActivationCollateral = params.minActivationCollateral < MIN_COLLATERAL_AMOUNT
             ? MIN_COLLATERAL_AMOUNT
-            : params.minValidatorStake;
+            : params.minActivationCollateral;
         minValidators = params.minValidators;
         bottomUpCheckPeriod = params.bottomUpCheckPeriod < MIN_CHECKPOINT_PERIOD
             ? MIN_CHECKPOINT_PERIOD
@@ -153,13 +153,13 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
         if (
-            stake[msg.sender] >= minValidatorStake &&
+            stake[msg.sender] >= minActivationCollateral &&
             !validators.contains(msg.sender) &&
             (consensus != ConsensusType.Delegated || validators.length() == 0)
         ) validators.add(msg.sender);
 
         if (status == Status.Instantiated) {
-            if (totalStake >= minValidatorStake) {
+            if (totalStake >= minActivationCollateral) {
                 payable(ipcGatewayAddr).functionCallWithValue(
                     abi.encodeWithSignature("register()"),
                     totalStake
