@@ -12,6 +12,7 @@ contract CheckpointHelperTest is Test {
 
     BottomUpCheckpoint public checkpoint;
     TopDownCheckpoint public topDownCheckpoint;
+    CrossMsg public crossMsg;
 
     function test_ToHash_Works_BottomUpCheckpoint() public {
         checkpoint.epoch = 10;
@@ -37,35 +38,39 @@ contract CheckpointHelperTest is Test {
     }
 
     function test_Sorted_SingleElement() public {
-        checkpoint.crossMsgs = new CrossMsg[](1);
-        checkpoint.crossMsgs[0].message.nonce = 10;
+        crossMsg.message.nonce = 10;
+        checkpoint.crossMsgs.push(crossMsg);
         require(isSorted(checkpoint));
     }
 
     function test_Sorted_True() public {
-        checkpoint.crossMsgs = new CrossMsg[](3);
-        checkpoint.crossMsgs[0].message.nonce = 10;
-        checkpoint.crossMsgs[1].message.nonce = 20;
-        checkpoint.crossMsgs[2].message.nonce = 30;
+        crossMsg.message.nonce = 10;
+        checkpoint.crossMsgs.push(crossMsg);
+        crossMsg.message.nonce  = 20;
+        checkpoint.crossMsgs.push(crossMsg);
+        crossMsg.message.nonce  = 30;
+        checkpoint.crossMsgs.push(crossMsg);
         require(isSorted(checkpoint));
     }
 
     function test_Sorted_False() public {
-        checkpoint.crossMsgs = new CrossMsg[](3);
-        checkpoint.crossMsgs[0].message.nonce = 10;
-        checkpoint.crossMsgs[1].message.nonce = 20;
-        checkpoint.crossMsgs[2].message.nonce = 10;
+        crossMsg.message.nonce = 10;
+        checkpoint.crossMsgs.push(crossMsg);
+        crossMsg.message.nonce  = 20;
+        checkpoint.crossMsgs.push(crossMsg);
+        crossMsg.message.nonce  = 10;
+        checkpoint.crossMsgs.push(crossMsg);
         require(isSorted(checkpoint) == false);
     }
 
     function isSorted(
-        BottomUpCheckpoint memory checkpoint
+        BottomUpCheckpoint memory _checkpoint
     ) public pure returns (bool) {
-        if (checkpoint.crossMsgs.length < 2) return true;
-        for (uint i = 1; i < checkpoint.crossMsgs.length; ) {
+        if (_checkpoint.crossMsgs.length < 2) return true;
+        for (uint i = 1; i < _checkpoint.crossMsgs.length; ) {
             if (
-                checkpoint.crossMsgs[i].message.nonce <=
-                checkpoint.crossMsgs[i - 1].message.nonce
+                _checkpoint.crossMsgs[i].message.nonce <=
+                _checkpoint.crossMsgs[i - 1].message.nonce
             ) return false;
 
             unchecked {

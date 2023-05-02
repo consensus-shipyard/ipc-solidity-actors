@@ -23,7 +23,7 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
 
       - name: Run tests
-        run: forge test -vvv --via-ir
+        run: forge test -vvv
         
       - name: Run Slither
         uses: crytic/slither-action@dev-git-safe-workspace
