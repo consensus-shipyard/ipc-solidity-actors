@@ -37,7 +37,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     address public ipcGatewayAddr;
     /// @notice Type of consensus algorithm.
     ConsensusType public consensus;
-    /// @notice The minimum stake required to be a validator in this subnet
+    /// @notice The minimum collateral required to be a validator in this subnet
     uint256 public minActivationCollateral;
     /// @notice Total collateral currently deposited in the GW from the subnet
     uint256 public totalStake;
@@ -47,8 +47,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     Status public status;
     /// @notice genesis block
     bytes public genesis;
-    /// @notice number of blocks after which finality is reached
-    uint64 public finalityThreshold;
     /// @notice number of blocks between two bottom-up checkpoints
     uint64 public bottomUpCheckPeriod;
     /// @notice number of blocks between two top-down checkpoints

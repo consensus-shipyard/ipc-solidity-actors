@@ -1098,14 +1098,28 @@ contract GatewayDeploymentTest is Test {
         gw.setMembership(validators, weights);
     }
 
-    function test_SetMembership_Works() public {
-        address[] memory validators = new address[](1);
+    function test_SetMembership_Works_MultipleValidators() public {
+        address[] memory validators = new address[](2);
         validators[0] = vm.addr(100);
-        uint256[] memory weights = new uint256[](1);
+        validators[1] = vm.addr(101);
+        uint256[] memory weights = new uint256[](2);
         weights[0] = 100;
+        weights[1] = 150;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
         gw.setMembership(validators, weights);
+
+        require(gw.totalWeight() == 250);
+    }
+
+    function test_SetMembership_Works_NewValidators() public {
+        addValidator(vm.addr(100), 100);
+
+        require(gw.totalWeight() == 100);
+
+        addValidator(vm.addr(101), 1000);
+        
+        require(gw.totalWeight() == 1000);
     }
 
     function test_SubmitTopDownCheckpoint_Fails_NotValidator() public {
@@ -1137,13 +1151,24 @@ contract GatewayDeploymentTest is Test {
 
     function test_SubmitTopDownCheckpoint_Fails_AlreadyVoted() public {
         address validator1 = vm.addr(100);
+        address validator2 = vm.addr(101);
         vm.deal(validator1, 1);
-        addValidator(validator1);
+        address[] memory validators = new address[](2);
+        uint256[] memory weights = new uint256[](2);
+        validators[0] = validator1;
+        validators[1] = validator2;
+        weights[0] = 10;
+        weights[1] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gw.setMembership(validators, weights);
 
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
 
         vm.prank(validator1);
         gw.submitTopDownCheckpoint(checkpoint);
+
+        require(gw.lastVotingExecutedEpoch() == 0, "lastVotingExecutedEpoch is updated");
 
         vm.prank(validator1);
         vm.expectRevert("validator has already voted the checkpoint");
@@ -1158,9 +1183,17 @@ contract GatewayDeploymentTest is Test {
         address validator3 = vm.addr(300);
         vm.deal(validator3, 1);
 
-        addValidator(validator1);
-        addValidator(validator2);
-        addValidator(validator3);
+        address[] memory validators = new address[](3);
+        uint256[] memory weights = new uint256[](3);
+        validators[0] = validator1;
+        validators[1] = validator2;
+        validators[2] = validator3;
+        weights[0] = 100;
+        weights[1] = 100;
+        weights[2] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gw.setMembership(validators, weights);
 
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({

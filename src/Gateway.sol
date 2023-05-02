@@ -14,6 +14,7 @@ import "./lib/StorableMsgHelper.sol";
 import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Gateway Contract
@@ -29,6 +30,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     using CheckpointMappingHelper for mapping(uint64 => BottomUpCheckpoint);
     using StorableMsgHelper for StorableMsg;
     using EnumerableSet for EnumerableSet.AddressSet;
+    using EnumerableMap for EnumerableMap.AddressToUintMap;
 
     uint8 constant MIN_CHECKPOINT_PERIOD = 10;
     uint256 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -78,20 +80,20 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice fee amount charged per cross message
     uint256 public crossMsgFee;
 
-    /// @notice List of validators for top-down messages
-    EnumerableSet.AddressSet private validators;
-
-    /// @notice how many votes of the total each validator has. Used as a proportion of the whole
-    mapping(address => uint256) validatorWeights;
-
-    /// @notice total votes of all validators
-    uint256 totalWeight;
-
     /// @notice percent approvals needed to reach consensus
     uint8 public majorityPercentage;
 
     /// @notice last executed epoch after voting
-    uint64 lastVotingExecutedEpoch;
+    uint64 public lastVotingExecutedEpoch;
+
+    /// @notice total votes of all validators
+    uint256 public totalWeight;
+
+    /// @notice List of validators for top-down messages
+    EnumerableSet.AddressSet private validators;
+
+    /// @notice how many votes of the total each validator has. Used as a proportion of the whole
+    EnumerableMap.AddressToUintMap private validatorWeights;
 
     /// @notice number of votes for a top-down checkpoint commitment
     mapping(bytes32 => uint256) private commitVoteAmount;
@@ -101,11 +103,11 @@ contract Gateway is IGateway, ReentrancyGuard {
         private hasValidatorVotedForCommit;
 
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
-    mapping(uint64 => mapping(bytes32 => uint256[2])) internal children;
+    mapping(uint64 => mapping(bytes32 => uint256[2])) private children;
 
     /// @notice epoch => SubnetID => check => exists
     mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool)))
-        internal checks;
+        private checks;
 
     bool initialized = false;
 
@@ -161,6 +163,14 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     function getNetworkName() external view returns (SubnetID memory) {
         return networkName;
+    }
+
+    function initGenesisEpoch(uint64 genesisEpoch) external {
+        require(msg.sender.isSystemActor(), "caller not the system actor");
+        require(initialized == false, "subnet already initialized");
+
+        lastVotingExecutedEpoch = genesisEpoch;
+        initialized = true;
     }
 
     /// @notice register a subnet in the gateway. called by a subnet when it reaches the treshold stake
@@ -361,6 +371,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         _distributeRewards(subnetId.getActor(), crossMsgFee);
     }
 
+    /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release() external payable signableOnly hasFee {
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(
             networkName,
@@ -381,12 +392,29 @@ contract Gateway is IGateway, ReentrancyGuard {
             "number of validators is not equal to the number of validator weights"
         );
 
-        uint64 currentEpoch = (uint64(block.number) / topDownCheckPeriod) *
-            topDownCheckPeriod;
-        for (uint i = 0; i < validatorsToSet.length; ) {
-            validators.add(validatorsToSet[i]);
-            validatorWeights[validatorsToSet[i]] = weights[i];
-            totalWeight += weights[i];
+        // reset all the previous validators and their weights
+        uint256 validatorsLength = validators.length();
+        for (uint validatorIndex = 0; validatorIndex < validatorsLength; ) {
+            address validatorAddress = validators.at(validatorIndex);
+
+            validators.remove(validatorAddress);
+            validatorWeights.remove(validatorAddress);
+
+            unchecked {
+                ++validatorIndex;
+            }
+        }
+
+        totalWeight = 0;
+
+        // setup the new validators
+        for (uint validatorIndex = 0; validatorIndex < validatorsToSet.length; ) {
+            address validatorAddress = validatorsToSet[validatorIndex];
+            uint256 validatorWeight = weights[validatorIndex];
+
+            validators.add(validatorAddress);
+            validatorWeights.set(validatorAddress, validatorWeight);
+            totalWeight += validatorWeight;
 
             // initial validators need to be conveniently funded with at least
             // 1 FIL for them to be able to commit the first few top-down messages.
@@ -397,21 +425,13 @@ contract Gateway is IGateway, ReentrancyGuard {
             // to be committed. This doesn't apply to the root.
             // TODO: Once account abstraction is conveniently supported, there will be
             // no need for this initial funding of validators.
-            if (currentEpoch == 1 && !networkName.isRoot())
-                payable(validatorsToSet[i]).sendValue(INITIAL_VALIDATOR_FUNDS);
+            if (block.number == 1 && !networkName.isRoot())
+                payable(validatorAddress).sendValue(INITIAL_VALIDATOR_FUNDS);
 
             unchecked {
-                ++i;
+                ++validatorIndex;
             }
         }
-    }
-
-    function initGenesisEpoch(uint64 genesisEpoch) external {
-        require(msg.sender.isSystemActor(), "caller not the system actor");
-        require(initialized == false, "subnet already initialized");
-
-        lastVotingExecutedEpoch = genesisEpoch;
-        initialized = true;
     }
 
     function submitTopDownCheckpoint(
@@ -419,7 +439,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     ) external signableOnly {
         require(initialized, "not initialized");
         require(validators.contains(msg.sender), "not validator");
-
         require(
             lastVotingExecutedEpoch + topDownCheckPeriod == checkpoint.epoch,
             "epoch in checkpoint doesn't correspond with a signing window"
@@ -433,11 +452,13 @@ contract Gateway is IGateway, ReentrancyGuard {
         );
 
         hasValidatorVotedForCommit[commitHash][msg.sender] = true;
+        commitVoteAmount[commitHash] += validatorWeights.get(msg.sender);
 
-        commitVoteAmount[commitHash] += validatorWeights[msg.sender];
         bool hasMajority = commitVoteAmount[commitHash] * 100 >
             totalWeight * majorityPercentage;
+
         if (hasMajority == false) return;
+
         lastVotingExecutedEpoch = checkpoint.epoch;
         commitVoteAmount[commitHash] = 0;
 
@@ -621,9 +642,7 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     /// @notice executes a cross message if its destination is the current network, otherwise adds it to the postbox to be propagated further
-    function _applyMsg(
-        CrossMsg memory crossMsg
-    ) internal {
+    function _applyMsg(CrossMsg memory crossMsg) internal {
         require(
             crossMsg.message.to.rawAddress != address(0),
             "error getting raw address from msg"
@@ -662,18 +681,16 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         postbox[cid] = crossMsg;
         postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
-
     }
 
     function _applyMessages(CrossMsg[] memory crossMsgs) internal {
+        uint256 prevNonce = 0;
         for (uint i = 0; i < crossMsgs.length; ) {
-            if (i >= 1) {
-                require(
-                    crossMsgs[i].message.nonce <=
-                        crossMsgs[i - 1].message.nonce,
-                    "cross messages not ordered by nonce"
-                );
-            }
+            require(
+                prevNonce <= crossMsgs[i].message.nonce,
+                "cross messages not ordered by nonce"
+            );
+            prevNonce = crossMsgs[i].message.nonce;
             _applyMsg(crossMsgs[i]);
             unchecked {
                 ++i;
