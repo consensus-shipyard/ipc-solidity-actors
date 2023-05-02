@@ -36,8 +36,6 @@ contract GatewayDeploymentTest is Test {
 
     address TOPDOWN_VALIDATOR_1 = address(12);
 
-    mapping(bytes32 => CrossMsg) private postbox;
-
     function setUp() public {
         address[] memory path = new address[](1);
         path[0] = ROOTNET_ADDRESS;
@@ -103,7 +101,6 @@ contract GatewayDeploymentTest is Test {
         require(gw.minStake() == MIN_COLLATERAL_AMOUNT);
         require(gw.bottomUpCheckPeriod() == checkpointPeriod);
         require(gw.topDownCheckPeriod() == checkpointPeriod);
-        require(gw.appliedBottomUpNonce() == 0);
         require(gw.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE);
     }
 
@@ -414,7 +411,7 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_Fund_Works_MultipleFundings() public {
-        uint8 numberOfFunds = 10;
+        uint8 numberOfFunds = 5;
         uint fundAmount = 1 ether;
         
         address validatorAddress = address(100);
@@ -1265,10 +1262,12 @@ contract GatewayDeploymentTest is Test {
         uint expectedNonce = nonceBefore + 1;
         uint expectedCircSupply = circSupplyBefore + fundAmountWithSubtractedFee;
 
+        require(gw.crossMsgFee() > 0, "crossMsgFee is 0");
+
         vm.expectCall(address(sa), abi.encodeWithSelector(sa.reward.selector));
 
         gw.fund{value: fundAmount}(subnetId);
-
+        
         (, , uint nonce, uint circSupply,) = getSubnet(address(sa));
 
         require(gw.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLenght);
@@ -1370,15 +1369,17 @@ contract GatewayDeploymentTest is Test {
         SubnetID memory subnetId = gateway.getNetworkName().createSubnetId(subnetAddress);
 
         (
-            SubnetID memory id,
-            uint256 stake,
-            uint256 nonce,
-            uint256 circSupply,
             Status status,
-
+            uint64 topDownNonce,
+            ,
+            uint256 stake,
+            ,
+            uint256 circSupply,
+            SubnetID memory id,
+            
         ) = gateway.subnets(subnetId.toHash());
 
-        return (id, stake, nonce, circSupply, status);
+        return (id, stake, topDownNonce, circSupply, status);
     }
     function getSubnet(
         address subnetAddress

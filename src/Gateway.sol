@@ -74,7 +74,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     /// @notice AppliedNonces keep track of the next nonce of the message to be applied.
     /// This prevents potential replay attacks.
-    uint64 public appliedBottomUpNonce;
+    // uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
     /// @notice fee amount charged per cross message
@@ -190,8 +190,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         subnet.id = subnetId;
         subnet.stake = msg.value;
         subnet.status = Status.Active;
-        subnet.topDownNonce = 0;
-        subnet.circSupply = 0;
+        subnet.genesisEpoch = block.number;
 
         totalSubnets += 1;
     }
@@ -350,7 +349,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         subnet.prevCheckpoint = commit;
 
-        _applyMessages(commit.crossMsgs);
+        _applyBottomUpMessages(commit.source, commit.crossMsgs);
 
         _distributeRewards(msg.sender, commit.fee);
     }
@@ -457,7 +456,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         commitVoteAmount[commitHash] = 0;
 
         //only execute the messages and update the last executed checkpoint when we have majority
-        _applyMessages(checkpoint.topDownMsgs);
+        _applyTopDownMessages(checkpoint.topDownMsgs);
     }
 
     /// @notice sends an arbitrary cross message from the current subnet to a destination subnet.
@@ -636,7 +635,10 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     /// @notice executes a cross message if its destination is the current network, otherwise adds it to the postbox to be propagated further
-    function _applyMsg(CrossMsg memory crossMsg) internal {
+    function _applyMsg(
+        SubnetID memory forwarder,
+        CrossMsg memory crossMsg
+    ) internal {
         require(
             crossMsg.message.to.rawAddress != address(0),
             "error getting raw address from msg"
@@ -657,8 +659,20 @@ contract Gateway is IGateway, ReentrancyGuard {
         // If the cross-message destination is the current network.
         if (crossMsg.message.to.subnetId.equals(networkName)) {
             if (applyType == IPCMsgType.BottomUp) {
-                require(appliedBottomUpNonce == crossMsg.message.nonce);
-                appliedBottomUpNonce += 1;
+                (bool registered, Subnet storage subnet) = _getSubnet(
+                    forwarder
+                );
+
+                require(
+                    registered,
+                    "we can execute a bottom-up message for a subnet that is not registered"
+                );
+                require(
+                    subnet.appliedBottomUpNonce == crossMsg.message.nonce,
+                    "the bottom-up message being applied for subnet doesn't hold the subsequent nonce"
+                );
+
+                subnet.appliedBottomUpNonce += 1;
             }
 
             if (applyType == IPCMsgType.TopDown) {
@@ -677,7 +691,19 @@ contract Gateway is IGateway, ReentrancyGuard {
         postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
     }
 
-    function _applyMessages(CrossMsg[] memory crossMsgs) internal {
+    function _applyTopDownMessages(CrossMsg[] memory crossMsgs) internal {
+        for (uint i = 0; i < crossMsgs.length; ) {
+            _applyMsg(SubnetID(new address[](0)), crossMsgs[i]);
+            unchecked {
+                ++i;
+            }
+        }
+    }
+
+    function _applyBottomUpMessages(
+        SubnetID calldata forwarder,
+        CrossMsg[] calldata crossMsgs
+    ) internal {
         uint256 prevNonce = 0;
         for (uint i = 0; i < crossMsgs.length; ) {
             require(
@@ -685,7 +711,7 @@ contract Gateway is IGateway, ReentrancyGuard {
                 "cross messages not ordered by nonce"
             );
             prevNonce = crossMsgs[i].message.nonce;
-            _applyMsg(crossMsgs[i]);
+            _applyMsg(forwarder, crossMsgs[i]);
             unchecked {
                 ++i;
             }
