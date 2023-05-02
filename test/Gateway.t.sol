@@ -1086,7 +1086,6 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
-
         address[] memory validators = new address[](1);
         validators[0] = vm.addr(100);
         uint256[] memory weights = new uint256[](2);
@@ -1095,6 +1094,17 @@ contract GatewayDeploymentTest is Test {
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert("number of validators is not equal to the number of validator weights");
+        gw.setMembership(validators, weights);
+    }    
+    
+    function test_SetMembership_Fails_ZeroWeight() public {
+        address[] memory validators = new address[](1);
+        validators[0] = vm.addr(100);
+        uint256[] memory weights = new uint256[](1);
+        weights[0] = 0;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert("validator's weight cannot be zero");
         gw.setMembership(validators, weights);
     }
 

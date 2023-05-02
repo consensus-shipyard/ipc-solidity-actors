@@ -89,11 +89,12 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice total votes of all validators
     uint256 public totalWeight;
 
-    /// @notice List of validators for top-down messages
-    EnumerableSet.AddressSet private validators;
+    /// @notice List of validators and how many votes of the total each validator has for top-down messages
+    // validatorNonce => validator => weight
+    mapping(uint256 => mapping(address => uint256)) public validatorSet;
 
-    /// @notice how many votes of the total each validator has. Used as a proportion of the whole
-    EnumerableMap.AddressToUintMap private validatorWeights;
+    /// @notice sequence number that uniquely identifies a validator set
+    uint256 public validatorNonce;
 
     /// @notice number of votes for a top-down checkpoint commitment
     mapping(bytes32 => uint256) private commitVoteAmount;
@@ -383,37 +384,28 @@ contract Gateway is IGateway, ReentrancyGuard {
     }
 
     function setMembership(
-        address[] memory validatorsToSet,
+        address[] memory validators,
         uint256[] memory weights
     ) external {
         require(msg.sender.isSystemActor(), "caller not the system actor");
         require(
-            validatorsToSet.length == weights.length,
+            validators.length == weights.length,
             "number of validators is not equal to the number of validator weights"
         );
 
-        // reset all the previous validators and their weights
-        uint256 validatorsLength = validators.length();
-        for (uint validatorIndex = 0; validatorIndex < validatorsLength; ) {
-            address validatorAddress = validators.at(validatorIndex);
-
-            validators.remove(validatorAddress);
-            validatorWeights.remove(validatorAddress);
-
-            unchecked {
-                ++validatorIndex;
-            }
-        }
-
+        // invalidate the previous validator set
+        validatorNonce++;
         totalWeight = 0;
 
-        // setup the new validators
-        for (uint validatorIndex = 0; validatorIndex < validatorsToSet.length; ) {
-            address validatorAddress = validatorsToSet[validatorIndex];
+        // setup the new validator set
+        for (uint validatorIndex = 0; validatorIndex < validators.length; ) {
+            address validatorAddress = validators[validatorIndex];
             uint256 validatorWeight = weights[validatorIndex];
 
-            validators.add(validatorAddress);
-            validatorWeights.set(validatorAddress, validatorWeight);
+            require(validatorWeight > 0, "validator's weight cannot be zero");
+
+            validatorSet[validatorNonce][validatorAddress] = validatorWeight;
+
             totalWeight += validatorWeight;
 
             // initial validators need to be conveniently funded with at least
@@ -437,8 +429,10 @@ contract Gateway is IGateway, ReentrancyGuard {
     function submitTopDownCheckpoint(
         TopDownCheckpoint memory checkpoint
     ) external signableOnly {
+        uint256 validatorWeight = validatorSet[validatorNonce][msg.sender];
+
         require(initialized, "not initialized");
-        require(validators.contains(msg.sender), "not validator");
+        require(validatorWeight > 0, "not validator");
         require(
             lastVotingExecutedEpoch + topDownCheckPeriod == checkpoint.epoch,
             "epoch in checkpoint doesn't correspond with a signing window"
@@ -452,7 +446,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         );
 
         hasValidatorVotedForCommit[commitHash][msg.sender] = true;
-        commitVoteAmount[commitHash] += validatorWeights.get(msg.sender);
+        commitVoteAmount[commitHash] += validatorWeight;
 
         bool hasMajority = commitVoteAmount[commitHash] * 100 >
             totalWeight * majorityPercentage;
