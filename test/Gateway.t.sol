@@ -419,11 +419,13 @@ contract GatewayDeploymentTest is Test {
 
         _join(validatorAddress);
 
-        vm.startPrank(funderAddress);
+        vm.startPrank(funderAddress);        
+        vm.expectCall(address(sa), gw.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 5);
+        
         for (uint i = 0; i < numberOfFunds; i++) {
             vm.deal(funderAddress, fundAmount + 1);
-
-            fund(funderAddress, fundAmount);   
+            
+            fund(funderAddress, fundAmount);
         }
     }
     
@@ -1264,7 +1266,7 @@ contract GatewayDeploymentTest is Test {
 
         require(gw.crossMsgFee() > 0, "crossMsgFee is 0");
 
-        vm.expectCall(address(sa), abi.encodeWithSelector(sa.reward.selector));
+        // vm.expectCall(address(sa), gw.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 1);
 
         gw.fund{value: fundAmount}(subnetId);
         
