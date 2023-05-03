@@ -29,42 +29,50 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     uint256 private constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 private constant MIN_CHECKPOINT_PERIOD = 10;
 
-    /// @notice Human-readable name of the subnet.
-    string public name;
-    /// @notice ID of the parent subnet
-    SubnetID private parentId;
-    /// @notice Address of the IPC gateway for the subnet
-    address public ipcGatewayAddr;
-    /// @notice Type of consensus algorithm.
-    ConsensusType public consensus;
-    /// @notice The minimum collateral required to be a validator in this subnet
-    uint256 public minActivationCollateral;
-    /// @notice Total collateral currently deposited in the GW from the subnet
-    uint256 public totalStake;
-    /// @notice validator address to stake amount
-    mapping(address => uint256) public stake;
     /// @notice current status of the subnet
     Status public status;
-    /// @notice genesis block
-    bytes public genesis;
-    /// @notice number of blocks between two bottom-up checkpoints
-    uint64 public bottomUpCheckPeriod;
-    /// @notice number of blocks between two top-down checkpoints
-    uint64 public topDownCheckPeriod;
-    /// @notice epoch of creation
-    uint64 public genesisEpoch;
-    /// @notice block number to corresponding bottom-up checkpoint at that block
-    mapping(uint64 => BottomUpCheckpoint) public checkpoints;
-    /// @notice List of validators in the subnet
-    EnumerableSet.AddressSet private validators;
-    /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
-    uint64 public minValidators;
+
+    /// @notice Type of consensus algorithm.
+    ConsensusType public consensus;
 
     /// @notice percentage of voters needed for majority
     uint8 public majorityPercentage;
 
+    /// @notice number of blocks between two bottom-up checkpoints
+    uint64 public bottomUpCheckPeriod;
+
+    /// @notice number of blocks between two top-down checkpoints
+    uint64 public topDownCheckPeriod;
+
+    /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
+    uint64 public minValidators;
+
     /// @notice last executed checkpoint epoch. Used as nonce
     uint64 lastVotingExecutedEpoch;
+
+    /// @notice epoch of creation
+    uint64 public genesisEpoch;
+
+    /// @notice Address of the IPC gateway for the subnet
+    address public ipcGatewayAddr;
+
+    /// @notice genesis block
+    bytes public genesis;
+
+    /// @notice validator address to stake amount
+    mapping(address => uint256) public stake;
+
+    /// @notice The minimum collateral required to be a validator in this subnet
+    uint256 public minActivationCollateral;
+
+    /// @notice Total collateral currently deposited in the GW from the subnet
+    uint256 public totalStake;
+
+    /// @notice block number to corresponding bottom-up checkpoint at that block
+    mapping(uint64 => BottomUpCheckpoint) public checkpoints;
+
+    /// @notice List of validators in the subnet
+    EnumerableSet.AddressSet private validators;
 
     /// @notice number of tokens(votes) for the checkpoint commit hash
     mapping(bytes32 => uint256) private commitVoteAmount;
@@ -74,6 +82,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     /// @notice commit hash -> EOA address -> have they voted yet?
     mapping(bytes32 => mapping(address => bool))
         public hasValidatorVotedForCommit;
+
+    /// @notice ID of the parent subnet
+    SubnetID private parentId;
+
+    /// @notice Human-readable name of the subnet.
+    string public name;
 
     modifier onlyGateway() {
         require(

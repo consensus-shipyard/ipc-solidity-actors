@@ -40,35 +40,23 @@ contract Gateway is IGateway, ReentrancyGuard {
     uint256 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
 
-    /// @notice path to the current network
-    SubnetID private networkName;
+    /// @notice set to true once the gateway is fully initiated and operational
+    bool initialized = false;
+
+    /// @notice percent approvals needed to reach consensus
+    uint8 public majorityPercentage;
+
+    /// @notice the epoch set on initialization
+    uint64 public genesisEpoch;
 
     /// @notice Number of active subnets spawned from this one
     uint64 public totalSubnets;
 
-    /// @notice Minimum stake required to create a new subnet
-    uint256 public minStake;
-
-    /// @notice List of subnets
-    /// SubnetID => Subnet
-    mapping(bytes32 => Subnet) public subnets;
-
     /// @notice bottom-up period in number of epochs for the subnet
     uint64 public bottomUpCheckPeriod;
 
-    /// @notice Postbox keeps track of all the cross-net messages triggered by
-    /// an actor that need to be propagated further through the hierarchy.
-    /// cross-net message id => CrossMsg
-    mapping(bytes32 => CrossMsg) public postbox;
-
-    /// @notice cross-net message id => set of owners
-    mapping(bytes32 => mapping(address => bool)) public postboxHasOwner;
-
     /// @notice top-down period in number of epochs for the subnet
     uint64 public topDownCheckPeriod;
-
-    /// @notice BottomUpCheckpoints in the GW per epoch
-    mapping(uint64 => BottomUpCheckpoint) public bottomUpCheckpoints;
 
     /// @notice nonce for top-down messages
     uint64 public topDownNonce;
@@ -78,27 +66,44 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     /// @notice AppliedNonces keep track of the next nonce of the message to be applied.
     /// This prevents potential replay attacks.
-    // uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
-
-    /// @notice fee amount charged per cross message
-    uint256 public crossMsgFee;
-
-    /// @notice percent approvals needed to reach consensus
-    uint8 public majorityPercentage;
 
     /// @notice last executed epoch after voting
     uint64 public lastVotingExecutedEpoch;
 
+    /// @notice path to the current network
+    SubnetID private networkName;
+
+    /// @notice List of subnets
+    /// SubnetID => Subnet
+    mapping(bytes32 => Subnet) public subnets;
+
+    /// @notice Minimum stake required to create a new subnet
+    uint256 public minStake;
+
+    /// @notice fee amount charged per cross message
+    uint256 public crossMsgFee;
+
+    /// @notice Postbox keeps track of all the cross-net messages triggered by
+    /// an actor that need to be propagated further through the hierarchy.
+    /// cross-net message id => CrossMsg
+    mapping(bytes32 => CrossMsg) public postbox;
+
+    /// @notice cross-net message id => set of owners
+    mapping(bytes32 => mapping(address => bool)) public postboxHasOwner;
+
+    /// @notice BottomUpCheckpoints in the GW per epoch
+    mapping(uint64 => BottomUpCheckpoint) public bottomUpCheckpoints;
+
     /// @notice total votes of all validators
     uint256 public totalWeight;
+
+    /// @notice sequence number that uniquely identifies a validator set
+    uint256 public validatorNonce;
 
     /// @notice List of validators and how many votes of the total each validator has for top-down messages
     // validatorNonce => validator => weight
     mapping(uint256 => mapping(address => uint256)) public validatorSet;
-
-    /// @notice sequence number that uniquely identifies a validator set
-    uint256 public validatorNonce;
 
     /// @notice number of votes for a top-down checkpoint commitment
     mapping(bytes32 => uint256) private commitVoteAmount;
@@ -113,10 +118,6 @@ contract Gateway is IGateway, ReentrancyGuard {
     /// @notice epoch => SubnetID => check => exists
     mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool)))
         private checks;
-
-    bool initialized = false;
-
-    uint64 public genesisEpoch;
 
     /// @notice contains voted submissions for a given epoch 
     mapping(uint64 => EpochVoteSubmission) public epochVoteSubmissions;

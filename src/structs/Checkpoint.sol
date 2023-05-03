@@ -30,11 +30,11 @@ struct CrossMsg {
 }
 
 struct StorableMsg {
+    bytes4 method;
+    uint64 nonce;
     IPCAddress from;
     IPCAddress to;
     uint256 value;
-    uint64 nonce;
-    bytes4 method;
     bytes params;
 }
 
