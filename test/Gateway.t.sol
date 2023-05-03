@@ -37,6 +37,33 @@ contract GatewayDeploymentTest is Test {
 
     address TOPDOWN_VALIDATOR_1 = address(12);
 
+    error NotSystemActor();
+    error NotSignableAccount();
+    error NotEnoughFee();
+    error NotEnoughFunds();
+    error NotEnoughFundsToRelease();
+    error NotEnoughBalance();
+    error NotInitialized();
+    error NotValidator();
+    error NotEnoughSubnetCircSupply();
+    error NotEmptySubnetCircSupply();
+    error NotRegisteredSubnet();
+    error AlreadyRegisteredSubnet();
+    error AlreadyInitialized();
+    error AlreadyCommitedCheckpoint();
+    error InconsistentPrevCheckpoint();
+    error InvalidPostboxOwner();
+    error InvalidCheckpointEpoch();
+    error InvalidCheckpointSource();
+    error InvalidCrossMsgNonce();
+    error InvalidCrossMsgDestinationSubnet();
+    error InvalidCrossMsgDestinationAddress();
+    error InvalidCrossMsgsSortOrder();
+    error CannotSendCrossMsgToItself();
+    error SubnetNotActive();
+    error PostboxNotExist();
+    error ValidatorAlreadyVoted();
+
     function setUp() public {
         address[] memory path = new address[](1);
         path[0] = ROOTNET_ADDRESS;
@@ -136,7 +163,7 @@ contract GatewayDeploymentTest is Test {
         uint256 collateral
     ) public {
         vm.assume(collateral < MIN_COLLATERAL_AMOUNT);
-        vm.expectRevert("call to register doesn't include enough funds");
+        vm.expectRevert(NotEnoughFunds.selector);
 
         gw.register{value: collateral}();
     }
@@ -144,7 +171,7 @@ contract GatewayDeploymentTest is Test {
     function test_Register_Fail_SubnetAlreadyExists() public {
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert("subnet is already registered");
+        vm.expectRevert(AlreadyRegisteredSubnet.selector);
 
         gw.register{value: MIN_COLLATERAL_AMOUNT}();
     }
@@ -203,13 +230,13 @@ contract GatewayDeploymentTest is Test {
     function testAddStake_Fail_ZeroAmount() public {
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert("no stake to add");
+        vm.expectRevert(NotEnoughFunds.selector);
 
         gw.addStake{value: 0}();
     }
 
     function testAddStake_Fail_SubnetNotExists() public {
-        vm.expectRevert("subnet is not registered");
+        vm.expectRevert(NotRegisteredSubnet.selector);
 
         gw.addStake{value: 1}();
     }
@@ -270,7 +297,7 @@ contract GatewayDeploymentTest is Test {
     function test_ReleaseStake_Fail_ZeroAmount() public {
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert("no funds to release in params");
+        vm.expectRevert(NotEnoughFundsToRelease.selector);
 
         gw.releaseStake(0);
     }
@@ -322,7 +349,7 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_Kill_Fail_SubnetNotExists() public {
-        vm.expectRevert("subnet is not registered");
+        vm.expectRevert(NotRegisteredSubnet.selector);
 
         gw.kill();
     }
@@ -342,7 +369,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.stopPrank();
         vm.startPrank(address(sa));
-        vm.expectRevert("cannot kill a subnet that still holds user funds in its circ. supply");
+        vm.expectRevert(NotEmptySubnetCircSupply.selector);
 
         gw.kill();
     }
@@ -422,7 +449,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.startPrank(funderAddress);        
         vm.expectCall(address(sa), gw.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 5);
-        
+
         for (uint i = 0; i < numberOfFunds; i++) {
             vm.deal(funderAddress, fundAmount + 1);
             
@@ -444,7 +471,7 @@ contract GatewayDeploymentTest is Test {
         wrongPath[0] = address(1);
         wrongPath[1] = address(2);
 
-        vm.expectRevert("couldn't compute the next subnet in route");
+        vm.expectRevert(NotRegisteredSubnet.selector);
 
         gw.fund{value: fundAmount}(SubnetID(wrongPath));
     }
@@ -461,7 +488,7 @@ contract GatewayDeploymentTest is Test {
 
         (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
 
-        vm.expectRevert("the caller is not an account");
+        vm.expectRevert(NotSignableAccount.selector);
 
         gw.fund{value: fundAmount}(subnetId);
     }
@@ -477,7 +504,7 @@ contract GatewayDeploymentTest is Test {
 
         (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
 
-        vm.expectRevert("not enough gas to pay cross-message");
+        vm.expectRevert(NotEnoughFee.selector);
 
         gw.fund{value: 0}(subnetId);
     }
@@ -500,7 +527,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, 1 ether);
-        vm.expectRevert("not enough gas to pay cross-message");
+        vm.expectRevert(NotEnoughFee.selector);
 
         gw.release{value: 0}();
     }
@@ -523,7 +550,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.startPrank(invalidAccount);
         vm.deal(invalidAccount, 1 ether);
-        vm.expectRevert("the caller is not an account");
+        vm.expectRevert(NotSignableAccount.selector);
 
         gw.release{value: 1 ether}();
     }
@@ -615,7 +642,7 @@ contract GatewayDeploymentTest is Test {
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
 
-        vm.expectRevert("error getting subnet from msg");
+        vm.expectRevert(InvalidCrossMsgDestinationSubnet.selector);
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
             SubnetID({route: new address[](0)}),
             CrossMsg({
@@ -645,7 +672,7 @@ contract GatewayDeploymentTest is Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         SubnetID memory destination = gw.getNetworkName();
         vm.expectRevert(
-            "destination is the current network, you are better off with a good ol' message, no cross needed"
+            CannotSendCrossMsgToItself.selector
         );
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
             destination,
@@ -678,7 +705,7 @@ contract GatewayDeploymentTest is Test {
             caller
         );
         vm.expectRevert(
-            "the funds in cross-msg params are not equal to the ones sent in the message"
+            NotEnoughFunds.selector
         );
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
             destination,
@@ -710,7 +737,7 @@ contract GatewayDeploymentTest is Test {
         SubnetID memory destination = gw.getNetworkName().createSubnetId(
             caller
         );
-        vm.expectRevert("invalid to addr");
+        vm.expectRevert(InvalidCrossMsgDestinationAddress.selector);
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
             destination,
             CrossMsg({
@@ -741,7 +768,7 @@ contract GatewayDeploymentTest is Test {
         SubnetID memory destination = gw.getNetworkName().createSubnetId(
             caller
         );
-        vm.expectRevert("not enough gas to pay cross-message");
+        vm.expectRevert(NotEnoughFee.selector);
         gw.sendCross{value: CROSS_MSG_FEE}(
             destination,
             CrossMsg({
@@ -917,7 +944,7 @@ contract GatewayDeploymentTest is Test {
         owners[0] = caller;
 
         vm.prank(receiver);
-        vm.expectRevert("not owner");
+        vm.expectRevert(InvalidPostboxOwner.selector);
         gw.whitelistPropagator(postBoxItemId, owners);
     }
 
@@ -929,7 +956,7 @@ contract GatewayDeploymentTest is Test {
         address[] memory owners = new address[](1);
         owners[0] = caller;
 
-        vm.expectRevert("not owner");
+        vm.expectRevert(InvalidPostboxOwner.selector);
 
         gw.whitelistPropagator(bytes32(0), owners);
     }
@@ -975,14 +1002,14 @@ contract GatewayDeploymentTest is Test {
 
         vm.prank(notOwner);
         vm.deal(notOwner, 1 ether);
-        vm.expectRevert("not owner");
+        vm.expectRevert(InvalidPostboxOwner.selector);
         gw.propagate{value: 1 ether}(postboxItemCid);
     }
 
     function test_Propagate_Fails_PostboxItemDoesNotExist() public {
         vm.prank(vm.addr(100));
         vm.deal(vm.addr(100), 1 ether);
-        vm.expectRevert("not owner");
+        vm.expectRevert(InvalidPostboxOwner.selector);
         gw.propagate{value: 1 ether}(bytes32(0));
     }
 
@@ -1089,7 +1116,7 @@ contract GatewayDeploymentTest is Test {
         weights[0] = 100;
 
         vm.prank(caller);
-        vm.expectRevert("caller not the system actor");
+        vm.expectRevert(NotSystemActor.selector);
         gw.setMembership(validators, weights);
     }
 
@@ -1146,7 +1173,7 @@ contract GatewayDeploymentTest is Test {
         address nonValidator = vm.addr(400);
         vm.prank(nonValidator);
         vm.deal(nonValidator, 1);
-        vm.expectRevert("not validator");
+        vm.expectRevert(NotValidator.selector);
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
@@ -1159,6 +1186,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.prank(validator);
         vm.expectRevert("epoch not votable");
+
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
@@ -1172,6 +1200,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.prank(validators[0]);
         vm.expectRevert("validator has already voted");
+
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
