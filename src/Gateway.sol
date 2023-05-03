@@ -111,13 +111,45 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @notice contains voted submissions for a given epoch 
     mapping(uint64 => EpochVoteTopDownSubmission) private epochVoteSubmissions;
 
+    error NotSystemActor();
+    error NotSignableAccount();
+    error NotEnoughFee();
+    error NotEnoughFunds();
+    error NotEnoughFundsToRelease();
+    error NotEnoughBalance();
+    error NotInitialized();
+    error NotValidator();
+    error NotEnoughSubnetCircSupply();
+    error NotEmptySubnetCircSupply();
+    error NotRegisteredSubnet();
+    error AlreadyRegisteredSubnet();
+    error AlreadyInitialized();
+    error AlreadyCommitedCheckpoint();
+    error InconsistentPrevCheckpoint();
+    error InvalidPostboxOwner();
+    error InvalidCheckpointEpoch();
+    error InvalidCheckpointSource();
+    error InvalidCrossMsgNonce();
+    error InvalidCrossMsgDestinationSubnet();
+    error InvalidCrossMsgDestinationAddress();
+    error InvalidCrossMsgsSortOrder();
+    error CannotSendCrossMsgToItself();
+    error SubnetNotActive();
+    error PostboxNotExist();
+    error ValidatorAlreadyVoted();
+
     modifier signableOnly() {
-        require(msg.sender.isAccount(), "the caller is not an account");
+        if (msg.sender.isAccount() == false) revert NotSignableAccount();
+        _;
+    }
+
+    modifier systemActorOnly() {
+        if (msg.sender.isSystemActor() == false) revert NotSystemActor();
         _;
     }
 
     modifier hasFee() {
-        require(msg.value > crossMsgFee, "not enough gas to pay cross-message");
+        if (msg.value <= crossMsgFee) revert NotEnoughFee();
         _;
     }
 
@@ -167,9 +199,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         return networkName;
     }
 
-    function initGenesisEpoch(uint64 _genesisEpoch) public {
-        require(msg.sender.isSystemActor(), "caller not the system actor");
-        require(initialized == false, "subnet already initialized");
+    function initGenesisEpoch(uint64 _genesisEpoch) external systemActorOnly {
+        if (initialized) revert AlreadyInitialized();
 
         genesisEpoch = _genesisEpoch;
         initialized = true;
@@ -177,16 +208,13 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice register a subnet in the gateway. called by a subnet when it reaches the treshold stake
     function register() external payable {
-        require(
-            msg.value >= minStake,
-            "call to register doesn't include enough funds"
-        );
+        if (msg.value < minStake) revert NotEnoughFunds();
 
         SubnetID memory subnetId = networkName.createSubnetId(msg.sender);
 
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
 
-        require(registered == false, "subnet is already registered");
+        if (registered) revert AlreadyRegisteredSubnet();
 
         subnet.id = subnetId;
         subnet.stake = msg.value;
@@ -198,32 +226,24 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice addStake - add collateral for an existing subnet
     function addStake() external payable {
-        require(msg.value > 0, "no stake to add");
+        if (msg.value <= 0) revert NotEnoughFunds();
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
-        require(registered, "subnet is not registered");
+        if (registered == false) revert NotRegisteredSubnet();
 
         subnet.stake += msg.value;
     }
 
     /// @notice release collateral for an existing subnet
     function releaseStake(uint amount) external nonReentrant {
-        require(amount > 0, "no funds to release in params");
+        if (amount == 0) revert NotEnoughFundsToRelease();
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
-        require(registered, "subnet is not registered");
-
-        require(
-            subnet.stake >= amount,
-            "subnet actor not allowed to release so many funds"
-        );
-
-        require(
-            address(this).balance >= amount,
-            "something went really wrong! the actor doesn't have enough balance to release"
-        );
+        if (registered == false) revert NotRegisteredSubnet();
+        if (subnet.stake < amount) revert NotEnoughFundsToRelease();
+        if (address(this).balance < amount) revert NotEnoughBalance();
 
         subnet.stake -= amount;
 
@@ -238,16 +258,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function kill() external {
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
-        require(registered, "subnet is not registered");
-
-        require(
-            address(this).balance >= subnet.stake,
-            "something went really wrong! the actor doesn't have enough balance to release"
-        );
-        require(
-            subnet.circSupply == 0,
-            "cannot kill a subnet that still holds user funds in its circ. supply"
-        );
+        if (registered == false) revert NotRegisteredSubnet();
+        if (address(this).balance < subnet.stake) revert NotEnoughBalance();
+        if (subnet.circSupply > 0) revert NotEmptySubnetCircSupply();
 
         uint256 stake = subnet.stake;
 
@@ -260,35 +273,21 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {
-        require(initialized, "not initialized");
-
-        require(
-            commit.source.getActor().normalize() == msg.sender,
-            "source in checkpoint doesn't belong to subnet"
-        );
+        if (initialized == false) revert NotInitialized();
+        if (commit.source.getActor().normalize() != msg.sender) revert InvalidCheckpointSource();
 
         require(CrossMsgHelper.isSorted(commit.crossMsgs), "bottom up messages not sorted");
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
-        require(registered, "subnet is not registered");
-
-        require(
-            subnet.status == Status.Active,
-            "can't commit checkpoint for an inactive subnet"
-        );
-
-        require(
-            subnet.prevCheckpoint.epoch + bottomUpCheckPeriod == commit.epoch,
-            "wrong epoch set for checkpoint"
-        );
-
-        if (commit.prevHash != EMPTY_HASH) {
-            require(
-                subnet.prevCheckpoint.toHash() == commit.prevHash,
-                "previous checkpoint not consistent with previous one"
-            );
-        }
+        if (registered == false) revert NotRegisteredSubnet();
+        if (subnet.status != Status.Active) revert SubnetNotActive();
+        if (subnet.prevCheckpoint.epoch + bottomUpCheckPeriod != commit.epoch)
+            revert InvalidCheckpointEpoch();
+        if (
+            commit.prevHash != EMPTY_HASH &&
+            commit.prevHash != subnet.prevCheckpoint.toHash()
+        ) revert InconsistentPrevCheckpoint();
 
         (
             bool checkpointExists,
@@ -310,10 +309,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         bool childExists = child[1] == 1; // 0 - no, 1 - yes
         bool childCheckExists = checks[currentEpoch][commitSource][commitData];
 
-        require(
-            childCheckExists == false,
-            "child checkpoint being committed already exists"
-        );
+        if (childCheckExists) revert AlreadyCommitedCheckpoint();
 
         if (childExists == false) {
             checkpoint.children.push(
@@ -340,10 +336,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         bottomUpNonce += commit.crossMsgs.length > 0 ? 1 : 0;
 
-        require(
-            subnet.circSupply >= totaValue,
-            "wtf! we can't release funds below circ, supply. something went really wrong"
-        );
+        if (subnet.circSupply < totaValue) revert NotEnoughSubnetCircSupply();
 
         subnet.circSupply -= totaValue;
 
@@ -385,8 +378,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function setMembership(
         address[] memory validators,
         uint256[] memory weights
-    ) external {
-        require(msg.sender.isSystemActor(), "caller not the system actor");
+    ) external systemActorOnly {
         require(
             validators.length == weights.length,
             "number of validators is not equal to the number of validator weights"
@@ -430,9 +422,13 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     ) external signableOnly validEpochOnly(checkpoint.epoch) {
         uint256 validatorWeight = validatorSet[validatorNonce][msg.sender];
 
-        require(initialized, "not initialized");
-        require(validatorWeight > 0, "not validator");
+        if (initialized == false) revert NotInitialized();
+        if (validatorWeight == 0) revert NotValidator();
         require(CrossMsgHelper.isSorted(checkpoint.topDownMsgs), "top down messages not sorted");
+
+        EpochVoteSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
+
+        require(voteSubmission.submitters[voteSubmission.nonce][msg.sender] == false, "validator has already voted");
 
         EpochVoteTopDownSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
         
@@ -467,18 +463,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         SubnetID memory destination,
         CrossMsg memory crossMsg
     ) external payable signableOnly hasFee {
-        require(
-            destination.equals(networkName) == false,
-            "destination is the current network, you are better off with a good ol' message, no cross needed"
-        );
-        require(
-            crossMsg.message.value == msg.value,
-            "the funds in cross-msg params are not equal to the ones sent in the message"
-        );
-        require(
-            crossMsg.message.to.rawAddress != address(0),
-            "invalid to addr"
-        );
+        // destination is the current network, you are better off with a good ol' message, no cross needed
+        if (destination.equals(networkName)) revert CannotSendCrossMsgToItself();
+        if (crossMsg.message.value != msg.value) revert NotEnoughFunds();
+        if (crossMsg.message.to.rawAddress == address(0)) revert InvalidCrossMsgDestinationAddress();
 
         // we disregard the "to" of the message. the caller is the one set as the "from" of the message.
         crossMsg.message.to.subnetId = destination;
@@ -500,11 +488,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         bytes32 msgCid,
         address[] calldata owners
     ) external {
-        require(postboxHasOwner[msgCid][msg.sender], "not owner");
+        if (postboxHasOwner[msgCid][msg.sender] == false)
+            revert InvalidPostboxOwner();
 
         CrossMsg storage crossMsg = postbox[msgCid];
 
-        require(crossMsg.isEmpty() == false, "postbox item does not exist");
+        if (crossMsg.isEmpty()) revert PostboxNotExist();
 
         // update postbox with the new owners
         for (uint256 i = 0; i < owners.length; ) {
@@ -522,15 +511,14 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @notice propagates the populated cross net message for the given cid
     /// @param msgCid - the cid of the cross-net message
     function propagate(bytes32 msgCid) external payable {
-        require(
-            msg.value >= crossMsgFee,
-            "not enough gas to pay cross-message"
-        );
-        require(postboxHasOwner[msgCid][msg.sender], "not owner");
+        if (msg.value < crossMsgFee) revert NotEnoughFee();
+
+        if (postboxHasOwner[msgCid][msg.sender] == false)
+            revert InvalidPostboxOwner();
 
         CrossMsg storage crossMsg = postbox[msgCid];
 
-        require(crossMsg.isEmpty() == false, "postbox item does not exist");
+        if (crossMsg.isEmpty()) revert PostboxNotExist();
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(
             crossMsg
@@ -579,8 +567,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     ) internal returns (bool shouldBurn, bool shouldDistributeRewards) {
         SubnetID memory to = crossMessage.message.to.subnetId;
 
-        require(to.route.length > 0, "error getting subnet from msg");
-        require(to.equals(networkName) == false, "should already be committed");
+        if (to.route.length == 0) revert InvalidCrossMsgDestinationSubnet();
+        if (to.equals(networkName)) revert InvalidCrossMsgDestinationSubnet();
 
         SubnetID memory from = crossMessage.message.from.subnetId;
         IPCMsgType applyType = crossMessage.message.applyType(networkName);
@@ -639,7 +627,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
 
-        require(registered, "couldn't compute the next subnet in route");
+        if (registered == false) revert NotRegisteredSubnet();
 
         crossMessage.message.nonce = subnet.topDownNonce;
         subnet.topDownNonce += 1;
@@ -663,19 +651,15 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         SubnetID memory forwarder,
         CrossMsg memory crossMsg
     ) internal {
-        require(
-            crossMsg.message.to.rawAddress != address(0),
-            "error getting raw address from msg"
-        );
-        require(
-            crossMsg.message.to.subnetId.route.length > 0,
-            "error getting subnet from msg"
-        );
-        if (crossMsg.message.method == METHOD_SEND) {
-            require(
-                address(this).balance >= crossMsg.message.value,
-                "not enough balance to mint new tokens as part of the cross-message"
-            );
+        if (crossMsg.message.to.rawAddress == address(0))
+            revert InvalidCrossMsgDestinationAddress();
+        if (crossMsg.message.to.subnetId.route.length == 0)
+            revert InvalidCrossMsgDestinationSubnet();
+        if (
+            crossMsg.message.method == METHOD_SEND &&
+            crossMsg.message.value > address(this).balance
+        ) {
+            revert NotEnoughBalance();
         }
 
         IPCMsgType applyType = crossMsg.message.applyType(networkName);
@@ -687,20 +671,16 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
                     forwarder
                 );
 
-                require(
-                    registered,
-                    "we can execute a bottom-up message for a subnet that is not registered"
-                );
-                require(
-                    subnet.appliedBottomUpNonce == crossMsg.message.nonce,
-                    "the bottom-up message being applied for subnet doesn't hold the subsequent nonce"
-                );
+                if (registered == false) revert NotRegisteredSubnet();
+                if (subnet.appliedBottomUpNonce != crossMsg.message.nonce)
+                    revert InvalidCrossMsgNonce();
 
                 subnet.appliedBottomUpNonce += 1;
             }
 
             if (applyType == IPCMsgType.TopDown) {
-                require(appliedTopDownNonce == crossMsg.message.nonce);
+                if (appliedTopDownNonce != crossMsg.message.nonce)
+                    revert InvalidCrossMsgNonce();
                 appliedTopDownNonce += 1;
             }
 
