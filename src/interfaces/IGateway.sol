@@ -24,7 +24,7 @@ interface IGateway {
     /// CommitChildCheck propagates the commitment of a checkpoint from a child subnet,
     /// process the cross-messages directed to the subnet.
     function commitChildCheck(
-        BottomUpCheckpoint calldata checkpoint
+        BottomUpCheckpoint calldata bottomupCheckpoint
     ) external;
     
     /// Fund injects new funds from an account of the parent chain to a subnet.
@@ -67,7 +67,7 @@ interface IGateway {
     /// Propagates the stored postbox item for the given cid
     function propagate(bytes32 msgCid) external payable;
 
-    function submitTopDownCheckpoint(TopDownCheckpoint memory checkpoint) external;
+    function submitTopDownCheckpoint(TopDownCheckpoint calldata topdownCheckpoint) external;
 
     function setMembership(address[] memory validatorsToSet, uint256[] memory weights) external;
 

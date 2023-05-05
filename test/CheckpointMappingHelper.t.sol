@@ -16,9 +16,9 @@ contract CheckpointMappingHelperTest is Test {
 
     uint64 constant BLOCKS_PER_EPOCH = 10;
 
-    uint64 constant EPOCH_ONE = 0 * BLOCKS_PER_EPOCH;
-    uint64 constant EPOCH_TWO = 1 * BLOCKS_PER_EPOCH;
-    uint64 constant EPOCH_THREE = 2 * BLOCKS_PER_EPOCH;
+    uint64 constant EPOCH_ONE = 1 * BLOCKS_PER_EPOCH;
+    uint64 constant EPOCH_TWO = 2 * BLOCKS_PER_EPOCH;
+    uint64 constant EPOCH_THREE = 3 * BLOCKS_PER_EPOCH;
     uint64 constant NON_EXISTING_EPOCH = 100000;
 
     mapping(uint64 => BottomUpCheckpoint) public checkpoints;
@@ -80,7 +80,7 @@ contract CheckpointMappingHelperTest is Test {
             );
 
             require(exists == false);
-            require(epoch == futureEpoch);
+            require(epoch == futureEpoch + 1 * BLOCKS_PER_EPOCH);
         }
     }
 

@@ -2,7 +2,9 @@
 pragma solidity ^0.8.7;
 
 import "./structs/Checkpoint.sol";
+import "./structs/EpochVoteSubmission.sol";
 import "./enums/Status.sol";
+import "./enums/VoteExecutionStatus.sol";
 import "./interfaces/IGateway.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./lib/SubnetIDHelper.sol";
@@ -11,6 +13,8 @@ import "./lib/CheckpointHelper.sol";
 import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
 import "./lib/StorableMsgHelper.sol";
+import "./lib/EpochVoteSubmissionHelper.sol";
+import "./lib/ExecutableQueueHelper.sol";
 import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
@@ -29,8 +33,8 @@ contract Gateway is IGateway, ReentrancyGuard {
     using CheckpointHelper for TopDownCheckpoint;
     using CheckpointMappingHelper for mapping(uint64 => BottomUpCheckpoint);
     using StorableMsgHelper for StorableMsg;
-    using EnumerableSet for EnumerableSet.AddressSet;
-    using EnumerableMap for EnumerableMap.AddressToUintMap;
+    using ExecutableQueueHelper for ExecutableQueue;
+    using EpochVoteSubmissionHelper for EpochVoteSubmission;
 
     uint8 constant MIN_CHECKPOINT_PERIOD = 10;
     uint256 constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -112,6 +116,16 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     bool initialized = false;
 
+    uint64 public genesisEpoch;
+
+    /// @notice contains voted submissions for a given epoch 
+    mapping(uint64 => EpochVoteSubmission) public epochVoteSubmissions;
+
+    /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
+    /// This usually happens when previous submission epoch has not executed, but the next submission
+    /// epoch is ready to be executed. Most of the time this should be empty
+    ExecutableQueue public executableQueue;
+
     modifier signableOnly() {
         require(msg.sender.isAccount(), "the caller is not an account");
         _;
@@ -166,11 +180,11 @@ contract Gateway is IGateway, ReentrancyGuard {
         return networkName;
     }
 
-    function initGenesisEpoch(uint64 genesisEpoch) external {
+    function initGenesisEpoch(uint64 _genesisEpoch) external {
         require(msg.sender.isSystemActor(), "caller not the system actor");
         require(initialized == false, "subnet already initialized");
 
-        lastVotingExecutedEpoch = genesisEpoch;
+        genesisEpoch = _genesisEpoch;
         initialized = true;
     }
 
@@ -425,38 +439,113 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
+    function _deriveExecutionStatus(
+        EpochVoteSubmission storage voteSubmission
+    ) internal view returns (VoteExecutionStatus) {
+        uint256 threshold = (totalWeight * majorityPercentage) / 100;
+        uint256 mostVotedWeight = voteSubmission.getMostVotedWeight();
+
+        // threshold not reached, require THRESHOLD to be surpassed, equality is not enough!
+        if (voteSubmission.totalSubmissionWeight <= threshold) {
+            return VoteExecutionStatus.ThresholdNotReached;
+        }
+
+        // consensus reached
+        if (mostVotedWeight > threshold) {
+            return VoteExecutionStatus.ConsensusReached;
+        }
+
+        // now the total submissions has reached the threshold, but the most submitted vote
+        // has yet to reach the threshold, that means consensus has not reached.
+        // we do a early termination check, to see if consensus will ever be reached.
+        //
+        // consider an example that consensus will never be reached:
+        //
+        // -------- | -------------------------|--------------- | ------------- |
+        //     MOST_VOTED                 THRESHOLD     TOTAL_SUBMISSIONS  TOTAL_WEIGHT
+        //
+        // we see MOST_VOTED is smaller than THRESHOLD, TOTAL_SUBMISSIONS and TOTAL_WEIGHT, if
+        // the potential extra votes any vote can obtain, i.e. TOTAL_WEIGHT - TOTAL_SUBMISSIONS,
+        // is smaller than or equal to the potential extra vote the most voted can obtain, i.e.
+        // THRESHOLD - MOST_VOTED, then consensus will never be reached, no point voting, just abort.
+        if (
+            threshold - mostVotedWeight >=
+            totalWeight - voteSubmission.totalSubmissionWeight
+        ) {
+            return VoteExecutionStatus.RoundAbort;
+        }
+
+        return VoteExecutionStatus.ReachingConsensus;
+    }
+
+    /// @notice marks the submission as executed, removes it from the queue if exist and retuns the most voted submission
+    function _markSubmissionExecuted(EpochVoteSubmission storage voteSubmission) internal returns(TopDownCheckpoint storage mostVotedSubmission){
+        mostVotedSubmission = voteSubmission.getMostVotedSubmission();
+
+        // most voted submission is empty, so do nothing
+        if (mostVotedSubmission.isEmpty()) return mostVotedSubmission;
+
+        if (executableQueue.contains(mostVotedSubmission.epoch)) {
+            require(mostVotedSubmission.epoch == executableQueue.first(), "epoch not the next executable epoch queue");
+
+            // remove the current checkpoint epoch from the queue
+            executableQueue.pop();
+        }
+
+        // update the last executed epoch
+        lastVotingExecutedEpoch = mostVotedSubmission.epoch;
+    }
+
     function submitTopDownCheckpoint(
-        TopDownCheckpoint memory checkpoint
+        TopDownCheckpoint calldata checkpoint
     ) external signableOnly {
         uint256 validatorWeight = validatorSet[validatorNonce][msg.sender];
 
         require(initialized, "not initialized");
         require(validatorWeight > 0, "not validator");
-        require(
-            lastVotingExecutedEpoch + topDownCheckPeriod == checkpoint.epoch,
-            "epoch in checkpoint doesn't correspond with a signing window"
-        );
+        require(checkpoint.epoch > lastVotingExecutedEpoch, "epoch already executed");
+        require(checkpoint.epoch > genesisEpoch && (checkpoint.epoch - genesisEpoch) % topDownCheckPeriod == 0, "epoch not votable");
 
-        bytes32 commitHash = checkpoint.toHash();
+        EpochVoteSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
-        require(
-            !hasValidatorVotedForCommit[commitHash][msg.sender],
-            "validator has already voted the checkpoint"
-        );
+        require(voteSubmission.submitters[voteSubmission.nonce][msg.sender] == false, "already voted");
 
-        hasValidatorVotedForCommit[commitHash][msg.sender] = true;
-        commitVoteAmount[commitHash] += validatorWeight;
+        // submit the vote
+        voteSubmission.submitVote(checkpoint, validatorWeight);
 
-        bool hasMajority = commitVoteAmount[commitHash] * 100 >
-            totalWeight * majorityPercentage;
+        VoteExecutionStatus status = _deriveExecutionStatus(voteSubmission);
 
-        if (hasMajority == false) return;
+        TopDownCheckpoint memory submissionToExecute;
+        
+        uint256 nextVotingExecutableEpoch = lastVotingExecutedEpoch + topDownCheckPeriod;
 
-        lastVotingExecutedEpoch = checkpoint.epoch;
-        commitVoteAmount[commitHash] = 0;
+        if (status == VoteExecutionStatus.ConsensusReached) {
+            if (nextVotingExecutableEpoch == checkpoint.epoch) {
+                
+                submissionToExecute = _markSubmissionExecuted(voteSubmission);
+            } else {
+                // there are pending epochs to be executed, just store the submission and skip execution
+                executableQueue.push(checkpoint.epoch);
+            }
+        } else if (status == VoteExecutionStatus.RoundAbort) {
+            // abort the current round and reset the submission data.
+            voteSubmission.reset();
+        }
+
+        // there is no execution for the current submission, so get the next executable epoch from the queue
+        if (submissionToExecute.topDownMsgs.length == 0) {
+            uint64 nextExecutableEpoch = executableQueue.first();
+
+            // make sure the next executable epoch exist and is valid
+            if (nextExecutableEpoch > 0 && nextExecutableEpoch <= nextVotingExecutableEpoch) {
+                EpochVoteSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
+
+                submissionToExecute = _markSubmissionExecuted(nextVoteSubmission);
+            }
+        }
 
         //only execute the messages and update the last executed checkpoint when we have majority
-        _applyTopDownMessages(checkpoint.topDownMsgs);
+        _applyTopDownMessages(submissionToExecute.topDownMsgs);
     }
 
     /// @notice sends an arbitrary cross message from the current subnet to a destination subnet.
@@ -700,6 +789,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
+    // @notice applies a cross-net messages coming from some other subnet. The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.  
     function _applyBottomUpMessages(
         SubnetID calldata forwarder,
         CrossMsg[] calldata crossMsgs

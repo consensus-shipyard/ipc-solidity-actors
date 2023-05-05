@@ -27,6 +27,7 @@ contract GatewayDeploymentTest is Test {
     address constant CHILD_NETWORK_ADDRESS = address(10);
     address constant CHILD_NETWORK_ADDRESS_2 = address(11);
     address constant SYSTEM_ACTOR = 0xfF00000000000000000000000000000000000000;
+    uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
     
     Gateway gw;
     Gateway gw2;
@@ -549,7 +550,7 @@ contract GatewayDeploymentTest is Test {
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
 
-        release(releaseAmount, crossMsgFee, 0);
+        release(releaseAmount, crossMsgFee, EPOCH_ONE);
     }
 
     function test_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -576,7 +577,7 @@ contract GatewayDeploymentTest is Test {
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, releaseAmount + 1);
 
-        release(releaseAmount, crossMsgFee, 0);
+        release(releaseAmount, crossMsgFee, EPOCH_ONE);
     }
 
     function test_Release_Works_NonEmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -603,9 +604,9 @@ contract GatewayDeploymentTest is Test {
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, 2 * releaseAmount + 1);
 
-        release(releaseAmount, crossMsgFee, 0);
+        release(releaseAmount, crossMsgFee, EPOCH_ONE);
         
-        release(releaseAmount, crossMsgFee, 0);
+        release(releaseAmount, crossMsgFee, EPOCH_ONE);
     }
 
     function test_SendCross_Fails_NoDestination() public {

@@ -69,6 +69,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     /// @notice number of tokens(votes) for the checkpoint commit hash
     mapping(bytes32 => uint256) private commitVoteAmount;
 
+    bytes32 public prevExecutedCheckpointHash;
+
     /// @notice commit hash -> EOA address -> have they voted yet?
     mapping(bytes32 => mapping(address => bool))
         public hasValidatorVotedForCommit;
@@ -88,9 +90,14 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
     modifier mutateState() {
         _;
-        if (status == Status.Instantiated && totalStake >= minActivationCollateral) {
+        if (
+            status == Status.Instantiated &&
+            totalStake >= minActivationCollateral
+        ) {
             status = Status.Active;
-        } else if (status == Status.Active && totalStake < minActivationCollateral) {
+        } else if (
+            status == Status.Active && totalStake < minActivationCollateral
+        ) {
             status = Status.Inactive;
         } else if (
             status == Status.Inactive && totalStake >= minActivationCollateral
@@ -124,7 +131,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         name = params.name;
         ipcGatewayAddr = params.ipcGatewayAddr;
         consensus = params.consensus;
-        minActivationCollateral = params.minActivationCollateral < MIN_COLLATERAL_AMOUNT
+        minActivationCollateral = params.minActivationCollateral <
+            MIN_COLLATERAL_AMOUNT
             ? MIN_COLLATERAL_AMOUNT
             : params.minActivationCollateral;
         minValidators = params.minValidators;
@@ -225,6 +233,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         );
 
         bytes32 commitHash = checkpoint.toHash();
+        
+        require(
+            prevExecutedCheckpointHash == checkpoint.prevHash,
+            "previous checkpoint not consistent with previous one"
+        );
         require(
             !hasValidatorVotedForCommit[commitHash][msg.sender],
             "validator has already voted the checkpoint"
@@ -238,6 +251,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             totalStake * majorityPercentage;
 
         if (hasMajority == false) return;
+
+        prevExecutedCheckpointHash = commitHash;
 
         // store the commitment on vote majority
         checkpoints[checkpoint.epoch] = checkpoint;

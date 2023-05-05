@@ -21,9 +21,13 @@ library CheckpointMappingHelper {
     )
         public
         view
-        returns (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint)
+        returns (
+            bool exists,
+            uint64 epoch,
+            BottomUpCheckpoint storage checkpoint
+        )
     {
-        epoch = (uint64(blockNumber) / checkPeriod) * checkPeriod;
+        epoch = ((uint64(blockNumber) / checkPeriod) + 1) * checkPeriod;
         checkpoint = checkpoints[epoch];
         exists = checkpoint.source.toHash() != EMPTY_SUBNET_HASH;
     }
