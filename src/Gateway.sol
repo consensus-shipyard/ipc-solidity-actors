@@ -508,19 +508,18 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         EpochVoteSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
-        require(voteSubmission.submitters[voteSubmission.nonce][msg.sender] == false, "already voted");
+        require(voteSubmission.submitters[voteSubmission.nonce][msg.sender] == false, "validator has already voted");
 
         // submit the vote
-        voteSubmission.submitVote(checkpoint, validatorWeight);
+        voteSubmission.submitVote(checkpoint, msg.sender, validatorWeight);
 
         VoteExecutionStatus status = _deriveExecutionStatus(voteSubmission);
 
         TopDownCheckpoint memory submissionToExecute;
         
-        uint256 nextVotingExecutableEpoch = lastVotingExecutedEpoch + topDownCheckPeriod;
-
         if (status == VoteExecutionStatus.ConsensusReached) {
-            if (nextVotingExecutableEpoch == checkpoint.epoch) {
+            uint64 currentVotingExecutableEpoch = lastVotingExecutedEpoch + topDownCheckPeriod;
+            if (currentVotingExecutableEpoch == checkpoint.epoch) {
                 
                 submissionToExecute = _markSubmissionExecuted(voteSubmission);
             } else {
@@ -535,6 +534,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         // there is no execution for the current submission, so get the next executable epoch from the queue
         if (submissionToExecute.topDownMsgs.length == 0) {
             uint64 nextExecutableEpoch = executableQueue.first();
+            uint64 nextVotingExecutableEpoch = lastVotingExecutedEpoch + topDownCheckPeriod;
 
             // make sure the next executable epoch exist and is valid
             if (nextExecutableEpoch > 0 && nextExecutableEpoch <= nextVotingExecutableEpoch) {

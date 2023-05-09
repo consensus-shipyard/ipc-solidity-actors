@@ -935,12 +935,12 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_Propagate_Works_WithFeeRemainder() external {
-        address caller = vm.addr(100);
-
-        vm.deal(caller, 1 ether);
+        address[] memory validators = setupValidators();
+        address caller = validators[0];
 
         bytes32 postboxId = setupWhiteListMethod(caller);
 
+        vm.deal(caller, 1 ether);
         vm.expectCall(caller, 1 ether - gw.crossMsgFee(), new bytes(0));
 
         vm.prank(caller);
@@ -950,17 +950,16 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_Propagate_Works_NoFeeReminder() external {
-        address caller = vm.addr(100);
+        address[] memory validators = setupValidators();
+        address caller = validators[0];
+
         uint fee = gw.crossMsgFee();
-        vm.deal(caller, fee);
-        require(caller.balance == fee, "caller.balance == fee");
-        console.log("caller.balance before", caller.balance);
 
         bytes32 postboxId = setupWhiteListMethod(caller);
         
+        vm.deal(caller, fee);
         vm.prank(caller);
         gw.propagate{value: fee}(postboxId);
-        console.log("caller.balance after", caller.balance);
         require(caller.balance == 0, "caller.balance == 0");
     }
 
@@ -988,8 +987,10 @@ contract GatewayDeploymentTest is Test {
     }
 
     function setupWhiteListMethod(address caller) internal returns (bytes32) {
-    
+        address[] memory validators = setupValidators();
+
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
+
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
                 from: IPCAddress({
@@ -1010,12 +1011,19 @@ contract GatewayDeploymentTest is Test {
 
         // we add a validator with 10 times as much weight as the default validator. 
         // This way we have 10/11 votes and we reach majority, setting the message in postbox
-        addValidator(caller, 1000);
+        // addValidator(caller, 1000);
 
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = crossMsg;
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
-        vm.prank(caller);
+        
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[1]);
+        gw.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[2]);
         gw.submitTopDownCheckpoint(checkpoint);
 
         return crossMsg.toHash();
@@ -1133,10 +1141,6 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_SubmitTopDownCheckpoint_Fails_NotValidator() public {
-        address validator1 = vm.addr(100);
-        vm.deal(validator1, 1);
-        addValidator(validator1);
-
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
 
         address nonValidator = vm.addr(400);
@@ -1146,64 +1150,33 @@ contract GatewayDeploymentTest is Test {
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
-    function test_SubmitTopDownCheckpoint_Fails_WrongEpochSet() public {
-        address validator1 = vm.addr(100);
-        vm.deal(validator1, 1);
+    function test_SubmitTopDownCheckpoint_Fails_EpochNotVotable() public {
+        address validator = vm.addr(100);
 
-        addValidator(validator1);
+        addValidator(validator);
 
-        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD + 10, topDownMsgs: new CrossMsg[](0)});
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD + 1, topDownMsgs: new CrossMsg[](0)});
 
-        vm.prank(validator1);
-        vm.expectRevert("epoch in checkpoint doesn't correspond with a signing window");
+        vm.prank(validator);
+        vm.expectRevert("epoch not votable");
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
-    function test_SubmitTopDownCheckpoint_Fails_AlreadyVoted() public {
-        address validator1 = vm.addr(100);
-        address validator2 = vm.addr(101);
-        vm.deal(validator1, 1);
-        address[] memory validators = new address[](2);
-        uint256[] memory weights = new uint256[](2);
-        validators[0] = validator1;
-        validators[1] = validator2;
-        weights[0] = 10;
-        weights[1] = 100;
-
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        gw.setMembership(validators, weights);
+    function test_SubmitTopDownCheckpoint_Fails_ValidatorAlreadyVoted() public {
+        address[] memory validators = setupValidators();
 
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
 
-        vm.prank(validator1);
+        vm.prank(validators[0]);
         gw.submitTopDownCheckpoint(checkpoint);
 
-        require(gw.lastVotingExecutedEpoch() == 0, "lastVotingExecutedEpoch is updated");
-
-        vm.prank(validator1);
-        vm.expectRevert("validator has already voted the checkpoint");
+        vm.prank(validators[0]);
+        vm.expectRevert("validator has already voted");
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
-    function test_SubmitTopDownCheckpoint_Works() public {
-        address validator1 = vm.addr(100);
-        vm.deal(validator1, 1);
-        address validator2 = vm.addr(200);
-        vm.deal(validator2, 1);
-        address validator3 = vm.addr(300);
-        vm.deal(validator3, 1);
-
-        address[] memory validators = new address[](3);
-        uint256[] memory weights = new uint256[](3);
-        validators[0] = validator1;
-        validators[1] = validator2;
-        validators[2] = validator3;
-        weights[0] = 100;
-        weights[1] = 100;
-        weights[2] = 100;
-
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        gw.setMembership(validators, weights);
+    function test_SubmitTopDownCheckpoint_Works_ConsensusReachedAndExecuted() public {
+        address[] memory validators = setupValidators();
 
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
@@ -1225,17 +1198,251 @@ contract GatewayDeploymentTest is Test {
         });
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
 
-        vm.prank(validator1);
+        vm.prank(validators[0]);
         gw.submitTopDownCheckpoint(checkpoint);
 
 
-        vm.prank(validator2);
+        vm.prank(validators[1]);
         gw.submitTopDownCheckpoint(checkpoint);
 
 
-        vm.prank(validator3);
+        vm.prank(validators[2]);
         vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector));
         gw.submitTopDownCheckpoint(checkpoint);
+
+        (uint256 head, uint256 tail) = gw.executableQueue();
+
+        require(gw.lastVotingExecutedEpoch() == checkpoint.epoch);
+        require(head == 0);
+        require(tail == 0);
+    }
+
+    function test_SubmitTopDownCheckpoint_Works_ConsensusReachedAndAddedToQueue() public {
+        address[] memory validators = setupValidators();
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 0,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+        uint64 nextEpoch = DEFAULT_CHECKPOINT_PERIOD + 10;
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: nextEpoch, topDownMsgs: topDownMsgs});
+
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(checkpoint);
+
+
+        vm.prank(validators[1]);
+        gw.submitTopDownCheckpoint(checkpoint);
+
+
+        vm.prank(validators[2]);
+        // should not call
+        vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector), 0);
+        gw.submitTopDownCheckpoint(checkpoint);
+
+        (uint256 head, uint256 tail) = gw.executableQueue();
+        
+        require(gw.lastVotingExecutedEpoch() == 0);
+        require(head == 0);
+        require(tail == 1);
+    }
+
+    function test_SubmitTopDownCheckpoint_Works_ConsensusReachedAndExecuteNext() public {
+        address[] memory validators = setupValidators();
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 0,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        TopDownCheckpoint memory currentCheckpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
+        TopDownCheckpoint memory futureCheckpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD + 10, topDownMsgs: topDownMsgs});
+
+        // reaching consensus for the future checkpoint, so it should be added to the queue
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(futureCheckpoint);
+
+        vm.prank(validators[1]);
+        gw.submitTopDownCheckpoint(futureCheckpoint);
+
+        vm.prank(validators[2]);
+        gw.submitTopDownCheckpoint(futureCheckpoint);
+
+        // reaching consensus for the current checkpoint, but since it contains 0 cross msgs
+        // it should execute the first checkpoint from the queue
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(currentCheckpoint);
+
+        vm.prank(validators[1]);
+        gw.submitTopDownCheckpoint(currentCheckpoint);
+
+        vm.prank(validators[2]);
+        // should not call
+        vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector), 1);
+        gw.submitTopDownCheckpoint(currentCheckpoint);
+
+        (uint256 head, uint256 tail) = gw.executableQueue();
+        
+        require(gw.lastVotingExecutedEpoch() == futureCheckpoint.epoch);
+        require(head == 1);
+        require(tail == 1);
+    }
+
+    function test_SubmitTopDownCheckpoint_Works_ConsensusReachedButNextEpochInFuture() public {
+        address[] memory validators = setupValidators();
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 0,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        TopDownCheckpoint memory currentCheckpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
+        TopDownCheckpoint memory futureCheckpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD + 50, topDownMsgs: topDownMsgs});
+
+        // reaching consensus for the future checkpoint, so it should be added to the queue
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(futureCheckpoint);
+
+        vm.prank(validators[1]);
+        gw.submitTopDownCheckpoint(futureCheckpoint);
+
+        vm.prank(validators[2]);
+        gw.submitTopDownCheckpoint(futureCheckpoint);
+
+        // reaching consensus for the current checkpoint, but since it contains 0 cross msgs
+        // it should execute the first checkpoint from the queue, but since it's far in the future
+        // it should not execute anything
+
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(currentCheckpoint);
+
+        vm.prank(validators[1]);
+        gw.submitTopDownCheckpoint(currentCheckpoint);
+
+        vm.prank(validators[2]);
+        // should not call
+        vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector), 0);
+        gw.submitTopDownCheckpoint(currentCheckpoint);
+
+        (uint256 head, uint256 tail) = gw.executableQueue();
+        
+        require(gw.lastVotingExecutedEpoch() == currentCheckpoint.epoch);
+        require(head == 0);
+        require(tail == 1);
+    }
+
+    function test_SubmitTopDownCheckpoint_Works_RoundAbort() public {
+        address[] memory validators = setupValidators();
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 0,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        TopDownCheckpoint memory checkpoint1 = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
+        TopDownCheckpoint memory checkpoint2 = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+        topDownMsgs[0].wrapped = true;
+        TopDownCheckpoint memory checkpoint3 = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(checkpoint1);
+
+        vm.prank(validators[1]);
+        gw.submitTopDownCheckpoint(checkpoint2);
+
+        vm.prank(validators[2]);
+        gw.submitTopDownCheckpoint(checkpoint3);
+
+        (uint256 head, uint256 tail) = gw.executableQueue();
+        (uint256 nonce, uint256 totalSubmissionWeight, bytes32 mostVotedSubmission) = gw.epochVoteSubmissions(DEFAULT_CHECKPOINT_PERIOD);
+        
+        require(nonce == 1);
+        require(totalSubmissionWeight == 0);
+        require(mostVotedSubmission == EMPTY_HASH);
+        require(gw.lastVotingExecutedEpoch() == 0);
+        require(head == 0);
+        require(tail == 0);
+    }
+
+    function setupValidators() internal returns(address[] memory) {
+        address validator1 = vm.addr(100);
+        address validator2 = vm.addr(200);
+        address validator3 = vm.addr(300);
+        address[] memory validators = new address[](3);
+        uint256[] memory weights = new uint256[](3);
+
+        vm.deal(validator1, 1);
+        vm.deal(validator2, 1);
+        vm.deal(validator3, 1);
+
+        validators[0] = validator1;
+        validators[1] = validator2;
+        validators[2] = validator3;
+
+        weights[0] = 100;
+        weights[1] = 100;
+        weights[2] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gw.setMembership(validators, weights);
+
+        return validators;
     }
 
     function addValidator(address validator) internal {
@@ -1248,6 +1455,7 @@ contract GatewayDeploymentTest is Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = weigth;
 
+        vm.deal(validator, 1);
         vm.prank(FilAddress.SYSTEM_ACTOR);
         gw.setMembership(validators, weights);
     }

@@ -11,14 +11,16 @@ library EpochVoteSubmissionHelper {
     function submitVote(
         EpochVoteSubmission storage voteSubmission,
         TopDownCheckpoint calldata submission,
-        uint256 voteSubmissionWeight
-    ) internal {
+        address submitterAddress,
+        uint256 submitterWeight
+    ) external {
         bytes32 submissionHash = submission.toHash();
 
-        voteSubmission.submitters[voteSubmission.nonce][msg.sender] = true;
-        voteSubmission.totalSubmissionWeight += voteSubmissionWeight;
-        voteSubmission.submissionWeights[voteSubmission.nonce][submissionHash] += voteSubmissionWeight;
+        voteSubmission.submitters[voteSubmission.nonce][submitterAddress] = true;
+        voteSubmission.totalSubmissionWeight += submitterWeight;
+        voteSubmission.submissionWeights[voteSubmission.nonce][submissionHash] += submitterWeight;
 
+        // store the submission only the first time
         if (voteSubmission.submissions[submissionHash].isEmpty()) {
             voteSubmission.submissions[submissionHash] = submission;
         }
@@ -26,12 +28,12 @@ library EpochVoteSubmissionHelper {
         uint256 mostVotedWeight = voteSubmission.submissionWeights[voteSubmission.nonce][voteSubmission.mostVotedSubmission];
         uint256 currVotedWeight = voteSubmission.submissionWeights[voteSubmission.nonce][submissionHash];
 
-        if (mostVotedWeight <= currVotedWeight) {
+        if (mostVotedWeight < currVotedWeight) {
             voteSubmission.mostVotedSubmission = submissionHash;
         }
     }
 
-    function reset(EpochVoteSubmission storage voteSubmission) internal {
+    function reset(EpochVoteSubmission storage voteSubmission) external {
         voteSubmission.nonce++;
         voteSubmission.totalSubmissionWeight = 0;
         voteSubmission.mostVotedSubmission = EMPTY_HASH;
@@ -39,11 +41,11 @@ library EpochVoteSubmissionHelper {
 
     function getMostVotedWeight(
         EpochVoteSubmission storage voteSubmission
-    ) internal view returns (uint256) {
+    ) external view returns (uint256) {
         return voteSubmission.submissionWeights[voteSubmission.nonce][voteSubmission.mostVotedSubmission];
     }
 
-    function getMostVotedSubmission(EpochVoteSubmission storage voteSubmission) internal view returns (TopDownCheckpoint storage) {
+    function getMostVotedSubmission(EpochVoteSubmission storage voteSubmission) external view returns (TopDownCheckpoint storage) {
         return voteSubmission.submissions[voteSubmission.mostVotedSubmission];
     }
 }
