@@ -54,7 +54,6 @@ contract SubnetActorTest is Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            currentEpoch: 0,
             genesis: GENESIS
 
         });
@@ -80,7 +79,6 @@ contract SubnetActorTest is Test {
             bottomUpCheckPeriod: _checkPeriod,
             topDownCheckPeriod: _checkPeriod,
             majorityPercentage: _majorityPercentage,
-            currentEpoch: 0,
             genesis: _genesis
         });
         sa = new SubnetActor(subnetConstructorParams);
@@ -89,7 +87,6 @@ contract SubnetActorTest is Test {
         require(sa.ipcGatewayAddr() == _ipcGatewayAddr, "sa.ipcGatewayAddr() == _ipcGatewayAddr");
         require(sa.minActivationCollateral() == _minActivationCollateral, "sa.minActivationCollateral() == _minActivationCollateral");
         require(sa.minValidators() == _minValidators, "sa.minValidators() == _minValidators");
-        require(sa.bottomUpCheckPeriod() == _checkPeriod, "sa.bottomUpCheckPeriod() == _checkPeriod");
         require(sa.topDownCheckPeriod() == _checkPeriod, "sa.topDownCheckPeriod() == _checkPeriod");
         require(keccak256(sa.genesis()) == keccak256(_genesis), "keccak256(sa.genesis()) == keccak256(_genesis)");
         require(sa.majorityPercentage() == _majorityPercentage, "sa.majorityPercentage() == _majorityPercentage");
@@ -178,7 +175,6 @@ contract SubnetActorTest is Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            currentEpoch: 0,
             genesis: GENESIS
         });
         sa = new SubnetActor(subnetConstructorParams);
@@ -265,23 +261,22 @@ contract SubnetActorTest is Test {
         _join(validator3);
 
         BottomUpCheckpoint memory checkpoint = _createBottomUpCheckpoint();
-        bytes32 checkpointHash = checkpoint.toHash();
 
         vm.prank(validator);
         sa.submitCheckpoint(checkpoint);
 
-        require(sa.hasValidatorVotedForCommit(checkpointHash, validator) == true);
+        require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator) == true);
 
         vm.prank(validator2);
         sa.submitCheckpoint(checkpoint);
 
-        require(sa.hasValidatorVotedForCommit(checkpointHash, validator2) == true);
+        require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator2) == true);
 
         vm.prank(validator3);
         vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector));
         sa.submitCheckpoint(checkpoint);
 
-        require(sa.hasValidatorVotedForCommit(checkpointHash, validator3) == true);
+        require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator3) == true);
     }
 
     function callback() public view {
@@ -299,8 +294,7 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         sa.submitCheckpoint(checkpoint);
 
-        bytes32 checkpointHash = checkpoint.toHash();
-        require(sa.hasValidatorVotedForCommit(checkpointHash, validator) == true);
+        require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator) == true);
     }
 
     function test_SubmitCheckpoint_Fails_InvalidValidator() public {
@@ -328,7 +322,7 @@ contract SubnetActorTest is Test {
         checkpoint.epoch = 1;
 
         vm.prank(validator);
-        vm.expectRevert("epoch in checkpoint doesn't correspond with a signing window");
+        vm.expectRevert("epoch already executed");
         sa.submitCheckpoint(checkpoint);
     }
 
@@ -344,7 +338,7 @@ contract SubnetActorTest is Test {
         vm.startPrank(validator);
         sa.submitCheckpoint(checkpoint);
 
-        vm.expectRevert("validator has already voted the checkpoint");
+        vm.expectRevert("validator has already voted");
         sa.submitCheckpoint(checkpoint);
     }
 

@@ -26,7 +26,6 @@ contract GatewayDeploymentTest is Test {
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
     address constant CHILD_NETWORK_ADDRESS_2 = address(11);
-    address constant SYSTEM_ACTOR = 0xfF00000000000000000000000000000000000000;
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
     
     Gateway gw;
@@ -54,12 +53,7 @@ contract GatewayDeploymentTest is Test {
         });
         gw = new Gateway(constructorParams);
 
-        address[] memory topDownValidators = new address[](1);
-        topDownValidators[0] = TOPDOWN_VALIDATOR_1;
-        uint256[] memory weights = new uint256[](1);
-        weights[0] = 100;
-        vm.prank(SYSTEM_ACTOR);
-        gw.setMembership(topDownValidators, weights);
+        addValidator(TOPDOWN_VALIDATOR_1, 100);
 
         constructorParams.networkName = SubnetID({route: path2});
         gw2 = new Gateway(constructorParams);
@@ -75,7 +69,6 @@ contract GatewayDeploymentTest is Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            currentEpoch: 0,
             genesis: GENESIS
         });
         sa = new SubnetActor(subnetConstructorParams);
@@ -1210,11 +1203,11 @@ contract GatewayDeploymentTest is Test {
         vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector));
         gw.submitTopDownCheckpoint(checkpoint);
 
-        (uint256 head, uint256 tail) = gw.executableQueue();
-
+        (, uint256 first, uint256 last) = gw.executableQueue();
+        
         require(gw.lastVotingExecutedEpoch() == checkpoint.epoch);
-        require(head == 0);
-        require(tail == 0);
+        require(first == 0);
+        require(last == 0);
     }
 
     function test_SubmitTopDownCheckpoint_Works_ConsensusReachedAndAddedToQueue() public {
@@ -1254,11 +1247,11 @@ contract GatewayDeploymentTest is Test {
         vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector), 0);
         gw.submitTopDownCheckpoint(checkpoint);
 
-        (uint256 head, uint256 tail) = gw.executableQueue();
+        (, uint256 first, uint256 last) = gw.executableQueue();
         
         require(gw.lastVotingExecutedEpoch() == 0);
-        require(head == 0);
-        require(tail == 1);
+        require(first == nextEpoch);
+        require(last == nextEpoch);
     }
 
     function test_SubmitTopDownCheckpoint_Works_ConsensusReachedAndExecuteNext() public {
@@ -1309,11 +1302,12 @@ contract GatewayDeploymentTest is Test {
         vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector), 1);
         gw.submitTopDownCheckpoint(currentCheckpoint);
 
-        (uint256 head, uint256 tail) = gw.executableQueue();
+        
+        (, uint256 first, uint256 last) = gw.executableQueue();
         
         require(gw.lastVotingExecutedEpoch() == futureCheckpoint.epoch);
-        require(head == 1);
-        require(tail == 1);
+        require(first == 0);
+        require(last == 0);
     }
 
     function test_SubmitTopDownCheckpoint_Works_ConsensusReachedButNextEpochInFuture() public {
@@ -1338,8 +1332,9 @@ contract GatewayDeploymentTest is Test {
             wrapped: false
         });
 
+        uint64 nextEpoch = DEFAULT_CHECKPOINT_PERIOD + 50;
         TopDownCheckpoint memory currentCheckpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
-        TopDownCheckpoint memory futureCheckpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD + 50, topDownMsgs: topDownMsgs});
+        TopDownCheckpoint memory futureCheckpoint = TopDownCheckpoint({epoch: nextEpoch, topDownMsgs: topDownMsgs});
 
         // reaching consensus for the future checkpoint, so it should be added to the queue
         vm.prank(validators[0]);
@@ -1366,11 +1361,11 @@ contract GatewayDeploymentTest is Test {
         vm.expectCall(address(this), abi.encodeWithSelector(this.callback.selector), 0);
         gw.submitTopDownCheckpoint(currentCheckpoint);
 
-        (uint256 head, uint256 tail) = gw.executableQueue();
+        (, uint256 first, uint256 last) = gw.executableQueue();
         
-        require(gw.lastVotingExecutedEpoch() == currentCheckpoint.epoch);
-        require(head == 0);
-        require(tail == 1);
+        require(gw.lastVotingExecutedEpoch() == DEFAULT_CHECKPOINT_PERIOD);
+        require(first == nextEpoch);
+        require(last == nextEpoch);
     }
 
     function test_SubmitTopDownCheckpoint_Works_RoundAbort() public {
@@ -1409,15 +1404,11 @@ contract GatewayDeploymentTest is Test {
         vm.prank(validators[2]);
         gw.submitTopDownCheckpoint(checkpoint3);
 
-        (uint256 head, uint256 tail) = gw.executableQueue();
-        (uint256 nonce, uint256 totalSubmissionWeight, bytes32 mostVotedSubmission) = gw.epochVoteSubmissions(DEFAULT_CHECKPOINT_PERIOD);
+        (, uint256 first, uint256 last) = gw.executableQueue();
         
-        require(nonce == 1);
-        require(totalSubmissionWeight == 0);
-        require(mostVotedSubmission == EMPTY_HASH);
         require(gw.lastVotingExecutedEpoch() == 0);
-        require(head == 0);
-        require(tail == 0);
+        require(first == 0);
+        require(last == 0);
     }
 
     function setupValidators() internal returns(address[] memory) {

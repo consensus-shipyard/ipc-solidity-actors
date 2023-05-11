@@ -5,37 +5,63 @@ import "../structs/ExecutableQueue.sol";
 
 library ExecutableQueueHelper {
     function push(ExecutableQueue storage queue, uint64 epoch) internal {
-        if (contains(queue, epoch)) return;
+        if (epoch == 0) return;
 
-        queue.epochs[queue.tail] = epoch;
-        queue.indexes[epoch] = queue.tail;
-        queue.tail++;
+        if (queue.first == 0 || queue.first > epoch) {
+            queue.first = epoch;
+        }
+        if (queue.last == 0 || queue.last < epoch ) {
+            queue.last = epoch;
+        }
+
+        queue.epochs[epoch] = true;
     }
 
-    function pop(ExecutableQueue storage queue) internal {
-        if (queue.head >= queue.tail) return;
+    function remove(ExecutableQueue storage queue, uint64 epoch) internal {
+        if (!contains(queue, epoch)) return;
 
-        uint64 epoch = queue.epochs[queue.head];
+        delete queue.epochs[epoch];
 
-        delete queue.indexes[epoch];
-        delete queue.epochs[queue.head];
+        // there is one element only, so delete everything and exit
+        if (queue.first == queue.last) {
+            delete queue.first;
+            delete queue.last;
 
-        queue.head++;
+            return;
+        }
+
+        // epoch is somewhere in the middle, so do nothing else
+        if (epoch > queue.first && epoch < queue.last) {
+            return;
+        }
+
+        // find the closest epoch on the right and set it as the new first
+        if (epoch == queue.first) {
+            uint64 newFirst = queue.first + queue.period;
+
+            while (newFirst < queue.last && !contains(queue, newFirst)) {
+                newFirst += queue.period;
+            }
+
+            queue.first = newFirst;
+        }
+
+        // find the closest epoch on the left and set it as the new last
+        if (epoch == queue.last) {
+            uint64 newLast = queue.last - queue.period;
+
+            while (newLast > queue.first && !contains(queue, newLast)) {
+                newLast -= queue.period;
+            }
+
+            queue.last = newLast;
+        }
     }
 
     function contains(
         ExecutableQueue storage queue,
         uint64 epoch
     ) internal view returns (bool) {
-        uint256 index = queue.indexes[epoch];
-
-        // epoch cannot be 0
-        return epoch > 0 && queue.epochs[index] == epoch;
-    }
-
-    function first(
-        ExecutableQueue storage queue
-    ) internal view returns (uint64) {
-        return queue.epochs[queue.head];
+        return queue.epochs[epoch];
     }
 }

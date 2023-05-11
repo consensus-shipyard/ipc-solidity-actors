@@ -11,127 +11,77 @@ import "forge-std/console.sol";
 
 contract EpochVoteSubmissionHelperTest is Test {
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
-    using CheckpointHelper for TopDownCheckpoint;
 
     EpochVoteSubmission public voteSubmission;
-    TopDownCheckpoint private topDownCheckpoint;
-    CrossMsg private crossMsg;
 
     address constant FIRST_SUBMITTER = address(100);
     address constant SECOND_SUBMITTER = address(101);
     uint256 constant FIRST_SUBMITTER_WEIGHT = 100;
     uint256 constant SECOND_SUBMITTER_WEIGHT = 101;
 
-
-    function test_SubmitVote_Works_OneSubmissionOneVote() public {
-        topDownCheckpoint.epoch = 10;
-
-        _asserSubmitVote(topDownCheckpoint, FIRST_SUBMITTER, FIRST_SUBMITTER_WEIGHT);
-        
-        require(voteSubmission.mostVotedSubmission == topDownCheckpoint.toHash());
-    }
-
-    function test_SubmitVote_Works_OneSubmissionManyVotes() public {
-        topDownCheckpoint.epoch = 10;
-
-        bytes32 cpHash = topDownCheckpoint.toHash();
-
-        _asserSubmitVote(topDownCheckpoint, FIRST_SUBMITTER, FIRST_SUBMITTER_WEIGHT);
-
-        require(voteSubmission.mostVotedSubmission == cpHash);
-
-        _asserSubmitVote(topDownCheckpoint, SECOND_SUBMITTER, SECOND_SUBMITTER_WEIGHT);
-
-        require(voteSubmission.mostVotedSubmission == cpHash);
-    }
-
-    function test_SubmitVote_Works_NewMostVotedSubmission() public {        
-        topDownCheckpoint.epoch = 10;
-
-        _asserSubmitVote(topDownCheckpoint, FIRST_SUBMITTER, FIRST_SUBMITTER_WEIGHT);
-        
-        bytes32 firstCpHash = topDownCheckpoint.toHash();
-
-       require(voteSubmission.mostVotedSubmission == firstCpHash);
-
-        // simulates new top down checkpoint for the same epoch
-        crossMsg.wrapped = true;
-        topDownCheckpoint.topDownMsgs.push(crossMsg);
-
-        _asserSubmitVote(topDownCheckpoint, SECOND_SUBMITTER, SECOND_SUBMITTER_WEIGHT);
-
-        bytes32 secondCpHash = topDownCheckpoint.toHash();
-        
-        require(voteSubmission.mostVotedSubmission == secondCpHash);
-    }
-
     function test_Reset_Works() public {
-        topDownCheckpoint.epoch = 10;
+        uint256 nonce = 0;
+        bytes32 submissionHash = keccak256("most_voted_submission");
 
-        _asserSubmitVote(topDownCheckpoint, FIRST_SUBMITTER, FIRST_SUBMITTER_WEIGHT);
+        voteSubmission.totalSubmissionWeight = FIRST_SUBMITTER_WEIGHT;
+        voteSubmission.mostVotedSubmission = submissionHash;
+        voteSubmission.submitters[nonce][FIRST_SUBMITTER] = true;
+        voteSubmission.submissionWeights[nonce][submissionHash] = FIRST_SUBMITTER_WEIGHT;
 
-        require(voteSubmission.nonce == 0);
+        require(voteSubmission.nonce == nonce);
+        require(voteSubmission.totalSubmissionWeight == FIRST_SUBMITTER_WEIGHT);
+        require(voteSubmission.mostVotedSubmission == submissionHash);
+        require(voteSubmission.submitters[nonce][FIRST_SUBMITTER] == true);
+        require(voteSubmission.submissionWeights[nonce][submissionHash] == FIRST_SUBMITTER_WEIGHT);
 
         voteSubmission.reset();
 
         uint256 newNonce = 1;
-        bytes32 cpHash = topDownCheckpoint.toHash();
 
         require(voteSubmission.nonce == newNonce);
         require(voteSubmission.totalSubmissionWeight == 0);
         require(voteSubmission.mostVotedSubmission == EMPTY_HASH);
         require(voteSubmission.submitters[newNonce][FIRST_SUBMITTER] == false);
-        require(voteSubmission.submissionWeights[newNonce][cpHash] == 0);
-        require(voteSubmission.submissions[cpHash].isEmpty() == false);
+        require(voteSubmission.submissionWeights[newNonce][submissionHash] == 0);
     }
 
-    function test_GetMostVotedWeight_Works() public {
-        topDownCheckpoint.epoch = 10;
+    function test_GetMostVotedWeight_Works_SingleSubmitter() public {
+        uint256 nonce = 0;
+        bytes32 submissionHash = keccak256("most_voted_submission");
 
-        _asserSubmitVote(topDownCheckpoint, FIRST_SUBMITTER, FIRST_SUBMITTER_WEIGHT);
-        
-        // new submission
-        crossMsg.wrapped = true;
-        topDownCheckpoint.topDownMsgs.push(crossMsg);
+        voteSubmission.nonce = nonce;
+        voteSubmission.totalSubmissionWeight = FIRST_SUBMITTER_WEIGHT;
+        voteSubmission.mostVotedSubmission = submissionHash;
+        voteSubmission.submitters[nonce][FIRST_SUBMITTER] = true;
+        voteSubmission.submissionWeights[nonce][submissionHash] = FIRST_SUBMITTER_WEIGHT;
 
-        _asserSubmitVote(topDownCheckpoint, SECOND_SUBMITTER, SECOND_SUBMITTER_WEIGHT);
+        require(voteSubmission.getMostVotedWeight() == FIRST_SUBMITTER_WEIGHT);
+    }
+
+    function test_GetMostVotedWeight_Works_Multipleubmitters() public {
+        uint256 nonce = 0;
+        bytes32 submissionHash1 = keccak256("most_voted_submission1");
+        bytes32 submissionHash2 = keccak256("most_voted_submission2");
+
+        voteSubmission.nonce = nonce;
+        voteSubmission.totalSubmissionWeight = FIRST_SUBMITTER_WEIGHT;
+        voteSubmission.submitters[nonce][FIRST_SUBMITTER] = true;
+        voteSubmission.submissionWeights[nonce][submissionHash1] = FIRST_SUBMITTER_WEIGHT;
+
+        voteSubmission.nonce = nonce;
+        voteSubmission.totalSubmissionWeight += SECOND_SUBMITTER_WEIGHT;
+        voteSubmission.submitters[nonce][SECOND_SUBMITTER] = true;
+        voteSubmission.submissionWeights[nonce][submissionHash2] = SECOND_SUBMITTER_WEIGHT;
+
+        voteSubmission.mostVotedSubmission = submissionHash1;
+        if (voteSubmission.submissionWeights[nonce][submissionHash1] < voteSubmission.submissionWeights[nonce][submissionHash2]) {
+            voteSubmission.mostVotedSubmission = submissionHash2;
+        }
 
         require(voteSubmission.getMostVotedWeight() == SECOND_SUBMITTER_WEIGHT);
     }
 
     function test_GetMostVotedWeight_Works_Empty() public view {
         require(voteSubmission.getMostVotedWeight() == 0);
-    }
-
-    function test_GetMostVotedSubmission_Works() public {
-        topDownCheckpoint.epoch = 10;
-
-        _asserSubmitVote(topDownCheckpoint, FIRST_SUBMITTER, FIRST_SUBMITTER_WEIGHT);
-
-        // new submission
-        crossMsg.wrapped = true;
-        topDownCheckpoint.topDownMsgs.push(crossMsg);
-
-        _asserSubmitVote(topDownCheckpoint, SECOND_SUBMITTER, SECOND_SUBMITTER_WEIGHT);
-
-        TopDownCheckpoint memory mostVotedSubmission = voteSubmission.getMostVotedSubmission();
-
-        require(mostVotedSubmission.topDownMsgs.length == 1);
-        require(mostVotedSubmission.topDownMsgs[0].wrapped == true);
-    }
-
-    function _asserSubmitVote(TopDownCheckpoint memory submission, address submitterAddress, uint256 submitterWeight) internal {
-        bytes32 submissionHash = submission.toHash();
-
-        uint256 nonce = voteSubmission.nonce;
-        uint256 totalSubmissionWeightBefore = voteSubmission.totalSubmissionWeight;
-        uint256 totalSubmissionWeightsBefore = voteSubmission.submissionWeights[nonce][submissionHash];
-        
-        voteSubmission.submitVote(submission, submitterAddress, submitterWeight);
-        
-        require(voteSubmission.submitters[nonce][submitterAddress] == true);
-        require(voteSubmission.totalSubmissionWeight == totalSubmissionWeightBefore + submitterWeight);
-        require(voteSubmission.submissionWeights[nonce][submissionHash] == totalSubmissionWeightsBefore + submitterWeight);
-        require(voteSubmission.submissions[submissionHash].isEmpty() == false);
     }
 }

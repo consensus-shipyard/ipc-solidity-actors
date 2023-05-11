@@ -1,33 +1,36 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
+import "./Voting.sol";
 import "./enums/ConsensusType.sol";
 import "./enums/Status.sol";
+import "./enums/VoteExecutionStatus.sol";
 import "./structs/Checkpoint.sol";
 import "./structs/Subnet.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./interfaces/IGateway.sol";
-import "./lib/CheckpointMappingHelper.sol";
 import "./lib/AccountHelper.sol";
 import "./lib/CheckpointHelper.sol";
 import "./lib/SubnetIDHelper.sol";
+import "./lib/ExecutableQueueHelper.sol";
+import "./lib/EpochVoteSubmissionHelper.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Subnet Actor Contract
 /// @author LimeChain team
-contract SubnetActor is ISubnetActor, ReentrancyGuard {
+contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
-    using CheckpointMappingHelper for mapping(int64 => BottomUpCheckpoint);
     using FilAddress for address;
     using Address for address payable;
     using AccountHelper for address;
+    using ExecutableQueueHelper for ExecutableQueue;
+    using EpochVoteSubmissionHelper for EpochVoteSubmission;
 
     uint256 private constant MIN_COLLATERAL_AMOUNT = 1 ether;
-    uint64 private constant MIN_CHECKPOINT_PERIOD = 10;
 
     /// @notice Human-readable name of the subnet.
     string public name;
@@ -47,12 +50,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     Status public status;
     /// @notice genesis block
     bytes public genesis;
-    /// @notice number of blocks between two bottom-up checkpoints
-    uint64 public bottomUpCheckPeriod;
     /// @notice number of blocks between two top-down checkpoints
     uint64 public topDownCheckPeriod;
-    /// @notice epoch of creation
-    uint64 public genesisEpoch;
     /// @notice block number to corresponding bottom-up checkpoint at that block
     mapping(uint64 => BottomUpCheckpoint) public checkpoints;
     /// @notice List of validators in the subnet
@@ -60,20 +59,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 public minValidators;
 
-    /// @notice percentage of voters needed for majority
-    uint8 public majorityPercentage;
-
-    /// @notice last executed checkpoint epoch. Used as nonce
-    uint64 lastVotingExecutedEpoch;
-
-    /// @notice number of tokens(votes) for the checkpoint commit hash
-    mapping(bytes32 => uint256) private commitVoteAmount;
-
     bytes32 public prevExecutedCheckpointHash;
 
-    /// @notice commit hash -> EOA address -> have they voted yet?
-    mapping(bytes32 => mapping(address => bool))
-        public hasValidatorVotedForCommit;
+    /// @notice contains voted submissions for a given epoch 
+    mapping(uint64 => EpochVoteBottomUpSubmission) private epochVoteSubmissions;
 
     modifier onlyGateway() {
         require(
@@ -118,15 +107,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
         uint64 bottomUpCheckPeriod;
         uint64 topDownCheckPeriod;
         uint8 majorityPercentage;
-        uint64 currentEpoch;
         bytes genesis;
     }
 
-    constructor(ConstructParams memory params) {
-        require(
-            params.majorityPercentage <= 100,
-            "majorityPercentage must be <= 100"
-        );
+    constructor(ConstructParams memory params) Voting(params.majorityPercentage, params.bottomUpCheckPeriod) {
         parentId = params.parentId;
         name = params.name;
         ipcGatewayAddr = params.ipcGatewayAddr;
@@ -136,16 +120,16 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             ? MIN_COLLATERAL_AMOUNT
             : params.minActivationCollateral;
         minValidators = params.minValidators;
-        bottomUpCheckPeriod = params.bottomUpCheckPeriod < MIN_CHECKPOINT_PERIOD
-            ? MIN_CHECKPOINT_PERIOD
-            : params.bottomUpCheckPeriod;
         topDownCheckPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
             ? MIN_CHECKPOINT_PERIOD
             : params.topDownCheckPeriod;
-        genesis = params.genesis;
-        genesisEpoch = params.currentEpoch;
-        majorityPercentage = params.majorityPercentage;
         status = Status.Instantiated;
+        genesis = params.genesis;
+        // NOTE: we currently use 0 as the genesisEpoch for subnets so checkpoints
+        // are submitted directly from epoch 0.
+        // In the future we can use the current epoch. This will be really
+        // useful once we support the docking of subnets to new parents, etc.
+        genesisEpoch = 0;
     }
 
     receive() external payable onlyGateway {}
@@ -216,15 +200,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
     function submitCheckpoint(
         BottomUpCheckpoint calldata checkpoint
-    ) external signableOnly {
+    ) external signableOnly validEpochOnly(checkpoint.epoch) {
         require(validators.contains(msg.sender), "not validator");
         require(
             status == Status.Active,
             "submitting checkpoints is not allowed while subnet is not active"
-        );
-        require(
-            lastVotingExecutedEpoch + bottomUpCheckPeriod == checkpoint.epoch,
-            "epoch in checkpoint doesn't correspond with a signing window"
         );
         require(
             checkpoint.source.toHash() ==
@@ -232,38 +212,45 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
             "submitting checkpoint with the wrong source"
         );
 
-        bytes32 commitHash = checkpoint.toHash();
+        // the epoch being submitted is the next executable epoch, we perform a check to ensure
+        // the checkpoints are chained. This is an early termination check to ensure the checkpoints
+        // are actually chained.
+        if (_isNextExecutableEpoch(checkpoint.epoch)) {
+            require(prevExecutedCheckpointHash == checkpoint.prevHash, "checkpoint not chained");
+        }
         
-        require(
-            prevExecutedCheckpointHash == checkpoint.prevHash,
-            "previous checkpoint not consistent with previous one"
-        );
-        require(
-            !hasValidatorVotedForCommit[commitHash][msg.sender],
-            "validator has already voted the checkpoint"
-        );
+        EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
-        hasValidatorVotedForCommit[commitHash][msg.sender] = true;
+        // submit the vote
+        bool shouldExecuteVote = _submitBottomUpVote(voteSubmission, checkpoint, msg.sender, stake[msg.sender]);
+        bool isCommited;
 
-        commitVoteAmount[commitHash] += stake[msg.sender];
+        BottomUpCheckpoint memory submissionToExecute;
 
-        bool hasMajority = commitVoteAmount[commitHash] * 100 >
-            totalStake * majorityPercentage;
+        if (shouldExecuteVote) {
+            submissionToExecute = _getMostVotedSubmission(voteSubmission);
+            isCommited = _commitCheckpoint(voteSubmission.vote, submissionToExecute);
+        } else {
+            // try to get the next executable epoch from the queue
+            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
 
-        if (hasMajority == false) return;
+            if (isExecutableEpoch) {
+                EpochVoteBottomUpSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
 
-        prevExecutedCheckpointHash = commitHash;
+                submissionToExecute = _getMostVotedSubmission(nextVoteSubmission);
+                isCommited = _commitCheckpoint(nextVoteSubmission.vote, submissionToExecute);
+            }
+        }
 
-        // store the commitment on vote majority
-        checkpoints[checkpoint.epoch] = checkpoint;
-
-        lastVotingExecutedEpoch = checkpoint.epoch;
-
-        IGateway(ipcGatewayAddr).commitChildCheck(checkpoint);
+        if (isCommited) {
+            IGateway(ipcGatewayAddr).commitChildCheck(checkpoint);
+        }
     }
 
+    /// Distributes the rewards for the subnet to validators.
     function reward() public payable onlyGateway nonReentrant {
         uint validatorLength = validators.length();
+        require(msg.value > 0, "no rewards sent for distribution");
         require(validatorLength != 0, "no validators in subnet");
 
         require(
@@ -291,5 +278,51 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard {
 
     function validatorAt(uint index) external view returns (address) {
         return validators.at(index);
+    }
+
+    function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns(bool) {
+        EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[epoch];
+
+        return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
+    }
+
+    function _submitBottomUpVote(
+        EpochVoteBottomUpSubmission storage voteSubmission,
+        BottomUpCheckpoint calldata submission,
+        address submitterAddress,
+        uint256 submitterWeight
+    ) internal returns (bool shouldExecuteVote) {
+        bytes32 submissionHash = submission.toHash();
+        
+        shouldExecuteVote = _submitVote(voteSubmission.vote, submissionHash, submitterAddress, submitterWeight, submission.epoch, totalStake);
+
+        // store the submission only the first time
+        if (voteSubmission.submissions[submissionHash].isEmpty()) {
+            voteSubmission.submissions[submissionHash] = submission;
+        }
+    }
+
+    function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission) internal view returns(BottomUpCheckpoint memory){
+        return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
+    }
+
+    function _commitCheckpoint(EpochVoteSubmission storage vote, BottomUpCheckpoint memory checkpoint) internal returns(bool committed) {
+        if (checkpoint.isEmpty()) {
+            return false;
+        }
+
+        /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
+        if (prevExecutedCheckpointHash != checkpoint.prevHash) {
+            vote.reset();
+            executableQueue.remove(checkpoint.epoch);
+
+            return false;
+        }
+
+        _markSubmissionExecuted(checkpoint.epoch);
+
+        prevExecutedCheckpointHash = checkpoint.toHash();
+
+        return true;
     }
 }

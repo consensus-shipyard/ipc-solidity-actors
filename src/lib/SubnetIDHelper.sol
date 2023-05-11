@@ -9,6 +9,9 @@ import "openzeppelin-contracts/utils/Strings.sol";
 library SubnetIDHelper {
     using Strings for address;
 
+    bytes32 private constant EMPTY_SUBNET_HASH =
+        keccak256(abi.encode(SubnetID(new address[](0))));
+
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
         require(subnet.route.length > 1, "error getting parent for subnet addr");
 
@@ -146,5 +149,9 @@ library SubnetIDHelper {
         }
         
         return SubnetID({route: route});
+    }
+
+    function isEmpty(SubnetID calldata subnetId) external pure returns(bool) {
+        return toHash(subnetId) == EMPTY_SUBNET_HASH;
     }
 }

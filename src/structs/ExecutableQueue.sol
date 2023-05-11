@@ -2,8 +2,8 @@
 pragma solidity ^0.8.7;
 
 struct ExecutableQueue {
-    mapping(uint256 => uint64) epochs;
-    mapping(uint64 => uint256) indexes;
-    uint256 head; // index of the first element
-    uint256 tail; // index after the last element
+    uint64 period; // number of blocks per epoch
+    uint64 first; // next epoch
+    uint64 last; // last epoch
+    mapping(uint64 => bool) epochs; // epoch => exist
 }

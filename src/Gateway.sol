@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
+import "./Voting.sol";
 import "./structs/Checkpoint.sol";
 import "./structs/EpochVoteSubmission.sol";
 import "./enums/Status.sol";
@@ -8,13 +9,12 @@ import "./enums/VoteExecutionStatus.sol";
 import "./interfaces/IGateway.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./lib/SubnetIDHelper.sol";
-import "./lib/CheckpointMappingHelper.sol";
 import "./lib/CheckpointHelper.sol";
 import "./lib/AccountHelper.sol";
 import "./lib/CrossMsgHelper.sol";
 import "./lib/StorableMsgHelper.sol";
-import "./lib/EpochVoteSubmissionHelper.sol";
 import "./lib/ExecutableQueueHelper.sol";
+import "./lib/EpochVoteSubmissionHelper.sol";
 import "fevmate/utils/FilAddress.sol";
 import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
@@ -23,7 +23,7 @@ import "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
-contract Gateway is IGateway, ReentrancyGuard {
+contract Gateway is IGateway, ReentrancyGuard, Voting {
     using FilAddress for address;
     using FilAddress for address payable;
     using AccountHelper for address;
@@ -31,12 +31,11 @@ contract Gateway is IGateway, ReentrancyGuard {
     using CrossMsgHelper for CrossMsg;
     using CheckpointHelper for BottomUpCheckpoint;
     using CheckpointHelper for TopDownCheckpoint;
-    using CheckpointMappingHelper for mapping(uint64 => BottomUpCheckpoint);
     using StorableMsgHelper for StorableMsg;
     using ExecutableQueueHelper for ExecutableQueue;
-    using EpochVoteSubmissionHelper for EpochVoteSubmission;
+    using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
 
-    uint8 constant MIN_CHECKPOINT_PERIOD = 10;
+    // uint8 constant MIN_CHECKPOINT_PERIOD = 10;
     uint256 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
 
@@ -78,17 +77,10 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     /// @notice AppliedNonces keep track of the next nonce of the message to be applied.
     /// This prevents potential replay attacks.
-    // uint64 public appliedBottomUpNonce;
     uint64 public appliedTopDownNonce;
 
     /// @notice fee amount charged per cross message
     uint256 public crossMsgFee;
-
-    /// @notice percent approvals needed to reach consensus
-    uint8 public majorityPercentage;
-
-    /// @notice last executed epoch after voting
-    uint64 public lastVotingExecutedEpoch;
 
     /// @notice total votes of all validators
     uint256 public totalWeight;
@@ -116,15 +108,8 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     bool initialized = false;
 
-    uint64 public genesisEpoch;
-
     /// @notice contains voted submissions for a given epoch 
-    mapping(uint64 => EpochVoteSubmission) public epochVoteSubmissions;
-
-    /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
-    /// This usually happens when previous submission epoch has not executed, but the next submission
-    /// epoch is ready to be executed. Most of the time this should be empty
-    ExecutableQueue public executableQueue;
+    mapping(uint64 => EpochVoteTopDownSubmission) private epochVoteSubmissions;
 
     modifier signableOnly() {
         require(msg.sender.isAccount(), "the caller is not an account");
@@ -144,8 +129,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         uint8 majorityPercentage;
     }
 
-    constructor(ConstructorParams memory params) {
-        require(params.majorityPercentage <= 100);
+    constructor(ConstructorParams memory params) Voting(params.majorityPercentage, params.topDownCheckPeriod) {
         networkName = params.networkName;
         minStake = MIN_COLLATERAL_AMOUNT;
         bottomUpCheckPeriod = params.bottomUpCheckPeriod < MIN_CHECKPOINT_PERIOD
@@ -155,8 +139,11 @@ contract Gateway is IGateway, ReentrancyGuard {
             ? MIN_CHECKPOINT_PERIOD
             : params.topDownCheckPeriod;
         crossMsgFee = params.msgFee;
-        majorityPercentage = params.majorityPercentage;
-        if (networkName.isRoot()) initialized = true;
+
+        // the root doesn't need to be explicitly initialized
+        if (networkName.isRoot()) {
+            initialized = true;
+        }
     }
 
     function getSubnetTopDownMsgsLength(
@@ -180,7 +167,7 @@ contract Gateway is IGateway, ReentrancyGuard {
         return networkName;
     }
 
-    function initGenesisEpoch(uint64 _genesisEpoch) external {
+    function initGenesisEpoch(uint64 _genesisEpoch) public {
         require(msg.sender.isSystemActor(), "caller not the system actor");
         require(initialized == false, "subnet already initialized");
 
@@ -280,6 +267,8 @@ contract Gateway is IGateway, ReentrancyGuard {
             "source in checkpoint doesn't belong to subnet"
         );
 
+        require(CrossMsgHelper.isSorted(commit.crossMsgs), "bottom up messages not sorted");
+
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
         require(registered, "subnet is not registered");
@@ -305,10 +294,7 @@ contract Gateway is IGateway, ReentrancyGuard {
             bool checkpointExists,
             uint64 currentEpoch,
             BottomUpCheckpoint storage checkpoint
-        ) = bottomUpCheckpoints.getCheckpointPerEpoch(
-                block.number,
-                bottomUpCheckPeriod
-            );
+        ) = _getCurrentBottomUpCheckpoint();
 
         // create checkpoint if not exists
         if (checkpointExists == false) {
@@ -363,7 +349,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
         subnet.prevCheckpoint = commit;
 
-        _applyBottomUpMessages(commit.source, commit.crossMsgs);
+        _applyMessages(commit.source, commit.crossMsgs);
 
         _distributeRewards(msg.sender, commit.fee);
     }
@@ -439,113 +425,39 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
-    function _deriveExecutionStatus(
-        EpochVoteSubmission storage voteSubmission
-    ) internal view returns (VoteExecutionStatus) {
-        uint256 threshold = (totalWeight * majorityPercentage) / 100;
-        uint256 mostVotedWeight = voteSubmission.getMostVotedWeight();
-
-        // threshold not reached, require THRESHOLD to be surpassed, equality is not enough!
-        if (voteSubmission.totalSubmissionWeight <= threshold) {
-            return VoteExecutionStatus.ThresholdNotReached;
-        }
-
-        // consensus reached
-        if (mostVotedWeight > threshold) {
-            return VoteExecutionStatus.ConsensusReached;
-        }
-
-        // now the total submissions has reached the threshold, but the most submitted vote
-        // has yet to reach the threshold, that means consensus has not reached.
-        // we do a early termination check, to see if consensus will ever be reached.
-        //
-        // consider an example that consensus will never be reached:
-        //
-        // -------- | -------------------------|--------------- | ------------- |
-        //     MOST_VOTED                 THRESHOLD     TOTAL_SUBMISSIONS  TOTAL_WEIGHT
-        //
-        // we see MOST_VOTED is smaller than THRESHOLD, TOTAL_SUBMISSIONS and TOTAL_WEIGHT, if
-        // the potential extra votes any vote can obtain, i.e. TOTAL_WEIGHT - TOTAL_SUBMISSIONS,
-        // is smaller than or equal to the potential extra vote the most voted can obtain, i.e.
-        // THRESHOLD - MOST_VOTED, then consensus will never be reached, no point voting, just abort.
-        if (
-            threshold - mostVotedWeight >=
-            totalWeight - voteSubmission.totalSubmissionWeight
-        ) {
-            return VoteExecutionStatus.RoundAbort;
-        }
-
-        return VoteExecutionStatus.ReachingConsensus;
-    }
-
-    /// @notice marks the submission as executed, removes it from the queue if exist and retuns the most voted submission
-    function _markSubmissionExecuted(EpochVoteSubmission storage voteSubmission) internal returns(TopDownCheckpoint storage mostVotedSubmission){
-        mostVotedSubmission = voteSubmission.getMostVotedSubmission();
-
-        // most voted submission is empty, so do nothing
-        if (mostVotedSubmission.isEmpty()) return mostVotedSubmission;
-
-        if (executableQueue.contains(mostVotedSubmission.epoch)) {
-            require(mostVotedSubmission.epoch == executableQueue.first(), "epoch not the next executable epoch queue");
-
-            // remove the current checkpoint epoch from the queue
-            executableQueue.pop();
-        }
-
-        // update the last executed epoch
-        lastVotingExecutedEpoch = mostVotedSubmission.epoch;
-    }
-
     function submitTopDownCheckpoint(
         TopDownCheckpoint calldata checkpoint
-    ) external signableOnly {
+    ) external signableOnly validEpochOnly(checkpoint.epoch) {
         uint256 validatorWeight = validatorSet[validatorNonce][msg.sender];
 
         require(initialized, "not initialized");
         require(validatorWeight > 0, "not validator");
-        require(checkpoint.epoch > lastVotingExecutedEpoch, "epoch already executed");
-        require(checkpoint.epoch > genesisEpoch && (checkpoint.epoch - genesisEpoch) % topDownCheckPeriod == 0, "epoch not votable");
+        require(CrossMsgHelper.isSorted(checkpoint.topDownMsgs), "top down messages not sorted");
 
-        EpochVoteSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
-
-        require(voteSubmission.submitters[voteSubmission.nonce][msg.sender] == false, "validator has already voted");
-
+        EpochVoteTopDownSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
+        
         // submit the vote
-        voteSubmission.submitVote(checkpoint, msg.sender, validatorWeight);
-
-        VoteExecutionStatus status = _deriveExecutionStatus(voteSubmission);
+        bool shouldExecuteVote = _submitTopDownVote(voteSubmission, checkpoint, msg.sender, validatorWeight);
 
         TopDownCheckpoint memory submissionToExecute;
         
-        if (status == VoteExecutionStatus.ConsensusReached) {
-            uint64 currentVotingExecutableEpoch = lastVotingExecutedEpoch + topDownCheckPeriod;
-            if (currentVotingExecutableEpoch == checkpoint.epoch) {
-                
-                submissionToExecute = _markSubmissionExecuted(voteSubmission);
-            } else {
-                // there are pending epochs to be executed, just store the submission and skip execution
-                executableQueue.push(checkpoint.epoch);
-            }
-        } else if (status == VoteExecutionStatus.RoundAbort) {
-            // abort the current round and reset the submission data.
-            voteSubmission.reset();
+        if (shouldExecuteVote) {
+            submissionToExecute = _markMostVotedSubmissionExecuted(voteSubmission);
         }
 
         // there is no execution for the current submission, so get the next executable epoch from the queue
         if (submissionToExecute.topDownMsgs.length == 0) {
-            uint64 nextExecutableEpoch = executableQueue.first();
-            uint64 nextVotingExecutableEpoch = lastVotingExecutedEpoch + topDownCheckPeriod;
+            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
 
-            // make sure the next executable epoch exist and is valid
-            if (nextExecutableEpoch > 0 && nextExecutableEpoch <= nextVotingExecutableEpoch) {
-                EpochVoteSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
+            if (isExecutableEpoch) {
+                EpochVoteTopDownSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
 
-                submissionToExecute = _markSubmissionExecuted(nextVoteSubmission);
+                submissionToExecute = _markMostVotedSubmissionExecuted(nextVoteSubmission);
             }
         }
 
         //only execute the messages and update the last executed checkpoint when we have majority
-        _applyTopDownMessages(submissionToExecute.topDownMsgs);
+        _applyMessages(SubnetID(new address[](0)), submissionToExecute.topDownMsgs);
     }
 
     /// @notice sends an arbitrary cross message from the current subnet to a destination subnet.
@@ -635,6 +547,30 @@ contract Gateway is IGateway, ReentrancyGuard {
         }
     }
 
+    function _markMostVotedSubmissionExecuted(EpochVoteTopDownSubmission storage voteSubmission) internal returns(TopDownCheckpoint memory mostVotedSubmission){
+        mostVotedSubmission = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
+
+        if (mostVotedSubmission.isEmpty() == false) {
+            _markSubmissionExecuted(mostVotedSubmission.epoch);
+        }
+    }
+
+   function _submitTopDownVote(
+        EpochVoteTopDownSubmission storage voteSubmission,
+        TopDownCheckpoint calldata submission,
+        address submitterAddress,
+        uint256 submitterWeight
+    ) internal returns (bool shouldExecuteVote) {
+        bytes32 submissionHash = submission.toHash();
+        
+        shouldExecuteVote = _submitVote(voteSubmission.vote, submissionHash, submitterAddress, submitterWeight, submission.epoch, totalWeight);
+
+        // store the submission only the first time
+        if (voteSubmission.submissions[submissionHash].isEmpty()) {
+            voteSubmission.submissions[submissionHash] = submission;
+        }
+    }
+
     /// @notice Commit the cross message to storage. It outputs a flag signaling
     /// if the committed messages was bottom-up and some funds need to be
     /// burnt or if a top-down message fee needs to be distributed.
@@ -713,8 +649,7 @@ contract Gateway is IGateway, ReentrancyGuard {
 
     /// @notice commit bottomup messages for their execution in the subnet
     function _commitBottomUpMsg(CrossMsg memory crossMessage) internal {
-        (, , BottomUpCheckpoint storage checkpoint) = bottomUpCheckpoints
-            .getCheckpointPerEpoch(block.number, bottomUpCheckPeriod);
+        (, , BottomUpCheckpoint storage checkpoint) = _getCurrentBottomUpCheckpoint();
 
         crossMessage.message.nonce = bottomUpNonce;
 
@@ -780,32 +715,31 @@ contract Gateway is IGateway, ReentrancyGuard {
         postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
     }
 
-    function _applyTopDownMessages(CrossMsg[] memory crossMsgs) internal {
+    // @notice applies a cross-net messages coming from some other subnet. The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.  
+    function _applyMessages(
+        SubnetID memory forwarder,
+        CrossMsg[] memory crossMsgs
+    ) internal {
         for (uint i = 0; i < crossMsgs.length; ) {
-            _applyMsg(SubnetID(new address[](0)), crossMsgs[i]);
+            _applyMsg(forwarder, crossMsgs[i]);
             unchecked {
                 ++i;
             }
         }
     }
 
-    // @notice applies a cross-net messages coming from some other subnet. The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.  
-    function _applyBottomUpMessages(
-        SubnetID calldata forwarder,
-        CrossMsg[] calldata crossMsgs
-    ) internal {
-        uint256 prevNonce = 0;
-        for (uint i = 0; i < crossMsgs.length; ) {
-            require(
-                prevNonce <= crossMsgs[i].message.nonce,
-                "cross messages not ordered by nonce"
-            );
-            prevNonce = crossMsgs[i].message.nonce;
-            _applyMsg(forwarder, crossMsgs[i]);
-            unchecked {
-                ++i;
-            }
-        }
+    function _getCurrentBottomUpCheckpoint()
+        internal
+        view
+        returns (
+            bool exists,
+            uint64 epoch,
+            BottomUpCheckpoint storage checkpoint
+        )
+    {
+        epoch = _getEpoch(block.number, bottomUpCheckPeriod);
+        checkpoint = bottomUpCheckpoints[epoch];
+        exists = checkpoint.source.isEmpty() == false;
     }
 
     /// @notice distribute rewards to validators in child subnet

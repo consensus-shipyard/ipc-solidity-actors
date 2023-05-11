@@ -229,6 +229,34 @@ contract CrossMsgHelperTest is Test {
         return params;
     }
 
+    function test_IsSorted_Works_SingleMsg() public {
+        addCrossMsg(0);
+
+        require(CrossMsgHelper.isSorted(crossMsgs));
+    }
+
+    function test_IsSorted_Works_MultipleMsgsSorted() public {
+        addCrossMsg(0);
+        addCrossMsg(1);
+
+        require(CrossMsgHelper.isSorted(crossMsgs));
+    }
+
+    function test_IsSorted_Works_MultipleMsgsNotSorted() public {
+        addCrossMsg(0);
+        addCrossMsg(2);
+        addCrossMsg(1);
+
+        require(CrossMsgHelper.isSorted(crossMsgs) == false);
+    }
+
+    function test_IsSorted_Works_MultipleMsgsZeroNonces() public {
+        addCrossMsg(0);
+        addCrossMsg(0);
+
+        require(CrossMsgHelper.isSorted(crossMsgs) == false);
+    }
+
     function createCrossMsg(
         uint64 nonce
     ) internal pure returns (CrossMsg memory) {
@@ -263,5 +291,9 @@ contract CrossMsgHelperTest is Test {
         }
     }
 
-    
+    function addCrossMsg(uint64 nonce) internal {
+        crossMsg.message.nonce = nonce;
+
+        crossMsgs.push(crossMsg);
+    }
 }
