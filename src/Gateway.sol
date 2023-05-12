@@ -426,10 +426,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (validatorWeight == 0) revert NotValidator();
         require(CrossMsgHelper.isSorted(checkpoint.topDownMsgs), "top down messages not sorted");
 
-        EpochVoteSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
-
-        require(voteSubmission.submitters[voteSubmission.nonce][msg.sender] == false, "validator has already voted");
-
         EpochVoteTopDownSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
         
         // submit the vote
