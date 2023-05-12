@@ -34,31 +34,47 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice Human-readable name of the subnet.
     string public name;
+
     /// @notice ID of the parent subnet
     SubnetID private parentId;
+
     /// @notice Address of the IPC gateway for the subnet
     address public ipcGatewayAddr;
+
     /// @notice Type of consensus algorithm.
     ConsensusType public consensus;
+
     /// @notice The minimum collateral required to be a validator in this subnet
     uint256 public minActivationCollateral;
+
     /// @notice Total collateral currently deposited in the GW from the subnet
     uint256 public totalStake;
+
     /// @notice validator address to stake amount
     mapping(address => uint256) public stake;
+
     /// @notice current status of the subnet
     Status public status;
+
     /// @notice genesis block
     bytes public genesis;
-    /// @notice number of blocks between two top-down checkpoints
+
+    /// @notice number of blocks in a top-down epoch
     uint64 public topDownCheckPeriod;
-    /// @notice block number to corresponding bottom-up checkpoint at that block
-    mapping(uint64 => BottomUpCheckpoint) public checkpoints;
+
+    /// @notice number of blocks in a bottom-up epoch
+    uint64 public bottomUpCheckPeriod;
+
+    /// @notice contains all committed bottom-up checkpoint at specific epoch
+    mapping(uint64 => BottomUpCheckpoint) public committedCheckpoints;
+
     /// @notice List of validators in the subnet
     EnumerableSet.AddressSet private validators;
+
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 public minValidators;
-
+    
+    /// @notice contains the last executed checkpoint hash
     bytes32 public prevExecutedCheckpointHash;
 
     /// @notice contains voted submissions for a given epoch 
@@ -123,6 +139,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         topDownCheckPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
             ? MIN_CHECKPOINT_PERIOD
             : params.topDownCheckPeriod;
+        bottomUpCheckPeriod = submissionPeriod;
         status = Status.Instantiated;
         genesis = params.genesis;
         // NOTE: we currently use 0 as the genesisEpoch for subnets so checkpoints
@@ -321,6 +338,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         _markSubmissionExecuted(checkpoint.epoch);
 
+        committedCheckpoints[checkpoint.epoch] = checkpoint;
         prevExecutedCheckpointHash = checkpoint.toHash();
 
         return true;
