@@ -242,7 +242,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         bool shouldExecuteVote = _submitBottomUpVote(voteSubmission, checkpoint, msg.sender, stake[msg.sender]);
         bool isCommited;
 
-        BottomUpCheckpoint memory submissionToExecute;
+        BottomUpCheckpoint storage submissionToExecute;
 
         if (shouldExecuteVote) {
             submissionToExecute = _getMostVotedSubmission(voteSubmission);
@@ -254,7 +254,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             if (isExecutableEpoch) {
                 EpochVoteBottomUpSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
 
-                submissionToExecute = _getMostVotedSubmission(nextVoteSubmission);
+                submissionToExecute  = _getMostVotedSubmission(nextVoteSubmission);
                 isCommited = _commitCheckpoint(nextVoteSubmission.vote, submissionToExecute);
             }
         }
@@ -319,11 +319,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission) internal view returns(BottomUpCheckpoint memory){
+    function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission) internal view returns(BottomUpCheckpoint storage){
         return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
     }
 
-    function _commitCheckpoint(EpochVoteSubmission storage vote, BottomUpCheckpoint memory checkpoint) internal returns(bool committed) {
+    function _commitCheckpoint(EpochVoteSubmission storage vote, BottomUpCheckpoint storage checkpoint) internal returns(bool committed) {
         if (checkpoint.isEmpty()) {
             return false;
         }

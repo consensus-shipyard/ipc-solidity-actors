@@ -438,26 +438,26 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         
         // submit the vote
         bool shouldExecuteVote = _submitTopDownVote(voteSubmission, checkpoint, msg.sender, validatorWeight);
-
-        TopDownCheckpoint memory submissionToExecute;
+        
+        CrossMsg[] memory topDownMsgs;
         
         if (shouldExecuteVote) {
-            submissionToExecute = _markMostVotedSubmissionExecuted(voteSubmission);
+            topDownMsgs = _markMostVotedSubmissionExecuted(voteSubmission);
         }
 
         // there is no execution for the current submission, so get the next executable epoch from the queue
-        if (submissionToExecute.topDownMsgs.length == 0) {
+        if (topDownMsgs.length == 0) {
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
                 EpochVoteTopDownSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
 
-                submissionToExecute = _markMostVotedSubmissionExecuted(nextVoteSubmission);
+                topDownMsgs = _markMostVotedSubmissionExecuted(nextVoteSubmission);
             }
         }
 
         //only execute the messages and update the last executed checkpoint when we have majority
-        _applyMessages(SubnetID(new address[](0)), submissionToExecute.topDownMsgs);
+        _applyMessages(SubnetID(new address[](0)), topDownMsgs);
     }
 
     /// @notice sends an arbitrary cross message from the current subnet to a destination subnet.
@@ -547,12 +547,14 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
-    function _markMostVotedSubmissionExecuted(EpochVoteTopDownSubmission storage voteSubmission) internal returns(TopDownCheckpoint memory mostVotedSubmission){
-        mostVotedSubmission = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
+    function _markMostVotedSubmissionExecuted(EpochVoteTopDownSubmission storage voteSubmission) internal returns(CrossMsg[] storage){
+        TopDownCheckpoint storage mostVotedSubmission = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
 
         if (mostVotedSubmission.isEmpty() == false) {
             _markSubmissionExecuted(mostVotedSubmission.epoch);
         }
+
+        return mostVotedSubmission.topDownMsgs;
     }
 
    function _submitTopDownVote(
