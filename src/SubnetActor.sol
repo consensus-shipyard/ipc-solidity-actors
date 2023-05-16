@@ -151,36 +151,41 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     receive() external payable onlyGateway {}
 
-    function join() external payable mutateState signableOnly {
+    function join() external payable signableOnly mutateState {
+        require(
+            status != Status.Terminating && status != Status.Killed,
+            "the subnet is already in a killed or terminating state"
+        );
         require(
             msg.value > 0,
             "a minimum collateral is required to join the subnet"
         );
-
+        
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
+
         if (
             stake[msg.sender] >= minActivationCollateral &&
             !validators.contains(msg.sender) &&
             (consensus != ConsensusType.Delegated || validators.length() == 0)
-        ) validators.add(msg.sender);
+        ) {
+            validators.add(msg.sender);
+        }
 
         if (status == Status.Instantiated) {
             if (totalStake >= minActivationCollateral) {
-                payable(ipcGatewayAddr).functionCallWithValue(
-                    abi.encodeWithSignature("register()"),
-                    totalStake
-                );
+                IGateway(ipcGatewayAddr).register{value: totalStake}();
             }
         } else {
-            payable(ipcGatewayAddr).functionCallWithValue(
-                abi.encodeWithSignature("addStake()"),
-                msg.value
-            );
+            IGateway(ipcGatewayAddr).addStake{value: msg.value}();
         }
     }
 
-    function leave() external mutateState nonReentrant signableOnly {
+    function leave() external nonReentrant signableOnly mutateState {
+        require(
+            status != Status.Terminating && status != Status.Killed,
+            "the subnet is already in a killed or terminating state"
+        );
         require(stake[msg.sender] != 0, "caller has no stake in subnet");
 
         uint256 amount = stake[msg.sender];
@@ -189,14 +194,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         totalStake -= amount;
         validators.remove(msg.sender);
 
-        if (status == Status.Terminating) return;
-
         IGateway(ipcGatewayAddr).releaseStake(amount);
 
         payable(msg.sender).sendValue(amount);
     }
 
-    function kill() external mutateState signableOnly {
+    function kill() external signableOnly mutateState {
         require(
             address(this).balance == 0,
             "there is still collateral in the subnet"
@@ -228,13 +231,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
                 parentId.createSubnetId(address(this)).toHash(),
             "submitting checkpoint with the wrong source"
         );
-
-        // the epoch being submitted is the next executable epoch, we perform a check to ensure
-        // the checkpoints are chained. This is an early termination check to ensure the checkpoints
-        // are actually chained.
-        if (_isNextExecutableEpoch(checkpoint.epoch)) {
-            require(prevExecutedCheckpointHash == checkpoint.prevHash, "checkpoint not chained");
-        }
         
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 

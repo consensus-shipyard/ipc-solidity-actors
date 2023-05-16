@@ -445,7 +445,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             topDownMsgs = _markMostVotedSubmissionExecuted(voteSubmission);
         }
 
-        // there is no execution for the current submission, so get the next executable epoch from the queue
+        // no messages executed in the current submission, let's get the next executable epoch from the queue to see if it can be executed already
         if (topDownMsgs.length == 0) {
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
 
@@ -550,10 +550,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function _markMostVotedSubmissionExecuted(EpochVoteTopDownSubmission storage voteSubmission) internal returns(CrossMsg[] storage){
         TopDownCheckpoint storage mostVotedSubmission = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
 
-        if (mostVotedSubmission.isEmpty() == false) {
-            _markSubmissionExecuted(mostVotedSubmission.epoch);
-        }
-
+        _markSubmissionExecuted(mostVotedSubmission.epoch);
+        
         return mostVotedSubmission.topDownMsgs;
     }
 
