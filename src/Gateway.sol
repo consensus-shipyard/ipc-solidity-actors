@@ -565,7 +565,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         SubnetID memory from = crossMessage.message.from.subnetId;
         IPCMsgType applyType = crossMessage.message.applyType(networkName);
 
-        bool shouldCommitBottomUp;
+        bool shouldCommitBottomUp = false;
 
         if (applyType == IPCMsgType.BottomUp) {
             shouldCommitBottomUp =
