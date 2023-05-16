@@ -219,11 +219,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         if(status != Status.Active) revert SubnetNotActive();
         if(checkpoint.source.toHash() != parentId.createSubnetId(address(this)).toHash()) revert WrongCheckpointSource();
 
-        // the epoch being submitted is the next executable epoch, we perform a check to ensure
-        // the checkpoints are chained. This is an early termination check to ensure the checkpoints
-        // are actually chained.
-        if(_isNextExecutableEpoch(checkpoint.epoch) && prevExecutedCheckpointHash != checkpoint.prevHash) revert CheckpointNotChained();
-    
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
         // submit the vote
