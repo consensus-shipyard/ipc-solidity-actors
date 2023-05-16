@@ -80,16 +80,28 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice contains voted submissions for a given epoch 
     mapping(uint64 => EpochVoteBottomUpSubmission) private epochVoteSubmissions;
 
+    error NotGateway();
+    error NotAccount();
+    error CollateralIsZero();
+    error CallerHasNoStake();
+    error CollateralStillLockedInSubnet();
+    error SubnetAlreadyTerminating();
+    error NotAllValidatorsHaveLeft();
+    error NotValidator();
+    error SubnetNotActive();
+    error WrongCheckpointSource();
+    error CheckpointNotChained();
+    error NoRewardsSentForDistribution();
+    error NoValidatorsInSubnet();
+    error NotEnoughBalanceForRewards();
+
     modifier onlyGateway() {
-        require(
-            msg.sender == ipcGatewayAddr,
-            "only the IPC gateway can call this function"
-        );
+        if(msg.sender != ipcGatewayAddr) revert NotGateway();
         _;
     }
 
     modifier signableOnly() {
-        require(msg.sender.isAccount(), "the caller is not an account");
+        if(!msg.sender.isAccount()) revert NotAccount();
         _;
     }
 
@@ -152,14 +164,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     receive() external payable onlyGateway {}
 
     function join() external payable signableOnly mutateState {
-        require(
-            status != Status.Terminating && status != Status.Killed,
-            "the subnet is already in a killed or terminating state"
-        );
-        require(
-            msg.value > 0,
-            "a minimum collateral is required to join the subnet"
-        );
+        if(status == Status.Terminating && status != Status.Killed) revert SubnetAlreadyTerminating();
+        if(msg.value == 0) revert CollateralIsZero();
         
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
@@ -181,13 +187,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    function leave() external nonReentrant signableOnly mutateState {
-        require(
-            status != Status.Terminating && status != Status.Killed,
-            "the subnet is already in a killed or terminating state"
-        );
-        require(stake[msg.sender] != 0, "caller has no stake in subnet");
-
+    function leave() external mutateState nonReentrant signableOnly {
+        if(status == Status.Terminating && status != Status.Killed) revert SubnetAlreadyTerminating();
+        if(stake[msg.sender] == 0) revert CallerHasNoStake();
+        
         uint256 amount = stake[msg.sender];
 
         stake[msg.sender] = 0;
@@ -200,18 +203,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     }
 
     function kill() external signableOnly mutateState {
-        require(
-            address(this).balance == 0,
-            "there is still collateral in the subnet"
-        );
-        require(
-            status != Status.Terminating && status != Status.Killed,
-            "the subnet is already in a killed or terminating state"
-        );
-        require(
-            validators.length() == 0 && totalStake == 0,
-            "this subnet can only be killed when all validators have left"
-        );
+        if(address(this).balance > 0) revert CollateralStillLockedInSubnet();
+        if(status == Status.Terminating && status != Status.Killed) revert SubnetAlreadyTerminating();
+        if(validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
 
         status = Status.Terminating;
 
@@ -221,17 +215,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function submitCheckpoint(
         BottomUpCheckpoint calldata checkpoint
     ) external signableOnly validEpochOnly(checkpoint.epoch) {
-        require(validators.contains(msg.sender), "not validator");
-        require(
-            status == Status.Active,
-            "submitting checkpoints is not allowed while subnet is not active"
-        );
-        require(
-            checkpoint.source.toHash() ==
-                parentId.createSubnetId(address(this)).toHash(),
-            "submitting checkpoint with the wrong source"
-        );
-        
+        if(!validators.contains(msg.sender)) revert NotValidator();
+        if(status != Status.Active) revert SubnetNotActive();
+        if(checkpoint.source.toHash() != parentId.createSubnetId(address(this)).toHash()) revert WrongCheckpointSource();
+
+        // the epoch being submitted is the next executable epoch, we perform a check to ensure
+        // the checkpoints are chained. This is an early termination check to ensure the checkpoints
+        // are actually chained.
+        if(_isNextExecutableEpoch(checkpoint.epoch) && prevExecutedCheckpointHash != checkpoint.prevHash) revert CheckpointNotChained();
+    
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
         // submit the vote
@@ -263,13 +255,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// Distributes the rewards for the subnet to validators.
     function reward() public payable onlyGateway nonReentrant {
         uint validatorLength = validators.length();
-        require(msg.value > 0, "no rewards sent for distribution");
-        require(validatorLength != 0, "no validators in subnet");
-
-        require(
-            address(this).balance >= validatorLength,
-            "we need to distribute at least one wei to each validator"
-        );
+        if(msg.value == 0) revert NoRewardsSentForDistribution();
+        if(validatorLength == 0) revert NoValidatorsInSubnet();
+        if(address(this).balance < validatorLength) revert NotEnoughBalanceForRewards();
 
         uint rewardAmount = address(this).balance / validatorLength;
 

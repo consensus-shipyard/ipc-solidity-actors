@@ -137,6 +137,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error SubnetNotActive();
     error PostboxNotExist();
     error ValidatorAlreadyVoted();
+    error MessagesNotSorted();
+    error ValidatorsAndWeightsLengthMismatch();
+    error ValidatorWeightIsZero();
 
     modifier signableOnly() {
         if (msg.sender.isAccount() == false) revert NotSignableAccount();
@@ -275,8 +278,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {
         if (initialized == false) revert NotInitialized();
         if (commit.source.getActor().normalize() != msg.sender) revert InvalidCheckpointSource();
-
-        require(CrossMsgHelper.isSorted(commit.crossMsgs), "bottom up messages not sorted");
+        if(!CrossMsgHelper.isSorted(commit.crossMsgs)) revert MessagesNotSorted();
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
@@ -379,10 +381,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         address[] memory validators,
         uint256[] memory weights
     ) external systemActorOnly {
-        require(
-            validators.length == weights.length,
-            "number of validators is not equal to the number of validator weights"
-        );
+        if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
 
         // invalidate the previous validator set
         validatorNonce++;
@@ -393,7 +392,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             address validatorAddress = validators[validatorIndex];
             uint256 validatorWeight = weights[validatorIndex];
 
-            require(validatorWeight > 0, "validator's weight cannot be zero");
+            if(validatorWeight == 0) revert ValidatorWeightIsZero();
 
             validatorSet[validatorNonce][validatorAddress] = validatorWeight;
 
@@ -424,7 +423,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         if (initialized == false) revert NotInitialized();
         if (validatorWeight == 0) revert NotValidator();
-        require(CrossMsgHelper.isSorted(checkpoint.topDownMsgs), "top down messages not sorted");
+        if(!CrossMsgHelper.isSorted(checkpoint.topDownMsgs)) revert MessagesNotSorted();
 
         EpochVoteTopDownSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
         
