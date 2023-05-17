@@ -116,6 +116,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error NotEnoughFee();
     error NotEnoughFunds();
     error NotEnoughFundsToRelease();
+    error CannnotReleaseZero();
     error NotEnoughBalance();
     error NotInitialized();
     error NotValidator();
@@ -136,10 +137,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error CannotSendCrossMsgToItself();
     error SubnetNotActive();
     error PostboxNotExist();
-    error ValidatorAlreadyVoted();
     error MessagesNotSorted();
     error ValidatorsAndWeightsLengthMismatch();
     error ValidatorWeightIsZero();
+    error NotEnoughFundsForMembership();
 
     modifier signableOnly() {
         if (msg.sender.isAccount() == false) revert NotSignableAccount();
@@ -240,13 +241,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice release collateral for an existing subnet
     function releaseStake(uint amount) external nonReentrant {
-        if (amount == 0) revert NotEnoughFundsToRelease();
+        if (amount == 0) revert CannnotReleaseZero();
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
         if (registered == false) revert NotRegisteredSubnet();
         if (subnet.stake < amount) revert NotEnoughFundsToRelease();
-        if (address(this).balance < amount) revert NotEnoughBalance();
 
         subnet.stake -= amount;
 
@@ -262,7 +262,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
         if (registered == false) revert NotRegisteredSubnet();
-        if (address(this).balance < subnet.stake) revert NotEnoughBalance();
+        // if (address(this).balance < subnet.stake) revert NotEnoughBalance();
         if (subnet.circSupply > 0) revert NotEmptySubnetCircSupply();
 
         uint256 stake = subnet.stake;
@@ -281,9 +281,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if(!CrossMsgHelper.isSorted(commit.crossMsgs)) revert MessagesNotSorted();
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
-
         if (registered == false) revert NotRegisteredSubnet();
         if (subnet.status != Status.Active) revert SubnetNotActive();
+        
         if (subnet.prevCheckpoint.epoch + bottomUpCheckPeriod != commit.epoch)
             revert InvalidCheckpointEpoch();
         if (
@@ -380,9 +380,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function setMembership(
         address[] memory validators,
         uint256[] memory weights
-    ) external systemActorOnly {
+    ) external payable systemActorOnly {
         if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
-
+        if(msg.value != validators.length * INITIAL_VALIDATOR_FUNDS) revert NotEnoughFundsForMembership();
         // invalidate the previous validator set
         validatorNonce++;
         totalWeight = 0;

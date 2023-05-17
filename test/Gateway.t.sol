@@ -27,6 +27,8 @@ contract GatewayDeploymentTest is Test {
     address constant CHILD_NETWORK_ADDRESS = address(10);
     address constant CHILD_NETWORK_ADDRESS_2 = address(11);
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
+    uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
+
     
     Gateway gw;
     Gateway gw2;
@@ -41,6 +43,7 @@ contract GatewayDeploymentTest is Test {
     error NotEnoughFee();
     error NotEnoughFunds();
     error NotEnoughFundsToRelease();
+    error CannnotReleaseZero();
     error NotEnoughBalance();
     error NotInitialized();
     error NotValidator();
@@ -62,6 +65,10 @@ contract GatewayDeploymentTest is Test {
     error SubnetNotActive();
     error PostboxNotExist();
     error ValidatorAlreadyVoted();
+    error MessagesNotSorted();
+    error ValidatorsAndWeightsLengthMismatch();
+    error ValidatorWeightIsZero();
+    error NotEnoughFundsForMembership();
 
     function setUp() public {
         address[] memory path = new address[](1);
@@ -290,7 +297,7 @@ contract GatewayDeploymentTest is Test {
     function test_ReleaseStake_Fail_ZeroAmount() public {
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert(NotEnoughFundsToRelease.selector);
+        vm.expectRevert(CannnotReleaseZero.selector);
 
         gw.releaseStake(0);
     }
@@ -307,7 +314,7 @@ contract GatewayDeploymentTest is Test {
 
         registerSubnet(subnetBalance, subnetAddress);
 
-        vm.expectRevert();
+        vm.expectRevert(NotEnoughFundsToRelease.selector);
 
         gw.releaseStake(releaseAmount);
     }
@@ -368,7 +375,7 @@ contract GatewayDeploymentTest is Test {
     }
 
 
-    function testCommitChildCheck_Works() public {
+    function test_CommitChildCheck_Works() public {
         address subnetAddress = address(100);
 
         vm.startPrank(subnetAddress);
@@ -381,7 +388,7 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function testCommitChildCheck_Works_SameSubnet(uint64 blockNumber) public {
+    function test_CommitChildCheck_Works_SameSubnet(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 11);
         vm.roll(blockNumber);
@@ -404,6 +411,151 @@ contract GatewayDeploymentTest is Test {
         );
         
         gw.commitChildCheck(checkpoint2);
+    }
+
+    function test_CommitChildCheck_Fails_NotInitialized() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        
+        BottomUpCheckpoint memory checkpoint = createCheckpoint(subnetAddress, DEFAULT_CHECKPOINT_PERIOD);
+        vm.expectRevert(NotInitialized.selector);
+        gw2.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fails_InvalidCheckpointSource() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        address notSubnetAddress = address(101);
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(notSubnetAddress);
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+
+        vm.expectRevert(InvalidCheckpointSource.selector);
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fails_MessagesNotSorted() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        CrossMsg[] memory crossMsgs = new CrossMsg[](2);
+        crossMsgs[0] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    value: CROSS_MSG_FEE + 1,
+                    nonce: 1,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
+                wrapped: false
+            });
+        crossMsgs[1] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    value: CROSS_MSG_FEE + 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
+                wrapped: false
+            });
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: crossMsgs, prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+
+        vm.expectRevert(MessagesNotSorted.selector);
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fails_NotRegisteredSubnet() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        //note we skip calling the registerSubnet function here
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+
+        vm.expectRevert(NotRegisteredSubnet.selector);
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fails_SubnetNotActive() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        sa.join{value: MIN_COLLATERAL_AMOUNT / 2}();
+        gw.kill();
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+
+        vm.expectRevert(SubnetNotActive.selector);
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fails_InconsistentPrevCheckpoint() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        gw.commitChildCheck(checkpoint);
+
+        checkpoint.fee = 100; // mess with the checkpoint to get different hash
+
+        BottomUpCheckpoint memory checkpoint2 = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: checkpoint.toHash(), children: new ChildCheck[](0)});
+
+        vm.expectRevert(InconsistentPrevCheckpoint.selector);
+        gw.commitChildCheck(checkpoint2);
+    }
+
+    function test_CommitChildCheck_Fails_AlreadyCommitedCheckpoint() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        gw.commitChildCheck(checkpoint);
+
+        vm.expectRevert(AlreadyCommitedCheckpoint.selector);
+        gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fails_NotEnoughSubnetCircSupply() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: MIN_COLLATERAL_AMOUNT * 2, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+
+        vm.expectRevert(NotEnoughSubnetCircSupply.selector);
+        gw.commitChildCheck(checkpoint);
     }
 
     function test_Fund_Works_EthAccountSingleFunding() public {
@@ -482,6 +634,23 @@ contract GatewayDeploymentTest is Test {
         (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
 
         vm.expectRevert(NotSignableAccount.selector);
+
+        gw.fund{value: fundAmount}(subnetId);
+    }
+
+    function test_Fund_Fails_NotRegistered() public {
+        address validatorAddress = address(100);
+        address funderAddress = address(101);
+        uint fundAmount = 1 ether;
+
+        _join(validatorAddress);
+
+        vm.startPrank(funderAddress);
+        vm.deal(funderAddress, fundAmount + 1);
+
+        (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
+
+        vm.expectRevert(NotRegisteredSubnet.selector);
 
         gw.fund{value: fundAmount}(subnetId);
     }
@@ -784,7 +953,7 @@ contract GatewayDeploymentTest is Test {
         );
     }
 
-        function test_SendCross_Works_TopDown_SameSubnet() public {
+    function test_SendCross_Works_TopDown_SameSubnet() public {
         address caller = vm.addr(100);
         vm.prank(caller);
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
@@ -1460,7 +1629,8 @@ contract GatewayDeploymentTest is Test {
         weights[2] = 100;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        gw.setMembership(validators, weights);
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS * 3);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS * 3}(validators, weights);
 
         return validators;
     }
@@ -1477,7 +1647,8 @@ contract GatewayDeploymentTest is Test {
 
         vm.deal(validator, 1);
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        gw.setMembership(validators, weights);
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
     }
 
     function callback() public view {

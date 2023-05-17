@@ -29,6 +29,21 @@ contract SubnetActorTest is Test {
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     address GATEWAY_ADDRESS;
 
+    error NotGateway();
+    error NotAccount();
+    error CollateralIsZero();
+    error CallerHasNoStake();
+    error CollateralStillLockedInSubnet();
+    error SubnetAlreadyTerminating();
+    error NotAllValidatorsHaveLeft();
+    error NotValidator();
+    error SubnetNotActive();
+    error WrongCheckpointSource();
+    error CheckpointNotChained();
+    error NoRewardsSentForDistribution();
+    error NoValidatorsInSubnet();
+    error NotEnoughBalanceForRewards();
+
     function setUp() public
     {
         address[] memory path = new address[](1);
@@ -166,7 +181,7 @@ contract SubnetActorTest is Test {
 
         vm.prank(validator);
         vm.deal(validator, amount);
-        vm.expectRevert("the subnet is already in a killed or terminating state");
+        vm.expectRevert(SubnetAlreadyTerminating.selector);
 
         sa.leave();
     }
@@ -176,7 +191,7 @@ contract SubnetActorTest is Test {
 
         vm.prank(caller);
         vm.deal(caller, 1 ether);
-        vm.expectRevert("caller has no stake in subnet");
+        vm.expectRevert(CallerHasNoStake.selector);
 
         sa.leave();
     }
@@ -202,7 +217,7 @@ contract SubnetActorTest is Test {
         _assertLeave(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
 
         vm.prank(validator1);
-        vm.expectRevert("this subnet can only be killed when all validators have left");
+        vm.expectRevert(NotAllValidatorsHaveLeft.selector);
         sa.kill();
     }
 
@@ -215,7 +230,7 @@ contract SubnetActorTest is Test {
         _assertKill(validator);
 
         vm.prank(validator);
-        vm.expectRevert("the subnet is already in a killed or terminating state");
+        vm.expectRevert(SubnetAlreadyTerminating.selector);
         sa.kill();
     }
 
@@ -233,7 +248,7 @@ contract SubnetActorTest is Test {
         require(success, "funding SubnetActor failed");
 
         vm.prank(validator);
-        vm.expectRevert("there is still collateral in the subnet");
+        vm.expectRevert(CollateralStillLockedInSubnet.selector);
         sa.kill();
     }
 
@@ -291,7 +306,7 @@ contract SubnetActorTest is Test {
         address notValidator = vm.addr(200);
         vm.prank(notValidator);
         vm.deal(notValidator, 1);
-        vm.expectRevert("not validator");
+        vm.expectRevert(NotValidator.selector);
         sa.submitCheckpoint(checkpoint);
     }
 
