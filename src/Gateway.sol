@@ -282,7 +282,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         (, Subnet storage subnet) = _getSubnet(msg.sender);
         if (subnet.status != Status.Active) revert SubnetNotActive();
-        
         if (subnet.prevCheckpoint.epoch > commit.epoch) revert InvalidCheckpointEpoch();
         if (
             commit.prevHash != EMPTY_HASH &&

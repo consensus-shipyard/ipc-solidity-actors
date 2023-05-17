@@ -85,7 +85,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error CollateralIsZero();
     error CallerHasNoStake();
     error CollateralStillLockedInSubnet();
-    error SubnetAlreadyTerminating();
+    error SubnetAlreadyKilled();
     error NotAllValidatorsHaveLeft();
     error NotValidator();
     error SubnetNotActive();
@@ -102,6 +102,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     modifier signableOnly() {
         if(!msg.sender.isAccount()) revert NotAccount();
+        _;
+    }
+
+    modifier notKilled() {
+        if(status == Status.Terminating || status == Status.Killed) revert SubnetAlreadyKilled();
         _;
     }
 
@@ -163,8 +168,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     receive() external payable onlyGateway {}
 
-    function join() external payable signableOnly mutateState {
-        if(status == Status.Terminating && status != Status.Killed) revert SubnetAlreadyTerminating();
+    function join() external payable signableOnly notKilled mutateState {
         if(msg.value == 0) revert CollateralIsZero();
         
         stake[msg.sender] += msg.value;
@@ -187,10 +191,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    function leave() external mutateState nonReentrant signableOnly {
-        if(status == Status.Terminating && status != Status.Killed) revert SubnetAlreadyTerminating();
-        if(stake[msg.sender] == 0) revert CallerHasNoStake();
-        
+
+    function leave() external nonReentrant signableOnly notKilled mutateState {
+        if(stake[msg.sender] == 0) revert NotValidator();
+
         uint256 amount = stake[msg.sender];
 
         stake[msg.sender] = 0;
@@ -202,9 +206,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         payable(msg.sender).sendValue(amount);
     }
 
-    function kill() external signableOnly mutateState {
+    function kill() external signableOnly notKilled mutateState {
         if(address(this).balance > 0) revert CollateralStillLockedInSubnet();
-        if(status == Status.Terminating && status != Status.Killed) revert SubnetAlreadyTerminating();
         if(validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
 
         status = Status.Terminating;
@@ -215,21 +218,17 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function submitCheckpoint(
         BottomUpCheckpoint calldata checkpoint
     ) external signableOnly validEpochOnly(checkpoint.epoch) {
-        if(!validators.contains(msg.sender)) revert NotValidator();
         if(status != Status.Active) revert SubnetNotActive();
+        if(!validators.contains(msg.sender)) revert NotValidator();
         if(checkpoint.source.toHash() != parentId.createSubnetId(address(this)).toHash()) revert WrongCheckpointSource();
 
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
         // submit the vote
         bool shouldExecuteVote = _submitBottomUpVote(voteSubmission, checkpoint, msg.sender, stake[msg.sender]);
-        bool isCommited;
-
-        BottomUpCheckpoint storage submissionToExecute;
 
         if (shouldExecuteVote) {
-            submissionToExecute = _getMostVotedSubmission(voteSubmission);
-            isCommited = _commitCheckpoint(voteSubmission.vote, submissionToExecute);
+            _commitCheckpoint(voteSubmission);
         } else {
             // try to get the next executable epoch from the queue
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
@@ -237,26 +236,23 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             if (isExecutableEpoch) {
                 EpochVoteBottomUpSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
 
-                submissionToExecute  = _getMostVotedSubmission(nextVoteSubmission);
-                isCommited = _commitCheckpoint(nextVoteSubmission.vote, submissionToExecute);
+                _commitCheckpoint(nextVoteSubmission);
             }
-        }
-
-        if (isCommited) {
-            IGateway(ipcGatewayAddr).commitChildCheck(checkpoint);
         }
     }
 
     /// Distributes the rewards for the subnet to validators.
     function reward() public payable onlyGateway nonReentrant {
-        uint validatorLength = validators.length();
+        uint256 validatorsLength = validators.length();
+        uint256 balance = address(this).balance;
+
         if(msg.value == 0) revert NoRewardsSentForDistribution();
-        if(validatorLength == 0) revert NoValidatorsInSubnet();
-        if(address(this).balance < validatorLength) revert NotEnoughBalanceForRewards();
+        if(validatorsLength == 0) revert NoValidatorsInSubnet();
+        if(balance < validatorsLength) revert NotEnoughBalanceForRewards();
 
-        uint rewardAmount = address(this).balance / validatorLength;
+        uint rewardAmount = address(this).balance / validatorsLength;
 
-        for (uint i = 0; i < validatorLength; ) {
+        for (uint i = 0; i < validatorsLength; ) {
             payable(validators.at(i)).sendValue(rewardAmount);
             unchecked {
                 ++i;
@@ -302,17 +298,19 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
     }
 
-    function _commitCheckpoint(EpochVoteSubmission storage vote, BottomUpCheckpoint storage checkpoint) internal returns(bool committed) {
+    function _commitCheckpoint(EpochVoteBottomUpSubmission storage voteSubmission) internal {
+        BottomUpCheckpoint storage checkpoint = _getMostVotedSubmission(voteSubmission);
+
         if (checkpoint.isEmpty()) {
-            return false;
+            return;
         }
 
         /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
         if (prevExecutedCheckpointHash != checkpoint.prevHash) {
-            vote.reset();
+            voteSubmission.vote.reset();
             executableQueue.remove(checkpoint.epoch);
 
-            return false;
+            return;
         }
 
         _markSubmissionExecuted(checkpoint.epoch);
@@ -320,6 +318,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         committedCheckpoints[checkpoint.epoch] = checkpoint;
         prevExecutedCheckpointHash = checkpoint.toHash();
 
-        return true;
+        IGateway(ipcGatewayAddr).commitChildCheck(checkpoint);
     }
 }
