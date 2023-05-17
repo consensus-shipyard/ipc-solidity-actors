@@ -43,6 +43,8 @@ contract SubnetActorTest is Test {
     error NoRewardsSentForDistribution();
     error NoValidatorsInSubnet();
     error NotEnoughBalanceForRewards();
+    error EpochAlreadyExecuted();
+    error ValidatorAlreadyVoted();
 
     function setUp() public
     {
@@ -80,7 +82,7 @@ contract SubnetActorTest is Test {
 
         vm.deal(validator, 1 gwei);
         vm.prank(validator);
-        vm.expectRevert("a minimum collateral is required to join the subnet");
+        vm.expectRevert(CollateralIsZero.selector);
 
         sa.join();
     }
@@ -92,7 +94,7 @@ contract SubnetActorTest is Test {
         _assertLeave(validator, DEFAULT_MIN_VALIDATOR_STAKE);
         _assertKill(validator);
 
-        vm.expectRevert("the subnet is already in a killed or terminating state");
+        vm.expectRevert(SubnetAlreadyTerminating.selector);
         vm.prank(validator);
         vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE + 1);
 
@@ -322,7 +324,7 @@ contract SubnetActorTest is Test {
         checkpoint.epoch = 1;
 
         vm.prank(validator);
-        vm.expectRevert("epoch already executed");
+        vm.expectRevert(EpochAlreadyExecuted.selector);
         sa.submitCheckpoint(checkpoint);
     }
 
@@ -338,7 +340,7 @@ contract SubnetActorTest is Test {
         vm.startPrank(validator);
         sa.submitCheckpoint(checkpoint);
 
-        vm.expectRevert("validator has already voted");
+        vm.expectRevert(ValidatorAlreadyVoted.selector);
         sa.submitCheckpoint(checkpoint);
     }
 

@@ -280,12 +280,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (commit.source.getActor().normalize() != msg.sender) revert InvalidCheckpointSource();
         if(!CrossMsgHelper.isSorted(commit.crossMsgs)) revert MessagesNotSorted();
 
-        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
-        if (registered == false) revert NotRegisteredSubnet();
+        (, Subnet storage subnet) = _getSubnet(msg.sender);
         if (subnet.status != Status.Active) revert SubnetNotActive();
         
-        if (subnet.prevCheckpoint.epoch + bottomUpCheckPeriod != commit.epoch)
-            revert InvalidCheckpointEpoch();
+        if (subnet.prevCheckpoint.epoch > commit.epoch) revert InvalidCheckpointEpoch();
         if (
             commit.prevHash != EMPTY_HASH &&
             commit.prevHash != subnet.prevCheckpoint.toHash()

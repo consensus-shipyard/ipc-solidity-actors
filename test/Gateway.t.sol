@@ -481,21 +481,9 @@ contract GatewayDeploymentTest is Test {
                 }),
                 wrapped: false
             });
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: crossMsgs, prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: crossMsgs, prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
 
         vm.expectRevert(MessagesNotSorted.selector);
-        gw.commitChildCheck(checkpoint);
-    }
-
-    function test_CommitChildCheck_Fails_NotRegisteredSubnet() public {
-        address subnetAddress = address(100);
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-        //note we skip calling the registerSubnet function here
-        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
-
-        vm.expectRevert(NotRegisteredSubnet.selector);
         gw.commitChildCheck(checkpoint);
     }
 
@@ -503,11 +491,9 @@ contract GatewayDeploymentTest is Test {
         address subnetAddress = address(100);
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-        sa.join{value: MIN_COLLATERAL_AMOUNT / 2}();
-        gw.kill();
 
         SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
 
         vm.expectRevert(SubnetNotActive.selector);
         gw.commitChildCheck(checkpoint);
@@ -520,12 +506,12 @@ contract GatewayDeploymentTest is Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
 
         SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
         gw.commitChildCheck(checkpoint);
 
         checkpoint.fee = 100; // mess with the checkpoint to get different hash
 
-        BottomUpCheckpoint memory checkpoint2 = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: checkpoint.toHash(), children: new ChildCheck[](0)});
+        BottomUpCheckpoint memory checkpoint2 = BottomUpCheckpoint({source: subnetId, epoch: 2 * DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: checkpoint.toHash(), children: new ChildCheck[](0)});
 
         vm.expectRevert(InconsistentPrevCheckpoint.selector);
         gw.commitChildCheck(checkpoint2);
@@ -538,7 +524,7 @@ contract GatewayDeploymentTest is Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
 
         SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
         gw.commitChildCheck(checkpoint);
 
         vm.expectRevert(AlreadyCommitedCheckpoint.selector);
@@ -552,7 +538,7 @@ contract GatewayDeploymentTest is Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
 
         SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: MIN_COLLATERAL_AMOUNT * 2, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: MIN_COLLATERAL_AMOUNT * 2, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
 
         vm.expectRevert(NotEnoughSubnetCircSupply.selector);
         gw.commitChildCheck(checkpoint);
@@ -1278,11 +1264,13 @@ contract GatewayDeploymentTest is Test {
         weights[0] = 100;
 
         vm.prank(caller);
+        vm.deal(caller, INITIAL_VALIDATOR_FUNDS);
         vm.expectRevert(NotSystemActor.selector);
-        gw.setMembership(validators, weights);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
     }
 
     function test_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
+        
         address[] memory validators = new address[](1);
         validators[0] = vm.addr(100);
         uint256[] memory weights = new uint256[](2);
@@ -1290,9 +1278,22 @@ contract GatewayDeploymentTest is Test {
         weights[1] = 130;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.expectRevert("number of validators is not equal to the number of validator weights");
-        gw.setMembership(validators, weights);
-    }    
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
+        vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
+    }
+
+    function test_SetMembership_Fails_NotEnoughFundsForMembership() public {
+        address[] memory validators = new address[](1);
+        validators[0] = vm.addr(100);
+        uint256[] memory weights = new uint256[](1);
+        weights[0] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS - 1);
+        vm.expectRevert(NotEnoughFundsForMembership.selector);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS - 1}(validators, weights);
+    }
     
     function test_SetMembership_Fails_ZeroWeight() public {
         address[] memory validators = new address[](1);
@@ -1301,8 +1302,9 @@ contract GatewayDeploymentTest is Test {
         weights[0] = 0;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.expectRevert("validator's weight cannot be zero");
-        gw.setMembership(validators, weights);
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
+        vm.expectRevert(ValidatorWeightIsZero.selector);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
     }
 
     function test_SetMembership_Works_MultipleValidators() public {
@@ -1314,7 +1316,8 @@ contract GatewayDeploymentTest is Test {
         weights[1] = 150;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        gw.setMembership(validators, weights);
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS * 2);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS * 2}(validators, weights);
 
         require(gw.totalWeight() == 250);
     }
