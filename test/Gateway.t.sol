@@ -1314,31 +1314,31 @@ contract GatewayDeploymentTest is Test {
         gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
     }
 
-    // function test_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
+    function test_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
         
-    //     address[] memory validators = new address[](1);
-    //     validators[0] = vm.addr(100);
-    //     uint256[] memory weights = new uint256[](2);
-    //     weights[0] = 100;
-    //     weights[1] = 130;
-
-    //     vm.prank(FilAddress.SYSTEM_ACTOR);
-    //     vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
-    //     vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
-    //     gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
-    // }
-
-    function test_SetMembership_Fails_NotEnoughFundsForMembership() public {
         address[] memory validators = new address[](1);
         validators[0] = vm.addr(100);
-        uint256[] memory weights = new uint256[](1);
+        uint256[] memory weights = new uint256[](2);
         weights[0] = 100;
+        weights[1] = 130;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS - 1);
-        vm.expectRevert(NotEnoughFundsForMembership.selector);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS - 1}(validators, weights);
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
+        vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
     }
+
+    // function test_SetMembership_Fails_NotEnoughFundsForMembership() public {
+    //     address[] memory validators = new address[](1);
+    //     validators[0] = vm.addr(100);
+    //     uint256[] memory weights = new uint256[](1);
+    //     weights[0] = 100;
+
+    //     vm.prank(FilAddress.SYSTEM_ACTOR);
+    //     vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS - 1);
+    //     vm.expectRevert(NotEnoughFundsForMembership.selector);
+    //     gw.setMembership{value: INITIAL_VALIDATOR_FUNDS - 1}(validators, weights);
+    // }
     
     function test_SetMembership_Fails_ZeroWeight() public {
         address[] memory validators = new address[](1);

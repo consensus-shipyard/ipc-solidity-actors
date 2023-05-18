@@ -378,8 +378,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         address[] memory validators,
         uint256[] memory weights
     ) external payable systemActorOnly {
-        // if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
-        if(msg.value != validators.length * INITIAL_VALIDATOR_FUNDS) revert NotEnoughFundsForMembership();
+        if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
+        // if(msg.value != validators.length * INITIAL_VALIDATOR_FUNDS) revert NotEnoughFundsForMembership();
         // invalidate the previous validator set
         validatorNonce++;
         totalWeight = 0;
