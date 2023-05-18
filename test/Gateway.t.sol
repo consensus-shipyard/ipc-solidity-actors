@@ -69,6 +69,7 @@ contract GatewayDeploymentTest is Test {
     error ValidatorsAndWeightsLengthMismatch();
     error ValidatorWeightIsZero();
     error NotEnoughFundsForMembership();
+    error EpochNotVotable();
 
     function setUp() public {
         address[] memory path = new address[](1);
@@ -133,10 +134,10 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_Register_Works_SingleSubnet(
-        uint256 subnetCollateral,
-        address subnetAddress
+        uint256 subnetCollateral
     ) public {
-        vm.assume(subnetCollateral >= MIN_COLLATERAL_AMOUNT);
+        vm.assume(subnetCollateral >= MIN_COLLATERAL_AMOUNT && subnetCollateral < type(uint64).max);
+        address subnetAddress = vm.addr(100);
         vm.prank(subnetAddress);
         vm.deal(subnetAddress, subnetCollateral);
 
@@ -178,10 +179,10 @@ contract GatewayDeploymentTest is Test {
 
     function testAddStake_Works_SingleStaking(
         uint256 stakeAmount,
-        uint256 registerAmount,
-        address subnetAddress
+        uint256 registerAmount
     ) public {
-        vm.assume(registerAmount >= MIN_COLLATERAL_AMOUNT);
+        address subnetAddress = vm.addr(100);
+        vm.assume(registerAmount >= MIN_COLLATERAL_AMOUNT && registerAmount < type(uint64).max);
         vm.assume(
             stakeAmount > 0 && stakeAmount < type(uint256).max - registerAmount
         );
@@ -304,11 +305,12 @@ contract GatewayDeploymentTest is Test {
 
     function test_ReleaseStake_Fail_InsufficientSubnetBalance(
         uint256 releaseAmount,
-        uint256 subnetBalance,
-        address subnetAddress
+        uint256 subnetBalance
     ) public {
         vm.assume(subnetBalance > MIN_COLLATERAL_AMOUNT);
-        vm.assume(releaseAmount > subnetBalance);
+        vm.assume(releaseAmount > subnetBalance && releaseAmount < type(uint256).max - subnetBalance);
+
+        address subnetAddress = vm.addr(100);
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, releaseAmount);
 
@@ -634,11 +636,13 @@ contract GatewayDeploymentTest is Test {
         vm.startPrank(funderAddress);
         vm.deal(funderAddress, fundAmount + 1);
 
-        (SubnetID memory subnetId, , , ,) = getSubnet(address(sa));
+        address[] memory wrongSubnetPath = new address[](2);
+        wrongSubnetPath[0] = vm.addr(102);
+        wrongSubnetPath[0] = vm.addr(103);
+        SubnetID memory wrongSubnetId = SubnetID({route: wrongSubnetPath});
 
         vm.expectRevert(NotRegisteredSubnet.selector);
-
-        gw.fund{value: fundAmount}(subnetId);
+        gw.fund{value: fundAmount}(wrongSubnetId);
     }
 
     function test_Fund_Fails_InsufficientAmount() public {
@@ -1350,7 +1354,7 @@ contract GatewayDeploymentTest is Test {
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD + 1, topDownMsgs: new CrossMsg[](0)});
 
         vm.prank(validator);
-        vm.expectRevert("epoch not votable");
+        vm.expectRevert(EpochNotVotable.selector);
 
         gw.submitTopDownCheckpoint(checkpoint);
     }
@@ -1364,7 +1368,7 @@ contract GatewayDeploymentTest is Test {
         gw.submitTopDownCheckpoint(checkpoint);
 
         vm.prank(validators[0]);
-        vm.expectRevert("validator has already voted");
+        vm.expectRevert(ValidatorAlreadyVoted.selector);
 
         gw.submitTopDownCheckpoint(checkpoint);
     }
