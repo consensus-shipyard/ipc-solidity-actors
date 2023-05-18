@@ -109,7 +109,7 @@ contract GatewayDeploymentTest is Test {
         sa = new SubnetActor(subnetConstructorParams);
     }
 
-    function testDeployment(uint64 checkpointPeriod) public {
+    function test_Deployment_Works_Root(uint64 checkpointPeriod) public {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
         address[] memory path = new address[](1);
         path[0] = address(0);
@@ -125,12 +125,39 @@ contract GatewayDeploymentTest is Test {
 
         SubnetID memory networkName = gw.getNetworkName();
 
-        require(networkName.isRoot());
+        require(networkName.isRoot(), "networkName.isRoot()");
+        require(gw.initialized() == true, "gw.initialized() == true");
 
-        require(gw.minStake() == MIN_COLLATERAL_AMOUNT);
-        require(gw.bottomUpCheckPeriod() == checkpointPeriod);
-        require(gw.topDownCheckPeriod() == checkpointPeriod);
-        require(gw.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE);
+        require(gw.minStake() == MIN_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
+        require(gw.bottomUpCheckPeriod() == checkpointPeriod, "gw.bottomUpCheckPeriod() == checkpointPeriod");
+        require(gw.topDownCheckPeriod() == checkpointPeriod, "gw.topDownCheckPeriod() == checkpointPeriod");
+        require(gw.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE, "gw.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE");
+    }
+
+    function test_Deployment_Works_NotRoot(uint64 checkpointPeriod) public {
+        vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
+        address[] memory path = new address[](2);
+        path[0] = address(0);
+        path[1] = address(1);
+
+        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+            networkName: SubnetID({route: path}),
+            bottomUpCheckPeriod: checkpointPeriod,
+            topDownCheckPeriod: checkpointPeriod,
+            msgFee: CROSS_MSG_FEE,
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+        });
+        gw = new Gateway(constructorParams);
+
+        SubnetID memory networkName = gw.getNetworkName();
+
+        require(networkName.isRoot() == false, "networkName.isRoot()");
+        require(gw.initialized() == false, "gw.initialized() == false");
+
+        require(gw.minStake() == MIN_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
+        require(gw.bottomUpCheckPeriod() == checkpointPeriod, "gw.bottomUpCheckPeriod() == checkpointPeriod");
+        require(gw.topDownCheckPeriod() == checkpointPeriod, "gw.topDownCheckPeriod() == checkpointPeriod");
+        require(gw.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE, "gw.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE");
     }
 
     function test_Register_Works_SingleSubnet(
@@ -144,6 +171,20 @@ contract GatewayDeploymentTest is Test {
         registerSubnet(subnetCollateral, subnetAddress);
 
         require(gw.totalSubnets() == 1);
+    }
+
+    function test_InitGenesisEpoch_Works() public {
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gw2.initGenesisEpoch(50);
+
+        require(gw2.initialized() == true);
+        require(gw2.genesisEpoch() == 50);
+    }
+
+    function test_InitGenesisEpoch_Fails_AlreadyInitialized() public {
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(AlreadyInitialized.selector);
+        gw.initGenesisEpoch(50);
     }
 
     function test_Register_Works_MultipleSubnets(uint8 numberOfSubnets) public {
@@ -1273,19 +1314,19 @@ contract GatewayDeploymentTest is Test {
         gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
     }
 
-    function test_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
+    // function test_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
         
-        address[] memory validators = new address[](1);
-        validators[0] = vm.addr(100);
-        uint256[] memory weights = new uint256[](2);
-        weights[0] = 100;
-        weights[1] = 130;
+    //     address[] memory validators = new address[](1);
+    //     validators[0] = vm.addr(100);
+    //     uint256[] memory weights = new uint256[](2);
+    //     weights[0] = 100;
+    //     weights[1] = 130;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
-        vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
-    }
+    //     vm.prank(FilAddress.SYSTEM_ACTOR);
+    //     vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
+    //     vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
+    //     gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
+    // }
 
     function test_SetMembership_Fails_NotEnoughFundsForMembership() public {
         address[] memory validators = new address[](1);

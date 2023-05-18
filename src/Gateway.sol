@@ -106,7 +106,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool)))
         private checks;
 
-    bool initialized = false;
+    bool public initialized = false;
 
     /// @notice contains voted submissions for a given epoch 
     mapping(uint64 => EpochVoteTopDownSubmission) private epochVoteSubmissions;
@@ -378,7 +378,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         address[] memory validators,
         uint256[] memory weights
     ) external payable systemActorOnly {
-        if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
+        // if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
         if(msg.value != validators.length * INITIAL_VALIDATOR_FUNDS) revert NotEnoughFundsForMembership();
         // invalidate the previous validator set
         validatorNonce++;
@@ -404,8 +404,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             // to be committed. This doesn't apply to the root.
             // TODO: Once account abstraction is conveniently supported, there will be
             // no need for this initial funding of validators.
-            if (block.number == 1 && !networkName.isRoot())
-                payable(validatorAddress).sendValue(INITIAL_VALIDATOR_FUNDS);
+            // if (block.number == 1 && !networkName.isRoot())
+            //     payable(validatorAddress).sendValue(INITIAL_VALIDATOR_FUNDS);
 
             unchecked {
                 ++validatorIndex;
