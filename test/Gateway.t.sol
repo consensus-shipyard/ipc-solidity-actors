@@ -70,6 +70,7 @@ contract GatewayDeploymentTest is Test {
     error ValidatorWeightIsZero();
     error NotEnoughFundsForMembership();
     error EpochNotVotable();
+    error EpochAlreadyExecuted();
 
     function setUp() public {
         address[] memory path = new address[](1);
@@ -1377,13 +1378,28 @@ contract GatewayDeploymentTest is Test {
         require(gw.totalWeight() == 1000);
     }
 
-    function test_SubmitTopDownCheckpoint_Fails_NotValidator() public {
+    function test_SubmitTopDownCheckpoint_Fails_NotSignableAccount() public {
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
 
-        address nonValidator = vm.addr(400);
-        vm.prank(nonValidator);
-        vm.deal(nonValidator, 1);
-        vm.expectRevert(NotValidator.selector);
+        address validator = vm.addr(400);
+        vm.prank(validator);
+        vm.expectRevert(NotSignableAccount.selector);
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubnetTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
+        address validator = address(100);
+
+        addValidator(validator, 100);
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
+
+        vm.prank(validator);
+        vm.deal(validator, 1 ether);
+        gw.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validator);
+        vm.expectRevert(EpochAlreadyExecuted.selector);
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
@@ -1410,6 +1426,258 @@ contract GatewayDeploymentTest is Test {
 
         vm.prank(validators[0]);
         vm.expectRevert(ValidatorAlreadyVoted.selector);
+
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_NotInitialized() public {
+        address[] memory path = new address[](2);
+        path[0] = address(0);
+        path[1] = address(1);
+
+        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+            networkName: SubnetID({route: path}),
+            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            msgFee: CROSS_MSG_FEE,
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+        });
+        gw = new Gateway(constructorParams);
+
+        address validator = vm.addr(100);
+
+        addValidator(validator, 100);
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
+
+        vm.prank(validator);
+        vm.deal(validator, 1);
+        vm.expectRevert(NotInitialized.selector);
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_NotValidator() public {
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: new CrossMsg[](0)});
+
+        address nonValidator = vm.addr(400);
+        vm.prank(nonValidator);
+        vm.deal(nonValidator, 1);
+        vm.expectRevert(NotValidator.selector);
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_MessagesNotSorted() public {
+        address[] memory validators = setupValidators();
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](2);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 10,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+        topDownMsgs[1] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 0,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validators[0]);
+        vm.expectRevert(MessagesNotSorted.selector);
+
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_InvalidCrossMsgDestinationAddress() public {
+        address validator = address(100);  
+
+        addValidator(validator, 100);
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(0)
+                }),
+                value: 0,
+                nonce: 10,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validator);
+        vm.expectRevert(InvalidCrossMsgDestinationAddress.selector);
+
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_NotEnoughBalance() public {
+        address validator = address(100);  
+
+        addValidator(validator, 100);
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 100 ether,
+                nonce: 10,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validator);
+        vm.expectRevert(NotEnoughBalance.selector);
+
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_InvalidCrossMsgDestinationSubnet() public { 
+        address validator = address(100);  
+
+        addValidator(validator, 100);
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: SubnetID(new address[](0)),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 10,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validator);
+        vm.deal(validator, 1);
+        vm.expectRevert(InvalidCrossMsgDestinationSubnet.selector);
+
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_TopDownInvalidCrossMsgNonce() public { 
+        address validator = address(100);  
+
+        addValidator(validator, 100);
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        // apply type = topdown
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 10,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+        
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validator);
+        vm.deal(validator, 1);
+        vm.expectRevert(InvalidCrossMsgNonce.selector);
+
+        gw.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function test_SubmitTopDownCheckpoint_Fails_SubnetNotRegisteredSubnet() public { 
+        address validator = address(100);  
+
+        addValidator(validator, 100);
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        address[] memory fromPath = new address[](2);
+        fromPath[0] = ROOTNET_ADDRESS;
+        fromPath[1] = address(13);
+
+        // apply type = topdown
+        topDownMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: SubnetID(fromPath),
+                    rawAddress: address(this)
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: address(this)
+                }),
+                value: 0,
+                nonce: 10,
+                method: this.callback.selector,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+        
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validator);
+        vm.deal(validator, 1);
+        vm.expectRevert(NotRegisteredSubnet.selector);
 
         gw.submitTopDownCheckpoint(checkpoint);
     }
