@@ -1127,6 +1127,55 @@ contract GatewayDeploymentTest is Test {
         require(gw2.appliedTopDownNonce() == 0);
     }
 
+    function test_WhitelistPropagator_Works() public {
+        address caller = vm.addr(100);
+        address receiver = vm.addr(101);
+
+        vm.prank(receiver);
+        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName(),
+                    rawAddress: caller
+                }),
+                to: IPCAddress({
+                    subnetId: gw.getNetworkName().createSubnetId(receiver),
+                    rawAddress: receiver
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: new bytes(0)
+            }),
+            wrapped: false
+        });
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
+        topDownMsgs[0] = crossMsg;
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+        vm.prank(TOPDOWN_VALIDATOR_1);
+        vm.deal(TOPDOWN_VALIDATOR_1, 1);
+        gw.submitTopDownCheckpoint(checkpoint);
+
+        bytes32 postboxItemId = crossMsg.toHash();
+        address[] memory ownersToAdd = new address[](2);
+        ownersToAdd[0] = receiver;
+
+        vm.prank(caller);
+        vm.deal(caller, CROSS_MSG_FEE + 2);
+        gw.whitelistPropagator(postboxItemId, ownersToAdd);
+
+        require(gw.postboxHasOwner(postboxItemId, caller), "gw.postboxHasOwner(postboxItemId, caller)");
+        require(gw.postboxHasOwner(postboxItemId, receiver), "gw.postboxHasOwner(postboxItemId, receiver)");
+
+        (StorableMsg memory storableMsg, bool wrapped) = gw.postbox(postboxItemId);
+        CrossMsg memory msgFrompostbox = CrossMsg(storableMsg, wrapped);
+        require(msgFrompostbox.toHash() == crossMsg.toHash());
+    }
+
     function test_WhitelistPropagator_Fails_NotOwner() public {
         address caller = vm.addr(100);
         vm.deal(caller, 1 ether);
@@ -1182,6 +1231,14 @@ contract GatewayDeploymentTest is Test {
         vm.prank(caller);
         gw.propagate{value: fee}(postboxId);
         require(caller.balance == 0, "caller.balance == 0");
+    }
+
+    function test_Propagate_Fails_NotEnoughFee() public {
+        address caller = vm.addr(100);
+        vm.deal(caller, 1 ether);
+
+        vm.expectRevert(NotEnoughFee.selector);
+        gw.propagate(bytes32(""));
     }
 
     function test_Propagate_Fails_NotOwner() public {
@@ -1248,57 +1305,6 @@ contract GatewayDeploymentTest is Test {
         gw.submitTopDownCheckpoint(checkpoint);
 
         return crossMsg.toHash();
-    }
-
-    function test_WhitelistPropagator_Works() public {
-        address caller = vm.addr(100);
-        address receiver = vm.addr(101);
-
-
-        vm.prank(receiver);
-        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
-
-        CrossMsg memory crossMsg = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({
-                    subnetId: gw.getNetworkName(),
-                    rawAddress: caller
-                }),
-                to: IPCAddress({
-                    subnetId: gw.getNetworkName().createSubnetId(receiver),
-                    rawAddress: receiver
-                }),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
-            wrapped: false
-        });
-
-        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
-        topDownMsgs[0] = crossMsg;
-        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
-        vm.prank(TOPDOWN_VALIDATOR_1);
-        vm.deal(TOPDOWN_VALIDATOR_1, 1);
-        gw.submitTopDownCheckpoint(checkpoint);
-
-        bytes32 postboxItemId = crossMsg.toHash();
-        address[] memory ownersToAdd = new address[](1);
-        ownersToAdd[0] = receiver;
-
-        vm.prank(caller);
-        vm.deal(caller, CROSS_MSG_FEE + 2);
-        gw.whitelistPropagator(postboxItemId, ownersToAdd);
-
-        require(gw.postboxHasOwner(postboxItemId, caller), "gw.postboxHasOwner(postboxItemId, caller)");
-        require(gw.postboxHasOwner(postboxItemId, receiver), "gw.postboxHasOwner(postboxItemId, receiver)");
-
-        (StorableMsg memory storableMsg, bool wrapped) = gw.postbox(postboxItemId);
-        CrossMsg memory msgFrompostbox = CrossMsg(storableMsg, wrapped);
-        require(msgFrompostbox.toHash() == crossMsg.toHash());
-
     }
 
     function test_SetMembership_Fails_NotSystemActor() public {

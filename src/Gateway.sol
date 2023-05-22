@@ -510,7 +510,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         CrossMsg storage crossMsg = postbox[msgCid];
 
-        if (crossMsg.isEmpty()) revert PostboxNotExist();
+        // if (crossMsg.isEmpty()) revert PostboxNotExist();
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(
             crossMsg
@@ -535,7 +535,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         return mostVotedSubmission.topDownMsgs;
     }
 
-   function _submitTopDownVote(
+    function _submitTopDownVote(
         EpochVoteTopDownSubmission storage voteSubmission,
         TopDownCheckpoint calldata submission,
         address submitterAddress,
