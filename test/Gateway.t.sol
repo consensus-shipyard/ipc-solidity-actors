@@ -309,6 +309,19 @@ contract GatewayDeploymentTest is Test {
         require(subnetAddress.balance == fullAmount);
     }
 
+    function test_ReleaseStake_Works_SubnetInactive() public {
+        address subnetAddress = vm.addr(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        gw.releaseStake(MIN_COLLATERAL_AMOUNT / 2);
+
+        (, uint stake, , , Status status) = getSubnet(subnetAddress);
+        require(stake == MIN_COLLATERAL_AMOUNT / 2, "stake == MIN_COLLATERAL_AMOUNT / 2");
+        require(status == Status.Inactive, "status == Status.Inactive");
+    }
+
     function test_ReleaseStake_Works_PartialAmount(
         uint256 partialAmount
     ) public {
@@ -361,6 +374,28 @@ contract GatewayDeploymentTest is Test {
         vm.expectRevert(NotEnoughFundsToRelease.selector);
 
         gw.releaseStake(releaseAmount);
+    }
+
+    function test_ReleaseStake_Fail_NotRegisteredSubnet() public{
+        vm.expectRevert(NotRegisteredSubnet.selector);
+
+        gw.releaseStake(1);
+    }
+
+    function test_ReleaseStake_Works_TransitionToInactive() public {
+        address subnetAddress = vm.addr(100);
+
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        gw.releaseStake(10);
+
+        (, uint stake, , , Status status) = getSubnet(subnetAddress);
+
+        require(stake == MIN_COLLATERAL_AMOUNT - 10, "stake should be MIN_COLLATERAL_AMOUNT - 10");
+        require(status == Status.Inactive, "status should be Inactive");
     }
 
     function test_Kill_Works() public {
@@ -432,6 +467,39 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
+    function test_CommitChildCheck_ChildExists() public {
+        address subnetAddress = address(100);
+
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+        gw.commitChildCheck(checkpoint);
+        CrossMsg[] memory crossMsgs = new CrossMsg[](1);
+        crossMsgs[0] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    value: 0,
+                    nonce: 1,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
+                wrapped: false
+            });
+        checkpoint.crossMsgs = crossMsgs;
+        gw.commitChildCheck(checkpoint);
+    }
+
     function test_CommitChildCheck_Works_SameSubnet(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 11);
@@ -481,6 +549,28 @@ contract GatewayDeploymentTest is Test {
 
         vm.expectRevert(InvalidCheckpointSource.selector);
         gw.commitChildCheck(checkpoint);
+    }
+
+    function test_CommitChildCheck_Fails_InvalidCheckpointEpoch() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        
+        BottomUpCheckpoint memory checkpoint = createCheckpoint(
+            subnetAddress,
+            DEFAULT_CHECKPOINT_PERIOD
+        );
+        gw.commitChildCheck(checkpoint);
+
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        BottomUpCheckpoint memory checkpoint2 = createCheckpoint(
+            subnetAddress,
+            2 * DEFAULT_CHECKPOINT_PERIOD
+        );
+        
+        gw.commitChildCheck(checkpoint2);
     }
 
     function test_CommitChildCheck_Fails_MessagesNotSorted() public {
