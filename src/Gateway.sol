@@ -262,7 +262,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
         if (registered == false) revert NotRegisteredSubnet();
-        // if (address(this).balance < subnet.stake) revert NotEnoughBalance();
         if (subnet.circSupply > 0) revert NotEmptySubnetCircSupply();
 
         uint256 stake = subnet.stake;
@@ -509,8 +508,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             revert InvalidPostboxOwner();
 
         CrossMsg storage crossMsg = postbox[msgCid];
-
-        // if (crossMsg.isEmpty()) revert PostboxNotExist();
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(
             crossMsg

@@ -301,11 +301,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function _commitCheckpoint(EpochVoteBottomUpSubmission storage voteSubmission) internal {
         BottomUpCheckpoint storage checkpoint = _getMostVotedSubmission(voteSubmission);
 
-        if (checkpoint.isEmpty()) {
-            return;
-        }
-
         /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
+        
+        
         if (prevExecutedCheckpointHash != checkpoint.prevHash) {
             voteSubmission.vote.reset();
             executableQueue.remove(checkpoint.epoch);

@@ -447,6 +447,11 @@ contract SubnetActorTest is Test {
         BottomUpCheckpoint memory checkpoint = _createBottomUpCheckpoint();
 
         _assertVote(validator, checkpoint);
+
+        require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator) == true);
+        require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator2) == false);
+        require(sa.lastVotingExecutedEpoch() == 0);
+
     }
 
     function test_SubmitCheckpoint_Fails_NotAccount() public {

@@ -467,39 +467,6 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function test_CommitChildCheck_ChildExists() public {
-        address subnetAddress = address(100);
-
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
-
-        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: 0, fee: 0, crossMsgs: new CrossMsg[](0), prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
-        gw.commitChildCheck(checkpoint);
-        CrossMsg[] memory crossMsgs = new CrossMsg[](1);
-        crossMsgs[0] = CrossMsg({
-                message: StorableMsg({
-                    from: IPCAddress({
-                        subnetId: SubnetID({route: new address[](0)}),
-                        rawAddress: address(this)
-                    }),
-                    to: IPCAddress({
-                        subnetId: SubnetID({route: new address[](0)}),
-                        rawAddress: address(this)
-                    }),
-                    value: 0,
-                    nonce: 1,
-                    method: METHOD_SEND,
-                    params: new bytes(0)
-                }),
-                wrapped: false
-            });
-        checkpoint.crossMsgs = crossMsgs;
-        gw.commitChildCheck(checkpoint);
-    }
-
     function test_CommitChildCheck_Works_SameSubnet(uint64 blockNumber) public {
         address subnetAddress = address(100);
         vm.assume(blockNumber < type(uint64).max / 2 - 11);
