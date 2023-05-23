@@ -72,7 +72,7 @@ contract ExecutableQueueHelperTest is Test {
     function test_Remove_Works_LastEpoch() public {
         _assertPush(EPOCH_ONE);
         _assertPush(EPOCH_TWO);
-        _assertPush(EPOCH_FOUR);
+        _assertPush(EPOCH_THREE);
 
         _assertRemove(EPOCH_THREE);
 
