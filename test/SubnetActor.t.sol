@@ -123,6 +123,14 @@ contract SubnetActorTest is Test {
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
     }
 
+    function test_Join_Works_LessThanMinStake() public {
+        address validator = vm.addr(1235);
+
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE - 1);
+
+        require(sa.validatorCount() == 0);
+    }
+
     function test_Join_Works_MultipleNewValidators() public {
         _assertJoin(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
         _assertJoin(vm.addr(1235), DEFAULT_MIN_VALIDATOR_STAKE);
