@@ -15,10 +15,10 @@ abstract contract Voting {
     uint8 constant MIN_CHECKPOINT_PERIOD = 10;
 
     /// @notice percent approvals needed to reach consensus
-    uint8 public majorityPercentage;
+    uint8 public immutable majorityPercentage;
 
     /// @notice number of blocks between two checkpoint submissions
-    uint64 public submissionPeriod;
+    uint64 public immutable submissionPeriod;
 
     /// @notice last executed epoch after voting
     uint64 public lastVotingExecutedEpoch;

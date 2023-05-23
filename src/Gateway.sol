@@ -37,7 +37,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     // uint8 constant MIN_CHECKPOINT_PERIOD = 10;
     uint256 constant MIN_COLLATERAL_AMOUNT = 1 ether;
-    uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
 
     /// @notice path to the current network
     SubnetID private networkName;
@@ -46,14 +45,14 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     uint64 public totalSubnets;
 
     /// @notice Minimum stake required to create a new subnet
-    uint256 public minStake;
+    uint256 public immutable minStake;
 
     /// @notice List of subnets
     /// SubnetID => Subnet
     mapping(bytes32 => Subnet) public subnets;
 
     /// @notice bottom-up period in number of epochs for the subnet
-    uint64 public bottomUpCheckPeriod;
+    uint64 public immutable bottomUpCheckPeriod;
 
     /// @notice Postbox keeps track of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
@@ -64,13 +63,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     mapping(bytes32 => mapping(address => bool)) public postboxHasOwner;
 
     /// @notice top-down period in number of epochs for the subnet
-    uint64 public topDownCheckPeriod;
+    uint64 public immutable topDownCheckPeriod;
 
     /// @notice BottomUpCheckpoints in the GW per epoch
     mapping(uint64 => BottomUpCheckpoint) public bottomUpCheckpoints;
-
-    /// @notice nonce for top-down messages
-    uint64 public topDownNonce;
 
     /// @notice nonce for bottom-up messages
     uint64 public bottomUpNonce;
@@ -80,7 +76,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     uint64 public appliedTopDownNonce;
 
     /// @notice fee amount charged per cross message
-    uint256 public crossMsgFee;
+    uint256 public immutable crossMsgFee;
 
     /// @notice total votes of all validators
     uint256 public totalWeight;
@@ -91,13 +87,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice sequence number that uniquely identifies a validator set
     uint256 public validatorNonce;
-
-    /// @notice number of votes for a top-down checkpoint commitment
-    mapping(bytes32 => uint256) private commitVoteAmount;
-
-    /// @notice weather or not a validator has voted on certain commitment
-    mapping(bytes32 => mapping(address => bool))
-        private hasValidatorVotedForCommit;
 
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) private children;
@@ -378,11 +367,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         uint256[] memory weights
     ) external payable systemActorOnly {
         if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
-        // if(msg.value != validators.length * INITIAL_VALIDATOR_FUNDS) revert NotEnoughFundsForMembership();
         // invalidate the previous validator set
         validatorNonce++;
-        totalWeight = 0;
 
+        uint256 totalValidatorsWeight = 0;
+        
         // setup the new validator set
         for (uint validatorIndex = 0; validatorIndex < validators.length; ) {
             address validatorAddress = validators[validatorIndex];
@@ -392,7 +381,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
             validatorSet[validatorNonce][validatorAddress] = validatorWeight;
 
-            totalWeight += validatorWeight;
+            totalValidatorsWeight += validatorWeight;
 
             // initial validators need to be conveniently funded with at least
             // 1 FIL for them to be able to commit the first few top-down messages.
@@ -410,6 +399,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
                 ++validatorIndex;
             }
         }
+
+        totalWeight = totalValidatorsWeight;
     }
 
     function submitTopDownCheckpoint(

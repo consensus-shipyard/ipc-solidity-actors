@@ -39,13 +39,13 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     SubnetID private parentId;
 
     /// @notice Address of the IPC gateway for the subnet
-    address public ipcGatewayAddr;
+    address public immutable ipcGatewayAddr;
 
     /// @notice Type of consensus algorithm.
     ConsensusType public consensus;
 
     /// @notice The minimum collateral required to be a validator in this subnet
-    uint256 public minActivationCollateral;
+    uint256 public immutable minActivationCollateral;
 
     /// @notice Total collateral currently deposited in the GW from the subnet
     uint256 public totalStake;
@@ -60,10 +60,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     bytes public genesis;
 
     /// @notice number of blocks in a top-down epoch
-    uint64 public topDownCheckPeriod;
+    uint64 public immutable topDownCheckPeriod;
 
     /// @notice number of blocks in a bottom-up epoch
-    uint64 public bottomUpCheckPeriod;
+    uint64 public immutable bottomUpCheckPeriod;
 
     /// @notice contains all committed bottom-up checkpoint at specific epoch
     mapping(uint64 => BottomUpCheckpoint) public committedCheckpoints;
@@ -72,7 +72,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     EnumerableSet.AddressSet private validators;
 
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
-    uint64 public minValidators;
+    uint64 public immutable minValidators;
     
     /// @notice contains the last executed checkpoint hash
     bytes32 public prevExecutedCheckpointHash;
