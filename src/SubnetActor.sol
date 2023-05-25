@@ -14,9 +14,9 @@ import "./lib/CheckpointHelper.sol";
 import "./lib/SubnetIDHelper.sol";
 import "./lib/ExecutableQueueHelper.sol";
 import "./lib/EpochVoteSubmissionHelper.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import "openzeppelin-contracts/utils/Address.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol";
+import "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/Address.sol";
 
 /// @title Subnet Actor Contract
 /// @author LimeChain team
@@ -73,11 +73,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 public minValidators;
-    
+
     /// @notice contains the last executed checkpoint hash
     bytes32 public prevExecutedCheckpointHash;
 
-    /// @notice contains voted submissions for a given epoch 
+    /// @notice contains voted submissions for a given epoch
     mapping(uint64 => EpochVoteBottomUpSubmission) private epochVoteSubmissions;
 
     modifier onlyGateway() {
@@ -126,7 +126,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         bytes genesis;
     }
 
-    constructor(ConstructParams memory params) Voting(params.majorityPercentage, params.bottomUpCheckPeriod) {
+    constructor(
+        ConstructParams memory params
+    ) Voting(params.majorityPercentage, params.bottomUpCheckPeriod) {
         parentId = params.parentId;
         name = params.name;
         ipcGatewayAddr = params.ipcGatewayAddr;
@@ -160,7 +162,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             msg.value > 0,
             "a minimum collateral is required to join the subnet"
         );
-        
+
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
 
@@ -231,27 +233,47 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
                 parentId.createSubnetId(address(this)).toHash(),
             "submitting checkpoint with the wrong source"
         );
-        
-        EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
+
+        EpochVoteBottomUpSubmission
+            storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
         // submit the vote
-        bool shouldExecuteVote = _submitBottomUpVote(voteSubmission, checkpoint, msg.sender, stake[msg.sender]);
+        bool shouldExecuteVote = _submitBottomUpVote(
+            voteSubmission,
+            checkpoint,
+            msg.sender,
+            stake[msg.sender]
+        );
         bool isCommited;
 
         BottomUpCheckpoint storage submissionToExecute;
 
         if (shouldExecuteVote) {
             submissionToExecute = _getMostVotedSubmission(voteSubmission);
-            isCommited = _commitCheckpoint(voteSubmission.vote, submissionToExecute);
+            isCommited = _commitCheckpoint(
+                voteSubmission.vote,
+                submissionToExecute
+            );
         } else {
             // try to get the next executable epoch from the queue
-            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
+            (
+                uint64 nextExecutableEpoch,
+                bool isExecutableEpoch
+            ) = _getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
-                EpochVoteBottomUpSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
+                EpochVoteBottomUpSubmission
+                    storage nextVoteSubmission = epochVoteSubmissions[
+                        nextExecutableEpoch
+                    ];
 
-                submissionToExecute  = _getMostVotedSubmission(nextVoteSubmission);
-                isCommited = _commitCheckpoint(nextVoteSubmission.vote, submissionToExecute);
+                submissionToExecute = _getMostVotedSubmission(
+                    nextVoteSubmission
+                );
+                isCommited = _commitCheckpoint(
+                    nextVoteSubmission.vote,
+                    submissionToExecute
+                );
             }
         }
 
@@ -293,10 +315,17 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         return validators.at(index);
     }
 
-    function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns(bool) {
-        EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[epoch];
+    function hasValidatorVotedForSubmission(
+        uint64 epoch,
+        address submitter
+    ) external view returns (bool) {
+        EpochVoteBottomUpSubmission
+            storage voteSubmission = epochVoteSubmissions[epoch];
 
-        return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
+        return
+            voteSubmission.vote.submitters[voteSubmission.vote.nonce][
+                submitter
+            ];
     }
 
     function _submitBottomUpVote(
@@ -306,8 +335,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         uint256 submitterWeight
     ) internal returns (bool shouldExecuteVote) {
         bytes32 submissionHash = submission.toHash();
-        
-        shouldExecuteVote = _submitVote(voteSubmission.vote, submissionHash, submitterAddress, submitterWeight, submission.epoch, totalStake);
+
+        shouldExecuteVote = _submitVote(
+            voteSubmission.vote,
+            submissionHash,
+            submitterAddress,
+            submitterWeight,
+            submission.epoch,
+            totalStake
+        );
 
         // store the submission only the first time
         if (voteSubmission.submissions[submissionHash].isEmpty()) {
@@ -315,11 +351,17 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission) internal view returns(BottomUpCheckpoint storage){
-        return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
+    function _getMostVotedSubmission(
+        EpochVoteBottomUpSubmission storage voteSubmission
+    ) internal view returns (BottomUpCheckpoint storage) {
+        return
+            voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
     }
 
-    function _commitCheckpoint(EpochVoteSubmission storage vote, BottomUpCheckpoint storage checkpoint) internal returns(bool committed) {
+    function _commitCheckpoint(
+        EpochVoteSubmission storage vote,
+        BottomUpCheckpoint storage checkpoint
+    ) internal returns (bool committed) {
         if (checkpoint.isEmpty()) {
             return false;
         }

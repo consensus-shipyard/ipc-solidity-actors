@@ -2,7 +2,7 @@
 pragma solidity ^0.8.7;
 
 import "../structs/Subnet.sol";
-import "openzeppelin-contracts/utils/Strings.sol";
+import "../../lib/openzeppelin-contracts/contracts/utils/Strings.sol";
 
 /// @title Helper library for manipulating SubnetID struct
 /// @author LimeChain team
@@ -12,8 +12,13 @@ library SubnetIDHelper {
     bytes32 private constant EMPTY_SUBNET_HASH =
         keccak256(abi.encode(SubnetID(new address[](0))));
 
-    function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
-        require(subnet.route.length > 1, "error getting parent for subnet addr");
+    function getParentSubnet(
+        SubnetID memory subnet
+    ) public pure returns (SubnetID memory) {
+        require(
+            subnet.route.length > 1,
+            "error getting parent for subnet addr"
+        );
 
         address[] memory route = new address[](subnet.route.length - 1);
         for (uint i = 0; i < route.length; ) {
@@ -22,10 +27,8 @@ library SubnetIDHelper {
                 ++i;
             }
         }
-        
-        return SubnetID({
-            route: route
-        });
+
+        return SubnetID({route: route});
     }
 
     function toString(
@@ -47,11 +50,10 @@ library SubnetIDHelper {
         return keccak256(abi.encode(subnet));
     }
 
-    function createSubnetId(SubnetID calldata subnet, address actor)
-        public
-        pure
-        returns (SubnetID memory newSubnet)
-    {
+    function createSubnetId(
+        SubnetID calldata subnet,
+        address actor
+    ) public pure returns (SubnetID memory newSubnet) {
         require(subnet.route.length >= 1, "cannot set actor for empty subnet");
 
         newSubnet.route = new address[](subnet.route.length + 1);
@@ -75,22 +77,20 @@ library SubnetIDHelper {
         return subnet.route.length == 1;
     }
 
-    function equals(SubnetID calldata subnet1, SubnetID calldata subnet2)
-        public
-        pure
-        returns (bool)
-    {
-       if (subnet1.route.length != subnet2.route.length) return false;
-       
-       return toHash(subnet1) == toHash(subnet2);
+    function equals(
+        SubnetID calldata subnet1,
+        SubnetID calldata subnet2
+    ) public pure returns (bool) {
+        if (subnet1.route.length != subnet2.route.length) return false;
+
+        return toHash(subnet1) == toHash(subnet2);
     }
 
     /// @notice Computes the common parent of the current subnet and the one given as argument
-    function commonParent(SubnetID calldata subnet1, SubnetID calldata subnet2)
-        public
-        pure
-        returns (SubnetID memory)
-    {
+    function commonParent(
+        SubnetID calldata subnet1,
+        SubnetID calldata subnet2
+    ) public pure returns (SubnetID memory) {
         uint i = 0;
         while (
             i < subnet1.route.length &&
@@ -127,8 +127,7 @@ library SubnetIDHelper {
 
         uint i = 0;
         while (
-            i < subnet2.route.length &&
-            subnet1.route[i] == subnet2.route[i]
+            i < subnet2.route.length && subnet1.route[i] == subnet2.route[i]
         ) {
             unchecked {
                 i++;
@@ -147,11 +146,11 @@ library SubnetIDHelper {
                 j++;
             }
         }
-        
+
         return SubnetID({route: route});
     }
 
-    function isEmpty(SubnetID calldata subnetId) external pure returns(bool) {
+    function isEmpty(SubnetID calldata subnetId) external pure returns (bool) {
         return toHash(subnetId) == EMPTY_SUBNET_HASH;
     }
 }

@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
-import "forge-std/Test.sol";
+import "../lib/forge-std/src/Test.sol";
 
-import "fevmate/utils/FilAddress.sol";
+import "../lib/fevmate/contracts/utils/FilAddress.sol";
 import "../src/lib/AccountHelper.sol";
 
 contract DummyContract {

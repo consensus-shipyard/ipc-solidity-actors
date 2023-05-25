@@ -4,8 +4,8 @@ pragma solidity ^0.8.7;
 import "../structs/Checkpoint.sol";
 import "../constants/Constants.sol";
 import "../lib/SubnetIDHelper.sol";
-import "openzeppelin-contracts/utils/Address.sol";
-import "fevmate/utils/FilAddress.sol";
+import "../../lib/openzeppelin-contracts/contracts/utils/Address.sol";
+import "../../lib/fevmate/contracts/utils/FilAddress.sol";
 
 /// @title Helper library for manipulating StorableMsg struct
 /// @author LimeChain team
@@ -124,7 +124,9 @@ library CrossMsgHelper {
     }
 
     // checks whether the cross messages are sorted in ascending order or not
-    function isSorted(CrossMsg[] calldata crossMsgs) external pure returns(bool) {
+    function isSorted(
+        CrossMsg[] calldata crossMsgs
+    ) external pure returns (bool) {
         uint256 prevNonce = 0;
         for (uint256 i = 0; i < crossMsgs.length; ) {
             uint256 nonce = crossMsgs[i].message.nonce;

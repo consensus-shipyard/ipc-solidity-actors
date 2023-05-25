@@ -15,11 +15,11 @@ import "./lib/CrossMsgHelper.sol";
 import "./lib/StorableMsgHelper.sol";
 import "./lib/ExecutableQueueHelper.sol";
 import "./lib/EpochVoteSubmissionHelper.sol";
-import "fevmate/utils/FilAddress.sol";
-import "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
-import "openzeppelin-contracts/utils/Address.sol";
+import "../lib/fevmate/contracts/utils/FilAddress.sol";
+import "../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/structs/EnumerableMap.sol";
+import "../lib/openzeppelin-contracts/contracts/utils/Address.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -108,7 +108,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     bool initialized = false;
 
-    /// @notice contains voted submissions for a given epoch 
+    /// @notice contains voted submissions for a given epoch
     mapping(uint64 => EpochVoteTopDownSubmission) private epochVoteSubmissions;
 
     modifier signableOnly() {
@@ -129,7 +129,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         uint8 majorityPercentage;
     }
 
-    constructor(ConstructorParams memory params) Voting(params.majorityPercentage, params.topDownCheckPeriod) {
+    constructor(
+        ConstructorParams memory params
+    ) Voting(params.majorityPercentage, params.topDownCheckPeriod) {
         networkName = params.networkName;
         minStake = MIN_COLLATERAL_AMOUNT;
         bottomUpCheckPeriod = params.bottomUpCheckPeriod < MIN_CHECKPOINT_PERIOD
@@ -267,7 +269,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             "source in checkpoint doesn't belong to subnet"
         );
 
-        require(CrossMsgHelper.isSorted(commit.crossMsgs), "bottom up messages not sorted");
+        require(
+            CrossMsgHelper.isSorted(commit.crossMsgs),
+            "bottom up messages not sorted"
+        );
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
@@ -432,27 +437,44 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         require(initialized, "not initialized");
         require(validatorWeight > 0, "not validator");
-        require(CrossMsgHelper.isSorted(checkpoint.topDownMsgs), "top down messages not sorted");
+        require(
+            CrossMsgHelper.isSorted(checkpoint.topDownMsgs),
+            "top down messages not sorted"
+        );
 
-        EpochVoteTopDownSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
-        
+        EpochVoteTopDownSubmission
+            storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
+
         // submit the vote
-        bool shouldExecuteVote = _submitTopDownVote(voteSubmission, checkpoint, msg.sender, validatorWeight);
-        
+        bool shouldExecuteVote = _submitTopDownVote(
+            voteSubmission,
+            checkpoint,
+            msg.sender,
+            validatorWeight
+        );
+
         CrossMsg[] memory topDownMsgs;
-        
+
         if (shouldExecuteVote) {
             topDownMsgs = _markMostVotedSubmissionExecuted(voteSubmission);
         }
 
         // no messages executed in the current submission, let's get the next executable epoch from the queue to see if it can be executed already
         if (topDownMsgs.length == 0) {
-            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
+            (
+                uint64 nextExecutableEpoch,
+                bool isExecutableEpoch
+            ) = _getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
-                EpochVoteTopDownSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
+                EpochVoteTopDownSubmission
+                    storage nextVoteSubmission = epochVoteSubmissions[
+                        nextExecutableEpoch
+                    ];
 
-                topDownMsgs = _markMostVotedSubmissionExecuted(nextVoteSubmission);
+                topDownMsgs = _markMostVotedSubmissionExecuted(
+                    nextVoteSubmission
+                );
             }
         }
 
@@ -547,23 +569,33 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
-    function _markMostVotedSubmissionExecuted(EpochVoteTopDownSubmission storage voteSubmission) internal returns(CrossMsg[] storage){
-        TopDownCheckpoint storage mostVotedSubmission = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
+    function _markMostVotedSubmissionExecuted(
+        EpochVoteTopDownSubmission storage voteSubmission
+    ) internal returns (CrossMsg[] storage) {
+        TopDownCheckpoint storage mostVotedSubmission = voteSubmission
+            .submissions[voteSubmission.vote.mostVotedSubmission];
 
         _markSubmissionExecuted(mostVotedSubmission.epoch);
-        
+
         return mostVotedSubmission.topDownMsgs;
     }
 
-   function _submitTopDownVote(
+    function _submitTopDownVote(
         EpochVoteTopDownSubmission storage voteSubmission,
         TopDownCheckpoint calldata submission,
         address submitterAddress,
         uint256 submitterWeight
     ) internal returns (bool shouldExecuteVote) {
         bytes32 submissionHash = submission.toHash();
-        
-        shouldExecuteVote = _submitVote(voteSubmission.vote, submissionHash, submitterAddress, submitterWeight, submission.epoch, totalWeight);
+
+        shouldExecuteVote = _submitVote(
+            voteSubmission.vote,
+            submissionHash,
+            submitterAddress,
+            submitterWeight,
+            submission.epoch,
+            totalWeight
+        );
 
         // store the submission only the first time
         if (voteSubmission.submissions[submissionHash].isEmpty()) {
@@ -649,7 +681,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice commit bottomup messages for their execution in the subnet
     function _commitBottomUpMsg(CrossMsg memory crossMessage) internal {
-        (, , BottomUpCheckpoint storage checkpoint) = _getCurrentBottomUpCheckpoint();
+        (
+            ,
+            ,
+            BottomUpCheckpoint storage checkpoint
+        ) = _getCurrentBottomUpCheckpoint();
 
         crossMessage.message.nonce = bottomUpNonce;
 
@@ -715,7 +751,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
     }
 
-    // @notice applies a cross-net messages coming from some other subnet. The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.  
+    // @notice applies a cross-net messages coming from some other subnet. The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.
     function _applyMessages(
         SubnetID memory forwarder,
         CrossMsg[] memory crossMsgs
