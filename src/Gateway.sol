@@ -142,7 +142,13 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     }
 
     modifier hasFee() {
-        if (msg.value <= crossMsgFee) revert NotEnoughFee();
+        if (msg.value < crossMsgFee) revert NotEnoughFee();
+        _;
+    }
+
+    modifier onlyValidPostboxOwner(bytes32 msgCid) {
+        if (postboxHasOwner[msgCid][msg.sender] == false)
+            revert InvalidPostboxOwner();
         _;
     }
 
@@ -365,7 +371,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function setMembership(
         address[] memory validators,
         uint256[] memory weights
-    ) external payable systemActorOnly {
+    ) external systemActorOnly {
         if(validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
         // invalidate the previous validator set
         validatorNonce++;
@@ -469,10 +475,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function whitelistPropagator(
         bytes32 msgCid,
         address[] calldata owners
-    ) external {
-        if (postboxHasOwner[msgCid][msg.sender] == false)
-            revert InvalidPostboxOwner();
-
+    ) external onlyValidPostboxOwner(msgCid) {
         CrossMsg storage crossMsg = postbox[msgCid];
 
         if (crossMsg.isEmpty()) revert PostboxNotExist();
@@ -492,12 +495,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice propagates the populated cross net message for the given cid
     /// @param msgCid - the cid of the cross-net message
-    function propagate(bytes32 msgCid) external payable {
-        if (msg.value < crossMsgFee) revert NotEnoughFee();
-
-        if (postboxHasOwner[msgCid][msg.sender] == false)
-            revert InvalidPostboxOwner();
-
+    function propagate(bytes32 msgCid) external payable hasFee onlyValidPostboxOwner(msgCid) {
         CrossMsg storage crossMsg = postbox[msgCid];
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(
