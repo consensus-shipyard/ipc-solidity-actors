@@ -272,8 +272,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {
         if (initialized == false) revert NotInitialized();
         if (commit.source.getActor().normalize() != msg.sender) revert InvalidCheckpointSource();
-        if(!CrossMsgHelper.isSorted(commit.crossMsgs)) revert MessagesNotSorted();
-
+        
         (, Subnet storage subnet) = _getSubnet(msg.sender);
         if (subnet.status != Status.Active) revert SubnetNotActive();
         if (subnet.prevCheckpoint.epoch > commit.epoch) revert InvalidCheckpointEpoch();

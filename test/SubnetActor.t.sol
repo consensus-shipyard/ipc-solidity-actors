@@ -46,6 +46,8 @@ contract SubnetActorTest is Test {
     error EpochAlreadyExecuted();
     error EpochNotVotable();
     error ValidatorAlreadyVoted();
+    error MessagesNotSorted();
+
 
     function setUp() public
     {
@@ -389,6 +391,54 @@ contract SubnetActorTest is Test {
         
         require(first == 0);
         require(last == 0);
+    }
+
+    function test_SubmitCheckpoint_Fails_MessagesNotSorted() public {
+        address validator = vm.addr(100);
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(address(sa));
+        CrossMsg[] memory crossMsgs = new CrossMsg[](2);
+        crossMsgs[0] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    value: CROSS_MSG_FEE + 1,
+                    nonce: 1,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
+                wrapped: false
+            });
+        crossMsgs[1] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({route: new address[](0)}),
+                        rawAddress: address(this)
+                    }),
+                    value: CROSS_MSG_FEE + 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
+                wrapped: false
+            });
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: crossMsgs, prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
+
+        vm.expectRevert(MessagesNotSorted.selector);
+        vm.prank(validator);
+        sa.submitCheckpoint(checkpoint);
+
     }
 
     function test_SubmitCheckpoint_Works_CheckpointNotChained() public {

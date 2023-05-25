@@ -540,54 +540,6 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint2);
     }
 
-    function test_CommitChildCheck_Fails_MessagesNotSorted() public {
-        address subnetAddress = address(100);
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
-
-        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        CrossMsg[] memory crossMsgs = new CrossMsg[](2);
-        crossMsgs[0] = CrossMsg({
-                message: StorableMsg({
-                    from: IPCAddress({
-                        subnetId: SubnetID({route: new address[](0)}),
-                        rawAddress: address(this)
-                    }),
-                    to: IPCAddress({
-                        subnetId: SubnetID({route: new address[](0)}),
-                        rawAddress: address(this)
-                    }),
-                    value: CROSS_MSG_FEE + 1,
-                    nonce: 1,
-                    method: METHOD_SEND,
-                    params: new bytes(0)
-                }),
-                wrapped: false
-            });
-        crossMsgs[1] = CrossMsg({
-                message: StorableMsg({
-                    from: IPCAddress({
-                        subnetId: SubnetID({route: new address[](0)}),
-                        rawAddress: address(this)
-                    }),
-                    to: IPCAddress({
-                        subnetId: SubnetID({route: new address[](0)}),
-                        rawAddress: address(this)
-                    }),
-                    value: CROSS_MSG_FEE + 1,
-                    nonce: 0,
-                    method: METHOD_SEND,
-                    params: new bytes(0)
-                }),
-                wrapped: false
-            });
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({source: subnetId, epoch: DEFAULT_CHECKPOINT_PERIOD, fee: 0, crossMsgs: crossMsgs, prevHash: EMPTY_HASH, children: new ChildCheck[](0)});
-
-        vm.expectRevert(MessagesNotSorted.selector);
-        gw.commitChildCheck(checkpoint);
-    }
-
     function test_CommitChildCheck_Fails_SubnetNotActive() public {
         address subnetAddress = address(100);
         vm.startPrank(subnetAddress);
@@ -1784,7 +1736,7 @@ contract GatewayDeploymentTest is Test {
     }
 
     function test_SubmitTopDownCheckpoint_FuzzNumberOfMessages(uint n) public {
-        vm.assume(n < 16000); // TODO: test with different memory limit
+        vm.assume(n < 19594); // TODO: test with different memory limit
         address[] memory validators = new address[](1);
         validators[0] = vm.addr(100);
         vm.deal(validators[0], 1);

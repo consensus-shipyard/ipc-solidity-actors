@@ -11,6 +11,7 @@ import "./interfaces/ISubnetActor.sol";
 import "./interfaces/IGateway.sol";
 import "./lib/AccountHelper.sol";
 import "./lib/CheckpointHelper.sol";
+import "./lib/CrossMsgHelper.sol";
 import "./lib/SubnetIDHelper.sol";
 import "./lib/ExecutableQueueHelper.sol";
 import "./lib/EpochVoteSubmissionHelper.sol";
@@ -29,6 +30,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     using AccountHelper for address;
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
+    using CrossMsgHelper for CrossMsg;
 
     uint256 private constant MIN_COLLATERAL_AMOUNT = 1 ether;
 
@@ -94,6 +96,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error NoRewardsSentForDistribution();
     error NoValidatorsInSubnet();
     error NotEnoughBalanceForRewards();
+    error MessagesNotSorted();
 
     modifier onlyGateway() {
         if(msg.sender != ipcGatewayAddr) revert NotGateway();
@@ -221,6 +224,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         if(status != Status.Active) revert SubnetNotActive();
         if(!validators.contains(msg.sender)) revert NotValidator();
         if(checkpoint.source.toHash() != parentId.createSubnetId(address(this)).toHash()) revert WrongCheckpointSource();
+        if(!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) revert MessagesNotSorted();
 
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
