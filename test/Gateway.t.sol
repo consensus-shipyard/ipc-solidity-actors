@@ -1014,13 +1014,13 @@ contract GatewayDeploymentTest is Test {
     function test_SendCross_Fails_NotEnoughGas() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 1);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         SubnetID memory destination = gw.getNetworkName().createSubnetId(
             caller
         );
         vm.expectRevert(NotEnoughFee.selector);
-        gw.sendCross{value: CROSS_MSG_FEE}(
+        gw.sendCross{value: CROSS_MSG_FEE - 1}(
             destination,
             CrossMsg({
                 message: StorableMsg({
@@ -1373,9 +1373,8 @@ contract GatewayDeploymentTest is Test {
         weights[0] = 100;
 
         vm.prank(caller);
-        vm.deal(caller, INITIAL_VALIDATOR_FUNDS);
         vm.expectRevert(NotSystemActor.selector);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
+        gw.setMembership(validators, weights);
     }
 
     function test_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
@@ -1387,9 +1386,8 @@ contract GatewayDeploymentTest is Test {
         weights[1] = 130;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
         vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
+        gw.setMembership(validators, weights);
     }
 
     // function test_SetMembership_Fails_NotEnoughFundsForMembership() public {
@@ -1411,9 +1409,8 @@ contract GatewayDeploymentTest is Test {
         weights[0] = 0;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
         vm.expectRevert(ValidatorWeightIsZero.selector);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
+        gw.setMembership(validators, weights);
     }
 
     function test_SetMembership_Works_MultipleValidators() public {
@@ -1425,8 +1422,7 @@ contract GatewayDeploymentTest is Test {
         weights[1] = 150;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS * 2);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS * 2}(validators, weights);
+        gw.setMembership(validators, weights);
 
         require(gw.totalWeight() == 250);
     }
@@ -1796,8 +1792,7 @@ contract GatewayDeploymentTest is Test {
         weights[0] = 100;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS * 3);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS * 3}(validators, weights);
+        gw.setMembership(validators, weights);
 
         CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
         for(uint64 i = 0; i < n; i++) {
@@ -2048,8 +2043,7 @@ contract GatewayDeploymentTest is Test {
         weights[2] = 100;
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS * 3);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS * 3}(validators, weights);
+        gw.setMembership(validators, weights);
 
         return validators;
     }
@@ -2066,8 +2060,7 @@ contract GatewayDeploymentTest is Test {
 
         vm.deal(validator, 1);
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS);
-        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS}(validators, weights);
+        gw.setMembership(validators, weights);
     }
 
     function callback() public view {
