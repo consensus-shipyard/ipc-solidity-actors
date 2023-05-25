@@ -534,9 +534,9 @@ contract GatewayDeploymentTest is Test {
 
         BottomUpCheckpoint memory checkpoint2 = createCheckpoint(
             subnetAddress,
-            2 * DEFAULT_CHECKPOINT_PERIOD
+            DEFAULT_CHECKPOINT_PERIOD / 2
         );
-        
+        vm.expectRevert(InvalidCheckpointEpoch.selector);
         gw.commitChildCheck(checkpoint2);
     }
 
@@ -1785,6 +1785,46 @@ contract GatewayDeploymentTest is Test {
         require(gw.lastVotingExecutedEpoch() == checkpoint.epoch);
         require(first == 0);
         require(last == 0);
+    }
+
+    function test_SubmitTopDownCheckpoint_FuzzNumberOfMessages(uint n) public {
+        vm.assume(n < 16000); // TODO: test with different memory limit
+        address[] memory validators = new address[](1);
+        validators[0] = vm.addr(100);
+        vm.deal(validators[0], 1);
+        uint[] memory weights = new uint[](1);
+        weights[0] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS * 3);
+        gw.setMembership{value: INITIAL_VALIDATOR_FUNDS * 3}(validators, weights);
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
+        for(uint64 i = 0; i < n; i++) {
+            topDownMsgs[i] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: gw.getNetworkName(),
+                        rawAddress: address(this)
+                    }),
+                    to: IPCAddress({
+                        subnetId: gw.getNetworkName(),
+                        rawAddress: address(this)
+                    }),
+                    value: 0,
+                    nonce: i,
+                    method: this.callback.selector,
+                    params: EMPTY_BYTES
+                }),
+                wrapped: false
+            });
+        }
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
+
+        vm.prank(validators[0]);
+        gw.submitTopDownCheckpoint(checkpoint);
+        
     }
 
     function test_SubmitTopDownCheckpoint_Works_ConsensusReachedAndAddedToQueue() public {
