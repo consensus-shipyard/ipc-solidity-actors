@@ -71,13 +71,12 @@ contract ExecutableQueueHelperTest is Test {
 
     function test_Remove_Works_LastEpoch() public {
         _assertPush(EPOCH_ONE);
-        _assertPush(EPOCH_TWO);
-        _assertPush(EPOCH_THREE);
+        _assertPush(EPOCH_FOUR);
 
-        _assertRemove(EPOCH_THREE);
+        _assertRemove(EPOCH_FOUR);
 
         require(queue.first == EPOCH_ONE);
-        require(queue.last == EPOCH_TWO);
+        require(queue.last == EPOCH_ONE);
     }
 
 

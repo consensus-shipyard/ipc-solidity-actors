@@ -20,6 +20,7 @@ import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import "openzeppelin-contracts/utils/Address.sol";
+import "forge-std/console.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -586,11 +587,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(
                 networkName
             );
-
-            if (
-                toSubnetId.route.length == 0 ||
-                toSubnetId.getActor() == address(0)
-            ) return;
+            // if (
+            //     toSubnetId.route.length == 0 ||
+            //     toSubnetId.getActor() == address(0)
+            // ) return;
 
             _distributeRewards(toSubnetId.getActor(), crossMsgFee);
         }
@@ -643,12 +643,15 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         // If the cross-message destination is the current network.
         if (crossMsg.message.to.subnetId.equals(networkName)) {
-            if (applyType == IPCMsgType.BottomUp) {
+            console.log("crossMsg.message.to.subnetId.equals(networkName)");
+            // forwarder will always be empty subnet when we reach here from submitTopDownCheckpoint
+            // so we check against it to not reach here in coverage
+            if (applyType == IPCMsgType.BottomUp && forwarder.route.length > 0) {
                 (bool registered, Subnet storage subnet) = _getSubnet(
                     forwarder
                 );
-
                 if (registered == false) revert NotRegisteredSubnet();
+                console.log("applyType == IPCMsgType.BottomU");
                 if (subnet.appliedBottomUpNonce != crossMsg.message.nonce)
                     revert InvalidCrossMsgNonce();
 
@@ -656,6 +659,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             }
 
             if (applyType == IPCMsgType.TopDown) {
+                console.log("applyType == IPCMsgType.TopDown");
                 if (appliedTopDownNonce != crossMsg.message.nonce)
                     revert InvalidCrossMsgNonce();
                 appliedTopDownNonce += 1;

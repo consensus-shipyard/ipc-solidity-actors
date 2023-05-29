@@ -127,8 +127,12 @@ contract SubnetActorTest is Test {
 
     function test_Join_Works_LessThanMinStake() public {
         address validator = vm.addr(1235);
-
-        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE - 1);
+        uint256 amount = DEFAULT_MIN_VALIDATOR_STAKE / 2;
+        vm.deal(validator, amount + 1);
+        vm.prank(validator);
+        vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gw.register.selector), 0);
+        vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gw.addStake.selector), 0);
+        sa.join{value: amount}();
 
         require(sa.validatorCount() == 0);
     }

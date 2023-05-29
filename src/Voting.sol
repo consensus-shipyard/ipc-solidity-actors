@@ -89,6 +89,7 @@ abstract contract Voting {
             return VoteExecutionStatus.RoundAbort;
         }
 
+        // TODO: we are never reaching here in tests
         return VoteExecutionStatus.ReachingConsensus;
     }
 

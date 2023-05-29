@@ -16,6 +16,9 @@ contract Deployer is Script {
     address public constant ROOTNET_ADDRESS = address(0);
     string private constant DEFAULT_NETWORK_NAME = "test";
 
+    // add this to be excluded from coverage report
+    function test() public {}
+
     function run() external {
         uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
         vm.startBroadcast(deployerPrivateKey);

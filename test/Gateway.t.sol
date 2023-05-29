@@ -77,8 +77,8 @@ contract GatewayDeploymentTest is Test {
         path[0] = ROOTNET_ADDRESS;
 
         address[] memory path2 = new address[](2);
-        path2[0] = ROOTNET_ADDRESS;
-        path2[1] = CHILD_NETWORK_ADDRESS;
+        path2[0] = CHILD_NETWORK_ADDRESS;
+        path2[1] = CHILD_NETWORK_ADDRESS_2;
 
         Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
             networkName: SubnetID({route: path}),
@@ -539,6 +539,7 @@ contract GatewayDeploymentTest is Test {
         vm.expectRevert(InvalidCheckpointEpoch.selector);
         gw.commitChildCheck(checkpoint2);
     }
+
 
     function test_CommitChildCheck_Fails_SubnetNotActive() public {
         address subnetAddress = address(100);
@@ -1095,6 +1096,7 @@ contract GatewayDeploymentTest is Test {
         require(gw2.appliedTopDownNonce() == 0);
     }
 
+
     function test_SendCross_Works_BottomUp_CurrentNetworkCommonParent() public {
         // the receiver is a network 1 address, but we are declaring it is network2 so we can use it in the tests
         address receiver = vm.addr(101);
@@ -1341,18 +1343,6 @@ contract GatewayDeploymentTest is Test {
         vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
         gw.setMembership(validators, weights);
     }
-
-    // function test_SetMembership_Fails_NotEnoughFundsForMembership() public {
-    //     address[] memory validators = new address[](1);
-    //     validators[0] = vm.addr(100);
-    //     uint256[] memory weights = new uint256[](1);
-    //     weights[0] = 100;
-
-    //     vm.prank(FilAddress.SYSTEM_ACTOR);
-    //     vm.deal(FilAddress.SYSTEM_ACTOR, INITIAL_VALIDATOR_FUNDS - 1);
-    //     vm.expectRevert(NotEnoughFundsForMembership.selector);
-    //     gw.setMembership{value: INITIAL_VALIDATOR_FUNDS - 1}(validators, weights);
-    // }
     
     function test_SetMembership_Fails_ZeroWeight() public {
         address[] memory validators = new address[](1);
@@ -1397,6 +1387,50 @@ contract GatewayDeploymentTest is Test {
         vm.expectRevert(NotSignableAccount.selector);
         gw.submitTopDownCheckpoint(checkpoint);
     }
+
+    // function test_SendCross_Fails_InvalidCrossMsgNonce() public {
+    //     address receiver = vm.addr(201);
+    //     address caller = vm.addr(202);
+
+    //     vm.prank(FilAddress.SYSTEM_ACTOR);
+    //     gw2.initGenesisEpoch(0);
+
+    //     vm.prank(caller);
+    //     vm.deal(caller, MIN_COLLATERAL_AMOUNT + 2 * CROSS_MSG_FEE + 2);
+    //     registerSubnetGW(MIN_COLLATERAL_AMOUNT, caller, gw2);
+
+
+    //     vm.prank(receiver);
+    //     vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
+    //     registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+
+    //     SubnetID memory destination = gw.getNetworkName().createSubnetId(receiver);
+
+    //     CrossMsg memory crossMsg = CrossMsg({
+    //         message: StorableMsg({
+    //             from: IPCAddress({
+    //                 subnetId: gw2.getNetworkName(),
+    //                 rawAddress: caller
+    //             }),
+    //             to: IPCAddress({
+    //                 subnetId: destination,
+    //                 rawAddress: receiver
+    //             }),
+    //             value: CROSS_MSG_FEE + 1,
+    //             nonce: 10,
+    //             method: METHOD_SEND,
+    //             params: new bytes(0)
+    //         }),
+    //         wrapped: true
+    //     });
+
+
+    //     vm.startPrank(caller);
+    //     gw2.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
+
+    //     vm.expectRevert(InvalidCrossMsgNonce.selector);
+    //     gw2.propagate{value: CROSS_MSG_FEE}(crossMsg.toHash());
+    // }
 
     function test_SubnetTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
         address validator = address(100);
@@ -2115,11 +2149,11 @@ contract GatewayDeploymentTest is Test {
 
         SubnetID memory parentNetwork = gateway.getNetworkName();
 
-        require(id.toHash() == parentNetwork.createSubnetId(subnetAddress).toHash());
-        require(stake == collateral);
-        require(nonce == 0);
-        require(circSupply == 0);
-        require(status == Status.Active);
+        require(id.toHash() == parentNetwork.createSubnetId(subnetAddress).toHash(), "id.toHash() == parentNetwork.createSubnetId(subnetAddress).toHash()");
+        require(stake == collateral, "stake == collateral");
+        require(nonce == 0, "nonce == 0");
+        require(circSupply == 0, "circSupply == 0");
+        require(status == Status.Active, "status == Status.Active");
     }
 
     function registerSubnet(
