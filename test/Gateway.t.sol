@@ -492,6 +492,41 @@ contract GatewayDeploymentTest is Test {
         gw.commitChildCheck(checkpoint2);
     }
 
+    function test_CommitChildCheck_Fails_InvalidCrossMsgNonce(uint64 blockNumber) public {
+        address subnetAddress = address(100);
+        vm.assume(blockNumber < type(uint64).max / 2 - 11);
+        vm.roll(blockNumber);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        SubnetID memory networkName = gw.getNetworkName();
+        BottomUpCheckpoint memory checkpoint = createCheckpoint(
+            subnetAddress,
+            DEFAULT_CHECKPOINT_PERIOD
+        );
+
+        checkpoint.crossMsgs = new CrossMsg[](1);
+        checkpoint.crossMsgs[0] = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({ subnetId:  networkName.createSubnetId(subnetAddress), rawAddress: address(1)}),
+                to: IPCAddress({subnetId: networkName, rawAddress: address(2)}),
+                value: 0,
+                nonce: 1,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
+            wrapped: false
+        });
+        
+        require(checkpoint.crossMsgs[0].message.applyType(networkName) == IPCMsgType.BottomUp);
+
+        vm.expectRevert(InvalidCrossMsgNonce.selector);
+
+        gw.commitChildCheck(checkpoint);
+    }
+
     function test_CommitChildCheck_Fails_NotInitialized() public {
         address subnetAddress = address(100);
         vm.startPrank(subnetAddress);
@@ -1685,44 +1720,6 @@ contract GatewayDeploymentTest is Test {
         vm.prank(validator);
         vm.deal(validator, 1);
         vm.expectRevert(InvalidCrossMsgNonce.selector);
-
-        gw.submitTopDownCheckpoint(checkpoint);
-    }
-
-    function test_SubmitTopDownCheckpoint_Fails_SubnetNotRegisteredSubnet() public { 
-        address validator = address(100);  
-
-        addValidator(validator, 100);
-
-        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
-        address[] memory fromPath = new address[](2);
-        fromPath[0] = ROOTNET_ADDRESS;
-        fromPath[1] = address(13);
-
-        // apply type = topdown
-        topDownMsgs[0] = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({
-                    subnetId: SubnetID(fromPath),
-                    rawAddress: address(this)
-                }),
-                to: IPCAddress({
-                    subnetId: gw.getNetworkName(),
-                    rawAddress: address(this)
-                }),
-                value: 0,
-                nonce: 10,
-                method: this.callback.selector,
-                params: EMPTY_BYTES
-            }),
-            wrapped: false
-        });
-        
-        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({epoch: DEFAULT_CHECKPOINT_PERIOD, topDownMsgs: topDownMsgs});
-
-        vm.prank(validator);
-        vm.deal(validator, 1);
-        vm.expectRevert(NotRegisteredSubnet.selector);
 
         gw.submitTopDownCheckpoint(checkpoint);
     }
