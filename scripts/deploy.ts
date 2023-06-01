@@ -37,65 +37,33 @@ export async function deploy() {
         "StorableMsgHelper": "0x18A4D584e844F5a24a6c1EF4c3486F3b0446F1c8",
     };
 
-    // const accountHelper = await deployments.deploy("AccountHelper", {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, maxFeePerGas: feeData.maxFeePerGas!, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!, });
     // const accountHelper = await deployContractWithDeployer(deployer, "AccountHelper", {}, txArgs);
     // console.log("AccountHelper deployed to:", accountHelper.address);
 
-    // const checkpointHelper = await deployments.deploy("CheckpointHelper", {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, maxFeePerGas: feeData.maxFeePerGas!, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!});
     // const checkpointHelper = await deployContractWithDeployer(deployer, "CheckpointHelper", {}, txArgs);
     // console.log("CheckpointHelper deployed to:", checkpointHelper.address);
 
-    // const subnetIDHelper = await deployments.deploy("SubnetIDHelper", {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, maxFeePerGas: feeData.maxFeePerGas!, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!});
     // const subnetIDHelper = await deployContractWithDeployer(deployer, "SubnetIDHelper", {}, txArgs);
     // console.log("SubnetIDHelper deployed to:", subnetIDHelper.address);
 
-    // const crossMsgHelper = await deployments.deploy("CrossMsgHelper", {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, maxFeePerGas: feeData.maxFeePerGas!, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!});
     // const crossMsgHelper = await deployContractWithDeployer(deployer, "CrossMsgHelper", { "SubnetIDHelper": subnetIDHelper.address }, txArgs);
     // console.log("CrossMsgHelper deployed to:", crossMsgHelper.address);
 
-    // const epochVoteSubmissionHelper = await deployments.deploy("EpochVoteSubmissionHelper", {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, maxFeePerGas: feeData.maxFeePerGas!, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!});
     // const epochVoteSubmissionHelper = await deployContractWithDeployer(deployer, "EpochVoteSubmissionHelper", {}, txArgs);
     // console.log("EpochVoteSubmissionHelper deployed to:", epochVoteSubmissionHelper.address);
 
-    // const executableQueueHelper = await deployments.deploy("ExecutableQueueHelper", {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, maxFeePerGas: feeData.maxFeePerGas!, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!});
     // const executableQueueHelper = await deployContractWithDeployer(deployer, "ExecutableQueueHelper", {}, txArgs);
     // console.log("ExecutableQueueHelper deployed to:", executableQueueHelper.address);
 
-    // const storableMsgHelper = await deployments.deploy("StorableMsgHelper", {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, maxFeePerGas: feeData.maxFeePerGas!, maxPriorityFeePerGas: feeData.maxPriorityFeePerGas!});
     // const storableMsgHelper = await deployContractWithDeployer(deployer, "StorableMsgHelper", { "SubnetIDHelper": subnetIDHelper.address }, txArgs);
     // console.log("StorableMsgHelper deployed to:", storableMsgHelper.address);
 
-    const Gateway = await ethers.getContractFactory("Gateway", {
-        libraries: {
-            // AccountHelper: accountHelper.address,
-            // CheckpointHelper: checkpointHelper.address,
-            // CrossMsgHelper: crossMsgHelper.address,
-            // EpochVoteSubmissionHelper: epochVoteSubmissionHelper.address,
-            // ExecutableQueueHelper: executableQueueHelper.address,
-            // StorableMsgHelper: storableMsgHelper.address,
-            // SubnetIDHelper: subnetIDHelper.address
-            ...libs
-        }
-    });
-    const gateway = await Gateway.deploy(gatewayConstructorParams, txArgs)
-    await gateway.deployed();
+    const gateway = await deployContractWithDeployer(deployer, "Gateway", libs, txArgs);
+
     console.log("Gateway address:", gateway.address);
 
-    // // const subnet = await deployments.deploy("Subnet",  {from: deployer.address, deterministicDeployment: process.env.CREATE2_SALT, args: });    //TODO:  constructor params in []
-
-    // const gateway = await deployments.deploy("Gateway", { from: deployer.address, args: [gatewayConstructorParams], deterministicDeployment: process.env.CREATE2_SALT, log: true, libraries: {
-    //     AccountHelper: accountHelper.address,
-    //     CheckpointHelper: checkpointHelper.address,
-    //     CrossMsgHelper: crossMsgHelper.address,
-    //     EpochVoteSubmissionHelper: epochVoteSubmissionHelper.address,
-    //     ExecutableQueueHelper: executableQueueHelper.address,
-    //     StorableMsgHelper: storableMsgHelper.address,
-    //     SubnetIDHelper: subnetIDHelper.address
-    // } });
-    // console.log("Gateway address:", gateway.address);
     return {
         gateway,
-        // subnet
     }
 
 }
