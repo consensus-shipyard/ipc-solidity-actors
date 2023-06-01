@@ -58,7 +58,7 @@ export async function deploy() {
     // const storableMsgHelper = await deployContractWithDeployer(deployer, "StorableMsgHelper", { "SubnetIDHelper": subnetIDHelper.address }, txArgs);
     // console.log("StorableMsgHelper deployed to:", storableMsgHelper.address);
 
-    const gateway = await deployContractWithDeployer(deployer, "Gateway", libs, txArgs);
+    const gateway = await deployContractWithDeployer(deployer, "Gateway", libs, gatewayConstructorParams, txArgs);
 
     console.log("Gateway address:", gateway.address);
 
