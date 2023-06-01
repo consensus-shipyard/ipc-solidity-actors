@@ -7,8 +7,8 @@ export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 export async function deployContractWithDeployer(
     deployer: SignerWithAddress,
     contractName: string,
-    args: unknown[],
     libs: {[key in string]: string},
+    ...args: any[]
   ): Promise<Contract> {
     const contractFactory = await ethers.getContractFactory(contractName, { signer: deployer, libraries: libs,  });
     return contractFactory.deploy(...args);

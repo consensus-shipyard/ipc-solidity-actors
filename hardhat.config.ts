@@ -19,7 +19,7 @@ task('deploy', 'Builds and deploys the contract on the selected network', async 
   const { deploy } = await lazyImport('./scripts/deploy');
   const deploymentData = await deploy();
 
-  console.log('Gateway deployed to:', deploymentData.gateway.address);
+  // console.log('Gateway deployed to:', deploymentData.gateway.address);
   // console.log('Subnet deployed to:', deploymentData.subnet.address);
 });
 
