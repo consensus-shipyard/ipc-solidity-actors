@@ -8,6 +8,8 @@ import "hardhat-deploy";
 import 'hardhat-contract-sizer';
 
 import dotenv from 'dotenv';
+import fs from 'fs';
+import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 dotenv.config();
 
@@ -15,12 +17,59 @@ const lazyImport = async (module: any) => {
   return await import(module);
 };
 
-task('deploy', 'Builds and deploys the contract on the selected network', async () => {
-  const { deploy } = await lazyImport('./scripts/deploy');
-  const deploymentData = await deploy();
+async function saveDeployments(env: string, deploymentData: { [key in string]: string }, branch?: string) {
+  const deploymentsJsonPath = `${process.cwd()}/deployments.json`;
 
-  // console.log('Gateway deployed to:', deploymentData.gateway.address);
-  // console.log('Subnet deployed to:', deploymentData.subnet.address);
+  let deploymentsJson = { [env]: {} };
+  if (fs.existsSync(deploymentsJsonPath)) {
+    deploymentsJson = JSON.parse(fs.readFileSync(deploymentsJsonPath).toString());
+  }
+
+  if (branch) {
+    deploymentsJson[env] = { ...deploymentsJson[env], [branch]: deploymentData }
+  } else {
+    deploymentsJson[env] = { ...deploymentsJson[env], ...deploymentData }
+  }
+
+  fs.writeFileSync(deploymentsJsonPath, JSON.stringify(deploymentsJson));
+}
+
+async function getLibsDeployment(env: string): Promise<{ [key in string]: string }> {
+  const deploymentsJsonPath = `${process.cwd()}/deployments.json`;
+
+  let libs = {};
+  if (fs.existsSync(deploymentsJsonPath)) {
+    libs = JSON.parse(fs.readFileSync(deploymentsJsonPath).toString())[env]['libs'];
+  }
+
+  return libs;
+}
+
+task('deploy-libraries', 'Build and deploys all libraries on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
+  const { deploy } = await lazyImport('./scripts/deploy-libraries');
+  const libsDeployment = await deploy();
+
+  console.log(libsDeployment);
+
+  await saveDeployments(hre.network.name, libsDeployment, 'libs');
+});
+
+task('deploy-gateway', 'Builds and deploys the contract on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
+  const network = hre.network.name;
+
+  const libs = await getLibsDeployment(network);
+  const { deploy } = await lazyImport('./scripts/deploy-gateway');
+  const gatewayDeployment = await deploy(libs);
+
+  console.log(gatewayDeployment);
+
+  await saveDeployments(network, gatewayDeployment);
+});
+
+task('deploy', 'Builds and deploys all contracts on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
+  await hre.run('compile');
+  await hre.run('deploy-libraries');
+  await hre.run('deploy-gateway');
 });
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -31,13 +80,6 @@ const config: HardhatUserConfig = {
       chainId: 314159,
       url: "https://filecoin-calibration.chainup.net/rpc/v1",
       accounts: [process.env.PRIVATE_KEY!],
-      // gasPrice: 3,
-      // blockGasLimit: 10000000000,
-      // initialBaseFeePerGas: 1,
-      // throwOnTransactionFailures: true,
-      // throwOnCallFailures: true,
-      // maxFeePerGas: 0,
-      // maxPriorityFeePerGas: 0
     }
   },
   solidity: {
