@@ -34,15 +34,15 @@ async function saveDeployments(env: string, deploymentData: { [key in string]: s
   fs.writeFileSync(deploymentsJsonPath, JSON.stringify(deploymentsJson));
 }
 
-async function getLibsDeployment(env: string): Promise<{ [key in string]: string }> {
+async function getDeployments(env: string): Promise<{ [key in string]: string }> {
   const deploymentsJsonPath = `${process.cwd()}/deployments.json`;
 
-  let libs = {};
+  let deployments = {};
   if (fs.existsSync(deploymentsJsonPath)) {
-    libs = JSON.parse(fs.readFileSync(deploymentsJsonPath).toString())[env]['libs'];
+    deployments = JSON.parse(fs.readFileSync(deploymentsJsonPath).toString())[env];
   }
 
-  return libs;
+  return deployments;
 }
 
 task('deploy-libraries', 'Build and deploys all libraries on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
@@ -54,16 +54,32 @@ task('deploy-libraries', 'Build and deploys all libraries on the selected networ
   await saveDeployments(hre.network.name, libsDeployment, 'libs');
 });
 
-task('deploy-gateway', 'Builds and deploys the contract on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
+task('deploy-gateway', 'Builds and deploys the Gateway contract on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
   const network = hre.network.name;
 
-  const libs = await getLibsDeployment(network);
+  const deployments = await getDeployments(network);
   const { deploy } = await lazyImport('./scripts/deploy-gateway');
-  const gatewayDeployment = await deploy(libs);
+  const gatewayDeployment = await deploy(deployments.libs);
 
   console.log(gatewayDeployment);
 
   await saveDeployments(network, gatewayDeployment);
+});
+
+task('deploy-subnet', 'Builds and deploys the SubnetActor contract on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
+  const network = hre.network.name;
+
+  const deployments = await getDeployments(network);
+  const { deploy } = await lazyImport('./scripts/deploy-subnet');
+
+  // remove unused lib
+  delete deployments.libs["StorableMsgHelper"];
+
+  const subnetDeployment = await deploy(deployments.Gateway, deployments.libs);
+
+  console.log(subnetDeployment);
+
+  await saveDeployments(network, subnetDeployment);
 });
 
 task('deploy', 'Builds and deploys all contracts on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {

@@ -5,7 +5,7 @@ import hre, { ethers } from "hardhat";
 import { deployContractWithDeployer, getTransactionFees } from './util';
 
 export async function deploy(libs: { [key in string]: string }) {
-    if (Object.keys(libs).length === 0) throw new Error(`Libraris are missing`);
+    if (!libs || Object.keys(libs).length === 0) throw new Error(`Libraries are missing`);
 
     await hre.run('compile');
 
@@ -31,16 +31,4 @@ export async function deploy(libs: { [key in string]: string }) {
         "Gateway": gatewayAddress
     }
 
-}
-
-// deploy();
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-if (require.main === module) {
-    deploy({})
-        .then(() => process.exit(0))
-        .catch((error: Error) => {
-            console.error(error)
-            process.exit(1)
-        })
 }
