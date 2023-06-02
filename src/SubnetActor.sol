@@ -75,11 +75,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 public immutable minValidators;
-    
+
     /// @notice contains the last executed checkpoint hash
     bytes32 public prevExecutedCheckpointHash;
 
-    /// @notice contains voted submissions for a given epoch 
+    /// @notice contains voted submissions for a given epoch
     mapping(uint64 => EpochVoteBottomUpSubmission) private epochVoteSubmissions;
 
     error NotGateway();
@@ -99,38 +99,18 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error MessagesNotSorted();
 
     modifier onlyGateway() {
-        if(msg.sender != ipcGatewayAddr) revert NotGateway();
+        if (msg.sender != ipcGatewayAddr) revert NotGateway();
         _;
     }
 
     modifier signableOnly() {
-        if(!msg.sender.isAccount()) revert NotAccount();
+        if (!msg.sender.isAccount()) revert NotAccount();
         _;
     }
 
     modifier notKilled() {
-        if(status == Status.Terminating || status == Status.Killed) revert SubnetAlreadyKilled();
+        if (status == Status.Terminating || status == Status.Killed) revert SubnetAlreadyKilled();
         _;
-    }
-
-    modifier mutateState() {
-        _;
-        if (
-            status == Status.Instantiated &&
-            totalStake >= minActivationCollateral
-        ) {
-            status = Status.Active;
-        } else if (
-            status == Status.Active && totalStake < minActivationCollateral
-        ) {
-            status = Status.Inactive;
-        } else if (
-            status == Status.Inactive && totalStake >= minActivationCollateral
-        ) {
-            status = Status.Active;
-        } else if (status == Status.Terminating && totalStake == 0) {
-            status = Status.Killed;
-        }
     }
 
     struct ConstructParams {
@@ -151,14 +131,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         name = params.name;
         ipcGatewayAddr = params.ipcGatewayAddr;
         consensus = params.consensus;
-        minActivationCollateral = params.minActivationCollateral <
-            MIN_COLLATERAL_AMOUNT
+        minActivationCollateral = params.minActivationCollateral < MIN_COLLATERAL_AMOUNT
             ? MIN_COLLATERAL_AMOUNT
             : params.minActivationCollateral;
         minValidators = params.minValidators;
-        topDownCheckPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
-            ? MIN_CHECKPOINT_PERIOD
-            : params.topDownCheckPeriod;
+        topDownCheckPeriod =
+            params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : params.topDownCheckPeriod;
         bottomUpCheckPeriod = submissionPeriod;
         status = Status.Instantiated;
         genesis = params.genesis;
@@ -171,16 +149,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     receive() external payable onlyGateway {}
 
-    function join() external payable signableOnly notKilled mutateState {
-        if(msg.value == 0) revert CollateralIsZero();
-        
+    function join() external payable signableOnly notKilled {
+        if (msg.value == 0) revert CollateralIsZero();
+
         stake[msg.sender] += msg.value;
         totalStake += msg.value;
 
         if (
-            stake[msg.sender] >= minActivationCollateral &&
-            !validators.contains(msg.sender) &&
-            (consensus != ConsensusType.Delegated || validators.length() == 0)
+            stake[msg.sender] >= minActivationCollateral && !validators.contains(msg.sender)
+                && (consensus != ConsensusType.Delegated || validators.length() == 0)
         ) {
             validators.add(msg.sender);
         }
@@ -188,15 +165,20 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         if (status == Status.Instantiated) {
             if (totalStake >= minActivationCollateral) {
                 IGateway(ipcGatewayAddr).register{value: totalStake}();
+                status = Status.Active;
             }
         } else {
             IGateway(ipcGatewayAddr).addStake{value: msg.value}();
         }
+
+        if(status == Status.Inactive && totalStake >= minActivationCollateral) {
+            status = Status.Active;
+        }
+
     }
 
-
-    function leave() external nonReentrant signableOnly notKilled mutateState {
-        if(stake[msg.sender] == 0) revert NotValidator();
+    function leave() external nonReentrant signableOnly notKilled {
+        if (stake[msg.sender] == 0) revert NotValidator();
 
         uint256 amount = stake[msg.sender];
 
@@ -206,25 +188,37 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         IGateway(ipcGatewayAddr).releaseStake(amount);
 
+        if (status == Status.Active && totalStake < minActivationCollateral) {
+            status = Status.Inactive;
+        }
+
         payable(msg.sender).sendValue(amount);
     }
 
-    function kill() external signableOnly notKilled mutateState {
-        if(address(this).balance > 0) revert CollateralStillLockedInSubnet();
-        if(validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
+    function kill() external signableOnly notKilled {
+        if (address(this).balance > 0) revert CollateralStillLockedInSubnet();
+        if (validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
 
         status = Status.Terminating;
 
         IGateway(ipcGatewayAddr).kill();
+
+        if (totalStake == 0) {
+            status = Status.Killed;
+        }
     }
 
-    function submitCheckpoint(
-        BottomUpCheckpoint calldata checkpoint
-    ) external signableOnly validEpochOnly(checkpoint.epoch) {
-        if(status != Status.Active) revert SubnetNotActive();
-        if(!validators.contains(msg.sender)) revert NotValidator();
-        if(checkpoint.source.toHash() != parentId.createSubnetId(address(this)).toHash()) revert WrongCheckpointSource();
-        if(!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) revert MessagesNotSorted();
+    function submitCheckpoint(BottomUpCheckpoint calldata checkpoint)
+        external
+        signableOnly
+        validEpochOnly(checkpoint.epoch)
+    {
+        if (status != Status.Active) revert SubnetNotActive();
+        if (!validators.contains(msg.sender)) revert NotValidator();
+        if (checkpoint.source.toHash() != parentId.createSubnetId(address(this)).toHash()) {
+            revert WrongCheckpointSource();
+        }
+        if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) revert MessagesNotSorted();
 
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
 
@@ -250,13 +244,13 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         uint256 validatorsLength = validators.length();
         uint256 balance = address(this).balance;
 
-        if(msg.value == 0) revert NoRewardsSentForDistribution();
-        if(validatorsLength == 0) revert NoValidatorsInSubnet();
-        if(balance < validatorsLength) revert NotEnoughBalanceForRewards();
+        if (msg.value == 0) revert NoRewardsSentForDistribution();
+        if (validatorsLength == 0) revert NoValidatorsInSubnet();
+        if (balance < validatorsLength) revert NotEnoughBalanceForRewards();
 
-        uint rewardAmount = address(this).balance / validatorsLength;
+        uint256 rewardAmount = balance / validatorsLength;
 
-        for (uint i = 0; i < validatorsLength; ) {
+        for (uint256 i = 0; i < validatorsLength;) {
             payable(validators.at(i)).sendValue(rewardAmount);
             unchecked {
                 ++i;
@@ -268,15 +262,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         return parentId;
     }
 
-    function validatorCount() external view returns (uint) {
+    function validatorCount() external view returns (uint256) {
         return validators.length();
     }
 
-    function validatorAt(uint index) external view returns (address) {
+    function validatorAt(uint256 index) external view returns (address) {
         return validators.at(index);
     }
 
-    function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns(bool) {
+    function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns (bool) {
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[epoch];
 
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
@@ -289,8 +283,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         uint256 submitterWeight
     ) internal returns (bool shouldExecuteVote) {
         bytes32 submissionHash = submission.toHash();
-        
-        shouldExecuteVote = _submitVote(voteSubmission.vote, submissionHash, submitterAddress, submitterWeight, submission.epoch, totalStake);
+
+        shouldExecuteVote = _submitVote(
+            voteSubmission.vote, submissionHash, submitterAddress, submitterWeight, submission.epoch, totalStake
+        );
 
         // store the submission only the first time
         if (voteSubmission.submissions[submissionHash].isEmpty()) {
@@ -298,7 +294,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission) internal view returns(BottomUpCheckpoint storage){
+    function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission)
+        internal
+        view
+        returns (BottomUpCheckpoint storage)
+    {
         return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
     }
 
@@ -306,8 +306,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         BottomUpCheckpoint storage checkpoint = _getMostVotedSubmission(voteSubmission);
 
         /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
-        
-        
+
         if (prevExecutedCheckpointHash != checkpoint.prevHash) {
             voteSubmission.vote.reset();
             executableQueue.remove(checkpoint.epoch);

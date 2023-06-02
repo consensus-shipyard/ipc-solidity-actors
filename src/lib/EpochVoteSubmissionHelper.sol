@@ -1,4 +1,3 @@
-
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
 
@@ -12,12 +11,7 @@ library EpochVoteSubmissionHelper {
         voteSubmission.mostVotedSubmission = EMPTY_HASH;
     }
 
-    function getMostVotedWeight(
-        EpochVoteSubmission storage voteSubmission
-    ) external view returns (uint256) {
-        return
-            voteSubmission.submissionWeights[voteSubmission.nonce][
-                voteSubmission.mostVotedSubmission
-            ];
+    function getMostVotedWeight(EpochVoteSubmission storage voteSubmission) external view returns (uint256) {
+        return voteSubmission.submissionWeights[voteSubmission.nonce][voteSubmission.mostVotedSubmission];
     }
 }

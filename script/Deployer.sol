@@ -6,7 +6,6 @@ import "../src/SubnetActor.sol";
 import "forge-std/Script.sol";
 
 contract Deployer is Script {
-
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;

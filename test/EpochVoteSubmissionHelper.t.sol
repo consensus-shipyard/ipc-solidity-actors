@@ -74,7 +74,10 @@ contract EpochVoteSubmissionHelperTest is Test {
         voteSubmission.submissionWeights[nonce][submissionHash2] = SECOND_SUBMITTER_WEIGHT;
 
         voteSubmission.mostVotedSubmission = submissionHash1;
-        if (voteSubmission.submissionWeights[nonce][submissionHash1] < voteSubmission.submissionWeights[nonce][submissionHash2]) {
+        if (
+            voteSubmission.submissionWeights[nonce][submissionHash1]
+                < voteSubmission.submissionWeights[nonce][submissionHash2]
+        ) {
             voteSubmission.mostVotedSubmission = submissionHash2;
         }
 

@@ -1,5 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.7;
+
 import "../structs/Checkpoint.sol";
 
 /// @title Subnet Actor interface

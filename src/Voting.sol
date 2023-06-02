@@ -36,26 +36,25 @@ abstract contract Voting {
     error ValidatorAlreadyVoted();
 
     modifier validEpochOnly(uint64 epoch) {
-        if(epoch <= lastVotingExecutedEpoch) revert EpochAlreadyExecuted();
-        if(epoch > genesisEpoch && (epoch - genesisEpoch) % submissionPeriod != 0) revert EpochNotVotable();
+        if (epoch <= lastVotingExecutedEpoch) revert EpochAlreadyExecuted();
+        if (epoch > genesisEpoch && (epoch - genesisEpoch) % submissionPeriod != 0) revert EpochNotVotable();
         _;
     }
 
     constructor(uint8 _majorityPercentage, uint64 _submissionPeriod) {
-        if(_majorityPercentage > 100) revert InvalidMajorityPercentage();
+        if (_majorityPercentage > 100) revert InvalidMajorityPercentage();
 
         majorityPercentage = _majorityPercentage;
-        submissionPeriod = _submissionPeriod < MIN_CHECKPOINT_PERIOD
-            ? MIN_CHECKPOINT_PERIOD
-            : _submissionPeriod;
-        
+        submissionPeriod = _submissionPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : _submissionPeriod;
+
         executableQueue.period = submissionPeriod;
     }
 
-    function _deriveExecutionStatus(
-        EpochVoteSubmission storage vote,
-        uint256 totalWeight
-    ) internal view returns (VoteExecutionStatus) {
+    function _deriveExecutionStatus(EpochVoteSubmission storage vote, uint256 totalWeight)
+        internal
+        view
+        returns (VoteExecutionStatus)
+    {
         uint256 threshold = (totalWeight * majorityPercentage) / 100;
         uint256 mostVotedWeight = vote.getMostVotedWeight();
 
@@ -82,10 +81,7 @@ abstract contract Voting {
         // the potential extra votes any vote can obtain, i.e. TOTAL_WEIGHT - TOTAL_SUBMISSIONS,
         // is smaller than or equal to the potential extra vote the most voted can obtain, i.e.
         // THRESHOLD - MOST_VOTED, then consensus will never be reached, no point voting, just abort.
-        if (
-            threshold - mostVotedWeight >=
-            totalWeight - vote.totalSubmissionWeight
-        ) {
+        if (threshold - mostVotedWeight >= totalWeight - vote.totalSubmissionWeight) {
             return VoteExecutionStatus.RoundAbort;
         }
 
@@ -107,13 +103,13 @@ abstract contract Voting {
         lastVotingExecutedEpoch = epoch;
     }
 
-    function _isNextExecutableEpoch(uint64 epoch) internal view returns(bool) {
+    function _isNextExecutableEpoch(uint64 epoch) internal view returns (bool) {
         return epoch == lastVotingExecutedEpoch + submissionPeriod;
     }
 
-    function _getNextExecutableEpoch() internal view returns(uint64 nextEpoch, bool isExecutable) {
-        nextEpoch = executableQueue.first;        
-        isExecutable = _isNextExecutableEpoch(nextEpoch);        
+    function _getNextExecutableEpoch() internal view returns (uint64 nextEpoch, bool isExecutable) {
+        nextEpoch = executableQueue.first;
+        isExecutable = _isNextExecutableEpoch(nextEpoch);
     }
 
     function _submitVote(
@@ -125,7 +121,7 @@ abstract contract Voting {
         uint256 totalWeight
     ) internal returns (bool shouldExecuteVote) {
         uint256 nonce = vote.nonce;
-        if(vote.submitters[nonce][submitterAddress]) revert ValidatorAlreadyVoted();
+        if (vote.submitters[nonce][submitterAddress]) revert ValidatorAlreadyVoted();
 
         vote.submitters[nonce][submitterAddress] = true;
         vote.totalSubmissionWeight += submitterWeight;
@@ -153,7 +149,7 @@ abstract contract Voting {
         }
     }
 
-    function _getEpoch(uint256 blockNumber, uint64 checkPeriod) internal pure returns(uint64) {
+    function _getEpoch(uint256 blockNumber, uint64 checkPeriod) internal pure returns (uint64) {
         return ((uint64(blockNumber) / checkPeriod) + 1) * checkPeriod;
     }
 }

@@ -79,7 +79,6 @@ contract ExecutableQueueHelperTest is Test {
         require(queue.last == EPOCH_ONE);
     }
 
-
     function test_Remove_Works_MiddleEpoch() public {
         _assertPush(EPOCH_ONE);
         _assertPush(EPOCH_TWO);
@@ -87,7 +86,7 @@ contract ExecutableQueueHelperTest is Test {
 
         require(queue.first == EPOCH_ONE);
         require(queue.last == EPOCH_THREE);
-        
+
         _assertRemove(EPOCH_TWO);
 
         require(queue.first == EPOCH_ONE);
