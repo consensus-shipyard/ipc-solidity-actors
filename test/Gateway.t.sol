@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.7;
+pragma solidity 0.8.18;
 
 import "forge-std/Test.sol";
 
@@ -1339,48 +1339,6 @@ contract GatewayDeploymentTest is Test {
         vm.expectRevert(NotSignableAccount.selector);
         gw.submitTopDownCheckpoint(checkpoint);
     }
-
-    // function test_SendCross_Fails_InvalidCrossMsgNonce() public {
-    //     address receiver = vm.addr(201);
-    //     address caller = vm.addr(202);
-
-    //     vm.prank(FilAddress.SYSTEM_ACTOR);
-    //     gw2.initGenesisEpoch(0);
-
-    //     vm.prank(caller);
-    //     vm.deal(caller, MIN_COLLATERAL_AMOUNT + 2 * CROSS_MSG_FEE + 2);
-    //     registerSubnetGW(MIN_COLLATERAL_AMOUNT, caller, gw2);
-
-    //     vm.prank(receiver);
-    //     vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
-    //     registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
-
-    //     SubnetID memory destination = gw.getNetworkName().createSubnetId(receiver);
-
-    //     CrossMsg memory crossMsg = CrossMsg({
-    //         message: StorableMsg({
-    //             from: IPCAddress({
-    //                 subnetId: gw2.getNetworkName(),
-    //                 rawAddress: caller
-    //             }),
-    //             to: IPCAddress({
-    //                 subnetId: destination,
-    //                 rawAddress: receiver
-    //             }),
-    //             value: CROSS_MSG_FEE + 1,
-    //             nonce: 10,
-    //             method: METHOD_SEND,
-    //             params: new bytes(0)
-    //         }),
-    //         wrapped: true
-    //     });
-
-    //     vm.startPrank(caller);
-    //     gw2.sendCross{value: CROSS_MSG_FEE + 1}(destination, crossMsg);
-
-    //     vm.expectRevert(InvalidCrossMsgNonce.selector);
-    //     gw2.propagate{value: CROSS_MSG_FEE}(crossMsg.toHash());
-    // }
 
     function test_SubnetTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
         address validator = address(100);

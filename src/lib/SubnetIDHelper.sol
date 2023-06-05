@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.7;
+pragma solidity 0.8.18;
 
 import "../structs/Subnet.sol";
 import "openzeppelin-contracts/utils/Strings.sol";
@@ -15,7 +15,7 @@ library SubnetIDHelper {
     bytes32 private constant EMPTY_SUBNET_HASH = keccak256(abi.encode(SubnetID(new address[](0))));
 
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
-        if (subnet.route.length <= 1) return NoParentForSubnet();
+        if (subnet.route.length <= 1) revert NoParentForSubnet();
 
         address[] memory route = new address[](subnet.route.length - 1);
         for (uint256 i = 0; i < route.length;) {
@@ -46,7 +46,7 @@ library SubnetIDHelper {
     }
 
     function createSubnetId(SubnetID calldata subnet, address actor) public pure returns (SubnetID memory newSubnet) {
-        if (subnet.route.length == 0) return EmptySubnet();
+        if (subnet.route.length == 0) revert EmptySubnet();
 
         newSubnet.route = new address[](subnet.route.length + 1);
         for (uint256 i = 0; i < subnet.route.length;) {
