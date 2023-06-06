@@ -12,6 +12,7 @@ abstract contract Voting {
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
 
+    /// @notice minimum checkpoint period. Values get clamped to this
     uint8 constant MIN_CHECKPOINT_PERIOD = 10;
 
     /// @notice percent approvals needed to reach consensus
@@ -23,6 +24,7 @@ abstract contract Voting {
     /// @notice last executed epoch after voting
     uint64 public lastVotingExecutedEpoch;
 
+    /// @notice Initial epoch number
     uint64 public genesisEpoch;
 
     /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
@@ -50,6 +52,9 @@ abstract contract Voting {
         executableQueue.period = submissionPeriod;
     }
 
+    /// @notice returns the current checkpoint execution status based on the current vote
+    /// @param vote - the vote submission data
+    /// @param totalWeight - the total voting power of the validators
     function _deriveExecutionStatus(EpochVoteSubmission storage vote, uint256 totalWeight)
         internal
         view
@@ -89,6 +94,8 @@ abstract contract Voting {
         return VoteExecutionStatus.ReachingConsensus;
     }
 
+    /// @notice marks a checkpoint for a given epoch as executed
+    /// @param epoch - the epoch to mark as executed
     function _markSubmissionExecuted(uint64 epoch) internal {
         // epoch not the next executable epoch
         if (_isNextExecutableEpoch(epoch) == false) return;
@@ -103,15 +110,29 @@ abstract contract Voting {
         lastVotingExecutedEpoch = epoch;
     }
 
+    /// @notice method that checks if the given epoch is the next executable epoch
+    /// @param epoch - the epoch to check
+    /// @return whether the given epoch is the next executable epoch
     function _isNextExecutableEpoch(uint64 epoch) internal view returns (bool) {
         return epoch == lastVotingExecutedEpoch + submissionPeriod;
     }
 
+    /// @notice method that returns the next executable epoch
+    /// @return nextEpoch - the next executable epoch
+    /// @return isExecutable - whether the next epoch is executable
     function _getNextExecutableEpoch() internal view returns (uint64 nextEpoch, bool isExecutable) {
         nextEpoch = executableQueue.first;
         isExecutable = _isNextExecutableEpoch(nextEpoch);
     }
 
+    /// @notice method that submits a vote for a given epoch
+    /// @param vote - the vote submission data
+    /// @param submissionHash - the hash of the submission
+    /// @param submitterAddress - the address of the submitter
+    /// @param submitterWeight - the voting power of the submitter
+    /// @param epoch - the epoch of the vote
+    /// @param totalWeight - the total voting power of the validators
+    /// @return shouldExecuteVote - whether the vote should be executed
     function _submitVote(
         EpochVoteSubmission storage vote,
         bytes32 submissionHash,
@@ -149,6 +170,8 @@ abstract contract Voting {
         }
     }
 
+    /// @notice method that gives the epoch for a given block number and checkpoint period
+    /// @return epoch - the epoch for the given block number and checkpoint period
     function _getEpoch(uint256 blockNumber, uint64 checkPeriod) internal pure returns (uint64) {
         return ((uint64(blockNumber) / checkPeriod) + 1) * checkPeriod;
     }

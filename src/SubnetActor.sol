@@ -32,19 +32,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
     using CrossMsgHelper for CrossMsg;
 
+    /// @notice minimum collateral validators need to stake in order to join the subnet. Values get clamped to this
     uint256 private constant MIN_COLLATERAL_AMOUNT = 1 ether;
-
-    /// @notice Human-readable name of the subnet.
-    string public name;
-
-    /// @notice ID of the parent subnet
-    SubnetID private parentId;
-
-    /// @notice Address of the IPC gateway for the subnet
-    address public immutable ipcGatewayAddr;
-
-    /// @notice Type of consensus algorithm.
-    ConsensusType public consensus;
 
     /// @notice The minimum collateral required to be a validator in this subnet
     uint256 public immutable minActivationCollateral;
@@ -52,20 +41,26 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice Total collateral currently deposited in the GW from the subnet
     uint256 public totalStake;
 
-    /// @notice validator address to stake amount
-    mapping(address => uint256) public stake;
-
-    /// @notice current status of the subnet
-    Status public status;
-
-    /// @notice genesis block
-    bytes public genesis;
-
     /// @notice number of blocks in a top-down epoch
     uint64 public immutable topDownCheckPeriod;
 
     /// @notice number of blocks in a bottom-up epoch
     uint64 public immutable bottomUpCheckPeriod;
+
+    /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
+    uint64 public immutable minValidators;
+
+    /// @notice Address of the IPC gateway for the subnet
+    address public ipcGatewayAddr;
+
+    /// @notice current status of the subnet
+    Status public status;
+
+    /// @notice Type of consensus algorithm.
+    ConsensusType public consensus;
+
+    /// @notice contains the last executed checkpoint hash
+    bytes32 public prevExecutedCheckpointHash;
 
     /// @notice contains all committed bottom-up checkpoint at specific epoch
     mapping(uint64 => BottomUpCheckpoint) public committedCheckpoints;
@@ -73,14 +68,20 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice List of validators in the subnet
     EnumerableSet.AddressSet private validators;
 
-    /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
-    uint64 public immutable minValidators;
-
-    /// @notice contains the last executed checkpoint hash
-    bytes32 public prevExecutedCheckpointHash;
-
     /// @notice contains voted submissions for a given epoch
     mapping(uint64 => EpochVoteBottomUpSubmission) private epochVoteSubmissions;
+
+    /// @notice validator address to stake amount
+    mapping(address => uint256) public stake;
+
+    /// @notice ID of the parent subnet
+    SubnetID private parentId;
+
+    /// @notice genesis block
+    bytes public genesis;
+
+    /// @notice Human-readable name of the subnet.
+    string public name;
 
     error NotGateway();
     error NotAccount();
@@ -149,6 +150,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     receive() external payable onlyGateway {}
 
+    /// @notice method that allows a validator to join the subnet
+    /// @param validator - address of the validator to join
     function join(address validator) external payable signableOnly notKilled {
         uint256 validatorStake = msg.value;
 
@@ -179,6 +182,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     }
 
+    /// @notice method that allows a validator to leave the subnet
     function leave() external nonReentrant signableOnly notKilled {
         if (stake[msg.sender] == 0) revert NotValidator();
 
@@ -197,6 +201,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         payable(msg.sender).sendValue(amount);
     }
 
+    /// @notice method that allows the subnet no be killed after all validators leave
     function kill() external signableOnly notKilled {
         if (address(this).balance > 0) revert CollateralStillLockedInSubnet();
         if (validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
@@ -210,6 +215,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
+    /// @param checkpoint - the batch messages data
     function submitCheckpoint(BottomUpCheckpoint calldata checkpoint)
         external
         signableOnly
@@ -241,7 +248,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    /// Distributes the rewards for the subnet to validators.
+    /// @notice method that distributes the rewards for the subnet to validators.
     function reward() public payable onlyGateway nonReentrant {
         uint256 validatorsLength = validators.length();
         uint256 balance = address(this).balance;
@@ -260,24 +267,35 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice get the parent subnet id
     function getParent() external view returns (SubnetID memory) {
         return parentId;
     }
 
+    /// @notice get validator count
     function validatorCount() external view returns (uint256) {
         return validators.length();
     }
 
+    /// @notice get validator at index
+    /// @param index - the index of the validator set
     function validatorAt(uint256 index) external view returns (address) {
         return validators.at(index);
     }
 
+    /// @notice wheather a validator has voted for a checkpoint submission during an epoch
+    /// @param epoch - the epoch to check
+    /// @param submitter - the validator to check
     function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns (bool) {
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[epoch];
 
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
     }
 
+    /// @notice submits a vote for a checkpoint
+    /// @param voteSubmission - the vote submission data
+    /// @param submitterAddress - the validator that submits the vote
+    /// @param submitterWeight - the weight of the validator
     function _submitBottomUpVote(
         EpochVoteBottomUpSubmission storage voteSubmission,
         BottomUpCheckpoint calldata submission,
@@ -296,6 +314,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice method that returns the most voted submission for a checkpoint
     function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission)
         internal
         view
@@ -304,6 +323,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
     }
 
+    /// @notice method that commits a checkpoint after reaching majority
+    /// @param voteSubmission - the last vote submission that reached majority for commit
     function _commitCheckpoint(EpochVoteBottomUpSubmission storage voteSubmission) internal {
         BottomUpCheckpoint storage checkpoint = _getMostVotedSubmission(voteSubmission);
 

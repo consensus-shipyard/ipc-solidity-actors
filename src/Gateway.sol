@@ -20,7 +20,6 @@ import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import "openzeppelin-contracts/utils/Address.sol";
-import "forge-std/console.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -95,6 +94,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @notice epoch => SubnetID => check => exists
     mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool))) private checks;
 
+    /// @notice whether the contract is initialized
     bool public initialized = false;
 
     /// @notice contains voted submissions for a given epoch
@@ -176,22 +176,27 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice get number of top-down messages for the given subnet
     function getSubnetTopDownMsgsLength(SubnetID memory subnetId) external view returns (uint256) {
         (, Subnet storage subnet) = _getSubnet(subnetId);
 
         return subnet.topDownMsgs.length;
     }
 
+    /// @notice get the top-down message at the given index for the given subnet
     function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
         (, Subnet storage subnet) = _getSubnet(subnetId);
 
         return subnet.topDownMsgs[index];
     }
 
+    /// @notice get the network name in subnet id format
     function getNetworkName() external view returns (SubnetID memory) {
         return networkName;
     }
 
+    /// @notice initialize the contract with the genesis epoch
+    /// @param _genesisEpoch - genesis epoch to set
     function initGenesisEpoch(uint64 _genesisEpoch) external systemActorOnly {
         if (initialized) revert AlreadyInitialized();
 
@@ -345,6 +350,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         _commitBottomUpMsg(crossMsg);
     }
 
+    /// @notice set up the top-down validators and their voting power
+    /// @param validators - list of validator addresses
+    /// @param weights - list of validators voting powers
     function setMembership(address[] memory validators, uint256[] memory weights) external systemActorOnly {
         if (validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
         // invalidate the previous validator set
@@ -383,6 +391,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         totalWeight = totalValidatorsWeight;
     }
 
+    /// @notice allows a validator to submit a batch of messages in a top-down commitment
+    /// @param checkpoint - top-down checkpoint
     function submitTopDownCheckpoint(TopDownCheckpoint calldata checkpoint)
         external
         signableOnly
@@ -479,6 +489,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice marks a checkpoint as executed based on the last vote that reached majority
+    /// @notice voteSubmission - the vote submission data
+    /// @return the cross messages that should be executed
     function _markMostVotedSubmissionExecuted(EpochVoteTopDownSubmission storage voteSubmission)
         internal
         returns (CrossMsg[] storage)
@@ -491,6 +504,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         return mostVotedSubmission.topDownMsgs;
     }
 
+    /// @notice submits a vote for a checkpoint
+    /// @param voteSubmission - the vote submission data
+    /// @param submitterAddress - the validator that submits the vote
+    /// @param submitterWeight - the weight of the validator
+    /// @return shouldExecuteVote - flag if the checkpoint should be executed based on the vote
     function _submitTopDownVote(
         EpochVoteTopDownSubmission storage voteSubmission,
         TopDownCheckpoint calldata submission,
@@ -544,6 +562,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice transaction side-effects from the commitment of a cross-net message. It burns funds
     /// and propagates the corresponding rewards.
+    /// @param crossMsg - the cross message that was committed
+    /// @param shouldBurn - flag if the message should burn funds
+    /// @param shouldDistributeRewards - flag if the message should distribute rewards
     function _crossMsgSideEffects(CrossMsg memory crossMsg, bool shouldBurn, bool shouldDistributeRewards) internal {
         if (shouldBurn) {
             payable(BURNT_FUNDS_ACTOR).sendValue(crossMsg.message.value);
@@ -560,7 +581,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
-    /// @notice commit topdown messages for their execution in the subnet
+    /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution
+    /// @param crossMessage - the cross message to be committed
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
         SubnetID memory subnetId = crossMessage.message.to.subnetId.down(networkName);
 
@@ -574,7 +596,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         subnet.topDownMsgs.push(crossMessage);
     }
 
-    /// @notice commit bottomup messages for their execution in the subnet
+    /// @notice commit bottomup messages for their execution in the subnet. Adds the message to the checkpoint for future execution
+    /// @param crossMessage - the cross message to be committed
     function _commitBottomUpMsg(CrossMsg memory crossMessage) internal {
         (,, BottomUpCheckpoint storage checkpoint) = _getCurrentBottomUpCheckpoint();
 
@@ -586,6 +609,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     }
 
     /// @notice executes a cross message if its destination is the current network, otherwise adds it to the postbox to be propagated further
+    /// @param forwarder - the subnet that handles the cross message
+    /// @param crossMsg - the cross message to be executed
     function _applyMsg(SubnetID memory forwarder, CrossMsg memory crossMsg) internal {
         if (crossMsg.message.to.rawAddress == address(0)) {
             revert InvalidCrossMsgDestinationAddress();
@@ -631,7 +656,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
     }
 
-    // @notice applies a cross-net messages coming from some other subnet. The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.
+    /// @notice applies a cross-net messages coming from some other subnet. 
+    /// The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.
+    /// @param forwarder - the subnet that handles the messages
+    /// @param crossMsgs - the cross-net messages to apply
     function _applyMessages(SubnetID memory forwarder, CrossMsg[] memory crossMsgs) internal {
         for (uint256 i = 0; i < crossMsgs.length;) {
             _applyMsg(forwarder, crossMsgs[i]);
@@ -641,6 +669,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice returns the current bottom-up checkpoint
+    /// @return exists - whether the checkpoint exists
+    /// @return epoch - the epoch of the checkpoint
+    /// @return checkpoint - the checkpoint struct
     function _getCurrentBottomUpCheckpoint()
         internal
         view
@@ -652,18 +684,28 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     }
 
     /// @notice distribute rewards to validators in child subnet
+    /// @param to - the address of the target subnet contract
+    /// @param amount - the amount of rewards to distribute
     function _distributeRewards(address to, uint256 amount) internal {
         if (amount == 0) return;
 
         Address.functionCallWithValue(to.normalize(), abi.encodeWithSignature("reward()"), amount);
     }
 
+    /// @notice returns the subnet created by a validator
+    /// @param actor the validator that created the subnet
+    /// @return found whether the subnet exists
+    /// @return subnet -  the subnet struct
     function _getSubnet(address actor) internal view returns (bool found, Subnet storage subnet) {
         SubnetID memory subnetId = networkName.createSubnetId(actor);
 
         return _getSubnet(subnetId);
     }
 
+    /// @notice returns the subnet with the given id
+    /// @param subnetId the id of the subnet
+    /// @return found whether the subnet exists
+    /// @return subnet -  the subnet struct
     function _getSubnet(SubnetID memory subnetId) internal view returns (bool found, Subnet storage subnet) {
         subnet = subnets[subnetId.toHash()];
         found = subnet.id.route.length > 0;
