@@ -795,4 +795,10 @@ contract SubnetActorTest is Test {
             children: new ChildCheck[](0)
         });
     }
+
+    function invariant_BalanceEqualsTotalStake() public {
+        assertEq(address(gw).balance, sa.totalStake());
+        assertEq(address(sa).balance, 0);
+    }
+
 }
