@@ -2,14 +2,14 @@
 pragma solidity 0.8.18;
 
 import "forge-std/Test.sol";
-
+import "forge-std/StdInvariant.sol";
 import "../src/Gateway.sol";
 import "../src/SubnetActor.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
 import "../src/lib/CrossMsgHelper.sol";
 
-contract GatewayDeploymentTest is Test {
+contract GatewayDeploymentTest is StdInvariant,Test {
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
@@ -42,7 +42,7 @@ contract GatewayDeploymentTest is Test {
     error NotEnoughFee();
     error NotEnoughFunds();
     error NotEnoughFundsToRelease();
-    error CannnotReleaseZero();
+    error CannotReleaseZero();
     error NotEnoughBalance();
     error NotInitialized();
     error NotValidator();
@@ -51,7 +51,7 @@ contract GatewayDeploymentTest is Test {
     error NotRegisteredSubnet();
     error AlreadyRegisteredSubnet();
     error AlreadyInitialized();
-    error AlreadyCommitedCheckpoint();
+    error AlreadyCommittedCheckpoint();
     error InconsistentPrevCheckpoint();
     error InvalidPostboxOwner();
     error InvalidCheckpointEpoch();
@@ -106,6 +106,12 @@ contract GatewayDeploymentTest is Test {
             genesis: GENESIS
         });
         sa = new SubnetActor(subnetConstructorParams);
+
+        targetContract(address(gw));
+    }
+
+    function invariant_CrossMsgFee() public view {
+        require(gw.crossMsgFee() == CROSS_MSG_FEE);
     }
 
     function test_Deployment_Works_Root(uint64 checkpointPeriod) public {
@@ -337,7 +343,7 @@ contract GatewayDeploymentTest is Test {
     function test_ReleaseStake_Fail_ZeroAmount() public {
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert(CannnotReleaseZero.selector);
+        vm.expectRevert(CannotReleaseZero.selector);
 
         gw.releaseStake(0);
     }
@@ -608,7 +614,7 @@ contract GatewayDeploymentTest is Test {
         });
         gw.commitChildCheck(checkpoint);
 
-        vm.expectRevert(AlreadyCommitedCheckpoint.selector);
+        vm.expectRevert(AlreadyCommittedCheckpoint.selector);
         gw.commitChildCheck(checkpoint);
     }
 
@@ -1904,7 +1910,7 @@ contract GatewayDeploymentTest is Test {
     function _join(address validatorAddress) internal {
         vm.prank(validatorAddress);
         vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT + 1);
-        sa.join{value: MIN_COLLATERAL_AMOUNT}();
+        sa.join{value: MIN_COLLATERAL_AMOUNT}(validatorAddress);
     }
 
     function release(uint256 releaseAmount, uint256 crossMsgFee, uint64 epoch) internal {

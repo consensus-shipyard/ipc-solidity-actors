@@ -19,6 +19,9 @@ contract SubnetIDHelperTest is Test {
 
     SubnetID EMPTY_SUBNET_ID = SubnetID(new address[](0));
 
+    error NoParentForSubnet();
+    error EmptySubnet();
+
     function setUp() public {
         ROOT_ADDRESS = makeAddr("root"); // 0x9f86b1918e5cf3a2150388024ff87df8c90d1d82
         SUBNET_ONE_ADDRESS = makeAddr("subnet_one"); // 0xb0c7ebf9ce6bfce01fba323a8b98054326032522
@@ -26,7 +29,7 @@ contract SubnetIDHelperTest is Test {
     }
 
     function test_GetParentSubnet_Fails_EmptySubnet() public {
-        vm.expectRevert("error getting parent for subnet addr");
+        vm.expectRevert(NoParentForSubnet.selector);
 
         EMPTY_SUBNET_ID.getParentSubnet();
     }
@@ -37,7 +40,7 @@ contract SubnetIDHelperTest is Test {
 
         SubnetID memory emptySubnet = SubnetID(route);
 
-        vm.expectRevert("error getting parent for subnet addr");
+        vm.expectRevert(NoParentForSubnet.selector);
 
         emptySubnet.getParentSubnet();
     }
@@ -193,7 +196,7 @@ contract SubnetIDHelperTest is Test {
     }
 
     function test_CreateSubnetId_Fails_EmptySubnet() public {
-        vm.expectRevert("cannot set actor for empty subnet");
+        vm.expectRevert(EmptySubnet.selector);
 
         EMPTY_SUBNET_ID.createSubnetId(SUBNET_ONE_ADDRESS);
     }

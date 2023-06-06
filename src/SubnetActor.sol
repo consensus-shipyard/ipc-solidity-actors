@@ -149,17 +149,19 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     receive() external payable onlyGateway {}
 
-    function join() external payable signableOnly notKilled {
-        if (msg.value == 0) revert CollateralIsZero();
+    function join(address validator) external payable signableOnly notKilled {
+        uint256 validatorStake = msg.value;
 
-        stake[msg.sender] += msg.value;
-        totalStake += msg.value;
+        if (validatorStake == 0) revert CollateralIsZero();
+
+        stake[validator] += validatorStake;
+        totalStake += validatorStake;
 
         if (
-            stake[msg.sender] >= minActivationCollateral && !validators.contains(msg.sender)
+            stake[validator] >= minActivationCollateral && !validators.contains(validator)
                 && (consensus != ConsensusType.Delegated || validators.length() == 0)
         ) {
-            validators.add(msg.sender);
+            validators.add(validator);
         }
 
         if (status == Status.Instantiated) {
@@ -168,7 +170,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
                 status = Status.Active;
             }
         } else {
-            IGateway(ipcGatewayAddr).addStake{value: msg.value}();
+            IGateway(ipcGatewayAddr).addStake{value: validatorStake}();
         }
 
         if(status == Status.Inactive && totalStake >= minActivationCollateral) {

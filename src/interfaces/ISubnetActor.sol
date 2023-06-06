@@ -9,7 +9,7 @@ interface ISubnetActor {
     /// Called by peers looking to join a subnet.
     ///
     /// It implements the basic logic to onboard new peers to the subnet.
-    function join() external payable;
+    function join(address validator) external payable;
 
     /// Called by peers looking to leave a subnet.
     function leave() external;

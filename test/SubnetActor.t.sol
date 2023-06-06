@@ -110,7 +110,7 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.expectRevert(CollateralIsZero.selector);
 
-        sa.join();
+        sa.join(validator);
     }
 
     function test_Join_Fail_AlreadyKilled() public {
@@ -124,7 +124,7 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE + 1);
 
-        sa.join{value: DEFAULT_MIN_VALIDATOR_STAKE}();
+        sa.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(validator);
     }
 
     function test_Join_Works_CallAddStake() public {
@@ -155,7 +155,7 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gw.register.selector), 0);
         vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gw.addStake.selector), 0);
-        sa.join{value: amount}();
+        sa.join{value: amount}(validator);
 
         require(sa.validatorCount() == 0);
     }
@@ -677,7 +677,7 @@ contract SubnetActorTest is Test {
         uint256 stakeBefore = sa.stake(validator);
         uint256 totalStakeBefore = sa.totalStake();
 
-        sa.join{value: amount}();
+        sa.join{value: amount}(validator);
 
         require(sa.stake(validator) == stakeBefore + amount);
         require(sa.totalStake() == totalStakeBefore + amount);

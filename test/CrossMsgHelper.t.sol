@@ -18,6 +18,8 @@ contract CrossMsgHelperTest is Test {
     CrossMsg public crossMsg;
     CrossMsg[] public crossMsgs;
 
+    error NoParentForSubnet();
+
     function test_ToHash_Works_EmptyCrossMsg() public view {
         require(crossMsg.toHash() == EMPTY_CROSS_MSG_HASH);
     }
@@ -83,7 +85,7 @@ contract CrossMsgHelperTest is Test {
         route[0] = makeAddr("root");
         SubnetID memory subnetId = SubnetID(route);
 
-        vm.expectRevert("error getting parent for subnet addr");
+        vm.expectRevert(NoParentForSubnet.selector);
 
         CrossMsgHelper.createReleaseMsg(subnetId, sender, releaseAmount);
     }
@@ -118,7 +120,7 @@ contract CrossMsgHelperTest is Test {
         noParentRoute[0] = makeAddr("root");
         SubnetID memory subnetId = SubnetID(noParentRoute);
 
-        vm.expectRevert("error getting parent for subnet addr");
+        vm.expectRevert(NoParentForSubnet.selector);
 
         CrossMsgHelper.createFundMsg(subnetId, sender, fundAmount);
     }
