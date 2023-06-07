@@ -74,6 +74,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice validator address to stake amount
     mapping(address => uint256) public stake;
 
+    mapping(address => string) public validatorNetAddresses;
+
     /// @notice ID of the parent subnet
     SubnetID private parentId;
 
@@ -81,7 +83,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     bytes public genesis;
 
     /// @notice Human-readable name of the subnet.
-    string public name;
+    bytes32 public name;
 
     error NotGateway();
     error NotAccount();
@@ -116,7 +118,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     struct ConstructParams {
         SubnetID parentId;
-        string name;
+        bytes32 name;
         address ipcGatewayAddr;
         ConsensusType consensus;
         uint256 minActivationCollateral;
@@ -151,10 +153,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     receive() external payable onlyGateway {}
 
     /// @notice method that allows a validator to join the subnet
-    /// @param validator - address of the validator to join
-    function join(address validator) external payable signableOnly notKilled {
+    /// @param netAddr - the network address of the validator
+    function join(string calldata netAddr) external payable signableOnly notKilled {
         uint256 validatorStake = msg.value;
-
+        address validator = msg.sender;
         if (validatorStake == 0) revert CollateralIsZero();
 
         stake[validator] += validatorStake;
@@ -165,6 +167,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
                 && (consensus != ConsensusType.Delegated || validators.length() == 0)
         ) {
             validators.add(validator);
+            validatorNetAddresses[validator] = netAddr;
         }
 
         if (status == Status.Instantiated) {

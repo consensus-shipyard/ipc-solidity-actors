@@ -20,9 +20,10 @@ contract SubnetActorTest is Test {
 
     address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    string private constant DEFAULT_NETWORK_NAME = "test";
+    bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
     uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
+    string private constant DEFAULT_NET_ADDR = "netAddr";
     bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
@@ -76,7 +77,7 @@ contract SubnetActorTest is Test {
     }
 
     function testDeployment(
-        string calldata _networkName,
+        bytes32 _networkName,
         address _ipcGatewayAddr,
         uint256 _minActivationCollateral,
         uint64 _minValidators,
@@ -110,7 +111,7 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.expectRevert(CollateralIsZero.selector);
 
-        sa.join(validator);
+        sa.join(DEFAULT_NET_ADDR);
     }
 
     function test_Join_Fail_AlreadyKilled() public {
@@ -124,7 +125,7 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE + 1);
 
-        sa.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(validator);
+        sa.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(DEFAULT_NET_ADDR);
     }
 
     function test_Join_Works_CallAddStake() public {
@@ -155,7 +156,7 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gw.register.selector), 0);
         vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gw.addStake.selector), 0);
-        sa.join{value: amount}(validator);
+        sa.join{value: amount}(DEFAULT_NET_ADDR);
 
         require(sa.validatorCount() == 0);
     }
@@ -677,7 +678,7 @@ contract SubnetActorTest is Test {
         uint256 stakeBefore = sa.stake(validator);
         uint256 totalStakeBefore = sa.totalStake();
 
-        sa.join{value: amount}(validator);
+        sa.join{value: amount}(DEFAULT_NET_ADDR);
 
         require(sa.stake(validator) == stakeBefore + amount);
         require(sa.totalStake() == totalStakeBefore + amount);
@@ -725,7 +726,7 @@ contract SubnetActorTest is Test {
     }
 
     function _assertDeploySubnetActor(
-        string memory _name,
+        bytes32 _name,
         address _ipcGatewayAddr,
         ConsensusType _consensus,
         uint256 _minActivationCollateral,

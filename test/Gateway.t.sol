@@ -18,10 +18,11 @@ contract GatewayDeploymentTest is StdInvariant,Test {
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
     address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
-    string private constant DEFAULT_NETWORK_NAME = "test";
+    bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
+    string private constant DEFAULT_NET_ADDR = "netAddr";
     bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
@@ -1910,7 +1911,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
     function _join(address validatorAddress) internal {
         vm.prank(validatorAddress);
         vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT + 1);
-        sa.join{value: MIN_COLLATERAL_AMOUNT}(validatorAddress);
+        sa.join{value: MIN_COLLATERAL_AMOUNT}(DEFAULT_NET_ADDR);
     }
 
     function release(uint256 releaseAmount, uint256 crossMsgFee, uint64 epoch) internal {

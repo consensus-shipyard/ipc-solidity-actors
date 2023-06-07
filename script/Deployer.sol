@@ -13,7 +13,7 @@ contract Deployer is Script {
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     bytes private constant GENESIS = EMPTY_BYTES;
     address public constant ROOTNET_ADDRESS = address(0);
-    string private constant DEFAULT_NETWORK_NAME = "test";
+    bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
 
     // add this to be excluded from coverage report
     function test() public {}
