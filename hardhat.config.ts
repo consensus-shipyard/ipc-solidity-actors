@@ -2,7 +2,6 @@ import { HardhatUserConfig, task } from "hardhat/config";
 import '@typechain/hardhat';
 
 import "@nomicfoundation/hardhat-foundry";
-import "@nomiclabs/hardhat-etherscan";
 import "@nomiclabs/hardhat-ethers";
 import "hardhat-deploy";
 import 'hardhat-contract-sizer';
@@ -94,7 +93,7 @@ const config: HardhatUserConfig = {
   networks: {
     calibrationnet: {
       chainId: 314159,
-      url: "https://filecoin-calibration.chainup.net/rpc/v1",
+      url: process.env.RPC_URL!,
       accounts: [process.env.PRIVATE_KEY!],
     }
   },
@@ -111,11 +110,6 @@ const config: HardhatUserConfig = {
         },
       },
     ],
-  },
-  etherscan: {
-    apiKey: {
-      calibrationnet: process.env.ETHERSCAN_API_KEY!
-    }
   },
   typechain: {
     outDir: 'typechain',

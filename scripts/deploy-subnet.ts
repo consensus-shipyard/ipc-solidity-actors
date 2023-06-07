@@ -23,7 +23,7 @@ export async function deploy(gatewayAddress: string, libs: { [key in string]: st
 
     const constructorParams = {
         parentId,
-        name: 'Subnet',
+        name: ethers.utils.formatBytes32String('Subnet'),
         ipcGatewayAddr: gatewayAddress,
         consensus: 0,
         minActivationCollateral: ethers.utils.parseEther("1"),
