@@ -8,8 +8,11 @@ import "./lib/SubnetIDHelper.sol";
 contract SubnetRegistry {
     using SubnetIDHelper for SubnetID;
 
+    /// @notice Mapping that tracks the deployed subnet actors. 
+    /// Key is the hash of Subnet ID, values are addresses.
     mapping(bytes32 => address) public subnets;
 
+    /// @notice Event emitted when a new subnet is deployed.
     event SubnetDeployed(address subnetAddr, SubnetID subnetId);
 
     function newSubnetActor(SubnetActor.ConstructParams calldata _params) external returns(address subnetAddr) {
