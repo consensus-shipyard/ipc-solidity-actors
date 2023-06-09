@@ -96,7 +96,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool))) private checks;
 
     /// @notice whether the contract is initialized
-    bool public initialized = false;
+    bool public initialized;
 
     /// @notice contains voted submissions for a given epoch
     mapping(uint64 => EpochVoteTopDownSubmission) private epochVoteSubmissions;
@@ -285,9 +285,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         (, Subnet storage subnet) = _getSubnet(msg.sender);
         if (subnet.status != Status.Active) revert SubnetNotActive();
         if (subnet.prevCheckpoint.epoch > commit.epoch) revert InvalidCheckpointEpoch();
-        if (commit.prevHash != EMPTY_HASH && commit.prevHash != subnet.prevCheckpoint.toHash()) {
-            revert InconsistentPrevCheckpoint();
-        }
+        if (commit.prevHash != EMPTY_HASH)
+            if(commit.prevHash != subnet.prevCheckpoint.toHash())
+                revert InconsistentPrevCheckpoint();
 
         (bool checkpointExists, uint64 currentEpoch, BottomUpCheckpoint storage checkpoint) =
             _getCurrentBottomUpCheckpoint();
@@ -320,7 +320,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         checks[currentEpoch][commitSource][commitData] = true;
 
         uint256 totalValue = 0;
-        for (uint256 i = 0; i < commit.crossMsgs.length;) {
+        uint256 crossMsgLength = commit.crossMsgs.length;
+        for (uint256 i = 0; i < crossMsgLength;) {
             totalValue += commit.crossMsgs[i].message.value;
             unchecked {
                 ++i;
@@ -367,20 +368,23 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function setMembership(address[] memory validators, uint256[] memory weights) external systemActorOnly {
         if (validators.length != weights.length) revert ValidatorsAndWeightsLengthMismatch();
         // invalidate the previous validator set
-        validatorNonce++;
+        ++validatorNonce;
 
         uint256 totalValidatorsWeight = 0;
 
         // setup the new validator set
-        for (uint256 validatorIndex = 0; validatorIndex < validators.length;) {
+        uint256 validatorsLength = validators.length;
+        for (uint256 validatorIndex = 0; validatorIndex < validatorsLength;) {
             address validatorAddress = validators[validatorIndex];
-            uint256 validatorWeight = weights[validatorIndex];
+            if(validatorAddress != address(0)) {
+                uint256 validatorWeight = weights[validatorIndex];
 
-            if (validatorWeight == 0) revert ValidatorWeightIsZero();
+                if (validatorWeight == 0) revert ValidatorWeightIsZero();
 
-            validatorSet[validatorNonce][validatorAddress] = validatorWeight;
+                validatorSet[validatorNonce][validatorAddress] = validatorWeight;
 
-            totalValidatorsWeight += validatorWeight;
+                totalValidatorsWeight += validatorWeight;
+            }
 
             // initial validators need to be conveniently funded with at least
             // 1 FIL for them to be able to commit the first few top-down messages.
@@ -470,14 +474,17 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.isEmpty()) revert PostboxNotExist();
 
         // update postbox with the new owners
-        for (uint256 i = 0; i < owners.length;) {
-            address owner = owners[i];
+        uint256 ownersLength = owners.length;
+        for (uint256 i = 0; i < ownersLength;) {
+            if(owners[i] != address(0)) {
+                address owner = owners[i];
 
-            if (postboxHasOwner[msgCid][owner] == false) {
-                postboxHasOwner[msgCid][owner] = true;
+                if (postboxHasOwner[msgCid][owner] == false) {
+                    postboxHasOwner[msgCid][owner] = true;
+                }
             }
             unchecked {
-                i++;
+                ++i;
             }
         }
     }
@@ -626,9 +633,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.message.to.subnetId.route.length == 0) {
             revert InvalidCrossMsgDestinationSubnet();
         }
-        if (crossMsg.message.method == METHOD_SEND && crossMsg.message.value > address(this).balance) {
-            revert NotEnoughBalance();
-        }
+        if (crossMsg.message.method == METHOD_SEND)
+            if(crossMsg.message.value > address(this).balance)
+                revert NotEnoughBalance();
 
         IPCMsgType applyType = crossMsg.message.applyType(networkName);
 
@@ -636,14 +643,16 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.message.to.subnetId.equals(networkName)) {
             // forwarder will always be empty subnet when we reach here from submitTopDownCheckpoint
             // so we check against it to not reach here in coverage
-            if (applyType == IPCMsgType.BottomUp && forwarder.route.length > 0) {
-                (bool registered, Subnet storage subnet) = _getSubnet(forwarder);
-                if (registered == false) revert NotRegisteredSubnet();
-                if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
-                    revert InvalidCrossMsgNonce();
-                }
+            if (applyType == IPCMsgType.BottomUp) {
+                if(forwarder.route.length > 0) {
+                    (bool registered, Subnet storage subnet) = _getSubnet(forwarder);
+                    if (registered == false) revert NotRegisteredSubnet();
+                    if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
+                        revert InvalidCrossMsgNonce();
+                    }
 
-                subnet.appliedBottomUpNonce += 1;
+                    subnet.appliedBottomUpNonce += 1;
+                }
             }
 
             if (applyType == IPCMsgType.TopDown) {
@@ -669,7 +678,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param forwarder - the subnet that handles the messages
     /// @param crossMsgs - the cross-net messages to apply
     function _applyMessages(SubnetID memory forwarder, CrossMsg[] memory crossMsgs) internal {
-        for (uint256 i = 0; i < crossMsgs.length;) {
+        uint256 crossMsgsLength = crossMsgs.length;
+        for (uint256 i = 0; i < crossMsgsLength;) {
             _applyMsg(forwarder, crossMsgs[i]);
             unchecked {
                 ++i;

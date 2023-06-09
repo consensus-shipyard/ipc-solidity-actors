@@ -33,7 +33,6 @@ contract SubnetActorTest is Test {
     error NotAccount();
     error CollateralIsZero();
     error CallerHasNoStake();
-    error CollateralStillLockedInSubnet();
     error SubnetAlreadyKilled();
     error NotAllValidatorsHaveLeft();
     error NotValidator();
@@ -287,23 +286,6 @@ contract SubnetActorTest is Test {
         sa.kill();
     }
 
-    function test_Kill_Fails_CollateralNotZero() public {
-        address validator = vm.addr(1235);
-
-        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
-        _assertLeave(validator, DEFAULT_MIN_VALIDATOR_STAKE);
-
-        vm.prank(GATEWAY_ADDRESS);
-        vm.deal(GATEWAY_ADDRESS, 1 ether);
-
-        (bool success,) = address(sa).call{value: 1}("");
-
-        require(success, "funding SubnetActor failed");
-
-        vm.prank(validator);
-        vm.expectRevert(CollateralStillLockedInSubnet.selector);
-        sa.kill();
-    }
 
     function test_SubmitCheckpoint_Works_Executed() public {
         address validator = vm.addr(100);

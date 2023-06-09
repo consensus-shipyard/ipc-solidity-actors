@@ -51,16 +51,21 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     uint64 public immutable minValidators;
 
     /// @notice Address of the IPC gateway for the subnet
-    address public ipcGatewayAddr;
+    address public immutable ipcGatewayAddr;
 
     /// @notice current status of the subnet
     Status public status;
 
     /// @notice Type of consensus algorithm.
-    ConsensusType public consensus;
+    ConsensusType public immutable consensus;
 
     /// @notice contains the last executed checkpoint hash
     bytes32 public prevExecutedCheckpointHash;
+
+    /// @notice Human-readable name of the subnet.
+    bytes32 public immutable name;
+
+    bytes32 public immutable currentSubnetHash;
 
     /// @notice contains all committed bottom-up checkpoint at specific epoch
     mapping(uint64 => BottomUpCheckpoint) public committedCheckpoints;
@@ -86,9 +91,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice genesis block
     bytes public genesis;
 
-    /// @notice Human-readable name of the subnet.
-    bytes32 public name;
-
     error NotGateway();
     error NotAccount();
     error CollateralIsZero();
@@ -105,6 +107,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error NotEnoughBalanceForRewards();
     error MessagesNotSorted();
     error NoRewardToWithdraw();
+    error GatewayCannotBeZero();
 
     modifier onlyGateway() {
         if (msg.sender != ipcGatewayAddr) revert NotGateway();
@@ -137,6 +140,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     constructor(ConstructParams memory params) Voting(params.majorityPercentage, params.bottomUpCheckPeriod) {
         parentId = params.parentId;
         name = params.name;
+        if (params.ipcGatewayAddr == address(0)) revert GatewayCannotBeZero();
         ipcGatewayAddr = params.ipcGatewayAddr;
         consensus = params.consensus;
         minActivationCollateral = params.minActivationCollateral < MIN_COLLATERAL_AMOUNT
@@ -148,6 +152,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         bottomUpCheckPeriod = submissionPeriod;
         status = Status.Instantiated;
         genesis = params.genesis;
+        currentSubnetHash = parentId.createSubnetId(address(this)).toHash();
         // NOTE: we currently use 0 as the genesisEpoch for subnets so checkpoints
         // are submitted directly from epoch 0.
         // In the future we can use the current epoch. This will be really
@@ -167,12 +172,14 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         stake[validator] += validatorStake;
         totalStake += validatorStake;
 
-        if (
-            stake[validator] >= minActivationCollateral && !validators.contains(validator)
-                && (consensus != ConsensusType.Delegated || validators.length() == 0)
-        ) {
-            validators.add(validator);
-            validatorNetAddresses[validator] = netAddr;
+        if (stake[validator] >= minActivationCollateral){
+            if(!validators.contains(validator)) {
+                if(consensus != ConsensusType.Delegated || validators.length() == 0)
+                {
+                    validators.add(validator);
+                    validatorNetAddresses[validator] = netAddr;
+                }
+            }
         }
 
         if (status == Status.Instantiated) {
@@ -184,17 +191,17 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             IGateway(ipcGatewayAddr).addStake{value: validatorStake}();
         }
 
-        if(status == Status.Inactive && totalStake >= minActivationCollateral) {
-            status = Status.Active;
-        }
+        if(status == Status.Inactive)
+            if(totalStake >= minActivationCollateral)
+                status = Status.Active;
 
     }
 
     /// @notice method that allows a validator to leave the subnet
     function leave() external nonReentrant signableOnly notKilled {
-        if (stake[msg.sender] == 0) revert NotValidator();
-
         uint256 amount = stake[msg.sender];
+
+        if (amount == 0) revert NotValidator();
 
         stake[msg.sender] = 0;
         totalStake -= amount;
@@ -202,16 +209,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         IGateway(ipcGatewayAddr).releaseStake(amount);
 
-        if (status == Status.Active && totalStake < minActivationCollateral) {
-            status = Status.Inactive;
-        }
+        if (status == Status.Active)
+            if(totalStake < minActivationCollateral)
+                status = Status.Inactive;
 
         payable(msg.sender).sendValue(amount);
     }
 
     /// @notice method that allows the subnet no be killed after all validators leave
     function kill() external signableOnly notKilled {
-        if (address(this).balance > 0) revert CollateralStillLockedInSubnet();
         if (validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
 
         status = Status.Terminating;
