@@ -20,6 +20,7 @@ import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import "openzeppelin-contracts/utils/Address.sol";
+import "forge-std/console.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -251,6 +252,15 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         payable(subnet.id.getActor()).sendValue(amount);
     }
 
+    function releaseRewards(uint256 amount) external nonReentrant {
+        if (amount == 0) revert CannotReleaseZero();
+
+        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
+        if (registered == false) revert NotRegisteredSubnet();
+
+        payable(subnet.id.getActor()).sendValue(amount);
+    } 
+
     /// @notice kill an existing subnet. It's balance must be empty
     function kill() external {
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
@@ -340,6 +350,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // commit top-down message.
         _commitTopDownMsg(crossMsg);
 
+        console.log("fund: %s", subnetId.toString());
         _distributeRewards(subnetId.getActor(), crossMsgFee);
     }
 
@@ -572,11 +583,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         if (shouldDistributeRewards) {
             SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(networkName);
-            // if (
-            //     toSubnetId.route.length == 0 ||
-            //     toSubnetId.getActor() == address(0)
-            // ) return;
 
+            console.log("subnetId: %s", toSubnetId.toString());
             _distributeRewards(toSubnetId.getActor(), crossMsgFee);
         }
     }
@@ -688,8 +696,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param amount - the amount of rewards to distribute
     function _distributeRewards(address to, uint256 amount) internal {
         if (amount == 0) return;
-
-        Address.functionCallWithValue(to.normalize(), abi.encodeWithSignature("reward()"), amount);
+        Address.functionCall(to.normalize(), abi.encodeWithSelector(ISubnetActor.reward.selector, amount));
     }
 
     /// @notice returns the subnet created by a validator

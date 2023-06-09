@@ -386,6 +386,31 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         require(status == Status.Inactive, "status should be Inactive");
     }
 
+    function test_ReleaseRewards_Fails_CannotReleaseZero() public {
+        vm.expectRevert(CannotReleaseZero.selector);
+
+        gw.releaseRewards(0);
+    }
+
+    function test_ReleaseRewards_Fails_NotRegisteredSubnet() public {
+        vm.expectRevert(NotRegisteredSubnet.selector);
+        vm.deal(address(gw), 1);
+        gw.releaseRewards(1);
+    }
+
+    function test_ReleaseRewards_Works() public {
+        address subnetAddress = CHILD_NETWORK_ADDRESS;
+
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        vm.prank(subnetAddress);
+        vm.deal(address(gw), 1);
+        gw.releaseRewards(1);
+
+    }
+
     function test_Kill_Works() public {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
 
@@ -674,7 +699,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         _join(validatorAddress);
 
         vm.startPrank(funderAddress);
-        vm.expectCall(address(sa), gw.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 5);
+        vm.expectCall(address(sa), 0, abi.encodeWithSelector(sa.reward.selector, gw.crossMsgFee()), 5);
 
         for (uint256 i = 0; i < numberOfFunds; i++) {
             vm.deal(funderAddress, fundAmount + 1);
@@ -1035,7 +1060,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         require(gw.appliedTopDownNonce() == 1);
     }
 
-    function reward() external payable {
+    function reward(uint256 amount) external {
         console.log("reward method called");
     }
 

@@ -47,6 +47,7 @@ contract SubnetActorTest is Test {
     error EpochNotVotable();
     error ValidatorAlreadyVoted();
     error MessagesNotSorted();
+    error NoRewardToWithdraw();
 
     function setUp() public {
         address[] memory path = new address[](1);
@@ -631,24 +632,12 @@ contract SubnetActorTest is Test {
 
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
-        uint256 balanceBefore = validator.balance;
-
         vm.startPrank(GATEWAY_ADDRESS);
         vm.deal(GATEWAY_ADDRESS, 1 ether);
 
-        sa.reward{value: 1 ether}();
+        sa.reward(1 ether);
 
-        require(validator.balance == balanceBefore + 1 ether);
-    }
-
-    function test_Reward_Fails_NoRewardsSentForDistribution() public {
-        _assertJoin(vm.addr(100), DEFAULT_MIN_VALIDATOR_STAKE);
-
-        vm.startPrank(GATEWAY_ADDRESS);
-        vm.deal(GATEWAY_ADDRESS, 1 ether);
-        vm.expectRevert(NoRewardsSentForDistribution.selector);
-
-        sa.reward();
+        require(sa.accumulatedRewards(validator) == 1 ether);
     }
 
     function test_Reward_Fails_NoValidatorsInSubnet() public {
@@ -656,7 +645,7 @@ contract SubnetActorTest is Test {
         vm.deal(GATEWAY_ADDRESS, 1 ether);
         vm.expectRevert(NoValidatorsInSubnet.selector);
 
-        sa.reward{value: 1 ether}();
+        sa.reward(1 ether);
     }
 
     function test_Reward_Fails_NotEnoughBalanceForRewards() public {
@@ -667,7 +656,33 @@ contract SubnetActorTest is Test {
         vm.deal(GATEWAY_ADDRESS, 1 ether);
         vm.expectRevert(NotEnoughBalanceForRewards.selector);
 
-        sa.reward{value: 1}();
+        sa.reward(1);
+    }
+
+    function test_Withdraw_Fails_NoRewardToWithdraw() public {
+        address validator = vm.addr(100);
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        vm.prank(validator);
+        vm.expectRevert(NoRewardToWithdraw.selector);
+
+        sa.withdraw();
+    }
+
+    function test_Withdraw_Works() public {
+        address validator = vm.addr(100);
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        vm.deal(GATEWAY_ADDRESS, 1 ether + 1);
+        vm.prank(GATEWAY_ADDRESS);
+        sa.reward(1 ether);
+
+        uint256 balanceBefore = validator.balance;
+        vm.prank(validator);
+        sa.withdraw();
+
+        require(validator.balance == balanceBefore + 1 ether);
+        require(sa.accumulatedRewards(validator) == 0);
     }
 
     function _assertJoin(address validator, uint256 amount) internal {

@@ -74,6 +74,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice validator address to stake amount
     mapping(address => uint256) public stake;
 
+    /// @notice validator address to accumulated rewards
+    mapping(address => uint256) public accumulatedRewards;
+
+    /// @notice validator address to validator net address
     mapping(address => string) public validatorNetAddresses;
 
     /// @notice ID of the parent subnet
@@ -100,6 +104,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error NoValidatorsInSubnet();
     error NotEnoughBalanceForRewards();
     error MessagesNotSorted();
+    error NoRewardToWithdraw();
 
     modifier onlyGateway() {
         if (msg.sender != ipcGatewayAddr) revert NotGateway();
@@ -252,23 +257,34 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     }
 
     /// @notice method that distributes the rewards for the subnet to validators.
-    function reward() public payable onlyGateway nonReentrant {
+    function reward(uint256 amount) external onlyGateway {
         uint256 validatorsLength = validators.length();
-        uint256 balance = address(this).balance;
 
-        if (msg.value == 0) revert NoRewardsSentForDistribution();
         if (validatorsLength == 0) revert NoValidatorsInSubnet();
-        if (balance < validatorsLength) revert NotEnoughBalanceForRewards();
+        if (amount < validatorsLength) revert NotEnoughBalanceForRewards();
 
-        uint256 rewardAmount = balance / validatorsLength;
+        uint256 rewardAmount = amount / validatorsLength;
 
         for (uint256 i = 0; i < validatorsLength;) {
-            payable(validators.at(i)).sendValue(rewardAmount);
+            accumulatedRewards[validators.at(i)] += rewardAmount;
             unchecked {
                 ++i;
             }
         }
     }
+
+    function withdraw() external signableOnly {
+        uint256 amount = accumulatedRewards[msg.sender];
+        
+        if (amount == 0) revert NoRewardToWithdraw();
+
+        accumulatedRewards[msg.sender] = 0;
+
+        IGateway(ipcGatewayAddr).releaseRewards(amount);
+
+        payable(msg.sender).sendValue(amount);
+    }
+
 
     /// @notice get the parent subnet id
     function getParent() external view returns (SubnetID memory) {
