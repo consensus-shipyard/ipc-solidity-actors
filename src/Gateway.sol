@@ -20,7 +20,6 @@ import "openzeppelin-contracts/security/ReentrancyGuard.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import "openzeppelin-contracts/utils/Address.sol";
-import "forge-std/console.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -351,7 +350,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // commit top-down message.
         _commitTopDownMsg(crossMsg);
 
-        console.log("fund: %s", subnetId.toString());
         _distributeRewards(subnetId.getActor(), crossMsgFee);
     }
 
@@ -591,7 +589,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (shouldDistributeRewards) {
             SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(networkName);
 
-            console.log("subnetId: %s", toSubnetId.toString());
             _distributeRewards(toSubnetId.getActor(), crossMsgFee);
         }
     }
@@ -673,7 +670,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
     }
 
-    /// @notice applies a cross-net messages coming from some other subnet. 
+    /// @notice applies a cross-net messages coming from some other subnet.
     /// The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.
     /// @param forwarder - the subnet that handles the messages
     /// @param crossMsgs - the cross-net messages to apply

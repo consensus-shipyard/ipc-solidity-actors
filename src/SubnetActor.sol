@@ -65,6 +65,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice Human-readable name of the subnet.
     bytes32 public immutable name;
 
+    // @notice Hash of the current subnet id
     bytes32 public immutable currentSubnetHash;
 
     /// @notice contains all committed bottom-up checkpoint at specific epoch
@@ -102,7 +103,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error SubnetNotActive();
     error WrongCheckpointSource();
     error CheckpointNotChained();
-    error NoRewardsSentForDistribution();
     error NoValidatorsInSubnet();
     error NotEnoughBalanceForRewards();
     error MessagesNotSorted();
@@ -238,9 +238,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     {
         if (status != Status.Active) revert SubnetNotActive();
         if (!validators.contains(msg.sender)) revert NotValidator();
-        if (checkpoint.source.toHash() != parentId.createSubnetId(address(this)).toHash()) {
-            revert WrongCheckpointSource();
-        }
+        if (checkpoint.source.toHash() != currentSubnetHash) revert WrongCheckpointSource();
         if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) revert MessagesNotSorted();
 
         EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
