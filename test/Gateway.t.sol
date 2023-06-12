@@ -249,6 +249,49 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         require(totalStaked == totalAmount);
     }
 
+    function test_AddStake_Works_Reactivate() public {
+        address subnetAddress = vm.addr(100);
+        uint256 registerAmount = MIN_COLLATERAL_AMOUNT;
+        uint256 stakeAmount = MIN_COLLATERAL_AMOUNT;
+
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, registerAmount);
+
+        registerSubnet(registerAmount, subnetAddress);
+        gw.releaseStake(registerAmount);
+
+        (,,,,,Status statusInactive) = getSubnet(subnetAddress);
+        require(statusInactive == Status.Inactive);
+
+        vm.deal(subnetAddress, stakeAmount);
+        addStake(stakeAmount, subnetAddress);
+
+        (,uint256 staked,,,,Status statusActive) = getSubnet(subnetAddress);
+
+        require(staked == stakeAmount);
+        require(statusActive == Status.Active);
+    }
+
+    function test_AddStake_Works_NotEnoughFundsToReactivate() public {
+        address subnetAddress = vm.addr(100);
+        uint256 registerAmount = MIN_COLLATERAL_AMOUNT;
+        uint256 stakeAmount = MIN_COLLATERAL_AMOUNT - 1;
+
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, registerAmount);
+
+        registerSubnet(registerAmount, subnetAddress);
+        gw.releaseStake(registerAmount);
+
+        vm.deal(subnetAddress, stakeAmount);
+        addStake(stakeAmount, subnetAddress);
+
+        (,uint256 staked,,,,Status status) = getSubnet(subnetAddress);
+
+        require(staked == stakeAmount);
+        require(status == Status.Inactive);
+    }
+
     function testAddStake_Works_MultipleStakings(uint8 numberOfStakes) public {
         vm.assume(numberOfStakes > 0);
 

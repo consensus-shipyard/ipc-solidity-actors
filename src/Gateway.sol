@@ -231,6 +231,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (registered == false) revert NotRegisteredSubnet();
 
         subnet.stake += msg.value;
+        
+        if (subnet.status == Status.Inactive) {
+            if (subnet.stake >= minStake) {
+                subnet.status = Status.Active;
+            }
+        }
     }
 
     /// @notice release collateral for an existing subnet

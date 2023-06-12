@@ -120,7 +120,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     }
 
     modifier notKilled() {
-        if (status == Status.Terminating || status == Status.Killed) revert SubnetAlreadyKilled();
+        if (status == Status.Killed) revert SubnetAlreadyKilled();
         _;
     }
 
@@ -220,13 +220,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function kill() external signableOnly notKilled {
         if (validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
 
-        status = Status.Terminating;
-
+        status = Status.Killed;
+        
         IGateway(ipcGatewayAddr).kill();
-
-        if (totalStake == 0) {
-            status = Status.Killed;
-        }
     }
 
     /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
