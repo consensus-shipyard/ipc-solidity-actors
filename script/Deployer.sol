@@ -14,6 +14,7 @@ contract Deployer is Script {
     bytes private constant GENESIS = EMPTY_BYTES;
     address public constant ROOTNET_ADDRESS = address(0);
     bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
+    uint64 private constant ROOTNET_CHAINID = 31415926;
 
     // add this to be excluded from coverage report
     function test() public {}
@@ -25,27 +26,29 @@ contract Deployer is Script {
         address[] memory path = new address[](1);
         path[0] = ROOTNET_ADDRESS;
 
-        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
-            networkName: SubnetID({route: path}),
-            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            msgFee: CROSS_MSG_FEE,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
-        });
+        Gateway.ConstructorParams memory constructorParams = Gateway
+            .ConstructorParams({
+                networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+                bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+                topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+                msgFee: CROSS_MSG_FEE,
+                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            });
         Gateway gw = new Gateway(constructorParams);
 
-        SubnetActor.ConstructParams memory subnetConstructorParams = SubnetActor.ConstructParams({
-            parentId: SubnetID({route: path}),
-            name: DEFAULT_NETWORK_NAME,
-            ipcGatewayAddr: address(gw),
-            consensus: ConsensusType.Dummy,
-            minActivationCollateral: MIN_COLLATERAL_AMOUNT,
-            minValidators: DEFAULT_MIN_VALIDATORS,
-            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            genesis: GENESIS
-        });
+        SubnetActor.ConstructParams memory subnetConstructorParams = SubnetActor
+            .ConstructParams({
+                parentId: SubnetID({root: ROOTNET_CHAINID, route: path}),
+                name: DEFAULT_NETWORK_NAME,
+                ipcGatewayAddr: address(gw),
+                consensus: ConsensusType.Dummy,
+                minActivationCollateral: MIN_COLLATERAL_AMOUNT,
+                minValidators: DEFAULT_MIN_VALIDATORS,
+                bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+                topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+                genesis: GENESIS
+            });
 
         new SubnetActor(subnetConstructorParams);
 
