@@ -179,10 +179,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             IGateway(ipcGatewayAddr).addStake{value: validatorStake}();
         }
 
-        if(status == Status.Inactive && totalStake >= minActivationCollateral) {
+        if (status == Status.Inactive && totalStake >= minActivationCollateral) {
             status = Status.Active;
         }
-
     }
 
     /// @notice method that allows a validator to leave the subnet

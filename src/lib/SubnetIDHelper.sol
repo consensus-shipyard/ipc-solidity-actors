@@ -12,16 +12,13 @@ library SubnetIDHelper {
     error NoParentForSubnet();
     error EmptySubnet();
 
-    bytes32 private constant EMPTY_SUBNET_HASH =
-        keccak256(abi.encode(SubnetID({root: 0, route: new address[](0)})));
+    bytes32 private constant EMPTY_SUBNET_HASH = keccak256(abi.encode(SubnetID({root: 0, route: new address[](0)})));
 
-    function getParentSubnet(
-        SubnetID memory subnet
-    ) public pure returns (SubnetID memory) {
+    function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
         if (subnet.route.length == 0) revert NoParentForSubnet();
 
         address[] memory route = new address[](subnet.route.length - 1);
-        for (uint256 i = 0; i < route.length; ) {
+        for (uint256 i = 0; i < route.length;) {
             route[i] = subnet.route[i];
             unchecked {
                 ++i;
@@ -31,13 +28,9 @@ library SubnetIDHelper {
         return SubnetID({root: subnet.root, route: route});
     }
 
-    function toString(
-        SubnetID calldata subnet
-    ) public pure returns (string memory) {
-        string memory route = string(
-            abi.encodePacked("/r", Strings.toString(subnet.root))
-        );
-        for (uint256 i = 0; i < subnet.route.length; ) {
+    function toString(SubnetID calldata subnet) public pure returns (string memory) {
+        string memory route = string(abi.encodePacked("/r", Strings.toString(subnet.root)));
+        for (uint256 i = 0; i < subnet.route.length;) {
             route = string.concat(route, "/");
             route = string.concat(route, subnet.route[i].toHexString());
             unchecked {
@@ -52,13 +45,10 @@ library SubnetIDHelper {
         return keccak256(abi.encode(subnet));
     }
 
-    function createSubnetId(
-        SubnetID calldata subnet,
-        address actor
-    ) public pure returns (SubnetID memory newSubnet) {
+    function createSubnetId(SubnetID calldata subnet, address actor) public pure returns (SubnetID memory newSubnet) {
         newSubnet.root = subnet.root;
         newSubnet.route = new address[](subnet.route.length + 1);
-        for (uint256 i = 0; i < subnet.route.length; ) {
+        for (uint256 i = 0; i < subnet.route.length;) {
             newSubnet.route[i] = subnet.route[i];
             unchecked {
                 ++i;
@@ -78,10 +68,7 @@ library SubnetIDHelper {
         return subnet.route.length == 0;
     }
 
-    function equals(
-        SubnetID calldata subnet1,
-        SubnetID calldata subnet2
-    ) public pure returns (bool) {
+    function equals(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (bool) {
         if (subnet1.root != subnet2.root) return false;
         if (subnet1.route.length != subnet2.route.length) return false;
 
@@ -89,20 +76,13 @@ library SubnetIDHelper {
     }
 
     /// @notice Computes the common parent of the current subnet and the one given as argument
-    function commonParent(
-        SubnetID calldata subnet1,
-        SubnetID calldata subnet2
-    ) public pure returns (SubnetID memory) {
+    function commonParent(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (SubnetID memory) {
         if (subnet1.root != subnet2.root) {
             return SubnetID({root: 0, route: new address[](0)});
         }
 
         uint256 i = 0;
-        while (
-            i < subnet1.route.length &&
-            i < subnet2.route.length &&
-            subnet1.route[i] == subnet2.route[i]
-        ) {
+        while (i < subnet1.route.length && i < subnet2.route.length && subnet1.route[i] == subnet2.route[i]) {
             unchecked {
                 ++i;
             }
@@ -110,7 +90,7 @@ library SubnetIDHelper {
         if (i == 0) return SubnetID({root: 0, route: new address[](0)});
 
         address[] memory route = new address[](i);
-        for (uint256 j = 0; j < i; ) {
+        for (uint256 j = 0; j < i;) {
             route[j] = subnet1.route[j];
             unchecked {
                 ++j;
@@ -123,10 +103,7 @@ library SubnetIDHelper {
     /// @notice In the path determined by the current subnet id, it moves
     /// down in the path from the subnet id given as argument.
     /// the subnet2 needs to be a subset of the subnet1
-    function down(
-        SubnetID calldata subnet1,
-        SubnetID calldata subnet2
-    ) public pure returns (SubnetID memory) {
+    function down(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (SubnetID memory) {
         if (subnet1.root != subnet2.root) {
             return SubnetID({root: 0, route: new address[](0)});
         }
@@ -135,9 +112,7 @@ library SubnetIDHelper {
         }
 
         uint256 i = 0;
-        while (
-            i < subnet2.route.length && subnet1.route[i] == subnet2.route[i]
-        ) {
+        while (i < subnet2.route.length && subnet1.route[i] == subnet2.route[i]) {
             unchecked {
                 i++;
             }
@@ -149,7 +124,7 @@ library SubnetIDHelper {
 
         address[] memory route = new address[](i + 1);
 
-        for (uint256 j = 0; j <= i; ) {
+        for (uint256 j = 0; j <= i;) {
             route[j] = subnet1.route[j];
             unchecked {
                 j++;
