@@ -457,5 +457,4 @@ contract SubnetIDHelperTest is Test {
         if (parent.route.length == 0) return false;
         return from.route.length > parent.route.length;
     }
-
 }

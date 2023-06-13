@@ -172,10 +172,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         stake[validator] += validatorStake;
         totalStake += validatorStake;
 
-        if (stake[validator] >= minActivationCollateral){
-            if(!validators.contains(validator)) {
-                if(consensus != ConsensusType.Delegated || validators.length() == 0)
-                {
+        if (stake[validator] >= minActivationCollateral) {
+            if (!validators.contains(validator)) {
+                if (consensus != ConsensusType.Delegated || validators.length() == 0) {
                     validators.add(validator);
                     validatorNetAddresses[validator] = netAddr;
                 }
@@ -191,10 +190,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             IGateway(ipcGatewayAddr).addStake{value: validatorStake}();
         }
 
-        if(status == Status.Inactive)
-            if(totalStake >= minActivationCollateral)
+        if (status == Status.Inactive) {
+            if (totalStake >= minActivationCollateral) {
                 status = Status.Active;
-
+            }
+        }
     }
 
     /// @notice method that allows a validator to leave the subnet
@@ -209,9 +209,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         IGateway(ipcGatewayAddr).releaseStake(amount);
 
-        if (status == Status.Active)
-            if(totalStake < minActivationCollateral)
+        if (status == Status.Active) {
+            if (totalStake < minActivationCollateral) {
                 status = Status.Inactive;
+            }
+        }
 
         payable(msg.sender).sendValue(amount);
     }
@@ -221,7 +223,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         if (validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
 
         status = Status.Killed;
-        
+
         IGateway(ipcGatewayAddr).kill();
     }
 
@@ -276,7 +278,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice method that allows a validator to withdraw it's accumulated rewards using pull-based transfer
     function withdraw() external signableOnly {
         uint256 amount = accumulatedRewards[msg.sender];
-        
+
         if (amount == 0) revert NoRewardToWithdraw();
 
         accumulatedRewards[msg.sender] = 0;
@@ -285,7 +287,6 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         payable(msg.sender).sendValue(amount);
     }
-
 
     /// @notice get the parent subnet id
     function getParent() external view returns (SubnetID memory) {

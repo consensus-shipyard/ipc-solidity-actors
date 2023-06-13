@@ -108,10 +108,10 @@ contract SubnetActorTest is Test {
 
     function test_Deployments_Fail_GatewayCannotBeZero() public {
         vm.expectRevert(GatewayCannotBeZero.selector);
-        
+
         address[] memory path = new address[](1);
         path[0] = address(0);
-        
+
         new SubnetActor(SubnetActor.ConstructParams({
             parentId: SubnetID(path),
             name: DEFAULT_NETWORK_NAME,
@@ -135,7 +135,7 @@ contract SubnetActorTest is Test {
     function test_Receive_Works() public {
         vm.prank(GATEWAY_ADDRESS);
         vm.deal(GATEWAY_ADDRESS, 1);
-        (bool success, ) = payable(address(sa)).call{value: 1}("");
+        (bool success,) = payable(address(sa)).call{value: 1}("");
         require(success);
     }
 
@@ -266,7 +266,6 @@ contract SubnetActorTest is Test {
         require(sa.status() == Status.Inactive);
     }
 
-
     function test_Leave_Works_StillActive() public payable {
         address validator1 = address(1234);
         address validator2 = address(1235);
@@ -291,7 +290,6 @@ contract SubnetActorTest is Test {
         vm.expectRevert(NotAccount.selector);
 
         sa.leave();
-
     }
 
     function test_Leave_Fail_AlreadyKilled() public payable {
@@ -368,7 +366,6 @@ contract SubnetActorTest is Test {
 
         sa.kill();
     }
-
 
     function test_SubmitCheckpoint_Works_Executed() public {
         address validator = vm.addr(100);
@@ -584,7 +581,7 @@ contract SubnetActorTest is Test {
     function test_SubmitCheckpoint_Works_MostVotedWeightEqualToThreshold_Abort() public {
         uint8 majorityPercentage = 50;
 
-         _assertDeploySubnetActor(
+        _assertDeploySubnetActor(
             DEFAULT_NETWORK_NAME,
             GATEWAY_ADDRESS,
             ConsensusType.Dummy,
@@ -750,8 +747,8 @@ contract SubnetActorTest is Test {
         _assertJoin(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
         _assertJoin(validator2, DEFAULT_MIN_VALIDATOR_STAKE);
 
-        uint validator1BalanceBefore = sa.accumulatedRewards(validator1);
-        uint validator2BalanceBefore = sa.accumulatedRewards(validator2);
+        uint256 validator1BalanceBefore = sa.accumulatedRewards(validator1);
+        uint256 validator2BalanceBefore = sa.accumulatedRewards(validator2);
 
         vm.startPrank(GATEWAY_ADDRESS);
         vm.deal(GATEWAY_ADDRESS, 1 ether);
@@ -948,5 +945,4 @@ contract SubnetActorTest is Test {
         assertEq(address(gw).balance, sa.totalStake());
         assertEq(address(sa).balance, 0);
     }
-
 }

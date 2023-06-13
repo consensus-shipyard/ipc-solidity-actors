@@ -39,9 +39,11 @@ abstract contract Voting {
 
     modifier validEpochOnly(uint64 epoch) {
         if (epoch <= lastVotingExecutedEpoch) revert EpochAlreadyExecuted();
-        if (epoch > genesisEpoch)
-            if((epoch - genesisEpoch) % submissionPeriod != 0)
+        if (epoch > genesisEpoch) {
+            if ((epoch - genesisEpoch) % submissionPeriod != 0) {
                 revert EpochNotVotable();
+            }
+        }
         _;
     }
 
@@ -103,9 +105,11 @@ abstract contract Voting {
         if (_isNextExecutableEpoch(epoch) == false) return;
 
         // epoch not the next executable epoch in the queue
-        if (executableQueue.contains(epoch))
-            if(executableQueue.first != epoch)
+        if (executableQueue.contains(epoch)) {
+            if (executableQueue.first != epoch) {
                 return;
+            }
+        }
 
         // remove from the queue if it exists
         executableQueue.remove(epoch);

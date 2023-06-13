@@ -230,7 +230,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (registered == false) revert NotRegisteredSubnet();
 
         subnet.stake += msg.value;
-        
+
         if (subnet.status == Status.Inactive) {
             if (subnet.stake >= minStake) {
                 subnet.status = Status.Active;
@@ -263,7 +263,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (registered == false) revert NotRegisteredSubnet();
 
         payable(subnet.id.getActor()).sendValue(amount);
-    } 
+    }
 
     /// @notice kill an existing subnet. It's balance must be empty
     function kill() external {
@@ -289,9 +289,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         (, Subnet storage subnet) = _getSubnet(msg.sender);
         if (subnet.status != Status.Active) revert SubnetNotActive();
         if (subnet.prevCheckpoint.epoch >= commit.epoch) revert InvalidCheckpointEpoch();
-        if (commit.prevHash != EMPTY_HASH)
-            if(commit.prevHash != subnet.prevCheckpoint.toHash())
+        if (commit.prevHash != EMPTY_HASH) {
+            if (commit.prevHash != subnet.prevCheckpoint.toHash()) {
                 revert InconsistentPrevCheckpoint();
+            }
+        }
 
         (bool checkpointExists, uint64 currentEpoch, BottomUpCheckpoint storage checkpoint) =
             _getCurrentBottomUpCheckpoint();
@@ -376,7 +378,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         uint256 validatorsLength = validators.length;
         for (uint256 validatorIndex = 0; validatorIndex < validatorsLength;) {
             address validatorAddress = validators[validatorIndex];
-            if(validatorAddress != address(0)) {
+            if (validatorAddress != address(0)) {
                 uint256 validatorWeight = weights[validatorIndex];
 
                 if (validatorWeight == 0) revert ValidatorWeightIsZero();
@@ -476,7 +478,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // update postbox with the new owners
         uint256 ownersLength = owners.length;
         for (uint256 i = 0; i < ownersLength;) {
-            if(owners[i] != address(0)) {
+            if (owners[i] != address(0)) {
                 address owner = owners[i];
 
                 if (postboxHasOwner[msgCid][owner] == false) {
@@ -632,9 +634,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.message.to.subnetId.route.length == 0) {
             revert InvalidCrossMsgDestinationSubnet();
         }
-        if (crossMsg.message.method == METHOD_SEND)
-            if(crossMsg.message.value > address(this).balance)
+        if (crossMsg.message.method == METHOD_SEND) {
+            if (crossMsg.message.value > address(this).balance) {
                 revert NotEnoughBalance();
+            }
+        }
 
         IPCMsgType applyType = crossMsg.message.applyType(networkName);
 
@@ -643,7 +647,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             // forwarder will always be empty subnet when we reach here from submitTopDownCheckpoint
             // so we check against it to not reach here in coverage
             if (applyType == IPCMsgType.BottomUp) {
-                if(forwarder.route.length > 0) {
+                if (forwarder.route.length > 0) {
                     (bool registered, Subnet storage subnet) = _getSubnet(forwarder);
                     if (registered == false) revert NotRegisteredSubnet();
                     if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {

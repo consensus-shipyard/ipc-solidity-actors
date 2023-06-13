@@ -34,9 +34,11 @@ library StorableMsgHelper {
         SubnetID memory currentParentSubnet = currentSubnet.commonParent(toSubnet);
         SubnetID memory messageParentSubnet = fromSubnet.commonParent(toSubnet);
 
-        if (currentParentSubnet.equals(messageParentSubnet))
-            if(fromSubnet.route.length > messageParentSubnet.route.length)
+        if (currentParentSubnet.equals(messageParentSubnet)) {
+            if (fromSubnet.route.length > messageParentSubnet.route.length) {
                 return IPCMsgType.BottomUp;
+            }
+        }
 
         return IPCMsgType.TopDown;
     }

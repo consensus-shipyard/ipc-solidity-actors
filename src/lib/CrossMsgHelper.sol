@@ -108,9 +108,11 @@ library CrossMsgHelper {
         for (uint256 i = 0; i < length;) {
             uint256 nonce = crossMsgs[i].message.nonce;
 
-            if (prevNonce >= nonce)
-                if(i > 0) 
+            if (prevNonce >= nonce) {
+                if (i > 0) {
                     return false;
+                }
+            }
 
             prevNonce = nonce;
             unchecked {

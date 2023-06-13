@@ -9,7 +9,7 @@ import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
 import "../src/lib/CrossMsgHelper.sol";
 
-contract GatewayDeploymentTest is StdInvariant,Test {
+contract GatewayDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
@@ -166,10 +166,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         require(gw.minStake() == MIN_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
         require(gw.bottomUpCheckPeriod() == checkpointPeriod, "gw.bottomUpCheckPeriod() == checkpointPeriod");
         require(gw.topDownCheckPeriod() == checkpointPeriod, "gw.topDownCheckPeriod() == checkpointPeriod");
-        require(
-            gw.majorityPercentage() == 100,
-            "gw.majorityPercentage() == 100"
-        );
+        require(gw.majorityPercentage() == 100, "gw.majorityPercentage() == 100");
     }
 
     function test_Register_Works_SingleSubnet(uint256 subnetCollateral) public {
@@ -260,13 +257,13 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         registerSubnet(registerAmount, subnetAddress);
         gw.releaseStake(registerAmount);
 
-        (,,,,,Status statusInactive) = getSubnet(subnetAddress);
+        (,,,,, Status statusInactive) = getSubnet(subnetAddress);
         require(statusInactive == Status.Inactive);
 
         vm.deal(subnetAddress, stakeAmount);
         addStake(stakeAmount, subnetAddress);
 
-        (,uint256 staked,,,,Status statusActive) = getSubnet(subnetAddress);
+        (, uint256 staked,,,, Status statusActive) = getSubnet(subnetAddress);
 
         require(staked == stakeAmount);
         require(statusActive == Status.Active);
@@ -286,7 +283,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         vm.deal(subnetAddress, stakeAmount);
         addStake(stakeAmount, subnetAddress);
 
-        (,uint256 staked,,,,Status status) = getSubnet(subnetAddress);
+        (, uint256 staked,,,, Status status) = getSubnet(subnetAddress);
 
         require(staked == stakeAmount);
         require(status == Status.Inactive);
@@ -457,7 +454,6 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         vm.prank(subnetAddress);
         vm.deal(address(gw), 1);
         gw.releaseRewards(1);
-
     }
 
     function test_Kill_Works() public {
@@ -472,7 +468,8 @@ contract GatewayDeploymentTest is StdInvariant,Test {
 
         gw.kill();
 
-        (SubnetID memory id, uint256 stake, uint256 nonce,, uint256 circSupply, Status status) = getSubnet(subnetAddress);
+        (SubnetID memory id, uint256 stake, uint256 nonce,, uint256 circSupply, Status status) =
+            getSubnet(subnetAddress);
 
         require(id.toHash() == SubnetID(new address[](0)).toHash());
         require(stake == 0);
@@ -561,7 +558,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
 
         vm.expectCall(subnetAddress, 0, abi.encodeWithSelector(ISubnetActor.reward.selector, checkpoint.fee), 1);
 
-        (,,,,uint256 circSupplyBefore,) = getSubnet(subnetAddress);
+        (,,,, uint256 circSupplyBefore,) = getSubnet(subnetAddress);
 
         gw.commitChildCheck(checkpoint);
 
@@ -1382,7 +1379,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
 
         vm.deal(caller, fee);
         vm.prank(caller);
-        
+
         vm.expectCall(caller, 0, EMPTY_BYTES, 0);
 
         gw.propagate{value: fee}(postboxId);
@@ -2173,8 +2170,15 @@ contract GatewayDeploymentTest is StdInvariant,Test {
     {
         SubnetID memory subnetId = gateway.getNetworkName().createSubnetId(subnetAddress);
 
-        (Status status, uint64 topDownNonce, uint256 appliedBottomUpNonce, uint256 stake,, uint256 circSupply, SubnetID memory id,) =
-            gateway.subnets(subnetId.toHash());
+        (
+            Status status,
+            uint64 topDownNonce,
+            uint256 appliedBottomUpNonce,
+            uint256 stake,
+            ,
+            uint256 circSupply,
+            SubnetID memory id,
+        ) = gateway.subnets(subnetId.toHash());
 
         return (id, stake, topDownNonce, appliedBottomUpNonce, circSupply, status);
     }
