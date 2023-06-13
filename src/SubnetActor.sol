@@ -273,6 +273,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice method that allows a validator to withdraw it's accumulated rewards using pull-based transfer
     function withdraw() external signableOnly {
         uint256 amount = accumulatedRewards[msg.sender];
         
