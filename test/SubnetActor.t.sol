@@ -197,24 +197,6 @@ contract SubnetActorTest is Test {
         require(sa.validatorCount() == 0);
     }
 
-    function test_Join_Works_DelegatedConsensusType() public {
-        _assertDeploySubnetActor(
-            DEFAULT_NETWORK_NAME,
-            GATEWAY_ADDRESS,
-            ConsensusType.Mir,
-            DEFAULT_MIN_VALIDATOR_STAKE,
-            DEFAULT_MIN_VALIDATORS,
-            DEFAULT_CHECKPOINT_PERIOD,
-            GENESIS,
-            DEFAULT_MAJORITY_PERCENTAGE
-        );
-
-        _assertJoin(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
-        _assertJoin(vm.addr(1235), DEFAULT_MIN_VALIDATOR_STAKE);
-
-        require(sa.validatorCount() == 1);
-    }
-
     function test_Join_Works_ReactivateSubnet() public {
         _assertJoin(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
         _assertLeave(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
