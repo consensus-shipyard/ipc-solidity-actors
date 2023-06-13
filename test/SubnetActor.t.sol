@@ -788,6 +788,16 @@ contract SubnetActorTest is Test {
         sa.reward(1);
     }
 
+    function test_Withdraw_Fails_NotAccount() public {
+        address validator = vm.addr(100);
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        vm.prank(address(this));
+        vm.expectRevert(NotAccount.selector);
+
+        sa.withdraw();
+    }
+
     function test_Withdraw_Fails_NoRewardToWithdraw() public {
         address validator = vm.addr(100);
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
