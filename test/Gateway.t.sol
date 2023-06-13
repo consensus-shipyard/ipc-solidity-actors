@@ -668,7 +668,7 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         gw.commitChildCheck(checkpoint);
     }
 
-    function test_CommitChildCheck_Fails_InvalidCheckpointEpoch() public {
+    function test_CommitChildCheck_Fails_InvalidCheckpointEpoch_PrevEpoch() public {
         address subnetAddress = address(100);
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
@@ -682,6 +682,21 @@ contract GatewayDeploymentTest is StdInvariant,Test {
         BottomUpCheckpoint memory checkpoint2 = createCheckpoint(subnetAddress, DEFAULT_CHECKPOINT_PERIOD / 2);
         vm.expectRevert(InvalidCheckpointEpoch.selector);
         gw.commitChildCheck(checkpoint2);
+    }
+
+    function test_CommitChildCheck_Fails_InvalidCheckpointEpoch_CurrentEpoch() public {
+        address subnetAddress = address(100);
+        vm.startPrank(subnetAddress);
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+
+        BottomUpCheckpoint memory checkpoint = createCheckpoint(subnetAddress, DEFAULT_CHECKPOINT_PERIOD);
+        gw.commitChildCheck(checkpoint);
+
+        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+
+        vm.expectRevert(InvalidCheckpointEpoch.selector);
+        gw.commitChildCheck(checkpoint);
     }
 
     function test_CommitChildCheck_Fails_SubnetNotActive() public {
@@ -733,27 +748,6 @@ contract GatewayDeploymentTest is StdInvariant,Test {
 
         vm.expectRevert(InconsistentPrevCheckpoint.selector);
         gw.commitChildCheck(checkpoint2);
-    }
-
-    function test_CommitChildCheck_Fails_AlreadyCommitedCheckpoint() public {
-        address subnetAddress = address(100);
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
-
-        SubnetID memory subnetId = gw.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
-            source: subnetId,
-            epoch: DEFAULT_CHECKPOINT_PERIOD,
-            fee: 0,
-            crossMsgs: new CrossMsg[](0),
-            prevHash: EMPTY_HASH,
-            children: new ChildCheck[](0)
-        });
-        gw.commitChildCheck(checkpoint);
-
-        vm.expectRevert(AlreadyCommittedCheckpoint.selector);
-        gw.commitChildCheck(checkpoint);
     }
 
     function test_CommitChildCheck_Fails_NotEnoughSubnetCircSupply() public {

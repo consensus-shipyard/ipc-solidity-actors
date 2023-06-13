@@ -114,7 +114,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error NotRegisteredSubnet();
     error AlreadyRegisteredSubnet();
     error AlreadyInitialized();
-    error AlreadyCommittedCheckpoint();
     error InconsistentPrevCheckpoint();
     error InvalidPostboxOwner();
     error InvalidCheckpointEpoch();
@@ -289,7 +288,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         (, Subnet storage subnet) = _getSubnet(msg.sender);
         if (subnet.status != Status.Active) revert SubnetNotActive();
-        if (subnet.prevCheckpoint.epoch > commit.epoch) revert InvalidCheckpointEpoch();
+        if (subnet.prevCheckpoint.epoch >= commit.epoch) revert InvalidCheckpointEpoch();
         if (commit.prevHash != EMPTY_HASH)
             if(commit.prevHash != subnet.prevCheckpoint.toHash())
                 revert InconsistentPrevCheckpoint();
@@ -309,9 +308,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         uint256[2] memory child = children[currentEpoch][commitSource];
         uint256 childIndex = child[0]; // index at checkpoint.data.children for the given subnet
         bool childExists = child[1] == 1; // 0 - no, 1 - yes
-        bool childCheckExists = checks[currentEpoch][commitSource][commitData];
-
-        if (childCheckExists) revert AlreadyCommittedCheckpoint();
 
         if (childExists == false) {
             checkpoint.children.push(ChildCheck({source: commit.source, checks: new bytes32[](0)}));
