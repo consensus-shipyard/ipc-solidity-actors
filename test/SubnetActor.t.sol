@@ -47,6 +47,7 @@ contract SubnetActorTest is Test {
     error ValidatorAlreadyVoted();
     error MessagesNotSorted();
     error NoRewardToWithdraw();
+    error GatewayCannotBeZero();
 
     function setUp() public {
         address[] memory path = new address[](1);
@@ -76,7 +77,7 @@ contract SubnetActorTest is Test {
         );
     }
 
-    function testDeployment(
+    function test_Deployment_Works(
         bytes32 _networkName,
         address _ipcGatewayAddr,
         uint256 _minActivationCollateral,
@@ -88,6 +89,7 @@ contract SubnetActorTest is Test {
         vm.assume(_minActivationCollateral > DEFAULT_MIN_VALIDATOR_STAKE);
         vm.assume(_checkPeriod > DEFAULT_CHECKPOINT_PERIOD);
         vm.assume(_majorityPercentage <= 100);
+        vm.assume(_ipcGatewayAddr != address(0));
 
         _assertDeploySubnetActor(
             _networkName,
@@ -102,6 +104,26 @@ contract SubnetActorTest is Test {
 
         SubnetID memory parent = sa.getParent();
         require(parent.isRoot(), "parent.isRoot()");
+    }
+
+    function test_Deployments_Fail_GatewayCannotBeZero() public {
+        vm.expectRevert(GatewayCannotBeZero.selector);
+        
+        address[] memory path = new address[](1);
+        path[0] = address(0);
+        
+        new SubnetActor(SubnetActor.ConstructParams({
+            parentId: SubnetID(path),
+            name: DEFAULT_NETWORK_NAME,
+            ipcGatewayAddr: address(0),
+            consensus: ConsensusType.Dummy,
+            minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
+            minValidators: DEFAULT_MIN_VALIDATORS,
+            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesis: EMPTY_BYTES
+        }));
     }
 
     function test_Receive_Fail_NotGateway() public {
