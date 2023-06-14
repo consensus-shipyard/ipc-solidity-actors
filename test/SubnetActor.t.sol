@@ -50,12 +50,8 @@ contract SubnetActorTest is Test {
     error MessagesNotSorted();
 
     function setUp() public {
-        address[] memory path = new address[](1);
-        // root
-        path[0] = address(0);
-
         Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
@@ -607,7 +603,7 @@ contract SubnetActorTest is Test {
 
         BottomUpCheckpoint memory checkpoint = _createBottomUpCheckpoint();
 
-        checkpoint.epoch = 1;
+        checkpoint.epoch = 11;
 
         vm.prank(validator);
         vm.expectRevert(EpochNotVotable.selector);
@@ -780,20 +776,16 @@ contract SubnetActorTest is Test {
     }
 
     function _createBottomUpCheckpoint() internal view returns (BottomUpCheckpoint memory checkpoint) {
-        address[] memory route = new address[](2);
-        route[0] = address(0);
-        route[1] = address(sa);
-
-        SubnetID memory source = SubnetID({root: ROOTNET_CHAINID, route: route});
+        SubnetID memory subnetActorId = sa.getParent().createSubnetId(address(sa));
         CrossMsg[] memory crossMsgs = new CrossMsg[](1);
 
         crossMsgs[0] = CrossMsg({
             message: StorableMsg({
                 from: IPCAddress({
-                    subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                    subnetId: subnetActorId,
                     rawAddress: address(this)
                 }),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                to: IPCAddress({subnetId: subnetActorId, rawAddress: address(this)}),
                 value: 0,
                 nonce: 0,
                 method: this.callback.selector,
@@ -803,7 +795,7 @@ contract SubnetActorTest is Test {
         });
 
         checkpoint = BottomUpCheckpoint({
-            source: source,
+            source: subnetActorId,
             epoch: DEFAULT_CHECKPOINT_PERIOD,
             fee: 0,
             crossMsgs: crossMsgs,

@@ -82,7 +82,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         path2[1] = CHILD_NETWORK_ADDRESS_2;
 
         Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
@@ -96,7 +96,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw2 = new Gateway(constructorParams);
 
         SubnetActor.ConstructParams memory subnetConstructorParams = SubnetActor.ConstructParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(gw),
             consensus: ConsensusType.Dummy,
@@ -118,11 +118,9 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
     function test_Deployment_Works_Root(uint64 checkpointPeriod) public {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
-        address[] memory path = new address[](1);
-        path[0] = address(0);
 
         Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: checkpointPeriod,
             topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
@@ -890,7 +888,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(InvalidCrossMsgDestinationSubnet.selector);
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
-            SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            SubnetID({root: 0, route: new address[](0)}),
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}), rawAddress: caller}),

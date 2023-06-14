@@ -82,13 +82,34 @@ contract CrossMsgHelperTest is Test {
     }
 
     function test_CreateReleaseMsg_Fails_SubnetNoParent(uint256 releaseAmount, address sender) public {
-        address[] memory route = new address[](1);
-        route[0] = makeAddr("root");
-        SubnetID memory subnetId = SubnetID(ROOTNET_CHAINID, route);
+        SubnetID memory subnetId = SubnetID(ROOTNET_CHAINID, new address[](0));
 
         vm.expectRevert(NoParentForSubnet.selector);
 
         CrossMsgHelper.createReleaseMsg(subnetId, sender, releaseAmount);
+    }
+
+    function test_CreateFundMsg_Works_Root(uint256 fundAmount, address sender) public {
+        address[] memory parentRoute = new address[](1);
+        parentRoute[0] = address(101);
+        SubnetID memory parentSubnetId = SubnetID(ROOTNET_CHAINID, parentRoute);
+
+        vm.prank(sender);
+
+        CrossMsg memory fundMsg = CrossMsgHelper.createFundMsg(parentSubnetId, sender, fundAmount);
+
+
+        SubnetID memory rootSubnetId = SubnetID(ROOTNET_CHAINID, new address[](0));
+
+        require(fundMsg.message.from.subnetId.toHash() == rootSubnetId.toHash());
+        require(fundMsg.message.from.rawAddress == sender);
+        require(fundMsg.message.to.subnetId.toHash() == parentSubnetId.toHash());
+        require(fundMsg.message.to.rawAddress == sender);
+        require(fundMsg.message.value == fundAmount);
+        require(fundMsg.message.nonce == 0);
+        require(fundMsg.message.method == METHOD_SEND);
+        require(keccak256(fundMsg.message.params) == keccak256(EMPTY_BYTES));
+        require(fundMsg.wrapped == false);
     }
 
     function test_CreateFundMsg_Works(uint256 fundAmount, address sender) public {
@@ -117,9 +138,7 @@ contract CrossMsgHelperTest is Test {
     }
 
     function test_CreateFundMsg_Fails_SubnetNoParent(uint256 fundAmount, address sender) public {
-        address[] memory noParentRoute = new address[](1);
-        noParentRoute[0] = makeAddr("root");
-        SubnetID memory subnetId = SubnetID(ROOTNET_CHAINID, noParentRoute);
+        SubnetID memory subnetId = SubnetID(ROOTNET_CHAINID, new address[](0));
 
         vm.expectRevert(NoParentForSubnet.selector);
 
