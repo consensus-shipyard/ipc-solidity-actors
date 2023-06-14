@@ -121,6 +121,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     modifier notKilled() {
         if (status == Status.Killed) revert SubnetAlreadyKilled();
+
         _;
     }
 
@@ -174,10 +175,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         if (stake[validator] >= minActivationCollateral) {
             if (!validators.contains(validator)) {
-                if (consensus != ConsensusType.Delegated || validators.length() == 0) {
-                    validators.add(validator);
-                    validatorNetAddresses[validator] = netAddr;
-                }
+                validators.add(validator);
+                validatorNetAddresses[validator] = netAddr;
             }
         }
 
