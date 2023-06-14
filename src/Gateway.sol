@@ -548,7 +548,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     {
         SubnetID memory to = crossMessage.message.to.subnetId;
 
-        if (to.route.length == 0) revert InvalidCrossMsgDestinationSubnet();
+        if (to.isEmpty()) revert InvalidCrossMsgDestinationSubnet();
         if (to.equals(networkName)) revert InvalidCrossMsgDestinationSubnet();
 
         SubnetID memory from = crossMessage.message.from.subnetId;
@@ -585,7 +585,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (shouldDistributeRewards) {
             SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(networkName);
             // if (
-            //     toSubnetId.route.length == 0 ||
+            //     toSubnetId.isEmpty() ||
             //     toSubnetId.getActor() == address(0)
             // ) return;
 
@@ -627,7 +627,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.message.to.rawAddress == address(0)) {
             revert InvalidCrossMsgDestinationAddress();
         }
-        if (crossMsg.message.to.subnetId.route.length == 0) {
+        if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDestinationSubnet();
         }
         if (crossMsg.message.method == METHOD_SEND && crossMsg.message.value > address(this).balance) {
@@ -640,7 +640,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.message.to.subnetId.equals(networkName)) {
             // forwarder will always be empty subnet when we reach here from submitTopDownCheckpoint
             // so we check against it to not reach here in coverage
-            if (applyType == IPCMsgType.BottomUp && forwarder.route.length > 0) {
+            if (applyType == IPCMsgType.BottomUp && !forwarder.isEmpty()) {
                 (bool registered, Subnet storage subnet) = _getSubnet(forwarder);
                 if (registered == false) revert NotRegisteredSubnet();
                 if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
@@ -720,6 +720,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @return subnet -  the subnet struct
     function _getSubnet(SubnetID memory subnetId) internal view returns (bool found, Subnet storage subnet) {
         subnet = subnets[subnetId.toHash()];
-        found = subnet.id.route.length > 0;
+        found = subnet.id.isEmpty() == false;
     }
 }

@@ -65,7 +65,7 @@ library SubnetIDHelper {
     }
 
     function isRoot(SubnetID calldata subnet) public pure returns (bool) {
-        return subnet.route.length == 0;
+        return subnet.route.length == 0 && subnet.root > 0;
     }
 
     function equals(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (bool) {
@@ -87,7 +87,7 @@ library SubnetIDHelper {
                 ++i;
             }
         }
-        if (i == 0) return SubnetID({root: 0, route: new address[](0)});
+        if (i == 0) return SubnetID({root: subnet1.root, route: new address[](0)});
 
         address[] memory route = new address[](i);
         for (uint256 j = 0; j < i;) {
@@ -118,13 +118,11 @@ library SubnetIDHelper {
             }
         }
 
-        if (i == 0) {
-            return SubnetID({root: 0, route: new address[](0)});
-        }
+        i++;
 
-        address[] memory route = new address[](i + 1);
+        address[] memory route = new address[](i);
 
-        for (uint256 j = 0; j <= i;) {
+        for (uint256 j = 0; j < i;) {
             route[j] = subnet1.route[j];
             unchecked {
                 j++;
