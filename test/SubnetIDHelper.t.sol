@@ -16,7 +16,6 @@ contract SubnetIDHelperTest is Test {
     address SUBNET_THREE_ADDRESS;
 
     uint64 private constant ROOTNET_CHAINID = 123;
-    // FIXME: This is not the correct hash for the empty subnet anymore
     bytes32 constant EMPTY_SUBNET_ID_HASH = 0x197c6df7c087e8e1cdf2a3b0fa558425f3e2b9c661fe0398a28cb4e1d1ec04c5;
     bytes32 constant ROOT_SUBNET_ID_HASH = 0x06e1ac310c4f4fc0fc8eaf2810408e7fd2b50abedce5894fcfeab35ae3b76263;
 
@@ -309,5 +308,15 @@ contract SubnetIDHelperTest is Test {
 
     function test_Equals_Works_RootNotSame() public view {
         require(EMPTY_SUBNET_ID.equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})) == false);
+
+    function test_IsEmpty_Works_Empty() public view {
+        require(EMPTY_SUBNET_ID.isEmpty());
+    }
+
+    function test_IsEmpty_Works_NonEmpty() public view {
+        address[] memory route = new address[](1);
+        route[0] = ROOT_ADDRESS;
+
+        require(SubnetID(route).isEmpty() == false);
     }
 }
