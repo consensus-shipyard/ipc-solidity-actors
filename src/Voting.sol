@@ -39,11 +39,8 @@ abstract contract Voting {
 
     modifier validEpochOnly(uint64 epoch) {
         if (epoch <= lastVotingExecutedEpoch) revert EpochAlreadyExecuted();
-        if (epoch > genesisEpoch) {
-            if ((epoch - genesisEpoch) % submissionPeriod != 0) {
-                revert EpochNotVotable();
-            }
-        }
+        if (epoch < genesisEpoch) revert EpochNotVotable();
+        if ((epoch - genesisEpoch) % submissionPeriod != 0) revert EpochNotVotable();
         _;
     }
 

@@ -154,11 +154,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         status = Status.Instantiated;
         genesis = params.genesis;
         currentSubnetHash = parentId.createSubnetId(address(this)).toHash();
-        // NOTE: we currently use 0 as the genesisEpoch for subnets so checkpoints
-        // are submitted directly from epoch 0.
-        // In the future we can use the current epoch. This will be really
-        // useful once we support the docking of subnets to new parents, etc.
-        genesisEpoch = 0;
+        genesisEpoch = _getEpoch(block.number, submissionPeriod);
     }
 
     receive() external payable onlyGateway {}
