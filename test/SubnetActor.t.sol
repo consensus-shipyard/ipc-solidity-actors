@@ -116,7 +116,7 @@ contract SubnetActorTest is Test {
             parentId: SubnetID(path),
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(0),
-            consensus: ConsensusType.Dummy,
+            consensus: ConsensusType.Mir,
             minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
@@ -566,7 +566,7 @@ contract SubnetActorTest is Test {
         _assertDeploySubnetActor(
             DEFAULT_NETWORK_NAME,
             GATEWAY_ADDRESS,
-            ConsensusType.Dummy,
+            ConsensusType.Mir,
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
