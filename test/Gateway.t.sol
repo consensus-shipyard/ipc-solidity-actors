@@ -1059,11 +1059,11 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotSignableAccount.selector);
         gw.sendCross{value: CROSS_MSG_FEE + 1}(
-            SubnetID({route: new address[](0)}),
+            SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}),
-                    to: IPCAddress({subnetId: SubnetID({route: new address[](0)}), rawAddress: caller}),
+                    from: IPCAddress({subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}), rawAddress: caller}),
+                    to: IPCAddress({subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}), rawAddress: caller}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,

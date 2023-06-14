@@ -106,11 +106,8 @@ contract SubnetActorTest is Test {
     function test_Deployments_Fail_GatewayCannotBeZero() public {
         vm.expectRevert(GatewayCannotBeZero.selector);
 
-        address[] memory path = new address[](1);
-        path[0] = address(0);
-
         new SubnetActor(SubnetActor.ConstructParams({
-            parentId: SubnetID(path),
+            parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(0),
             consensus: ConsensusType.Mir,

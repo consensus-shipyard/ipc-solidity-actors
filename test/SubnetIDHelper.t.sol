@@ -308,15 +308,13 @@ contract SubnetIDHelperTest is Test {
 
     function test_Equals_Works_RootNotSame() public view {
         require(EMPTY_SUBNET_ID.equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})) == false);
+    }
 
     function test_IsEmpty_Works_Empty() public view {
         require(EMPTY_SUBNET_ID.isEmpty());
     }
 
     function test_IsEmpty_Works_NonEmpty() public view {
-        address[] memory route = new address[](1);
-        route[0] = ROOT_ADDRESS;
-
-        require(SubnetID(route).isEmpty() == false);
+        require(ROOT_SUBNET_ID.isEmpty() == false);
     }
 }
