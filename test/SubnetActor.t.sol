@@ -611,7 +611,7 @@ contract SubnetActorTest is Test {
         require(sa.lastVotingExecutedEpoch() == 0);
     }
 
-     function test_SubmitCheckpoint_Fails_EpochNotVotable_EpochEqualToGenesisEpoch() public {
+     function test_SubmitCheckpoint_Works_EpochEqualToGenesisEpoch() public {
         address validator = vm.addr(100);
 
         vm.roll(0);
