@@ -307,23 +307,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             checkpoint.epoch = currentEpoch;
         }
 
-        bytes32 commitSource = commit.source.toHash();
-        bytes32 commitData = commit.toHash();
-
-        uint256[2] memory child = children[currentEpoch][commitSource];
-        uint256 childIndex = child[0]; // index at checkpoint.data.children for the given subnet
-        bool childExists = child[1] == 1; // 0 - no, 1 - yes
-
-        if (childExists == false) {
-            checkpoint.children.push(ChildCheck({source: commit.source, checks: new bytes32[](0)}));
-            childIndex = checkpoint.children.length - 1;
-        }
-
-        checkpoint.children[childIndex].checks.push(commitData);
-
-        children[currentEpoch][commitSource][0] = childIndex;
-        children[currentEpoch][commitSource][1] = 1;
-        checks[currentEpoch][commitSource][commitData] = true;
+        checkpoint.setChildCheck(commit, children, checks, currentEpoch);
 
         uint256 totalValue = 0;
         uint256 crossMsgLength = commit.crossMsgs.length;
