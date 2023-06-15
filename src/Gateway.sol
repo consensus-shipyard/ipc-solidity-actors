@@ -295,7 +295,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             if (commit.prevHash != subnet.prevCheckpoint.toHash()) {
                 revert InconsistentPrevCheckpoint();
             }
-
         }
 
         (bool checkpointExists, uint64 currentEpoch, BottomUpCheckpoint storage checkpoint) =
@@ -651,7 +650,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
                     }
 
                     subnet.appliedBottomUpNonce += 1;
-
                 }
             }
 

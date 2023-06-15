@@ -42,7 +42,13 @@ library CheckpointHelper {
         return toHash(bottomUpCheckpoint) == EMPTY_BOTTOMUPCHECKPOINT_HASH;
     }
 
-    function setChildCheck(BottomUpCheckpoint storage checkpoint, BottomUpCheckpoint calldata commit, mapping(uint64 => mapping(bytes32 => uint256[2])) storage children, mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool))) storage checks, uint64 currentEpoch) public {
+    function setChildCheck(
+        BottomUpCheckpoint storage checkpoint,
+        BottomUpCheckpoint calldata commit,
+        mapping(uint64 => mapping(bytes32 => uint256[2])) storage children,
+        mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool))) storage checks,
+        uint64 currentEpoch
+    ) public {
         bytes32 commitSource = commit.source.toHash();
         bytes32 commitData = toHash(commit);
 
