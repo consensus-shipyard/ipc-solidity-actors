@@ -56,6 +56,9 @@ contract SubnetRegistry {
         require(subnet != address(0), "Not exists");
     }
 
+    // @notice List all subnets in the registry. This is equivalent to list all subnets in the gateway.
+    // TODO: considering moving this function into gateway once its size is smallers. Currently delete
+    // TODO: is not handled. Or gateway calls into registry to delete the subnets.
     function listSubnets(uint64 _page) external view returns(SubnetID[] memory) {
         uint64 start = _page * LIST_SUBNETS_PAGE_SIZE;
         if (start >= subnetIDs.length) { revert SubnetsOutOfBound(); }
