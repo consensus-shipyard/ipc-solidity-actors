@@ -125,7 +125,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         _;
     }
 
-    struct ValidatorDetail {
+    struct ValidatorInfo {
         address addr;
         uint256 weight;
         string netAddresses;
@@ -311,7 +311,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice get all the validators in the subnet.
     /// TODO: we can introduce pagination
-    function getValidators() public view returns (address[] memory) {
+    function getValidators() external view returns (address[] memory) {
         uint256 length = validators.length();
         address[] memory result = new address[](length);
 
@@ -323,15 +323,16 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     }
 
     /// @notice get the full details of the validators, not just their addresses.
-    function getValidatorDetails() external view returns(ValidatorDetail[] memory) {
-        address[] memory allValidators = getValidators();
-        ValidatorDetail[] memory details = new ValidatorDetail[](allValidators.length);
+    function getValidatorsInfo() external view returns(ValidatorInfo[] memory) {
+        uint256 length = validators.length();
 
-        for (uint256 i = 0; i < allValidators.length; i++) {
-            details[i] = ValidatorDetail({
-                addr: allValidators[i],
-                weight: stake[allValidators[i]],
-                netAddresses: validatorNetAddresses[allValidators[i]]
+        ValidatorInfo[] memory details = new ValidatorInfo[](length);
+
+        for (uint256 i = 0; i < length; i++) {
+            details[i] = ValidatorInfo({
+                addr: validators.at(i),
+                weight: stake[validators.at(i)],
+                netAddresses: validatorNetAddresses[validators.at(i)]
             });
         }
 
