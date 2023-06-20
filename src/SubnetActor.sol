@@ -190,9 +190,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         totalStake += validatorStake;
 
         if (stake[validator] >= minActivationCollateral) {
+            configurationNumber += 1;
             if (!validators.contains(validator)) {
-                configurationNumber += 1;
-
                 validators.add(validator);
                 validatorNetAddresses[validator] = netAddr;
             }
@@ -223,7 +222,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         stake[msg.sender] = 0;
         totalStake -= amount;
         validators.remove(msg.sender);
-        configurationNumber -= 1;
+        configurationNumber += 1;
 
         IGateway(ipcGatewayAddr).releaseStake(amount);
 
