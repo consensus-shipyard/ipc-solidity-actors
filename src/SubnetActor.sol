@@ -50,6 +50,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 public immutable minValidators;
 
+    /// @notice Sequence number that uniquely identifies a validator set.
+    uint64 public configurationNumber;
+
     /// @notice Address of the IPC gateway for the subnet
     address public immutable ipcGatewayAddr;
 
@@ -131,6 +134,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         string netAddresses;
     }
 
+    struct ValidatorSet {
+        ValidatorInfo[] validators;
+        uint64 configurationNumber;
+    }
+
     struct ConstructParams {
         SubnetID parentId;
         bytes32 name;
@@ -165,6 +173,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         // In the future we can use the current epoch. This will be really
         // useful once we support the docking of subnets to new parents, etc.
         genesisEpoch = 0;
+
+        configurationNumber = 0;
     }
 
     receive() external payable onlyGateway {}
@@ -181,6 +191,8 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         if (stake[validator] >= minActivationCollateral) {
             if (!validators.contains(validator)) {
+                configurationNumber += 1;
+
                 validators.add(validator);
                 validatorNetAddresses[validator] = netAddr;
             }
@@ -211,6 +223,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         stake[msg.sender] = 0;
         totalStake -= amount;
         validators.remove(msg.sender);
+        configurationNumber -= 1;
 
         IGateway(ipcGatewayAddr).releaseStake(amount);
 
@@ -323,7 +336,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     }
 
     /// @notice get the full details of the validators, not just their addresses.
-    function getValidatorsInfo() external view returns(ValidatorInfo[] memory) {
+    function getValidatorSet() external view returns(ValidatorSet memory) {
         uint256 length = validators.length();
 
         ValidatorInfo[] memory details = new ValidatorInfo[](length);
@@ -336,7 +349,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             });
         }
 
-        return details;
+        return ValidatorSet({
+            validators: details,
+            configurationNumber: configurationNumber
+        });
     }
 
     /// @notice wheather a validator has voted for a checkpoint submission during an epoch
