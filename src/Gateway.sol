@@ -179,7 +179,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param subnetId the id of the subnet
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
-    function getSubnet(SubnetID calldata subnetId) internal view returns (bool, Subnet memory) {
+    function getSubnet(SubnetID calldata subnetId) external view returns (bool, Subnet memory) {
         return _getSubnet(subnetId);
     }
 
