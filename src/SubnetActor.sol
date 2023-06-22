@@ -7,9 +7,11 @@ import "./enums/Status.sol";
 import "./enums/VoteExecutionStatus.sol";
 import "./structs/Checkpoint.sol";
 import "./structs/Subnet.sol";
+import "./structs/FvmAddress.sol";
 import "./interfaces/ISubnetActor.sol";
 import "./interfaces/IGateway.sol";
 import "./lib/AccountHelper.sol";
+import "./lib/FvmAddressHelper.sol";
 import "./lib/CheckpointHelper.sol";
 import "./lib/CrossMsgHelper.sol";
 import "./lib/SubnetIDHelper.sol";
@@ -31,6 +33,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
     using CrossMsgHelper for CrossMsg;
+    using FvmAddressHelper for FvmAddress;
 
     /// @notice minimum collateral validators need to stake in order to join the subnet. Values get clamped to this
     uint256 private constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -89,6 +92,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice validator address to validator net address
     mapping(address => string) public validatorNetAddresses;
 
+    /// @notice validator address to validator worker address
+    mapping(address => FvmAddress) public validatorWorkerAddresses;
+
     /// @notice ID of the parent subnet
     SubnetID private parentId;
 
@@ -97,6 +103,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     error NotGateway();
     error NotAccount();
+    error WorkerAddressInvalid();
     error CollateralIsZero();
     error CallerHasNoStake();
     error CollateralStillLockedInSubnet();
@@ -131,6 +138,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     struct ValidatorInfo {
         address addr;
         uint256 weight;
+        FvmAddress workerAddr;
         string netAddresses;
     }
 
@@ -181,9 +189,10 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice method that allows a validator to join the subnet
     /// @param netAddr - the network address of the validator
-    function join(string calldata netAddr) external payable signableOnly notKilled {
+    function join(string calldata netAddr, FvmAddress calldata workerAddr) external payable signableOnly notKilled {
         uint256 validatorStake = msg.value;
         address validator = msg.sender;
+        if (!workerAddr.isValid()) revert WorkerAddressInvalid();
         if (validatorStake == 0) revert CollateralIsZero();
 
         stake[validator] += validatorStake;
@@ -194,6 +203,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             if (!validators.contains(validator)) {
                 validators.add(validator);
                 validatorNetAddresses[validator] = netAddr;
+                validatorWorkerAddresses[validator] = workerAddr;
             }
         }
 
@@ -344,6 +354,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             details[i] = ValidatorInfo({
                 addr: validators.at(i),
                 weight: stake[validators.at(i)],
+                workerAddr: validatorWorkerAddresses[validators.at(i)],
                 netAddresses: validatorNetAddresses[validators.at(i)]
             });
         }
