@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 address constant INIT_ACTOR = address(1);
 address constant REWARD_ACTOR = address(2);
