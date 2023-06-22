@@ -18,8 +18,10 @@ contract SubnetRegistry {
     event SubnetDeployed(address subnetAddr, SubnetID subnetId);
 
     error NotSameGateway();
+    error GatewayCannotBeZero();
 
     constructor(address _gateway) {
+        if (_gateway == address(0)) revert GatewayCannotBeZero();
         gateway = _gateway;
     }
 
