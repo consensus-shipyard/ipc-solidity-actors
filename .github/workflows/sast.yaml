@@ -7,6 +7,15 @@ on:
     branches: [ main ]
 
 jobs:
+  prettier:
+    name: Prettier check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actionsx/prettier@v2
+        with:
+          args: --check .
+          
   slither:
     name: Slither check
     runs-on: ubuntu-latest
