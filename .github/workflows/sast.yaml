@@ -35,6 +35,6 @@ jobs:
       - name: Install solidity plugin
         run: npm i --unsafe-perm prettier prettier-plugin-solidity
       - name: Prettier check
-        run: npx prettier --check 'src/**/*.sol'
+        run: npx prettier --check 'src/**/*.sol' 'test/*.sol'
       - name: Solhint check
         run: npx solhint 'src/**/*.sol'
