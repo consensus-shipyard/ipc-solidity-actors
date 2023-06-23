@@ -8,11 +8,29 @@ on:
 
 jobs:
   slither:
+    name: Slither check
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
         with:
           submodules: recursive
-      - uses: crytic/slither-action@v0.3.0
+
+      - name: Run Slither
+        uses: crytic/slither-action@v0.3.0
         with:
           fail-on: low
+
+  solhint:
+    name: Solhint check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup Node 16
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16.x'
+          cache: 'npm'
+      - name: Install Node dependencies
+        run: npm i --unsafe-perm
+      - name: Solhint check
+        run: npx solhint src/**/*.sol
