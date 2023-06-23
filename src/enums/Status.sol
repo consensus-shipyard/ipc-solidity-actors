@@ -4,10 +4,10 @@ pragma solidity 0.8.18;
 /// @title Subnet Status enum
 /// @author LimeChain team
 enum Status {
-  Unset,
-  Instantiated,
-  Active,
-  Inactive,
-  Terminating,
-  Killed
+    Unset,
+    Instantiated,
+    Active,
+    Inactive,
+    Terminating,
+    Killed
 }

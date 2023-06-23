@@ -3,7 +3,7 @@ module.exports = {
     singleQuote: true,
     printWidth: 80,
     endOfLine: 'auto',
-    tabWidth: 2,
+    tabWidth: 4,
     trailingComma: 'all',
     overrides: [
         {
@@ -11,7 +11,7 @@ module.exports = {
             options: {
                 parser: 'solidity-parse',
                 printWidth: 120,
-                tabWidth: 2,
+                tabWidth: 4,
                 useTabs: false,
                 singleQuote: false,
                 bracketSpacing: false,

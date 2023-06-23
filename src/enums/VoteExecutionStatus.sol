@@ -2,8 +2,8 @@
 pragma solidity 0.8.18;
 
 enum VoteExecutionStatus {
-  ThresholdNotReached,
-  ReachingConsensus,
-  RoundAbort,
-  ConsensusReached
+    ThresholdNotReached,
+    ReachingConsensus,
+    RoundAbort,
+    ConsensusReached
 }
