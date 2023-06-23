@@ -33,4 +33,4 @@ jobs:
       - name: Install Node dependencies
         run: npm i --unsafe-perm
       - name: Solhint check
-        run: npx solhint src/**/*.sol
+        run: npx solhint 'src/**/*.sol'
