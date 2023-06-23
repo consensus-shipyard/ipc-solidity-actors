@@ -133,17 +133,23 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error NotEnoughFundsForMembership();
 
     modifier signableOnly() {
-        if (!msg.sender.isAccount()) revert NotSignableAccount();
+        if (!msg.sender.isAccount()) {
+            revert NotSignableAccount();
+        }
         _;
     }
 
     modifier systemActorOnly() {
-        if (!msg.sender.isSystemActor()) revert NotSystemActor();
+        if (!msg.sender.isSystemActor()) {
+            revert NotSystemActor();
+        }
         _;
     }
 
     modifier hasFee() {
-        if (msg.value < crossMsgFee) revert NotEnoughFee();
+        if (msg.value < crossMsgFee) {
+            revert NotEnoughFee();
+        }
         _;
     }
 
@@ -201,7 +207,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @notice initialize the contract with the genesis epoch
     /// @param _genesisEpoch - genesis epoch to set
     function initGenesisEpoch(uint64 _genesisEpoch) external systemActorOnly {
-        if (initialized) revert AlreadyInitialized();
+        if (initialized) {
+            revert AlreadyInitialized();
+        }
 
         genesisEpoch = _genesisEpoch;
         initialized = true;
@@ -209,13 +217,17 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice register a subnet in the gateway. called by a subnet when it reaches the threshold stake
     function register() external payable {
-        if (msg.value < minStake) revert NotEnoughFunds();
+        if (msg.value < minStake) {
+            revert NotEnoughFunds();
+        }
 
         SubnetID memory subnetId = _networkName.createSubnetId(msg.sender);
 
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
 
-        if (registered) revert AlreadyRegisteredSubnet();
+        if (registered) {
+            revert AlreadyRegisteredSubnet();
+        }
 
         subnet.id = subnetId;
         subnet.stake = msg.value;
@@ -227,11 +239,15 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice addStake - add collateral for an existing subnet
     function addStake() external payable {
-        if (msg.value <= 0) revert NotEnoughFunds();
+        if (msg.value <= 0) {
+            revert NotEnoughFunds();
+        }
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
-        if (!registered) revert NotRegisteredSubnet();
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
 
         subnet.stake += msg.value;
 
@@ -244,12 +260,18 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice release collateral for an existing subnet
     function releaseStake(uint256 amount) external nonReentrant {
-        if (amount == 0) revert CannotReleaseZero();
+        if (amount == 0) {
+            revert CannotReleaseZero();
+        }
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
-        if (!registered) revert NotRegisteredSubnet();
-        if (subnet.stake < amount) revert NotEnoughFundsToRelease();
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
+        if (subnet.stake < amount) {
+            revert NotEnoughFundsToRelease();
+        }
 
         subnet.stake -= amount;
 
@@ -261,10 +283,14 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     }
 
     function releaseRewards(uint256 amount) external nonReentrant {
-        if (amount == 0) revert CannotReleaseZero();
+        if (amount == 0) {
+            revert CannotReleaseZero();
+        }
 
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
-        if (!registered) revert NotRegisteredSubnet();
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
 
         payable(subnet.id.getActor()).sendValue(amount);
     }
@@ -273,8 +299,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function kill() external {
         (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
 
-        if (!registered) revert NotRegisteredSubnet();
-        if (subnet.circSupply > 0) revert NotEmptySubnetCircSupply();
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
+        if (subnet.circSupply > 0) {
+            revert NotEmptySubnetCircSupply();
+        }
 
         uint256 stake = subnet.stake;
 
@@ -287,14 +317,20 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {
-        if (!initialized) revert NotInitialized();
+        if (!initialized) {
+            revert NotInitialized();
+        }
         if (commit.source.getActor().normalize() != msg.sender) {
             revert InvalidCheckpointSource();
         }
 
         (, Subnet storage subnet) = _getSubnet(msg.sender);
-        if (subnet.status != Status.Active) revert SubnetNotActive();
-        if (subnet.prevCheckpoint.epoch >= commit.epoch) revert InvalidCheckpointEpoch();
+        if (subnet.status != Status.Active) {
+            revert SubnetNotActive();
+        }
+        if (subnet.prevCheckpoint.epoch >= commit.epoch) {
+            revert InvalidCheckpointEpoch();
+        }
         if (commit.prevHash != EMPTY_HASH) {
             if (commit.prevHash != subnet.prevCheckpoint.toHash()) {
                 revert InconsistentPrevCheckpoint();
@@ -328,7 +364,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         bottomUpNonce += commit.crossMsgs.length > 0 ? 1 : 0;
 
-        if (subnet.circSupply < totalValue) revert NotEnoughSubnetCircSupply();
+        if (subnet.circSupply < totalValue) {
+            revert NotEnoughSubnetCircSupply();
+        }
 
         subnet.circSupply -= totalValue;
 
@@ -376,7 +414,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             if (validatorAddress != address(0)) {
                 uint256 validatorWeight = weights[validatorIndex];
 
-                if (validatorWeight == 0) revert ValidatorWeightIsZero();
+                if (validatorWeight == 0) {
+                    revert ValidatorWeightIsZero();
+                }
 
                 validatorSet[validatorNonce][validatorAddress] = validatorWeight;
 
@@ -410,8 +450,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     ) external signableOnly validEpochOnly(checkpoint.epoch) {
         uint256 validatorWeight = validatorSet[validatorNonce][msg.sender];
 
-        if (!initialized) revert NotInitialized();
-        if (validatorWeight == 0) revert NotValidator();
+        if (!initialized) {
+            revert NotInitialized();
+        }
+        if (validatorWeight == 0) {
+            revert NotValidator();
+        }
         if (!CrossMsgHelper.isSorted(checkpoint.topDownMsgs)) {
             revert MessagesNotSorted();
         }
@@ -451,7 +495,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (destination.equals(_networkName)) {
             revert CannotSendCrossMsgToItself();
         }
-        if (crossMsg.message.value != msg.value) revert NotEnoughFunds();
+        if (crossMsg.message.value != msg.value) {
+            revert NotEnoughFunds();
+        }
         if (crossMsg.message.to.rawAddress == address(0)) {
             revert InvalidCrossMsgDestinationAddress();
         }
@@ -473,7 +519,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function whitelistPropagator(bytes32 msgCid, address[] calldata owners) external onlyValidPostboxOwner(msgCid) {
         CrossMsg storage crossMsg = postbox[msgCid];
 
-        if (crossMsg.isEmpty()) revert PostboxNotExist();
+        if (crossMsg.isEmpty()) {
+            revert PostboxNotExist();
+        }
 
         // update postbox with the new owners
         uint256 ownersLength = owners.length;
@@ -589,8 +637,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     ) internal returns (bool shouldBurn, bool shouldDistributeRewards) {
         SubnetID memory to = crossMessage.message.to.subnetId;
 
-        if (to.isEmpty()) revert InvalidCrossMsgDestinationSubnet();
-        if (to.equals(_networkName)) revert InvalidCrossMsgDestinationSubnet();
+        if (to.isEmpty()) {
+            revert InvalidCrossMsgDestinationSubnet();
+        }
+        if (to.equals(_networkName)) {
+            revert InvalidCrossMsgDestinationSubnet();
+        }
 
         SubnetID memory from = crossMessage.message.from.subnetId;
         IPCMsgType applyType = crossMessage.message.applyType(_networkName);
@@ -641,7 +693,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
 
-        if (!registered) revert NotRegisteredSubnet();
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
 
         crossMessage.message.nonce = subnet.topDownNonce;
         subnet.topDownNonce += 1;
@@ -652,7 +706,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function getTopDownMsgs(SubnetID calldata subnetId) external view returns (CrossMsg[] memory) {
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
 
-        if (!registered) revert NotRegisteredSubnet();
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
 
         return subnet.topDownMsgs;
     }
@@ -695,7 +751,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             if (applyType == IPCMsgType.BottomUp) {
                 if (!forwarder.isEmpty()) {
                     (bool registered, Subnet storage subnet) = _getSubnet(forwarder);
-                    if (!registered) revert NotRegisteredSubnet();
+                    if (!registered) {
+                        revert NotRegisteredSubnet();
+                    }
                     if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
                         revert InvalidCrossMsgNonce();
                     }
@@ -755,7 +813,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param to - the address of the target subnet contract
     /// @param amount - the amount of rewards to distribute
     function _distributeRewards(address to, uint256 amount) internal {
-        if (amount == 0) return;
+        if (amount == 0) {
+            return;
+        }
         // slither-disable-next-line unused-return
         Address.functionCall(to.normalize(), abi.encodeWithSelector(ISubnetActor.reward.selector, amount));
     }

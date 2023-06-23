@@ -15,7 +15,9 @@ library SubnetIDHelper {
     bytes32 public constant EMPTY_SUBNET_HASH = keccak256(abi.encode(SubnetID({root: 0, route: new address[](0)})));
 
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
-        if (subnet.route.length == 0) revert NoParentForSubnet();
+        if (subnet.route.length == 0) {
+            revert NoParentForSubnet();
+        }
 
         address[] memory route = new address[](subnet.route.length - 1);
         uint256 routeLength = route.length;
@@ -61,7 +63,9 @@ library SubnetIDHelper {
     }
 
     function getActor(SubnetID calldata subnet) public pure returns (address) {
-        if (subnet.route.length == 0) return address(0);
+        if (subnet.route.length == 0) {
+            return address(0);
+        }
 
         return subnet.route[subnet.route.length - 1];
     }
@@ -71,8 +75,12 @@ library SubnetIDHelper {
     }
 
     function equals(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (bool) {
-        if (subnet1.root != subnet2.root) return false;
-        if (subnet1.route.length != subnet2.route.length) return false;
+        if (subnet1.root != subnet2.root) {
+            return false;
+        }
+        if (subnet1.route.length != subnet2.route.length) {
+            return false;
+        }
 
         return toHash(subnet1) == toHash(subnet2);
     }
@@ -91,7 +99,9 @@ library SubnetIDHelper {
                 ++i;
             }
         }
-        if (i == 0) return SubnetID({root: subnet1.root, route: new address[](0)});
+        if (i == 0) {
+            return SubnetID({root: subnet1.root, route: new address[](0)});
+        }
 
         address[] memory route = new address[](i);
         for (uint256 j = 0; j < i; ) {

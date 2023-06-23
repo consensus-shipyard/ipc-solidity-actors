@@ -111,18 +111,23 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error GatewayCannotBeZero();
 
     modifier onlyGateway() {
-        if (msg.sender != ipcGatewayAddr) revert NotGateway();
+        if (msg.sender != ipcGatewayAddr) {
+            revert NotGateway();
+        }
         _;
     }
 
     modifier signableOnly() {
-        if (!msg.sender.isAccount()) revert NotAccount();
+        if (!msg.sender.isAccount()) {
+            revert NotAccount();
+        }
         _;
     }
 
     modifier notKilled() {
-        if (status == Status.Killed) revert SubnetAlreadyKilled();
-
+        if (status == Status.Killed) {
+            revert SubnetAlreadyKilled();
+        }
         _;
     }
 
@@ -142,7 +147,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     constructor(ConstructParams memory params) Voting(params.majorityPercentage, params.bottomUpCheckPeriod) {
         _parentId = params.parentId;
         name = params.name;
-        if (params.ipcGatewayAddr == address(0)) revert GatewayCannotBeZero();
+        if (params.ipcGatewayAddr == address(0)) {
+            revert GatewayCannotBeZero();
+        }
         ipcGatewayAddr = params.ipcGatewayAddr;
         consensus = params.consensus;
         minActivationCollateral = params.minActivationCollateral < MIN_COLLATERAL_AMOUNT
@@ -173,7 +180,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function join(string calldata netAddr) external payable signableOnly notKilled {
         uint256 validatorStake = msg.value;
         address validator = msg.sender;
-        if (validatorStake == 0) revert CollateralIsZero();
+        if (validatorStake == 0) {
+            revert CollateralIsZero();
+        }
 
         stake[validator] += validatorStake;
         totalStake += validatorStake;
@@ -205,7 +214,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function leave() external nonReentrant signableOnly notKilled {
         uint256 amount = stake[msg.sender];
 
-        if (amount == 0) revert NotValidator();
+        if (amount == 0) {
+            revert NotValidator();
+        }
 
         stake[msg.sender] = 0;
         totalStake -= amount;
@@ -224,7 +235,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice method that allows the subnet no be killed after all validators leave
     function kill() external signableOnly notKilled {
-        if (_validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
+        if (_validators.length() != 0 || totalStake != 0) {
+            revert NotAllValidatorsHaveLeft();
+        }
 
         status = Status.Killed;
 
@@ -236,10 +249,18 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function submitCheckpoint(
         BottomUpCheckpoint calldata checkpoint
     ) external signableOnly validEpochOnly(checkpoint.epoch) {
-        if (status != Status.Active) revert SubnetNotActive();
-        if (!_validators.contains(msg.sender)) revert NotValidator();
-        if (checkpoint.source.toHash() != currentSubnetHash) revert WrongCheckpointSource();
-        if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) revert MessagesNotSorted();
+        if (status != Status.Active) {
+            revert SubnetNotActive();
+        }
+        if (!_validators.contains(msg.sender)) {
+            revert NotValidator();
+        }
+        if (checkpoint.source.toHash() != currentSubnetHash) {
+            revert WrongCheckpointSource();
+        }
+        if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) {
+            revert MessagesNotSorted();
+        }
 
         EpochVoteBottomUpSubmission storage voteSubmission = _epochVoteSubmissions[checkpoint.epoch];
 
@@ -264,8 +285,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function reward(uint256 amount) external onlyGateway {
         uint256 validatorsLength = _validators.length();
 
-        if (validatorsLength == 0) revert NoValidatorsInSubnet();
-        if (amount < validatorsLength) revert NotEnoughBalanceForRewards();
+        if (validatorsLength == 0) {
+            revert NoValidatorsInSubnet();
+        }
+        if (amount < validatorsLength) {
+            revert NotEnoughBalanceForRewards();
+        }
 
         uint256 rewardAmount = amount / validatorsLength;
 
@@ -281,7 +306,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function withdraw() external signableOnly {
         uint256 amount = accumulatedRewards[msg.sender];
 
-        if (amount == 0) revert NoRewardToWithdraw();
+        if (amount == 0) {
+            revert NoRewardToWithdraw();
+        }
 
         accumulatedRewards[msg.sender] = 0;
 

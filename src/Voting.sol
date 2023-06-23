@@ -38,7 +38,9 @@ abstract contract Voting {
     error ValidatorAlreadyVoted();
 
     modifier validEpochOnly(uint64 epoch) {
-        if (epoch <= lastVotingExecutedEpoch) revert EpochAlreadyExecuted();
+        if (epoch <= lastVotingExecutedEpoch) {
+            revert EpochAlreadyExecuted();
+        }
         if (epoch > genesisEpoch) {
             if ((epoch - genesisEpoch) % submissionPeriod != 0) {
                 revert EpochNotVotable();
@@ -48,7 +50,9 @@ abstract contract Voting {
     }
 
     constructor(uint8 _majorityPercentage, uint64 _submissionPeriod) {
-        if (_majorityPercentage > 100) revert InvalidMajorityPercentage();
+        if (_majorityPercentage > 100) {
+            revert InvalidMajorityPercentage();
+        }
 
         majorityPercentage = _majorityPercentage;
         submissionPeriod = _submissionPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : _submissionPeriod;
@@ -101,7 +105,9 @@ abstract contract Voting {
     /// @param epoch - the epoch to mark as executed
     function _markSubmissionExecuted(uint64 epoch) internal {
         // epoch not the next executable epoch
-        if (!_isNextExecutableEpoch(epoch)) return;
+        if (!_isNextExecutableEpoch(epoch)) {
+            return;
+        }
 
         // epoch not the next executable epoch in the queue
         if (executableQueue.contains(epoch)) {
@@ -149,7 +155,9 @@ abstract contract Voting {
         uint256 totalWeight
     ) internal returns (bool shouldExecuteVote) {
         uint256 nonce = vote.nonce;
-        if (vote.submitters[nonce][submitterAddress]) revert ValidatorAlreadyVoted();
+        if (vote.submitters[nonce][submitterAddress]) {
+            revert ValidatorAlreadyVoted();
+        }
 
         vote.submitters[nonce][submitterAddress] = true;
         vote.totalSubmissionWeight += submitterWeight;
