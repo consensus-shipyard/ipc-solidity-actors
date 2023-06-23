@@ -41,5 +41,7 @@ jobs:
           cache: 'npm'
       - name: Install Node dependencies
         run: npm i --unsafe-perm
+      - name: Install solidity plugin
+        run: npm i --unsafe-perm prettier prettier-plugin-solidity
       - name: Solhint check
         run: npx solhint 'src/**/*.sol'
