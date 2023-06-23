@@ -75,6 +75,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     EnumerableSet.AddressSet private validators;
 
     /// @notice contains voted submissions for a given epoch
+    // slither-disable-next-line uninitialized-state
     mapping(uint64 => EpochVoteBottomUpSubmission) private epochVoteSubmissions;
 
     /// @notice validator address to stake amount
@@ -179,6 +180,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         if (stake[validator] >= minActivationCollateral) {
             if (!validators.contains(validator)) {
+                // slither-disable-next-line unused-return
                 validators.add(validator);
                 validatorNetAddresses[validator] = netAddr;
             }
@@ -207,6 +209,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
         stake[msg.sender] = 0;
         totalStake -= amount;
+        // slither-disable-next-line unused-return
         validators.remove(msg.sender);
         if (status == Status.Active) {
             if (totalStake < minActivationCollateral) {

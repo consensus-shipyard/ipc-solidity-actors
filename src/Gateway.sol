@@ -66,6 +66,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     uint64 public immutable topDownCheckPeriod;
 
     /// @notice BottomUpCheckpoints in the GW per epoch
+    // slither-disable-next-line uninitialized-state
     mapping(uint64 => BottomUpCheckpoint) public bottomUpCheckpoints;
 
     /// @notice nonce for bottom-up messages
@@ -98,6 +99,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     bool public initialized;
 
     /// @notice contains voted submissions for a given epoch
+    // slither-disable-next-line uninitialized-state
     mapping(uint64 => EpochVoteTopDownSubmission) private epochVoteSubmissions;
 
     error NotSystemActor();
@@ -419,6 +421,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // submit the vote
         bool shouldExecuteVote = _submitTopDownVote(voteSubmission, checkpoint, msg.sender, validatorWeight);
 
+        // slither-disable-next-line uninitialized-local
         CrossMsg[] memory topDownMsgs;
 
         if (shouldExecuteVote) {
@@ -592,6 +595,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         SubnetID memory from = crossMessage.message.from.subnetId;
         IPCMsgType applyType = crossMessage.message.applyType(networkName);
 
+        // slither-disable-next-line uninitialized-local
         bool shouldCommitBottomUp;
 
         if (applyType == IPCMsgType.BottomUp) {
@@ -707,6 +711,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
                 appliedTopDownNonce += 1;
             }
 
+            // slither-disable-next-line unused-return
             crossMsg.execute();
             return;
         }
@@ -751,6 +756,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param amount - the amount of rewards to distribute
     function _distributeRewards(address to, uint256 amount) internal {
         if (amount == 0) return;
+        // slither-disable-next-line unused-return
         Address.functionCall(to.normalize(), abi.encodeWithSelector(ISubnetActor.reward.selector, amount));
     }
 
