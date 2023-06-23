@@ -12,7 +12,7 @@ library SubnetIDHelper {
     error NoParentForSubnet();
     error EmptySubnet();
 
-    bytes32 private constant EMPTY_SUBNET_HASH = keccak256(abi.encode(SubnetID({root: 0, route: new address[](0)})));
+    bytes32 public constant EMPTY_SUBNET_HASH = keccak256(abi.encode(SubnetID({root: 0, route: new address[](0)})));
 
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
         if (subnet.route.length == 0) revert NoParentForSubnet();

@@ -39,7 +39,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;
 
     /// @notice path to the current network
-    SubnetID private networkName;
+    SubnetID private _networkName;
 
     /// @notice Number of active subnets spawned from this one
     uint64 public totalSubnets;
@@ -90,17 +90,17 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     uint256 public validatorNonce;
 
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
-    mapping(uint64 => mapping(bytes32 => uint256[2])) private children;
+    mapping(uint64 => mapping(bytes32 => uint256[2])) private _children;
 
     /// @notice epoch => SubnetID => check => exists
-    mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool))) private checks;
+    mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool))) private _checks;
 
     /// @notice whether the contract is initialized
     bool public initialized;
 
     /// @notice contains voted submissions for a given epoch
     // slither-disable-next-line uninitialized-state
-    mapping(uint64 => EpochVoteTopDownSubmission) private epochVoteSubmissions;
+    mapping(uint64 => EpochVoteTopDownSubmission) private _epochVoteSubmissions;
 
     error NotSystemActor();
     error NotSignableAccount();
@@ -163,7 +163,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     }
 
     constructor(ConstructorParams memory params) Voting(params.majorityPercentage, params.topDownCheckPeriod) {
-        networkName = params.networkName;
+        _networkName = params.networkName;
         minStake = MIN_COLLATERAL_AMOUNT;
         bottomUpCheckPeriod = params.bottomUpCheckPeriod < MIN_CHECKPOINT_PERIOD
             ? MIN_CHECKPOINT_PERIOD
@@ -174,7 +174,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         crossMsgFee = params.msgFee;
 
         // the root doesn't need to be explicitly initialized
-        if (networkName.isRoot()) {
+        if (_networkName.isRoot()) {
             initialized = true;
         }
     }
@@ -195,7 +195,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice get the network name in subnet id format
     function getNetworkName() external view returns (SubnetID memory) {
-        return networkName;
+        return _networkName;
     }
 
     /// @notice initialize the contract with the genesis epoch
@@ -211,7 +211,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function register() external payable {
         if (msg.value < minStake) revert NotEnoughFunds();
 
-        SubnetID memory subnetId = networkName.createSubnetId(msg.sender);
+        SubnetID memory subnetId = _networkName.createSubnetId(msg.sender);
 
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
 
@@ -309,11 +309,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         // create checkpoint if not exists
         if (!checkpointExists) {
-            checkpoint.source = networkName;
+            checkpoint.source = _networkName;
             checkpoint.epoch = currentEpoch;
         }
 
-        checkpoint.setChildCheck(commit, children, checks, currentEpoch);
+        checkpoint.setChildCheck(commit, _children, _checks, currentEpoch);
 
         uint256 totalValue = 0;
         uint256 crossMsgLength = commit.crossMsgs.length;
@@ -352,7 +352,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release() external payable signableOnly hasFee {
-        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(networkName, msg.sender, msg.value - crossMsgFee);
+        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(_networkName, msg.sender, msg.value - crossMsgFee);
 
         _commitBottomUpMsg(crossMsg);
     }
@@ -392,7 +392,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             // to be committed. This doesn't apply to the root.
             // TODO: Once account abstraction is conveniently supported, there will be
             // no need for this initial funding of validators.
-            // if (block.number == 1 && !networkName.isRoot())
+            // if (block.number == 1 && !_networkName.isRoot())
             //     payable(validatorAddress).sendValue(INITIAL_VALIDATOR_FUNDS);
 
             unchecked {
@@ -416,7 +416,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             revert MessagesNotSorted();
         }
 
-        EpochVoteTopDownSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
+        EpochVoteTopDownSubmission storage voteSubmission = _epochVoteSubmissions[checkpoint.epoch];
 
         // submit the vote
         bool shouldExecuteVote = _submitTopDownVote(voteSubmission, checkpoint, msg.sender, validatorWeight);
@@ -433,7 +433,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
-                EpochVoteTopDownSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
+                EpochVoteTopDownSubmission storage nextVoteSubmission = _epochVoteSubmissions[nextExecutableEpoch];
 
                 topDownMsgs = _markMostVotedSubmissionExecuted(nextVoteSubmission);
             }
@@ -448,7 +448,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param crossMsg - message to send
     function sendCross(SubnetID memory destination, CrossMsg memory crossMsg) external payable signableOnly hasFee {
         // destination is the current network, you are better off with a good ol' message, no cross needed
-        if (destination.equals(networkName)) {
+        if (destination.equals(_networkName)) {
             revert CannotSendCrossMsgToItself();
         }
         if (crossMsg.message.value != msg.value) revert NotEnoughFunds();
@@ -458,7 +458,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         // we disregard the "to" of the message. the caller is the one set as the "from" of the message.
         crossMsg.message.to.subnetId = destination;
-        crossMsg.message.from.subnetId = networkName;
+        crossMsg.message.from.subnetId = _networkName;
         crossMsg.message.from.rawAddress = msg.sender;
 
         // commit cross-message for propagation
@@ -513,7 +513,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param epoch - the epoch to check
     /// @param submitter - the validator to check
     function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns (bool) {
-        EpochVoteTopDownSubmission storage voteSubmission = epochVoteSubmissions[epoch];
+        EpochVoteTopDownSubmission storage voteSubmission = _epochVoteSubmissions[epoch];
 
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
     }
@@ -590,16 +590,16 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         SubnetID memory to = crossMessage.message.to.subnetId;
 
         if (to.isEmpty()) revert InvalidCrossMsgDestinationSubnet();
-        if (to.equals(networkName)) revert InvalidCrossMsgDestinationSubnet();
+        if (to.equals(_networkName)) revert InvalidCrossMsgDestinationSubnet();
 
         SubnetID memory from = crossMessage.message.from.subnetId;
-        IPCMsgType applyType = crossMessage.message.applyType(networkName);
+        IPCMsgType applyType = crossMessage.message.applyType(_networkName);
 
         // slither-disable-next-line uninitialized-local
         bool shouldCommitBottomUp;
 
         if (applyType == IPCMsgType.BottomUp) {
-            shouldCommitBottomUp = !to.commonParent(from).equals(networkName);
+            shouldCommitBottomUp = !to.commonParent(from).equals(_networkName);
         }
 
         if (shouldCommitBottomUp) {
@@ -628,7 +628,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
 
         if (shouldDistributeRewards) {
-            SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(networkName);
+            SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(_networkName);
 
             _distributeRewards(toSubnetId.getActor(), crossMsgFee);
         }
@@ -637,7 +637,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution
     /// @param crossMessage - the cross message to be committed
     function _commitTopDownMsg(CrossMsg memory crossMessage) internal {
-        SubnetID memory subnetId = crossMessage.message.to.subnetId.down(networkName);
+        SubnetID memory subnetId = crossMessage.message.to.subnetId.down(_networkName);
 
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
 
@@ -685,10 +685,10 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             }
         }
 
-        IPCMsgType applyType = crossMsg.message.applyType(networkName);
+        IPCMsgType applyType = crossMsg.message.applyType(_networkName);
 
         // If the cross-message destination is the current network.
-        if (crossMsg.message.to.subnetId.equals(networkName)) {
+        if (crossMsg.message.to.subnetId.equals(_networkName)) {
             // forwarder will always be empty subnet when we reach here from submitTopDownCheckpoint
             // so we check against it to not reach here in coverage
 
@@ -765,7 +765,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
     function _getSubnet(address actor) internal view returns (bool found, Subnet storage subnet) {
-        SubnetID memory subnetId = networkName.createSubnetId(actor);
+        SubnetID memory subnetId = _networkName.createSubnetId(actor);
 
         return _getSubnet(subnetId);
     }
