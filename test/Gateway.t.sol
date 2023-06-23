@@ -1218,8 +1218,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         require(gw.appliedTopDownNonce() == 1);
     }
 
-    function reward(uint256 amount) external {
-        console.log("reward method called");
+    function reward(uint256 amount) external view {
+        console.log("reward method called with %d", amount);
     }
 
     function test_SendCross_Works_BottomUp_CurrentNetworkNotCommonParent() public {
