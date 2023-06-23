@@ -7,15 +7,6 @@ on:
     branches: [ main ]
 
 jobs:
-  prettier:
-    name: Prettier check
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actionsx/prettier@v2
-        with:
-          args: --check 'src/**/*.sol'
-
   slither:
     name: Slither check
     runs-on: ubuntu-latest
@@ -41,7 +32,9 @@ jobs:
           cache: 'npm'
       - name: Install Node dependencies
         run: npm i --unsafe-perm
-      - name: Install solidity plugin
-        run: npm i --unsafe-perm prettier prettier-plugin-solidity
       - name: Solhint check
         run: npx solhint 'src/**/*.sol'
+      - name: Install solidity plugin
+        run: npm i --unsafe-perm prettier prettier-plugin-solidity
+      - name: Prettier check
+        run: npx prettier --check 'src/**/*.sol'
