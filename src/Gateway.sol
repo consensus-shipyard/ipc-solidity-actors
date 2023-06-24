@@ -297,16 +297,15 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             }
         }
 
-        (bool checkpointExists, uint64 currentEpoch, BottomUpCheckpoint storage checkpoint) =
-            _getCurrentBottomUpCheckpoint();
+        BottomUpCheckpoint storage checkpoint = bottomUpCheckpoints[commit.epoch];
 
         // create checkpoint if not exists
-        if (!checkpointExists) {
+        if (checkpoint.source.isEmpty()) {
             checkpoint.source = networkName;
-            checkpoint.epoch = currentEpoch;
+            checkpoint.epoch = commit.epoch;
         }
 
-        checkpoint.setChildCheck(commit, children, checks, currentEpoch);
+        checkpoint.setChildCheck(commit, children, checks, commit.epoch);
 
         uint256 totalValue = 0;
         uint256 crossMsgLength = commit.crossMsgs.length;
