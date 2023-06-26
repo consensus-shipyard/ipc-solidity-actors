@@ -22,7 +22,9 @@ contract SubnetRegistry {
     error ZeroSubnetAddress();
 
     constructor(address _gateway) {
-        if (_gateway == address(0)) revert GatewayCannotBeZero();
+        if (_gateway == address(0)) {
+            revert GatewayCannotBeZero();
+        }
         gateway = _gateway;
     }
 
@@ -44,6 +46,8 @@ contract SubnetRegistry {
     function subnetAddress(SubnetID calldata _subnetId) external view returns (address subnet) {
         bytes32 subnetHash = _subnetId.toHash();
         subnet = subnets[subnetHash];
-        if (subnet == address(0)) revert ZeroSubnetAddress();
+        if (subnet == address(0)) {
+            revert ZeroSubnetAddress();
+        }
     }
 }
