@@ -28,14 +28,14 @@ contract SubnetRegistry {
         gateway = _gateway;
     }
 
-    function newSubnetActor(SubnetActor.ConstructParams calldata _params) external returns (address subnetAddr) {
-        if (_params.ipcGatewayAddr != gateway) {
+    function newSubnetActor(SubnetActor.ConstructParams calldata params) external returns (address subnetAddr) {
+        if (params.ipcGatewayAddr != gateway) {
             revert NotSameGateway();
         }
 
-        subnetAddr = address(new SubnetActor(_params));
+        subnetAddr = address(new SubnetActor(params));
 
-        SubnetID memory id = _params.parentId.createSubnetId(subnetAddr);
+        SubnetID memory id = params.parentId.createSubnetId(subnetAddr);
 
         bytes32 subnetHash = id.toHash();
         subnets[subnetHash] = subnetAddr;
@@ -43,8 +43,8 @@ contract SubnetRegistry {
         emit SubnetDeployed(subnetAddr, id);
     }
 
-    function subnetAddress(SubnetID calldata _subnetId) external view returns (address subnet) {
-        bytes32 subnetHash = _subnetId.toHash();
+    function subnetAddress(SubnetID calldata subnetId) external view returns (address subnet) {
+        bytes32 subnetHash = subnetId.toHash();
         subnet = subnets[subnetHash];
         if (subnet == address(0)) {
             revert ZeroSubnetAddress();
