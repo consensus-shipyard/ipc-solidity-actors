@@ -510,7 +510,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // commit cross-message for propagation
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
 
-        _crossMsgSideEffects(crossMsg.message.value, crossMsg.message.to.subnetId.down(_networkName), shouldBurn, shouldDistributeRewards);
+        _crossMsgSideEffects(
+            crossMsg.message.value,
+            crossMsg.message.to.subnetId.down(_networkName),
+            shouldBurn,
+            shouldDistributeRewards
+        );
     }
 
     /// @notice whitelist a series of addresses as propagator of a cross net message
@@ -679,7 +684,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param toSubnetId - the destination subnet of the committed cross-net message
     /// @param shouldBurn - flag if the message should burn funds
     /// @param shouldDistributeRewards - flag if the message should distribute rewards
-    function _crossMsgSideEffects(uint256 v, SubnetID memory toSubnetId, bool shouldBurn, bool shouldDistributeRewards) internal {
+    function _crossMsgSideEffects(
+        uint256 v,
+        SubnetID memory toSubnetId,
+        bool shouldBurn,
+        bool shouldDistributeRewards
+    ) internal {
         if (shouldBurn) {
             payable(BURNT_FUNDS_ACTOR).sendValue(v);
         }
