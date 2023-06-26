@@ -491,7 +491,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         CrossMsg storage crossMsg = postbox[msgCid];
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
-
+// We must delete the message first to prevent potential re-entrancies, 
+// and as the message is deleted and we don't have a reference to the object
+// anymore, we need to pull the data from the message to trigger the side-effects.
         uint256 v = crossMsg.message.value;
         SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(networkName);
         delete postbox[msgCid];
