@@ -1138,6 +1138,31 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         );
     }
 
+    function test_SendCrossMessage_Fails_EmptyNetwork() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destinationSubnet = SubnetID(0, new address[](0));
+        vm.expectRevert(InvalidCrossMsgDestinationSubnet.selector);
+        gw.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+            CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        rawAddress: caller
+                    }),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
+                    value: CROSS_MSG_FEE + 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
+                wrapped: true
+            })
+        );
+    }
+
     function test_SendCrossMessage_Fails_InvalidCrossMsgFromSubnetId() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
