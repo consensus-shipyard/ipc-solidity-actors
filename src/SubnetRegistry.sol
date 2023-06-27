@@ -8,9 +8,15 @@ import "./lib/SubnetIDHelper.sol";
 contract SubnetRegistry {
     using SubnetIDHelper for SubnetID;
 
-    /// @notice Mapping that tracks the deployed subnet actors.
+    /// @notice Mapping that tracks the deployed subnet actors per user.
     /// Key is the hash of Subnet ID, values are addresses.
-    mapping(bytes32 => address) public subnets;
+    /// mapping owner => nonce => subnet
+    mapping(address => mapping(uint64 => address)) public subnets;
+
+    /// @notice Mapping that tracks the latest nonce of the deployed
+    /// subnet for each user.
+    /// owner => nonce
+    mapping(address => uint64) public userNonces;
 
     address public immutable gateway;
 
@@ -37,15 +43,25 @@ contract SubnetRegistry {
 
         SubnetID memory id = params.parentId.createSubnetId(subnetAddr);
 
-        bytes32 subnetHash = id.toHash();
-        subnets[subnetHash] = subnetAddr;
+        subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
+        userNonces[msg.sender]++;
 
         emit SubnetDeployed(subnetAddr, id);
     }
 
-    function subnetAddress(SubnetID calldata subnetId) external view returns (address subnet) {
-        bytes32 subnetHash = subnetId.toHash();
-        subnet = subnets[subnetHash];
+    /// @notice Returns the address of the latest subnet actor
+    /// deployed by a user
+    function latestSubnetDeployed(address owner) external view returns (address subnet) {
+        subnet = subnets[owner][userNonces[owner] - 1];
+        if (subnet == address(0)) {
+            revert ZeroSubnetAddress();
+        }
+    }
+
+    /// @notice Returns the address of a subnet actor deployed for a
+    /// specific nonce by a user
+    function getSubnetDeployedByNonce(address owner, uint64 nonce) external view returns (address subnet) {
+        subnet = subnets[owner][nonce];
         if (subnet == address(0)) {
             revert ZeroSubnetAddress();
         }
