@@ -1050,10 +1050,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
                         rawAddress: caller
                     }),
-                    to: IPCAddress({
-                        subnetId: SubnetID({root: 0, route: new address[](0)}),
-                        rawAddress: caller
-                    }),
+                    to: IPCAddress({subnetId: SubnetID({root: 0, route: new address[](0)}), rawAddress: caller}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1105,10 +1102,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
                         rawAddress: caller
                     }),
-                    to: IPCAddress({
-                        subnetId: destinationSubnet,
-                        rawAddress: caller
-                    }),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1133,10 +1127,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
                         rawAddress: caller
                     }),
-                    to: IPCAddress({
-                        subnetId: destinationSubnet,
-                        rawAddress: caller
-                    }),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
                     value: 5,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1157,19 +1148,13 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
-                from: IPCAddress({
-                subnetId: SubnetID({root: 0, route: new address[](0)}),
-                rawAddress: caller
-            }),
-                to: IPCAddress({
-                subnetId: destinationSubnet,
-                rawAddress: caller
-            }),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
+                    from: IPCAddress({subnetId: SubnetID({root: 0, route: new address[](0)}), rawAddress: caller}),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
+                    value: CROSS_MSG_FEE + 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
                 wrapped: true
             })
         );
@@ -1186,19 +1171,16 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
-                from: IPCAddress({
-                subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                rawAddress: invalidCaller
-            }),
-                to: IPCAddress({
-                subnetId: destinationSubnet,
-                rawAddress: caller
-            }),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
+                    from: IPCAddress({
+                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        rawAddress: invalidCaller
+                    }),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
+                    value: CROSS_MSG_FEE + 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0)
+                }),
                 wrapped: true
             })
         );
@@ -1218,10 +1200,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
                         rawAddress: caller
                     }),
-                    to: IPCAddress({
-                        subnetId: destinationSubnet,
-                        rawAddress: address(0)
-                    }),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: address(0)}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1246,10 +1225,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
                         rawAddress: caller
                     }),
-                    to: IPCAddress({
-                        subnetId: destinationSubnet,
-                        rawAddress: address(0)
-                    }),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: address(0)}),
                     value: 0,
                     nonce: 0,
                     method: METHOD_SEND,
