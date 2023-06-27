@@ -184,7 +184,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw2.initGenesisEpoch(50);
 
         require(gw2.initialized() == true);
-        require(gw2.genesisEpoch() == 50);
+        require(gw2.getGenesisEpoch() == 50);
     }
 
     function test_InitGenesisEpoch_Fails_NotSystemActor() public {
@@ -2118,11 +2118,11 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         addValidator(validator, 100);
     }
 
-    function addValidator(address validator, uint256 weigth) internal {
+    function addValidator(address validator, uint256 weight) internal {
         address[] memory validators = new address[](1);
         validators[0] = validator;
         uint256[] memory weights = new uint256[](1);
-        weights[0] = weigth;
+        weights[0] = weight;
 
         vm.deal(validator, 1);
         vm.prank(FilAddress.SYSTEM_ACTOR);

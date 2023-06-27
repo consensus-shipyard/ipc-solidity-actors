@@ -117,6 +117,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error AlreadyRegisteredSubnet();
     error AlreadyInitialized();
     error InconsistentPrevCheckpoint();
+    error InvalidActorAddress();
     error InvalidPostboxOwner();
     error InvalidCheckpointEpoch();
     error InvalidCheckpointSource();
@@ -205,13 +206,13 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     }
 
     /// @notice initialize the contract with the genesis epoch
-    /// @param _genesisEpoch - genesis epoch to set
-    function initGenesisEpoch(uint64 _genesisEpoch) external systemActorOnly {
+    /// @param genesisEpoch - genesis epoch to set
+    function initGenesisEpoch(uint64 genesisEpoch) external systemActorOnly {
         if (initialized) {
             revert AlreadyInitialized();
         }
 
-        genesisEpoch = _genesisEpoch;
+        _genesisEpoch = genesisEpoch;
         initialized = true;
     }
 
@@ -565,7 +566,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
-    /// @notice wheather a validator has voted for a checkpoint submission during an epoch
+    /// @notice whether a validator has voted for a checkpoint submission during an epoch
     /// @param epoch - the epoch to check
     /// @param submitter - the validator to check
     function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns (bool) {
@@ -837,6 +838,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
     function _getSubnet(address actor) internal view returns (bool found, Subnet storage subnet) {
+        if (actor == address(0)) {
+            revert InvalidActorAddress();
+        }
         SubnetID memory subnetId = _networkName.createSubnetId(actor);
 
         return _getSubnet(subnetId);
