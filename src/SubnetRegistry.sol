@@ -44,7 +44,7 @@ contract SubnetRegistry {
         SubnetID memory id = params.parentId.createSubnetId(subnetAddr);
 
         subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
-        userNonces[msg.sender]++;
+        ++userNonces[msg.sender];
 
         emit SubnetDeployed(subnetAddr, id);
     }
