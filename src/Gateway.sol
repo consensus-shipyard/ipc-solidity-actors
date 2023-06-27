@@ -125,6 +125,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error InvalidCrossMsgDestinationSubnet();
     error InvalidCrossMsgDestinationAddress();
     error InvalidCrossMsgsSortOrder();
+    error InvalidCrossMsgFromSubnetId();
+    error InvalidCrossMsgFromRawAddress();
     error CannotSendCrossMsgToItself();
     error SubnetNotActive();
     error PostboxNotExist();
@@ -488,12 +490,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         _applyMessages(SubnetID(0, new address[](0)), topDownMsgs);
     }
 
-    /// @notice sends an arbitrary cross message from the current subnet to a destination subnet.
-    /// @param destination - destination subnet
+    /// @notice sends an arbitrary cross message from the current subnet to the destination subnet
     /// @param crossMsg - message to send
-    function sendCross(SubnetID memory destination, CrossMsg memory crossMsg) external payable signableOnly hasFee {
-        // destination is the current network, you are better off with a good ol' message, no cross needed
-        if (destination.equals(_networkName)) {
+    function sendCrossMessage(CrossMsg calldata crossMsg) external payable signableOnly hasFee {
+        // destination is the current network, you are better off with a good old message, no cross needed
+        if (crossMsg.message.to.subnetId.equals(_networkName)) {
             revert CannotSendCrossMsgToItself();
         }
         if (crossMsg.message.value != msg.value) {
@@ -503,10 +504,13 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             revert InvalidCrossMsgDestinationAddress();
         }
 
-        // we disregard the "to" of the message. the caller is the one set as the "from" of the message.
-        crossMsg.message.to.subnetId = destination;
-        crossMsg.message.from.subnetId = _networkName;
-        crossMsg.message.from.rawAddress = msg.sender;
+        // we disregard the "to" of the message. the caller is the one set as the "from" of the message
+        if (!crossMsg.message.from.subnetId.equals(_networkName)) {
+            revert InvalidCrossMsgFromSubnetId();
+        }
+        if (crossMsg.message.from.rawAddress != msg.sender) {
+            revert InvalidCrossMsgFromRawAddress();
+        }
 
         // commit cross-message for propagation
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
