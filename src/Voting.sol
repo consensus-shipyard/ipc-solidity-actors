@@ -13,7 +13,7 @@ abstract contract Voting {
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
 
     /// @notice minimum checkpoint period. Values get clamped to this
-    uint8 constant MIN_CHECKPOINT_PERIOD = 10;
+    uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
 
     /// @notice percent approvals needed to reach consensus
     uint8 public immutable majorityPercentage;
@@ -25,7 +25,7 @@ abstract contract Voting {
     uint64 public lastVotingExecutedEpoch;
 
     /// @notice Initial epoch number
-    uint64 public genesisEpoch;
+    uint64 internal _genesisEpoch;
 
     /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
     /// This usually happens when previous submission epoch has not executed, but the next submission
@@ -38,9 +38,11 @@ abstract contract Voting {
     error ValidatorAlreadyVoted();
 
     modifier validEpochOnly(uint64 epoch) {
-        if (epoch <= lastVotingExecutedEpoch) revert EpochAlreadyExecuted();
-        if (epoch > genesisEpoch) {
-            if ((epoch - genesisEpoch) % submissionPeriod != 0) {
+        if (epoch <= lastVotingExecutedEpoch) {
+            revert EpochAlreadyExecuted();
+        }
+        if (epoch > _genesisEpoch) {
+            if ((epoch - _genesisEpoch) % submissionPeriod != 0) {
                 revert EpochNotVotable();
             }
         }
@@ -48,7 +50,9 @@ abstract contract Voting {
     }
 
     constructor(uint8 _majorityPercentage, uint64 _submissionPeriod) {
-        if (_majorityPercentage > 100) revert InvalidMajorityPercentage();
+        if (_majorityPercentage > 100) {
+            revert InvalidMajorityPercentage();
+        }
 
         majorityPercentage = _majorityPercentage;
         submissionPeriod = _submissionPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : _submissionPeriod;
@@ -59,11 +63,10 @@ abstract contract Voting {
     /// @notice returns the current checkpoint execution status based on the current vote
     /// @param vote - the vote submission data
     /// @param totalWeight - the total voting power of the validators
-    function _deriveExecutionStatus(EpochVoteSubmission storage vote, uint256 totalWeight)
-        internal
-        view
-        returns (VoteExecutionStatus)
-    {
+    function _deriveExecutionStatus(
+        EpochVoteSubmission storage vote,
+        uint256 totalWeight
+    ) internal view returns (VoteExecutionStatus) {
         uint256 threshold = (totalWeight * majorityPercentage) / 100;
         uint256 mostVotedWeight = vote.getMostVotedWeight();
 
@@ -102,7 +105,9 @@ abstract contract Voting {
     /// @param epoch - the epoch to mark as executed
     function _markSubmissionExecuted(uint64 epoch) internal {
         // epoch not the next executable epoch
-        if (_isNextExecutableEpoch(epoch) == false) return;
+        if (!_isNextExecutableEpoch(epoch)) {
+            return;
+        }
 
         // epoch not the next executable epoch in the queue
         if (executableQueue.contains(epoch)) {
@@ -150,7 +155,9 @@ abstract contract Voting {
         uint256 totalWeight
     ) internal returns (bool shouldExecuteVote) {
         uint256 nonce = vote.nonce;
-        if (vote.submitters[nonce][submitterAddress]) revert ValidatorAlreadyVoted();
+        if (vote.submitters[nonce][submitterAddress]) {
+            revert ValidatorAlreadyVoted();
+        }
 
         vote.submitters[nonce][submitterAddress] = true;
         vote.totalSubmissionWeight += submitterWeight;
@@ -182,5 +189,11 @@ abstract contract Voting {
     /// @return epoch - the epoch for the given block number and checkpoint period
     function _getNextEpoch(uint256 blockNumber, uint64 checkPeriod) internal pure returns (uint64) {
         return ((uint64(blockNumber) / checkPeriod) + 1) * checkPeriod;
+    }
+
+    /// @notice method that returns the genesis epoch
+    /// @return epoch - the genesis epoch
+    function getGenesisEpoch() public view returns (uint64) {
+        return _genesisEpoch;
     }
 }
