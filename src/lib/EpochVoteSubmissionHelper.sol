@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "./CheckpointHelper.sol";
 import "../structs/EpochVoteSubmission.sol";
 
 library EpochVoteSubmissionHelper {
     function reset(EpochVoteSubmission storage voteSubmission) external {
-        voteSubmission.nonce++;
+        ++voteSubmission.nonce;
         voteSubmission.totalSubmissionWeight = 0;
         voteSubmission.mostVotedSubmission = EMPTY_HASH;
     }

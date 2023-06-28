@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "../structs/ExecutableQueue.sol";
 
 library ExecutableQueueHelper {
     function push(ExecutableQueue storage queue, uint64 epoch) public {
-        if (epoch == 0) return;
+        if (epoch == 0) {
+            return;
+        }
 
         if (queue.first == 0 || queue.first > epoch) {
             queue.first = epoch;
@@ -18,7 +20,9 @@ library ExecutableQueueHelper {
     }
 
     function remove(ExecutableQueue storage queue, uint64 epoch) public {
-        if (!contains(queue, epoch)) return;
+        if (!contains(queue, epoch)) {
+            return;
+        }
 
         delete queue.epochs[epoch];
 

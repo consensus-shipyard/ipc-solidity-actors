@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "./Subnet.sol";
 
@@ -12,6 +12,7 @@ struct BottomUpCheckpoint {
     CrossMsg[] crossMsgs;
     ChildCheck[] children;
     bytes32 prevHash;
+    bytes proof;
 }
 
 struct TopDownCheckpoint {

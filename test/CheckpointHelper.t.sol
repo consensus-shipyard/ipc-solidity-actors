@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 
@@ -24,7 +24,8 @@ contract CheckpointHelperTest is Test {
                 crossMsgs: new CrossMsg[](0),
                 fee: 0,
                 prevHash: EMPTY_HASH,
-                children: new ChildCheck[](0)
+                children: new ChildCheck[](0),
+                proof: new bytes(0)
             }).toHash() == checkpoint.toHash()
         );
     }
@@ -62,7 +63,7 @@ contract CheckpointHelperTest is Test {
 
     function isSorted(BottomUpCheckpoint memory _checkpoint) public pure returns (bool) {
         if (_checkpoint.crossMsgs.length < 2) return true;
-        for (uint256 i = 1; i < _checkpoint.crossMsgs.length;) {
+        for (uint256 i = 1; i < _checkpoint.crossMsgs.length; ) {
             if (_checkpoint.crossMsgs[i].message.nonce <= _checkpoint.crossMsgs[i - 1].message.nonce) return false;
 
             unchecked {

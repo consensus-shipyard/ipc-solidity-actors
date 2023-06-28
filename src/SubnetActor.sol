@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "./Voting.sol";
 import "./enums/ConsensusType.sol";
@@ -33,7 +33,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     using CrossMsgHelper for CrossMsg;
 
     /// @notice minimum collateral validators need to stake in order to join the subnet. Values get clamped to this
-    uint256 private constant MIN_COLLATERAL_AMOUNT = 1 ether;
+    uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;
 
     /// @notice The minimum collateral required to be a validator in this subnet
     uint256 public immutable minActivationCollateral;
@@ -72,10 +72,11 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     mapping(uint64 => BottomUpCheckpoint) public committedCheckpoints;
 
     /// @notice List of validators in the subnet
-    EnumerableSet.AddressSet private validators;
+    EnumerableSet.AddressSet private _validators;
 
     /// @notice contains voted submissions for a given epoch
-    mapping(uint64 => EpochVoteBottomUpSubmission) private epochVoteSubmissions;
+    // slither-disable-next-line uninitialized-state
+    mapping(uint64 => EpochVoteBottomUpSubmission) private _epochVoteSubmissions;
 
     /// @notice validator address to stake amount
     mapping(address => uint256) public stake;
@@ -87,7 +88,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     mapping(address => string) public validatorNetAddresses;
 
     /// @notice ID of the parent subnet
-    SubnetID private parentId;
+    SubnetID private _parentId;
 
     /// @notice genesis block
     bytes public genesis;
@@ -110,18 +111,23 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error GatewayCannotBeZero();
 
     modifier onlyGateway() {
-        if (msg.sender != ipcGatewayAddr) revert NotGateway();
+        if (msg.sender != ipcGatewayAddr) {
+            revert NotGateway();
+        }
         _;
     }
 
     modifier signableOnly() {
-        if (!msg.sender.isAccount()) revert NotAccount();
+        if (!msg.sender.isAccount()) {
+            revert NotAccount();
+        }
         _;
     }
 
     modifier notKilled() {
-        if (status == Status.Killed) revert SubnetAlreadyKilled();
-
+        if (status == Status.Killed) {
+            revert SubnetAlreadyKilled();
+        }
         _;
     }
 
@@ -139,56 +145,64 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     }
 
     constructor(ConstructParams memory params) Voting(params.majorityPercentage, params.bottomUpCheckPeriod) {
-        parentId = params.parentId;
+        _parentId = params.parentId;
         name = params.name;
-        if (params.ipcGatewayAddr == address(0)) revert GatewayCannotBeZero();
+        if (params.ipcGatewayAddr == address(0)) {
+            revert GatewayCannotBeZero();
+        }
         ipcGatewayAddr = params.ipcGatewayAddr;
         consensus = params.consensus;
         minActivationCollateral = params.minActivationCollateral < MIN_COLLATERAL_AMOUNT
             ? MIN_COLLATERAL_AMOUNT
             : params.minActivationCollateral;
         minValidators = params.minValidators;
-        topDownCheckPeriod =
-            params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : params.topDownCheckPeriod;
+        topDownCheckPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
+            ? MIN_CHECKPOINT_PERIOD
+            : params.topDownCheckPeriod;
         bottomUpCheckPeriod = submissionPeriod;
         status = Status.Instantiated;
         genesis = params.genesis;
-        currentSubnetHash = parentId.createSubnetId(address(this)).toHash();
-        genesisEpoch = _getEpoch(block.number, submissionPeriod);
+        currentSubnetHash = _parentId.createSubnetId(address(this)).toHash();
+        _genesisEpoch = _getNextEpoch(block.number, submissionPeriod);
     }
 
+    /* solhint-disable no-empty-blocks */
     receive() external payable onlyGateway {}
+
+    /* solhint-enable no-empty-blocks */
 
     /// @notice method that allows a validator to join the subnet
     /// @param netAddr - the network address of the validator
     function join(string calldata netAddr) external payable signableOnly notKilled {
         uint256 validatorStake = msg.value;
         address validator = msg.sender;
-        if (validatorStake == 0) revert CollateralIsZero();
+        if (validatorStake == 0) {
+            revert CollateralIsZero();
+        }
 
         stake[validator] += validatorStake;
         totalStake += validatorStake;
 
         if (stake[validator] >= minActivationCollateral) {
-            if (!validators.contains(validator)) {
-                validators.add(validator);
+            if (!_validators.contains(validator)) {
+                // slither-disable-next-line unused-return
+                _validators.add(validator);
                 validatorNetAddresses[validator] = netAddr;
             }
         }
 
         if (status == Status.Instantiated) {
             if (totalStake >= minActivationCollateral) {
-                IGateway(ipcGatewayAddr).register{value: totalStake}();
                 status = Status.Active;
+                IGateway(ipcGatewayAddr).register{value: totalStake}();
             }
         } else {
-            IGateway(ipcGatewayAddr).addStake{value: validatorStake}();
-        }
-
-        if (status == Status.Inactive) {
-            if (totalStake >= minActivationCollateral) {
-                status = Status.Active;
+            if (status == Status.Inactive) {
+                if (totalStake >= minActivationCollateral) {
+                    status = Status.Active;
+                }
             }
+            IGateway(ipcGatewayAddr).addStake{value: validatorStake}();
         }
     }
 
@@ -196,26 +210,30 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function leave() external nonReentrant signableOnly notKilled {
         uint256 amount = stake[msg.sender];
 
-        if (amount == 0) revert NotValidator();
+        if (amount == 0) {
+            revert NotValidator();
+        }
 
         stake[msg.sender] = 0;
         totalStake -= amount;
-        validators.remove(msg.sender);
-
-        IGateway(ipcGatewayAddr).releaseStake(amount);
-
+        // slither-disable-next-line unused-return
+        _validators.remove(msg.sender);
         if (status == Status.Active) {
             if (totalStake < minActivationCollateral) {
                 status = Status.Inactive;
             }
         }
 
+        IGateway(ipcGatewayAddr).releaseStake(amount);
+
         payable(msg.sender).sendValue(amount);
     }
 
     /// @notice method that allows the subnet no be killed after all validators leave
     function kill() external signableOnly notKilled {
-        if (validators.length() != 0 || totalStake != 0) revert NotAllValidatorsHaveLeft();
+        if (_validators.length() != 0 || totalStake != 0) {
+            revert NotAllValidatorsHaveLeft();
+        }
 
         status = Status.Killed;
 
@@ -224,17 +242,23 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
     /// @param checkpoint - the batch messages data
-    function submitCheckpoint(BottomUpCheckpoint calldata checkpoint)
-        external
-        signableOnly
-        validEpochOnly(checkpoint.epoch)
-    {
-        if (status != Status.Active) revert SubnetNotActive();
-        if (!validators.contains(msg.sender)) revert NotValidator();
-        if (checkpoint.source.toHash() != currentSubnetHash) revert WrongCheckpointSource();
-        if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) revert MessagesNotSorted();
+    function submitCheckpoint(
+        BottomUpCheckpoint calldata checkpoint
+    ) external signableOnly validEpochOnly(checkpoint.epoch) {
+        if (status != Status.Active) {
+            revert SubnetNotActive();
+        }
+        if (!_validators.contains(msg.sender)) {
+            revert NotValidator();
+        }
+        if (checkpoint.source.toHash() != currentSubnetHash) {
+            revert WrongCheckpointSource();
+        }
+        if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) {
+            revert MessagesNotSorted();
+        }
 
-        EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[checkpoint.epoch];
+        EpochVoteBottomUpSubmission storage voteSubmission = _epochVoteSubmissions[checkpoint.epoch];
 
         // submit the vote
         bool shouldExecuteVote = _submitBottomUpVote(voteSubmission, checkpoint, msg.sender, stake[msg.sender]);
@@ -246,7 +270,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
-                EpochVoteBottomUpSubmission storage nextVoteSubmission = epochVoteSubmissions[nextExecutableEpoch];
+                EpochVoteBottomUpSubmission storage nextVoteSubmission = _epochVoteSubmissions[nextExecutableEpoch];
 
                 _commitCheckpoint(nextVoteSubmission);
             }
@@ -255,15 +279,19 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice method that distributes the rewards for the subnet to validators.
     function reward(uint256 amount) external onlyGateway {
-        uint256 validatorsLength = validators.length();
+        uint256 validatorsLength = _validators.length();
 
-        if (validatorsLength == 0) revert NoValidatorsInSubnet();
-        if (amount < validatorsLength) revert NotEnoughBalanceForRewards();
+        if (validatorsLength == 0) {
+            revert NoValidatorsInSubnet();
+        }
+        if (amount < validatorsLength) {
+            revert NotEnoughBalanceForRewards();
+        }
 
         uint256 rewardAmount = amount / validatorsLength;
 
-        for (uint256 i = 0; i < validatorsLength;) {
-            accumulatedRewards[validators.at(i)] += rewardAmount;
+        for (uint256 i = 0; i < validatorsLength; ) {
+            accumulatedRewards[_validators.at(i)] += rewardAmount;
             unchecked {
                 ++i;
             }
@@ -274,7 +302,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     function withdraw() external signableOnly {
         uint256 amount = accumulatedRewards[msg.sender];
 
-        if (amount == 0) revert NoRewardToWithdraw();
+        if (amount == 0) {
+            revert NoRewardToWithdraw();
+        }
 
         accumulatedRewards[msg.sender] = 0;
 
@@ -285,25 +315,41 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice get the parent subnet id
     function getParent() external view returns (SubnetID memory) {
-        return parentId;
+        return _parentId;
     }
 
     /// @notice get validator count
     function validatorCount() external view returns (uint256) {
-        return validators.length();
+        return _validators.length();
     }
 
     /// @notice get validator at index
     /// @param index - the index of the validator set
     function validatorAt(uint256 index) external view returns (address) {
-        return validators.at(index);
+        return _validators.at(index);
     }
 
-    /// @notice wheather a validator has voted for a checkpoint submission during an epoch
+    /// @notice get all the validators in the subnet.
+    /// TODO: we can introduce pagination
+    function getValidators() external view returns (address[] memory) {
+        uint256 length = _validators.length();
+        address[] memory result = new address[](length);
+
+        for (uint256 i = 0; i < length; ) {
+            result[i] = _validators.at(i);
+            unchecked {
+                ++i;
+            }
+        }
+
+        return result;
+    }
+
+    /// @notice whether a validator has voted for a checkpoint submission during an epoch
     /// @param epoch - the epoch to check
     /// @param submitter - the validator to check
     function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns (bool) {
-        EpochVoteBottomUpSubmission storage voteSubmission = epochVoteSubmissions[epoch];
+        EpochVoteBottomUpSubmission storage voteSubmission = _epochVoteSubmissions[epoch];
 
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
     }
@@ -321,7 +367,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         bytes32 submissionHash = submission.toHash();
 
         shouldExecuteVote = _submitVote(
-            voteSubmission.vote, submissionHash, submitterAddress, submitterWeight, submission.epoch, totalStake
+            voteSubmission.vote,
+            submissionHash,
+            submitterAddress,
+            submitterWeight,
+            submission.epoch,
+            totalStake
         );
 
         // store the submission only the first time
@@ -331,11 +382,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     }
 
     /// @notice method that returns the most voted submission for a checkpoint
-    function _getMostVotedSubmission(EpochVoteBottomUpSubmission storage voteSubmission)
-        internal
-        view
-        returns (BottomUpCheckpoint storage)
-    {
+    function _getMostVotedSubmission(
+        EpochVoteBottomUpSubmission storage voteSubmission
+    ) internal view returns (BottomUpCheckpoint storage) {
         return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
     }
 

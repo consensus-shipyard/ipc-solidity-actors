@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "../constants/Constants.sol";
 import "fevmate/utils/FilAddress.sol";
@@ -10,9 +10,11 @@ library AccountHelper {
     function isAccount(address _address) external view returns (bool) {
         uint256 size;
 
+        /* solhint-disable no-inline-assembly */
         assembly {
             size := extcodesize(_address)
         }
+        /* solhint-enable no-inline-assembly */
 
         return size == 0 && ADDRESS_CODEHASH == _address.codehash && ADDRESS_CODEHASH == keccak256(_address.code);
     }
