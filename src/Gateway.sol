@@ -137,7 +137,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error NotEnoughFundsForMembership();
 
     function _signableOnly() private view {
-        if (msg.sender.isAccount() == false) {
+        if (!msg.sender.isAccount()) {
             revert NotSignableAccount();
         }
     }
