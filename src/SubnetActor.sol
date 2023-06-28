@@ -397,24 +397,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    /// @notice method that returns the most voted submission for a checkpoint
-    function _getMostVotedSubmission(
-        EpochVoteBottomUpSubmission storage voteSubmission
-    ) internal view returns (BottomUpCheckpoint storage) {
-        return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
-    }
-
     /// @notice method that commits a checkpoint after reaching majority
     /// @param voteSubmission - the last vote submission that reached majority for commit
     function _commitCheckpoint(EpochVoteBottomUpSubmission storage voteSubmission) internal {
-        BottomUpCheckpoint storage checkpoint = _getMostVotedSubmission(voteSubmission);
-
+       BottomUpCheckpoint storage checkpoint = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
         /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
 
         if (prevExecutedCheckpointHash != checkpoint.prevHash) {
             voteSubmission.vote.reset();
             executableQueue.remove(checkpoint.epoch);
-
             return;
         }
 

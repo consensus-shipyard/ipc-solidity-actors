@@ -146,7 +146,7 @@ library SubnetIDHelper {
         return SubnetID({root: subnet1.root, route: route});
     }
 
-    function isEmpty(SubnetID calldata subnetId) external pure returns (bool) {
+    function isEmpty(SubnetID calldata subnetId) public pure returns (bool) {
         return subnetId.route.length == 0 && subnetId.root == 0;
     }
 }
