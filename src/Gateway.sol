@@ -505,7 +505,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (!crossMsg.message.from.subnetId.equals(_networkName)) {
             revert InvalidCrossMsgFromSubnetId();
         }
-        // The can be many semantics of the (rawAddress, msg.sender) pairs.
+        // There can be many semantics of the (rawAddress, msg.sender) pairs.
         // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
         // They can be equal, we can propagate the real sender address only or both.
         // We are going to use the simplest implementation for now and define the appropriate interpretation later
