@@ -393,7 +393,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice method that commits a checkpoint after reaching majority
     /// @param voteSubmission - the last vote submission that reached majority for commit
     function _commitCheckpoint(EpochVoteBottomUpSubmission storage voteSubmission) internal {
-       BottomUpCheckpoint storage checkpoint = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
+        BottomUpCheckpoint storage checkpoint = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
         /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
 
         if (prevExecutedCheckpointHash != checkpoint.prevHash) {
