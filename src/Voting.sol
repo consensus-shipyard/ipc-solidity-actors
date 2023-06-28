@@ -37,7 +37,7 @@ abstract contract Voting {
     error InvalidMajorityPercentage();
     error ValidatorAlreadyVoted();
 
-    modifier validEpochOnly(uint64 epoch) {
+    function _validEpochOnly(uint64 epoch) private view {
         if (epoch <= lastVotingExecutedEpoch) {
             revert EpochAlreadyExecuted();
         }
@@ -46,6 +46,10 @@ abstract contract Voting {
                 revert EpochNotVotable();
             }
         }
+    }
+
+    modifier validEpochOnly(uint64 epoch) {
+        _validEpochOnly(epoch);
         _;
     }
 

@@ -110,24 +110,36 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error NoRewardToWithdraw();
     error GatewayCannotBeZero();
 
-    modifier onlyGateway() {
+    function _signableOnly() private view {
+        if (!msg.sender.isAccount()) {
+            revert NotAccount();
+        }
+    }
+
+    function _onlyGateway() private view {
         if (msg.sender != ipcGatewayAddr) {
             revert NotGateway();
         }
+    }
+
+    function _notKilled() private view {
+        if (status == Status.Killed) {
+            revert SubnetAlreadyKilled();
+        }
+    }
+
+    modifier onlyGateway() {
+        _onlyGateway();
         _;
     }
 
     modifier signableOnly() {
-        if (!msg.sender.isAccount()) {
-            revert NotAccount();
-        }
+        _signableOnly();
         _;
     }
 
     modifier notKilled() {
-        if (status == Status.Killed) {
-            revert SubnetAlreadyKilled();
-        }
+        _notKilled();
         _;
     }
 

@@ -136,31 +136,47 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error ValidatorWeightIsZero();
     error NotEnoughFundsForMembership();
 
-    modifier signableOnly() {
-        if (!msg.sender.isAccount()) {
+    function _signableOnly() private view {
+        if (msg.sender.isAccount() == false) {
             revert NotSignableAccount();
         }
+    }
+
+    function _hasFee() private view {
+        if (msg.value < crossMsgFee) {
+            revert NotEnoughFee();
+        }
+    }
+
+    function _systemActorOnly() private view {
+        if (!msg.sender.isSystemActor()) {
+            revert NotSystemActor();
+        }
+    }
+
+    function _onlyValidPostboxOwner(bytes32 msgCid) private view {
+        if (!postboxHasOwner[msgCid][msg.sender]) {
+            revert InvalidPostboxOwner();
+        }
+    }
+
+    modifier signableOnly() {
+        _signableOnly();
         _;
     }
 
     modifier systemActorOnly() {
-        if (!msg.sender.isSystemActor()) {
-            revert NotSystemActor();
-        }
+        _systemActorOnly();
         _;
     }
 
     modifier hasFee() {
-        if (msg.value < crossMsgFee) {
-            revert NotEnoughFee();
-        }
+        _hasFee();
         _;
     }
 
     modifier onlyValidPostboxOwner(bytes32 msgCid) {
-        if (!postboxHasOwner[msgCid][msg.sender]) {
-            revert InvalidPostboxOwner();
-        }
+        _onlyValidPostboxOwner(msgCid);
         _;
     }
 
