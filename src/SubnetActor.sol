@@ -1,16 +1,26 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import "./Voting.sol";
-import "./enums/ConsensusType.sol";
-import "./enums/Status.sol";
-import "./structs/Subnet.sol";
-import "./interfaces/ISubnetActor.sol";
-import "./interfaces/IGateway.sol";
-import "./lib/AccountHelper.sol";
-import "./lib/CrossMsgHelper.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import "openzeppelin-contracts/security/ReentrancyGuard.sol";
+import { Voting } from "./Voting.sol";
+import { ConsensusType } from "./enums/ConsensusType.sol";
+import { Status } from "./enums/Status.sol";
+import { BottomUpCheckpoint, CrossMsg } from "./structs/Checkpoint.sol";
+import { SubnetID } from "./structs/Subnet.sol";
+import { EpochVoteSubmission } from "./structs/EpochVoteSubmission.sol";
+import { ISubnetActor } from "./interfaces/ISubnetActor.sol";
+import { IGateway } from "./interfaces/IGateway.sol";
+import { AccountHelper } from "./lib/AccountHelper.sol";
+import { CrossMsgHelper } from "./lib/CrossMsgHelper.sol";
+import { ExecutableQueue } from "./structs/ExecutableQueue.sol";
+import { ExecutableQueueHelper } from "./lib/ExecutableQueueHelper.sol";
+import { EpochVoteBottomUpSubmission } from "./structs/EpochVoteSubmission.sol";
+import { EpochVoteSubmissionHelper } from "./lib/EpochVoteSubmissionHelper.sol";
+import { SubnetIDHelper } from "./lib/SubnetIDHelper.sol";
+import { CheckpointHelper } from "./lib/CheckpointHelper.sol";
+import { FilAddress } from "fevmate/utils/FilAddress.sol";
+import { EnumerableSet } from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import { ReentrancyGuard } from "openzeppelin-contracts/security/ReentrancyGuard.sol";
+import { Address } from "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Subnet Actor Contract
 /// @author LimeChain team
