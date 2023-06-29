@@ -69,4 +69,8 @@ interface IGateway {
     function setMembership(address[] memory validatorsToSet, uint256[] memory weights) external;
 
     function bottomUpCheckpointHashAtEpoch(uint64 epoch) external returns (bool, bytes32);
+
+    function bottomUpCheckpointAtEpoch(
+        uint64 epoch
+    ) external returns (bool exists, BottomUpCheckpoint memory checkpoint);
 }

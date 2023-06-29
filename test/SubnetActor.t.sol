@@ -978,6 +978,19 @@ contract SubnetActorTest is Test {
 
         (bool exists, bytes32 checkpointPrevHash) = IGateway(GATEWAY_ADDRESS)
             .bottomUpCheckpointHashAtEpoch(checkpoint.epoch);
+        (bool buExists, BottomUpCheckpoint memory buPrevcheckpoint) = IGateway(GATEWAY_ADDRESS)
+            .bottomUpCheckpointAtEpoch(checkpoint.epoch);
+        require(buExists, "1st round checkpoint non exists");
+
+        require(buPrevcheckpoint.epoch == checkpoint.epoch, "1st round epoch not match");
+        require(buPrevcheckpoint.source.toHash() == checkpoint.source.toHash(), "1st round source not match");
+        require(buPrevcheckpoint.fee == checkpoint.fee, "1st round fee not match");
+        require(buPrevcheckpoint.prevHash == checkpoint.prevHash, "1st round prevHash not match");
+        require(buPrevcheckpoint.proof.length == checkpoint.proof.length, "1st round proof length not match");
+        for (uint256 i = 0; i < buPrevcheckpoint.proof.length; i++) {
+            require(buPrevcheckpoint.proof[i] == checkpoint.proof[i], "1st round proof not match");
+        }
+        
         require(exists, "1st round previous hash non exists");
         require(checkpointPrevHash == checkpoint.toHash(), "hash not equal");
 

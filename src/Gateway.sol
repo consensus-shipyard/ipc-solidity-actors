@@ -347,22 +347,20 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
 
         // get checkpoint for the current template being populated
-        (
-            bool checkpointExists,
-            uint64 nextCheckEpoch,
-            BottomUpCheckpoint storage checkpoint
-        ) = _getCurrentBottomUpCheckpoint();
+
+        BottomUpCheckpoint storage checkpoint = bottomUpCheckpoints[commit.epoch];
+        bool checkpointExists = !checkpoint.source.isEmpty();
 
         // create a checkpoint template if it doesn't exists
         if (!checkpointExists) {
             checkpoint.source = _networkName;
-            checkpoint.epoch = nextCheckEpoch;
+            checkpoint.epoch = commit.epoch;
             checkpoint.proof = commit.proof;
             checkpoint.fee = commit.fee;
             checkpoint.prevHash = commit.prevHash;
         }
 
-        checkpoint.setChildCheck(commit, _children, _checks, nextCheckEpoch);
+        checkpoint.setChildCheck(commit, _children, _checks, commit.epoch);
 
         uint256 totalValue = 0;
         uint256 crossMsgLength = commit.crossMsgs.length;
