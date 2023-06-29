@@ -67,4 +67,6 @@ interface IGateway {
     function submitTopDownCheckpoint(TopDownCheckpoint calldata topdownCheckpoint) external;
 
     function setMembership(address[] memory validatorsToSet, uint256[] memory weights) external;
+
+    function bottomUpCheckpointHashAtEpoch(uint64 epoch) external returns (bool, bytes32);
 }
