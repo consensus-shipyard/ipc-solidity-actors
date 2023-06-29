@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import { BottomUpCheckpoint, TopDownCheckpoint } from "./Checkpoint.sol";
+import {BottomUpCheckpoint, TopDownCheckpoint} from "./Checkpoint.sol";
 
 struct EpochVoteSubmission {
     uint256 nonce;

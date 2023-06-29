@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import { SubnetID } from "./Subnet.sol";
-import { BottomUpCheckpoint, CrossMsg } from "./Checkpoint.sol";
-import { Status } from "../enums/Status.sol";
+import {SubnetID} from "./Subnet.sol";
+import {BottomUpCheckpoint, CrossMsg} from "./Checkpoint.sol";
+import {Status} from "../enums/Status.sol";
 
 /// @title Subnet id struct
 /// @author LimeChain team

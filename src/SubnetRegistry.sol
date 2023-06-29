@@ -1,9 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import { SubnetActor } from "./SubnetActor.sol";
-import { SubnetID } from  "./structs/Subnet.sol";
-import { SubnetIDHelper } from "./lib/SubnetIDHelper.sol";
+import {SubnetActor} from "./SubnetActor.sol";
+import {SubnetID} from "./structs/Subnet.sol";
+import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 
 contract SubnetRegistry {
     using SubnetIDHelper for SubnetID;

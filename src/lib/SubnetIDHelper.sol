@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import { SubnetID } from "../structs/Subnet.sol";
-import { Strings } from "openzeppelin-contracts/utils/Strings.sol";
+import {SubnetID} from "../structs/Subnet.sol";
+import {Strings} from "openzeppelin-contracts/utils/Strings.sol";
 
 /// @title Helper library for manipulating SubnetID struct
 /// @author LimeChain team

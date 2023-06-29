@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import { ExecutableQueue } from "./structs/ExecutableQueue.sol";
-import { EpochVoteSubmission } from "./structs/EpochVoteSubmission.sol";
-import { VoteExecutionStatus } from "./enums/VoteExecutionStatus.sol";
-import { ExecutableQueueHelper } from "./lib/ExecutableQueueHelper.sol";
-import { EpochVoteSubmissionHelper } from "./lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueue} from "./structs/ExecutableQueue.sol";
+import {EpochVoteSubmission} from "./structs/EpochVoteSubmission.sol";
+import {VoteExecutionStatus} from "./enums/VoteExecutionStatus.sol";
+import {ExecutableQueueHelper} from "./lib/ExecutableQueueHelper.sol";
+import {EpochVoteSubmissionHelper} from "./lib/EpochVoteSubmissionHelper.sol";
 
 abstract contract Voting {
     using ExecutableQueueHelper for ExecutableQueue;
