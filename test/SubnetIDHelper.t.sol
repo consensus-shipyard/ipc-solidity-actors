@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
@@ -297,12 +297,12 @@ contract SubnetIDHelperTest is Test {
         route2[0] = SUBNET_TWO_ADDRESS;
 
         require(
-            SubnetID({root: ROOTNET_CHAINID, route: route}).equals(SubnetID({root: ROOTNET_CHAINID, route: route}))
-                == true
+            SubnetID({root: ROOTNET_CHAINID, route: route}).equals(SubnetID({root: ROOTNET_CHAINID, route: route})) ==
+                true
         );
         require(
-            SubnetID({root: ROOTNET_CHAINID, route: route}).equals(SubnetID({root: ROOTNET_CHAINID, route: route2}))
-                == false
+            SubnetID({root: ROOTNET_CHAINID, route: route}).equals(SubnetID({root: ROOTNET_CHAINID, route: route2})) ==
+                false
         );
     }
 

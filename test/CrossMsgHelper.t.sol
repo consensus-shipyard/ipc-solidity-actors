@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity 0.8.18;
+pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import "../src/lib/CrossMsgHelper.sol";
 import "../src/lib/SubnetIDHelper.sol";
+import "openzeppelin-contracts/utils/Address.sol";
 
 contract CrossMsgHelperTest is Test {
     using SubnetIDHelper for SubnetID;
@@ -203,7 +204,7 @@ contract CrossMsgHelperTest is Test {
     }
 
     function test_Execute_Fails_InvalidMethod() public {
-        vm.expectRevert("Address: low-level call failed");
+        vm.expectRevert(Address.FailedInnerCall.selector);
 
         crossMsg.message.to.rawAddress = address(this);
         crossMsg.message.method = bytes4("1");
@@ -244,17 +245,18 @@ contract CrossMsgHelperTest is Test {
     }
 
     function createCrossMsg(uint64 nonce) internal pure returns (CrossMsg memory) {
-        return CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: address(0)}),
-                to: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: address(0)}),
-                value: 0,
-                nonce: nonce,
-                method: METHOD_SEND,
-                params: EMPTY_BYTES
-            }),
-            wrapped: false
-        });
+        return
+            CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: address(0)}),
+                    to: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: address(0)}),
+                    value: 0,
+                    nonce: nonce,
+                    method: METHOD_SEND,
+                    params: EMPTY_BYTES
+                }),
+                wrapped: false
+            });
     }
 
     function createCrossMsgs(uint256 length, uint64 nonce) internal pure returns (CrossMsg[] memory _crossMsgs) {
