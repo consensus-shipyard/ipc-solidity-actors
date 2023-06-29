@@ -990,6 +990,8 @@ contract SubnetActorTest is Test {
         for (uint256 i = 0; i < buPrevcheckpoint.proof.length; i++) {
             require(buPrevcheckpoint.proof[i] == checkpoint.proof[i], "1st round proof not match");
         }
+        require(buPrevcheckpoint.crossMsgs.length == checkpoint.crossMsgs.length, "1st round crossMsgs length not match");
+        require(buPrevcheckpoint.children.length == checkpoint.children.length, "1st round children length not match");
         
         require(exists, "1st round previous hash non exists");
         require(checkpointPrevHash == checkpoint.toHash(), "hash not equal");
