@@ -353,7 +353,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         // create a checkpoint template if it doesn't exists
         if (!checkpointExists) {
-            checkpoint.source = _networkName;
+            checkpoint.source = commit.source;
             checkpoint.epoch = commit.epoch;
             checkpoint.proof = commit.proof;
             checkpoint.fee = commit.fee;
