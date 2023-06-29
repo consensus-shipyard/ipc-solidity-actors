@@ -357,6 +357,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (!checkpointExists) {
             checkpoint.source = _networkName;
             checkpoint.epoch = nextCheckEpoch;
+            checkpoint.proof = commit.proof;
+            checkpoint.fee = commit.fee;
+            checkpoint.prevHash = commit.prevHash;
         }
 
         checkpoint.setChildCheck(commit, _children, _checks, nextCheckEpoch);
@@ -378,7 +381,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         subnet.circSupply -= totalValue;
 
-        subnet.prevCheckpoint = commit;
+        subnet.prevCheckpoint = checkpoint;
 
         _applyMessages(commit.source, commit.crossMsgs);
 
