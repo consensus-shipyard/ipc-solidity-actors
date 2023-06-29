@@ -583,26 +583,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
     }
 
-    /// @notice returns the current bottom-up checkpoint
-    /// @param epoch - the epoch to check
-    /// @return exists - whether the checkpoint exists
-    /// @return checkpoint - the checkpoint struct
-    function bottomUpCheckpointAtEpoch(
-        uint64 epoch
-    ) public view returns (bool exists, BottomUpCheckpoint memory checkpoint) {
-        checkpoint = bottomUpCheckpoints[epoch];
-        exists = !checkpoint.source.isEmpty();
-    }
-
-    /// @notice returns the historical bottom-up checkpoint hash
-    /// @param epoch - the epoch to check
-    /// @return exists - whether the checkpoint exists
-    /// @return hash - the hash of the checkpoint
-    function bottomUpCheckpointHashAtEpoch(uint64 epoch) external view returns (bool, bytes32) {
-        (bool exists, BottomUpCheckpoint memory checkpoint) = bottomUpCheckpointAtEpoch(epoch);
-        return (exists, checkpoint.toHash());
-    }
-
     /// @notice marks a checkpoint as executed based on the last vote that reached majority
     /// @notice voteSubmission - the vote submission data
     /// @return the cross messages that should be executed
