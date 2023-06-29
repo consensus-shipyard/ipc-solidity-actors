@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import "../structs/FvmAddress.sol";
+import {FvmAddress} from "../structs/FvmAddress.sol";
 
 /// @title Helper library for Fil Address
 library FvmAddressHelper {

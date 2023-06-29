@@ -1,25 +1,28 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import "./Voting.sol";
-import "./structs/Checkpoint.sol";
-import "./structs/EpochVoteSubmission.sol";
-import "./enums/Status.sol";
-import "./enums/VoteExecutionStatus.sol";
-import "./interfaces/IGateway.sol";
-import "./interfaces/ISubnetActor.sol";
-import "./lib/SubnetIDHelper.sol";
-import "./lib/CheckpointHelper.sol";
-import "./lib/AccountHelper.sol";
-import "./lib/CrossMsgHelper.sol";
-import "./lib/StorableMsgHelper.sol";
-import "./lib/ExecutableQueueHelper.sol";
-import "./lib/EpochVoteSubmissionHelper.sol";
-import "fevmate/utils/FilAddress.sol";
-import "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
-import "openzeppelin-contracts/utils/Address.sol";
+import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "./constants/Constants.sol";
+import {Voting} from "./Voting.sol";
+import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "./structs/Checkpoint.sol";
+import {EpochVoteTopDownSubmission} from "./structs/EpochVoteSubmission.sol";
+import {Status} from "./enums/Status.sol";
+import {IPCMsgType} from "./enums/IPCMsgType.sol";
+import {ExecutableQueue} from "./structs/ExecutableQueue.sol";
+import {IGateway} from "./interfaces/IGateway.sol";
+import {ISubnetActor} from "./interfaces/ISubnetActor.sol";
+import {SubnetID, Subnet} from "./structs/Subnet.sol";
+import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
+import {CheckpointHelper} from "./lib/CheckpointHelper.sol";
+import {AccountHelper} from "./lib/AccountHelper.sol";
+import {CrossMsgHelper} from "./lib/CrossMsgHelper.sol";
+import {StorableMsgHelper} from "./lib/StorableMsgHelper.sol";
+import {ExecutableQueueHelper} from "./lib/ExecutableQueueHelper.sol";
+import {EpochVoteSubmissionHelper} from "./lib/EpochVoteSubmissionHelper.sol";
+import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
+import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 /// @title Gateway Contract
 /// @author LimeChain team
@@ -102,6 +105,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => EpochVoteTopDownSubmission) private _epochVoteSubmissions;
 
+    error EmptySubnet();
     error NotSystemActor();
     error NotSignableAccount();
     error NotEnoughFee();
@@ -125,6 +129,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error InvalidCrossMsgDestinationSubnet();
     error InvalidCrossMsgDestinationAddress();
     error InvalidCrossMsgsSortOrder();
+    error InvalidCrossMsgFromSubnetId();
+    error InvalidCrossMsgFromRawAddress();
     error CannotSendCrossMsgToItself();
     error SubnetNotActive();
     error PostboxNotExist();
@@ -133,31 +139,47 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error ValidatorWeightIsZero();
     error NotEnoughFundsForMembership();
 
-    modifier signableOnly() {
+    function _signableOnly() private view {
         if (!msg.sender.isAccount()) {
             revert NotSignableAccount();
         }
+    }
+
+    function _hasFee() private view {
+        if (msg.value < crossMsgFee) {
+            revert NotEnoughFee();
+        }
+    }
+
+    function _systemActorOnly() private view {
+        if (!msg.sender.isSystemActor()) {
+            revert NotSystemActor();
+        }
+    }
+
+    function _onlyValidPostboxOwner(bytes32 msgCid) private view {
+        if (!postboxHasOwner[msgCid][msg.sender]) {
+            revert InvalidPostboxOwner();
+        }
+    }
+
+    modifier signableOnly() {
+        _signableOnly();
         _;
     }
 
     modifier systemActorOnly() {
-        if (!msg.sender.isSystemActor()) {
-            revert NotSystemActor();
-        }
+        _systemActorOnly();
         _;
     }
 
     modifier hasFee() {
-        if (msg.value < crossMsgFee) {
-            revert NotEnoughFee();
-        }
+        _hasFee();
         _;
     }
 
     modifier onlyValidPostboxOwner(bytes32 msgCid) {
-        if (!postboxHasOwner[msgCid][msg.sender]) {
-            revert InvalidPostboxOwner();
-        }
+        _onlyValidPostboxOwner(msgCid);
         _;
     }
 
@@ -185,7 +207,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             initialized = true;
         }
     }
-    
+
     /// @notice returns the subnet with the given id
     /// @param subnetId the id of the subnet
     /// @return found whether the subnet exists
@@ -495,14 +517,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         _applyMessages(SubnetID(0, new address[](0)), topDownMsgs);
     }
 
-    /// @notice sends an arbitrary cross message from the current subnet to a destination subnet.
-    /// @param destination - destination subnet
+    /// @notice sends an arbitrary cross message from the current subnet to the destination subnet
     /// @param crossMsg - message to send
-    function sendCross(SubnetID memory destination, CrossMsg memory crossMsg) external payable signableOnly hasFee {
-        // destination is the current network, you are better off with a good ol' message, no cross needed
-        if (destination.equals(_networkName)) {
-            revert CannotSendCrossMsgToItself();
-        }
+    function sendCrossMessage(CrossMsg calldata crossMsg) external payable signableOnly hasFee {
         if (crossMsg.message.value != msg.value) {
             revert NotEnoughFunds();
         }
@@ -510,10 +527,19 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             revert InvalidCrossMsgDestinationAddress();
         }
 
-        // we disregard the "to" of the message. the caller is the one set as the "from" of the message.
-        crossMsg.message.to.subnetId = destination;
-        crossMsg.message.from.subnetId = _networkName;
-        crossMsg.message.from.rawAddress = msg.sender;
+        // We disregard the "to" of the message that will be verified in the _commitCrossMessage().
+        // The caller is the one set as the "from" of the message
+        if (!crossMsg.message.from.subnetId.equals(_networkName)) {
+            revert InvalidCrossMsgFromSubnetId();
+        }
+        // There can be many semantics of the (rawAddress, msg.sender) pairs.
+        // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
+        // They can be equal, we can propagate the real sender address only or both.
+        // We are going to use the simplest implementation for now and define the appropriate interpretation later
+        // based on the business requirements.
+        if (crossMsg.message.from.rawAddress != msg.sender) {
+            revert InvalidCrossMsgFromRawAddress();
+        }
 
         // commit cross-message for propagation
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
@@ -583,6 +609,26 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
     }
 
+    /// @notice returns the current bottom-up checkpoint
+    /// @param epoch - the epoch to check
+    /// @return exists - whether the checkpoint exists
+    /// @return checkpoint - the checkpoint struct
+    function bottomUpCheckpointAtEpoch(
+        uint64 epoch
+    ) public view returns (bool exists, BottomUpCheckpoint memory checkpoint) {
+        checkpoint = bottomUpCheckpoints[epoch];
+        exists = !checkpoint.source.isEmpty();
+    }
+
+    /// @notice returns the historical bottom-up checkpoint hash
+    /// @param epoch - the epoch to check
+    /// @return exists - whether the checkpoint exists
+    /// @return hash - the hash of the checkpoint
+    function bottomUpCheckpointHashAtEpoch(uint64 epoch) external view returns (bool, bytes32) {
+        (bool exists, BottomUpCheckpoint memory checkpoint) = bottomUpCheckpointAtEpoch(epoch);
+        return (exists, checkpoint.toHash());
+    }
+
     /// @notice marks a checkpoint as executed based on the last vote that reached majority
     /// @notice voteSubmission - the vote submission data
     /// @return the cross messages that should be executed
@@ -629,16 +675,19 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @notice Commit the cross message to storage. It outputs a flag signaling
     /// if the committed messages was bottom-up and some funds need to be
     /// burnt or if a top-down message fee needs to be distributed.
+    ///
+    /// It also validates that destination subnet ID is not empty
+    /// and not equal to the current network.
     function _commitCrossMessage(
         CrossMsg memory crossMessage
     ) internal returns (bool shouldBurn, bool shouldDistributeRewards) {
         SubnetID memory to = crossMessage.message.to.subnetId;
-
         if (to.isEmpty()) {
             revert InvalidCrossMsgDestinationSubnet();
         }
+        // destination is the current network, you are better off with a good old message, no cross needed
         if (to.equals(_networkName)) {
-            revert InvalidCrossMsgDestinationSubnet();
+            revert CannotSendCrossMsgToItself();
         }
 
         SubnetID memory from = crossMessage.message.from.subnetId;

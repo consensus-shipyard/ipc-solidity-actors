@@ -4,6 +4,8 @@ pragma solidity 0.8.19;
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
+import {EMPTY_BYTES} from "../src/constants/Constants.sol";
+
 import "../src/SubnetActor.sol";
 import "../src/Gateway.sol";
 import "../src/enums/Status.sol";
@@ -166,7 +168,10 @@ contract SubnetActorTest is Test {
         vm.prank(validator);
         vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE + 1);
 
-        sa.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
+        sa.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(
+            DEFAULT_NET_ADDR,
+            FvmAddress({addrType: 1, payload: new bytes(20)})
+        );
     }
 
     function test_Join_Works_CallAddStake() public {
