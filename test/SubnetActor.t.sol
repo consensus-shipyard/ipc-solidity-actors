@@ -976,6 +976,11 @@ contract SubnetActorTest is Test {
         );
         _assertVote(validator, checkpoint);
 
+        (bool exists, bytes32 checkpointPrevHash) = IGateway(GATEWAY_ADDRESS)
+            .bottomUpCheckpointHashAtEpoch(checkpoint.epoch);
+        require(exists, "1st round previous hash non exists");
+        require(checkpointPrevHash == checkpoint.toHash(), "hash not equal");
+
         (SubnetID memory source, uint64 epoch, uint256 fee, bytes32 prevHash, bytes memory proof) = sa
             .committedCheckpoints(checkpoint.epoch);
 
