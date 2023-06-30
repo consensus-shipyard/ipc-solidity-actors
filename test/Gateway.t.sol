@@ -838,9 +838,9 @@ contract GatewayDeploymentTest is StdInvariant, Test {
             fund(funderAddress, fundAmount);
         }
 
-        (SubnetID memory subnetId, , , , , , , ) = getSubnet(address(sa));
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(sa));
 
-        require(gw.getTopDownMsgs(subnetId, 0) == 5, "get top down msgs length not correct")
+        require(gw.getTopDownMsgs(subnetId, 0).length == numberOfFunds, "td msgs length not correct");
     }
 
     function test_Fund_Fails_WrongSubnet() public {
