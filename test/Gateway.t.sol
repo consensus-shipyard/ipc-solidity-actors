@@ -825,7 +825,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         require(gw.getTopDownMsgs(subnetId, 0).length == 0, "td msgs length not 0");
     }
-    
+
     function test_Fund_Works_MultipleFundings() public {
         uint8 numberOfFunds = 5;
         uint256 fundAmount = 1 ether;

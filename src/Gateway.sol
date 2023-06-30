@@ -758,7 +758,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param fromNonce - The starting nonce to get top down messages, inclusive.
     function getTopDownMsgs(SubnetID calldata subnetId, uint64 fromNonce) external view returns (CrossMsg[] memory) {
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
-        if (!registered) { 
+        if (!registered) {
             return new CrossMsg[](0);
         }
 
