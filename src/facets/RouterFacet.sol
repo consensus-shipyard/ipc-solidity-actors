@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity 0.8.19;
 
 import "../lib/AppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
@@ -16,6 +16,7 @@ import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
+import {LibGateway} from "../lib/Gateway.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
@@ -25,9 +26,7 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
-contract RouterFacet is LibAppStorage {
-    AppStorage internal s;
-
+contract RouterFacet is Modifiers {
     using FilAddress for address;
     using FilAddress for address payable;
     using AccountHelper for address;
@@ -48,7 +47,7 @@ contract RouterFacet is LibAppStorage {
             revert InvalidCheckpointSource();
         }
 
-        (, Subnet storage subnet) = _getSubnet(msg.sender);
+        (, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
         if (subnet.status != Status.Active) {
             revert SubnetNotActive();
         }
@@ -66,7 +65,7 @@ contract RouterFacet is LibAppStorage {
         bool checkpointExists,
         uint64 nextCheckEpoch,
         BottomUpCheckpoint storage checkpoint
-        ) = _getCurrentBottomUpCheckpoint();
+        ) = LibGateway._getCurrentBottomUpCheckpoint();
 
         // create a checkpoint template if it doesn't exists
         if (!checkpointExists) {
@@ -97,55 +96,7 @@ contract RouterFacet is LibAppStorage {
 
         _applyMessages(commit.source, commit.crossMsgs);
 
-        _distributeRewards(msg.sender, commit.fee);
-    }
-
-    /// @notice set up the top-down validators and their voting power
-    /// @param validators - list of validator addresses
-    /// @param weights - list of validators voting powers
-    function setMembership(address[] memory validators, uint256[] memory weights) external systemActorOnly {
-        if (validators.length != weights.length) {
-            revert ValidatorsAndWeightsLengthMismatch();
-        }
-        // invalidate the previous validator set
-        ++s.validatorNonce;
-
-        uint256 totalValidatorsWeight = 0;
-
-        // setup the new validator set
-        uint256 validatorsLength = validators.length;
-        for (uint256 validatorIndex = 0; validatorIndex < validatorsLength; ) {
-            address validatorAddress = validators[validatorIndex];
-            if (validatorAddress != address(0)) {
-                uint256 validatorWeight = weights[validatorIndex];
-
-                if (validatorWeight == 0) {
-                    revert ValidatorWeightIsZero();
-                }
-
-                s.validatorSet[s.validatorNonce][validatorAddress] = validatorWeight;
-
-                totalValidatorsWeight += validatorWeight;
-            }
-
-            // initial validators need to be conveniently funded with at least
-            // 1 FIL for them to be able to commit the first few top-down messages.
-            // They should use this FIL to fund their own addresses in the subnet
-            // so they can keep committing top-down messages. If they don't do this,
-            // they won't be able to send cross-net messages in their subnet.
-            // Funds are only distributed in child subnets, where top-down checkpoints need
-            // to be committed. This doesn't apply to the root.
-            // TODO: Once account abstraction is conveniently supported, there will be
-            // no need for this initial funding of validators.
-            // if (block.number == 1 && !_networkName.isRoot())
-            //     payable(validatorAddress).sendValue(INITIAL_VALIDATOR_FUNDS);
-
-            unchecked {
-                ++validatorIndex;
-            }
-        }
-
-        s.totalWeight = totalValidatorsWeight;
+        LibGateway._distributeRewards(msg.sender, commit.fee);
     }
 
     /// @notice allows a validator to submit a batch of messages in a top-down commitment
@@ -179,7 +130,7 @@ contract RouterFacet is LibAppStorage {
 
         // no messages executed in the current submission, let's get the next executable epoch from the queue to see if it can be executed already
         if (topDownMsgs.length == 0) {
-            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = _getNextExecutableEpoch();
+            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibGateway._getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
                 EpochVoteTopDownSubmission storage nextVoteSubmission = s.epochVoteSubmissions[nextExecutableEpoch];
@@ -314,7 +265,7 @@ contract RouterFacet is LibAppStorage {
         voteSubmission.vote.mostVotedSubmission
         ];
 
-        _markSubmissionExecuted(mostVotedSubmission.epoch);
+        LibGateway._markSubmissionExecuted(mostVotedSubmission.epoch);
 
         return mostVotedSubmission.topDownMsgs;
     }
@@ -332,7 +283,7 @@ contract RouterFacet is LibAppStorage {
     ) internal returns (bool shouldExecuteVote) {
         bytes32 submissionHash = submission.toHash();
 
-        shouldExecuteVote = _submitVote(
+        shouldExecuteVote = LibGateway._submitVote(
             voteSubmission.vote,
             submissionHash,
             submitterAddress,
@@ -376,7 +327,7 @@ contract RouterFacet is LibAppStorage {
         }
 
         if (shouldCommitBottomUp) {
-            _commitBottomUpMsg(crossMessage);
+            LibGateway._commitBottomUpMsg(crossMessage);
 
             return (shouldBurn = crossMessage.message.value > 0, shouldDistributeRewards = false);
         }
@@ -385,7 +336,7 @@ contract RouterFacet is LibAppStorage {
             ++s.appliedTopDownNonce;
         }
 
-        _commitTopDownMsg(crossMessage);
+        LibGateway._commitTopDownMsg(crossMessage);
 
         return (shouldBurn = false, shouldDistributeRewards = true);
     }
@@ -407,12 +358,12 @@ contract RouterFacet is LibAppStorage {
         }
 
         if (shouldDistributeRewards) {
-            _distributeRewards(toSubnetId.getActor(), s.crossMsgFee);
+            LibGateway._distributeRewards(toSubnetId.getActor(), s.crossMsgFee);
         }
     }
 
     function getTopDownMsgs(SubnetID calldata subnetId) external view returns (CrossMsg[] memory) {
-        (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
+        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -446,7 +397,7 @@ contract RouterFacet is LibAppStorage {
 
             if (applyType == IPCMsgType.BottomUp) {
                 if (!forwarder.isEmpty()) {
-                    (bool registered, Subnet storage subnet) = _getSubnet(forwarder);
+                    (bool registered, Subnet storage subnet) = LibGateway._getSubnet(forwarder);
                     if (!registered) {
                         revert NotRegisteredSubnet();
                     }

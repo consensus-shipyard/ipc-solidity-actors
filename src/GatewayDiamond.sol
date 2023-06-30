@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import { AppStorage } from "./lib/AppStorage.sol";
-import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
+import { IDiamond } from "./interfaces/IDiamond.sol";
 import { LibDiamond } from "./lib/Diamond.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
@@ -28,7 +28,7 @@ contract GatewayDiamond {
         uint8 majorityPercentage;
     }
 
-    constructor(IDiamondCut.FacetCut[] memory _diamondCut, ConstructorParams memory params){
+    constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params){
         LibDiamond.setContractOwner(msg.sender);
         LibDiamond.diamondCut(_diamondCut, address(0), new bytes(0));
 
@@ -62,13 +62,13 @@ contract GatewayDiamond {
         }
         // Execute external function from facet using delegatecall and return any value.
         assembly {
-        // copy function selector and any arguments
+            // copy function selector and any arguments
             calldatacopy(0, 0, calldatasize())
-        // execute function call using the facet
+            // execute function call using the facet
             let result := delegatecall(gas(), facet, 0, calldatasize(), 0, 0)
-        // get any return value
+            // get any return value
             returndatacopy(0, 0, returndatasize())
-        // return any return value or error back to the caller
+            // return any return value or error back to the caller
             switch result
             case 0 {
                 revert(0, returndatasize())

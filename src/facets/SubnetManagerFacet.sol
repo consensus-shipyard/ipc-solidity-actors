@@ -1,4 +1,4 @@
-pragma solidity ^0.8.0;
+pragma solidity 0.8.19;
 
 import "../lib/AppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
@@ -9,6 +9,7 @@ import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
+import {LibGateway} from "../lib/Gateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -23,10 +24,9 @@ import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.s
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import "hardhat/console.sol";
 
-contract SubnetManagerFaucet is ReentrancyGuard, LibAppStorage {
-    AppStorage internal s;
-
+contract SubnetManagerFacet is ReentrancyGuard, Modifiers {
     using FilAddress for address;
     using FilAddress for address payable;
     using AccountHelper for address;
@@ -51,13 +51,14 @@ contract SubnetManagerFaucet is ReentrancyGuard, LibAppStorage {
 
     /// @notice register a subnet in the gateway. called by a subnet when it reaches the threshold stake
     function register() external payable {
+        console.log(s.minStake);
         if (msg.value < s.minStake) {
             revert NotEnoughFunds();
         }
 
         SubnetID memory subnetId = s.networkName.createSubnetId(msg.sender);
 
-        (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
+        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
 
         if (registered) {
             revert AlreadyRegisteredSubnet();
@@ -77,7 +78,7 @@ contract SubnetManagerFaucet is ReentrancyGuard, LibAppStorage {
             revert NotEnoughFunds();
         }
 
-        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -98,7 +99,7 @@ contract SubnetManagerFaucet is ReentrancyGuard, LibAppStorage {
             revert CannotReleaseZero();
         }
 
-        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -121,7 +122,7 @@ contract SubnetManagerFaucet is ReentrancyGuard, LibAppStorage {
             revert CannotReleaseZero();
         }
 
-        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
         if (!registered) {
             revert NotRegisteredSubnet();
         }
@@ -131,7 +132,7 @@ contract SubnetManagerFaucet is ReentrancyGuard, LibAppStorage {
 
     /// @notice kill an existing subnet. It's balance must be empty
     function kill() external {
-        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -155,16 +156,16 @@ contract SubnetManagerFaucet is ReentrancyGuard, LibAppStorage {
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, msg.value - s.crossMsgFee);
 
         // commit top-down message.
-        _commitTopDownMsg(crossMsg);
+        LibGateway._commitTopDownMsg(crossMsg);
 
-        _distributeRewards(subnetId.getActor(), s.crossMsgFee);
+        LibGateway._distributeRewards(subnetId.getActor(), s.crossMsgFee);
     }
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release() external payable signableOnly hasFee {
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(s.networkName, msg.sender, msg.value - s.crossMsgFee);
 
-        _commitBottomUpMsg(crossMsg);
+        LibGateway._commitBottomUpMsg(crossMsg);
     }
 
     /// @notice set up the top-down validators and their voting power

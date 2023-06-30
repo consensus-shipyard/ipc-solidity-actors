@@ -3,10 +3,11 @@ pragma solidity ^0.8.0;
 
 import "../interfaces/IDiamondCut.sol";
 import "../interfaces/IDiamond.sol";
+import "hardhat/console.sol";
 
 error NotOwner();
 error NoBytecodeAtAddress(address _contractAddress, string _message);
-error IncorrectFacetCutAction(uint8 _action);
+error IncorrectFacetCutAction(IDiamondCut.FacetCutAction _action);
 error NoSelectorsProvidedForFacetForCut(address _facetAddress);
 error CannotAddFunctionToDiamondThatAlreadyExists(bytes4 _selector);
 error CannotAddSelectorsToZeroAddress(bytes4[] _selectors);
@@ -55,7 +56,7 @@ library LibDiamond {
     }
 
     function diamondCut(
-        IDiamondCut.FacetCut[] memory _diamondCut,
+        IDiamond.FacetCut[] memory _diamondCut,
         address _init,
         bytes memory _calldata
     ) internal {
@@ -66,10 +67,10 @@ library LibDiamond {
                 revert NoSelectorsProvidedForFacetForCut(facetAddress);
             }
             IDiamondCut.FacetCutAction action = _diamondCut[facetIndex].action;
-            if (uint(action) == uint(IDiamond.FacetCutAction.Add)) {
+            if (action == IDiamond.FacetCutAction.Add) {
                 addFunctions(facetAddress, functionSelectors);
             } else {
-                revert IncorrectFacetCutAction(uint8(action));
+                revert IncorrectFacetCutAction(action);
             }
         }
         emit DiamondCut(_diamondCut, _init, _calldata);
