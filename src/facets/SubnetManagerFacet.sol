@@ -49,9 +49,18 @@ contract SubnetManagerFacet is ReentrancyGuard, Modifiers {
         s.initialized = true;
     }
 
+    function registerTotalSubnets() external view returns (uint64) {
+        return s.totalSubnets;
+    }
+
+    function managerMinStake() external view returns (uint256) {
+        console.log("managerMinStake");
+        return s.minStake;
+    }
+
     /// @notice register a subnet in the gateway. called by a subnet when it reaches the threshold stake
     function register() external payable {
-        console.log(s.minStake);
+        console.log("s.minStake=", s.minStake);
         if (msg.value < s.minStake) {
             revert NotEnoughFunds();
         }
@@ -68,7 +77,6 @@ contract SubnetManagerFacet is ReentrancyGuard, Modifiers {
         subnet.stake = msg.value;
         subnet.status = Status.Active;
         subnet.genesisEpoch = block.number;
-
         s.totalSubnets += 1;
     }
 

@@ -11,8 +11,7 @@ error FunctionNotFound(bytes4 _functionSelector);
 
 contract GatewayDiamond {
     using SubnetIDHelper for SubnetID;
-
-    AppStorage internal s;
+    AppStorage s;
 
     // uint8 constant MIN_CHECKPOINT_PERIOD = 10;
     uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;

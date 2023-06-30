@@ -22,7 +22,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
 
-    uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
+    //uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
+    uint64 constant MIN_COLLATERAL_AMOUNT = 5 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
     address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
     bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
@@ -158,7 +159,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
     function testGatewayDiamondAddStake_Works_SingleStaking(uint256 stakeAmount, uint256 registerAmount) public {
         gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
         require(gwInfo.crossMsgFee() == CROSS_MSG_FEE);
+        console.log(gwInfo.minStake());
+        require(gwInfo.minStake() == MIN_COLLATERAL_AMOUNT);
+        console.log(gwManager.managerMinStake());
+        require(gwManager.managerMinStake() == MIN_COLLATERAL_AMOUNT, "manager min stake");
         require(gwInfo.getNetworkName().equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})));
 
         address subnetAddress = vm.addr(100);
@@ -171,7 +177,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, totalAmount);
 
         registerSubnet(registerAmount, subnetAddress);
-        require(gwInfo.totalSubnets() == 1);
+        require(gwInfo.totalSubnets() == 1, "subnets number == 1");
 
         addStake(stakeAmount, subnetAddress);
 
@@ -322,7 +328,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwManager = SubnetManagerFacet(address(gw));
         gwInfo = InfoFacet(address(gw));
 
+        require(gwInfo.crossMsgFee() == CROSS_MSG_FEE);
+        require(gwInfo.getNetworkName().equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})));
+        require(gwInfo.minStake() == MIN_COLLATERAL_AMOUNT);
+
+        require(gwInfo.totalSubnets() == 0, "registerSubnetGW: subnets number == 0");
         gwManager.register{value: collateral}();
+        console.log(gwManager.registerTotalSubnets());
+        console.log(gwInfo.totalSubnets());
+        require(gwManager.registerTotalSubnets() == 1, "registerTotalSubnetsSubnetGW: subnets number == 1");
+        require(gwInfo.totalSubnets() == 1, "registerSubnetGW: subnets number == 1");
 
         (SubnetID memory id, uint256 stake, uint256 topDownNonce, , uint256 circSupply, Status status) = getSubnetGW(
             subnetAddress,

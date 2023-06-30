@@ -25,7 +25,7 @@ import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.s
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
-
+import "hardhat/console.sol";
 
 contract InfoFacet {
     AppStorage internal s;
@@ -51,6 +51,11 @@ contract InfoFacet {
 
     function totalSubnets() external view returns (uint64) {
         return s.totalSubnets;
+    }
+
+    function minStake() external view returns (uint256) {
+        console.log("minStake");
+        return s.minStake;
     }
 
     function getNetworkName() external view returns (SubnetID memory) {
