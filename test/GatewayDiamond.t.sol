@@ -171,6 +171,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, totalAmount);
 
         registerSubnet(registerAmount, subnetAddress);
+        require(gwInfo.totalSubnets() == 1);
+
         addStake(stakeAmount, subnetAddress);
 
         (, uint256 totalStaked, , , , ) = getSubnet(subnetAddress);

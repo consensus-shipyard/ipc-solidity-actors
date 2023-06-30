@@ -49,6 +49,10 @@ contract InfoFacet {
         return s.bottomUpNonce;
     }
 
+    function totalSubnets() external view returns (uint64) {
+        return s.totalSubnets;
+    }
+
     function getNetworkName() external view returns (SubnetID memory) {
         return s.networkName;
     }
@@ -64,7 +68,6 @@ contract InfoFacet {
     function getSubnet(SubnetID calldata subnetId) external view returns (bool, Subnet memory) {
         return LibGateway._getSubnet(subnetId);
     }
-
 
     function subnets(bytes32 h) external view returns (
         Status status,
