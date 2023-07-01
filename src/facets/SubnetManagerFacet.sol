@@ -26,7 +26,7 @@ import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import "hardhat/console.sol";
 
-contract SubnetManagerFacet is ReentrancyGuard, Modifiers {
+contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
     using FilAddress for address;
     using FilAddress for address payable;
     using AccountHelper for address;
@@ -220,7 +220,6 @@ contract SubnetManagerFacet is ReentrancyGuard, Modifiers {
                 ++validatorIndex;
             }
         }
-
         s.totalWeight = totalValidatorsWeight;
     }
 }

@@ -26,6 +26,42 @@ import { ExecutableQueueHelper } from "../lib/ExecutableQueueHelper.sol";
 import { EpochVoteSubmissionHelper } from "../lib/EpochVoteSubmissionHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
+error EmptySubnet();
+error NotSystemActor();
+error NotSignableAccount();
+error NotEnoughFee();
+error NotEnoughFunds();
+error NotEnoughFundsToRelease();
+error CannotReleaseZero();
+error NotEnoughBalance();
+error NotInitialized();
+error NotValidator();
+error NotEnoughSubnetCircSupply();
+error NotEmptySubnetCircSupply();
+error NotRegisteredSubnet();
+error AlreadyRegisteredSubnet();
+error AlreadyInitialized();
+error InconsistentPrevCheckpoint();
+error InvalidActorAddress();
+error InvalidPostboxOwner();
+error InvalidCheckpointEpoch();
+error InvalidCheckpointSource();
+error InvalidCrossMsgNonce();
+error InvalidCrossMsgDestinationSubnet();
+error InvalidCrossMsgDestinationAddress();
+error InvalidCrossMsgsSortOrder();
+error InvalidCrossMsgFromSubnetId();
+error InvalidCrossMsgFromRawAddress();
+error CannotSendCrossMsgToItself();
+error SubnetNotActive();
+error PostboxNotExist();
+error MessagesNotSorted();
+error ValidatorsAndWeightsLengthMismatch();
+error ValidatorWeightIsZero();
+error NotEnoughFundsForMembership();
+error EpochAlreadyExecuted();
+error EpochNotVotable();
+
 struct AppStorage {
     /// @notice path to the current network
     SubnetID networkName;
@@ -131,42 +167,6 @@ contract Modifiers  {
     using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
-
-    error EmptySubnet();
-    error NotSystemActor();
-    error NotSignableAccount();
-    error NotEnoughFee();
-    error NotEnoughFunds();
-    error NotEnoughFundsToRelease();
-    error CannotReleaseZero();
-    error NotEnoughBalance();
-    error NotInitialized();
-    error NotValidator();
-    error NotEnoughSubnetCircSupply();
-    error NotEmptySubnetCircSupply();
-    error NotRegisteredSubnet();
-    error AlreadyRegisteredSubnet();
-    error AlreadyInitialized();
-    error InconsistentPrevCheckpoint();
-    error InvalidActorAddress();
-    error InvalidPostboxOwner();
-    error InvalidCheckpointEpoch();
-    error InvalidCheckpointSource();
-    error InvalidCrossMsgNonce();
-    error InvalidCrossMsgDestinationSubnet();
-    error InvalidCrossMsgDestinationAddress();
-    error InvalidCrossMsgsSortOrder();
-    error InvalidCrossMsgFromSubnetId();
-    error InvalidCrossMsgFromRawAddress();
-    error CannotSendCrossMsgToItself();
-    error SubnetNotActive();
-    error PostboxNotExist();
-    error MessagesNotSorted();
-    error ValidatorsAndWeightsLengthMismatch();
-    error ValidatorWeightIsZero();
-    error NotEnoughFundsForMembership();
-    error EpochAlreadyExecuted();
-    error EpochNotVotable();
 
     function _validEpochOnly(uint64 epoch) private view {
         if (epoch <= s.lastVotingExecutedEpoch) {

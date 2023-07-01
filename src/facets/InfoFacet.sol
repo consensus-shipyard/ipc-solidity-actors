@@ -54,8 +54,19 @@ contract InfoFacet {
     }
 
     function minStake() external view returns (uint256) {
-        console.log("minStake");
         return s.minStake;
+    }
+
+    function majorityPercentage() external view returns (uint8) {
+        return s.majorityPercentage;
+    }
+
+    function bottomUpCheckPeriod() external view returns (uint64) {
+        return s.bottomUpCheckPeriod;
+    }
+
+    function topDownCheckPeriod() external view returns (uint64) {
+        return s.topDownCheckPeriod;
     }
 
     function getNetworkName() external view returns (SubnetID memory) {

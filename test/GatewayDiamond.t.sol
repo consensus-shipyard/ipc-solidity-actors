@@ -22,8 +22,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
 
-    //uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
-    uint64 constant MIN_COLLATERAL_AMOUNT = 5 ether;
+    uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
     address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
     bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
@@ -38,9 +37,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
     uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
 
-    GatewayDiamond gatewayDiamond;
     GatewayDiamond gw2;
     SubnetActor sa;
+
+    GatewayDiamond gatewayDiamond;
     SubnetManagerFacet gwManager;
     InfoFacet gwInfo;
     RouterFacet gwRouter;
@@ -134,6 +134,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         gatewayDiamond = new GatewayDiamond(diamondCut, constructorParams);
 
+
         gwRouter = RouterFacet(address(gatewayDiamond));
         gwManager = SubnetManagerFacet(address(gatewayDiamond));
         gwInfo = InfoFacet(address(gatewayDiamond));
@@ -157,15 +158,30 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         targetContract(address(gatewayDiamond));
     }
 
+    function testGatewayDiamond_Constructor() public {
+        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
+        gwRouter = RouterFacet(address(gatewayDiamond));
+
+        require(gwInfo.totalSubnets() == 0, "totalSubnets");
+        require(gwInfo.bottomUpNonce() == 0, "bottomUpNonce");
+        require(gwInfo.minStake() == MIN_COLLATERAL_AMOUNT, "minStake");
+        require(gwInfo.crossMsgFee() == CROSS_MSG_FEE, "crossMsgFee");
+        require(gwInfo.bottomUpCheckPeriod() == DEFAULT_CHECKPOINT_PERIOD, "bottomUpCheckPeriod" );
+        require(gwInfo.topDownCheckPeriod() == DEFAULT_CHECKPOINT_PERIOD, "topDownCheckPeriod");
+        require(gwInfo.getNetworkName().equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})), "getNetworkName");
+        require(gwInfo.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE, "majorityPercentage");
+
+        require(gwRouter.routerMinStake() == MIN_COLLATERAL_AMOUNT, "router minStake");
+        require(gwRouter.routerCrossMsgFee() == CROSS_MSG_FEE, "routerCrossMsgFee");
+        require(gwRouter.routerMajorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE, "routerCrossMsgFee");
+        console.log("gwManager.managerMinStake() = ", gwManager.managerMinStake());
+        require(gwManager.managerMinStake() == MIN_COLLATERAL_AMOUNT, "manager minStake");
+    }
+
     function testGatewayDiamondAddStake_Works_SingleStaking(uint256 stakeAmount, uint256 registerAmount) public {
         gwInfo = InfoFacet(address(gatewayDiamond));
         gwManager = SubnetManagerFacet(address(gatewayDiamond));
-        require(gwInfo.crossMsgFee() == CROSS_MSG_FEE);
-        console.log(gwInfo.minStake());
-        require(gwInfo.minStake() == MIN_COLLATERAL_AMOUNT);
-        console.log(gwManager.managerMinStake());
-        require(gwManager.managerMinStake() == MIN_COLLATERAL_AMOUNT, "manager min stake");
-        require(gwInfo.getNetworkName().equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})));
 
         address subnetAddress = vm.addr(100);
         vm.assume(registerAmount >= MIN_COLLATERAL_AMOUNT && registerAmount < type(uint64).max);
@@ -177,6 +193,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, totalAmount);
 
         registerSubnet(registerAmount, subnetAddress);
+        console.log("number of subnets: ", gwInfo.totalSubnets());
         require(gwInfo.totalSubnets() == 1, "subnets number == 1");
 
         addStake(stakeAmount, subnetAddress);

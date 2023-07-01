@@ -27,6 +27,42 @@ import { ExecutableQueueHelper } from "../lib/ExecutableQueueHelper.sol";
 import { EpochVoteSubmissionHelper } from "../lib/EpochVoteSubmissionHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
+error EmptySubnet();
+error NotSystemActor();
+error NotSignableAccount();
+error NotEnoughFee();
+error NotEnoughFunds();
+error NotEnoughFundsToRelease();
+error CannotReleaseZero();
+error NotEnoughBalance();
+error NotInitialized();
+error NotValidator();
+error NotEnoughSubnetCircSupply();
+error NotEmptySubnetCircSupply();
+error NotRegisteredSubnet();
+error AlreadyRegisteredSubnet();
+error AlreadyInitialized();
+error InconsistentPrevCheckpoint();
+error InvalidActorAddress();
+error InvalidPostboxOwner();
+error InvalidCheckpointEpoch();
+error InvalidCheckpointSource();
+error InvalidCrossMsgNonce();
+error InvalidCrossMsgDestinationSubnet();
+error InvalidCrossMsgDestinationAddress();
+error InvalidCrossMsgsSortOrder();
+error InvalidCrossMsgFromSubnetId();
+error InvalidCrossMsgFromRawAddress();
+error CannotSendCrossMsgToItself();
+error SubnetNotActive();
+error PostboxNotExist();
+error MessagesNotSorted();
+error ValidatorsAndWeightsLengthMismatch();
+error ValidatorWeightIsZero();
+error NotEnoughFundsForMembership();
+error EpochAlreadyExecuted();
+error EpochNotVotable();
+
 library LibGateway  {
     using FilAddress for address;
     using FilAddress for address payable;
@@ -39,42 +75,6 @@ library LibGateway  {
     using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
-
-    error EmptySubnet();
-    error NotSystemActor();
-    error NotSignableAccount();
-    error NotEnoughFee();
-    error NotEnoughFunds();
-    error NotEnoughFundsToRelease();
-    error CannotReleaseZero();
-    error NotEnoughBalance();
-    error NotInitialized();
-    error NotValidator();
-    error NotEnoughSubnetCircSupply();
-    error NotEmptySubnetCircSupply();
-    error NotRegisteredSubnet();
-    error AlreadyRegisteredSubnet();
-    error AlreadyInitialized();
-    error InconsistentPrevCheckpoint();
-    error InvalidActorAddress();
-    error InvalidPostboxOwner();
-    error InvalidCheckpointEpoch();
-    error InvalidCheckpointSource();
-    error InvalidCrossMsgNonce();
-    error InvalidCrossMsgDestinationSubnet();
-    error InvalidCrossMsgDestinationAddress();
-    error InvalidCrossMsgsSortOrder();
-    error InvalidCrossMsgFromSubnetId();
-    error InvalidCrossMsgFromRawAddress();
-    error CannotSendCrossMsgToItself();
-    error SubnetNotActive();
-    error PostboxNotExist();
-    error MessagesNotSorted();
-    error ValidatorsAndWeightsLengthMismatch();
-    error ValidatorWeightIsZero();
-    error NotEnoughFundsForMembership();
-    error EpochAlreadyExecuted();
-    error EpochNotVotable();
 
     /// @notice returns the current bottom-up checkpoint
     /// @return exists - whether the checkpoint exists

@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import { AppStorage } from "./lib/AppStorage.sol";
-import { IDiamond } from "./interfaces/IDiamond.sol";
-import { LibDiamond } from "./lib/Diamond.sol";
+import {AppStorage} from "./lib/AppStorage.sol";
+import {IDiamond} from "./interfaces/IDiamond.sol";
+import {LibDiamond} from "./lib/Diamond.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
 contract GatewayDiamond {
+    AppStorage internal s;
     using SubnetIDHelper for SubnetID;
-    AppStorage s;
 
     // uint8 constant MIN_CHECKPOINT_PERIOD = 10;
     uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -40,6 +40,7 @@ contract GatewayDiamond {
             ? MIN_CHECKPOINT_PERIOD
             : params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
+        s.majorityPercentage = params.majorityPercentage;
 
         // the root doesn't need to be explicitly initialized
         if (s.networkName.isRoot()) {

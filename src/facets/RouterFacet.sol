@@ -25,6 +25,7 @@ import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.s
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import "hardhat/console.sol";
 
 contract RouterFacet is Modifiers {
     using FilAddress for address;
@@ -37,6 +38,21 @@ contract RouterFacet is Modifiers {
     using StorableMsgHelper for StorableMsg;
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
+
+    function routerMinStake() external view returns (uint256) {
+        console.log("routerMinStake");
+        return s.minStake;
+    }
+
+    function routerMajorityPercentage() external view returns (uint256) {
+        console.log("routerMajorityPercentage");
+        return s.majorityPercentage;
+    }
+
+    function routerCrossMsgFee() external view returns (uint256) {
+        console.log("routerCrossMsgFee");
+        return s.crossMsgFee;
+    }
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {
