@@ -49,14 +49,6 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
         s.initialized = true;
     }
 
-    function registerTotalSubnets() external view returns (uint64) {
-        return s.totalSubnets;
-    }
-
-    function managerMinStake() external view returns (uint256) {
-        return s.minStake;
-    }
-
     /// @notice register a subnet in the gateway. called by a subnet when it reaches the threshold stake
     function register() external payable {
         if (msg.value < s.minStake) {
@@ -171,7 +163,11 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
     function release() external payable signableOnly hasFee {
         console.log(1);
         console.log(s.networkName.root);
-        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(s.networkName, msg.sender, msg.value - s.crossMsgFee);
+        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(
+            s.networkName,
+            msg.sender,
+            msg.value - s.crossMsgFee
+        );
         console.log(1);
 
         LibGateway._commitBottomUpMsg(crossMsg);

@@ -48,22 +48,18 @@ library LibDiamond {
         contractOwner_ = diamondStorage().contractOwner;
     }
 
-    modifier onlyOwner {
+    modifier onlyOwner() {
         if (msg.sender != diamondStorage().contractOwner) {
             revert NotOwner();
         }
         _;
     }
 
-    function diamondCut(
-        IDiamond.FacetCut[] memory _diamondCut,
-        address _init,
-        bytes memory _calldata
-    ) internal {
+    function diamondCut(IDiamond.FacetCut[] memory _diamondCut, address _init, bytes memory _calldata) internal {
         for (uint256 facetIndex; facetIndex < _diamondCut.length; facetIndex++) {
             bytes4[] memory functionSelectors = _diamondCut[facetIndex].functionSelectors;
             address facetAddress = _diamondCut[facetIndex].facetAddress;
-            if(functionSelectors.length == 0) {
+            if (functionSelectors.length == 0) {
                 revert NoSelectorsProvidedForFacetForCut(facetAddress);
             }
             IDiamondCut.FacetCutAction action = _diamondCut[facetIndex].action;
@@ -78,7 +74,7 @@ library LibDiamond {
     }
 
     function addFunctions(address _facetAddress, bytes4[] memory _functionSelectors) internal {
-        if(_facetAddress == address(0)) {
+        if (_facetAddress == address(0)) {
             revert CannotAddSelectorsToZeroAddress(_functionSelectors);
         }
         DiamondStorage storage ds = diamondStorage();
@@ -87,10 +83,13 @@ library LibDiamond {
         for (uint256 selectorIndex; selectorIndex < _functionSelectors.length; selectorIndex++) {
             bytes4 selector = _functionSelectors[selectorIndex];
             address oldFacetAddress = ds.facetAddressAndSelectorPosition[selector].facetAddress;
-            if(oldFacetAddress != address(0)) {
+            if (oldFacetAddress != address(0)) {
                 revert CannotAddFunctionToDiamondThatAlreadyExists(selector);
             }
-            ds.facetAddressAndSelectorPosition[selector] = FacetAddressAndSelectorPosition(_facetAddress, selectorCount);
+            ds.facetAddressAndSelectorPosition[selector] = FacetAddressAndSelectorPosition(
+                _facetAddress,
+                selectorCount
+            );
             ds.selectors.push(selector);
             selectorCount++;
         }
@@ -121,7 +120,7 @@ library LibDiamond {
         assembly {
             contractSize := extcodesize(_contract)
         }
-        if(contractSize == 0) {
+        if (contractSize == 0) {
             revert NoBytecodeAtAddress(_contract, _errorMessage);
         }
     }

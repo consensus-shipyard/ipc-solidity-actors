@@ -11,20 +11,20 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {AccountHelper} from "./AccountHelper.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
-import { ExecutableQueue } from "../structs/ExecutableQueue.sol";
-import { EpochVoteSubmission } from "../structs/EpochVoteSubmission.sol";
-import { VoteExecutionStatus } from "../enums/VoteExecutionStatus.sol";
-import { ExecutableQueueHelper } from "../lib/ExecutableQueueHelper.sol";
-import { EpochVoteSubmissionHelper } from "../lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
+import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
+import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
+import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
+import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
-import { ExecutableQueue } from "../structs/ExecutableQueue.sol";
-import { EpochVoteSubmission } from "../structs/EpochVoteSubmission.sol";
-import { VoteExecutionStatus } from "../enums/VoteExecutionStatus.sol";
-import { ExecutableQueueHelper } from "../lib/ExecutableQueueHelper.sol";
-import { EpochVoteSubmissionHelper } from "../lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
+import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
+import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
+import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
+import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
 error EmptySubnet();
@@ -63,7 +63,7 @@ error NotEnoughFundsForMembership();
 error EpochAlreadyExecuted();
 error EpochNotVotable();
 
-library LibGateway  {
+library LibGateway {
     using FilAddress for address;
     using FilAddress for address payable;
     using AccountHelper for address;
@@ -81,9 +81,10 @@ library LibGateway  {
     /// @return epoch - the epoch of the checkpoint
     /// @return checkpoint - the checkpoint struct
     function _getCurrentBottomUpCheckpoint()
-    internal
-    view
-    returns (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint) {
+        internal
+        view
+        returns (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint)
+    {
         AppStorage storage s = LibAppStorage.appStorage();
         epoch = _getNextEpoch(block.number, s.bottomUpCheckPeriod);
         checkpoint = s.bottomUpCheckpoints[epoch];
@@ -317,5 +318,3 @@ library LibGateway  {
         }
     }
 }
-
-

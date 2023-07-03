@@ -28,7 +28,7 @@ contract GatewayDiamond {
         uint8 majorityPercentage;
     }
 
-    constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params){
+    constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
         LibDiamond.setContractOwner(msg.sender);
         LibDiamond.diamondCut(_diamondCut, address(0), new bytes(0));
 
@@ -52,7 +52,9 @@ contract GatewayDiamond {
             revert InvalidMajorityPercentage();
         }
 
-        s.submissionPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : params.topDownCheckPeriod;
+        s.submissionPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
+            ? MIN_CHECKPOINT_PERIOD
+            : params.topDownCheckPeriod;
 
         s.executableQueue.period = s.submissionPeriod;
     }
@@ -66,7 +68,7 @@ contract GatewayDiamond {
         }
         // get facet from function selector
         address facet = ds.facetAddressAndSelectorPosition[msg.sig].facetAddress;
-        if(facet == address(0)) {
+        if (facet == address(0)) {
             revert FunctionNotFound(msg.sig);
         }
         // Execute external function from facet using delegatecall and return any value.
@@ -97,5 +99,4 @@ contract GatewayDiamond {
     receive() external payable {
         _fallback();
     }
-
 }

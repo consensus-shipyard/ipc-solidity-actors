@@ -39,21 +39,6 @@ contract RouterFacet is Modifiers {
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
 
-    function routerMinStake() external view returns (uint256) {
-        console.log("routerMinStake");
-        return s.minStake;
-    }
-
-    function routerMajorityPercentage() external view returns (uint256) {
-        console.log("routerMajorityPercentage");
-        return s.majorityPercentage;
-    }
-
-    function routerCrossMsgFee() external view returns (uint256) {
-        console.log("routerCrossMsgFee");
-        return s.crossMsgFee;
-    }
-
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {
         if (!s.initialized) {
@@ -77,11 +62,8 @@ contract RouterFacet is Modifiers {
         }
 
         // get checkpoint for the current template being populated
-        (
-        bool checkpointExists,
-        uint64 nextCheckEpoch,
-        BottomUpCheckpoint storage checkpoint
-        ) = LibGateway._getCurrentBottomUpCheckpoint();
+        (bool checkpointExists, uint64 nextCheckEpoch, BottomUpCheckpoint storage checkpoint) = LibGateway
+            ._getCurrentBottomUpCheckpoint();
 
         // create a checkpoint template if it doesn't exists
         if (!checkpointExists) {
@@ -278,7 +260,7 @@ contract RouterFacet is Modifiers {
         EpochVoteTopDownSubmission storage voteSubmission
     ) internal returns (CrossMsg[] storage) {
         TopDownCheckpoint storage mostVotedSubmission = voteSubmission.submissions[
-        voteSubmission.vote.mostVotedSubmission
+            voteSubmission.vote.mostVotedSubmission
         ];
 
         LibGateway._markSubmissionExecuted(mostVotedSubmission.epoch);

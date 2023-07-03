@@ -10,20 +10,20 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {AccountHelper} from "./AccountHelper.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
-import { ExecutableQueue } from "../structs/ExecutableQueue.sol";
-import { EpochVoteSubmission } from "../structs/EpochVoteSubmission.sol";
-import { VoteExecutionStatus } from "../enums/VoteExecutionStatus.sol";
-import { ExecutableQueueHelper } from "../lib/ExecutableQueueHelper.sol";
-import { EpochVoteSubmissionHelper } from "../lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
+import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
+import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
+import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
+import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
-import { ExecutableQueue } from "../structs/ExecutableQueue.sol";
-import { EpochVoteSubmission } from "../structs/EpochVoteSubmission.sol";
-import { VoteExecutionStatus } from "../enums/VoteExecutionStatus.sol";
-import { ExecutableQueueHelper } from "../lib/ExecutableQueueHelper.sol";
-import { EpochVoteSubmissionHelper } from "../lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
+import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
+import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
+import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
+import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
 error EmptySubnet();
@@ -65,87 +65,64 @@ error EpochNotVotable();
 struct AppStorage {
     /// @notice path to the current network
     SubnetID networkName;
-
     /// @notice Number of active subnets spawned from this one
     uint64 totalSubnets;
-
     /// @notice Minimum stake required to create a new subnet
     uint256 minStake;
-
     /// @notice List of subnets
     /// SubnetID => Subnet
     mapping(bytes32 => Subnet) subnets;
-
     /// @notice bottom-up period in number of epochs for the subnet
     uint64 bottomUpCheckPeriod;
-
     /// @notice Postbox keeps track of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
     /// cross-net message id => CrossMsg
     mapping(bytes32 => CrossMsg) postbox;
-
     /// @notice cross-net message id => set of owners
     mapping(bytes32 => mapping(address => bool)) postboxHasOwner;
-
     /// @notice top-down period in number of epochs for the subnet
     uint64 topDownCheckPeriod;
-
     /// @notice BottomUpCheckpoints in the GW per epoch
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpoints;
-
     /// @notice nonce for bottom-up messages
     uint64 bottomUpNonce;
-
     /// @notice AppliedNonces keep track of the next nonce of the message to be applied.
     /// This prevents potential replay attacks.
     uint64 appliedTopDownNonce;
-
     /// @notice fee amount charged per cross message
     uint256 crossMsgFee;
-
     /// @notice total votes of all validators
     uint256 totalWeight;
-
     /// @notice List of validators and how many votes of the total each validator has for top-down messages
     // validatorNonce => validator => weight
     mapping(uint256 => mapping(address => uint256)) validatorSet;
-
     /// @notice sequence number that uniquely identifies a validator set
     uint256 validatorNonce;
-
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
-
     /// @notice epoch => SubnetID => check => exists
     mapping(uint64 => mapping(bytes32 => mapping(bytes32 => bool))) checks;
-
     /// @notice whether the contract is initialized
     bool initialized;
-
     /// @notice contains voted submissions for a given epoch
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => EpochVoteTopDownSubmission) epochVoteSubmissions;
-
     /// @notice percent approvals needed to reach consensus
     uint8 majorityPercentage;
-
     /// @notice number of blocks between two checkpoint submissions
     uint64 submissionPeriod;
-
     /// @notice last executed epoch after voting
     uint64 lastVotingExecutedEpoch;
-
     /// @notice Initial epoch number
     uint64 genesisEpoch;
-
     /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
     /// This usually happens when previous submission epoch has not executed, but the next submission
     /// epoch is ready to be executed. Most of the time this should be empty
     ExecutableQueue executableQueue;
 }
 
-library LibAppStorage  {
+library LibAppStorage {
     function appStorage() internal pure returns (AppStorage storage ds) {
         assembly {
             ds.slot := 0
@@ -153,7 +130,7 @@ library LibAppStorage  {
     }
 }
 
-contract Modifiers  {
+contract Modifiers {
     AppStorage internal s;
 
     using FilAddress for address;
@@ -228,5 +205,3 @@ contract Modifiers  {
         _;
     }
 }
-
-

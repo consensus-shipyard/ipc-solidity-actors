@@ -77,14 +77,21 @@ contract InfoFacet {
         return s.networkName;
     }
 
-    function bottomUpCheckpoints(uint64 e) external view returns (
-        SubnetID memory source,
-        uint64 epoch,
-        uint256 fee,
-        CrossMsg[] memory crossMsgs,
-        ChildCheck[] memory children,
-        bytes32 prevHash,
-        bytes memory proof) {
+    function bottomUpCheckpoints(
+        uint64 e
+    )
+        external
+        view
+        returns (
+            SubnetID memory source,
+            uint64 epoch,
+            uint256 fee,
+            CrossMsg[] memory crossMsgs,
+            ChildCheck[] memory children,
+            bytes32 prevHash,
+            bytes memory proof
+        )
+    {
         return (
             s.bottomUpCheckpoints[e].source,
             s.bottomUpCheckpoints[e].epoch,
@@ -96,10 +103,6 @@ contract InfoFacet {
         );
     }
 
-    function bottomUpCheckpointsFee(uint64 e) external view returns (uint256) {
-        return s.bottomUpCheckpoints[e].fee;
-    }
-
     /// @notice returns the subnet with the given id
     /// @param subnetId the id of the subnet
     /// @return found whether the subnet exists
@@ -108,16 +111,22 @@ contract InfoFacet {
         return LibGateway._getSubnet(subnetId);
     }
 
-    function subnets(bytes32 h) external view returns (
-        Status status,
-        uint64 topDownNonce,
-        uint64 appliedBottomUpNonce,
-        uint256 stake,
-        uint256 genesisEpoch,
-        uint256 circSupply,
-        SubnetID memory id,
-        BottomUpCheckpoint memory prevCheckpoint
-    ) {
+    function subnets(
+        bytes32 h
+    )
+        external
+        view
+        returns (
+            Status status,
+            uint64 topDownNonce,
+            uint64 appliedBottomUpNonce,
+            uint256 stake,
+            uint256 genesisEpoch,
+            uint256 circSupply,
+            SubnetID memory id,
+            BottomUpCheckpoint memory prevCheckpoint
+        )
+    {
         status = s.subnets[h].status;
         topDownNonce = s.subnets[h].topDownNonce;
         appliedBottomUpNonce = s.subnets[h].appliedBottomUpNonce;
@@ -164,8 +173,8 @@ contract InfoFacet {
     function executableQueue() public view returns (uint64, uint64, uint64) {
         return (s.executableQueue.period, s.executableQueue.first, s.executableQueue.last);
     }
+
     function lastVotingExecutedEpoch() public view returns (uint64) {
         return s.lastVotingExecutedEpoch;
     }
 }
-
