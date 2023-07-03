@@ -852,7 +852,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         bytes32 cid = crossMsg.toHash();
 
         postbox[cid] = crossMsg;
-        postboxHasOwner[cid][crossMsg.message.from.rawAddress.extractEvmAddress()] = true;
+        FvmAddress memory addr = crossMsg.message.from.rawAddress;
+        postboxHasOwner[cid][addr.extractEvmAddress()] = true;
     }
 
     /// @notice applies a cross-net messages coming from some other subnet.
