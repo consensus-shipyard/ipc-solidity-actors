@@ -2213,7 +2213,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         // vm.expectCall(address(sa), gw.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 1);
 
-        gw.fund{value: fundAmount}(subnetId);
+        gw.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(msg.sender));
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(sa));
 
