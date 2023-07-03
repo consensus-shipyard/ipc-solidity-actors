@@ -2213,7 +2213,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         // vm.expectCall(address(sa), gw.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 1);
 
-        gw.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(msg.sender));
+        gw.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(sa));
 
@@ -2234,7 +2234,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
             );
             require(
                 keccak256(abi.encode(topDownMsg.message.from)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: FvmAddressHelper.from(funderAddress)}))),
+                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: FvmAddressHelper.from(msg.sender)}))),
                 "td from not match"
             );
         }
