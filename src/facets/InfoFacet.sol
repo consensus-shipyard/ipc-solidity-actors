@@ -57,6 +57,10 @@ contract InfoFacet {
         return s.minStake;
     }
 
+    function initialized() external view returns (bool) {
+        return s.initialized;
+    }
+
     function majorityPercentage() external view returns (uint8) {
         return s.majorityPercentage;
     }
@@ -110,6 +114,10 @@ contract InfoFacet {
         (, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
 
         return subnet.topDownMsgs.length;
+    }
+
+    function getGenesisEpoch() public view returns (uint64) {
+        return LibGateway.getGenesisEpoch();
     }
 
     /// @notice get the top-down message at the given index for the given subnet
