@@ -2234,7 +2234,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
             );
             require(
                 keccak256(abi.encode(topDownMsg.message.from)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: FvmAddressHelper.from(msg.sender)}))),
+                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: FvmAddressHelper.from(funderAddress)}))),
                 "td from not match"
             );
         }
