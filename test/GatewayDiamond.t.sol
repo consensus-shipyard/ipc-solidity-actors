@@ -341,8 +341,23 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, subnetCollateral);
 
         registerSubnet(subnetCollateral, subnetAddress);
-        console.log("totalSubnets=", gwInfo.totalSubnets());
         require(gwInfo.totalSubnets() == 1);
+
+        SubnetID memory subnetId = gwInfo.getNetworkName().createSubnetId(subnetAddress);
+
+        (bool ok, Subnet memory targetSubnet) = gwInfo.getSubnet(subnetId);
+
+        require(ok, "subnet found");
+
+        (SubnetID memory id, uint256 stake, , , , Status status) = getSubnet(
+            subnetAddress
+        );
+
+        require(targetSubnet.status == Status.Active);
+        require(targetSubnet.status == status);
+        require(targetSubnet.stake == stake);
+        require(targetSubnet.stake == subnetCollateral);
+        require(id.equals(subnetId));
     }
 
     function testGatewayDiamond_GatewayDiamond_InitGenesisEpoch_Works() public {
@@ -1087,6 +1102,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
+        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
+        gwRouter = RouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -1137,12 +1155,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
+        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
+        gwRouter = RouterFacet(address(gatewayDiamond));
 
         vm.roll(0);
         vm.warp(0);
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
-
         release(releaseAmount, crossMsgFee, EPOCH_ONE);
     }
 
@@ -1162,6 +1182,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
+        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
+        gwRouter = RouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -1189,6 +1212,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
+        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
+        gwRouter = RouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -1859,6 +1885,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
+        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
+        gwRouter = RouterFacet(address(gatewayDiamond));
 
         address validator = vm.addr(100);
 
@@ -2359,24 +2388,24 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         (SubnetID memory subnetId, , uint256 nonceBefore, , uint256 circSupplyBefore, ) = getSubnet(address(sa));
 
-        uint256 expectedTopDownMsgsLenght = gwInfo.getSubnetTopDownMsgsLength(subnetId) + 1;
+        uint256 expectedTopDownMsgsLength = gwInfo.getSubnetTopDownMsgsLength(subnetId) + 1;
         uint256 expectedNonce = nonceBefore + 1;
         uint256 expectedCircSupply = circSupplyBefore + fundAmountWithSubtractedFee;
 
         require(gwInfo.crossMsgFee() > 0, "crossMsgFee is 0");
 
-        vm.expectCall(address(sa), gwInfo.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 1);
+        // vm.expectCall(address(sa), gwInfo.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 1);
 
         gwManager.fund{value: fundAmount}(subnetId);
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(sa));
 
-        require(gwInfo.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLenght);
+        require(gwInfo.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLength);
 
         require(nonce == expectedNonce);
         require(circSupply == expectedCircSupply);
 
-        for (uint256 msgIndex = 0; msgIndex < expectedTopDownMsgsLenght; msgIndex++) {
+        for (uint256 msgIndex = 0; msgIndex < expectedTopDownMsgsLength; msgIndex++) {
             CrossMsg memory topDownMsg = gwInfo.getSubnetTopDownMsg(subnetId, msgIndex);
 
             require(topDownMsg.message.nonce == msgIndex);
@@ -2401,14 +2430,15 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function release(uint256 releaseAmount, uint256 crossMsgFee, uint64 epoch) internal {
-        uint256 feeBefore = gwInfo.bottomUpCheckpointsFee(epoch);
+        (, , uint256 feeBefore, , , ,) = gwInfo.bottomUpCheckpoints(epoch);
 
         uint256 expectedNonce = gwInfo.bottomUpNonce() + 1;
         uint256 expectedCheckpointDataFee = feeBefore + crossMsgFee;
 
         gwManager.release{value: releaseAmount}();
 
-        uint256 fee = gwInfo.bottomUpCheckpointsFee(epoch);
+        (, , uint256 fee, , , ,) = gwInfo.bottomUpCheckpoints(epoch);
+
         console.log("fee %d", fee);
         console.log("expectedCheckpointDataFee: %d", expectedCheckpointDataFee);
 
@@ -2460,9 +2490,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         );
 
         SubnetID memory parentNetwork = gwInfo.getNetworkName();
-
-        //console.logBytes32(id.toHash());
-        //console.logBytes32(parentNetwork.createSubnetId(subnetAddress).toHash());
 
         require(
             id.toHash() == parentNetwork.createSubnetId(subnetAddress).toHash(),

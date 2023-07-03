@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import "../lib/AppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
 import {Voting} from "../Voting.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {LibGateway} from "../lib/Gateway.sol";
 import {Status} from "../enums/Status.sol";
@@ -75,6 +75,25 @@ contract InfoFacet {
 
     function getNetworkName() external view returns (SubnetID memory) {
         return s.networkName;
+    }
+
+    function bottomUpCheckpoints(uint64 e) external view returns (
+        SubnetID memory source,
+        uint64 epoch,
+        uint256 fee,
+        CrossMsg[] memory crossMsgs,
+        ChildCheck[] memory children,
+        bytes32 prevHash,
+        bytes memory proof) {
+        return (
+            s.bottomUpCheckpoints[e].source,
+            s.bottomUpCheckpoints[e].epoch,
+            s.bottomUpCheckpoints[e].fee,
+            s.bottomUpCheckpoints[e].crossMsgs,
+            s.bottomUpCheckpoints[e].children,
+            s.bottomUpCheckpoints[e].prevHash,
+            s.bottomUpCheckpoints[e].proof
+        );
     }
 
     function bottomUpCheckpointsFee(uint64 e) external view returns (uint256) {

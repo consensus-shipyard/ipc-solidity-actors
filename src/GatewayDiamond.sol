@@ -8,6 +8,7 @@ import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
+error InvalidMajorityPercentage();
 
 contract GatewayDiamond {
     AppStorage internal s;
@@ -46,6 +47,14 @@ contract GatewayDiamond {
         if (s.networkName.isRoot()) {
             s.initialized = true;
         }
+
+        if (params.majorityPercentage > 100) {
+            revert InvalidMajorityPercentage();
+        }
+
+        s.submissionPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : params.topDownCheckPeriod;
+
+        s.executableQueue.period = s.submissionPeriod;
     }
 
     function _fallback() internal {

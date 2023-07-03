@@ -54,13 +54,11 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
     }
 
     function managerMinStake() external view returns (uint256) {
-        console.log("managerMinStake");
         return s.minStake;
     }
 
     /// @notice register a subnet in the gateway. called by a subnet when it reaches the threshold stake
     function register() external payable {
-        console.log("s.minStake=", s.minStake);
         if (msg.value < s.minStake) {
             revert NotEnoughFunds();
         }
@@ -171,7 +169,10 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release() external payable signableOnly hasFee {
+        console.log(1);
+        console.log(s.networkName.root);
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(s.networkName, msg.sender, msg.value - s.crossMsgFee);
+        console.log(1);
 
         LibGateway._commitBottomUpMsg(crossMsg);
     }
