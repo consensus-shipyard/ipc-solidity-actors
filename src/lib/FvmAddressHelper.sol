@@ -70,6 +70,7 @@ library FvmAddressHelper {
     }
 
     function _bytesToAddress(bytes memory bys) private pure returns (address addr) {
+        // solhint-disable-next-line
         assembly {
             addr := mload(add(bys,20))
         }
