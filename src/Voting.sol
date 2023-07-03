@@ -158,9 +158,7 @@ abstract contract Voting {
         uint256 totalWeight
     ) internal returns (bool shouldExecuteVote) {
         uint256 nonce = vote.nonce;
-        if (vote.submitters[nonce][submitterAddress]) {
-            revert ValidatorAlreadyVoted();
-        }
+        require(!vote.submitters[nonce][submitterAddress], "IPC-5");
 
         vote.submitters[nonce][submitterAddress] = true;
         vote.totalSubmissionWeight += submitterWeight;

@@ -484,15 +484,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     ) external signableOnly validEpochOnly(checkpoint.epoch) {
         uint256 validatorWeight = validatorSet[validatorNonce][msg.sender];
 
-        if (!initialized) {
-            revert NotInitialized();
-        }
-        if (validatorWeight == 0) {
-            revert NotValidator();
-        }
-        if (!CrossMsgHelper.isSorted(checkpoint.topDownMsgs)) {
-            revert MessagesNotSorted();
-        }
+        require(initialized, "IPC-2");
+        require(validatorWeight > 0, "IPC-3");
+        require(CrossMsgHelper.isSorted(checkpoint.topDownMsgs), "IPC-4");
 
         EpochVoteTopDownSubmission storage voteSubmission = _epochVoteSubmissions[checkpoint.epoch];
 
