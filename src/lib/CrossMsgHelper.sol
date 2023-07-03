@@ -70,7 +70,7 @@ library CrossMsgHelper {
 
     function execute(CrossMsg calldata crossMsg) public returns (bytes memory) {
         uint256 value = crossMsg.message.value;
-        address recipient = crossMsg.message.to.extractEvmAddress();
+        address recipient = crossMsg.message.to.rawAddress.extractEvmAddress();
 
         if (crossMsg.message.method == METHOD_SEND) {
             Address.sendValue(payable(recipient), value);
