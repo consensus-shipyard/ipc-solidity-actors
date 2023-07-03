@@ -120,10 +120,33 @@ contract InfoFacet {
         return LibGateway.getGenesisEpoch();
     }
 
+    function totalWeight() public view returns (uint256) {
+        return s.totalWeight;
+    }
+
+    function appliedTopDownNonce() public view returns (uint64) {
+        return s.appliedTopDownNonce;
+    }
+
+    function postboxHasOwner(bytes32 id, address caller) public view returns (bool) {
+        return s.postboxHasOwner[id][caller];
+    }
+
+    function postbox(bytes32 id) public view returns (StorableMsg memory storableMsg, bool wrapped) {
+        return (s.postbox[id].message, s.postbox[id].wrapped);
+    }
+
     /// @notice get the top-down message at the given index for the given subnet
     function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
         (, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
         return subnet.topDownMsgs[index];
+    }
+
+    function executableQueue() public view returns (uint64, uint64, uint64) {
+        return (s.executableQueue.period, s.executableQueue.first, s.executableQueue.last);
+    }
+    function lastVotingExecutedEpoch() public view returns (uint64) {
+        return s.lastVotingExecutedEpoch;
     }
 }
 

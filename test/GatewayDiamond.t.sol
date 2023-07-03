@@ -37,6 +37,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
     uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
 
+    bytes4[] routerSelectors;
+    bytes4[] managerSelectors;
+    bytes4[] infoSelectors;
+
     GatewayDiamond gatewayDiamond;
     SubnetManagerFacet gwManager;
     InfoFacet gwInfo;
@@ -90,6 +94,48 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     error EpochNotVotable();
     error EpochAlreadyExecuted();
 
+    constructor() {
+        routerSelectors = generateSelectors("RouterFacet");
+        infoSelectors = generateSelectors("InfoFacet");
+        managerSelectors = generateSelectors("SubnetManagerFacet");
+    }
+
+    function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns(GatewayDiamond) {
+        gwRouter = new RouterFacet();
+        gwManager = new SubnetManagerFacet();
+        gwInfo = new InfoFacet();
+
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](3);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: address(gwRouter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: routerSelectors
+            })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+                facetAddress: address(gwManager),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: managerSelectors
+            })
+        );
+
+        diamondCut[2] = (
+            IDiamond.FacetCut({
+                facetAddress: address(gwInfo),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: infoSelectors
+            })
+        );
+
+        gatewayDiamond = new GatewayDiamond(diamondCut, params);
+
+        return gatewayDiamond;
+    }
+
     function setUp() public {
         address[] memory path = new address[](1);
         path[0] = ROOTNET_ADDRESS;
@@ -116,7 +162,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: generateSelectors("RouterFacet")
+                functionSelectors: routerSelectors
             })
         );
 
@@ -124,7 +170,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: generateSelectors("SubnetManagerFacet")
+                functionSelectors: managerSelectors
             })
         );
 
@@ -132,7 +178,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwInfo),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: generateSelectors("InfoFacet")
+                functionSelectors: infoSelectors
             })
         );
 
@@ -205,34 +251,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
-        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](3);
-
-        diamondCut[0] = (
-                IDiamond.FacetCut({
-                facetAddress: address(depRouter),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: generateSelectors("RouterFacet")
-            })
-        );
-
-        diamondCut[1] = (
-                IDiamond.FacetCut({
-                facetAddress: address(depManager),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: generateSelectors("SubnetManagerFacet")
-            })
-        );
-
-        diamondCut[2] = (
-                IDiamond.FacetCut({
-                facetAddress: address(depInfo),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: generateSelectors("InfoFacet")
-            })
-        );
-
-        dep = new GatewayDiamond(diamondCut, constructorParams);
-
+        dep = createDiamond(constructorParams);
         depInfo = InfoFacet(address(dep));
         depManager = SubnetManagerFacet(address(dep));
         depRouter = RouterFacet(address(dep));
@@ -252,6 +271,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
     function testGatewayDiamond_GatewayDiamond_Deployment_Works_NotRoot(uint64 checkpointPeriod) public {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
+
         address[] memory path = new address[](2);
         path[0] = address(0);
         path[1] = address(1);
@@ -273,26 +293,26 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         diamondCut[0] = (
             IDiamond.FacetCut({
-            facetAddress: address(depRouter),
-            action: IDiamond.FacetCutAction.Add,
-            functionSelectors: generateSelectors("RouterFacet")
-        })
+                facetAddress: address(depRouter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: routerSelectors
+            })
         );
 
         diamondCut[1] = (
             IDiamond.FacetCut({
-            facetAddress: address(depManager),
-            action: IDiamond.FacetCutAction.Add,
-            functionSelectors: generateSelectors("SubnetManagerFacet")
-        })
+                facetAddress: address(depManager),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: managerSelectors
+            })
         );
 
         diamondCut[2] = (
             IDiamond.FacetCut({
-            facetAddress: address(depInfo),
-            action: IDiamond.FacetCutAction.Add,
-            functionSelectors: generateSelectors("InfoFacet")
-        })
+                facetAddress: address(depInfo),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: infoSelectors
+            })
         );
 
         dep = new GatewayDiamond(diamondCut, constructorParams);
@@ -585,7 +605,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
     function testGatewayDiamond_ReleaseRewards_Fails_NotRegisteredSubnet() public {
         vm.expectRevert(NotRegisteredSubnet.selector);
-        vm.deal(address(gw), 1);
+        vm.deal(address(gatewayDiamond), 1);
         gwManager.releaseRewards(1);
     }
 
@@ -598,7 +618,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
         vm.stopPrank();
         vm.prank(subnetAddress);
-        vm.deal(address(gw), 1);
+        vm.deal(address(gatewayDiamond), 1);
         gwManager.releaseRewards(1);
     }
 
@@ -1059,14 +1079,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path[0] = address(1);
         path[1] = address(2);
 
-        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+        GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
-        gw = new Gateway(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
 
         address callerAddress = address(100);
 
@@ -1082,14 +1102,15 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path[0] = address(1);
         path[1] = address(2);
 
-        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+        GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
-        gw = new Gateway(constructorParams);
+
+        gatewayDiamond = createDiamond(constructorParams);
 
         address invalidAccount = address(sa);
 
@@ -1108,14 +1129,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path[0] = makeAddr("root");
         path[1] = makeAddr("subnet_one");
 
-        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+        GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
-        gw = new Gateway(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
 
         vm.roll(0);
         vm.warp(0);
@@ -1133,14 +1154,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path[0] = makeAddr("root");
         path[1] = makeAddr("subnet_one");
 
-        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+        GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
-        gw = new Gateway(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
 
         address callerAddress = address(100);
 
@@ -1160,14 +1181,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path[0] = makeAddr("root");
         path[1] = makeAddr("subnet_one");
 
-        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+        GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
-        gw = new Gateway(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
 
         address callerAddress = address(100);
 
@@ -1830,14 +1851,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path[0] = address(0);
         path[1] = address(1);
 
-        Gateway.ConstructorParams memory constructorParams = Gateway.ConstructorParams({
+        GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
-        gw = new Gateway(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
 
         address validator = vm.addr(100);
 
@@ -2032,7 +2053,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             message: StorableMsg({
             from: IPCAddress({subnetId: gwInfo.getNetworkName(), rawAddress: address(this)}),
             to: IPCAddress({subnetId: gwInfo.getNetworkName(), rawAddress: validators[0]}),
-            value: address(gw).balance,
+            value: address(gatewayDiamond).balance,
             nonce: 0,
             method: METHOD_SEND,
             params: EMPTY_BYTES
