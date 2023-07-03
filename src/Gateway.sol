@@ -118,7 +118,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error NotEnoughBalance();
     error NotInitialized();
     error NotValidator();
-    error NotEnoughSubnetCircSupply();
     error NotEmptySubnetCircSupply();
     error NotRegisteredSubnet();
     error AlreadyRegisteredSubnet();
@@ -400,7 +399,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // if (subnet.circSupply < totalValue) {
         //     revert NotEnoughSubnetCircSupply();
         // }
-        require(subnet.circSupply >= totalValue, "NotEnoughSubnetCircSupply");
+        require(subnet.circSupply >= totalValue, "IPC-6");
 
         subnet.circSupply -= totalValue;
 

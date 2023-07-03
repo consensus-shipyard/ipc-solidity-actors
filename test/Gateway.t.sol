@@ -51,7 +51,6 @@ contract GatewayDeploymentTest is StdInvariant, Test {
     error NotEnoughBalance();
     error NotInitialized();
     error NotValidator();
-    error NotEnoughSubnetCircSupply();
     error NotEmptySubnetCircSupply();
     error NotRegisteredSubnet();
     error AlreadyRegisteredSubnet();
@@ -772,7 +771,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
             proof: new bytes(0)
         });
 
-        vm.expectRevert("NotEnoughSubnetCircSupply");
+        vm.expectRevert("IPC-6");
         gw.commitChildCheck(checkpoint);
     }
 
