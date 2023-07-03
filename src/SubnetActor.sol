@@ -204,7 +204,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         // are submitted directly from epoch 0.
         // In the future we can use the current epoch. This will be really
         // useful once we support the docking of subnets to new parents, etc.
-        _genesisEpoch = _getNextEpoch(block.number, submissionPeriod);
+        _genesisEpoch = 0;
         configurationNumber = 0;
     }
 

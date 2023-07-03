@@ -263,7 +263,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         subnet.id = subnetId;
         subnet.stake = msg.value;
         subnet.status = Status.Active;
-        subnet.genesisEpoch = _getNextEpoch(block.number, topDownCheckPeriod);
+        subnet.genesisEpoch = block.number;
 
         totalSubnets += 1;
     }
