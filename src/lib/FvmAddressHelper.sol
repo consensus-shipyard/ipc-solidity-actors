@@ -27,7 +27,7 @@ library FvmAddressHelper {
         });
     }
 
-    function extractEvmAddress(FvmAddress calldata fvmAddress) internal pure returns (address addr) {
+    function extractEvmAddress(FvmAddress memory fvmAddress) internal pure returns (address addr) {
         require(fvmAddress.addrType == DELEGATED, "IPC-1");
         
         DelegatedAddress memory delegated = abi.decode(fvmAddress.payload, (DelegatedAddress));
