@@ -6,6 +6,8 @@ import "forge-std/console.sol";
 
 import "../src/lib/CrossMsgHelper.sol";
 import "../src/lib/SubnetIDHelper.sol";
+import "../src/lib/FvmAddressHelper.sol";
+
 import "openzeppelin-contracts/utils/Address.sol";
 
 contract CrossMsgHelperTest is Test {
@@ -248,8 +250,8 @@ contract CrossMsgHelperTest is Test {
         return
             CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: address(0)}),
-                    to: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: address(0)}),
+                    from: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: FvmAddressHelper.from(address(0))}),
+                    to: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: FvmAddressHelper.from(address(0))}),
                     value: 0,
                     nonce: nonce,
                     method: METHOD_SEND,
