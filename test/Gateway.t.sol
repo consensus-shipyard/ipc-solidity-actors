@@ -8,6 +8,7 @@ import "../src/SubnetActor.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
 import "../src/lib/CrossMsgHelper.sol";
+import "../src/structs/FvmAddress.sol";
 
 contract GatewayDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -819,6 +820,12 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         fund(BLS_ACCOUNT_ADDREESS, fundAmount);
     }
 
+    function test_GetTopDownMsgs_Works_Empty() public view {
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(sa));
+
+        require(gw.getTopDownMsgs(subnetId, 0).length == 0, "td msgs length not 0");
+    }
+
     function test_Fund_Works_MultipleFundings() public {
         uint8 numberOfFunds = 5;
         uint256 fundAmount = 1 ether;
@@ -836,6 +843,10 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
             fund(funderAddress, fundAmount);
         }
+
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(sa));
+
+        require(gw.getTopDownMsgs(subnetId, 0).length == numberOfFunds, "td msgs length not correct");
     }
 
     function test_Fund_Fails_WrongSubnet() public {
@@ -2228,7 +2239,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
     function _join(address validatorAddress) internal {
         vm.prank(validatorAddress);
         vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT + 1);
-        sa.join{value: MIN_COLLATERAL_AMOUNT}(DEFAULT_NET_ADDR);
+        sa.join{value: MIN_COLLATERAL_AMOUNT}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
 
         require(sa.status() == Status.Active);
     }

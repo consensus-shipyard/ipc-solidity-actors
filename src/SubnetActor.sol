@@ -1,23 +1,28 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import "./Voting.sol";
-import "./enums/ConsensusType.sol";
-import "./enums/Status.sol";
-import "./enums/VoteExecutionStatus.sol";
-import "./structs/Checkpoint.sol";
-import "./structs/Subnet.sol";
-import "./interfaces/ISubnetActor.sol";
-import "./interfaces/IGateway.sol";
-import "./lib/AccountHelper.sol";
-import "./lib/CheckpointHelper.sol";
-import "./lib/CrossMsgHelper.sol";
-import "./lib/SubnetIDHelper.sol";
-import "./lib/ExecutableQueueHelper.sol";
-import "./lib/EpochVoteSubmissionHelper.sol";
-import "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import "openzeppelin-contracts/utils/Address.sol";
+import {Voting} from "./Voting.sol";
+import {ConsensusType} from "./enums/ConsensusType.sol";
+import {Status} from "./enums/Status.sol";
+import {BottomUpCheckpoint, CrossMsg} from "./structs/Checkpoint.sol";
+import {SubnetID} from "./structs/Subnet.sol";
+import {EpochVoteSubmission} from "./structs/EpochVoteSubmission.sol";
+import {ISubnetActor} from "./interfaces/ISubnetActor.sol";
+import {IGateway} from "./interfaces/IGateway.sol";
+import {AccountHelper} from "./lib/AccountHelper.sol";
+import {CrossMsgHelper} from "./lib/CrossMsgHelper.sol";
+import {ExecutableQueue} from "./structs/ExecutableQueue.sol";
+import {ExecutableQueueHelper} from "./lib/ExecutableQueueHelper.sol";
+import {EpochVoteBottomUpSubmission} from "./structs/EpochVoteSubmission.sol";
+import {EpochVoteSubmissionHelper} from "./lib/EpochVoteSubmissionHelper.sol";
+import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
+import {CheckpointHelper} from "./lib/CheckpointHelper.sol";
+import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.sol";
+import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import {FvmAddress} from "./structs/FvmAddress.sol";
+import {FvmAddressHelper} from "./lib/FvmAddressHelper.sol";
 
 /// @title Subnet Actor Contract
 /// @author LimeChain team
@@ -31,6 +36,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
     using CrossMsgHelper for CrossMsg;
+    using FvmAddressHelper for FvmAddress;
 
     /// @notice minimum collateral validators need to stake in order to join the subnet. Values get clamped to this
     uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;
@@ -49,6 +55,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 public immutable minValidators;
+
+    /// @notice Sequence number that uniquely identifies a validator set.
+    uint64 public configurationNumber;
 
     /// @notice Address of the IPC gateway for the subnet
     address public immutable ipcGatewayAddr;
@@ -87,6 +96,9 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     /// @notice validator address to validator net address
     mapping(address => string) public validatorNetAddresses;
 
+    /// @notice validator address to validator worker address
+    mapping(address => FvmAddress) public validatorWorkerAddresses;
+
     /// @notice ID of the parent subnet
     SubnetID private _parentId;
 
@@ -95,6 +107,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     error NotGateway();
     error NotAccount();
+    error WorkerAddressInvalid();
     error CollateralIsZero();
     error CallerHasNoStake();
     error CollateralStillLockedInSubnet();
@@ -110,25 +123,49 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
     error NoRewardToWithdraw();
     error GatewayCannotBeZero();
 
-    modifier onlyGateway() {
+    function _signableOnly() private view {
+        if (!msg.sender.isAccount()) {
+            revert NotAccount();
+        }
+    }
+
+    function _onlyGateway() private view {
         if (msg.sender != ipcGatewayAddr) {
             revert NotGateway();
         }
+    }
+
+    function _notKilled() private view {
+        if (status == Status.Killed) {
+            revert SubnetAlreadyKilled();
+        }
+    }
+
+    modifier onlyGateway() {
+        _onlyGateway();
         _;
     }
 
     modifier signableOnly() {
-        if (!msg.sender.isAccount()) {
-            revert NotAccount();
-        }
+        _signableOnly();
         _;
     }
 
     modifier notKilled() {
-        if (status == Status.Killed) {
-            revert SubnetAlreadyKilled();
-        }
+        _notKilled();
         _;
+    }
+
+    struct ValidatorInfo {
+        address addr;
+        uint256 weight;
+        FvmAddress workerAddr;
+        string netAddresses;
+    }
+
+    struct ValidatorSet {
+        ValidatorInfo[] validators;
+        uint64 configurationNumber;
     }
 
     struct ConstructParams {
@@ -163,7 +200,12 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         status = Status.Instantiated;
         genesis = params.genesis;
         currentSubnetHash = _parentId.createSubnetId(address(this)).toHash();
+        // NOTE: we currently use 0 as the genesisEpoch for subnets so checkpoints
+        // are submitted directly from epoch 0.
+        // In the future we can use the current epoch. This will be really
+        // useful once we support the docking of subnets to new parents, etc.
         _genesisEpoch = _getNextEpoch(block.number, submissionPeriod);
+        configurationNumber = 0;
     }
 
     /* solhint-disable no-empty-blocks */
@@ -173,7 +215,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /// @notice method that allows a validator to join the subnet
     /// @param netAddr - the network address of the validator
-    function join(string calldata netAddr) external payable signableOnly notKilled {
+    function join(string calldata netAddr, FvmAddress calldata workerAddr) external payable signableOnly notKilled {
         uint256 validatorStake = msg.value;
         address validator = msg.sender;
         if (validatorStake == 0) {
@@ -188,6 +230,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
                 // slither-disable-next-line unused-return
                 _validators.add(validator);
                 validatorNetAddresses[validator] = netAddr;
+                validatorWorkerAddresses[validator] = workerAddr;
             }
         }
 
@@ -345,6 +388,24 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         return result;
     }
 
+    /// @notice get the full details of the validators, not just their addresses.
+    function getValidatorSet() external view returns (ValidatorSet memory) {
+        uint256 length = _validators.length();
+
+        ValidatorInfo[] memory details = new ValidatorInfo[](length);
+
+        for (uint256 i = 0; i < length; i++) {
+            details[i] = ValidatorInfo({
+                addr: _validators.at(i),
+                weight: stake[_validators.at(i)],
+                workerAddr: validatorWorkerAddresses[_validators.at(i)],
+                netAddresses: validatorNetAddresses[_validators.at(i)]
+            });
+        }
+
+        return ValidatorSet({validators: details, configurationNumber: configurationNumber});
+    }
+
     /// @notice whether a validator has voted for a checkpoint submission during an epoch
     /// @param epoch - the epoch to check
     /// @param submitter - the validator to check
@@ -352,6 +413,26 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         EpochVoteBottomUpSubmission storage voteSubmission = _epochVoteSubmissions[epoch];
 
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
+    }
+
+    /// @notice returns the committed bottom-up checkpoint at specific epoch
+    /// @param epoch - the epoch to check
+    /// @return exists - whether the checkpoint exists
+    /// @return checkpoint - the checkpoint struct
+    function bottomUpCheckpointAtEpoch(
+        uint64 epoch
+    ) public view returns (bool exists, BottomUpCheckpoint memory checkpoint) {
+        checkpoint = committedCheckpoints[epoch];
+        exists = !checkpoint.source.isEmpty();
+    }
+
+    /// @notice returns the historical committed bottom-up checkpoint hash
+    /// @param epoch - the epoch to check
+    /// @return exists - whether the checkpoint exists
+    /// @return hash - the hash of the checkpoint
+    function bottomUpCheckpointHashAtEpoch(uint64 epoch) external view returns (bool, bytes32) {
+        (bool exists, BottomUpCheckpoint memory checkpoint) = bottomUpCheckpointAtEpoch(epoch);
+        return (exists, checkpoint.toHash());
     }
 
     /// @notice submits a vote for a checkpoint
@@ -381,24 +462,15 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
         }
     }
 
-    /// @notice method that returns the most voted submission for a checkpoint
-    function _getMostVotedSubmission(
-        EpochVoteBottomUpSubmission storage voteSubmission
-    ) internal view returns (BottomUpCheckpoint storage) {
-        return voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
-    }
-
     /// @notice method that commits a checkpoint after reaching majority
     /// @param voteSubmission - the last vote submission that reached majority for commit
     function _commitCheckpoint(EpochVoteBottomUpSubmission storage voteSubmission) internal {
-        BottomUpCheckpoint storage checkpoint = _getMostVotedSubmission(voteSubmission);
-
+        BottomUpCheckpoint storage checkpoint = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
         /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
 
         if (prevExecutedCheckpointHash != checkpoint.prevHash) {
             voteSubmission.vote.reset();
             executableQueue.remove(checkpoint.epoch);
-
             return;
         }
 

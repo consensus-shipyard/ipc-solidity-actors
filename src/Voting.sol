@@ -1,9 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import "./enums/VoteExecutionStatus.sol";
-import "./lib/ExecutableQueueHelper.sol";
-import "./lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueue} from "./structs/ExecutableQueue.sol";
+import {EpochVoteSubmission} from "./structs/EpochVoteSubmission.sol";
+import {VoteExecutionStatus} from "./enums/VoteExecutionStatus.sol";
+import {ExecutableQueueHelper} from "./lib/ExecutableQueueHelper.sol";
+import {EpochVoteSubmissionHelper} from "./lib/EpochVoteSubmissionHelper.sol";
 
 abstract contract Voting {
     using ExecutableQueueHelper for ExecutableQueue;
@@ -34,7 +36,7 @@ abstract contract Voting {
     error InvalidMajorityPercentage();
     error ValidatorAlreadyVoted();
 
-    modifier validEpochOnly(uint64 epoch) {
+    function _validEpochOnly(uint64 epoch) private view {
         if (epoch <= lastVotingExecutedEpoch) {
             revert EpochAlreadyExecuted();
         }
@@ -44,6 +46,10 @@ abstract contract Voting {
         if ((epoch - _genesisEpoch) % submissionPeriod != 0) {
             revert EpochNotVotable();
         }
+    }
+
+    modifier validEpochOnly(uint64 epoch) {
+        _validEpochOnly(epoch);
         _;
     }
 
