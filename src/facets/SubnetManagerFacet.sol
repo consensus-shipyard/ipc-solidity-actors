@@ -160,14 +160,11 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release() external payable signableOnly hasFee {
-        console.log(1);
-        console.log(s.networkName.root);
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(
             s.networkName,
             msg.sender,
             msg.value - s.crossMsgFee
         );
-        console.log(1);
 
         LibGateway._commitBottomUpMsg(crossMsg);
     }
