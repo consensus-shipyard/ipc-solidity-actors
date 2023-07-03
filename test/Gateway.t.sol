@@ -867,7 +867,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gw.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath));
+        gw.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
     }
 
     function test_Fund_Fails_InvalidAccount() public {
@@ -884,7 +884,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotSignableAccount.selector);
 
-        gw.fund{value: fundAmount}(subnetId);
+        gw.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function test_Fund_Fails_NotRegistered() public {
@@ -903,7 +903,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
 
         vm.expectRevert(NotRegisteredSubnet.selector);
-        gw.fund{value: fundAmount}(wrongSubnetId);
+        gw.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function test_Fund_Fails_InsufficientAmount() public {
@@ -919,7 +919,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotEnoughFee.selector);
 
-        gw.fund{value: 0}(subnetId);
+        gw.fund{value: 0}(subnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function test_Release_Fails_InsufficientAmount() public {
@@ -942,7 +942,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         vm.deal(callerAddress, 1 ether);
         vm.expectRevert(NotEnoughFee.selector);
 
-        gw.release{value: 0}();
+        gw.release{value: 0}(FvmAddressHelper.from(msg.sender));
     }
 
     function test_Release_Fails_InvalidAccount() public {
@@ -965,7 +965,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         vm.deal(invalidAccount, 1 ether);
         vm.expectRevert(NotSignableAccount.selector);
 
-        gw.release{value: 1 ether}();
+        gw.release{value: 1 ether}(FvmAddressHelper.from(msg.sender));
     }
 
     function test_Release_Works_BLSAccount(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -2252,7 +2252,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         uint256 expectedNonce = gw.bottomUpNonce() + 1;
         uint256 expectedCheckpointDataFee = feeBefore + crossMsgFee;
 
-        gw.release{value: releaseAmount}();
+        gw.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender));
 
         (, , uint256 fee, , ) = gw.bottomUpCheckpoints(epoch);
         console.log("fee %d", fee);
