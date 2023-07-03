@@ -5,6 +5,7 @@ import "forge-std/Test.sol";
 
 import "../src/lib/StorableMsgHelper.sol";
 import "../src/lib/FvmAddressHelper.sol";
+import {IPCAddress} from "../src/structs/Subnet.sol";
 
 contract StorableMsgHelperTest is Test {
     using StorableMsgHelper for StorableMsg;
