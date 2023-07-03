@@ -772,7 +772,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
             proof: new bytes(0)
         });
 
-        vm.expectRevert(NotEnoughSubnetCircSupply.selector);
+        vm.expectRevert("NotEnoughSubnetCircSupply");
         gw.commitChildCheck(checkpoint);
     }
 
