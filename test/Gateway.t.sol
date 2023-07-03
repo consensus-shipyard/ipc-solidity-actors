@@ -2217,23 +2217,25 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(sa));
 
-        require(gw.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLenght);
+        require(gw.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLenght, "td nonce not same");
 
-        require(nonce == expectedNonce);
-        require(circSupply == expectedCircSupply);
+        require(nonce == expectedNonce, "nonce not equal");
+        require(circSupply == expectedCircSupply, "circ supply not equal");
 
         for (uint256 msgIndex = 0; msgIndex < expectedTopDownMsgsLenght; msgIndex++) {
             CrossMsg memory topDownMsg = gw.getSubnetTopDownMsg(subnetId, msgIndex);
 
-            require(topDownMsg.message.nonce == msgIndex);
-            require(topDownMsg.message.value == fundAmountWithSubtractedFee);
+            require(topDownMsg.message.nonce == msgIndex, "msg Index not euqla");
+            require(topDownMsg.message.value == fundAmountWithSubtractedFee, "value not equal");
             require(
                 keccak256(abi.encode(topDownMsg.message.to)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId, rawAddress: FvmAddressHelper.from(funderAddress)})))
+                    keccak256(abi.encode(IPCAddress({subnetId: subnetId, rawAddress: FvmAddressHelper.from(funderAddress)}))),
+                "td to not match"    
             );
             require(
                 keccak256(abi.encode(topDownMsg.message.from)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: FvmAddressHelper.from(funderAddress)})))
+                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: FvmAddressHelper.from(funderAddress)}))),
+                "td from not match"
             );
         }
     }
