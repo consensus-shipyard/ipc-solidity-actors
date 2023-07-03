@@ -65,7 +65,10 @@ library CrossMsgHelper {
     }
 
     function isEmpty(CrossMsg memory crossMsg) internal pure returns (bool) {
-        return crossMsg.message.to.subnetId.root == 0 && crossMsg.message.from.subnetId.root == 0;
+        return 
+            crossMsg.message.nonce == 0 && 
+            crossMsg.message.to.subnetId.root == 0 && 
+            crossMsg.message.from.subnetId.root == 0;
     }
 
     function execute(CrossMsg calldata crossMsg) public returns (bytes memory) {
