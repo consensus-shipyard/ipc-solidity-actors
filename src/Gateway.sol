@@ -31,7 +31,7 @@ import {Address} from "openzeppelin-contracts/utils/Address.sol";
 contract Gateway is IGateway, ReentrancyGuard, Voting {
     using FilAddress for address;
     using FilAddress for address payable;
-    using FvmAddressHelper for FvmAddressHelper;
+    using FvmAddressHelper for FvmAddress;
     using AccountHelper for address;
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
