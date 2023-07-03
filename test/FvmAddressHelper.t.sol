@@ -12,7 +12,7 @@ contract FvmAddressHelperTest is Test {
 
     function test_works() public view {
         address addr = 0xeC2804Dd9B992C10396b5Af176f06923d984D90e;
-        FvmAddress fvmAddr = FvmAddressHelper.from(addr);
+        FvmAddress memory fvmAddr = FvmAddressHelper.from(addr);
         
         address extracted = fvmAddr.extractEvmAddress();
         require(extracted == addr, "addresses not equal");
