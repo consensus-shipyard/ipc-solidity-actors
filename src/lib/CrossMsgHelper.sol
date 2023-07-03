@@ -26,7 +26,7 @@ library CrossMsgHelper {
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({subnetId: subnet, rawAddress: FvmAddressHelper.from(BURNT_FUNDS_ACTOR)}),
-                    to: to,
+                    to: IPCAddress({subnetId: subnet.getParentSubnet(), rawAddress: to}),
                     value: value,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -46,7 +46,7 @@ library CrossMsgHelper {
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({subnetId: subnet.getParentSubnet(), rawAddress: FvmAddressHelper.from(signer)}),
-                    to: to,
+                    to: IPCAddress({subnetId: subnet, rawAddress: to}),
                     value: value,
                     nonce: 0,
                     method: METHOD_SEND,
