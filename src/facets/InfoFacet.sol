@@ -25,7 +25,6 @@ import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.s
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
-import "hardhat/console.sol";
 
 contract InfoFacet {
     AppStorage internal s;

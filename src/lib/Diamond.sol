@@ -3,7 +3,6 @@ pragma solidity ^0.8.0;
 
 import "../interfaces/IDiamondCut.sol";
 import "../interfaces/IDiamond.sol";
-import "hardhat/console.sol";
 
 error NotOwner();
 error NoBytecodeAtAddress(address _contractAddress, string _message);
