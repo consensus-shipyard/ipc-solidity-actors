@@ -721,7 +721,7 @@ contract SubnetActorTest is Test {
 
         _assertVote(validator, checkpoint);
 
-        vm.expectRevert(ValidatorAlreadyVoted.selector);
+        vm.expectRevert("IPC-5");
         vm.prank(validator);
 
         sa.submitCheckpoint(checkpoint);

@@ -1690,7 +1690,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw.submitTopDownCheckpoint(checkpoint);
 
         vm.prank(validators[0]);
-        vm.expectRevert(ValidatorAlreadyVoted.selector);
+        vm.expectRevert("IPC-5");
 
         gw.submitTopDownCheckpoint(checkpoint);
     }
@@ -1720,7 +1720,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.prank(validator);
         vm.deal(validator, 1);
-        vm.expectRevert(NotInitialized.selector);
+        vm.expectRevert("IPC-2");
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
@@ -1733,7 +1733,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         address nonValidator = vm.addr(400);
         vm.prank(nonValidator);
         vm.deal(nonValidator, 1);
-        vm.expectRevert(NotValidator.selector);
+        vm.expectRevert("IPC-3");
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
@@ -1770,7 +1770,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         });
 
         vm.prank(validators[0]);
-        vm.expectRevert(MessagesNotSorted.selector);
+        vm.expectRevert("IPC-4");
 
         gw.submitTopDownCheckpoint(checkpoint);
     }
