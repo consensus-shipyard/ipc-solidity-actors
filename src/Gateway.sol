@@ -424,7 +424,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release(FvmAddress calldata to) external payable signableOnly hasFee {
-        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(_networkName, msg.sender, to, msg.value - crossMsgFee);
+        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(_networkName, to, msg.value - crossMsgFee);
 
         _commitBottomUpMsg(crossMsg);
     }
@@ -527,9 +527,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.message.value != msg.value) {
             revert NotEnoughFunds();
         }
-        if (crossMsg.message.to.rawAddress == address(0)) {
-            revert InvalidCrossMsgDestinationAddress();
-        }
+
+        // TODO: disable the below for now, as we are using Fvm Address.
+        // if (crossMsg.message.to.rawAddress == address(0)) {
+        //     revert InvalidCrossMsgDestinationAddress();
+        // }
 
         // We disregard the "to" of the message that will be verified in the _commitCrossMessage().
         // The caller is the one set as the "from" of the message
@@ -541,9 +543,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // They can be equal, we can propagate the real sender address only or both.
         // We are going to use the simplest implementation for now and define the appropriate interpretation later
         // based on the business requirements.
-        if (crossMsg.message.from.rawAddress != msg.sender) {
-            revert InvalidCrossMsgFromRawAddress();
-        }
+
+        // TODO: disable the below for now, as we are using Fvm Address.
+        // if (crossMsg.message.from.rawAddress != msg.sender) {
+        //     revert InvalidCrossMsgFromRawAddress();
+        // }
 
         // commit cross-message for propagation
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
@@ -797,9 +801,11 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param forwarder - the subnet that handles the cross message
     /// @param crossMsg - the cross message to be executed
     function _applyMsg(SubnetID memory forwarder, CrossMsg memory crossMsg) internal {
-        if (crossMsg.message.to.rawAddress == address(0)) {
-            revert InvalidCrossMsgDestinationAddress();
-        }
+        // TODO: disable the below for now, as we are using Fvm Address.
+        // if (crossMsg.message.to.rawAddress == address(0)) {
+        //     revert InvalidCrossMsgDestinationAddress();
+        // }
+
         if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDestinationSubnet();
         }
@@ -846,7 +852,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         bytes32 cid = crossMsg.toHash();
 
         postbox[cid] = crossMsg;
-        postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
+        postboxHasOwner[cid][crossMsg.message.from.rawAddress.extractEvmAddress()] = true;
     }
 
     /// @notice applies a cross-net messages coming from some other subnet.
