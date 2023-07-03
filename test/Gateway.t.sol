@@ -1085,7 +1085,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: FvmAddressHelper.from(caller))
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
@@ -1113,7 +1113,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: FvmAddressHelper.from(caller))
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
                     value: CROSS_MSG_FEE + 1,
