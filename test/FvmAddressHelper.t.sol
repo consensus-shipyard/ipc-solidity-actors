@@ -18,21 +18,6 @@ contract FvmAddressHelperTest is Test {
         require(extracted == addr, "addresses not equal");
     }
 
-    function test_decode_works() public pure {
-        address addr = 0x1A79385eAd0e873FE0C441C034636D3Edf7014cC;
-        FvmAddress memory fAddr = FvmAddressHelper.from(addr);
-        require(false, iToHex(fAddr.payload));
-
-        bytes memory payload = bytes("0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000141a79385ead0e873fe0c441c034636d3edf7014cc000000000000000000000000");
-        FvmAddress memory fvmAddr = FvmAddress({
-            addrType: 4,
-            payload: payload
-        });
-        
-        address extracted = fvmAddr.extractEvmAddress();
-        require(extracted == addr, "addresses not equal");
-    }
-
     function iToHex(bytes memory buffer) internal pure returns (string memory) {
 
         // Fixed buffer size for hexadecimal convertion

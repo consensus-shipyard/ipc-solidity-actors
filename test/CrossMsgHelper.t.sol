@@ -60,7 +60,7 @@ contract CrossMsgHelperTest is Test {
 
         vm.prank(sender);
 
-        CrossMsg memory releaseMsg = CrossMsgHelper.createReleaseMsg(subnetId, FvmAddressHelper.from(sender), releaseAmount);
+        CrossMsg memory releaseMsg = CrossMsgHelper.createReleaseMsg(subnetId, sender, FvmAddressHelper.from(sender), releaseAmount);
 
         address[] memory parentRoute = new address[](1);
         parentRoute[0] = route[0];
@@ -82,7 +82,7 @@ contract CrossMsgHelperTest is Test {
 
         vm.expectRevert(NoParentForSubnet.selector);
 
-        CrossMsgHelper.createReleaseMsg(subnetId, FvmAddressHelper.from(sender), releaseAmount);
+        CrossMsgHelper.createReleaseMsg(subnetId, sender, FvmAddressHelper.from(sender), releaseAmount);
     }
 
     function test_CreateFundMsg_Works_Root(uint256 fundAmount, address sender) public {

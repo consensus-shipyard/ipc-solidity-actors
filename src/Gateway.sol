@@ -396,9 +396,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         totalValue += commit.fee + checkpoint.fee; // add fee that is already in checkpoint as well. For example from release message interacting with the same checkpoint
 
-        // if (subnet.circSupply < totalValue) {
-        //     revert NotEnoughSubnetCircSupply();
-        // }
         require(subnet.circSupply >= totalValue, "IPC-6");
 
         subnet.circSupply -= totalValue;
@@ -423,7 +420,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release(FvmAddress calldata to) external payable signableOnly hasFee {
-        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(_networkName, to, msg.value - crossMsgFee);
+        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(_networkName, msg.sender, to, msg.value - crossMsgFee);
 
         _commitBottomUpMsg(crossMsg);
     }

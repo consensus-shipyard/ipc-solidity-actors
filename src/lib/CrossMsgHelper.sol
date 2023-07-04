@@ -19,13 +19,14 @@ library CrossMsgHelper {
 
     function createReleaseMsg(
         SubnetID calldata subnet,
+        address signer,
         FvmAddress calldata to,
         uint256 value
     ) public pure returns (CrossMsg memory) {
         return
             CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: subnet, rawAddress: FvmAddressHelper.from(BURNT_FUNDS_ACTOR)}),
+                    from: IPCAddress({subnetId: subnet, rawAddress: FvmAddressHelper.from(signer)}),
                     to: IPCAddress({subnetId: subnet.getParentSubnet(), rawAddress: to}),
                     value: value,
                     nonce: 0,
