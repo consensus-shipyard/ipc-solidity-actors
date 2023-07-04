@@ -2,44 +2,14 @@
 pragma solidity 0.8.19;
 
 import {AppStorage} from "../lib/AppStorage.sol";
-import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
-import {Voting} from "../Voting.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
-import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
+import {CrossMsg, BottomUpCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
 import {LibGateway} from "../lib/Gateway.sol";
 import {Status} from "../enums/Status.sol";
-import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
-import {IGateway} from "../interfaces/IGateway.sol";
-import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
-import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
-import {AccountHelper} from "../lib/AccountHelper.sol";
-import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
-import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
-import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
-import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 contract InfoFacet {
     // solhint-disable-next-line private-vars-leading-underscore
     AppStorage internal s;
-
-    using FilAddress for address;
-    using FilAddress for address payable;
-    using AccountHelper for address;
-    using SubnetIDHelper for SubnetID;
-    using CrossMsgHelper for CrossMsg;
-    using CheckpointHelper for BottomUpCheckpoint;
-    using CheckpointHelper for TopDownCheckpoint;
-    using StorableMsgHelper for StorableMsg;
-    using ExecutableQueueHelper for ExecutableQueue;
-    using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
 
     function crossMsgFee() external view returns (uint256) {
         return s.crossMsgFee;
@@ -108,7 +78,7 @@ contract InfoFacet {
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
     function getSubnet(SubnetID calldata subnetId) external view returns (bool, Subnet memory) {
-        return LibGateway._getSubnet(subnetId);
+        return LibGateway.getSubnet(subnetId);
     }
 
     function subnets(
@@ -139,7 +109,7 @@ contract InfoFacet {
 
     /// @notice get number of top-down messages for the given subnet
     function getSubnetTopDownMsgsLength(SubnetID memory subnetId) external view returns (uint256) {
-        (, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
+        (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
 
         return subnet.topDownMsgs.length;
     }
@@ -166,7 +136,7 @@ contract InfoFacet {
 
     /// @notice get the top-down message at the given index for the given subnet
     function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
-        (, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
+        (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
         return subnet.topDownMsgs[index];
     }
 

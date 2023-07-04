@@ -86,7 +86,7 @@ library LibGateway {
         returns (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint)
     {
         AppStorage storage s = LibAppStorage.appStorage();
-        epoch = _getNextEpoch(block.number, s.bottomUpCheckPeriod);
+        epoch = getNextEpoch(block.number, s.bottomUpCheckPeriod);
         checkpoint = s.bottomUpCheckpoints[epoch];
         exists = !checkpoint.source.isEmpty();
     }
@@ -97,7 +97,7 @@ library LibGateway {
         AppStorage storage s = LibAppStorage.appStorage();
         SubnetID memory subnetId = crossMessage.message.to.subnetId.down(s.networkName);
 
-        (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
+        (bool registered, Subnet storage subnet) = getSubnet(subnetId);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -113,7 +113,7 @@ library LibGateway {
     /// @param crossMessage - the cross message to be committed
     function commitBottomUpMsg(CrossMsg memory crossMessage) internal {
         AppStorage storage s = LibAppStorage.appStorage();
-        (, , BottomUpCheckpoint storage checkpoint) = _getCurrentBottomUpCheckpoint();
+        (, , BottomUpCheckpoint storage checkpoint) = getCurrentBottomUpCheckpoint();
 
         crossMessage.message.nonce = s.bottomUpNonce;
 
@@ -144,7 +144,7 @@ library LibGateway {
         }
         SubnetID memory subnetId = s.networkName.createSubnetId(actor);
 
-        return _getSubnet(subnetId);
+        return getSubnet(subnetId);
     }
 
     /// @notice returns the subnet with the given id
@@ -171,7 +171,6 @@ library LibGateway {
     }
 
     /// @notice method that returns whether epoch is valid or not
-    /// @return epoch - the target epoch
     function validEpochOnly(uint64 epoch) public view {
         AppStorage storage s = LibAppStorage.appStorage();
         if (epoch <= s.lastVotingExecutedEpoch) {
@@ -237,7 +236,7 @@ library LibGateway {
     function markSubmissionExecuted(uint64 epoch) internal {
         AppStorage storage s = LibAppStorage.appStorage();
         // epoch not the next executable epoch
-        if (!_isNextExecutableEpoch(epoch)) {
+        if (!isNextExecutableEpoch(epoch)) {
             return;
         }
 
@@ -269,7 +268,7 @@ library LibGateway {
     function getNextExecutableEpoch() internal view returns (uint64 nextEpoch, bool isExecutable) {
         AppStorage storage s = LibAppStorage.appStorage();
         nextEpoch = s.executableQueue.first;
-        isExecutable = _isNextExecutableEpoch(nextEpoch);
+        isExecutable = isNextExecutableEpoch(nextEpoch);
     }
 
     /// @notice method that submits a vote for a given epoch
@@ -305,10 +304,10 @@ library LibGateway {
             vote.mostVotedSubmission = submissionHash;
         }
 
-        VoteExecutionStatus status = _deriveExecutionStatus(vote, totalWeight);
+        VoteExecutionStatus status = deriveExecutionStatus(vote, totalWeight);
 
         if (status == VoteExecutionStatus.ConsensusReached) {
-            if (_isNextExecutableEpoch(epoch)) {
+            if (isNextExecutableEpoch(epoch)) {
                 shouldExecuteVote = true;
             } else {
                 // there are pending epochs to be executed, just store the submission and skip execution

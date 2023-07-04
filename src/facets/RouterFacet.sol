@@ -1,7 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {AppStorage} from "../lib/AppStorage.sol";
+// solhint-disable-next-line no-global-import
+import "../lib/AppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
 import {Voting} from "../Voting.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
@@ -47,7 +48,7 @@ contract RouterFacet is Modifiers {
             revert InvalidCheckpointSource();
         }
 
-        (, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
+        (, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
         if (subnet.status != Status.Active) {
             revert SubnetNotActive();
         }
@@ -62,7 +63,7 @@ contract RouterFacet is Modifiers {
 
         // get checkpoint for the current template being populated
         (bool checkpointExists, uint64 nextCheckEpoch, BottomUpCheckpoint storage checkpoint) = LibGateway
-            ._getCurrentBottomUpCheckpoint();
+            .getCurrentBottomUpCheckpoint();
 
         // create a checkpoint template if it doesn't exists
         if (!checkpointExists) {
@@ -93,7 +94,7 @@ contract RouterFacet is Modifiers {
 
         _applyMessages(commit.source, commit.crossMsgs);
 
-        LibGateway._distributeRewards(msg.sender, commit.fee);
+        LibGateway.distributeRewards(msg.sender, commit.fee);
     }
 
     /// @notice allows a validator to submit a batch of messages in a top-down commitment
@@ -127,7 +128,7 @@ contract RouterFacet is Modifiers {
 
         // no messages executed in the current submission, let's get the next executable epoch from the queue to see if it can be executed already
         if (topDownMsgs.length == 0) {
-            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibGateway._getNextExecutableEpoch();
+            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibGateway.getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
                 EpochVoteTopDownSubmission storage nextVoteSubmission = s.epochVoteSubmissions[nextExecutableEpoch];
@@ -262,7 +263,7 @@ contract RouterFacet is Modifiers {
             voteSubmission.vote.mostVotedSubmission
         ];
 
-        LibGateway._markSubmissionExecuted(mostVotedSubmission.epoch);
+        LibGateway.markSubmissionExecuted(mostVotedSubmission.epoch);
 
         return mostVotedSubmission.topDownMsgs;
     }
@@ -280,7 +281,7 @@ contract RouterFacet is Modifiers {
     ) internal returns (bool shouldExecuteVote) {
         bytes32 submissionHash = submission.toHash();
 
-        shouldExecuteVote = LibGateway._submitVote(
+        shouldExecuteVote = LibGateway.submitVote(
             voteSubmission.vote,
             submissionHash,
             submitterAddress,
@@ -324,7 +325,7 @@ contract RouterFacet is Modifiers {
         }
 
         if (shouldCommitBottomUp) {
-            LibGateway._commitBottomUpMsg(crossMessage);
+            LibGateway.commitBottomUpMsg(crossMessage);
 
             return (shouldBurn = crossMessage.message.value > 0, shouldDistributeRewards = false);
         }
@@ -333,7 +334,7 @@ contract RouterFacet is Modifiers {
             ++s.appliedTopDownNonce;
         }
 
-        LibGateway._commitTopDownMsg(crossMessage);
+        LibGateway.commitTopDownMsg(crossMessage);
 
         return (shouldBurn = false, shouldDistributeRewards = true);
     }
@@ -355,12 +356,12 @@ contract RouterFacet is Modifiers {
         }
 
         if (shouldDistributeRewards) {
-            LibGateway._distributeRewards(toSubnetId.getActor(), s.crossMsgFee);
+            LibGateway.distributeRewards(toSubnetId.getActor(), s.crossMsgFee);
         }
     }
 
     function getTopDownMsgs(SubnetID calldata subnetId) external view returns (CrossMsg[] memory) {
-        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -394,7 +395,7 @@ contract RouterFacet is Modifiers {
 
             if (applyType == IPCMsgType.BottomUp) {
                 if (!forwarder.isEmpty()) {
-                    (bool registered, Subnet storage subnet) = LibGateway._getSubnet(forwarder);
+                    (bool registered, Subnet storage subnet) = LibGateway.getSubnet(forwarder);
                     if (!registered) {
                         revert NotRegisteredSubnet();
                     }

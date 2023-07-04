@@ -1,6 +1,7 @@
 pragma solidity 0.8.19;
 
-import {AppStorage} from "../lib/AppStorage.sol";
+// solhint-disable-next-line no-global-import
+import "../lib/AppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
 import {Voting} from "../Voting.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
@@ -56,7 +57,7 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
 
         SubnetID memory subnetId = s.networkName.createSubnetId(msg.sender);
 
-        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(subnetId);
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
 
         if (registered) {
             revert AlreadyRegisteredSubnet();
@@ -75,7 +76,7 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
             revert NotEnoughFunds();
         }
 
-        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -96,7 +97,7 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
             revert CannotReleaseZero();
         }
 
-        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -119,7 +120,7 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
             revert CannotReleaseZero();
         }
 
-        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
         if (!registered) {
             revert NotRegisteredSubnet();
         }
@@ -129,7 +130,7 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
 
     /// @notice kill an existing subnet. It's balance must be empty
     function kill() external {
-        (bool registered, Subnet storage subnet) = LibGateway._getSubnet(msg.sender);
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
 
         if (!registered) {
             revert NotRegisteredSubnet();
@@ -153,9 +154,9 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, msg.value - s.crossMsgFee);
 
         // commit top-down message.
-        LibGateway._commitTopDownMsg(crossMsg);
+        LibGateway.commitTopDownMsg(crossMsg);
 
-        LibGateway._distributeRewards(subnetId.getActor(), s.crossMsgFee);
+        LibGateway.distributeRewards(subnetId.getActor(), s.crossMsgFee);
     }
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
@@ -166,7 +167,7 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
             msg.value - s.crossMsgFee
         );
 
-        LibGateway._commitBottomUpMsg(crossMsg);
+        LibGateway.commitBottomUpMsg(crossMsg);
     }
 
     /// @notice set up the top-down validators and their voting power
