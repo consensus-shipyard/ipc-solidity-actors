@@ -1,6 +1,6 @@
 pragma solidity 0.8.19;
 
-import {AppStorage, Modifiers} from "../lib/AppStorage.sol";
+import {Modifiers} from "../lib/AppStorage.sol";
 import {CrossMsg} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
 import {LibGateway} from "../lib/Gateway.sol";
