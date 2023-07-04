@@ -27,42 +27,6 @@ import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
-error EmptySubnet();
-error NotSystemActor();
-error NotSignableAccount();
-error NotEnoughFee();
-error NotEnoughFunds();
-error NotEnoughFundsToRelease();
-error CannotReleaseZero();
-error NotEnoughBalance();
-error NotInitialized();
-error NotValidator();
-error NotEnoughSubnetCircSupply();
-error NotEmptySubnetCircSupply();
-error NotRegisteredSubnet();
-error AlreadyRegisteredSubnet();
-error AlreadyInitialized();
-error InconsistentPrevCheckpoint();
-error InvalidActorAddress();
-error InvalidPostboxOwner();
-error InvalidCheckpointEpoch();
-error InvalidCheckpointSource();
-error InvalidCrossMsgNonce();
-error InvalidCrossMsgDestinationSubnet();
-error InvalidCrossMsgDestinationAddress();
-error InvalidCrossMsgsSortOrder();
-error InvalidCrossMsgFromSubnetId();
-error InvalidCrossMsgFromRawAddress();
-error CannotSendCrossMsgToItself();
-error SubnetNotActive();
-error PostboxNotExist();
-error MessagesNotSorted();
-error ValidatorsAndWeightsLengthMismatch();
-error ValidatorWeightIsZero();
-error NotEnoughFundsForMembership();
-error EpochAlreadyExecuted();
-error EpochNotVotable();
-
 library LibGateway {
     using FilAddress for address;
     using FilAddress for address payable;
@@ -75,6 +39,12 @@ library LibGateway {
     using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
+
+    error NotRegisteredSubnet();
+    error InvalidActorAddress();
+    error EpochAlreadyExecuted();
+    error EpochNotVotable();
+    error ValidatorAlreadyVoted();
 
     /// @notice returns the current bottom-up checkpoint
     /// @return exists - whether the checkpoint exists
@@ -165,13 +135,13 @@ library LibGateway {
 
     /// @notice method that returns the genesis epoch
     /// @return epoch - the genesis epoch
-    function getGenesisEpoch() public view returns (uint64) {
+    function getGenesisEpoch() internal view returns (uint64) {
         AppStorage storage s = LibAppStorage.appStorage();
         return s.genesisEpoch;
     }
 
     /// @notice method that returns whether epoch is valid or not
-    function validEpochOnly(uint64 epoch) public view {
+    function validEpochOnly(uint64 epoch) internal view {
         AppStorage storage s = LibAppStorage.appStorage();
         if (epoch <= s.lastVotingExecutedEpoch) {
             revert EpochAlreadyExecuted();
@@ -182,12 +152,6 @@ library LibGateway {
             }
         }
     }
-
-    /// @notice minimum checkpoint period. Values get clamped to this
-    uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
-
-    error InvalidMajorityPercentage();
-    error ValidatorAlreadyVoted();
 
     /// @notice returns the current checkpoint execution status based on the current vote
     /// @param vote - the vote submission data
