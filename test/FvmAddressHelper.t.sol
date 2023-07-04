@@ -17,4 +17,15 @@ contract FvmAddressHelperTest is Test {
         address extracted = fvmAddr.extractEvmAddress();
         require(extracted == addr, "addresses not equal");
     }
+
+    function test_decode_works() public pure {
+        address addr = 0x1A79385eAd0e873FE0C441C034636D3Edf7014cC;
+        FvmAddress memory fvmAddr = FvmAddress({
+            addrType: 4,
+            payload: 0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000141a79385ead0e873fe0c441c034636d3edf7014cc000000000000000000000000
+        });
+        
+        address extracted = fvmAddr.extractEvmAddress();
+        require(extracted == addr, "addresses not equal");
+    }
 }
