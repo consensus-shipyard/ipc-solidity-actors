@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import "../lib/AppStorage.sol";
+import {AppStorage} from "../lib/AppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
 import {Voting} from "../Voting.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
@@ -27,6 +27,7 @@ import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 contract InfoFacet {
+    // solhint-disable-next-line private-vars-leading-underscore
     AppStorage internal s;
 
     using FilAddress for address;

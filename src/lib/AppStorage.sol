@@ -131,6 +131,7 @@ library LibAppStorage {
 }
 
 contract Modifiers {
+    // solhint-disable-next-line private-vars-leading-underscore
     AppStorage internal s;
 
     using FilAddress for address;

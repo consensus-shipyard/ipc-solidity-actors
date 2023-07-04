@@ -11,7 +11,9 @@ error FunctionNotFound(bytes4 _functionSelector);
 error InvalidMajorityPercentage();
 
 contract GatewayDiamond {
+    // solhint-disable-next-line private-vars-leading-underscore
     AppStorage internal s;
+
     using SubnetIDHelper for SubnetID;
 
     // uint8 constant MIN_CHECKPOINT_PERIOD = 10;

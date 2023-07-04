@@ -1,6 +1,6 @@
 pragma solidity 0.8.19;
 
-import "../lib/AppStorage.sol";
+import {AppStorage} from "../lib/AppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
 import {Voting} from "../Voting.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";

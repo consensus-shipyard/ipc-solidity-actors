@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity 0.8.19;
 
-import "../interfaces/IDiamondCut.sol";
-import "../interfaces/IDiamond.sol";
+import {FacetCutAction} from "../interfaces/IDiamondCut.sol";
+import {FacetCut} from "../interfaces/IDiamond.sol";
 
 error NotOwner();
 error NoBytecodeAtAddress(address _contractAddress, string _message);
@@ -13,7 +13,8 @@ error CannotAddSelectorsToZeroAddress(bytes4[] _selectors);
 error InitializationFunctionReverted(address _initializationContractAddress, bytes _calldata);
 
 library LibDiamond {
-    bytes32 constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
+    // solhint-disable-next-line private-vars-leading-underscore
+    bytes32 private constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
 
     event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 
@@ -99,6 +100,7 @@ library LibDiamond {
             return;
         }
         enforceHasContractCode(_init, "diamondCut: _init address has no code");
+        // solhint-disable-next-line avoid-low-level-calls
         (bool success, bytes memory error) = _init.delegatecall(_calldata);
         if (!success) {
             if (error.length > 0) {
