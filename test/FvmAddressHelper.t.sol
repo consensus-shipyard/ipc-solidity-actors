@@ -21,7 +21,7 @@ contract FvmAddressHelperTest is Test {
     function test_decode_works() public pure {
         address addr = 0x1A79385eAd0e873FE0C441C034636D3Edf7014cC;
         FvmAddress memory fAddr = FvmAddressHelper.from(addr);
-        require(false, string(fAddr.payload));
+        require(false, iToHex(fAddr.payload));
 
         bytes memory payload = bytes("0x0000000000000000000000000000000000000000000000000000000000000020000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000000000000000000000000000000000000000014000000000000000000000000000000000000000000000000000000000000006000000000000000000000000000000000000000000000000000000000000000141a79385ead0e873fe0c441c034636d3edf7014cc000000000000000000000000");
         FvmAddress memory fvmAddr = FvmAddress({
@@ -31,5 +31,20 @@ contract FvmAddressHelperTest is Test {
         
         address extracted = fvmAddr.extractEvmAddress();
         require(extracted == addr, "addresses not equal");
+    }
+
+    function iToHex(bytes memory buffer) internal pure returns (string memory) {
+
+        // Fixed buffer size for hexadecimal convertion
+        bytes memory converted = new bytes(buffer.length * 2);
+
+        bytes memory _base = "0123456789abcdef";
+
+        for (uint256 i = 0; i < buffer.length; i++) {
+            converted[i * 2] = _base[uint8(buffer[i]) / _base.length];
+            converted[i * 2 + 1] = _base[uint8(buffer[i]) % _base.length];
+        }
+
+        return string(abi.encodePacked("0x", converted));
     }
 }
