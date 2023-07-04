@@ -9,6 +9,7 @@ import {SubnetID, Subnet} from "../structs/Subnet.sol";
 
 contract InfoFacet {
     // solhint-disable-next-line private-vars-leading-underscore
+    // slither-disable-next-line uninitialized-state-variables
     AppStorage internal s;
 
     function crossMsgFee() external view returns (uint256) {
