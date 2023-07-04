@@ -1,42 +1,28 @@
 pragma solidity 0.8.19;
 
-// solhint-disable-next-line no-global-import
-import "../lib/AppStorage.sol";
-import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
-import {Voting} from "../Voting.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
-import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
+import {AppStorage, Modifiers} from "../lib/AppStorage.sol";
+import {CrossMsg} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
-import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
-import {IGateway} from "../interfaces/IGateway.sol";
 import {LibGateway} from "../lib/Gateway.sol";
-import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
-import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
-import {AccountHelper} from "../lib/AccountHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
-import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
-import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
-import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.sol";
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {EnumerableMap} from "openzeppelin-contracts/utils/structs/EnumerableMap.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
-    using FilAddress for address;
     using FilAddress for address payable;
-    using AccountHelper for address;
     using SubnetIDHelper for SubnetID;
-    using CrossMsgHelper for CrossMsg;
-    using CheckpointHelper for BottomUpCheckpoint;
-    using CheckpointHelper for TopDownCheckpoint;
-    using StorableMsgHelper for StorableMsg;
-    using ExecutableQueueHelper for ExecutableQueue;
-    using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
+
+    error AlreadyInitialized();
+    error AlreadyRegisteredSubnet();
+    error CannotReleaseZero();
+    error NotEnoughFunds();
+    error NotEnoughFundsToRelease();
+    error NotEmptySubnetCircSupply();
+    error NotRegisteredSubnet();
+    error ValidatorsAndWeightsLengthMismatch();
+    error ValidatorWeightIsZero();
 
     /// @notice initialize the contract with the genesis epoch
     /// @param genesisEpoch - genesis epoch to set
