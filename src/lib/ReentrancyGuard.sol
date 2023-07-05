@@ -4,26 +4,16 @@ pragma solidity 0.8.19;
 /// @title Reentrancy Guard
 /// @notice Abstract contract to provide protection against reentrancy
 abstract contract ReentrancyGuard {
-    /// Storage ///
-
     bytes32 private constant NAMESPACE = keccak256("reentrancyguard.lib.gateway.diamond.storage");
-
-    /// Types ///
 
     struct ReentrancyStorage {
         uint256 status;
     }
 
-    /// Errors ///
-
     error ReentrancyError();
-
-    /// Constants ///
 
     uint256 private constant _NOT_ENTERED = 0;
     uint256 private constant _ENTERED = 1;
-
-    /// Modifiers ///
 
     modifier nonReentrant() {
         ReentrancyStorage storage s = reentrancyStorage();
@@ -33,14 +23,8 @@ abstract contract ReentrancyGuard {
         s.status = _NOT_ENTERED;
     }
 
-    /// Private Methods ///
-
     /// @dev fetch local storage
-    function reentrancyStorage()
-    private
-    pure
-    returns (ReentrancyStorage storage data)
-    {
+    function reentrancyStorage() private pure returns (ReentrancyStorage storage data) {
         bytes32 position = NAMESPACE;
         // solhint-disable-next-line no-inline-assembly
         assembly {
