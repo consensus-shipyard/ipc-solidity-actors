@@ -24,24 +24,6 @@ contract CrossMsgHelperTest is Test {
 
     error NoParentForSubnet();
 
-    // TODO: comment off first, not sure what they do when address is replaced with FvmAddress
-    // function test_ToHash_Works_NonEmptyCrossMsg(uint64 nonce) public {
-    //     crossMsg.message.nonce = nonce;
-
-    //     CrossMsg memory crossMsgExpected = createCrossMsg(nonce);
-
-    //     require(crossMsg.toHash() == crossMsgExpected.toHash());
-    // }
-
-    // function test_ToHash_Works_NonEmptyCrossMsgs(uint64 nonce) public {
-    //     crossMsg.message.nonce = nonce;
-    //     crossMsgs.push(crossMsg);
-
-    //     CrossMsg[] memory crossMsgsExpected = createCrossMsgs(1, nonce);
-
-    //     require(crossMsgs.toHash() == crossMsgsExpected.toHash());
-    // }
-
     function test_IsEmpty_Works_EmptyCrossMsg() public view {
         require(crossMsg.isEmpty() == true);
     }
@@ -60,7 +42,12 @@ contract CrossMsgHelperTest is Test {
 
         vm.prank(sender);
 
-        CrossMsg memory releaseMsg = CrossMsgHelper.createReleaseMsg(subnetId, sender, FvmAddressHelper.from(sender), releaseAmount);
+        CrossMsg memory releaseMsg = CrossMsgHelper.createReleaseMsg(
+            subnetId,
+            sender,
+            FvmAddressHelper.from(sender),
+            releaseAmount
+        );
 
         address[] memory parentRoute = new address[](1);
         parentRoute[0] = route[0];
@@ -92,7 +79,12 @@ contract CrossMsgHelperTest is Test {
 
         vm.prank(sender);
 
-        CrossMsg memory fundMsg = CrossMsgHelper.createFundMsg(parentSubnetId, sender, FvmAddressHelper.from(sender), fundAmount);
+        CrossMsg memory fundMsg = CrossMsgHelper.createFundMsg(
+            parentSubnetId,
+            sender,
+            FvmAddressHelper.from(sender),
+            fundAmount
+        );
 
         SubnetID memory rootSubnetId = SubnetID(ROOTNET_CHAINID, new address[](0));
 
@@ -115,7 +107,12 @@ contract CrossMsgHelperTest is Test {
 
         vm.prank(sender);
 
-        CrossMsg memory fundMsg = CrossMsgHelper.createFundMsg(subnetId, sender, FvmAddressHelper.from(sender), fundAmount);
+        CrossMsg memory fundMsg = CrossMsgHelper.createFundMsg(
+            subnetId,
+            sender,
+            FvmAddressHelper.from(sender),
+            fundAmount
+        );
 
         address[] memory parentRoute = new address[](1);
         parentRoute[0] = route[0];
@@ -243,8 +240,14 @@ contract CrossMsgHelperTest is Test {
         return
             CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: FvmAddressHelper.from(address(0))}),
-                    to: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: FvmAddressHelper.from(address(0))}),
+                    from: IPCAddress({
+                        subnetId: SubnetID(0, new address[](0)),
+                        rawAddress: FvmAddressHelper.from(address(0))
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID(0, new address[](0)),
+                        rawAddress: FvmAddressHelper.from(address(0))
+                    }),
                     value: 0,
                     nonce: nonce,
                     method: METHOD_SEND,

@@ -52,8 +52,14 @@ contract StorableMsgHelperTest is Test {
         to[3] = address(4);
 
         StorableMsg memory storableMsg = StorableMsg({
-            from: IPCAddress({subnetId: SubnetID({root: ROOTNET_CHAINID, route: from}), rawAddress: FvmAddressHelper.from(address(3))}),
-            to: IPCAddress({subnetId: SubnetID({root: ROOTNET_CHAINID, route: to}), rawAddress: FvmAddressHelper.from(address(3))}),
+            from: IPCAddress({
+                subnetId: SubnetID({root: ROOTNET_CHAINID, route: from}),
+                rawAddress: FvmAddressHelper.from(address(3))
+            }),
+            to: IPCAddress({
+                subnetId: SubnetID({root: ROOTNET_CHAINID, route: to}),
+                rawAddress: FvmAddressHelper.from(address(3))
+            }),
             value: 1,
             nonce: 1,
             method: METHOD_SEND,
@@ -91,8 +97,14 @@ contract StorableMsgHelperTest is Test {
         to[0] = address(1);
 
         StorableMsg memory storableMsg = StorableMsg({
-            from: IPCAddress({subnetId: SubnetID({root: ROOTNET_CHAINID, route: from}), rawAddress: FvmAddressHelper.from(address(3))}),
-            to: IPCAddress({subnetId: SubnetID({root: ROOTNET_CHAINID, route: to}), rawAddress: FvmAddressHelper.from(address(3))}),
+            from: IPCAddress({
+                subnetId: SubnetID({root: ROOTNET_CHAINID, route: from}),
+                rawAddress: FvmAddressHelper.from(address(3))
+            }),
+            to: IPCAddress({
+                subnetId: SubnetID({root: ROOTNET_CHAINID, route: to}),
+                rawAddress: FvmAddressHelper.from(address(3))
+            }),
             value: 1,
             nonce: 1,
             method: METHOD_SEND,

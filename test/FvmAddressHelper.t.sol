@@ -13,13 +13,12 @@ contract FvmAddressHelperTest is Test {
     function test_works() public pure {
         address addr = 0xeC2804Dd9B992C10396b5Af176f06923d984D90e;
         FvmAddress memory fvmAddr = FvmAddressHelper.from(addr);
-        
+
         address extracted = fvmAddr.extractEvmAddress();
         require(extracted == addr, "addresses not equal");
     }
 
     function iToHex(bytes memory buffer) internal pure returns (string memory) {
-
         // Fixed buffer size for hexadecimal convertion
         bytes memory converted = new bytes(buffer.length * 2);
 

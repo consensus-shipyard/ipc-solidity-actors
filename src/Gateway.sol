@@ -115,6 +115,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error NotEnoughFunds();
     error NotEnoughFundsToRelease();
     error CannotReleaseZero();
+    error NotEnoughSubnetCircSupply();
     error NotEnoughBalance();
     error NotInitialized();
     error NotValidator();
@@ -129,10 +130,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error InvalidCheckpointSource();
     error InvalidCrossMsgNonce();
     error InvalidCrossMsgDestinationSubnet();
-    error InvalidCrossMsgDestinationAddress();
     error InvalidCrossMsgsSortOrder();
     error InvalidCrossMsgFromSubnetId();
-    error InvalidCrossMsgFromRawAddress();
     error CannotSendCrossMsgToItself();
     error SubnetNotActive();
     error PostboxNotExist();
@@ -396,7 +395,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
         totalValue += commit.fee + checkpoint.fee; // add fee that is already in checkpoint as well. For example from release message interacting with the same checkpoint
 
-        require(subnet.circSupply >= totalValue, "IPC-6");
+        if (subnet.circSupply < totalValue) {
+            revert NotEnoughSubnetCircSupply();
+        }
 
         subnet.circSupply -= totalValue;
 
@@ -409,6 +410,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice fund - commit a top-down message releasing funds in a child subnet. There is an associated fee that gets distributed to validators in the subnet as well
     /// @param subnetId - subnet to fund
+    /// @param to - the address to send funds to
     function fund(SubnetID calldata subnetId, FvmAddress calldata to) external payable signableOnly hasFee {
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, to, msg.value - crossMsgFee);
 
@@ -420,7 +422,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
     function release(FvmAddress calldata to) external payable signableOnly hasFee {
-        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(_networkName, msg.sender, to, msg.value - crossMsgFee);
+        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(
+            _networkName,
+            msg.sender,
+            to,
+            msg.value - crossMsgFee
+        );
 
         _commitBottomUpMsg(crossMsg);
     }
@@ -480,9 +487,15 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     ) external signableOnly validEpochOnly(checkpoint.epoch) {
         uint256 validatorWeight = validatorSet[validatorNonce][msg.sender];
 
-        require(initialized, "IPC-2");
-        require(validatorWeight > 0, "IPC-3");
-        require(CrossMsgHelper.isSorted(checkpoint.topDownMsgs), "IPC-4");
+        if (!initialized) {
+            revert NotInitialized();
+        }
+        if (validatorWeight == 0) {
+            revert NotValidator();
+        }
+        if (!CrossMsgHelper.isSorted(checkpoint.topDownMsgs)) {
+            revert MessagesNotSorted();
+        }
 
         EpochVoteTopDownSubmission storage voteSubmission = _epochVoteSubmissions[checkpoint.epoch];
 
@@ -518,11 +531,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             revert NotEnoughFunds();
         }
 
-        // TODO: disable the below for now, as we are using Fvm Address.
-        // if (crossMsg.message.to.rawAddress == address(0)) {
-        //     revert InvalidCrossMsgDestinationAddress();
-        // }
-
         // We disregard the "to" of the message that will be verified in the _commitCrossMessage().
         // The caller is the one set as the "from" of the message
         if (!crossMsg.message.from.subnetId.equals(_networkName)) {
@@ -533,11 +541,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // They can be equal, we can propagate the real sender address only or both.
         // We are going to use the simplest implementation for now and define the appropriate interpretation later
         // based on the business requirements.
-
-        // TODO: disable the below for now, as we are using Fvm Address.
-        // if (crossMsg.message.from.rawAddress != msg.sender) {
-        //     revert InvalidCrossMsgFromRawAddress();
-        // }
 
         // commit cross-message for propagation
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
@@ -791,11 +794,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param forwarder - the subnet that handles the cross message
     /// @param crossMsg - the cross message to be executed
     function _applyMsg(SubnetID memory forwarder, CrossMsg memory crossMsg) internal {
-        // TODO: disable the below for now, as we are using Fvm Address.
-        // if (crossMsg.message.to.rawAddress == address(0)) {
-        //     revert InvalidCrossMsgDestinationAddress();
-        // }
-
         if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDestinationSubnet();
         }

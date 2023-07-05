@@ -13,29 +13,34 @@ library FvmAddressHelper {
     uint8 public constant DELEGATED = 4;
     uint64 public constant EAM_ACTOR = 10;
 
+    error NotDelegatedEvmAddress();
+
     /// @notice Checks if two fil addresses are the same
     function from(address addr) internal pure returns (FvmAddress memory fvmAddress) {
-        bytes memory payload = abi.encode(DelegatedAddress({
-            namespace: EAM_ACTOR,
-            length: 20,
-            buffer: abi.encodePacked(addr)
-        }));
+        bytes memory payload = abi.encode(
+            DelegatedAddress({namespace: EAM_ACTOR, length: 20, buffer: abi.encodePacked(addr)})
+        );
 
-        fvmAddress = FvmAddress({
-            addrType: DELEGATED,
-            payload: payload
-        });
+        fvmAddress = FvmAddress({addrType: DELEGATED, payload: payload});
     }
 
     function extractEvmAddress(FvmAddress memory fvmAddress) internal pure returns (address addr) {
-        require(fvmAddress.addrType == DELEGATED, "IPC-1");
-        
+        if (fvmAddress.addrType != DELEGATED) {
+            revert NotDelegatedEvmAddress();
+        }
+
         DelegatedAddress memory delegated = abi.decode(fvmAddress.payload, (DelegatedAddress));
-        
-        require(delegated.namespace == EAM_ACTOR, "IPC-1");
-        require(delegated.length == 20, "IPC-1");
-        require(delegated.buffer.length == 20, "IPC-1");
-        
+
+        if (delegated.namespace != EAM_ACTOR) {
+            revert NotDelegatedEvmAddress();
+        }
+        if (delegated.length != 20) {
+            revert NotDelegatedEvmAddress();
+        }
+        if (delegated.buffer.length != 20) {
+            revert NotDelegatedEvmAddress();
+        }
+
         addr = _bytesToAddress(delegated.buffer);
     }
 
@@ -49,8 +54,12 @@ library FvmAddressHelper {
 
     /// @notice Checks if the fil addresses is valid. For f4, We only support evm address.
     function isValid(FvmAddress calldata filAddress) internal pure returns (bool) {
-        if (filAddress.addrType == SECP256K1) { return _isValidF1Address(filAddress.payload); }
-        if (filAddress.addrType == DELEGATED) { return _isValidF4EVMAddress(filAddress.payload); }
+        if (filAddress.addrType == SECP256K1) {
+            return _isValidF1Address(filAddress.payload);
+        }
+        if (filAddress.addrType == DELEGATED) {
+            return _isValidF4EVMAddress(filAddress.payload);
+        }
 
         return false;
     }
@@ -61,10 +70,16 @@ library FvmAddressHelper {
 
     function _isValidF4EVMAddress(bytes calldata payload) private pure returns (bool) {
         DelegatedAddress memory delegated = abi.decode(payload, (DelegatedAddress));
-        
-        if (delegated.namespace != EAM_ACTOR) { return false; }
-        if (delegated.length != 20) { return false; }
-        if (delegated.buffer.length != 20) { return false; }
+
+        if (delegated.namespace != EAM_ACTOR) {
+            return false;
+        }
+        if (delegated.length != 20) {
+            return false;
+        }
+        if (delegated.buffer.length != 20) {
+            return false;
+        }
 
         return true;
     }
@@ -72,7 +87,7 @@ library FvmAddressHelper {
     function _bytesToAddress(bytes memory bys) private pure returns (address addr) {
         // solhint-disable-next-line
         assembly {
-            addr := mload(add(bys,20))
+            addr := mload(add(bys, 20))
         }
     }
 }
