@@ -195,14 +195,14 @@ contract CrossMsgHelperTest is Test {
         require(decodedCrossMsg.toHash() == crossMsg.toHash());
     }
 
-    // function test_Execute_Fails_InvalidMethod() public {
-    //     vm.expectRevert(Address.FailedInnerCall.selector);
+    function test_Execute_Fails_InvalidMethod() public {
+        vm.expectRevert(Address.FailedInnerCall.selector);
 
-    //     crossMsg.message.to.rawAddress = address(this);
-    //     crossMsg.message.method = bytes4("1");
+        crossMsg.message.to.rawAddress = FvmAddressHelper.from(address(this));
+        crossMsg.message.method = bytes4("1");
 
-    //     crossMsg.execute();
-    // }
+        crossMsg.execute();
+    }
 
     function callback(bytes calldata params) public payable returns (bytes memory) {
         return params;

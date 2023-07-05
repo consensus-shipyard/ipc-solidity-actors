@@ -1870,7 +1870,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         require(last == 0);
     }
 
-    // TODO: not sure what this test case does, kiv for now
+    // FIXME: This test was written by Limechain and is flaky so we disabled
+    // until we figure out what it does and the best way to fix it.
     // function test_SubmitTopDownCheckpoint_FuzzNumberOfMessages(uint256 n) public {
     //     vm.assume(n < 19594); // TODO: test with different memory limit
     //     address[] memory validators = new address[](1);
