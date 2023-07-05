@@ -15,7 +15,7 @@ library FvmAddressHelper {
 
     error NotDelegatedEvmAddress();
 
-    /// @notice Checks if two fil addresses are the same
+    /// @notice Creates a FvmAddress from address type
     function from(address addr) internal pure returns (FvmAddress memory fvmAddress) {
         bytes memory payload = abi.encode(
             DelegatedAddress({namespace: EAM_ACTOR, length: 20, buffer: abi.encodePacked(addr)})
@@ -42,46 +42,6 @@ library FvmAddressHelper {
         }
 
         addr = _bytesToAddress(delegated.buffer);
-    }
-
-    /// @notice Checks if two fil addresses are the same
-    function isEqual(FvmAddress calldata f1, FvmAddress calldata f2) internal pure returns (bool) {
-        if (f1.addrType != f2.addrType) {
-            return false;
-        }
-        return f1.payload.length == f2.payload.length && keccak256(f1.payload) == keccak256(f2.payload);
-    }
-
-    /// @notice Checks if the fil addresses is valid. For f4, We only support evm address.
-    function isValid(FvmAddress calldata filAddress) internal pure returns (bool) {
-        if (filAddress.addrType == SECP256K1) {
-            return _isValidF1Address(filAddress.payload);
-        }
-        if (filAddress.addrType == DELEGATED) {
-            return _isValidF4EVMAddress(filAddress.payload);
-        }
-
-        return false;
-    }
-
-    function _isValidF1Address(bytes calldata payload) private pure returns (bool) {
-        return payload.length == PAYLOAD_HASH_LEN;
-    }
-
-    function _isValidF4EVMAddress(bytes calldata payload) private pure returns (bool) {
-        DelegatedAddress memory delegated = abi.decode(payload, (DelegatedAddress));
-
-        if (delegated.namespace != EAM_ACTOR) {
-            return false;
-        }
-        if (delegated.length != 20) {
-            return false;
-        }
-        if (delegated.buffer.length != 20) {
-            return false;
-        }
-
-        return true;
     }
 
     function _bytesToAddress(bytes memory bys) private pure returns (address addr) {
