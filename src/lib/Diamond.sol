@@ -13,7 +13,7 @@ error CannotAddSelectorsToZeroAddress(bytes4[] _selectors);
 error InitializationFunctionReverted(address _initializationContractAddress, bytes _calldata);
 
 library LibDiamond {
-    bytes32 public constant DIAMOND_STORAGE_POSITION = keccak256("diamond.standard.diamond.storage");
+    bytes32 public constant DIAMOND_STORAGE_POSITION = keccak256("libdiamond.lib.gateway.diamond.storage");
 
     event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 

@@ -8,7 +8,7 @@ import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.sol";
+import {ReentrancyGuard} from "../lib/ReentrancyGuard.sol";
 
 contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
     using FilAddress for address payable;
