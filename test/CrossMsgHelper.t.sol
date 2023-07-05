@@ -54,7 +54,7 @@ contract CrossMsgHelperTest is Test {
         SubnetID memory parentSubnetId = SubnetID(ROOTNET_CHAINID, parentRoute);
 
         require(releaseMsg.message.from.subnetId.toHash() == subnetId.toHash());
-        require(releaseMsg.message.from.rawAddress.extractEvmAddress() == BURNT_FUNDS_ACTOR);
+        require(releaseMsg.message.from.rawAddress.extractEvmAddress() == sender);
         require(releaseMsg.message.to.subnetId.toHash() == parentSubnetId.toHash());
         require(releaseMsg.message.to.rawAddress.extractEvmAddress() == sender);
         require(releaseMsg.message.value == releaseAmount);
