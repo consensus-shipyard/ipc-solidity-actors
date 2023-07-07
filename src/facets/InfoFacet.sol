@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {AppStorage} from "../lib/AppStorage.sol";
+import {AppStorage} from "../lib/LibAppStorage.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
-import {LibGateway} from "../lib/Gateway.sol";
+import {LibGateway} from "../lib/LibGateway.sol";
+import {LibVoting} from "../lib/LibVoting.sol";
 import {Status} from "../enums/Status.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 
@@ -30,10 +31,6 @@ contract InfoFacet {
 
     function initialized() external view returns (bool) {
         return s.initialized;
-    }
-
-    function majorityPercentage() external view returns (uint8) {
-        return s.majorityPercentage;
     }
 
     function bottomUpCheckPeriod() external view returns (uint64) {
@@ -116,7 +113,7 @@ contract InfoFacet {
     }
 
     function getGenesisEpoch() public view returns (uint64) {
-        return LibGateway.getGenesisEpoch();
+        return LibVoting.getGenesisEpoch();
     }
 
     function totalWeight() public view returns (uint256) {
@@ -141,11 +138,15 @@ contract InfoFacet {
         return subnet.topDownMsgs[index];
     }
 
-    function executableQueue() public view returns (uint64, uint64, uint64) {
-        return (s.executableQueue.period, s.executableQueue.first, s.executableQueue.last);
+    function executableQueue() public view returns (uint64, uint64,  uint64) {
+        return LibVoting.executableQueue();
     }
 
     function lastVotingExecutedEpoch() public view returns (uint64) {
-        return s.lastVotingExecutedEpoch;
+        return LibVoting.lastVotingExecutedEpoch();
+    }
+
+    function majorityPercentage() public view returns (uint64) {
+        return LibVoting.majorityPercentage();
     }
 }

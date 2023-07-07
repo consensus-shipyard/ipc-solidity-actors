@@ -1,9 +1,10 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {AppStorage} from "./lib/AppStorage.sol";
+import {AppStorage} from "./lib/LibAppStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
-import {LibDiamond} from "./lib/Diamond.sol";
+import {LibDiamond} from "./lib/LibDiamond.sol";
+import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 
@@ -43,22 +44,14 @@ contract GatewayDiamond {
             ? MIN_CHECKPOINT_PERIOD
             : params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
-        s.majorityPercentage = params.majorityPercentage;
 
         // the root doesn't need to be explicitly initialized
         if (s.networkName.isRoot()) {
             s.initialized = true;
         }
 
-        if (params.majorityPercentage > 100) {
-            revert InvalidMajorityPercentage();
-        }
-
-        s.submissionPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
-            ? MIN_CHECKPOINT_PERIOD
-            : params.topDownCheckPeriod;
-
-        s.executableQueue.period = s.submissionPeriod;
+        // init Voting params.
+        LibVoting.initVoting(params.majorityPercentage, params.topDownCheckPeriod);
     }
 
     function _fallback() internal {

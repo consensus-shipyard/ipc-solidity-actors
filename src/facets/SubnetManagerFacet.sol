@@ -1,14 +1,15 @@
 pragma solidity 0.8.19;
 
-import {Modifiers} from "../lib/AppStorage.sol";
+import {Modifiers} from "../lib/LibAppStorage.sol";
 import {CrossMsg} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
-import {LibGateway} from "../lib/Gateway.sol";
+import {LibGateway} from "../lib/LibGateway.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {ReentrancyGuard} from "../lib/ReentrancyGuard.sol";
+import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
+import {LibVoting} from "../lib/LibVoting.sol";
 
 contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
     using FilAddress for address payable;
@@ -31,7 +32,7 @@ contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
             revert AlreadyInitialized();
         }
 
-        s.genesisEpoch = genesisEpoch;
+        LibVoting.setGenesisEpoch(genesisEpoch);
         s.initialized = true;
     }
 

@@ -1,130 +1,87 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {IGateway} from "../interfaces/IGateway.sol";
-import {AppStorage, LibAppStorage} from "../lib/AppStorage.sol";
-import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
-import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
-import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
-import {AccountHelper} from "./AccountHelper.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
 import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
 import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
-import {AccountHelper} from "../lib/AccountHelper.sol";
-import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
-import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
-import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
-import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
-import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
-import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
-import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
-library LibGateway {
-    using FilAddress for address;
-    using FilAddress for address payable;
-    using AccountHelper for address;
-    using SubnetIDHelper for SubnetID;
-    using CrossMsgHelper for CrossMsg;
-    using CheckpointHelper for BottomUpCheckpoint;
-    using CheckpointHelper for TopDownCheckpoint;
-    using ExecutableQueueHelper for ExecutableQueue;
-    using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
+struct VotingStorage {
+    /// @notice last executed epoch after voting
+    uint64 lastVotingExecutedEpoch;
+
+    /// @notice Initial epoch number
+    uint64 genesisEpoch;
+
+    uint8 majorityPercentage;
+
+    uint64 submissionPeriod;
+
+    /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
+    /// This usually happens when previous submission epoch has not executed, but the next submission
+    /// epoch is ready to be executed. Most of the time this should be empty
+    ExecutableQueue executableQueue;
+}
+
+library LibVoting {
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
 
-    error NotRegisteredSubnet();
-    error InvalidActorAddress();
     error EpochAlreadyExecuted();
     error EpochNotVotable();
+    error InvalidMajorityPercentage();
     error ValidatorAlreadyVoted();
 
-    /// @notice returns the current bottom-up checkpoint
-    /// @return exists - whether the checkpoint exists
-    /// @return epoch - the epoch of the checkpoint
-    /// @return checkpoint - the checkpoint struct
-    function getCurrentBottomUpCheckpoint()
-        internal
-        view
-        returns (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint)
-    {
-        AppStorage storage s = LibAppStorage.appStorage();
-        epoch = getNextEpoch(block.number, s.bottomUpCheckPeriod);
-        checkpoint = s.bottomUpCheckpoints[epoch];
-        exists = !checkpoint.source.isEmpty();
+    /// @notice minimum checkpoint period. Values get clamped to this
+    uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
+
+    bytes32 constant VOTING_STORAGE_POSITION = keccak256("voting.standard.diamond.storage");
+
+    function votingStorage() internal pure returns (VotingStorage storage s) {
+        bytes32 position = VOTING_STORAGE_POSITION;
+        assembly {
+            s.slot := position
+        }
     }
 
-    /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution
-    /// @param crossMessage - the cross message to be committed
-    function commitTopDownMsg(CrossMsg memory crossMessage) internal {
-        AppStorage storage s = LibAppStorage.appStorage();
-        SubnetID memory subnetId = crossMessage.message.to.subnetId.down(s.networkName);
+    modifier validEpochOnly(uint64 epoch) {
+        _validEpochOnly(epoch);
+        _;
+    }
 
-        (bool registered, Subnet storage subnet) = getSubnet(subnetId);
+    function applyValidEpochOnly(uint64 epoch) public view {
+        _validEpochOnly(epoch);
+    }
 
-        if (!registered) {
-            revert NotRegisteredSubnet();
+    function _validEpochOnly(uint64 epoch) private view {
+        VotingStorage storage s = votingStorage();
+        if (epoch <= s.lastVotingExecutedEpoch) {
+            revert EpochAlreadyExecuted();
+        }
+        if (epoch > s.genesisEpoch) {
+            if ((epoch - s.genesisEpoch) % s.submissionPeriod != 0) {
+                revert EpochNotVotable();
+            }
+        }
+    }
+
+    // TODO: Denis. Should it be internal? Can anyone just call it and rewrite the values?
+    function initVoting(uint8 _majorityPercentage, uint64 _submissionPeriod) public {
+        VotingStorage storage s = votingStorage();
+        if (_majorityPercentage > 100) {
+            revert InvalidMajorityPercentage();
         }
 
-        crossMessage.message.nonce = subnet.topDownNonce;
-        subnet.topDownNonce += 1;
-        subnet.circSupply += crossMessage.message.value;
-        subnet.topDownMsgs.push(crossMessage);
+        s.majorityPercentage = _majorityPercentage;
+        s.submissionPeriod = _submissionPeriod < MIN_CHECKPOINT_PERIOD ? MIN_CHECKPOINT_PERIOD : _submissionPeriod;
+
+        s.executableQueue.period = s.submissionPeriod;
     }
 
-    /// @notice commit bottomup messages for their execution in the subnet. Adds the message to the checkpoint for future execution
-    /// @param crossMessage - the cross message to be committed
-    function commitBottomUpMsg(CrossMsg memory crossMessage) internal {
-        AppStorage storage s = LibAppStorage.appStorage();
-        (, , BottomUpCheckpoint storage checkpoint) = getCurrentBottomUpCheckpoint();
-
-        crossMessage.message.nonce = s.bottomUpNonce;
-
-        checkpoint.fee += s.crossMsgFee;
-        checkpoint.crossMsgs.push(crossMessage);
-        s.bottomUpNonce += 1;
-    }
-
-    /// @notice distribute rewards to validators in child subnet
-    /// @param to - the address of the target subnet contract
-    /// @param amount - the amount of rewards to distribute
-    function distributeRewards(address to, uint256 amount) internal {
-        if (amount == 0) {
-            return;
-        }
-        // slither-disable-next-line unused-return
-        Address.functionCall(to.normalize(), abi.encodeWithSelector(ISubnetActor.reward.selector, amount));
-    }
-
-    /// @notice returns the subnet created by a validator
-    /// @param actor the validator that created the subnet
-    /// @return found whether the subnet exists
-    /// @return subnet -  the subnet struct
-    function getSubnet(address actor) internal view returns (bool found, Subnet storage subnet) {
-        AppStorage storage s = LibAppStorage.appStorage();
-        if (actor == address(0)) {
-            revert InvalidActorAddress();
-        }
-        SubnetID memory subnetId = s.networkName.createSubnetId(actor);
-
-        return getSubnet(subnetId);
-    }
-
-    /// @notice returns the subnet with the given id
-    /// @param subnetId the id of the subnet
-    /// @return found whether the subnet exists
-    /// @return subnet -  the subnet struct
-    function getSubnet(SubnetID memory subnetId) internal view returns (bool found, Subnet storage subnet) {
-        AppStorage storage s = LibAppStorage.appStorage();
-        subnet = s.subnets[subnetId.toHash()];
-        found = !subnet.id.isEmpty();
+    function initGenesisEpoch(uint64 _genesisEpoch) public {
+        VotingStorage storage s = votingStorage();
+        s.genesisEpoch = _genesisEpoch;
     }
 
     /// @notice method that gives the epoch for a given block number and checkpoint period
@@ -136,21 +93,13 @@ library LibGateway {
     /// @notice method that returns the genesis epoch
     /// @return epoch - the genesis epoch
     function getGenesisEpoch() internal view returns (uint64) {
-        AppStorage storage s = LibAppStorage.appStorage();
+        VotingStorage storage s = votingStorage();
         return s.genesisEpoch;
     }
 
-    /// @notice method that returns whether epoch is valid or not
-    function validEpochOnly(uint64 epoch) internal view {
-        AppStorage storage s = LibAppStorage.appStorage();
-        if (epoch <= s.lastVotingExecutedEpoch) {
-            revert EpochAlreadyExecuted();
-        }
-        if (epoch > s.genesisEpoch) {
-            if ((epoch - s.genesisEpoch) % s.submissionPeriod != 0) {
-                revert EpochNotVotable();
-            }
-        }
+    function getSubmissionPeriod() public view returns (uint64) {
+        VotingStorage storage s = votingStorage();
+        return s.submissionPeriod;
     }
 
     /// @notice returns the current checkpoint execution status based on the current vote
@@ -160,7 +109,7 @@ library LibGateway {
         EpochVoteSubmission storage vote,
         uint256 totalWeight
     ) internal view returns (VoteExecutionStatus) {
-        AppStorage storage s = LibAppStorage.appStorage();
+        VotingStorage storage s = votingStorage();
         uint256 threshold = (totalWeight * s.majorityPercentage) / 100;
         uint256 mostVotedWeight = vote.getMostVotedWeight();
 
@@ -198,7 +147,7 @@ library LibGateway {
     /// @notice marks a checkpoint for a given epoch as executed
     /// @param epoch - the epoch to mark as executed
     function markSubmissionExecuted(uint64 epoch) internal {
-        AppStorage storage s = LibAppStorage.appStorage();
+        VotingStorage storage s = votingStorage();
         // epoch not the next executable epoch
         if (!isNextExecutableEpoch(epoch)) {
             return;
@@ -222,7 +171,7 @@ library LibGateway {
     /// @param epoch - the epoch to check
     /// @return whether the given epoch is the next executable epoch
     function isNextExecutableEpoch(uint64 epoch) internal view returns (bool) {
-        AppStorage storage s = LibAppStorage.appStorage();
+        VotingStorage storage s = votingStorage();
         return epoch == s.lastVotingExecutedEpoch + s.submissionPeriod;
     }
 
@@ -230,7 +179,7 @@ library LibGateway {
     /// @return nextEpoch - the next executable epoch
     /// @return isExecutable - whether the next epoch is executable
     function getNextExecutableEpoch() internal view returns (uint64 nextEpoch, bool isExecutable) {
-        AppStorage storage s = LibAppStorage.appStorage();
+        VotingStorage storage s = votingStorage();
         nextEpoch = s.executableQueue.first;
         isExecutable = isNextExecutableEpoch(nextEpoch);
     }
@@ -251,7 +200,7 @@ library LibGateway {
         uint64 epoch,
         uint256 totalWeight
     ) internal returns (bool shouldExecuteVote) {
-        AppStorage storage s = LibAppStorage.appStorage();
+        VotingStorage storage s = votingStorage();
         uint256 nonce = vote.nonce;
         if (vote.submitters[nonce][submitterAddress]) {
             revert ValidatorAlreadyVoted();
@@ -281,5 +230,30 @@ library LibGateway {
             // abort the current round and reset the submission data.
             vote.reset();
         }
+    }
+
+    function executableQueue() public view returns (uint64, uint64, uint64) {
+        VotingStorage storage s = votingStorage();
+        return (s.executableQueue.period, s.executableQueue.first, s.executableQueue.last);
+    }
+
+    function lastVotingExecutedEpoch() public view returns (uint64) {
+        VotingStorage storage s = votingStorage();
+        return s.lastVotingExecutedEpoch;
+    }
+
+    function setGenesisEpoch(uint64 genesisEpoch) internal {
+        VotingStorage storage s = votingStorage();
+        s.genesisEpoch = genesisEpoch;
+    }
+
+    function majorityPercentage() public view returns (uint64) {
+        VotingStorage storage s = votingStorage();
+        return s.majorityPercentage;
+    }
+
+    function removeFromExecutableQueue(uint64 e) public {
+        VotingStorage storage s = votingStorage();
+        s.executableQueue.remove(e);
     }
 }

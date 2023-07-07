@@ -108,18 +108,6 @@ struct AppStorage {
     /// @notice contains voted submissions for a given epoch
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => EpochVoteTopDownSubmission) epochVoteSubmissions;
-    /// @notice percent approvals needed to reach consensus
-    uint8 majorityPercentage;
-    /// @notice number of blocks between two checkpoint submissions
-    uint64 submissionPeriod;
-    /// @notice last executed epoch after voting
-    uint64 lastVotingExecutedEpoch;
-    /// @notice Initial epoch number
-    uint64 genesisEpoch;
-    /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
-    /// This usually happens when previous submission epoch has not executed, but the next submission
-    /// epoch is ready to be executed. Most of the time this should be empty
-    ExecutableQueue executableQueue;
 }
 
 library LibAppStorage {
@@ -145,22 +133,6 @@ contract Modifiers {
     using EpochVoteSubmissionHelper for EpochVoteTopDownSubmission;
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
-
-    function _validEpochOnly(uint64 epoch) private view {
-        if (epoch <= s.lastVotingExecutedEpoch) {
-            revert EpochAlreadyExecuted();
-        }
-        if (epoch > s.genesisEpoch) {
-            if ((epoch - s.genesisEpoch) % s.submissionPeriod != 0) {
-                revert EpochNotVotable();
-            }
-        }
-    }
-
-    modifier validEpochOnly(uint64 epoch) {
-        _validEpochOnly(epoch);
-        _;
-    }
 
     function _signableOnly() private view {
         if (!msg.sender.isAccount()) {

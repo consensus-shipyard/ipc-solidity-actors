@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {Modifiers} from "../lib/AppStorage.sol";
+import {Modifiers} from "../lib/LibAppStorage.sol";
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "../constants/Constants.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
@@ -10,8 +10,9 @@ import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
+import {LibVoting} from "../lib/LibVoting.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
-import {LibGateway} from "../lib/Gateway.sol";
+import {LibGateway} from "../lib/LibGateway.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
@@ -106,7 +107,10 @@ contract RouterFacet is Modifiers {
     /// @param checkpoint - top-down checkpoint
     function submitTopDownCheckpoint(
         TopDownCheckpoint calldata checkpoint
-    ) external signableOnly validEpochOnly(checkpoint.epoch) {
+    ) external signableOnly  {
+        // use this instead of the validEpochOnly modifier
+        LibVoting.applyValidEpochOnly(checkpoint.epoch);
+
         uint256 validatorWeight = s.validatorSet[s.validatorNonce][msg.sender];
 
         if (!s.initialized) {
@@ -133,7 +137,7 @@ contract RouterFacet is Modifiers {
 
         // no messages executed in the current submission, let's get the next executable epoch from the queue to see if it can be executed already
         if (topDownMsgs.length == 0) {
-            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibGateway.getNextExecutableEpoch();
+            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibVoting.getNextExecutableEpoch();
 
             if (isExecutableEpoch) {
                 EpochVoteTopDownSubmission storage nextVoteSubmission = s.epochVoteSubmissions[nextExecutableEpoch];
@@ -268,7 +272,7 @@ contract RouterFacet is Modifiers {
             voteSubmission.vote.mostVotedSubmission
         ];
 
-        LibGateway.markSubmissionExecuted(mostVotedSubmission.epoch);
+        LibVoting.markSubmissionExecuted(mostVotedSubmission.epoch);
 
         return mostVotedSubmission.topDownMsgs;
     }
@@ -286,7 +290,7 @@ contract RouterFacet is Modifiers {
     ) internal returns (bool shouldExecuteVote) {
         bytes32 submissionHash = submission.toHash();
 
-        shouldExecuteVote = LibGateway.submitVote(
+        shouldExecuteVote = LibVoting.submitVote(
             voteSubmission.vote,
             submissionHash,
             submitterAddress,
