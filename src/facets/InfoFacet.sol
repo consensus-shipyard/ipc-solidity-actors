@@ -138,7 +138,7 @@ contract InfoFacet {
         return subnet.topDownMsgs[index];
     }
 
-    function executableQueue() public view returns (uint64, uint64,  uint64) {
+    function executableQueue() public view returns (uint64, uint64, uint64) {
         return LibVoting.executableQueue();
     }
 

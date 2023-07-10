@@ -9,6 +9,7 @@ import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 import {Status} from "./enums/Status.sol";
+import {GatewayDiamond} from "./GatewayDiamond.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 error InvalidMajorityPercentage();
@@ -103,13 +104,13 @@ contract SubnetActorDiamond {
         }
         // Execute external function from facet using delegatecall and return any value.
         assembly {
-        // copy function selector and any arguments
+            // copy function selector and any arguments
             calldatacopy(0, 0, calldatasize())
-        // execute function call using the facet
+            // execute function call using the facet
             let result := delegatecall(gas(), facet, 0, calldatasize(), 0, 0)
-        // get any return value
+            // get any return value
             returndatacopy(0, 0, returndatasize())
-        // return any return value or error back to the caller
+            // return any return value or error back to the caller
             switch result
             case 0 {
                 revert(0, returndatasize())
@@ -128,6 +129,7 @@ contract SubnetActorDiamond {
     /// @notice Same as fallback but called when calldata is empty
     /* solhint-disable no-empty-blocks */
     receive() external payable onlyGateway {}
+
     /* solhint-enable no-empty-blocks */
 
     function _onlyGateway() private view {

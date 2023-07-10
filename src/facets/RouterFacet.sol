@@ -105,9 +105,7 @@ contract RouterFacet is Modifiers {
 
     /// @notice allows a validator to submit a batch of messages in a top-down commitment
     /// @param checkpoint - top-down checkpoint
-    function submitTopDownCheckpoint(
-        TopDownCheckpoint calldata checkpoint
-    ) external signableOnly  {
+    function submitTopDownCheckpoint(TopDownCheckpoint calldata checkpoint) external signableOnly {
         // use this instead of the validEpochOnly modifier
         LibVoting.applyValidEpochOnly(checkpoint.epoch);
 

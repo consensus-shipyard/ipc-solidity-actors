@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {SubnetActorModifiers} from "../lib/LibSubnetActorStorage.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, CrossMsg, ChildCheck} from "../structs/Checkpoint.sol";
 import {SubnetID} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
@@ -19,6 +19,7 @@ import {EpochVoteBottomUpSubmission} from "../structs/EpochVoteSubmission.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 import {Status} from "../enums/Status.sol";
+import {ConsensusType} from "../enums/ConsensusType.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
@@ -120,9 +121,7 @@ contract SubnetActorFacet is SubnetActorModifiers, ReentrancyGuard {
 
     /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
     /// @param checkpoint - the batch messages data
-    function submitCheckpoint(
-        BottomUpCheckpoint calldata checkpoint
-    ) external signableOnly {
+    function submitCheckpoint(BottomUpCheckpoint calldata checkpoint) external signableOnly {
         LibVoting.applyValidEpochOnly(checkpoint.epoch);
 
         if (s.status != Status.Active) {
@@ -196,6 +195,79 @@ contract SubnetActorFacet is SubnetActorModifiers, ReentrancyGuard {
     /// @notice get the parent subnet id
     function getParent() external view returns (SubnetID memory) {
         return s.parentId;
+    }
+
+    /// @notice get the current status
+    function status() external view returns (Status) {
+        return s.status;
+    }
+
+    /// @notice get the total stake
+    function totalStake() external view returns (uint256) {
+        return s.totalStake;
+    }
+
+    function prevExecutedCheckpointHash() external view returns (bytes32) {
+        return s.prevExecutedCheckpointHash;
+    }
+
+    function lastVotingExecutedEpoch() external view returns (uint64) {
+        return LibVoting.lastVotingExecutedEpoch();
+    }
+
+    function executableQueue() external view returns (uint64, uint64, uint64) {
+        return LibVoting.executableQueue();
+    }
+
+    function accumulatedRewards(address a) external view returns (uint256) {
+        return s.accumulatedRewards[a];
+    }
+
+    function stake(address a) external view returns (uint256) {
+        return s.stake[a];
+    }
+
+    function ipcGatewayAddr() external view returns (address) {
+        return s.ipcGatewayAddr;
+    }
+
+    function minValidators() external view returns (uint64) {
+        return s.minValidators;
+    }
+
+    function topDownCheckPeriod() external view returns (uint64) {
+        return s.topDownCheckPeriod;
+    }
+
+    function genesis() external view returns (bytes memory) {
+        return s.genesis;
+    }
+
+    function majorityPercentage() external view returns (uint64) {
+        return LibVoting.majorityPercentage();
+    }
+
+    function consensus() external view returns (ConsensusType) {
+        return s.consensus;
+    }
+
+    function minActivationCollateral() external view returns (uint256) {
+        return s.minActivationCollateral;
+    }
+
+    function name() external view returns (bytes32) {
+        return s.name;
+    }
+
+    /// @notice get the total stake
+    function committedCheckpoints(
+        uint64 e
+    ) external view returns (SubnetID memory source, uint64 epoch, uint256 fee, bytes32 prevHash, bytes memory proof) {
+        source = s.committedCheckpoints[e].source;
+        epoch = s.committedCheckpoints[e].epoch;
+        fee = s.committedCheckpoints[e].fee;
+        prevHash = s.committedCheckpoints[e].prevHash;
+        proof = s.committedCheckpoints[e].proof;
     }
 
     /// @notice get validator count
@@ -318,5 +390,4 @@ contract SubnetActorFacet is SubnetActorModifiers, ReentrancyGuard {
 
         IGateway(s.ipcGatewayAddr).commitChildCheck(checkpoint);
     }
-
 }

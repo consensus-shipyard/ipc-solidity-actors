@@ -3,18 +3,22 @@ pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/StdInvariant.sol";
-import "../src/Gateway.sol";
-import "../src/SubnetActor.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
 import "../src/lib/CrossMsgHelper.sol";
 import "../src/structs/FvmAddress.sol";
-import "../src/GatewayDiamond.sol";
-import {IDiamond} from "../src//interfaces/IDiamond.sol";
-import {IDiamondCut} from "../src//interfaces/IDiamondCut.sol";
+import "../src/SubnetActorDiamond.sol";
+import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
+import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
+import {IDiamond} from "../src/interfaces/IDiamond.sol";
+import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {RouterFacet} from "../src/facets/RouterFacet.sol";
 import {SubnetManagerFacet} from "../src/facets/SubnetManagerFacet.sol";
 import {InfoFacet} from "../src/facets/InfoFacet.sol";
+import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
+import {GatewayDiamond} from "../src/GatewayDiamond.sol";
+import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
+import {SubnetActorFacet} from "../src/facets/SubnetActorFacet.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -51,7 +55,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     InfoFacet gwInfo2;
     RouterFacet gwRouter2;
 
-    SubnetActor sa;
+    bytes4[] saSelectors;
+    SubnetActorDiamond saDiamond;
+    SubnetActorFacet sa;
 
     uint64 private constant ROOTNET_CHAINID = 123;
     address public constant ROOTNET_ADDRESS = address(1);
@@ -196,7 +202,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwManager2 = SubnetManagerFacet(address(gatewayDiamond2));
         gwRouter2 = RouterFacet(address(gatewayDiamond2));
 
-        SubnetActor.ConstructParams memory subnetConstructorParams = SubnetActor.ConstructParams({
+        SubnetActorDiamond.ConstructorParams memory subnetConstructorParams = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(gatewayDiamond),
@@ -208,7 +214,18 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             genesis: GENESIS
         });
-        sa = new SubnetActor(subnetConstructorParams);
+
+        IDiamond.FacetCut[] memory saDiamondCut = new IDiamond.FacetCut[](1);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: address(sa),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saSelectors
+            })
+        );
+        saDiamond = new SubnetActorDiamond(saDiamondCut, subnetConstructorParams);
+        sa = SubnetActorFacet(address(saDiamond));
 
         targetContract(address(gatewayDiamond));
     }

@@ -28,7 +28,6 @@ import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 
-
 library LibGateway {
     using FilAddress for address;
     using FilAddress for address payable;

@@ -10,14 +10,10 @@ import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 struct VotingStorage {
     /// @notice last executed epoch after voting
     uint64 lastVotingExecutedEpoch;
-
     /// @notice Initial epoch number
     uint64 genesisEpoch;
-
     uint8 majorityPercentage;
-
     uint64 submissionPeriod;
-
     /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
     /// This usually happens when previous submission epoch has not executed, but the next submission
     /// epoch is ready to be executed. Most of the time this should be empty

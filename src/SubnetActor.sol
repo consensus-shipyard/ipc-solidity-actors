@@ -209,6 +209,7 @@ contract SubnetActor is ISubnetActor, ReentrancyGuard, Voting {
 
     /* solhint-disable no-empty-blocks */
     receive() external payable onlyGateway {}
+
     /* solhint-enable no-empty-blocks */
 
     /// @notice method that allows a validator to join the subnet
