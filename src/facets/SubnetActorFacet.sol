@@ -24,6 +24,7 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
+import "hardhat/console.sol";
 
 struct ValidatorInfo {
     address addr;

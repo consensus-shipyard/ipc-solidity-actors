@@ -3,28 +3,40 @@ pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
-
-import {EMPTY_BYTES, METHOD_SEND} from "../src/constants/Constants.sol";
-
-import "../src/SubnetActorDiamond.sol";
-import "../src/enums/Status.sol";
-import "../src/structs/Subnet.sol";
-import "../src/structs/FvmAddress.sol";
-import "../src/lib/SubnetIDHelper.sol";
-import "../src/lib/CheckpointHelper.sol";
+import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
+import {Status} from "../src/enums/Status.sol";
+import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../src/structs/Checkpoint.sol";
+import {IGateway} from "../src/interfaces/IGateway.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {SubnetActorFacet} from "../src/facets/SubnetActorFacet.sol";
-import {SubnetID} from "../src/structs/Subnet.sol";
+import {ConsensusType} from "../src/enums/ConsensusType.sol";
+import {SubnetID, IPCAddress, Subnet} from "../src/structs/Subnet.sol";
+import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
+import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
 import {RouterFacet} from "../src/facets/RouterFacet.sol";
 import {SubnetManagerFacet} from "../src/facets/SubnetManagerFacet.sol";
 import {InfoFacet} from "../src/facets/InfoFacet.sol";
 import {StorableMsg} from "../src/structs/Checkpoint.sol";
-import "../src/SubnetActor.sol";
+import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
+import {GatewayDiamond} from "../src/GatewayDiamond.sol";
+import {FvmAddress} from "../src/structs/FvmAddress.sol";
 
 contract SubnetActorDiamondTest is Test {
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
+
+    address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
+    uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
+    bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
+    uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
+    uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
+    string private constant DEFAULT_NET_ADDR = "netAddr";
+    bytes private constant GENESIS = EMPTY_BYTES;
+    uint256 constant CROSS_MSG_FEE = 10 gwei;
+    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
+    uint64 private constant ROOTNET_CHAINID = 123;
+    address GATEWAY_ADDRESS;
 
     bytes4[] saSelectors;
     bytes4[] routerSelectors;
@@ -38,18 +50,6 @@ contract SubnetActorDiamondTest is Test {
     SubnetManagerFacet gwManager;
     InfoFacet gwInfo;
     RouterFacet gwRouter;
-
-    address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
-    uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
-    uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
-    uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
-    string private constant DEFAULT_NET_ADDR = "netAddr";
-    bytes private constant GENESIS = EMPTY_BYTES;
-    uint256 constant CROSS_MSG_FEE = 10 gwei;
-    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
-    uint64 private constant ROOTNET_CHAINID = 123;
-    address GATEWAY_ADDRESS;
 
     error NotGateway();
     error NotAccount();
@@ -117,14 +117,15 @@ contract SubnetActorDiamondTest is Test {
         return gatewayDiamond;
     }
 
-    function createSADiamond(SubnetActorDiamond.ConstructorParams memory params) public returns (SubnetActorDiamond) {
-        sa = new SubnetActorFacet();
-
+    function createSADiamondWithFaucet(
+        SubnetActorDiamond.ConstructorParams memory params,
+        address faucet
+    ) public returns (SubnetActorDiamond) {
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](1);
 
         diamondCut[0] = (
             IDiamond.FacetCut({
-                facetAddress: address(sa),
+                facetAddress: faucet,
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: saSelectors
             })
@@ -151,6 +152,10 @@ contract SubnetActorDiamondTest is Test {
         });
 
         gatewayDiamond = createGWDiamond(gwConstructorParams);
+
+        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwManager = SubnetManagerFacet(address(gatewayDiamond));
+        gwRouter = RouterFacet(address(gatewayDiamond));
 
         GATEWAY_ADDRESS = address(gatewayDiamond);
 
@@ -196,9 +201,10 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function testSubnetActorDiamond_Deployments_Fail_GatewayCannotBeZero() public {
-        vm.expectRevert(GatewayCannotBeZero.selector);
+        SubnetActorFacet saFaucet = new SubnetActorFacet();
 
-        saDiamond = createSADiamond(
+        vm.expectRevert(GatewayCannotBeZero.selector);
+        createSADiamondWithFaucet(
             SubnetActorDiamond.ConstructorParams({
                 parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
                 name: DEFAULT_NETWORK_NAME,
@@ -210,7 +216,8 @@ contract SubnetActorDiamondTest is Test {
                 topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
                 majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
                 genesis: EMPTY_BYTES
-            })
+            }),
+            address(saFaucet)
         );
     }
 
@@ -992,6 +999,8 @@ contract SubnetActorDiamondTest is Test {
     ) public {
         SubnetID memory _parentId = gwInfo.getNetworkName();
 
+        sa = new SubnetActorFacet();
+
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](1);
 
         diamondCut[0] = (
@@ -1017,6 +1026,8 @@ contract SubnetActorDiamondTest is Test {
                 genesis: _genesis
             })
         );
+
+        sa = SubnetActorFacet(address(saDiamond));
 
         require(
             keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_name)),

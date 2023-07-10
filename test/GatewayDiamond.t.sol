@@ -3,13 +3,16 @@ pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/StdInvariant.sol";
-import "../src/lib/SubnetIDHelper.sol";
-import "../src/lib/CheckpointHelper.sol";
-import "../src/lib/CrossMsgHelper.sol";
-import "../src/structs/FvmAddress.sol";
-import "../src/SubnetActorDiamond.sol";
+import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
+import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../src/structs/Checkpoint.sol";
+import {ConsensusType} from "../src/enums/ConsensusType.sol";
+import {Status} from "../src/enums/Status.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
+import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
+import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
+import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
+import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {RouterFacet} from "../src/facets/RouterFacet.sol";
@@ -19,6 +22,8 @@ import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
 import {GatewayDiamond} from "../src/GatewayDiamond.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {SubnetActorFacet} from "../src/facets/SubnetActorFacet.sol";
+import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import {FvmAddress} from "../src/structs/FvmAddress.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -104,6 +109,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         routerSelectors = generateSelectors("RouterFacet");
         infoSelectors = generateSelectors("InfoFacet");
         managerSelectors = generateSelectors("SubnetManagerFacet");
+        saSelectors = generateSelectors("SubnetActorFacet");
     }
 
     function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
@@ -150,7 +156,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path2[0] = CHILD_NETWORK_ADDRESS;
         path2[1] = CHILD_NETWORK_ADDRESS_2;
 
-        GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
+        // create a gateway actor.
+
+        GatewayDiamond.ConstructorParams memory gwConstructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
@@ -162,9 +170,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwManager = new SubnetManagerFacet();
         gwInfo = new InfoFacet();
 
-        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](3);
+        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](3);
 
-        diamondCut[0] = (
+        gwDiamondCut[0] = (
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
@@ -172,7 +180,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             })
         );
 
-        diamondCut[1] = (
+        gwDiamondCut[1] = (
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
@@ -180,7 +188,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             })
         );
 
-        diamondCut[2] = (
+        gwDiamondCut[2] = (
             IDiamond.FacetCut({
                 facetAddress: address(gwInfo),
                 action: IDiamond.FacetCutAction.Add,
@@ -188,21 +196,23 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             })
         );
 
-        gatewayDiamond = new GatewayDiamond(diamondCut, constructorParams);
+        gatewayDiamond = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
         gwInfo = InfoFacet(address(gatewayDiamond));
         gwManager = SubnetManagerFacet(address(gatewayDiamond));
         gwRouter = RouterFacet(address(gatewayDiamond));
 
         addValidator(TOPDOWN_VALIDATOR_1, 100);
 
-        constructorParams.networkName = SubnetID({root: ROOTNET_CHAINID, route: path2});
+        gwConstructorParams.networkName = SubnetID({root: ROOTNET_CHAINID, route: path2});
 
-        gatewayDiamond2 = new GatewayDiamond(diamondCut, constructorParams);
+        gatewayDiamond2 = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
         gwInfo2 = InfoFacet(address(gatewayDiamond2));
         gwManager2 = SubnetManagerFacet(address(gatewayDiamond2));
         gwRouter2 = RouterFacet(address(gatewayDiamond2));
 
-        SubnetActorDiamond.ConstructorParams memory subnetConstructorParams = SubnetActorDiamond.ConstructorParams({
+        // create a subnet actor.
+
+        SubnetActorDiamond.ConstructorParams memory saConstructorParams = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(gatewayDiamond),
@@ -215,16 +225,18 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             genesis: GENESIS
         });
 
+        sa = new SubnetActorFacet();
+
         IDiamond.FacetCut[] memory saDiamondCut = new IDiamond.FacetCut[](1);
 
-        diamondCut[0] = (
+        saDiamondCut[0] = (
             IDiamond.FacetCut({
                 facetAddress: address(sa),
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: saSelectors
             })
         );
-        saDiamond = new SubnetActorDiamond(saDiamondCut, subnetConstructorParams);
+        saDiamond = new SubnetActorDiamond(saDiamondCut, saConstructorParams);
         sa = SubnetActorFacet(address(saDiamond));
 
         targetContract(address(gatewayDiamond));
