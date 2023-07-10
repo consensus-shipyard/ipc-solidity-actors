@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {AppStorage} from "../lib/LibAppStorage.sol";
+import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 import {Status} from "../enums/Status.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 
-contract InfoFacet {
+contract GetterFacet {
     // solhint-disable-next-line private-vars-leading-underscore
     // slither-disable-next-line uninitialized-state-variables
-    AppStorage internal s;
+    GatewayActorStorage internal s;
 
     function crossMsgFee() external view returns (uint256) {
         return s.crossMsgFee;

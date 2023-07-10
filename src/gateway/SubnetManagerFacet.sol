@@ -1,6 +1,6 @@
 pragma solidity 0.8.19;
 
-import {Modifiers} from "../lib/LibAppStorage.sol";
+import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {CrossMsg} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
@@ -11,7 +11,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 
-contract SubnetManagerFacet is Modifiers, ReentrancyGuard {
+contract SubnetManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
 

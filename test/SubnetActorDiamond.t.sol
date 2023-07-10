@@ -9,14 +9,15 @@ import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck
 import {IGateway} from "../src/interfaces/IGateway.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
-import {SubnetActorFacet} from "../src/facets/SubnetActorFacet.sol";
+import {SubnetGetterFacet} from "../src/subnet/SubnetGetterFacet.sol";
+import {SubnetActorFacet} from "../src/subnet/SubnetActorFacet.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {SubnetID, IPCAddress, Subnet} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
-import {RouterFacet} from "../src/facets/RouterFacet.sol";
-import {SubnetManagerFacet} from "../src/facets/SubnetManagerFacet.sol";
-import {InfoFacet} from "../src/facets/InfoFacet.sol";
+import {RouterFacet} from "../src/gateway/RouterFacet.sol";
+import {SubnetManagerFacet} from "../src/gateway/SubnetManagerFacet.sol";
+import {GetterFacet} from "../src/gateway/GetterFacet.sol";
 import {StorableMsg} from "../src/structs/Checkpoint.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {GatewayDiamond} from "../src/GatewayDiamond.sol";
@@ -38,17 +39,20 @@ contract SubnetActorDiamondTest is Test {
     uint64 private constant ROOTNET_CHAINID = 123;
     address GATEWAY_ADDRESS;
 
-    bytes4[] saSelectors;
-    bytes4[] routerSelectors;
-    bytes4[] managerSelectors;
-    bytes4[] infoSelectors;
+    bytes4[] saGetterSelectors;
+    bytes4[] saManagerSelectors;
+
+    bytes4[] gwRouterSelectors;
+    bytes4[] gwManagerSelectors;
+    bytes4[] gwGetterSelectors;
 
     SubnetActorDiamond saDiamond;
     SubnetActorFacet sa;
+    SubnetGetterFacet saGetter;
 
     GatewayDiamond gatewayDiamond;
     SubnetManagerFacet gwManager;
-    InfoFacet gwInfo;
+    GetterFacet gwGetter;
     RouterFacet gwRouter;
 
     error NotGateway();
@@ -71,6 +75,15 @@ contract SubnetActorDiamondTest is Test {
     error NoRewardToWithdraw();
     error GatewayCannotBeZero();
 
+    constructor() {
+        saGetterSelectors = generateSelectors("SubnetGetterFacet");
+        saManagerSelectors = generateSelectors("SubnetActorFacet");
+
+        gwRouterSelectors = generateSelectors("RouterFacet");
+        gwGetterSelectors = generateSelectors("GetterFacet");
+        gwManagerSelectors = generateSelectors("SubnetManagerFacet");
+    }
+
     function generateSelectors(string memory facetName) internal returns (bytes4[] memory facetSelectors) {
         string[] memory inputs = new string[](3);
         inputs[0] = "python3";
@@ -84,7 +97,7 @@ contract SubnetActorDiamondTest is Test {
     function createGWDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         gwRouter = new RouterFacet();
         gwManager = new SubnetManagerFacet();
-        gwInfo = new InfoFacet();
+        gwGetter = new GetterFacet();
 
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](3);
 
@@ -92,7 +105,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: routerSelectors
+                functionSelectors: gwRouterSelectors
             })
         );
 
@@ -100,15 +113,15 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: managerSelectors
+                functionSelectors: gwManagerSelectors
             })
         );
 
         diamondCut[2] = (
             IDiamond.FacetCut({
-                facetAddress: address(gwInfo),
+                facetAddress: address(gwGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: infoSelectors
+                functionSelectors: gwGetterSelectors
             })
         );
 
@@ -119,27 +132,28 @@ contract SubnetActorDiamondTest is Test {
 
     function createSADiamondWithFaucet(
         SubnetActorDiamond.ConstructorParams memory params,
-        address faucet
+        address getterFaucet, address managerFaucet
     ) public returns (SubnetActorDiamond) {
-        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](1);
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](2);
 
         diamondCut[0] = (
             IDiamond.FacetCut({
-                facetAddress: faucet,
+                facetAddress: getterFaucet,
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: saSelectors
+                functionSelectors: saGetterSelectors
             })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+            facetAddress: managerFaucet,
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: saManagerSelectors
+        })
         );
 
         saDiamond = new SubnetActorDiamond(diamondCut, params);
         return saDiamond;
-    }
-
-    constructor() {
-        saSelectors = generateSelectors("SubnetActorFacet");
-        routerSelectors = generateSelectors("RouterFacet");
-        infoSelectors = generateSelectors("InfoFacet");
-        managerSelectors = generateSelectors("SubnetManagerFacet");
     }
 
     function setUp() public {
@@ -153,7 +167,7 @@ contract SubnetActorDiamondTest is Test {
 
         gatewayDiamond = createGWDiamond(gwConstructorParams);
 
-        gwInfo = InfoFacet(address(gatewayDiamond));
+        gwGetter = GetterFacet(address(gatewayDiamond));
         gwManager = SubnetManagerFacet(address(gatewayDiamond));
         gwRouter = RouterFacet(address(gatewayDiamond));
 
@@ -196,12 +210,13 @@ contract SubnetActorDiamondTest is Test {
             _majorityPercentage
         );
 
-        SubnetID memory parent = sa.getParent();
+        SubnetID memory parent = saGetter.getParent();
         require(parent.isRoot(), "parent.isRoot()");
     }
 
     function testSubnetActorDiamond_Deployments_Fail_GatewayCannotBeZero() public {
-        SubnetActorFacet saFaucet = new SubnetActorFacet();
+        SubnetActorFacet saDupMangerFaucet = new SubnetActorFacet();
+        SubnetGetterFacet saDupGetterFaucet = new SubnetGetterFacet();
 
         vm.expectRevert(GatewayCannotBeZero.selector);
         createSADiamondWithFaucet(
@@ -217,7 +232,8 @@ contract SubnetActorDiamondTest is Test {
                 majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
                 genesis: EMPTY_BYTES
             }),
-            address(saFaucet)
+            address(saDupGetterFaucet),
+            address(saDupMangerFaucet)
         );
     }
 
@@ -284,8 +300,8 @@ contract SubnetActorDiamondTest is Test {
 
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
-        require(sa.validatorCount() == 1);
-        require(sa.validatorAt(0) == validator);
+        require(saGetter.validatorCount() == 1);
+        require(saGetter.validatorAt(0) == validator);
     }
 
     function testSubnetActorDiamond_Join_Works_CallRegister() public {
@@ -310,14 +326,14 @@ contract SubnetActorDiamondTest is Test {
         vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gwManager.addStake.selector), 0);
         sa.join{value: amount}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
 
-        require(sa.validatorCount() == 0);
+        require(saGetter.validatorCount() == 0);
     }
 
     function testSubnetActorDiamond_Join_Works_MultipleNewValidators() public {
         _assertJoin(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
         _assertJoin(vm.addr(1235), DEFAULT_MIN_VALIDATOR_STAKE);
 
-        require(sa.validatorCount() == 2);
+        require(saGetter.validatorCount() == 2);
     }
 
     function testSubnetActorDiamond_Join_Works_NoNewValidator_CollateralNotEnough() public {
@@ -325,22 +341,22 @@ contract SubnetActorDiamondTest is Test {
 
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE - 1);
 
-        require(sa.validatorCount() == 0);
-        require(sa.status() == Status.Instantiated);
+        require(saGetter.validatorCount() == 0);
+        require(saGetter.status() == Status.Instantiated);
     }
 
     function testSubnetActorDiamond_Join_Works_ReactivateSubnet() public {
         _assertJoin(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
         _assertLeave(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
 
-        require(sa.totalStake() == 0);
-        require(sa.validatorCount() == 0);
-        require(sa.status() == Status.Inactive);
+        require(saGetter.totalStake() == 0);
+        require(saGetter.validatorCount() == 0);
+        require(saGetter.status() == Status.Inactive);
 
         _assertJoin(vm.addr(1235), DEFAULT_MIN_VALIDATOR_STAKE);
 
-        require(sa.validatorCount() == 1);
-        require(sa.status() == Status.Active);
+        require(saGetter.validatorCount() == 1);
+        require(saGetter.status() == Status.Active);
     }
 
     function testSubnetActorDiamond_Leave_Works_NoValidatorsLeft() public payable {
@@ -351,9 +367,9 @@ contract SubnetActorDiamondTest is Test {
 
         _assertLeave(validator, amount);
 
-        require(sa.totalStake() == 0);
-        require(sa.validatorCount() == 0);
-        require(sa.status() == Status.Inactive);
+        require(saGetter.totalStake() == 0);
+        require(saGetter.validatorCount() == 0);
+        require(saGetter.status() == Status.Inactive);
     }
 
     function testSubnetActorDiamond_Leave_Works_StillActive() public payable {
@@ -366,9 +382,9 @@ contract SubnetActorDiamondTest is Test {
 
         _assertLeave(validator1, amount);
 
-        require(sa.totalStake() == amount);
-        require(sa.validatorCount() == 1);
-        require(sa.status() == Status.Active);
+        require(saGetter.totalStake() == amount);
+        require(saGetter.validatorCount() == 1);
+        require(saGetter.status() == Status.Active);
     }
 
     function testSubnetActorDiamond_Leave_Fail_NotAccount() public payable {
@@ -418,7 +434,7 @@ contract SubnetActorDiamondTest is Test {
         _assertKill(validator);
 
         require(GATEWAY_ADDRESS.balance == 0);
-        require(gwInfo.totalSubnets() == 0);
+        require(gwGetter.totalSubnets() == 0);
     }
 
     function testSubnetActorDiamond_Kill_Fails_NotAccount() public payable {
@@ -480,8 +496,8 @@ contract SubnetActorDiamondTest is Test {
         (SubnetID memory source, uint64 epoch, uint256 fee, bytes32 prevHash, bytes memory proof) = sa
             .committedCheckpoints(checkpoint.epoch);
 
-        require(sa.prevExecutedCheckpointHash() == checkpoint.toHash());
-        require(sa.lastVotingExecutedEpoch() == checkpoint.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint.epoch);
         require(source.toHash() == checkpoint.source.toHash());
         require(epoch == checkpoint.epoch);
         require(fee == checkpoint.fee);
@@ -506,8 +522,8 @@ contract SubnetActorDiamondTest is Test {
         _assertVote(validator2, checkpoint1);
         _assertVote(validator3, checkpoint1);
 
-        require(sa.lastVotingExecutedEpoch() == checkpoint1.epoch);
-        require(sa.prevExecutedCheckpointHash() == checkpoint1.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint1.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint1.toHash());
 
         // next epochs
         checkpoint2.epoch = checkpoint1.epoch + DEFAULT_CHECKPOINT_PERIOD;
@@ -526,16 +542,16 @@ contract SubnetActorDiamondTest is Test {
         _assertVote(validator3, checkpoint3);
 
         // ensures no execution is triggered
-        require(sa.lastVotingExecutedEpoch() == checkpoint1.epoch);
-        require(sa.prevExecutedCheckpointHash() == checkpoint1.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint1.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint1.toHash());
 
         // trigger execution of checkpoint 2
         _assertVote(validator, checkpoint2);
         _assertVote(validator2, checkpoint2);
         _assertVote(validator3, checkpoint2);
 
-        require(sa.lastVotingExecutedEpoch() == checkpoint2.epoch);
-        require(sa.prevExecutedCheckpointHash() == checkpoint2.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint2.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint2.toHash());
 
         // vote for checkpoint 4 and trigger execution of checkpoint 3 from the queue
         _assertVote(validator, checkpoint4);
@@ -543,8 +559,8 @@ contract SubnetActorDiamondTest is Test {
         (SubnetID memory source, uint64 epoch, uint256 fee, bytes32 prevHash, bytes memory proof) = sa
             .committedCheckpoints(checkpoint3.epoch);
 
-        require(sa.lastVotingExecutedEpoch() == checkpoint3.epoch);
-        require(sa.prevExecutedCheckpointHash() == checkpoint3.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint3.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint3.toHash());
         require(source.toHash() == checkpoint3.source.toHash());
         require(epoch == checkpoint3.epoch);
         require(fee == checkpoint3.fee);
@@ -572,9 +588,9 @@ contract SubnetActorDiamondTest is Test {
 
         require(sa.hasValidatorVotedForSubmission(checkpoint1.epoch, validator) == false);
         require(sa.hasValidatorVotedForSubmission(checkpoint2.epoch, validator2) == false);
-        require(sa.lastVotingExecutedEpoch() == 0);
+        require(saGetter.lastVotingExecutedEpoch() == 0);
 
-        (, uint256 first, uint256 last) = sa.executableQueue();
+        (, uint256 first, uint256 last) = saGetter.executableQueue();
 
         require(first == 0);
         require(last == 0);
@@ -584,7 +600,7 @@ contract SubnetActorDiamondTest is Test {
         address validator = vm.addr(100);
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
-        SubnetID memory subnetId = gwInfo.getNetworkName().createSubnetId(address(sa));
+        SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(address(sa));
         CrossMsg[] memory crossMsgs = new CrossMsg[](2);
         crossMsgs[0] = CrossMsg({
             message: StorableMsg({
@@ -650,8 +666,8 @@ contract SubnetActorDiamondTest is Test {
         _assertVote(validator2, checkpoint1);
         _assertVote(validator3, checkpoint1);
 
-        require(sa.lastVotingExecutedEpoch() == checkpoint1.epoch);
-        require(sa.prevExecutedCheckpointHash() == checkpoint1.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint1.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint1.toHash());
 
         // set next epoch
         checkpoint2.epoch = checkpoint1.epoch + DEFAULT_CHECKPOINT_PERIOD;
@@ -673,10 +689,10 @@ contract SubnetActorDiamondTest is Test {
         require(sa.hasValidatorVotedForSubmission(checkpoint2.epoch, validator) == false);
         require(sa.hasValidatorVotedForSubmission(checkpoint2.epoch, validator2) == false);
         require(sa.hasValidatorVotedForSubmission(checkpoint2.epoch, validator3) == false);
-        require(sa.lastVotingExecutedEpoch() == checkpoint1.epoch);
-        require(sa.prevExecutedCheckpointHash() == checkpoint1.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint1.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint1.toHash());
 
-        (, uint256 first, uint256 last) = sa.executableQueue();
+        (, uint256 first, uint256 last) = saGetter.executableQueue();
 
         require(first == 0);
         require(last == 0);
@@ -719,7 +735,7 @@ contract SubnetActorDiamondTest is Test {
 
         require(sa.hasValidatorVotedForSubmission(checkpoint1.epoch, validator) == false);
         require(sa.hasValidatorVotedForSubmission(checkpoint2.epoch, validator2) == false);
-        require(sa.lastVotingExecutedEpoch() == 0);
+        require(saGetter.lastVotingExecutedEpoch() == 0);
     }
 
     function testSubnetActorDiamond_SubmitCheckpoint_Works_VoteForCheckpoint() public {
@@ -734,7 +750,7 @@ contract SubnetActorDiamondTest is Test {
 
         require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator) == true);
         require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator2) == false);
-        require(sa.lastVotingExecutedEpoch() == 0);
+        require(saGetter.lastVotingExecutedEpoch() == 0);
     }
 
     function testSubnetActorDiamond_SubmitCheckpoint_Fails_NotAccount() public {
@@ -842,7 +858,7 @@ contract SubnetActorDiamondTest is Test {
 
         sa.reward(1 ether);
 
-        require(sa.accumulatedRewards(validator) == 1 ether);
+        require(saGetter.accumulatedRewards(validator) == 1 ether);
         // sa.reward{value: 1}();
 
         // require(validator.balance == balanceBefore + 1);
@@ -855,16 +871,16 @@ contract SubnetActorDiamondTest is Test {
         _assertJoin(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
         _assertJoin(validator2, DEFAULT_MIN_VALIDATOR_STAKE);
 
-        uint256 validator1BalanceBefore = sa.accumulatedRewards(validator1);
-        uint256 validator2BalanceBefore = sa.accumulatedRewards(validator2);
+        uint256 validator1BalanceBefore = saGetter.accumulatedRewards(validator1);
+        uint256 validator2BalanceBefore = saGetter.accumulatedRewards(validator2);
 
         vm.startPrank(GATEWAY_ADDRESS);
         vm.deal(GATEWAY_ADDRESS, 1 ether);
 
         sa.reward(110);
 
-        require(sa.accumulatedRewards(validator1) - validator1BalanceBefore == 55);
-        require(sa.accumulatedRewards(validator2) - validator2BalanceBefore == 55);
+        require(saGetter.accumulatedRewards(validator1) - validator1BalanceBefore == 55);
+        require(saGetter.accumulatedRewards(validator2) - validator2BalanceBefore == 55);
     }
 
     function testSubnetActorDiamond_Reward_Fails_NoValidatorsInSubnet() public {
@@ -929,7 +945,7 @@ contract SubnetActorDiamondTest is Test {
         sa.withdraw();
 
         require(validator.balance == balanceBefore + 1 ether);
-        require(sa.accumulatedRewards(validator) == 0);
+        require(saGetter.accumulatedRewards(validator) == 0);
     }
 
     function _assertJoin(address validator, uint256 amount) internal {
@@ -937,13 +953,13 @@ contract SubnetActorDiamondTest is Test {
         vm.deal(validator, amount + 1);
 
         uint256 balanceBefore = validator.balance;
-        uint256 stakeBefore = sa.stake(validator);
-        uint256 totalStakeBefore = sa.totalStake();
+        uint256 stakeBefore = saGetter.stake(validator);
+        uint256 totalStakeBefore = saGetter.totalStake();
 
         sa.join{value: amount}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
 
-        require(sa.stake(validator) == stakeBefore + amount);
-        require(sa.totalStake() == totalStakeBefore + amount);
+        require(saGetter.stake(validator) == stakeBefore + amount);
+        require(saGetter.totalStake() == totalStakeBefore + amount);
         require(validator.balance == balanceBefore - amount);
 
         vm.stopPrank();
@@ -951,8 +967,8 @@ contract SubnetActorDiamondTest is Test {
 
     function _assertLeave(address validator, uint256 amount) internal {
         uint256 validatorBalanceBefore = validator.balance;
-        uint256 validatorsCountBefore = sa.validatorCount();
-        uint256 totalStakeBefore = sa.totalStake();
+        uint256 validatorsCountBefore = saGetter.validatorCount();
+        uint256 totalStakeBefore = saGetter.totalStake();
 
         vm.prank(validator);
         vm.expectCall(GATEWAY_ADDRESS, abi.encodeWithSelector(gwManager.releaseStake.selector, amount));
@@ -960,9 +976,9 @@ contract SubnetActorDiamondTest is Test {
 
         sa.leave();
 
-        require(sa.stake(validator) == 0);
-        require(sa.totalStake() == totalStakeBefore - amount);
-        require(sa.validatorCount() == validatorsCountBefore - 1);
+        require(saGetter.stake(validator) == 0);
+        require(saGetter.totalStake() == totalStakeBefore - amount);
+        require(saGetter.validatorCount() == validatorsCountBefore - 1);
         require(validator.balance == validatorBalanceBefore + amount);
     }
 
@@ -973,9 +989,9 @@ contract SubnetActorDiamondTest is Test {
 
         sa.kill();
 
-        require(sa.totalStake() == 0);
-        require(sa.validatorCount() == 0);
-        require(sa.status() == Status.Killed);
+        require(saGetter.totalStake() == 0);
+        require(saGetter.validatorCount() == 0);
+        require(saGetter.status() == Status.Killed);
 
         vm.stopPrank();
     }
@@ -997,18 +1013,27 @@ contract SubnetActorDiamondTest is Test {
         bytes memory _genesis,
         uint8 _majorityPercentage
     ) public {
-        SubnetID memory _parentId = gwInfo.getNetworkName();
+        SubnetID memory _parentId = gwGetter.getNetworkName();
 
         sa = new SubnetActorFacet();
+        saGetter = new SubnetGetterFacet();
 
-        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](1);
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](2);
 
         diamondCut[0] = (
             IDiamond.FacetCut({
                 facetAddress: address(sa),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: saSelectors
+                functionSelectors: saManagerSelectors
             })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+            facetAddress: address(saGetter),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: saGetterSelectors
+        })
         );
 
         saDiamond = new SubnetActorDiamond(
@@ -1028,23 +1053,24 @@ contract SubnetActorDiamondTest is Test {
         );
 
         sa = SubnetActorFacet(address(saDiamond));
+        saGetter = SubnetGetterFacet(address(saDiamond));
 
         require(
-            keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_name)),
+            keccak256(abi.encodePacked(saGetter.name())) == keccak256(abi.encodePacked(_name)),
             "keccak256(abi.encodePacked(sa.name())) == keccak256(abi.encodePacked(_networkName))"
         );
-        require(sa.ipcGatewayAddr() == _ipcGatewayAddr, "sa.ipcGatewayAddr() == _ipcGatewayAddr");
+        require(saGetter.ipcGatewayAddr() == _ipcGatewayAddr, "sa.ipcGatewayAddr() == _ipcGatewayAddr");
         require(
-            sa.minActivationCollateral() == _minActivationCollateral,
+            saGetter.minActivationCollateral() == _minActivationCollateral,
             "sa.minActivationCollateral() == _minActivationCollateral"
         );
-        require(sa.minValidators() == _minValidators, "sa.minValidators() == _minValidators");
-        require(sa.topDownCheckPeriod() == _checkPeriod, "sa.topDownCheckPeriod() == _checkPeriod");
-        require(keccak256(sa.genesis()) == keccak256(_genesis), "keccak256(sa.genesis()) == keccak256(_genesis)");
-        require(sa.majorityPercentage() == _majorityPercentage, "sa.majorityPercentage() == _majorityPercentage");
-        require(sa.consensus() == _consensus);
+        require(saGetter.minValidators() == _minValidators, "sa.minValidators() == _minValidators");
+        require(saGetter.topDownCheckPeriod() == _checkPeriod, "sa.topDownCheckPeriod() == _checkPeriod");
+        require(keccak256(saGetter.genesis()) == keccak256(_genesis), "keccak256(sa.genesis()) == keccak256(_genesis)");
+        require(saGetter.majorityPercentage() == _majorityPercentage, "sa.majorityPercentage() == _majorityPercentage");
+        require(saGetter.consensus() == _consensus);
         require(
-            sa.getParent().toHash() == _parentId.toHash(),
+            saGetter.getParent().toHash() == _parentId.toHash(),
             "parent.toHash() == SubnetID({root: ROOTNET_CHAINID, route: path}).toHash()"
         );
     }
@@ -1055,7 +1081,7 @@ contract SubnetActorDiamondTest is Test {
         bytes32 prevHash,
         bytes memory proof
     ) internal view returns (BottomUpCheckpoint memory checkpoint) {
-        SubnetID memory subnetActorId = sa.getParent().createSubnetId(address(sa));
+        SubnetID memory subnetActorId = saGetter.getParent().createSubnetId(address(sa));
         CrossMsg[] memory crossMsgs = new CrossMsg[](1);
 
         crossMsgs[0] = CrossMsg({
@@ -1086,7 +1112,7 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function invariant_BalanceEqualsTotalStake() public {
-        assertEq(address(gatewayDiamond).balance, sa.totalStake());
+        assertEq(address(gatewayDiamond).balance, saGetter.totalStake());
         assertEq(address(sa).balance, 0);
     }
 
@@ -1105,8 +1131,8 @@ contract SubnetActorDiamondTest is Test {
         (SubnetID memory source, uint64 epoch, uint256 fee, bytes32 prevHash, bytes memory proof) = sa
             .committedCheckpoints(checkpoint.epoch);
 
-        require(sa.prevExecutedCheckpointHash() == checkpoint.toHash());
-        require(sa.lastVotingExecutedEpoch() == checkpoint.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint.epoch);
         require(source.toHash() == checkpoint.source.toHash());
         require(epoch == checkpoint.epoch);
         require(fee == checkpoint.fee);
@@ -1131,8 +1157,8 @@ contract SubnetActorDiamondTest is Test {
         (SubnetID memory source2, uint64 epoch2, uint256 fee2, bytes32 prevHash2, bytes memory proof2) = sa
             .committedCheckpoints(checkpoint2.epoch);
 
-        require(sa.prevExecutedCheckpointHash() == checkpoint2.toHash());
-        require(sa.lastVotingExecutedEpoch() == checkpoint2.epoch);
+        require(saGetter.prevExecutedCheckpointHash() == checkpoint2.toHash());
+        require(saGetter.lastVotingExecutedEpoch() == checkpoint2.epoch);
         require(source2.toHash() == checkpoint2.source.toHash());
         require(epoch2 == checkpoint2.epoch);
         require(fee2 == checkpoint2.fee);

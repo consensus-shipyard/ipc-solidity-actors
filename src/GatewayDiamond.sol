@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {AppStorage} from "./lib/LibAppStorage.sol";
+import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
@@ -13,7 +13,7 @@ error InvalidMajorityPercentage();
 
 contract GatewayDiamond {
     // solhint-disable-next-line private-vars-leading-underscore
-    AppStorage internal s;
+    GatewayActorStorage internal s;
 
     using SubnetIDHelper for SubnetID;
 

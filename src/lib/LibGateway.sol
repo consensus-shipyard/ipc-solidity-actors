@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {IGateway} from "../interfaces/IGateway.sol";
-import {AppStorage, LibAppStorage} from "../lib/LibAppStorage.sol";
+import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
@@ -56,7 +56,7 @@ library LibGateway {
         view
         returns (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint)
     {
-        AppStorage storage s = LibAppStorage.appStorage();
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         epoch = LibVoting.getNextEpoch(block.number, s.bottomUpCheckPeriod);
         checkpoint = s.bottomUpCheckpoints[epoch];
         exists = !checkpoint.source.isEmpty();
@@ -65,7 +65,7 @@ library LibGateway {
     /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution
     /// @param crossMessage - the cross message to be committed
     function commitTopDownMsg(CrossMsg memory crossMessage) internal {
-        AppStorage storage s = LibAppStorage.appStorage();
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         SubnetID memory subnetId = crossMessage.message.to.subnetId.down(s.networkName);
 
         (bool registered, Subnet storage subnet) = getSubnet(subnetId);
@@ -83,7 +83,7 @@ library LibGateway {
     /// @notice commit bottomup messages for their execution in the subnet. Adds the message to the checkpoint for future execution
     /// @param crossMessage - the cross message to be committed
     function commitBottomUpMsg(CrossMsg memory crossMessage) internal {
-        AppStorage storage s = LibAppStorage.appStorage();
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         (, , BottomUpCheckpoint storage checkpoint) = getCurrentBottomUpCheckpoint();
 
         crossMessage.message.nonce = s.bottomUpNonce;
@@ -109,7 +109,7 @@ library LibGateway {
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
     function getSubnet(address actor) internal view returns (bool found, Subnet storage subnet) {
-        AppStorage storage s = LibAppStorage.appStorage();
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         if (actor == address(0)) {
             revert InvalidActorAddress();
         }
@@ -123,7 +123,7 @@ library LibGateway {
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
     function getSubnet(SubnetID memory subnetId) internal view returns (bool found, Subnet storage subnet) {
-        AppStorage storage s = LibAppStorage.appStorage();
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         subnet = s.subnets[subnetId.toHash()];
         found = !subnet.id.isEmpty();
     }

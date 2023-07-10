@@ -62,7 +62,7 @@ error NotEnoughFundsForMembership();
 error EpochAlreadyExecuted();
 error EpochNotVotable();
 
-struct AppStorage {
+struct GatewayActorStorage {
     /// @notice path to the current network
     SubnetID networkName;
     /// @notice Number of active subnets spawned from this one
@@ -110,17 +110,17 @@ struct AppStorage {
     mapping(uint64 => EpochVoteTopDownSubmission) epochVoteSubmissions;
 }
 
-library LibAppStorage {
-    function appStorage() internal pure returns (AppStorage storage ds) {
+library LibGatewayActorStorage {
+    function appStorage() internal pure returns (GatewayActorStorage storage ds) {
         assembly {
             ds.slot := 0
         }
     }
 }
 
-contract Modifiers {
+contract GatewayActorModifiers {
     // solhint-disable-next-line private-vars-leading-underscore
-    AppStorage internal s;
+    GatewayActorStorage internal s;
 
     using FilAddress for address;
     using FilAddress for address payable;

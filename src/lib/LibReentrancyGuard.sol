@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 /// @title Reentrancy Guard
 /// @notice Abstract contract to provide protection against reentrancy
 abstract contract ReentrancyGuard {
-    bytes32 private constant NAMESPACE = keccak256("reentrancyguard.lib.gateway.diamond.storage");
+    bytes32 private constant NAMESPACE = keccak256("reentrancyguard.lib.diamond.storage");
 
     struct ReentrancyStorage {
         uint256 status;

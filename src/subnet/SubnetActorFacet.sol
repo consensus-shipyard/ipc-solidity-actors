@@ -24,19 +24,6 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
-import "hardhat/console.sol";
-
-struct ValidatorInfo {
-    address addr;
-    uint256 weight;
-    FvmAddress workerAddr;
-    string netAddresses;
-}
-
-struct ValidatorSet {
-    ValidatorInfo[] validators;
-    uint64 configurationNumber;
-}
 
 contract SubnetActorFacet is SubnetActorModifiers, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
@@ -193,73 +180,6 @@ contract SubnetActorFacet is SubnetActorModifiers, ReentrancyGuard {
         payable(msg.sender).sendValue(amount);
     }
 
-    /// @notice get the parent subnet id
-    function getParent() external view returns (SubnetID memory) {
-        return s.parentId;
-    }
-
-    /// @notice get the current status
-    function status() external view returns (Status) {
-        return s.status;
-    }
-
-    /// @notice get the total stake
-    function totalStake() external view returns (uint256) {
-        return s.totalStake;
-    }
-
-    function prevExecutedCheckpointHash() external view returns (bytes32) {
-        return s.prevExecutedCheckpointHash;
-    }
-
-    function lastVotingExecutedEpoch() external view returns (uint64) {
-        return LibVoting.lastVotingExecutedEpoch();
-    }
-
-    function executableQueue() external view returns (uint64, uint64, uint64) {
-        return LibVoting.executableQueue();
-    }
-
-    function accumulatedRewards(address a) external view returns (uint256) {
-        return s.accumulatedRewards[a];
-    }
-
-    function stake(address a) external view returns (uint256) {
-        return s.stake[a];
-    }
-
-    function ipcGatewayAddr() external view returns (address) {
-        return s.ipcGatewayAddr;
-    }
-
-    function minValidators() external view returns (uint64) {
-        return s.minValidators;
-    }
-
-    function topDownCheckPeriod() external view returns (uint64) {
-        return s.topDownCheckPeriod;
-    }
-
-    function genesis() external view returns (bytes memory) {
-        return s.genesis;
-    }
-
-    function majorityPercentage() external view returns (uint64) {
-        return LibVoting.majorityPercentage();
-    }
-
-    function consensus() external view returns (ConsensusType) {
-        return s.consensus;
-    }
-
-    function minActivationCollateral() external view returns (uint256) {
-        return s.minActivationCollateral;
-    }
-
-    function name() external view returns (bytes32) {
-        return s.name;
-    }
-
     /// @notice get the total stake
     function committedCheckpoints(
         uint64 e
@@ -269,51 +189,6 @@ contract SubnetActorFacet is SubnetActorModifiers, ReentrancyGuard {
         fee = s.committedCheckpoints[e].fee;
         prevHash = s.committedCheckpoints[e].prevHash;
         proof = s.committedCheckpoints[e].proof;
-    }
-
-    /// @notice get validator count
-    function validatorCount() external view returns (uint256) {
-        return s.validators.length();
-    }
-
-    /// @notice get validator at index
-    /// @param index - the index of the validator set
-    function validatorAt(uint256 index) external view returns (address) {
-        return s.validators.at(index);
-    }
-
-    /// @notice get all the validators in the subnet.
-    /// TODO: we can introduce pagination
-    function getValidators() external view returns (address[] memory) {
-        uint256 length = s.validators.length();
-        address[] memory result = new address[](length);
-
-        for (uint256 i = 0; i < length; ) {
-            result[i] = s.validators.at(i);
-            unchecked {
-                ++i;
-            }
-        }
-
-        return result;
-    }
-
-    /// @notice get the full details of the validators, not just their addresses.
-    function getValidatorSet() external view returns (ValidatorSet memory) {
-        uint256 length = s.validators.length();
-
-        ValidatorInfo[] memory details = new ValidatorInfo[](length);
-
-        for (uint256 i = 0; i < length; i++) {
-            details[i] = ValidatorInfo({
-                addr: s.validators.at(i),
-                weight: s.stake[s.validators.at(i)],
-                workerAddr: s.validatorWorkerAddresses[s.validators.at(i)],
-                netAddresses: s.validatorNetAddresses[s.validators.at(i)]
-            });
-        }
-
-        return ValidatorSet({validators: details, configurationNumber: s.configurationNumber});
     }
 
     /// @notice whether a validator has voted for a checkpoint submission during an epoch
