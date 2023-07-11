@@ -11,7 +11,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 
-contract SubnetManagerFacet is GatewayActorModifiers, ReentrancyGuard {
+contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
 

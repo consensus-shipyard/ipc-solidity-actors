@@ -8,7 +8,7 @@ import {LibVoting} from "../lib/LibVoting.sol";
 import {Status} from "../enums/Status.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 
-contract GetterFacet {
+contract GatewayGetterFacet {
     // solhint-disable-next-line private-vars-leading-underscore
     // slither-disable-next-line uninitialized-state-variables
     GatewayActorStorage internal s;

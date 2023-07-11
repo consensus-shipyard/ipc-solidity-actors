@@ -25,7 +25,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 
-contract SubnetActorFacet is SubnetActorModifiers, ReentrancyGuard {
+contract SubnetActorManagerFacet is SubnetActorModifiers, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;

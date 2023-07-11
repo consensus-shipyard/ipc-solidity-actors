@@ -4,27 +4,28 @@ pragma solidity 0.8.19;
 import "forge-std/Test.sol";
 import "forge-std/StdInvariant.sol";
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../src/structs/Checkpoint.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
-import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
+import {IDiamond} from "../src/interfaces/IDiamond.sol";
+import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
+import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
+import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../src/structs/Checkpoint.sol";
+import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
-import {IDiamond} from "../src/interfaces/IDiamond.sol";
-import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
-import {RouterFacet} from "../src/gateway/RouterFacet.sol";
-import {SubnetManagerFacet} from "../src/gateway/SubnetManagerFacet.sol";
-import {GetterFacet} from "../src/gateway/GetterFacet.sol";
 import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
+import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {GatewayDiamond} from "../src/GatewayDiamond.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
-import {SubnetGetterFacet} from "../src/subnet/SubnetGetterFacet.sol";
-import {SubnetActorFacet} from "../src/subnet/SubnetActorFacet.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {FvmAddress} from "../src/structs/FvmAddress.sol";
+import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
+import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
+import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
+import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
+import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
+import "../src/SubnetActor.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -47,25 +48,25 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
     uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
 
-    bytes4[] routerSelectors;
-    bytes4[] managerSelectors;
-    bytes4[] getterSelectors;
+    bytes4[] gwRouterSelectors;
+    bytes4[] gwManagerSelectors;
+    bytes4[] gwGetterSelectors;
 
     GatewayDiamond gatewayDiamond;
-    SubnetManagerFacet gwManager;
-    GetterFacet gwGetter;
-    RouterFacet gwRouter;
+    GatewayManagerFacet gwManager;
+    GatewayGetterFacet gwGetter;
+    GatewayRouterFacet gwRouter;
 
     GatewayDiamond gatewayDiamond2;
-    SubnetManagerFacet gwManager2;
-    GetterFacet gwGetter2;
-    RouterFacet gwRouter2;
+    GatewayManagerFacet gwManager2;
+    GatewayGetterFacet gwGetter2;
+    GatewayRouterFacet gwRouter2;
 
     bytes4[] saGetterSelectors;
     bytes4[] saManagerSelectors;
     SubnetActorDiamond saDiamond;
-    SubnetActorFacet saManager;
-    SubnetGetterFacet saGetter;
+    SubnetActorManagerFacet saManager;
+    SubnetActorGetterFacet saGetter;
 
     uint64 private constant ROOTNET_CHAINID = 123;
     address public constant ROOTNET_ADDRESS = address(1);
@@ -109,18 +110,18 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     error EpochAlreadyExecuted();
 
     constructor() {
-        saGetterSelectors = generateSelectors("SubnetGetterFacet");
-        saManagerSelectors = generateSelectors("SubnetActorFacet");
+        saGetterSelectors = generateSelectors("SubnetActorGetterFacet");
+        saManagerSelectors = generateSelectors("SubnetActorManagerFacet");
 
-        routerSelectors = generateSelectors("RouterFacet");
-        getterSelectors = generateSelectors("GetterFacet");
-        managerSelectors = generateSelectors("SubnetManagerFacet");
+        gwRouterSelectors = generateSelectors("GatewayRouterFacet");
+        gwGetterSelectors = generateSelectors("GatewayGetterFacet");
+        gwManagerSelectors = generateSelectors("GatewayManagerFacet");
     }
 
     function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
-        gwRouter = new RouterFacet();
-        gwManager = new SubnetManagerFacet();
-        gwGetter = new GetterFacet();
+        gwRouter = new GatewayRouterFacet();
+        gwManager = new GatewayManagerFacet();
+        gwGetter = new GatewayGetterFacet();
 
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](3);
 
@@ -128,7 +129,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: routerSelectors
+                functionSelectors: gwRouterSelectors
             })
         );
 
@@ -136,7 +137,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: managerSelectors
+                functionSelectors: gwManagerSelectors
             })
         );
 
@@ -144,7 +145,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: getterSelectors
+                functionSelectors: gwGetterSelectors
             })
         );
 
@@ -171,9 +172,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
-        gwRouter = new RouterFacet();
-        gwManager = new SubnetManagerFacet();
-        gwGetter = new GetterFacet();
+        gwRouter = new GatewayRouterFacet();
+        gwManager = new GatewayManagerFacet();
+        gwGetter = new GatewayGetterFacet();
 
         IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](3);
 
@@ -181,7 +182,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: routerSelectors
+                functionSelectors: gwRouterSelectors
             })
         );
 
@@ -189,7 +190,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: managerSelectors
+                functionSelectors: gwManagerSelectors
             })
         );
 
@@ -197,23 +198,23 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: getterSelectors
+                functionSelectors: gwGetterSelectors
             })
         );
 
         gatewayDiamond = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
-        gwGetter = GetterFacet(address(gatewayDiamond));
-        gwManager = SubnetManagerFacet(address(gatewayDiamond));
-        gwRouter = RouterFacet(address(gatewayDiamond));
+        gwGetter = GatewayGetterFacet(address(gatewayDiamond));
+        gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         addValidator(TOPDOWN_VALIDATOR_1, 100);
 
         gwConstructorParams.networkName = SubnetID({root: ROOTNET_CHAINID, route: path2});
 
         gatewayDiamond2 = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
-        gwGetter2 = GetterFacet(address(gatewayDiamond2));
-        gwManager2 = SubnetManagerFacet(address(gatewayDiamond2));
-        gwRouter2 = RouterFacet(address(gatewayDiamond2));
+        gwGetter2 = GatewayGetterFacet(address(gatewayDiamond2));
+        gwManager2 = GatewayManagerFacet(address(gatewayDiamond2));
+        gwRouter2 = GatewayRouterFacet(address(gatewayDiamond2));
 
         // create a subnet actor.
 
@@ -230,8 +231,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             genesis: GENESIS
         });
 
-        saManager  = new SubnetActorFacet();
-        saGetter = new SubnetGetterFacet();
+        saManager  = new SubnetActorManagerFacet();
+        saGetter = new SubnetActorGetterFacet();
 
         IDiamond.FacetCut[] memory saDiamondCut = new IDiamond.FacetCut[](2);
 
@@ -252,8 +253,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         );
 
         saDiamond = new SubnetActorDiamond(saDiamondCut, saConstructorParams);
-        saManager  = SubnetActorFacet(address(saDiamond));
-        saGetter = SubnetGetterFacet(address(saDiamond));
+        saManager  = SubnetActorManagerFacet(address(saDiamond));
+        saGetter = SubnetActorGetterFacet(address(saDiamond));
 
         targetContract(address(gatewayDiamond));
     }
@@ -281,9 +282,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
 
         GatewayDiamond dep;
-        SubnetManagerFacet depManager = new SubnetManagerFacet();
-        GetterFacet depGetter = new GetterFacet();
-        RouterFacet depRouter = new RouterFacet();
+        GatewayManagerFacet depManager = new GatewayManagerFacet();
+        GatewayGetterFacet depGetter = new GatewayGetterFacet();
+        GatewayRouterFacet depRouter = new GatewayRouterFacet();
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
@@ -294,9 +295,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         });
 
         dep = createDiamond(constructorParams);
-        depGetter = GetterFacet(address(dep));
-        depManager = SubnetManagerFacet(address(dep));
-        depRouter = RouterFacet(address(dep));
+        depGetter = GatewayGetterFacet(address(dep));
+        depManager = GatewayManagerFacet(address(dep));
+        depRouter = GatewayRouterFacet(address(dep));
 
         SubnetID memory networkName = depGetter.getNetworkName();
 
@@ -319,9 +320,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         path[1] = address(1);
 
         GatewayDiamond dep;
-        SubnetManagerFacet depManager = new SubnetManagerFacet();
-        GetterFacet depGetter = new GetterFacet();
-        RouterFacet depRouter = new RouterFacet();
+        GatewayManagerFacet depManager = new GatewayManagerFacet();
+        GatewayGetterFacet depGetter = new GatewayGetterFacet();
+        GatewayRouterFacet depRouter = new GatewayRouterFacet();
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
@@ -337,7 +338,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(depRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: routerSelectors
+                functionSelectors: gwRouterSelectors
             })
         );
 
@@ -345,7 +346,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(depManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: managerSelectors
+                functionSelectors: gwManagerSelectors
             })
         );
 
@@ -353,15 +354,15 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(depGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: getterSelectors
+                functionSelectors: gwGetterSelectors
             })
         );
 
         dep = new GatewayDiamond(diamondCut, constructorParams);
 
-        depGetter = GetterFacet(address(dep));
-        depManager = SubnetManagerFacet(address(dep));
-        depRouter = RouterFacet(address(dep));
+        depGetter = GatewayGetterFacet(address(dep));
+        depManager = GatewayManagerFacet(address(dep));
+        depRouter = GatewayRouterFacet(address(dep));
 
         SubnetID memory networkName = depGetter.getNetworkName();
 
@@ -1141,9 +1142,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
-        gwGetter = GetterFacet(address(gatewayDiamond));
-        gwManager = SubnetManagerFacet(address(gatewayDiamond));
-        gwRouter = RouterFacet(address(gatewayDiamond));
+        gwGetter = GatewayGetterFacet(address(gatewayDiamond));
+        gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -1194,9 +1195,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
-        gwGetter = GetterFacet(address(gatewayDiamond));
-        gwManager = SubnetManagerFacet(address(gatewayDiamond));
-        gwRouter = RouterFacet(address(gatewayDiamond));
+        gwGetter = GatewayGetterFacet(address(gatewayDiamond));
+        gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         vm.roll(0);
         vm.warp(0);
@@ -1221,9 +1222,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
-        gwGetter = GetterFacet(address(gatewayDiamond));
-        gwManager = SubnetManagerFacet(address(gatewayDiamond));
-        gwRouter = RouterFacet(address(gatewayDiamond));
+        gwGetter = GatewayGetterFacet(address(gatewayDiamond));
+        gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -1251,9 +1252,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
-        gwGetter = GetterFacet(address(gatewayDiamond));
-        gwManager = SubnetManagerFacet(address(gatewayDiamond));
-        gwRouter = RouterFacet(address(gatewayDiamond));
+        gwGetter = GatewayGetterFacet(address(gatewayDiamond));
+        gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -1924,9 +1925,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
-        gwGetter = GetterFacet(address(gatewayDiamond));
-        gwManager = SubnetManagerFacet(address(gatewayDiamond));
-        gwRouter = RouterFacet(address(gatewayDiamond));
+        gwGetter = GatewayGetterFacet(address(gatewayDiamond));
+        gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         address validator = vm.addr(100);
 
@@ -2513,9 +2514,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function registerSubnetGW(uint256 collateral, address subnetAddress, GatewayDiamond gw) internal {
-        gwRouter = RouterFacet(address(gw));
-        gwManager = SubnetManagerFacet(address(gw));
-        gwGetter = GetterFacet(address(gw));
+        gwRouter = GatewayRouterFacet(address(gw));
+        gwManager = GatewayManagerFacet(address(gw));
+        gwGetter = GatewayGetterFacet(address(gw));
 
         gwManager.register{value: collateral}();
 
@@ -2544,9 +2545,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address subnetAddress,
         GatewayDiamond gw
     ) internal returns (SubnetID memory, uint256, uint256, uint256, uint256, Status) {
-        gwRouter = RouterFacet(address(gw));
-        gwManager = SubnetManagerFacet(address(gw));
-        gwGetter = GetterFacet(address(gw));
+        gwRouter = GatewayRouterFacet(address(gw));
+        gwManager = GatewayManagerFacet(address(gw));
+        gwGetter = GatewayGetterFacet(address(gw));
 
         SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(subnetAddress);
 

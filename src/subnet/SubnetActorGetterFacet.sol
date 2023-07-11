@@ -36,7 +36,7 @@ struct ValidatorSet {
     uint64 configurationNumber;
 }
 
-contract SubnetGetterFacet {
+contract SubnetActorGetterFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;

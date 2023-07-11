@@ -17,7 +17,7 @@ import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
-contract RouterFacet is GatewayActorModifiers {
+contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
