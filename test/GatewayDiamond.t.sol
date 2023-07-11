@@ -232,29 +232,29 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             genesis: GENESIS
         });
 
-        saManager  = new SubnetActorManagerFacet();
+        saManager = new SubnetActorManagerFacet();
         saGetter = new SubnetActorGetterFacet();
 
         IDiamond.FacetCut[] memory saDiamondCut = new IDiamond.FacetCut[](2);
 
         saDiamondCut[0] = (
             IDiamond.FacetCut({
-            facetAddress: address(saGetter),
-            action: IDiamond.FacetCutAction.Add,
-            functionSelectors: saGetterSelectors
-        })
+                facetAddress: address(saGetter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saGetterSelectors
+            })
         );
 
         saDiamondCut[1] = (
             IDiamond.FacetCut({
-            facetAddress: address(saManager),
-            action: IDiamond.FacetCutAction.Add,
-            functionSelectors: saManagerSelectors
-        })
+                facetAddress: address(saManager),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saManagerSelectors
+            })
         );
 
         saDiamond = new SubnetActorDiamond(saDiamondCut, saConstructorParams);
-        saManager  = SubnetActorManagerFacet(address(saDiamond));
+        saManager = SubnetActorManagerFacet(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
 
         targetContract(address(gatewayDiamond));
@@ -722,7 +722,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         fund(funderAddress, fundAmount);
 
         vm.stopPrank();
-        vm.startPrank(address(saManager ));
+        vm.startPrank(address(saManager));
         vm.expectRevert(NotEmptySubnetCircSupply.selector);
 
         gwManager.kill();
@@ -1050,7 +1050,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         _join(validatorAddress);
 
         vm.startPrank(funderAddress);
-        vm.expectCall(address(saManager), 0, abi.encodeWithSelector(saManager.reward.selector, gwGetter.crossMsgFee()), 5);
+        vm.expectCall(
+            address(saManager),
+            0,
+            abi.encodeWithSelector(saManager.reward.selector, gwGetter.crossMsgFee()),
+            5
+        );
 
         for (uint256 i = 0; i < numberOfFunds; i++) {
             vm.deal(funderAddress, fundAmount + 1);
@@ -1690,7 +1695,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.deal(caller, 1 ether);
         vm.expectCall(caller, 1 ether - gwGetter.crossMsgFee(), new bytes(0), 1);
-        vm.expectCall(address(this), 0, abi.encodeWithSelector(ISubnetActor.reward.selector, gwGetter.crossMsgFee()), 1);
+        vm.expectCall(
+            address(this),
+            0,
+            abi.encodeWithSelector(ISubnetActor.reward.selector, gwGetter.crossMsgFee()),
+            1
+        );
 
         vm.prank(caller);
         gwRouter.propagate{value: 1 ether}(postboxId);
@@ -2464,22 +2474,25 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function _join(address validatorAddress) internal {
         vm.prank(validatorAddress);
         vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT + 1);
-        saManager.join{value: MIN_COLLATERAL_AMOUNT}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
+        saManager.join{value: MIN_COLLATERAL_AMOUNT}(
+            DEFAULT_NET_ADDR,
+            FvmAddress({addrType: 1, payload: new bytes(20)})
+        );
 
         require(saGetter.status() == Status.Active);
     }
 
     function release(uint256 releaseAmount, uint256 crossMsgFee, uint64 epoch) internal {
-        (, , uint256 feeBefore, , , , ) = gwGetter.bottomUpCheckpoints(epoch);
+        BottomUpCheckpoint memory beforeRelease = gwGetter.bottomUpCheckpoints(epoch);
 
         uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
-        uint256 expectedCheckpointDataFee = feeBefore + crossMsgFee;
+        uint256 expectedCheckpointDataFee = beforeRelease.fee + crossMsgFee;
 
         gwManager.release{value: releaseAmount}();
 
-        (, , uint256 fee, , , , ) = gwGetter.bottomUpCheckpoints(epoch);
+        BottomUpCheckpoint memory afterRelease = gwGetter.bottomUpCheckpoints(epoch);
 
-        require(fee == expectedCheckpointDataFee, "cpDataAfter.fee == expectedCheckpointDataFee");
+        require(afterRelease.fee == expectedCheckpointDataFee, "cpDataAfter.fee == expectedCheckpointDataFee");
         require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
     }
 
@@ -2552,18 +2565,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(subnetAddress);
 
-        (
-            Status status,
-            uint64 topDownNonce,
-            uint256 appliedBottomUpNonce,
-            uint256 stake,
-            ,
-            uint256 circSupply,
-            SubnetID memory id,
+        Subnet memory subnet = gwGetter.subnets(subnetId.toHash());
 
-        ) = gwGetter.subnets(subnetId.toHash());
-
-        return (id, stake, topDownNonce, appliedBottomUpNonce, circSupply, status);
+        return (
+            subnet.id,
+            subnet.stake,
+            subnet.topDownNonce,
+            subnet.appliedBottomUpNonce,
+            subnet.circSupply,
+            subnet.status
+        );
     }
 
     function getSubnet(

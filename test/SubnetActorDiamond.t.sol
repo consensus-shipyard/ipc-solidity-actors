@@ -124,7 +124,8 @@ contract SubnetActorDiamondTest is Test {
 
     function createSADiamondWithFaucet(
         SubnetActorDiamond.ConstructorParams memory params,
-        address getterFaucet, address managerFaucet
+        address getterFaucet,
+        address managerFaucet
     ) public returns (SubnetActorDiamond) {
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](2);
 
@@ -138,10 +139,10 @@ contract SubnetActorDiamondTest is Test {
 
         diamondCut[1] = (
             IDiamond.FacetCut({
-            facetAddress: managerFaucet,
-            action: IDiamond.FacetCutAction.Add,
-            functionSelectors: saManagerSelectors
-        })
+                facetAddress: managerFaucet,
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saManagerSelectors
+            })
         );
 
         saDiamond = new SubnetActorDiamond(diamondCut, params);
@@ -1022,10 +1023,10 @@ contract SubnetActorDiamondTest is Test {
 
         diamondCut[1] = (
             IDiamond.FacetCut({
-            facetAddress: address(saGetter),
-            action: IDiamond.FacetCutAction.Add,
-            functionSelectors: saGetterSelectors
-        })
+                facetAddress: address(saGetter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saGetterSelectors
+            })
         );
 
         saDiamond = new SubnetActorDiamond(
@@ -1058,8 +1059,14 @@ contract SubnetActorDiamondTest is Test {
         );
         require(saGetter.minValidators() == _minValidators, "saGetter.minValidators() == _minValidators");
         require(saGetter.topDownCheckPeriod() == _checkPeriod, "saGetter.topDownCheckPeriod() == _checkPeriod");
-        require(keccak256(saGetter.genesis()) == keccak256(_genesis), "keccak256(saGetter.genesis()) == keccak256(_genesis)");
-        require(saGetter.majorityPercentage() == _majorityPercentage, "saGetter.majorityPercentage() == _majorityPercentage");
+        require(
+            keccak256(saGetter.genesis()) == keccak256(_genesis),
+            "keccak256(saGetter.genesis()) == keccak256(_genesis)"
+        );
+        require(
+            saGetter.majorityPercentage() == _majorityPercentage,
+            "saGetter.majorityPercentage() == _majorityPercentage"
+        );
         require(saGetter.consensus() == _consensus);
         require(
             saGetter.getParent().toHash() == _parentId.toHash(),

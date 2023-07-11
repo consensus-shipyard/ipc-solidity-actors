@@ -45,30 +45,8 @@ contract GatewayGetterFacet {
         return s.networkName;
     }
 
-    function bottomUpCheckpoints(
-        uint64 e
-    )
-        external
-        view
-        returns (
-            SubnetID memory source,
-            uint64 epoch,
-            uint256 fee,
-            CrossMsg[] memory crossMsgs,
-            ChildCheck[] memory children,
-            bytes32 prevHash,
-            bytes memory proof
-        )
-    {
-        return (
-            s.bottomUpCheckpoints[e].source,
-            s.bottomUpCheckpoints[e].epoch,
-            s.bottomUpCheckpoints[e].fee,
-            s.bottomUpCheckpoints[e].crossMsgs,
-            s.bottomUpCheckpoints[e].children,
-            s.bottomUpCheckpoints[e].prevHash,
-            s.bottomUpCheckpoints[e].proof
-        );
+    function bottomUpCheckpoints(uint64 e) external view returns (BottomUpCheckpoint memory) {
+        return s.bottomUpCheckpoints[e];
     }
 
     /// @notice returns the subnet with the given id
@@ -79,30 +57,8 @@ contract GatewayGetterFacet {
         return LibGateway.getSubnet(subnetId);
     }
 
-    function subnets(
-        bytes32 h
-    )
-        external
-        view
-        returns (
-            Status status,
-            uint64 topDownNonce,
-            uint64 appliedBottomUpNonce,
-            uint256 stake,
-            uint256 genesisEpoch,
-            uint256 circSupply,
-            SubnetID memory id,
-            BottomUpCheckpoint memory prevCheckpoint
-        )
-    {
-        status = s.subnets[h].status;
-        topDownNonce = s.subnets[h].topDownNonce;
-        appliedBottomUpNonce = s.subnets[h].appliedBottomUpNonce;
-        stake = s.subnets[h].stake;
-        genesisEpoch = s.subnets[h].genesisEpoch;
-        circSupply = s.subnets[h].circSupply;
-        id = s.subnets[h].id;
-        prevCheckpoint = s.subnets[h].prevCheckpoint;
+    function subnets(bytes32 h) external view returns (Subnet memory subnet) {
+        return s.subnets[h];
     }
 
     /// @notice get number of top-down messages for the given subnet
