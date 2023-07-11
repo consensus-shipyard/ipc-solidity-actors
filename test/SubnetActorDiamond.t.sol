@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
+import {TestUtils} from "./TestUtils.sol";
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
@@ -77,22 +78,12 @@ contract SubnetActorDiamondTest is Test {
     error GatewayCannotBeZero();
 
     constructor() {
-        saGetterSelectors = generateSelectors("SubnetActorGetterFacet");
-        saManagerSelectors = generateSelectors("SubnetActorManagerFacet");
+        saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
+        saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacet");
 
-        gwRouterSelectors = generateSelectors("GatewayRouterFacet");
-        gwGetterSelectors = generateSelectors("GatewayGetterFacet");
-        gwManagerSelectors = generateSelectors("GatewayManagerFacet");
-    }
-
-    function generateSelectors(string memory facetName) internal returns (bytes4[] memory facetSelectors) {
-        string[] memory inputs = new string[](3);
-        inputs[0] = "python3";
-        inputs[1] = "scripts/python/get_selectors.py";
-        inputs[2] = facetName;
-
-        bytes memory res = vm.ffi(inputs);
-        facetSelectors = abi.decode(res, (bytes4[]));
+        gwRouterSelectors = TestUtils.generateSelectors(vm, "GatewayRouterFacet");
+        gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
+        gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
     }
 
     function createGWDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {

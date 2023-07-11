@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/StdInvariant.sol";
+import {TestUtils} from "./TestUtils.sol";
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
@@ -110,12 +111,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     error EpochAlreadyExecuted();
 
     constructor() {
-        saGetterSelectors = generateSelectors("SubnetActorGetterFacet");
-        saManagerSelectors = generateSelectors("SubnetActorManagerFacet");
+        saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
+        saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacet");
 
-        gwRouterSelectors = generateSelectors("GatewayRouterFacet");
-        gwGetterSelectors = generateSelectors("GatewayGetterFacet");
-        gwManagerSelectors = generateSelectors("GatewayManagerFacet");
+        gwRouterSelectors = TestUtils.generateSelectors(vm, "GatewayRouterFacet");
+        gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
+        gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
     }
 
     function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
@@ -2569,15 +2570,5 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address subnetAddress
     ) internal returns (SubnetID memory, uint256, uint256, uint256, uint256, Status) {
         return getSubnetGW(subnetAddress, gatewayDiamond);
-    }
-
-    function generateSelectors(string memory facetName) internal returns (bytes4[] memory facetSelectors) {
-        string[] memory inputs = new string[](3);
-        inputs[0] = "python3";
-        inputs[1] = "scripts/python/get_selectors.py";
-        inputs[2] = facetName;
-
-        bytes memory res = vm.ffi(inputs);
-        facetSelectors = abi.decode(res, (bytes4[]));
     }
 }
