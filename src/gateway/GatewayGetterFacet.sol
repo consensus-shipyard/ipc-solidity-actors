@@ -1,17 +1,25 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
-import {CrossMsg, BottomUpCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
-import {LibGateway} from "../lib/LibGateway.sol";
-import {LibVoting} from "../lib/LibVoting.sol";
+import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {CrossMsg, BottomUpCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
+import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
+import {LibGateway} from "../lib/LibGateway.sol";
+import {LibVoting} from "../lib/LibVoting.sol";
+import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
+import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
 contract GatewayGetterFacet {
     // solhint-disable-next-line private-vars-leading-underscore
     // slither-disable-next-line uninitialized-state-variables
     GatewayActorStorage internal s;
+
+    using SubnetIDHelper for SubnetID;
+    using CheckpointHelper for BottomUpCheckpoint;
+
+    error NotRegisteredSubnet();
 
     function crossMsgFee() external view returns (uint256) {
         return s.crossMsgFee;
@@ -67,6 +75,22 @@ contract GatewayGetterFacet {
         return subnet.topDownMsgs.length;
     }
 
+    /// @notice get the top-down message at the given index for the given subnet
+    function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
+        (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
+        return subnet.topDownMsgs[index];
+    }
+
+    function getTopDownMsgs(SubnetID calldata subnetId) external view returns (CrossMsg[] memory) {
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
+
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
+
+        return subnet.topDownMsgs;
+    }
+
     function totalWeight() public view returns (uint256) {
         return s.totalWeight;
     }
@@ -83,10 +107,32 @@ contract GatewayGetterFacet {
         return (s.postbox[id].message, s.postbox[id].wrapped);
     }
 
-    /// @notice get the top-down message at the given index for the given subnet
-    function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
-        (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
-        return subnet.topDownMsgs[index];
+    /// @notice whether a validator has voted for a checkpoint submission during an epoch
+    /// @param epoch - the epoch to check
+    /// @param submitter - the validator to check
+    function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns (bool) {
+        EpochVoteTopDownSubmission storage voteSubmission = s.epochVoteSubmissions[epoch];
+        return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
+    }
+
+    /// @notice returns the current bottom-up checkpoint
+    /// @param epoch - the epoch to check
+    /// @return exists - whether the checkpoint exists
+    /// @return checkpoint - the checkpoint struct
+    function bottomUpCheckpointAtEpoch(
+        uint64 epoch
+    ) public view returns (bool exists, BottomUpCheckpoint memory checkpoint) {
+        checkpoint = s.bottomUpCheckpoints[epoch];
+        exists = !checkpoint.source.isEmpty();
+    }
+
+    /// @notice returns the historical bottom-up checkpoint hash
+    /// @param epoch - the epoch to check
+    /// @return exists - whether the checkpoint exists
+    /// @return hash - the hash of the checkpoint
+    function bottomUpCheckpointHashAtEpoch(uint64 epoch) external view returns (bool, bytes32) {
+        (bool exists, BottomUpCheckpoint memory checkpoint) = bottomUpCheckpointAtEpoch(epoch);
+        return (exists, checkpoint.toHash());
     }
 
     function getGenesisEpoch() public view returns (uint64) {
