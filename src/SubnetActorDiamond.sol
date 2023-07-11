@@ -13,7 +13,6 @@ import {GatewayDiamond} from "./GatewayDiamond.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 error InvalidMajorityPercentage();
-import "hardhat/console.sol";
 
 contract SubnetActorDiamond {
     // solhint-disable-next-line private-vars-leading-underscore
