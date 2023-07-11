@@ -30,7 +30,7 @@ format:
 	npx prettier --check -w 'src/**/*.sol' 'test/*.sol'
 
 test:
-	forge test
+	forge test -vvv --ffi
 
 prepare: format lint test slither
 
