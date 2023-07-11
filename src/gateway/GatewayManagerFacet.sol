@@ -32,7 +32,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
             revert AlreadyInitialized();
         }
 
-        LibVoting.setGenesisEpoch(genesisEpoch);
+        LibVoting.initGenesisEpoch(genesisEpoch);
         s.initialized = true;
     }
 

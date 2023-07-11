@@ -64,12 +64,7 @@ contract GatewayGetterFacet {
     /// @notice get number of top-down messages for the given subnet
     function getSubnetTopDownMsgsLength(SubnetID memory subnetId) external view returns (uint256) {
         (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
-
         return subnet.topDownMsgs.length;
-    }
-
-    function getGenesisEpoch() public view returns (uint64) {
-        return LibVoting.getGenesisEpoch();
     }
 
     function totalWeight() public view returns (uint256) {
@@ -92,6 +87,10 @@ contract GatewayGetterFacet {
     function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
         (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
         return subnet.topDownMsgs[index];
+    }
+
+    function getGenesisEpoch() public view returns (uint64) {
+        return LibVoting.getGenesisEpoch();
     }
 
     function executableQueue() public view returns (uint64, uint64, uint64) {

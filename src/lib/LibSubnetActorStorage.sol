@@ -4,23 +4,22 @@ pragma solidity ^0.8.0;
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {Status} from "../enums/Status.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
-import {SubnetID} from "../structs/Subnet.sol";
-import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
-import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {IGateway} from "../interfaces/IGateway.sol";
-import {AccountHelper} from "../lib/AccountHelper.sol";
-import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
+import {EpochVoteSubmission, EpochVoteBottomUpSubmission} from "../structs/EpochVoteSubmission.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
-import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
-import {EpochVoteBottomUpSubmission} from "../structs/EpochVoteSubmission.sol";
-import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
-import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
-import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
+import {SubnetID} from "../structs/Subnet.sol";
+import {IGateway} from "../interfaces/IGateway.sol";
+import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
+import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
+import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
+import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
+import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
+import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
+import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
 struct SubnetActorStorage {
     /// @notice Total collateral currently deposited in the GW from the subnet

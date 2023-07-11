@@ -1,11 +1,11 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
+import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
-import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
-import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
+import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
 
 struct VotingStorage {
     /// @notice last executed epoch after voting
@@ -32,7 +32,7 @@ library LibVoting {
     /// @notice minimum checkpoint period. Values get clamped to this
     uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
 
-    bytes32 constant VOTING_STORAGE_POSITION = keccak256("voting.standard.diamond.storage");
+    bytes32 constant VOTING_STORAGE_POSITION = keccak256("libvoting.lib.diamond.storage");
 
     function votingStorage() internal pure returns (VotingStorage storage s) {
         bytes32 position = VOTING_STORAGE_POSITION;
@@ -46,7 +46,7 @@ library LibVoting {
         _;
     }
 
-    function applyValidEpochOnly(uint64 epoch) public view {
+    function applyValidEpochOnly(uint64 epoch) internal view {
         _validEpochOnly(epoch);
     }
 
@@ -62,8 +62,7 @@ library LibVoting {
         }
     }
 
-    // TODO: Denis. Should it be internal? Can anyone just call it and rewrite the values?
-    function initVoting(uint8 _majorityPercentage, uint64 _submissionPeriod) public {
+    function initVoting(uint8 _majorityPercentage, uint64 _submissionPeriod) internal {
         VotingStorage storage s = votingStorage();
         if (_majorityPercentage > 100) {
             revert InvalidMajorityPercentage();
@@ -75,9 +74,9 @@ library LibVoting {
         s.executableQueue.period = s.submissionPeriod;
     }
 
-    function initGenesisEpoch(uint64 _genesisEpoch) public {
+    function initGenesisEpoch(uint64 genesisEpoch) internal {
         VotingStorage storage s = votingStorage();
-        s.genesisEpoch = _genesisEpoch;
+        s.genesisEpoch = genesisEpoch;
     }
 
     /// @notice method that gives the epoch for a given block number and checkpoint period
@@ -238,17 +237,12 @@ library LibVoting {
         return s.lastVotingExecutedEpoch;
     }
 
-    function setGenesisEpoch(uint64 genesisEpoch) internal {
-        VotingStorage storage s = votingStorage();
-        s.genesisEpoch = genesisEpoch;
-    }
-
     function majorityPercentage() public view returns (uint64) {
         VotingStorage storage s = votingStorage();
         return s.majorityPercentage;
     }
 
-    function removeFromExecutableQueue(uint64 e) public {
+    function removeFromExecutableQueue(uint64 e) internal {
         VotingStorage storage s = votingStorage();
         s.executableQueue.remove(e);
     }

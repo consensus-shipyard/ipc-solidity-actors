@@ -4,16 +4,16 @@ pragma solidity 0.8.19;
 import {IDiamondCut} from "../interfaces/IDiamondCut.sol";
 import {IDiamond} from "../interfaces/IDiamond.sol";
 
-error NotOwner();
-error NoBytecodeAtAddress(address _contractAddress, string _message);
-error IncorrectFacetCutAction(IDiamondCut.FacetCutAction _action);
-error NoSelectorsProvidedForFacetForCut(address _facetAddress);
-error CannotAddFunctionToDiamondThatAlreadyExists(bytes4 _selector);
-error CannotAddSelectorsToZeroAddress(bytes4[] _selectors);
-error InitializationFunctionReverted(address _initializationContractAddress, bytes _calldata);
-
 library LibDiamond {
-    bytes32 public constant DIAMOND_STORAGE_POSITION = keccak256("libdiamond.lib.gateway.diamond.storage");
+    bytes32 public constant DIAMOND_STORAGE_POSITION = keccak256("libdiamond.lib.diamond.storage");
+
+    error NotOwner();
+    error NoBytecodeAtAddress(address _contractAddress, string _message);
+    error IncorrectFacetCutAction(IDiamondCut.FacetCutAction _action);
+    error NoSelectorsProvidedForFacetForCut(address _facetAddress);
+    error CannotAddFunctionToDiamondThatAlreadyExists(bytes4 _selector);
+    error CannotAddSelectorsToZeroAddress(bytes4[] _selectors);
+    error InitializationFunctionReverted(address _initializationContractAddress, bytes _calldata);
 
     event DiamondCut(IDiamondCut.FacetCut[] _diamondCut, address _init, bytes _calldata);
 

@@ -15,6 +15,7 @@ import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {ExecutableQueueHelper} from "../lib/ExecutableQueueHelper.sol";
 import {EpochVoteBottomUpSubmission} from "../structs/EpochVoteSubmission.sol";
+import {ValidatorInfo, ValidatorSet} from "../structs/Validator.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 import {Status} from "../enums/Status.sol";
@@ -23,18 +24,6 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
-
-struct ValidatorInfo {
-    address addr;
-    uint256 weight;
-    FvmAddress workerAddr;
-    string netAddresses;
-}
-
-struct ValidatorSet {
-    ValidatorInfo[] validators;
-    uint64 configurationNumber;
-}
 
 contract SubnetActorGetterFacet {
     using EnumerableSet for EnumerableSet.AddressSet;

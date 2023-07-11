@@ -39,6 +39,7 @@ contract SubnetActorDiamondTest is Test {
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 private constant ROOTNET_CHAINID = 123;
+
     address GATEWAY_ADDRESS;
 
     bytes4[] saGetterSelectors;
@@ -86,7 +87,7 @@ contract SubnetActorDiamondTest is Test {
         gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
     }
 
-    function createGWDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
+    function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         gwRouter = new GatewayRouterFacet();
         gwManager = new GatewayManagerFacet();
         gwGetter = new GatewayGetterFacet();
@@ -122,7 +123,7 @@ contract SubnetActorDiamondTest is Test {
         return gatewayDiamond;
     }
 
-    function createSADiamondWithFaucet(
+    function createSubnetActorDiamondWithFaucets(
         SubnetActorDiamond.ConstructorParams memory params,
         address getterFaucet,
         address managerFaucet
@@ -158,7 +159,7 @@ contract SubnetActorDiamondTest is Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
-        gatewayDiamond = createGWDiamond(gwConstructorParams);
+        gatewayDiamond = createGatewayDiamond(gwConstructorParams);
 
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
@@ -212,7 +213,7 @@ contract SubnetActorDiamondTest is Test {
         SubnetActorGetterFacet saDupGetterFaucet = new SubnetActorGetterFacet();
 
         vm.expectRevert(GatewayCannotBeZero.selector);
-        createSADiamondWithFaucet(
+        createSubnetActorDiamondWithFaucets(
             SubnetActorDiamond.ConstructorParams({
                 parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
                 name: DEFAULT_NETWORK_NAME,
