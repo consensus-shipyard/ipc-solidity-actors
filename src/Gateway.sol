@@ -874,8 +874,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @notice returns the list of registered subnets in IPC
     /// @return subnet - the list of subnets
     function listSubnets() external view returns (Subnet[] memory) {
-        Subnet[] memory out = new Subnet[](subnetKeys.length);
-        for (uint256 i = 0; i < subnetKeys.length; i++) {
+        uint256 size = subnetKeys.length;
+        Subnet[] memory out = new Subnet[](size);
+        for (uint256 i = 0; i < size; ++i) {
             bytes32 key = subnetKeys[i];
             out[i] = subnets[key];
         }
