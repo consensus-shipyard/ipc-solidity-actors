@@ -469,7 +469,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
 
         totalWeight = totalValidatorsWeight;
-        revert MethodNotSupportedYet()
+        // revert MethodNotSupportedYet();
     }
 
     /// @notice allows a validator to submit a batch of messages in a top-down commitment
