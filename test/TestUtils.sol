@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {Vm} from "forge-std/Test.sol";
+import "forge-std/Test.sol";
 
 library TestUtils {
     function generateSelectors(Vm vm, string memory facetName) internal returns (bytes4[] memory facetSelectors) {

@@ -26,7 +26,7 @@ import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
-import "../src/SubnetActor.sol";
+import "../src/gen/Selectors.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -110,15 +110,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     error EpochNotVotable();
     error EpochAlreadyExecuted();
 
-    constructor() {
-        saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
-        saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacet");
-
-        gwRouterSelectors = TestUtils.generateSelectors(vm, "GatewayRouterFacet");
-        gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
-        gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
-    }
-
     function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         gwRouter = new GatewayRouterFacet();
         gwManager = new GatewayManagerFacet();
@@ -130,7 +121,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwRouterSelectors
+                functionSelectors: abi.decode(GatewayRouterFacetSelectors, (bytes4[]))
             })
         );
 
@@ -138,7 +129,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwManagerSelectors
+                functionSelectors: abi.decode(GatewayManagerFacetSelectors, (bytes4[]))
             })
         );
 
@@ -146,7 +137,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwGetterSelectors
+                functionSelectors: abi.decode(GatewayGetterFacetSelectors, (bytes4[]))
             })
         );
 
@@ -183,7 +174,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwRouterSelectors
+                functionSelectors: abi.decode(GatewayRouterFacetSelectors, (bytes4[]))
             })
         );
 
@@ -191,7 +182,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwManagerSelectors
+                functionSelectors: abi.decode(GatewayManagerFacetSelectors, (bytes4[]))
             })
         );
 
@@ -199,7 +190,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwGetterSelectors
+                functionSelectors: abi.decode(GatewayGetterFacetSelectors, (bytes4[]))
             })
         );
 
@@ -241,7 +232,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(saGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: saGetterSelectors
+                functionSelectors: abi.decode(SubnetActorGetterFacetSelectors, (bytes4[]))
             })
         );
 
@@ -249,7 +240,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(saManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: saManagerSelectors
+                functionSelectors: abi.decode(SubnetActorManagerFacetSelectors, (bytes4[]))
             })
         );
 
@@ -339,7 +330,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(depRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwRouterSelectors
+                functionSelectors: abi.decode(GatewayRouterFacetSelectors, (bytes4[]))
             })
         );
 
@@ -347,7 +338,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(depManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwManagerSelectors
+                functionSelectors: abi.decode(GatewayManagerFacetSelectors, (bytes4[]))
             })
         );
 
@@ -355,7 +346,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             IDiamond.FacetCut({
                 facetAddress: address(depGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwGetterSelectors
+                functionSelectors: abi.decode(GatewayGetterFacetSelectors, (bytes4[]))
             })
         );
 

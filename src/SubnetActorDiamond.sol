@@ -10,8 +10,11 @@ import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 import {Status} from "./enums/Status.sol";
 import {GatewayDiamond} from "./GatewayDiamond.sol";
+import "./subnet/SubnetActorManagerFacet.sol";
+import "./subnet/SubnetActorGetterFacet.sol";
+import "./gen/Selectors.sol";
 
-error FunctionNotFound(bytes4 _functionSelector);
+    error FunctionNotFound(bytes4 _functionSelector);
 error InvalidMajorityPercentage();
 
 contract SubnetActorDiamond {

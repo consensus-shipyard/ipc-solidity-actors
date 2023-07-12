@@ -7,6 +7,10 @@ import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
+import {GatewayManagerFacet} from "./gateway/GatewayManagerFacet.sol";
+import {GatewayRouterFacet} from "./gateway/GatewayRouterFacet.sol";
+import {GatewayGetterFacet} from "./gateway/GatewayGetterFacet.sol";
+import "./gen/Selectors.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 error InvalidMajorityPercentage();

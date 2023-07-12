@@ -34,5 +34,9 @@ test:
 
 prepare: format lint test slither
 
+selectors:
+	python3 ./scripts/python/gen_selectors.py --contracts=GatewayManagerFacet,GatewayRouterFacet,GatewayGetterFacet,SubnetActorGetterFacet,SubnetActorManagerFacet \
+		--out=./src/gen/Selectors.sol
+
 # ==============================================================================
 .PHONY: deploy-ipc lint format check-subnet slither check-gateway test prepare
