@@ -876,9 +876,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function listSubnets() external view returns (Subnet[] memory) {
         uint256 size = subnetKeys.length;
         Subnet[] memory out = new Subnet[](size);
-        for (uint256 i = 0; i < size; ++i) {
+        for (uint256 i = 0; i < size; ) {
             bytes32 key = subnetKeys[i];
             out[i] = subnets[key];
+            unchecked {
+                ++i;
+            }
         }
         return out;
     }
