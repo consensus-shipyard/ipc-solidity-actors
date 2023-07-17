@@ -1,14 +1,15 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
-import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
-import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
-import {LibGateway} from "../lib/LibGateway.sol";
-import {LibVoting} from "../lib/LibVoting.sol";
+import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
+import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {NotRegisteredSubnet} from "../errors/GenericErrors.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
+import {LibGateway} from "../lib/LibGateway.sol";
+import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
+import {LibVoting} from "../lib/LibVoting.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
 contract GatewayGetterFacet {
@@ -18,8 +19,6 @@ contract GatewayGetterFacet {
 
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
-
-    error NotRegisteredSubnet();
 
     function crossMsgFee() external view returns (uint256) {
         return s.crossMsgFee;

@@ -6,7 +6,8 @@ is not compatible with [EIP-2535](https://eips.ethereum.org/EIPS/eip-2535) stand
 The current implementation can be classified as a `Single Cut Diamond`. 
 A single cut diamond adds all functions to itself in its constructor function,
 but it does not allow adding, replacing, or removing functions later.
-This means that a single cut diamond is fully created in its constructor and once created can never be upgraded.
+This means that all facets of the diamond will be added to it in the constructor of the diamond 
+and upgrades will not be possible.
 
 ## Code Layout
 

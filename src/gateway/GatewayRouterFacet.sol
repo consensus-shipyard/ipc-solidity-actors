@@ -8,6 +8,8 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {CannotSendCrossMsgToItself, InconsistentPrevCheckpoint, InvalidCheckpointEpoch, InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDestinationAddress, InvalidCrossMsgDestinationSubnet} from "../errors/GenericErrors.sol";
+import {InvalidCrossMsgFromRawAddress, InvalidCrossMsgFromSubnetId, MessagesNotSorted, NotInitialized, NotEnoughBalance, NotEnoughFunds, NotEnoughSubnetCircSupply, NotRegisteredSubnet, NotValidator, PostboxNotExist, SubnetNotActive} from "../errors/GenericErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
@@ -25,25 +27,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using CheckpointHelper for BottomUpCheckpoint;
     using CheckpointHelper for TopDownCheckpoint;
     using StorableMsgHelper for StorableMsg;
-
-    error CannotSendCrossMsgToItself();
-    error InconsistentPrevCheckpoint();
-    error InvalidCheckpointEpoch();
-    error InvalidCheckpointSource();
-    error InvalidCrossMsgNonce();
-    error InvalidCrossMsgDestinationAddress();
-    error InvalidCrossMsgDestinationSubnet();
-    error InvalidCrossMsgFromRawAddress();
-    error InvalidCrossMsgFromSubnetId();
-    error MessagesNotSorted();
-    error NotInitialized();
-    error NotEnoughBalance();
-    error NotEnoughFunds();
-    error NotEnoughSubnetCircSupply();
-    error NotRegisteredSubnet();
-    error NotValidator();
-    error PostboxNotExist();
-    error SubnetNotActive();
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
     function commitChildCheck(BottomUpCheckpoint calldata commit) external {

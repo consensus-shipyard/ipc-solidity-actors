@@ -47,9 +47,7 @@ async function getDeployments(env: string): Promise<{ [key in string]: string }>
 task('deploy-libraries', 'Build and deploys all libraries on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
   const { deploy } = await lazyImport('./scripts/deploy-libraries');
   const libsDeployment = await deploy();
-
-  console.log(libsDeployment);
-
+  console.log("Deployed libraries:", libsDeployment);
   await saveDeployments(hre.network.name, libsDeployment, 'libs');
 });
 
@@ -60,7 +58,7 @@ task('deploy-gateway', 'Builds and deploys the Gateway contract on the selected 
   const { deploy } = await lazyImport('./scripts/deploy-gateway');
   const gatewayDeployment = await deploy(deployments.libs);
 
-  console.log(gatewayDeployment);
+  console.log("Deployed Gateway Actor diamond address: ", gatewayDeployment);
 
   await saveDeployments(network, gatewayDeployment);
 });
@@ -81,11 +79,28 @@ task('deploy-subnet', 'Builds and deploys the SubnetActor contract on the select
   await saveDeployments(network, subnetDeployment);
 });
 
+task('deploy-gw-diamond-and-facets', 'Builds and deploys gateway diamond and its facets', async (args, hre: HardhatRuntimeEnvironment) => {
+  const network = hre.network.name;
+  const deployments = await getDeployments(network);
+  const { deployDiamond } = await lazyImport('./scripts/deploy-gw-diamond');
+  const subnetDeployment = await deployDiamond(deployments.libs);
+  console.log(subnetDeployment);
+
+  await saveDeployments(network, subnetDeployment);
+});
+
 task('deploy', 'Builds and deploys all contracts on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
   await hre.run('compile');
   await hre.run('deploy-libraries');
   await hre.run('deploy-gateway');
 });
+
+task('deploy-gw-diamond', 'Builds and deploys Gateway Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
+  await hre.run('compile');
+  //await hre.run('deploy-libraries');
+  await hre.run('deploy-gw-diamond-and-facets');
+});
+
 
 /** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
@@ -95,6 +110,7 @@ const config: HardhatUserConfig = {
       chainId: 314159,
       url: process.env.RPC_URL!,
       accounts: [process.env.PRIVATE_KEY!],
+      timeout: 1000000,
     },
     localnet: {
       chainId: 31415926,

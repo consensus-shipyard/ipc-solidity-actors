@@ -6,6 +6,7 @@ import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {BottomUpCheckpoint, CrossMsg, ChildCheck} from "../structs/Checkpoint.sol";
 import {SubnetID} from "../structs/Subnet.sol";
+import {CollateralIsZero, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, MessageNotSorted, NoRewardToWithdraw} from "../errors/GenericErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";

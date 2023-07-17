@@ -4,18 +4,16 @@ pragma solidity 0.8.19;
 import {SubnetActorStorage} from "./lib/LibSubnetActorStorage.sol";
 import {ConsensusType} from "./enums/ConsensusType.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
+import {GatewayCannotBeZero, NotGateway, InvalidMajorityPercentage} from "./errors/GenericErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 import {Status} from "./enums/Status.sol";
 import {GatewayDiamond} from "./GatewayDiamond.sol";
-import "./subnet/SubnetActorManagerFacet.sol";
-import "./subnet/SubnetActorGetterFacet.sol";
 import "./gen/Selectors.sol";
 
-    error FunctionNotFound(bytes4 _functionSelector);
-error InvalidMajorityPercentage();
+error FunctionNotFound(bytes4 _functionSelector);
 
 contract SubnetActorDiamond {
     // solhint-disable-next-line private-vars-leading-underscore
@@ -28,24 +26,6 @@ contract SubnetActorDiamond {
 
     /// @notice minimum checkpoint period. Values get clamped to this
     uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
-
-    error NotGateway();
-    error NotAccount();
-    error WorkerAddressInvalid();
-    error CollateralIsZero();
-    error CallerHasNoStake();
-    error CollateralStillLockedInSubnet();
-    error SubnetAlreadyKilled();
-    error NotAllValidatorsHaveLeft();
-    error NotValidator();
-    error SubnetNotActive();
-    error WrongCheckpointSource();
-    error CheckpointNotChained();
-    error NoValidatorsInSubnet();
-    error NotEnoughBalanceForRewards();
-    error MessagesNotSorted();
-    error NoRewardToWithdraw();
-    error GatewayCannotBeZero();
 
     struct ConstructorParams {
         SubnetID parentId;

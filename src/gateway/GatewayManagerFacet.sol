@@ -1,3 +1,4 @@
+// SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
@@ -5,6 +6,7 @@ import {CrossMsg} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {AlreadyInitialized, AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet, ValidatorsAndWeightsLengthMismatch, ValidatorWeightIsZero  } from "../errors/GenericErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
@@ -14,16 +16,6 @@ import {LibVoting} from "../lib/LibVoting.sol";
 contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
-
-    error AlreadyInitialized();
-    error AlreadyRegisteredSubnet();
-    error CannotReleaseZero();
-    error NotEnoughFunds();
-    error NotEnoughFundsToRelease();
-    error NotEmptySubnetCircSupply();
-    error NotRegisteredSubnet();
-    error ValidatorsAndWeightsLengthMismatch();
-    error ValidatorWeightIsZero();
 
     /// @notice initialize the contract with the genesis epoch
     /// @param genesisEpoch - genesis epoch to set

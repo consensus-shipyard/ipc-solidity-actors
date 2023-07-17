@@ -92,7 +92,7 @@ library LibVoting {
         return s.genesisEpoch;
     }
 
-    function getSubmissionPeriod() public view returns (uint64) {
+    function getSubmissionPeriod() internal view returns (uint64) {
         VotingStorage storage s = votingStorage();
         return s.submissionPeriod;
     }
@@ -227,17 +227,17 @@ library LibVoting {
         }
     }
 
-    function executableQueue() public view returns (uint64, uint64, uint64) {
+    function executableQueue() internal view returns (uint64, uint64, uint64) {
         VotingStorage storage s = votingStorage();
         return (s.executableQueue.period, s.executableQueue.first, s.executableQueue.last);
     }
 
-    function lastVotingExecutedEpoch() public view returns (uint64) {
+    function lastVotingExecutedEpoch() internal view returns (uint64) {
         VotingStorage storage s = votingStorage();
         return s.lastVotingExecutedEpoch;
     }
 
-    function majorityPercentage() public view returns (uint64) {
+    function majorityPercentage() internal view returns (uint64) {
         VotingStorage storage s = votingStorage();
         return s.majorityPercentage;
     }
