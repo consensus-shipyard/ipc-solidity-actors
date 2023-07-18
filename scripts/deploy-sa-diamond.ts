@@ -36,7 +36,7 @@ async function deploySubnetActorDiamond (gatewayDiamondAddress: string, libs: { 
         CrossMsgHelper: '0x262E53e0697202EF993C7994b89CE2e107c066db',
         StorableMsgHelper: '0x3Cb5BcFD85F8F28E68B8f4f248Bbfe5B8Adf9208'
     }
-    
+
      */
 
     // ----
