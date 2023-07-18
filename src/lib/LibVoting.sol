@@ -32,7 +32,7 @@ library LibVoting {
     /// @notice minimum checkpoint period. Values get clamped to this
     uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
 
-    bytes32 constant VOTING_STORAGE_POSITION = keccak256("libvoting.lib.diamond.storage");
+    bytes32 private constant VOTING_STORAGE_POSITION = keccak256("libvoting.lib.diamond.storage");
 
     function votingStorage() internal pure returns (VotingStorage storage s) {
         bytes32 position = VOTING_STORAGE_POSITION;

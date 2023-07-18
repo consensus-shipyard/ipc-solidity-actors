@@ -24,7 +24,6 @@ import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
-import "../src/gen/Selectors.sol";
 
 contract SubnetActorDiamondTest is Test {
     using SubnetIDHelper for SubnetID;
@@ -79,6 +78,15 @@ contract SubnetActorDiamondTest is Test {
     error NoRewardToWithdraw();
     error GatewayCannotBeZero();
 
+    constructor() {
+        saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
+        saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacet");
+
+        gwRouterSelectors = TestUtils.generateSelectors(vm, "GatewayRouterFacet");
+        gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
+        gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
+    }
+
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         gwRouter = new GatewayRouterFacet();
         gwManager = new GatewayManagerFacet();
@@ -90,7 +98,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwRouter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: abi.decode(GatewayRouterFacetSelectors, (bytes4[]))
+                functionSelectors: gwRouterSelectors
             })
         );
 
@@ -98,7 +106,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: abi.decode(GatewayManagerFacetSelectors, (bytes4[]))
+                functionSelectors: gwManagerSelectors
             })
         );
 
@@ -106,7 +114,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: address(gwGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: abi.decode(GatewayGetterFacetSelectors, (bytes4[]))
+                functionSelectors: gwGetterSelectors
             })
         );
 
@@ -126,7 +134,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: getterFaucet,
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: abi.decode(SubnetActorGetterFacetSelectors, (bytes4[]))
+                functionSelectors: saGetterSelectors
             })
         );
 
@@ -134,7 +142,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: managerFaucet,
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: abi.decode(SubnetActorManagerFacetSelectors, (bytes4[]))
+                functionSelectors: saManagerSelectors
             })
         );
 
@@ -1010,7 +1018,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: address(saManager),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: abi.decode(SubnetActorManagerFacetSelectors, (bytes4[]))
+                functionSelectors: saManagerSelectors
             })
         );
 
@@ -1018,7 +1026,7 @@ contract SubnetActorDiamondTest is Test {
             IDiamond.FacetCut({
                 facetAddress: address(saGetter),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: abi.decode(SubnetActorGetterFacetSelectors, (bytes4[]))
+                functionSelectors: saGetterSelectors
             })
         );
 

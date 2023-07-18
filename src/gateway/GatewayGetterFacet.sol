@@ -13,7 +13,6 @@ import {LibVoting} from "../lib/LibVoting.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
 contract GatewayGetterFacet {
-    // solhint-disable-next-line private-vars-leading-underscore
     // slither-disable-next-line uninitialized-state-variables
     GatewayActorStorage internal s;
 

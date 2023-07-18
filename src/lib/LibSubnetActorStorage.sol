@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.0;
+pragma solidity 0.8.19;
 
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {Status} from "../enums/Status.sol";
@@ -77,7 +77,6 @@ library LibSubnetActorStorage {
 }
 
 contract SubnetActorModifiers {
-    // solhint-disable-next-line private-vars-leading-underscore
     SubnetActorStorage internal s;
 
     using EnumerableSet for EnumerableSet.AddressSet;

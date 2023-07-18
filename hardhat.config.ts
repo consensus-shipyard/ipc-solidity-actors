@@ -79,14 +79,22 @@ task('deploy-subnet', 'Builds and deploys the SubnetActor contract on the select
   await saveDeployments(network, subnetDeployment);
 });
 
-task('deploy-gw-diamond-and-facets', 'Builds and deploys gateway diamond and its facets', async (args, hre: HardhatRuntimeEnvironment) => {
+task('deploy-gw-diamond-and-facets', 'Builds and deploys Gateway Actor diamond and its facets', async (args, hre: HardhatRuntimeEnvironment) => {
   const network = hre.network.name;
   const deployments = await getDeployments(network);
   const { deployDiamond } = await lazyImport('./scripts/deploy-gw-diamond');
-  const subnetDeployment = await deployDiamond(deployments.libs);
-  console.log(subnetDeployment);
+  const gatewayActorDiamond = await deployDiamond(deployments.libs);
+  console.log(gatewayActorDiamond);
+  await saveDeployments(network, gatewayActorDiamond);
+});
 
-  await saveDeployments(network, subnetDeployment);
+task('deploy-sa-diamond-and-facets', 'Builds and deploys Subnet Actor diamond and its facets', async (args, hre: HardhatRuntimeEnvironment) => {
+  const network = hre.network.name;
+  const deployments = await getDeployments(network);
+  const { deployDiamond } = await lazyImport('./scripts/deploy-sa-diamond');
+  const subnetActorDiamond = await deployDiamond(deployments.GatewayActorDiamond,deployments.libs);
+  console.log(subnetActorDiamond);
+  await saveDeployments(network, subnetActorDiamond);
 });
 
 task('deploy', 'Builds and deploys all contracts on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
@@ -99,6 +107,12 @@ task('deploy-gw-diamond', 'Builds and deploys Gateway Actor diamond', async (arg
   await hre.run('compile');
   //await hre.run('deploy-libraries');
   await hre.run('deploy-gw-diamond-and-facets');
+});
+
+task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
+  await hre.run('compile');
+  //await hre.run('deploy-libraries');
+  await hre.run('deploy-sa-diamond-and-facets');
 });
 
 

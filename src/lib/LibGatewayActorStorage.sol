@@ -110,7 +110,6 @@ library LibGatewayActorStorage {
 }
 
 contract GatewayActorModifiers {
-    // solhint-disable-next-line private-vars-leading-underscore
     GatewayActorStorage internal s;
 
     using FilAddress for address;

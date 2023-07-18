@@ -37,7 +37,6 @@ contract SubnetActorGetterFacet {
     using CrossMsgHelper for CrossMsg;
     using FvmAddressHelper for FvmAddress;
 
-    // solhint-disable-next-line private-vars-leading-underscore
     // slither-disable-next-line uninitialized-state-variables
     SubnetActorStorage internal s;
 

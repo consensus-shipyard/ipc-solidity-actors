@@ -11,12 +11,10 @@ import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 import {Status} from "./enums/Status.sol";
 import {GatewayDiamond} from "./GatewayDiamond.sol";
-import "./gen/Selectors.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
 contract SubnetActorDiamond {
-    // solhint-disable-next-line private-vars-leading-underscore
     SubnetActorStorage internal s;
 
     using SubnetIDHelper for SubnetID;
