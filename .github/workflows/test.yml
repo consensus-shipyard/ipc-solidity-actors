@@ -32,5 +32,8 @@ jobs:
         with:
           cache: false
 
+      - name: Build
+        run: forge build --names
+
       - name: Run tests
         run: forge test -vvv --ffi

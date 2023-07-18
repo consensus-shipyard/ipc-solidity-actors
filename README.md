@@ -75,7 +75,7 @@ The build artifacts (contracts’ ABI `.json` files), can be found in the `out` 
 To run all repo tests run
 
 ```bash
-forge test
+forge test -vvv --ffi
 ```
 
 And to generate coverage report run
