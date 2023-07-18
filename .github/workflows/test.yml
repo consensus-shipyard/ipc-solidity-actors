@@ -27,12 +27,6 @@ jobs:
         uses: foundry-rs/foundry-toolchain@v1
         with:
           cache: false
-      
-      - name: Setup tmate session
-        uses: mxschmitt/action-tmate@v3
-
-      - name: Build
-        run: forge build --names
 
       - name: Run tests
         run: forge test -vvv --ffi
