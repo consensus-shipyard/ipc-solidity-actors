@@ -13,7 +13,7 @@ import {LibVoting} from "../lib/LibVoting.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 
 contract GatewayGetterFacet {
-    // slither-disable-next-line uninitialized-state-variables
+    // slither-disable-next-line uninitialized-state
     GatewayActorStorage internal s;
 
     using SubnetIDHelper for SubnetID;

@@ -60,6 +60,7 @@ contract GatewayDiamond {
         LibDiamond.DiamondStorage storage ds;
         bytes32 position = LibDiamond.DIAMOND_STORAGE_POSITION;
         // get diamond storage
+        // slither-disable-next-line assembly
         assembly {
             ds.slot := position
         }
@@ -69,6 +70,7 @@ contract GatewayDiamond {
             revert FunctionNotFound(msg.sig);
         }
         // Execute external function from facet using delegatecall and return any value.
+        // slither-disable-next-line assembly
         assembly {
             // copy function selector and any arguments
             calldatacopy(0, 0, calldatasize())
