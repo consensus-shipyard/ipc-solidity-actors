@@ -768,16 +768,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         checkpoint.crossMsgs = new CrossMsg[](1);
         checkpoint.crossMsgs[0] = CrossMsg({
             message: StorableMsg({
-            from: IPCAddress({
-            subnetId: networkName.createSubnetId(subnetAddress),
-            rawAddress: FvmAddressHelper.from(address(1))
-        }),
-            to: IPCAddress({subnetId: networkName, rawAddress: FvmAddressHelper.from(address(2))}),
-            value: 1,
-            nonce: 0,
-            method: METHOD_SEND,
-            params: EMPTY_BYTES
-        }),
+                from: IPCAddress({
+                    subnetId: networkName.createSubnetId(subnetAddress),
+                    rawAddress: FvmAddressHelper.from(address(1))
+                }),
+                to: IPCAddress({subnetId: networkName, rawAddress: FvmAddressHelper.from(address(2))}),
+                value: 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: EMPTY_BYTES
+            }),
             wrapped: false
         });
 
@@ -841,7 +841,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         checkpoint.crossMsgs = new CrossMsg[](1);
         checkpoint.crossMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: networkName.createSubnetId(subnetAddress), rawAddress: FvmAddressHelper.from(address(1))}),
+                from: IPCAddress({
+                    subnetId: networkName.createSubnetId(subnetAddress),
+                    rawAddress: FvmAddressHelper.from(address(1))
+                }),
                 to: IPCAddress({subnetId: networkName, rawAddress: FvmAddressHelper.from(address(2))}),
                 value: 1,
                 nonce: 1,
@@ -1292,7 +1295,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: SubnetID({root: 0, route: new address[](0)}), rawAddress: FvmAddressHelper.from(caller)}),
+                    to: IPCAddress({
+                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1415,7 +1421,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: SubnetID({root: 0, route: new address[](0)}), rawAddress: FvmAddressHelper.from(caller)}),
+                    from: IPCAddress({
+                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
                     to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
@@ -1615,11 +1624,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function setupWhiteListMethod(address caller) internal returns (bytes32) {
         address[] memory validators = setupValidators();
 
-        registerSubnet(MIN_COLLATERAL_AMOUNT,address(this));
+        registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName().createSubnetId(caller), rawAddress: FvmAddressHelper.from(caller)}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName().createSubnetId(caller),
+                    rawAddress: FvmAddressHelper.from(caller)
+                }),
                 to: IPCAddress({
                     subnetId: gwGetter.getNetworkName().createSubnetId(address(this)),
                     rawAddress: FvmAddressHelper.from(address(this))
@@ -1830,7 +1842,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](2);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 10,
@@ -1841,7 +1856,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         });
         topDownMsgs[1] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
@@ -1870,7 +1888,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 100 ether,
                 nonce: 10,
@@ -1899,8 +1920,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
-                to: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
+                to: IPCAddress({
+                    subnetId: SubnetID(0, new address[](0)),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 value: 0,
                 nonce: 10,
                 method: this.callback.selector,
@@ -1930,7 +1957,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         // apply type = topdown
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 10,
@@ -1958,7 +1988,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(validators[0])}),
                 value: address(gatewayDiamond).balance,
                 nonce: 0,
@@ -2032,7 +2065,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
@@ -2068,7 +2104,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
@@ -2123,7 +2162,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
@@ -2178,7 +2220,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
@@ -2291,11 +2336,20 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             require(topDownMsg.message.value == fundAmountWithSubtractedFee);
             require(
                 keccak256(abi.encode(topDownMsg.message.to)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId, rawAddress: FvmAddressHelper.from(funderAddress)})))
+                    keccak256(
+                        abi.encode(IPCAddress({subnetId: subnetId, rawAddress: FvmAddressHelper.from(funderAddress)}))
+                    )
             );
             require(
                 keccak256(abi.encode(topDownMsg.message.from)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: FvmAddressHelper.from(funderAddress)})))
+                    keccak256(
+                        abi.encode(
+                            IPCAddress({
+                                subnetId: subnetId.getParentSubnet(),
+                                rawAddress: FvmAddressHelper.from(funderAddress)
+                            })
+                        )
+                    )
             );
         }
     }

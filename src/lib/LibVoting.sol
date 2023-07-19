@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
-import {EpochAlreadyExecuted, EpochNotVotable, InvalidMajorityPercentage, EpochNotVotable, ValidatorAlreadyVoted } from "../errors/IPCErrors.sol";
+import {EpochAlreadyExecuted, EpochNotVotable, InvalidMajorityPercentage, EpochNotVotable, ValidatorAlreadyVoted} from "../errors/IPCErrors.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";

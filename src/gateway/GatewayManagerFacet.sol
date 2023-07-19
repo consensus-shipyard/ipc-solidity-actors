@@ -134,7 +134,6 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     /// @param subnetId - subnet to fund
     /// @param to - the address to send funds to
     function fund(SubnetID calldata subnetId, FvmAddress calldata to) external payable signableOnly hasFee {
-
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, to, msg.value - s.crossMsgFee);
 
         // commit top-down message.

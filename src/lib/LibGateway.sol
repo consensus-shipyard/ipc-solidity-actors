@@ -7,7 +7,7 @@ import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
-import {NotRegisteredSubnet, InvalidActorAddress, EpochAlreadyExecuted, EpochNotVotable, ValidatorAlreadyVoted } from "../errors/IPCErrors.sol";
+import {NotRegisteredSubnet, InvalidActorAddress, EpochAlreadyExecuted, EpochNotVotable, ValidatorAlreadyVoted} from "../errors/IPCErrors.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {AccountHelper} from "./AccountHelper.sol";
