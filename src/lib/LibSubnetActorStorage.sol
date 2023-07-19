@@ -4,6 +4,7 @@ pragma solidity 0.8.19;
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {Status} from "../enums/Status.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
+import {NotGateway, NotAccount, SubnetAlreadyKilled} from "../errors/IPCErrors.sol";
 import {EpochVoteSubmission, EpochVoteBottomUpSubmission} from "../structs/EpochVoteSubmission.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
@@ -89,24 +90,6 @@ contract SubnetActorModifiers {
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
     using CrossMsgHelper for CrossMsg;
     using FvmAddressHelper for FvmAddress;
-
-    error NotGateway();
-    error NotAccount();
-    error WorkerAddressInvalid();
-    error CollateralIsZero();
-    error CallerHasNoStake();
-    error CollateralStillLockedInSubnet();
-    error SubnetAlreadyKilled();
-    error NotAllValidatorsHaveLeft();
-    error NotValidator();
-    error SubnetNotActive();
-    error WrongCheckpointSource();
-    error CheckpointNotChained();
-    error NoValidatorsInSubnet();
-    error NotEnoughBalanceForRewards();
-    error MessagesNotSorted();
-    error NoRewardToWithdraw();
-    error GatewayCannotBeZero();
 
     function _signableOnly() private view {
         if (!msg.sender.isAccount()) {

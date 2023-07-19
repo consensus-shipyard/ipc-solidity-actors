@@ -14,6 +14,7 @@ import {StorableMsg} from "../src/structs/Checkpoint.sol";
 import {IGateway} from "../src/interfaces/IGateway.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
+import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
 import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
@@ -28,6 +29,7 @@ import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 contract SubnetActorDiamondTest is Test {
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
+    using FvmAddressHelper for FvmAddress;
 
     address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
@@ -600,11 +602,11 @@ contract SubnetActorDiamondTest is Test {
             message: StorableMsg({
                 from: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 to: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 1,
@@ -617,11 +619,11 @@ contract SubnetActorDiamondTest is Test {
             message: StorableMsg({
                 from: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 to: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
@@ -1086,8 +1088,8 @@ contract SubnetActorDiamondTest is Test {
 
         crossMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: subnetActorId, rawAddress: address(this)}),
-                to: IPCAddress({subnetId: subnetActorId, rawAddress: address(this)}),
+                from: IPCAddress({subnetId: subnetActorId, rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: subnetActorId, rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: nonce,
                 method: this.callback.selector,

@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {SubnetActorStorage} from "./lib/LibSubnetActorStorage.sol";
 import {ConsensusType} from "./enums/ConsensusType.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
-import {GatewayCannotBeZero, NotGateway, InvalidMajorityPercentage} from "./errors/GenericErrors.sol";
+import {GatewayCannotBeZero, NotGateway, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";

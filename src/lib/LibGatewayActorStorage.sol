@@ -34,7 +34,6 @@ error AlreadyRegisteredSubnet();
 error AlreadyInitialized();
 error InconsistentPrevCheckpoint();
 error InvalidActorAddress();
-error InvalidPostboxOwner();
 error InvalidCheckpointEpoch();
 error InvalidCheckpointSource();
 error InvalidCrossMsgNonce();
@@ -69,8 +68,6 @@ struct GatewayActorStorage {
     /// an actor that need to be propagated further through the hierarchy.
     /// cross-net message id => CrossMsg
     mapping(bytes32 => CrossMsg) postbox;
-    /// @notice cross-net message id => set of owners
-    mapping(bytes32 => mapping(address => bool)) postboxHasOwner;
     /// @notice top-down period in number of epochs for the subnet
     uint64 topDownCheckPeriod;
     /// @notice BottomUpCheckpoints in the GW per epoch
@@ -142,12 +139,6 @@ contract GatewayActorModifiers {
         }
     }
 
-    function _onlyValidPostboxOwner(bytes32 msgCid) private view {
-        if (!s.postboxHasOwner[msgCid][msg.sender]) {
-            revert InvalidPostboxOwner();
-        }
-    }
-
     modifier signableOnly() {
         _signableOnly();
         _;
@@ -160,11 +151,6 @@ contract GatewayActorModifiers {
 
     modifier hasFee() {
         _hasFee();
-        _;
-    }
-
-    modifier onlyValidPostboxOwner(bytes32 msgCid) {
-        _onlyValidPostboxOwner(msgCid);
         _;
     }
 }

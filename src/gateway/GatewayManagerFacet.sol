@@ -4,9 +4,11 @@ pragma solidity 0.8.19;
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {CrossMsg} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
-import {LibGateway} from "../lib/LibGateway.sol";
+import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {AlreadyInitialized, AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet, ValidatorsAndWeightsLengthMismatch, ValidatorWeightIsZero} from "../errors/GenericErrors.sol";
+import {AlreadyInitialized, AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet, ValidatorsAndWeightsLengthMismatch, ValidatorWeightIsZero} from "../errors/IPCErrors.sol";
+import {LibGateway} from "../lib/LibGateway.sol";
+import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
@@ -16,6 +18,7 @@ import {LibVoting} from "../lib/LibVoting.sol";
 contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
+    using FvmAddressHelper for FvmAddress;
 
     /// @notice initialize the contract with the genesis epoch
     /// @param genesisEpoch - genesis epoch to set
@@ -129,8 +132,10 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
 
     /// @notice fund - commit a top-down message releasing funds in a child subnet. There is an associated fee that gets distributed to validators in the subnet as well
     /// @param subnetId - subnet to fund
-    function fund(SubnetID calldata subnetId) external payable signableOnly hasFee {
-        CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, msg.value - s.crossMsgFee);
+    /// @param to - the address to send funds to
+    function fund(SubnetID calldata subnetId, FvmAddress calldata to) external payable signableOnly hasFee {
+
+        CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, to, msg.value - s.crossMsgFee);
 
         // commit top-down message.
         LibGateway.commitTopDownMsg(crossMsg);
@@ -139,10 +144,11 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     }
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
-    function release() external payable signableOnly hasFee {
+    function release(FvmAddress calldata to) external payable signableOnly hasFee {
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(
             s.networkName,
             msg.sender,
+            to,
             msg.value - s.crossMsgFee
         );
 

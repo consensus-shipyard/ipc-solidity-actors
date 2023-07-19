@@ -8,8 +8,8 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {CannotSendCrossMsgToItself, InconsistentPrevCheckpoint, InvalidCheckpointEpoch, InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDestinationAddress, InvalidCrossMsgDestinationSubnet} from "../errors/GenericErrors.sol";
-import {InvalidCrossMsgFromRawAddress, InvalidCrossMsgFromSubnetId, MessagesNotSorted, NotInitialized, NotEnoughBalance, NotEnoughFunds, NotEnoughSubnetCircSupply, NotRegisteredSubnet, NotValidator, PostboxNotExist, SubnetNotActive} from "../errors/GenericErrors.sol";
+import {InconsistentPrevCheckpoint, CannotSendCrossMsgToItself, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDestinationSubnet} from "../errors/IPCErrors.sol";
+import {InvalidCrossMsgFromSubnetId, MessagesNotSorted, NotInitialized, NotEnoughBalance, NotEnoughFunds, NotRegisteredSubnet, NotValidator, PostboxNotExist, SubnetNotActive} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
@@ -134,25 +134,19 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice sends an arbitrary cross message from the current subnet to the destination subnet
     /// @param crossMsg - message to send
     function sendCrossMessage(CrossMsg calldata crossMsg) external payable signableOnly hasFee {
+        // There can be many semantics of the (rawAddress, msg.sender) pairs.
+        // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
+        // They can be equal, we can propagate the real sender address only or both.
+        // We are going to use the simplest implementation for now and define the appropriate interpretation later
+        // based on the business requirements.
         if (crossMsg.message.value != msg.value) {
             revert NotEnoughFunds();
-        }
-        if (crossMsg.message.to.rawAddress == address(0)) {
-            revert InvalidCrossMsgDestinationAddress();
         }
 
         // We disregard the "to" of the message that will be verified in the _commitCrossMessage().
         // The caller is the one set as the "from" of the message
         if (!crossMsg.message.from.subnetId.equals(s.networkName)) {
             revert InvalidCrossMsgFromSubnetId();
-        }
-        // There can be many semantics of the (rawAddress, msg.sender) pairs.
-        // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
-        // They can be equal, we can propagate the real sender address only or both.
-        // We are going to use the simplest implementation for now and define the appropriate interpretation later
-        // based on the business requirements.
-        if (crossMsg.message.from.rawAddress != msg.sender) {
-            revert InvalidCrossMsgFromRawAddress();
         }
 
         // commit cross-message for propagation
@@ -166,35 +160,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         );
     }
 
-    /// @notice whitelist a series of addresses as propagator of a cross net message
-    /// @param msgCid - the cid of the cross-net message
-    /// @param owners - list of addresses to be added as owners
-    function whitelistPropagator(bytes32 msgCid, address[] calldata owners) external onlyValidPostboxOwner(msgCid) {
-        CrossMsg storage crossMsg = s.postbox[msgCid];
-
-        if (crossMsg.isEmpty()) {
-            revert PostboxNotExist();
-        }
-
-        // update postbox with the new owners
-        uint256 ownersLength = owners.length;
-        for (uint256 i = 0; i < ownersLength; ) {
-            if (owners[i] != address(0)) {
-                address owner = owners[i];
-
-                if (!s.postboxHasOwner[msgCid][owner]) {
-                    s.postboxHasOwner[msgCid][owner] = true;
-                }
-            }
-            unchecked {
-                ++i;
-            }
-        }
-    }
-
     /// @notice propagates the populated cross net message for the given cid
     /// @param msgCid - the cid of the cross-net message
-    function propagate(bytes32 msgCid) external payable hasFee onlyValidPostboxOwner(msgCid) {
+    function propagate(bytes32 msgCid) external payable hasFee {
         CrossMsg storage crossMsg = s.postbox[msgCid];
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
@@ -325,9 +293,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param forwarder - the subnet that handles the cross message
     /// @param crossMsg - the cross message to be executed
     function _applyMsg(SubnetID memory forwarder, CrossMsg memory crossMsg) internal {
-        if (crossMsg.message.to.rawAddress == address(0)) {
-            revert InvalidCrossMsgDestinationAddress();
-        }
         if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDestinationSubnet();
         }
@@ -374,7 +339,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         bytes32 cid = crossMsg.toHash();
 
         s.postbox[cid] = crossMsg;
-        s.postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
     }
 
     /// @notice applies a cross-net messages coming from some other subnet.

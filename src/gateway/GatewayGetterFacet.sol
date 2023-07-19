@@ -5,7 +5,7 @@ import {Status} from "../enums/Status.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ChildCheck} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {NotRegisteredSubnet} from "../errors/GenericErrors.sol";
+import {NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
@@ -95,10 +95,6 @@ contract GatewayGetterFacet {
 
     function appliedTopDownNonce() public view returns (uint64) {
         return s.appliedTopDownNonce;
-    }
-
-    function postboxHasOwner(bytes32 id, address caller) public view returns (bool) {
-        return s.postboxHasOwner[id][caller];
     }
 
     function postbox(bytes32 id) public view returns (StorableMsg memory storableMsg, bool wrapped) {

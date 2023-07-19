@@ -2,6 +2,7 @@
 pragma solidity 0.8.19;
 
 import {VoteExecutionStatus} from "../enums/VoteExecutionStatus.sol";
+import {EpochAlreadyExecuted, EpochNotVotable, InvalidMajorityPercentage, EpochNotVotable, ValidatorAlreadyVoted } from "../errors/IPCErrors.sol";
 import {ExecutableQueue} from "../structs/ExecutableQueue.sol";
 import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
@@ -23,11 +24,6 @@ struct VotingStorage {
 library LibVoting {
     using ExecutableQueueHelper for ExecutableQueue;
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
-
-    error EpochAlreadyExecuted();
-    error EpochNotVotable();
-    error InvalidMajorityPercentage();
-    error ValidatorAlreadyVoted();
 
     /// @notice minimum checkpoint period. Values get clamped to this
     uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
