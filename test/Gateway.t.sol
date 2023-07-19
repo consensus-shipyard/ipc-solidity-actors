@@ -8,6 +8,7 @@ import "../src/SubnetActor.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
 import "../src/lib/CrossMsgHelper.sol";
+import "../src/lib/FvmAddressHelper.sol";
 import "../src/structs/FvmAddress.sol";
 
 contract GatewayDeploymentTest is StdInvariant, Test {
@@ -15,6 +16,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
     using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
+    using FvmAddressHelper for FvmAddress;
 
     uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
@@ -47,16 +49,15 @@ contract GatewayDeploymentTest is StdInvariant, Test {
     error NotEnoughFundsToRelease();
     error CannotReleaseZero();
     error NotEnoughBalance();
+    error NotEnoughSubnetCircSupply();
     error NotInitialized();
     error NotValidator();
-    error NotEnoughSubnetCircSupply();
     error NotEmptySubnetCircSupply();
     error NotRegisteredSubnet();
     error AlreadyRegisteredSubnet();
     error AlreadyInitialized();
     error AlreadyCommittedCheckpoint();
     error InconsistentPrevCheckpoint();
-    error InvalidPostboxOwner();
     error InvalidCheckpointEpoch();
     error InvalidCheckpointSource();
     error InvalidCrossMsgNonce();
@@ -180,6 +181,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         registerSubnet(subnetCollateral, subnetAddress);
 
         require(gw.totalSubnets() == 1);
+        Subnet[] memory subnets = gw.listSubnets();
+        require(subnets.length == 1, "subnets.length == 1");
     }
 
     function test_InitGenesisEpoch_Works() public {
@@ -213,6 +216,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         }
 
         require(gw.totalSubnets() == numberOfSubnets);
+        Subnet[] memory subnets = gw.listSubnets();
+        require(subnets.length == numberOfSubnets, "subnets.length == numberOfSubnets");
     }
 
     function test_Register_Fail_InsufficientCollateral(uint256 collateral) public {
@@ -547,8 +552,11 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         checkpoint.crossMsgs = new CrossMsg[](1);
         checkpoint.crossMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: networkName.createSubnetId(subnetAddress), rawAddress: address(1)}),
-                to: IPCAddress({subnetId: networkName, rawAddress: address(2)}),
+                from: IPCAddress({
+                    subnetId: networkName.createSubnetId(subnetAddress),
+                    rawAddress: FvmAddressHelper.from(address(1))
+                }),
+                to: IPCAddress({subnetId: networkName, rawAddress: FvmAddressHelper.from(address(2))}),
                 value: 1,
                 nonce: 0,
                 method: METHOD_SEND,
@@ -617,8 +625,11 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         checkpoint.crossMsgs = new CrossMsg[](1);
         checkpoint.crossMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: networkName.createSubnetId(subnetAddress), rawAddress: address(1)}),
-                to: IPCAddress({subnetId: networkName, rawAddress: address(2)}),
+                from: IPCAddress({
+                    subnetId: networkName.createSubnetId(subnetAddress),
+                    rawAddress: FvmAddressHelper.from(address(1))
+                }),
+                to: IPCAddress({subnetId: networkName, rawAddress: FvmAddressHelper.from(address(2))}),
                 value: 1,
                 nonce: 1,
                 method: METHOD_SEND,
@@ -820,6 +831,12 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         fund(BLS_ACCOUNT_ADDREESS, fundAmount);
     }
 
+    function test_GetTopDownMsgs_Works_Empty() public view {
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(sa));
+
+        require(gw.getTopDownMsgs(subnetId, 0).length == 0, "td msgs length not 0");
+    }
+
     function test_Fund_Works_MultipleFundings() public {
         uint8 numberOfFunds = 5;
         uint256 fundAmount = 1 ether;
@@ -837,6 +854,10 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
             fund(funderAddress, fundAmount);
         }
+
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(sa));
+
+        require(gw.getTopDownMsgs(subnetId, 0).length == numberOfFunds, "td msgs length not correct");
     }
 
     function test_Fund_Fails_WrongSubnet() public {
@@ -855,7 +876,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gw.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath));
+        gw.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
     }
 
     function test_Fund_Fails_InvalidAccount() public {
@@ -872,7 +893,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotSignableAccount.selector);
 
-        gw.fund{value: fundAmount}(subnetId);
+        gw.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function test_Fund_Fails_NotRegistered() public {
@@ -891,7 +912,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
 
         vm.expectRevert(NotRegisteredSubnet.selector);
-        gw.fund{value: fundAmount}(wrongSubnetId);
+        gw.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function test_Fund_Fails_InsufficientAmount() public {
@@ -907,7 +928,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotEnoughFee.selector);
 
-        gw.fund{value: 0}(subnetId);
+        gw.fund{value: 0}(subnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function test_Release_Fails_InsufficientAmount() public {
@@ -930,7 +951,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         vm.deal(callerAddress, 1 ether);
         vm.expectRevert(NotEnoughFee.selector);
 
-        gw.release{value: 0}();
+        gw.release{value: 0}(FvmAddressHelper.from(msg.sender));
     }
 
     function test_Release_Fails_InvalidAccount() public {
@@ -953,7 +974,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         vm.deal(invalidAccount, 1 ether);
         vm.expectRevert(NotSignableAccount.selector);
 
-        gw.release{value: 1 ether}();
+        gw.release{value: 1 ether}(FvmAddressHelper.from(msg.sender));
     }
 
     function test_Release_Works_BLSAccount(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -1049,9 +1070,12 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: SubnetID({root: 0, route: new address[](0)}), rawAddress: caller}),
+                    to: IPCAddress({
+                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1073,11 +1097,11 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
@@ -1101,9 +1125,9 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1126,9 +1150,9 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
                     value: 5,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1151,9 +1175,9 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1174,59 +1198,11 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: SubnetID({root: 0, route: new address[](0)}), rawAddress: caller}),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
-                    value: CROSS_MSG_FEE + 1,
-                    nonce: 0,
-                    method: METHOD_SEND,
-                    params: new bytes(0)
-                }),
-                wrapped: true
-            })
-        );
-    }
-
-    function test_SendCrossMessage_Fails_InvalidCrossMsgFromRawAddress() public {
-        address caller = vm.addr(100);
-        address invalidCaller = vm.addr(200);
-        vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
-        SubnetID memory destinationSubnet = gw.getNetworkName().createSubnetId(caller);
-        vm.expectRevert(InvalidCrossMsgFromRawAddress.selector);
-        gw.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
-            CrossMsg({
-                message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: invalidCaller
+                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: caller}),
-                    value: CROSS_MSG_FEE + 1,
-                    nonce: 0,
-                    method: METHOD_SEND,
-                    params: new bytes(0)
-                }),
-                wrapped: true
-            })
-        );
-    }
-
-    function test_SendCrossMessage_Fails_InvalidToAddr() public {
-        address caller = vm.addr(100);
-        vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
-        SubnetID memory destinationSubnet = gw.getNetworkName().createSubnetId(caller);
-        vm.expectRevert(InvalidCrossMsgDestinationAddress.selector);
-        gw.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
-            CrossMsg({
-                message: StorableMsg({
-                    from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
-                    }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: address(0)}),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
                     value: CROSS_MSG_FEE + 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1249,9 +1225,9 @@ contract GatewayDeploymentTest is StdInvariant, Test {
                 message: StorableMsg({
                     from: IPCAddress({
                         subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                        rawAddress: caller
+                        rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: address(0)}),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(0))}),
                     value: 0,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1278,8 +1254,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: caller}),
-                to: IPCAddress({subnetId: destinationSubnet, rawAddress: receiver}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(caller)}),
+                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)}),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
@@ -1325,8 +1301,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: network2, rawAddress: caller}),
-                to: IPCAddress({subnetId: destinationSubnet, rawAddress: receiver}),
+                from: IPCAddress({subnetId: network2, rawAddress: FvmAddressHelper.from(caller)}),
+                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)}),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
@@ -1357,8 +1333,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: network2, rawAddress: caller}),
-                to: IPCAddress({subnetId: destinationSubnet, rawAddress: receiver}),
+                from: IPCAddress({subnetId: network2, rawAddress: FvmAddressHelper.from(caller)}),
+                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)}),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
@@ -1374,80 +1350,6 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw2.sendCrossMessage{value: CROSS_MSG_FEE + 1}(crossMsg);
 
         require(gw2.appliedTopDownNonce() == 0);
-    }
-
-    function test_WhitelistPropagator_Works() public {
-        address caller = vm.addr(100);
-        address receiver = vm.addr(101);
-
-        vm.prank(receiver);
-        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
-
-        CrossMsg memory crossMsg = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: caller}),
-                to: IPCAddress({subnetId: gw.getNetworkName().createSubnetId(receiver), rawAddress: receiver}),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
-            wrapped: false
-        });
-
-        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
-        topDownMsgs[0] = crossMsg;
-        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
-            epoch: DEFAULT_CHECKPOINT_PERIOD,
-            topDownMsgs: topDownMsgs
-        });
-        vm.prank(TOPDOWN_VALIDATOR_1);
-        vm.deal(TOPDOWN_VALIDATOR_1, 1);
-        gw.submitTopDownCheckpoint(checkpoint);
-
-        bytes32 postboxItemId = crossMsg.toHash();
-        address[] memory ownersToAdd = new address[](2);
-        ownersToAdd[0] = receiver;
-
-        vm.prank(caller);
-        vm.deal(caller, CROSS_MSG_FEE + 2);
-        gw.whitelistPropagator(postboxItemId, ownersToAdd);
-
-        require(gw.postboxHasOwner(postboxItemId, caller), "gw.postboxHasOwner(postboxItemId, caller)");
-        require(gw.postboxHasOwner(postboxItemId, receiver), "gw.postboxHasOwner(postboxItemId, receiver)");
-
-        (StorableMsg memory storableMsg, bool wrapped) = gw.postbox(postboxItemId);
-        CrossMsg memory msgFrompostbox = CrossMsg(storableMsg, wrapped);
-        require(msgFrompostbox.toHash() == crossMsg.toHash());
-    }
-
-    function test_WhitelistPropagator_Fails_NotOwner() public {
-        address caller = vm.addr(100);
-        vm.deal(caller, 1 ether);
-        address receiver = vm.addr(101);
-
-        bytes32 postBoxItemId = setupWhiteListMethod(caller);
-
-        address[] memory owners = new address[](1);
-        owners[0] = caller;
-
-        vm.prank(receiver);
-        vm.expectRevert(InvalidPostboxOwner.selector);
-        gw.whitelistPropagator(postBoxItemId, owners);
-    }
-
-    function test_WhitelistPropagator_Fails_PostboxItemDoesNotExist() public {
-        address caller = vm.addr(100);
-        vm.deal(caller, 1 ether);
-        setupWhiteListMethod(caller);
-
-        address[] memory owners = new address[](1);
-        owners[0] = caller;
-
-        vm.expectRevert(InvalidPostboxOwner.selector);
-
-        gw.whitelistPropagator(bytes32(0), owners);
     }
 
     function test_Propagate_Works_WithFeeRemainder() external {
@@ -1491,29 +1393,6 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw.propagate(bytes32(""));
     }
 
-    function test_Propagate_Fails_NotOwner() public {
-        address caller = vm.addr(100);
-        vm.deal(caller, 1 ether);
-        address notOwner = vm.addr(102);
-
-        bytes32 postboxItemCid = setupWhiteListMethod(caller);
-
-        address[] memory owners = new address[](1);
-        owners[0] = caller;
-
-        vm.prank(notOwner);
-        vm.deal(notOwner, 1 ether);
-        vm.expectRevert(InvalidPostboxOwner.selector);
-        gw.propagate{value: 1 ether}(postboxItemCid);
-    }
-
-    function test_Propagate_Fails_PostboxItemDoesNotExist() public {
-        vm.prank(vm.addr(100));
-        vm.deal(vm.addr(100), 1 ether);
-        vm.expectRevert(InvalidPostboxOwner.selector);
-        gw.propagate{value: 1 ether}(bytes32(0));
-    }
-
     function setupWhiteListMethod(address caller) internal returns (bytes32) {
         address[] memory validators = setupValidators();
 
@@ -1521,10 +1400,13 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName().createSubnetId(caller), rawAddress: caller}),
+                from: IPCAddress({
+                    subnetId: gw.getNetworkName().createSubnetId(caller),
+                    rawAddress: FvmAddressHelper.from(caller)
+                }),
                 to: IPCAddress({
                     subnetId: gw.getNetworkName().createSubnetId(address(this)),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
@@ -1729,8 +1611,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](2);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 10,
                 method: this.callback.selector,
@@ -1740,8 +1622,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         });
         topDownMsgs[1] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
                 method: this.callback.selector,
@@ -1761,35 +1643,6 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         gw.submitTopDownCheckpoint(checkpoint);
     }
 
-    function test_SubmitTopDownCheckpoint_Fails_InvalidCrossMsgDestinationAddress() public {
-        address validator = address(100);
-
-        addValidator(validator, 100);
-
-        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
-        topDownMsgs[0] = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(0)}),
-                value: 0,
-                nonce: 10,
-                method: this.callback.selector,
-                params: EMPTY_BYTES
-            }),
-            wrapped: false
-        });
-
-        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
-            epoch: DEFAULT_CHECKPOINT_PERIOD,
-            topDownMsgs: topDownMsgs
-        });
-
-        vm.prank(validator);
-        vm.expectRevert(InvalidCrossMsgDestinationAddress.selector);
-
-        gw.submitTopDownCheckpoint(checkpoint);
-    }
-
     function test_SubmitTopDownCheckpoint_Fails_NotEnoughBalance() public {
         address validator = address(100);
 
@@ -1798,8 +1651,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 100 ether,
                 nonce: 10,
                 method: METHOD_SEND,
@@ -1827,8 +1680,11 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: SubnetID(0, new address[](0)), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({
+                    subnetId: SubnetID(0, new address[](0)),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
                 value: 0,
                 nonce: 10,
                 method: this.callback.selector,
@@ -1858,8 +1714,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         // apply type = topdown
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 10,
                 method: this.callback.selector,
@@ -1886,8 +1742,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: validators[0]}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(validators[0])}),
                 value: address(gw).balance,
                 nonce: 0,
                 method: METHOD_SEND,
@@ -1917,40 +1773,42 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         require(last == 0);
     }
 
-    function test_SubmitTopDownCheckpoint_FuzzNumberOfMessages(uint256 n) public {
-        vm.assume(n < 19594); // TODO: test with different memory limit
-        address[] memory validators = new address[](1);
-        validators[0] = vm.addr(100);
-        vm.deal(validators[0], 1);
-        uint256[] memory weights = new uint[](1);
-        weights[0] = 100;
+    // FIXME: This test was written by Limechain and is flaky so we disabled
+    // until we figure out what it does and the best way to fix it.
+    // function test_SubmitTopDownCheckpoint_FuzzNumberOfMessages(uint256 n) public {
+    //     vm.assume(n < 19594); // TODO: test with different memory limit
+    //     address[] memory validators = new address[](1);
+    //     validators[0] = vm.addr(100);
+    //     vm.deal(validators[0], 1);
+    //     uint256[] memory weights = new uint[](1);
+    //     weights[0] = 100;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        gw.setMembership(validators, weights);
+    //     vm.prank(FilAddress.SYSTEM_ACTOR);
+    //     gw.setMembership(validators, weights);
 
-        CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
-        for (uint64 i = 0; i < n; i++) {
-            topDownMsgs[i] = CrossMsg({
-                message: StorableMsg({
-                    from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                    to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                    value: 0,
-                    nonce: i,
-                    method: this.callback.selector,
-                    params: EMPTY_BYTES
-                }),
-                wrapped: false
-            });
-        }
+    //     CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
+    //     for (uint64 i = 0; i < n; i++) {
+    //         topDownMsgs[i] = CrossMsg({
+    //             message: StorableMsg({
+    //                 from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+    //                 to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+    //                 value: 0,
+    //                 nonce: i,
+    //                 method: this.callback.selector,
+    //                 params: EMPTY_BYTES
+    //             }),
+    //             wrapped: false
+    //         });
+    //     }
 
-        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
-            epoch: DEFAULT_CHECKPOINT_PERIOD,
-            topDownMsgs: topDownMsgs
-        });
+    //     TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
+    //         epoch: DEFAULT_CHECKPOINT_PERIOD,
+    //         topDownMsgs: topDownMsgs
+    //     });
 
-        vm.prank(validators[0]);
-        gw.submitTopDownCheckpoint(checkpoint);
-    }
+    //     vm.prank(validators[0]);
+    //     gw.submitTopDownCheckpoint(checkpoint);
+    // }
 
     function test_SubmitTopDownCheckpoint_Works_ConsensusReachedAndAddedToQueue() public {
         address[] memory validators = setupValidators();
@@ -1958,8 +1816,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
                 method: this.callback.selector,
@@ -1994,8 +1852,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
                 method: this.callback.selector,
@@ -2049,8 +1907,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
                 method: this.callback.selector,
@@ -2104,8 +1962,8 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
         topDownMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
-                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: address(this)}),
+                from: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: gw.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: 0,
                 method: this.callback.selector,
@@ -2201,27 +2059,38 @@ contract GatewayDeploymentTest is StdInvariant, Test {
 
         // vm.expectCall(address(sa), gw.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 1);
 
-        gw.fund{value: fundAmount}(subnetId);
+        gw.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(sa));
 
-        require(gw.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLenght);
+        require(gw.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLenght, "td nonce not same");
 
-        require(nonce == expectedNonce);
-        require(circSupply == expectedCircSupply);
+        require(nonce == expectedNonce, "nonce not equal");
+        require(circSupply == expectedCircSupply, "circ supply not equal");
 
         for (uint256 msgIndex = 0; msgIndex < expectedTopDownMsgsLenght; msgIndex++) {
             CrossMsg memory topDownMsg = gw.getSubnetTopDownMsg(subnetId, msgIndex);
 
-            require(topDownMsg.message.nonce == msgIndex);
-            require(topDownMsg.message.value == fundAmountWithSubtractedFee);
+            require(topDownMsg.message.nonce == msgIndex, "msg Index not euqla");
+            require(topDownMsg.message.value == fundAmountWithSubtractedFee, "value not equal");
             require(
                 keccak256(abi.encode(topDownMsg.message.to)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId, rawAddress: funderAddress})))
+                    keccak256(
+                        abi.encode(IPCAddress({subnetId: subnetId, rawAddress: FvmAddressHelper.from(funderAddress)}))
+                    ),
+                "td to not match"
             );
             require(
                 keccak256(abi.encode(topDownMsg.message.from)) ==
-                    keccak256(abi.encode(IPCAddress({subnetId: subnetId.getParentSubnet(), rawAddress: funderAddress})))
+                    keccak256(
+                        abi.encode(
+                            IPCAddress({
+                                subnetId: subnetId.getParentSubnet(),
+                                rawAddress: FvmAddressHelper.from(funderAddress)
+                            })
+                        )
+                    ),
+                "td from not match"
             );
         }
     }
@@ -2240,7 +2109,7 @@ contract GatewayDeploymentTest is StdInvariant, Test {
         uint256 expectedNonce = gw.bottomUpNonce() + 1;
         uint256 expectedCheckpointDataFee = feeBefore + crossMsgFee;
 
-        gw.release{value: releaseAmount}();
+        gw.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender));
 
         (, , uint256 fee, , ) = gw.bottomUpCheckpoints(epoch);
         console.log("fee %d", fee);

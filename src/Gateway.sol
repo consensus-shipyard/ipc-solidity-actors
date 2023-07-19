@@ -4,6 +4,7 @@ pragma solidity 0.8.19;
 import {EMPTY_HASH, BURNT_FUNDS_ACTOR, METHOD_SEND} from "./constants/Constants.sol";
 import {Voting} from "./Voting.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "./structs/Checkpoint.sol";
+import {FvmAddress} from "./structs/FvmAddress.sol";
 import {EpochVoteTopDownSubmission} from "./structs/EpochVoteSubmission.sol";
 import {Status} from "./enums/Status.sol";
 import {IPCMsgType} from "./enums/IPCMsgType.sol";
@@ -12,6 +13,7 @@ import {IGateway} from "./interfaces/IGateway.sol";
 import {ISubnetActor} from "./interfaces/ISubnetActor.sol";
 import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
+import {FvmAddressHelper} from "./lib/FvmAddressHelper.sol";
 import {CheckpointHelper} from "./lib/CheckpointHelper.sol";
 import {AccountHelper} from "./lib/AccountHelper.sol";
 import {CrossMsgHelper} from "./lib/CrossMsgHelper.sol";
@@ -29,6 +31,7 @@ import {Address} from "openzeppelin-contracts/utils/Address.sol";
 contract Gateway is IGateway, ReentrancyGuard, Voting {
     using FilAddress for address;
     using FilAddress for address payable;
+    using FvmAddressHelper for FvmAddress;
     using AccountHelper for address;
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
@@ -54,6 +57,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// SubnetID => Subnet
     mapping(bytes32 => Subnet) public subnets;
 
+    /// @notice Keys of the registered subnets. Useful to iterate through them
+    bytes32[] public subnetKeys;
+
     /// @notice bottom-up period in number of epochs for the subnet
     uint64 public immutable bottomUpCheckPeriod;
 
@@ -61,9 +67,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// an actor that need to be propagated further through the hierarchy.
     /// cross-net message id => CrossMsg
     mapping(bytes32 => CrossMsg) public postbox;
-
-    /// @notice cross-net message id => set of owners
-    mapping(bytes32 => mapping(address => bool)) public postboxHasOwner;
 
     /// @notice top-down period in number of epochs for the subnet
     uint64 public immutable topDownCheckPeriod;
@@ -112,25 +115,22 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error NotEnoughFunds();
     error NotEnoughFundsToRelease();
     error CannotReleaseZero();
+    error NotEnoughSubnetCircSupply();
     error NotEnoughBalance();
     error NotInitialized();
     error NotValidator();
-    error NotEnoughSubnetCircSupply();
     error NotEmptySubnetCircSupply();
     error NotRegisteredSubnet();
     error AlreadyRegisteredSubnet();
     error AlreadyInitialized();
     error InconsistentPrevCheckpoint();
     error InvalidActorAddress();
-    error InvalidPostboxOwner();
     error InvalidCheckpointEpoch();
     error InvalidCheckpointSource();
     error InvalidCrossMsgNonce();
     error InvalidCrossMsgDestinationSubnet();
-    error InvalidCrossMsgDestinationAddress();
     error InvalidCrossMsgsSortOrder();
     error InvalidCrossMsgFromSubnetId();
-    error InvalidCrossMsgFromRawAddress();
     error CannotSendCrossMsgToItself();
     error SubnetNotActive();
     error PostboxNotExist();
@@ -138,6 +138,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     error ValidatorsAndWeightsLengthMismatch();
     error ValidatorWeightIsZero();
     error NotEnoughFundsForMembership();
+    error MethodNotSupportedYet();
 
     function _signableOnly() private view {
         if (!msg.sender.isAccount()) {
@@ -157,12 +158,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
-    function _onlyValidPostboxOwner(bytes32 msgCid) private view {
-        if (!postboxHasOwner[msgCid][msg.sender]) {
-            revert InvalidPostboxOwner();
-        }
-    }
-
     modifier signableOnly() {
         _signableOnly();
         _;
@@ -175,11 +170,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     modifier hasFee() {
         _hasFee();
-        _;
-    }
-
-    modifier onlyValidPostboxOwner(bytes32 msgCid) {
-        _onlyValidPostboxOwner(msgCid);
         _;
     }
 
@@ -264,6 +254,8 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         subnet.stake = msg.value;
         subnet.status = Status.Active;
         subnet.genesisEpoch = block.number;
+
+        subnetKeys.push(subnetId.toHash());
 
         totalSubnets += 1;
     }
@@ -409,8 +401,9 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
 
     /// @notice fund - commit a top-down message releasing funds in a child subnet. There is an associated fee that gets distributed to validators in the subnet as well
     /// @param subnetId - subnet to fund
-    function fund(SubnetID calldata subnetId) external payable signableOnly hasFee {
-        CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, msg.value - crossMsgFee);
+    /// @param to - the address to send funds to
+    function fund(SubnetID calldata subnetId, FvmAddress calldata to) external payable signableOnly hasFee {
+        CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg(subnetId, msg.sender, to, msg.value - crossMsgFee);
 
         // commit top-down message.
         _commitTopDownMsg(crossMsg);
@@ -419,8 +412,13 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     }
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
-    function release() external payable signableOnly hasFee {
-        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(_networkName, msg.sender, msg.value - crossMsgFee);
+    function release(FvmAddress calldata to) external payable signableOnly hasFee {
+        CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg(
+            _networkName,
+            msg.sender,
+            to,
+            msg.value - crossMsgFee
+        );
 
         _commitBottomUpMsg(crossMsg);
     }
@@ -471,6 +469,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
 
         totalWeight = totalValidatorsWeight;
+        // revert MethodNotSupportedYet();
     }
 
     /// @notice allows a validator to submit a batch of messages in a top-down commitment
@@ -523,9 +522,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (crossMsg.message.value != msg.value) {
             revert NotEnoughFunds();
         }
-        if (crossMsg.message.to.rawAddress == address(0)) {
-            revert InvalidCrossMsgDestinationAddress();
-        }
 
         // We disregard the "to" of the message that will be verified in the _commitCrossMessage().
         // The caller is the one set as the "from" of the message
@@ -537,9 +533,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         // They can be equal, we can propagate the real sender address only or both.
         // We are going to use the simplest implementation for now and define the appropriate interpretation later
         // based on the business requirements.
-        if (crossMsg.message.from.rawAddress != msg.sender) {
-            revert InvalidCrossMsgFromRawAddress();
-        }
 
         // commit cross-message for propagation
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
@@ -550,37 +543,12 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
             shouldBurn,
             shouldDistributeRewards
         );
-    }
-
-    /// @notice whitelist a series of addresses as propagator of a cross net message
-    /// @param msgCid - the cid of the cross-net message
-    /// @param owners - list of addresses to be added as owners
-    function whitelistPropagator(bytes32 msgCid, address[] calldata owners) external onlyValidPostboxOwner(msgCid) {
-        CrossMsg storage crossMsg = postbox[msgCid];
-
-        if (crossMsg.isEmpty()) {
-            revert PostboxNotExist();
-        }
-
-        // update postbox with the new owners
-        uint256 ownersLength = owners.length;
-        for (uint256 i = 0; i < ownersLength; ) {
-            if (owners[i] != address(0)) {
-                address owner = owners[i];
-
-                if (!postboxHasOwner[msgCid][owner]) {
-                    postboxHasOwner[msgCid][owner] = true;
-                }
-            }
-            unchecked {
-                ++i;
-            }
-        }
+        // revert MethodNotSupportedYet();
     }
 
     /// @notice propagates the populated cross net message for the given cid
     /// @param msgCid - the cid of the cross-net message
-    function propagate(bytes32 msgCid) external payable hasFee onlyValidPostboxOwner(msgCid) {
+    function propagate(bytes32 msgCid) external payable hasFee {
         CrossMsg storage crossMsg = postbox[msgCid];
 
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
@@ -598,6 +566,7 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         if (feeRemainder > 0) {
             payable(msg.sender).sendValue(feeRemainder);
         }
+        // revert MethodNotSupportedYet();
     }
 
     /// @notice whether a validator has voted for a checkpoint submission during an epoch
@@ -753,14 +722,28 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         subnet.topDownMsgs.push(crossMessage);
     }
 
-    function getTopDownMsgs(SubnetID calldata subnetId) external view returns (CrossMsg[] memory) {
+    /// @notice get the list of top down messages from nonce, we may also consider introducing pagination.
+    /// @param subnetId - The subnet id to fetch messages from
+    /// @param fromNonce - The starting nonce to get top down messages, inclusive.
+    function getTopDownMsgs(SubnetID calldata subnetId, uint64 fromNonce) external view returns (CrossMsg[] memory) {
         (bool registered, Subnet storage subnet) = _getSubnet(subnetId);
-
         if (!registered) {
-            revert NotRegisteredSubnet();
+            return new CrossMsg[](0);
         }
 
-        return subnet.topDownMsgs;
+        uint256 totalLength = subnet.topDownMsgs.length;
+        uint256 startingNonce = uint256(fromNonce);
+        if (startingNonce >= totalLength) {
+            return new CrossMsg[](0);
+        }
+
+        uint256 msgLength = totalLength - startingNonce;
+        CrossMsg[] memory messages = new CrossMsg[](msgLength);
+        for (uint256 i = 0; i < msgLength; i++) {
+            messages[i] = subnet.topDownMsgs[i + startingNonce];
+        }
+
+        return messages;
     }
 
     /// @notice commit bottomup messages for their execution in the subnet. Adds the message to the checkpoint for future execution
@@ -779,9 +762,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     /// @param forwarder - the subnet that handles the cross message
     /// @param crossMsg - the cross message to be executed
     function _applyMsg(SubnetID memory forwarder, CrossMsg memory crossMsg) internal {
-        if (crossMsg.message.to.rawAddress == address(0)) {
-            revert InvalidCrossMsgDestinationAddress();
-        }
         if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDestinationSubnet();
         }
@@ -828,7 +808,6 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         bytes32 cid = crossMsg.toHash();
 
         postbox[cid] = crossMsg;
-        postboxHasOwner[cid][crossMsg.message.from.rawAddress] = true;
     }
 
     /// @notice applies a cross-net messages coming from some other subnet.
@@ -890,5 +869,20 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
     function _getSubnet(SubnetID memory subnetId) internal view returns (bool found, Subnet storage subnet) {
         subnet = subnets[subnetId.toHash()];
         found = !subnet.id.isEmpty();
+    }
+
+    /// @notice returns the list of registered subnets in IPC
+    /// @return subnet - the list of subnets
+    function listSubnets() external view returns (Subnet[] memory) {
+        uint256 size = subnetKeys.length;
+        Subnet[] memory out = new Subnet[](size);
+        for (uint256 i = 0; i < size; ) {
+            bytes32 key = subnetKeys[i];
+            out[i] = subnets[key];
+            unchecked {
+                ++i;
+            }
+        }
+        return out;
     }
 }

@@ -120,6 +120,12 @@ task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args
 const config: HardhatUserConfig = {
   defaultNetwork: "calibrationnet",
   networks: {
+    mainnet: {
+      chainId: 314,
+      url: process.env.RPC_URL!,
+      accounts: [process.env.PRIVATE_KEY!],
+      timeout: 1000000,
+    },
     calibrationnet: {
       chainId: 314159,
       url: process.env.RPC_URL!,

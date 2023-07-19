@@ -13,6 +13,7 @@ import "../src/structs/Subnet.sol";
 import "../src/structs/FvmAddress.sol";
 import "../src/lib/SubnetIDHelper.sol";
 import "../src/lib/CheckpointHelper.sol";
+import "../src/lib/FvmAddressHelper.sol";
 
 contract SubnetActorTest is Test {
     using SubnetIDHelper for SubnetID;
@@ -484,11 +485,11 @@ contract SubnetActorTest is Test {
             message: StorableMsg({
                 from: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 to: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 1,
@@ -501,11 +502,11 @@ contract SubnetActorTest is Test {
             message: StorableMsg({
                 from: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 to: IPCAddress({
                     subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                    rawAddress: address(this)
+                    rawAddress: FvmAddressHelper.from(address(this))
                 }),
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
@@ -629,6 +630,32 @@ contract SubnetActorTest is Test {
         require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator) == true);
         require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator2) == false);
         require(sa.lastVotingExecutedEpoch() == 0);
+    }
+
+    function test_SubmitCheckpoint_Works_EpochEqualToGenesisEpoch() public {
+        address validator = vm.addr(100);
+
+        vm.roll(0);
+
+        _assertDeploySubnetActor(
+            DEFAULT_NETWORK_NAME,
+            GATEWAY_ADDRESS,
+            ConsensusType.Mir,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            GENESIS,
+            DEFAULT_MAJORITY_PERCENTAGE
+        );
+
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        BottomUpCheckpoint memory checkpoint = _createBottomUpCheckpoint();
+
+        _assertVote(validator, checkpoint);
+
+        require(sa.hasValidatorVotedForSubmission(checkpoint.epoch, validator) == true);
+        require(sa.lastVotingExecutedEpoch() == checkpoint.epoch);
     }
 
     function test_SubmitCheckpoint_Fails_NotAccount() public {
@@ -939,8 +966,8 @@ contract SubnetActorTest is Test {
 
         crossMsgs[0] = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: subnetActorId, rawAddress: address(this)}),
-                to: IPCAddress({subnetId: subnetActorId, rawAddress: address(this)}),
+                from: IPCAddress({subnetId: subnetActorId, rawAddress: FvmAddressHelper.from(address(this))}),
+                to: IPCAddress({subnetId: subnetActorId, rawAddress: FvmAddressHelper.from(address(this))}),
                 value: 0,
                 nonce: nonce,
                 method: this.callback.selector,
