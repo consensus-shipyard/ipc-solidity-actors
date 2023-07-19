@@ -138,6 +138,7 @@ contract GatewayGetterFacet {
     }
 
     function executableQueue() public view returns (uint64, uint64, uint64) {
+        // slither-disable-next-line unused-return
         return LibVoting.executableQueue();
     }
 
