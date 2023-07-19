@@ -37,6 +37,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert InvalidCheckpointSource();
         }
 
+        // slither-disable-next-line unused-return
         (, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
         if (subnet.status != Status.Active) {
             revert SubnetNotActive();

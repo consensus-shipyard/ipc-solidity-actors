@@ -60,6 +60,7 @@ contract GatewayGetterFacet {
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
     function getSubnet(SubnetID calldata subnetId) external view returns (bool, Subnet memory) {
+        // slither-disable-next-line unused-return
         return LibGateway.getSubnet(subnetId);
     }
 
@@ -69,12 +70,14 @@ contract GatewayGetterFacet {
 
     /// @notice get number of top-down messages for the given subnet
     function getSubnetTopDownMsgsLength(SubnetID memory subnetId) external view returns (uint256) {
+        // slither-disable-next-line unused-return
         (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
         return subnet.topDownMsgs.length;
     }
 
     /// @notice get the top-down message at the given index for the given subnet
     function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
+        // slither-disable-next-line unused-return
         (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
         return subnet.topDownMsgs[index];
     }
@@ -130,6 +133,7 @@ contract GatewayGetterFacet {
     }
 
     function getGenesisEpoch() public view returns (uint64) {
+        // slither-disable-next-line unused-return
         return LibVoting.getGenesisEpoch();
     }
 

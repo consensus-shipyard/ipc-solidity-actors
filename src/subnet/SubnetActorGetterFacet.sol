@@ -64,6 +64,7 @@ contract SubnetActorGetterFacet {
     }
 
     function executableQueue() external view returns (uint64, uint64, uint64) {
+        // slither-disable-next-line unused-return
         return LibVoting.executableQueue();
     }
 
