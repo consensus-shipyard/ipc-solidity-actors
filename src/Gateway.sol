@@ -423,54 +423,54 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         _commitBottomUpMsg(crossMsg);
     }
 
-    /// @notice set up the top-down validators and their voting power
-    /// @param validators - list of validator addresses
-    /// @param weights - list of validators voting powers
-    function setMembership(address[] memory validators, uint256[] memory weights) external systemActorOnly {
-        if (validators.length != weights.length) {
-            revert ValidatorsAndWeightsLengthMismatch();
-        }
-        // invalidate the previous validator set
-        ++validatorNonce;
-
-        uint256 totalValidatorsWeight = 0;
-
-        // setup the new validator set
-        uint256 validatorsLength = validators.length;
-        for (uint256 validatorIndex = 0; validatorIndex < validatorsLength; ) {
-            address validatorAddress = validators[validatorIndex];
-            if (validatorAddress != address(0)) {
-                uint256 validatorWeight = weights[validatorIndex];
-
-                if (validatorWeight == 0) {
-                    revert ValidatorWeightIsZero();
-                }
-
-                validatorSet[validatorNonce][validatorAddress] = validatorWeight;
-
-                totalValidatorsWeight += validatorWeight;
-            }
-
-            // initial validators need to be conveniently funded with at least
-            // 1 FIL for them to be able to commit the first few top-down messages.
-            // They should use this FIL to fund their own addresses in the subnet
-            // so they can keep committing top-down messages. If they don't do this,
-            // they won't be able to send cross-net messages in their subnet.
-            // Funds are only distributed in child subnets, where top-down checkpoints need
-            // to be committed. This doesn't apply to the root.
-            // TODO: Once account abstraction is conveniently supported, there will be
-            // no need for this initial funding of validators.
-            // if (block.number == 1 && !_networkName.isRoot())
-            //     payable(validatorAddress).sendValue(INITIAL_VALIDATOR_FUNDS);
-
-            unchecked {
-                ++validatorIndex;
-            }
-        }
-
-        totalWeight = totalValidatorsWeight;
-        // revert MethodNotSupportedYet();
-    }
+//    /// @notice set up the top-down validators and their voting power
+//    /// @param validators - list of validator addresses
+//    /// @param weights - list of validators voting powers
+//    function setMembership(address[] memory validators, uint256[] memory weights) external systemActorOnly {
+//        if (validators.length != weights.length) {
+//            revert ValidatorsAndWeightsLengthMismatch();
+//        }
+//        // invalidate the previous validator set
+//        ++validatorNonce;
+//
+//        uint256 totalValidatorsWeight = 0;
+//
+//        // setup the new validator set
+//        uint256 validatorsLength = validators.length;
+//        for (uint256 validatorIndex = 0; validatorIndex < validatorsLength; ) {
+//            address validatorAddress = validators[validatorIndex];
+//            if (validatorAddress != address(0)) {
+//                uint256 validatorWeight = weights[validatorIndex];
+//
+//                if (validatorWeight == 0) {
+//                    revert ValidatorWeightIsZero();
+//                }
+//
+//                validatorSet[validatorNonce][validatorAddress] = validatorWeight;
+//
+//                totalValidatorsWeight += validatorWeight;
+//            }
+//
+//            // initial validators need to be conveniently funded with at least
+//            // 1 FIL for them to be able to commit the first few top-down messages.
+//            // They should use this FIL to fund their own addresses in the subnet
+//            // so they can keep committing top-down messages. If they don't do this,
+//            // they won't be able to send cross-net messages in their subnet.
+//            // Funds are only distributed in child subnets, where top-down checkpoints need
+//            // to be committed. This doesn't apply to the root.
+//            // TODO: Once account abstraction is conveniently supported, there will be
+//            // no need for this initial funding of validators.
+//            // if (block.number == 1 && !_networkName.isRoot())
+//            //     payable(validatorAddress).sendValue(INITIAL_VALIDATOR_FUNDS);
+//
+//            unchecked {
+//                ++validatorIndex;
+//            }
+//        }
+//
+//        totalWeight = totalValidatorsWeight;
+//        // revert MethodNotSupportedYet();
+//    }
 
     /// @notice allows a validator to submit a batch of messages in a top-down commitment
     /// @param checkpoint - top-down checkpoint
@@ -516,58 +516,58 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         _applyMessages(SubnetID(0, new address[](0)), topDownMsgs);
     }
 
-    /// @notice sends an arbitrary cross message from the current subnet to the destination subnet
-    /// @param crossMsg - message to send
-    function sendCrossMessage(CrossMsg calldata crossMsg) external payable signableOnly hasFee {
-        if (crossMsg.message.value != msg.value) {
-            revert NotEnoughFunds();
-        }
+//    /// @notice sends an arbitrary cross message from the current subnet to the destination subnet
+//    /// @param crossMsg - message to send
+//    function sendCrossMessage(CrossMsg calldata crossMsg) external payable signableOnly hasFee {
+//        if (crossMsg.message.value != msg.value) {
+//            revert NotEnoughFunds();
+//        }
+//
+//        // We disregard the "to" of the message that will be verified in the _commitCrossMessage().
+//        // The caller is the one set as the "from" of the message
+//        if (!crossMsg.message.from.subnetId.equals(_networkName)) {
+//            revert InvalidCrossMsgFromSubnetId();
+//        }
+//        // There can be many semantics of the (rawAddress, msg.sender) pairs.
+//        // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
+//        // They can be equal, we can propagate the real sender address only or both.
+//        // We are going to use the simplest implementation for now and define the appropriate interpretation later
+//        // based on the business requirements.
+//
+//        // commit cross-message for propagation
+//        (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
+//
+//        _crossMsgSideEffects(
+//            crossMsg.message.value,
+//            crossMsg.message.to.subnetId.down(_networkName),
+//            shouldBurn,
+//            shouldDistributeRewards
+//        );
+//        // revert MethodNotSupportedYet();
+//    }
 
-        // We disregard the "to" of the message that will be verified in the _commitCrossMessage().
-        // The caller is the one set as the "from" of the message
-        if (!crossMsg.message.from.subnetId.equals(_networkName)) {
-            revert InvalidCrossMsgFromSubnetId();
-        }
-        // There can be many semantics of the (rawAddress, msg.sender) pairs.
-        // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
-        // They can be equal, we can propagate the real sender address only or both.
-        // We are going to use the simplest implementation for now and define the appropriate interpretation later
-        // based on the business requirements.
-
-        // commit cross-message for propagation
-        (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
-
-        _crossMsgSideEffects(
-            crossMsg.message.value,
-            crossMsg.message.to.subnetId.down(_networkName),
-            shouldBurn,
-            shouldDistributeRewards
-        );
-        // revert MethodNotSupportedYet();
-    }
-
-    /// @notice propagates the populated cross net message for the given cid
-    /// @param msgCid - the cid of the cross-net message
-    function propagate(bytes32 msgCid) external payable hasFee {
-        CrossMsg storage crossMsg = postbox[msgCid];
-
-        (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
-        // We must delete the message first to prevent potential re-entrancies,
-        // and as the message is deleted and we don't have a reference to the object
-        // anymore, we need to pull the data from the message to trigger the side-effects.
-        uint256 v = crossMsg.message.value;
-        SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(_networkName);
-        delete postbox[msgCid];
-
-        _crossMsgSideEffects(v, toSubnetId, shouldBurn, shouldDistributeRewards);
-
-        uint256 feeRemainder = msg.value - crossMsgFee;
-
-        if (feeRemainder > 0) {
-            payable(msg.sender).sendValue(feeRemainder);
-        }
-        // revert MethodNotSupportedYet();
-    }
+//    /// @notice propagates the populated cross net message for the given cid
+//    /// @param msgCid - the cid of the cross-net message
+//    function propagate(bytes32 msgCid) external payable hasFee {
+//        CrossMsg storage crossMsg = postbox[msgCid];
+//
+//        (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
+//        // We must delete the message first to prevent potential re-entrancies,
+//        // and as the message is deleted and we don't have a reference to the object
+//        // anymore, we need to pull the data from the message to trigger the side-effects.
+//        uint256 v = crossMsg.message.value;
+//        SubnetID memory toSubnetId = crossMsg.message.to.subnetId.down(_networkName);
+//        delete postbox[msgCid];
+//
+//        _crossMsgSideEffects(v, toSubnetId, shouldBurn, shouldDistributeRewards);
+//
+//        uint256 feeRemainder = msg.value - crossMsgFee;
+//
+//        if (feeRemainder > 0) {
+//            payable(msg.sender).sendValue(feeRemainder);
+//        }
+//        // revert MethodNotSupportedYet();
+//    }
 
     /// @notice whether a validator has voted for a checkpoint submission during an epoch
     /// @param epoch - the epoch to check

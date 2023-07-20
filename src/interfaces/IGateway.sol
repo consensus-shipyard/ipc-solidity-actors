@@ -45,22 +45,21 @@ interface IGateway {
     /// the amount of funds that can be released for a specific address.
     function release(FvmAddress calldata to) external payable;
 
-    /// SendCrossMessage sends an arbitrary cross-message to other subnet in the hierarchy.
-    ///
-    /// If the message includes any funds they need to be burnt (like in Release)
-    /// before being propagated to the corresponding subnet.
-    /// The circulating supply in each subnet needs to be updated as the message passes through them.
-    ///
-    /// Params expect a raw message without any subnet context (the IPC address is
-    /// included in the message by the actor). Only actors are allowed to send arbitrary
-    /// cross-messages as a side-effect of their execution. For plain token exchanges
-    /// fund and release have to be used.
-    function sendCrossMessage(CrossMsg memory crossMsg) external payable;
+//    /// SendCrossMessage sends an arbitrary cross-message to other subnet in the hierarchy.
+//    ///
+//    /// If the message includes any funds they need to be burnt (like in Release)
+//    /// before being propagated to the corresponding subnet.
+//    /// The circulating supply in each subnet needs to be updated as the message passes through them.
+//    ///
+//    /// Params expect a raw message without any subnet context (the IPC address is
+//    /// included in the message by the actor). Only actors are allowed to send arbitrary
+//    /// cross-messages as a side-effect of their execution. For plain token exchanges
+//    function sendCrossMessage(CrossMsg memory crossMsg) external payable;
 
-    /// Propagates the stored postbox item for the given cid
-    function propagate(bytes32 msgCid) external payable;
+//    /// Propagates the stored postbox item for the given cid
+//    function propagate(bytes32 msgCid) external payable;
 
     function submitTopDownCheckpoint(TopDownCheckpoint calldata topdownCheckpoint) external;
 
-    function setMembership(address[] memory validatorsToSet, uint256[] memory weights) external;
+//    function setMembership(address[] memory validatorsToSet, uint256[] memory weights) external;
 }
