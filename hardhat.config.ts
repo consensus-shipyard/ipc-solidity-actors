@@ -105,13 +105,13 @@ task('deploy', 'Builds and deploys all contracts on the selected network', async
 
 task('deploy-gw-diamond', 'Builds and deploys Gateway Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
   await hre.run('compile');
-  //await hre.run('deploy-libraries');
+  await hre.run('deploy-libraries');
   await hre.run('deploy-gw-diamond-and-facets');
 });
 
 task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
   await hre.run('compile');
-  //await hre.run('deploy-libraries');
+  await hre.run('deploy-libraries');
   await hre.run('deploy-sa-diamond-and-facets');
 });
 
