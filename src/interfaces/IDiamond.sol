@@ -14,6 +14,6 @@ interface IDiamond {
         FacetCutAction action;
         bytes4[] functionSelectors;
     }
-// The DiamondCut event records all function changes to a diamond.
+    // The DiamondCut event records all function changes to a diamond.
     event DiamondCut(FacetCut[] _diamondCut, address _init, bytes _calldata);
 }
