@@ -2058,8 +2058,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         for (uint64 i = 0; i < n; i++) {
             topDownMsgs[i] = CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
-                    to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                    from: IPCAddress({
+                        subnetId: gwGetter.getNetworkName(),
+                        rawAddress: FvmAddressHelper.from(address(this))
+                    }),
+                    to: IPCAddress({
+                        subnetId: gwGetter.getNetworkName(),
+                        rawAddress: FvmAddressHelper.from(address(this))
+                    }),
                     value: 0,
                     nonce: i,
                     method: this.callback.selector,
