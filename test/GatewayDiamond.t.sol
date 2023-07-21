@@ -8,6 +8,7 @@ import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.s
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
+import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
@@ -27,6 +28,7 @@ import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
+import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -69,6 +71,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     SubnetActorDiamond saDiamond;
     SubnetActorManagerFacet saManager;
     SubnetActorGetterFacet saGetter;
+
+    bytes4[] louperSelectors;
+    DiamondLoupeFacet louper;
 
     uint64 private constant ROOTNET_CHAINID = 123;
     address public constant ROOTNET_ADDRESS = address(1);
@@ -118,6 +123,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouterSelectors = TestUtils.generateSelectors(vm, "GatewayRouterFacet");
         gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
         gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
+
+        louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
     }
 
     function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
@@ -177,8 +184,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter = new GatewayRouterFacet();
         gwManager = new GatewayManagerFacet();
         gwGetter = new GatewayGetterFacet();
+        louper = new DiamondLoupeFacet();
 
-        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](3);
+        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](4);
 
         gwDiamondCut[0] = (
             IDiamond.FacetCut({
@@ -204,10 +212,19 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             })
         );
 
+        gwDiamondCut[3] = (
+            IDiamond.FacetCut({
+                facetAddress: address(louper),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: louperSelectors
+            })
+        );
+
         gatewayDiamond = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
+        louper = DiamondLoupeFacet(address(gatewayDiamond));
 
         addValidator(TOPDOWN_VALIDATOR_1, 100);
 
@@ -278,6 +295,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             "getNetworkName"
         );
         require(gwGetter.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE, "majorityPercentage");
+    }
+
+    function testGatewayDiamond_GatewayDiamond_LoupeFunction() public view {
+        require(louper.facets().length == 4);
     }
 
     function testGatewayDiamond_GatewayDiamond_Deployment_Works_Root(uint64 checkpointPeriod) public {
