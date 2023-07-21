@@ -2043,42 +2043,40 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(last == 0);
     }
 
-    // FIXME: This test was written by Limechain and is flaky so we disabled
-    // until we figure out what it does and the best way to fix it.
-    //function testGatewayDiamond_SubmitTopDownCheckpoint_FuzzNumberOfMessages(uint256 n) public {
-    //    vm.assume(n < 19594); // TODO: test with different memory limit
-    //    address[] memory validators = new address[](1);
-    //    validators[0] = vm.addr(100);
-    //    vm.deal(validators[0], 1);
-    //    uint256[] memory weights = new uint[](1);
-    //    weights[0] = 100;
-    //
-    //    vm.prank(FilAddress.SYSTEM_ACTOR);
-    //    gwManager.setMembership(validators, weights);
-    //
-    //    CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
-    //    for (uint64 i = 0; i < n; i++) {
-    //        topDownMsgs[i] = CrossMsg({
-    //            message: StorableMsg({
-    //                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
-    //                to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
-    //                value: 0,
-    //                nonce: i,
-    //                method: this.callback.selector,
-    //                params: EMPTY_BYTES
-    //            }),
-    //            wrapped: false
-    //        });
-    //    }
-    //
-    //    TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
-    //        epoch: DEFAULT_CHECKPOINT_PERIOD,
-    //        topDownMsgs: topDownMsgs
-    //    });
-    //
-    //    vm.prank(validators[0]);
-    //    gwRouter.submitTopDownCheckpoint(checkpoint);
-    //}
+    function testGatewayDiamond_SubmitTopDownCheckpoint_BigNumberOfMessages() public {
+        uint256 n = 3000;
+        address[] memory validators = new address[](1);
+        validators[0] = vm.addr(100);
+        vm.deal(validators[0], 1);
+        uint256[] memory weights = new uint[](1);
+        weights[0] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gwManager.setMembership(validators, weights);
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
+        for (uint64 i = 0; i < n; i++) {
+            topDownMsgs[i] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                    to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(address(this))}),
+                    value: 0,
+                    nonce: i,
+                    method: this.callback.selector,
+                    params: EMPTY_BYTES
+                }),
+                wrapped: false
+            });
+        }
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
+            epoch: DEFAULT_CHECKPOINT_PERIOD,
+            topDownMsgs: topDownMsgs
+        });
+
+        vm.prank(validators[0]);
+        gwRouter.submitTopDownCheckpoint(checkpoint);
+    }
 
     function testGatewayDiamond_SubmitTopDownCheckpoint_Works_ConsensusReachedAndAddedToQueue() public {
         address[] memory validators = setupValidators();
