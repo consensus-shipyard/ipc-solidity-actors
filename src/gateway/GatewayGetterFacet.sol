@@ -84,12 +84,20 @@ contract GatewayGetterFacet {
 
     function getTopDownMsgs(SubnetID calldata subnetId) external view returns (CrossMsg[] memory) {
         (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
-
         if (!registered) {
             revert NotRegisteredSubnet();
         }
-
         return subnet.topDownMsgs;
+    }
+
+    /// @notice Get the latest applied top down nonce
+    /// @param subnetId - The subnet id to fetch messages from
+    function getAppliedTopDownNonce(SubnetID calldata subnetId) external view returns (bool, uint64) {
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
+        if (!registered) {
+            return (false, 0);
+        }
+        return (true, subnet.topDownNonce);
     }
 
     function totalWeight() public view returns (uint256) {

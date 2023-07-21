@@ -1,7 +1,8 @@
 # IPC Diamond
 
-The IPC Solidity Actors are implemented in the Diamond pattern, but the current implementation 
-is not compatible with [EIP-2535](https://eips.ethereum.org/EIPS/eip-2535) standard. 
+The IPC Solidity Actors are implemented using the Diamond pattern, but the current implementation 
+is not compatible with [EIP-2535](https://eips.ethereum.org/EIPS/eip-2535) standard:
+At present, it is not possible to add new facets or update the existing ones.
 
 The current implementation can be classified as a `Single Cut Diamond`. 
 A single cut diamond adds all functions to itself in its constructor function,
