@@ -1,13 +1,13 @@
 # IPC Diamond
 
-The IPC Solidity Actors are implemented using the Diamond pattern, but the current implementation 
+The IPC Solidity Actors are implemented using the Diamond pattern, but the current implementation
 is not compatible with [EIP-2535](https://eips.ethereum.org/EIPS/eip-2535) standard:
 At present, it is not possible to add new facets or update the existing ones.
 
-The current implementation can be classified as a `Single Cut Diamond`. 
-A single cut diamond adds all functions to itself in its constructor function,
+The current implementation can be classified as a `Single Cut Diamond`.
+A single-cut diamond adds all functions to itself in its constructor function,
 but it does not allow adding, replacing, or removing functions later.
-This means that all facets of the diamond will be added to it in the constructor of the diamond 
+This means that all facets of the diamond will be added to it in the constructor of the diamond
 and upgrades will not be possible.
 
 ## Code Layout
@@ -16,22 +16,21 @@ and upgrades will not be possible.
 2. `GatewayDiamond.sol` and `SubnetActorDiamond.sol` are diamond contracts.
 3. Libraries are stored in the `lib` directory. They contain functionality that can't fit in a facet or should be shared by multiple facets.
 4. `lib/LibSubnetActor.sol` and `lib/LibGatewayActorStorage` implement `AppStorage` pattern.
-5. A custom `lib/ReentrancyGuard.sol` is used because original OpenZeppelin's `ReentrancyGuard` contract doesn't support diamond pattern.
+5. A custom `lib/ReentrancyGuard.sol` is used because the original OpenZeppelin's `ReentrancyGuard` contract doesn't support the Diamond pattern.
 
 ## Implementation Base
 The IPC diamond code is based on the [diamond-1-hardhat](https://github.com/mudgen/diamond-1-hardhat/tree/main/contracts) reference implementation.
 
 ## Storage
-The implementation uses `AppStorage` pattern in facets and `Diamond Storage` in libraries.
-`GatewayActorStorage` and `SubnetActorStorage` are used within `AppStorage` pattern.
-To be compatible with `ApStorage` and to be able to apply it we are using `LibReentrancyGuard` contract.
+The implementation uses the `AppStorage` pattern in facets and `Diamond Storage` in libraries.
+`GatewayActorStorage` and `SubnetActorStorage` are used within the `AppStorage` pattern.
+To be compatible with `ApStorage` and to be able to apply it, we are using the `LibReentrancyGuard` contract.
 
 ## Getting Selectors
-Because of diamonds contain mappings of function selectors to facet addresses we have to know function selectors before deploying.
-To do that we use `get_selectors` function from a script in Python.
+Because diamonds contain mappings of function selectors to facet addresses, we have to know function selectors before deploying.
+To do that, we use the `get_selectors` function from a script in Python.
 
 ## References
-
- - [Introduction to EIP-2535 Diamonds](https://eip2535diamonds.substack.com/p/introduction-to-the-diamond-standard)
- - [ERC-2535: Diamonds, Multi-Facet Proxy](https://eips.ethereum.org/EIPS/eip-2535#facets-state-variables-and-diamond-storage)
- - [Understanding Diamonds on Ethereum](https://dev.to/mudgen/understanding-diamonds-on-ethereum-1fb)
+- [Introduction to EIP-2535 Diamonds](https://eip2535diamonds.substack.com/p/introduction-to-the-diamond-standard)
+- [ERC-2535: Diamonds, Multi-Facet Proxy](https://eips.ethereum.org/EIPS/eip-2535#facets-state-variables-and-diamond-storage)
+- [Understanding Diamonds on Ethereum](https://dev.to/mudgen/understanding-diamonds-on-ethereum-1fb)

@@ -1,5 +1,5 @@
 import hre, { ethers } from "hardhat";
-import {deployContractWithDeployer, deployContractWithDeployerNoArgs, getTransactionFees} from './util';
+import {deployContractWithDeployer, getTransactionFees} from './util';
 
 const { getSelectors, FacetCutAction } = require('./js/diamond.js')
 
@@ -26,18 +26,6 @@ async function deployGatewayDiamond (libs: { [key in string]: string }) {
     type Libraries = {
         [libraryName: string]: string;
     }
-
-    /*
-    libs = {
-        AccountHelper: '0x957dA11E0528c05bff3feC9a0f5AAf32B42f2eB1',
-        CheckpointHelper: '0x1E5e41B76F7896c148bD870064A9b296170141b3',
-        EpochVoteSubmissionHelper: '0x05012b1CcF33C5F26EFA276461c4Eeb2f553aB26',
-        ExecutableQueueHelper: '0x27e801800a87F7bc8713251A923A8433A7CF9450',
-        SubnetIDHelper: '0x2d005d4380004a15daA72Bd450698d82e5b42b8C',
-        CrossMsgHelper: '0x262E53e0697202EF993C7994b89CE2e107c066db',
-        StorableMsgHelper: '0x3Cb5BcFD85F8F28E68B8f4f248Bbfe5B8Adf9208'
-    }
-     */
 
     // ----
 

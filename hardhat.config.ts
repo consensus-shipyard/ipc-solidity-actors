@@ -47,7 +47,7 @@ async function getDeployments(env: string): Promise<{ [key in string]: string }>
 task('deploy-libraries', 'Build and deploys all libraries on the selected network', async (args, hre: HardhatRuntimeEnvironment) => {
   const { deploy } = await lazyImport('./scripts/deploy-libraries');
   const libsDeployment = await deploy();
-  console.log("Deployed libraries:", libsDeployment);
+  console.log(libsDeployment);
   await saveDeployments(hre.network.name, libsDeployment, 'libs');
 });
 
@@ -58,7 +58,7 @@ task('deploy-gateway', 'Builds and deploys the Gateway contract on the selected 
   const { deploy } = await lazyImport('./scripts/deploy-gateway');
   const gatewayDeployment = await deploy(deployments.libs);
 
-  console.log(gatewayDeployment);g
+  console.log(gatewayDeployment);
 
   await saveDeployments(network, gatewayDeployment);
 });
