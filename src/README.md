@@ -21,6 +21,15 @@ and upgrades will not be possible.
 ## Implementation Base
 The IPC diamond code is based on the [diamond-1-hardhat](https://github.com/mudgen/diamond-1-hardhat/tree/main/contracts) reference implementation.
 
+## Storage
+The implementation uses `AppStorage` pattern in facets and `Diamond Storage` in libraries.
+`GatewayActorStorage` and `SubnetActorStorage` are used within `AppStorage` pattern.
+To be compatible with `ApStorage` and to be able to apply it we are using `LibReentrancyGuard` contract.
+
+## Getting Selectors
+Because of diamonds contain mappings of function selectors to facet addresses we have to know function selectors before deploying.
+To do that we use `get_selectors` function from a script in Python.
+
 ## References
 
  - [Introduction to EIP-2535 Diamonds](https://eip2535diamonds.substack.com/p/introduction-to-the-diamond-standard)
