@@ -58,7 +58,7 @@ task('deploy-gateway', 'Builds and deploys the Gateway contract on the selected 
   const { deploy } = await lazyImport('./scripts/deploy-gateway');
   const gatewayDeployment = await deploy(deployments.libs);
 
-  console.log("Deployed Gateway Actor diamond address: ", gatewayDeployment);
+  console.log(gatewayDeployment);g
 
   await saveDeployments(network, gatewayDeployment);
 });
