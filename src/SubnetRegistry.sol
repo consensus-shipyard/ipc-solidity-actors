@@ -49,7 +49,7 @@ contract SubnetRegistry {
     }
 
     function newSubnetActor(SubnetActor.ConstructParams calldata _params) external returns (address subnetAddr) {
-        if (params.ipcGatewayAddr != gateway) {
+        if (_params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
 
