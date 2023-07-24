@@ -32,7 +32,7 @@ contract SubnetRegistryTest is Test {
 
     function setUp() public {
         bytes4[] memory mockedSelectors = new bytes4[](1);
-        mockedSelectors[0] = new bytes4(1);
+        mockedSelectors[0] = 0x00000001;
 
         address getter = address(new SubnetActorGetterFacet());
         address manager = address(new SubnetActorManagerFacet());
