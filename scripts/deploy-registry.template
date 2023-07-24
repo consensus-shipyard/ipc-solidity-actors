@@ -1,5 +1,5 @@
 import hre, { ethers } from 'hardhat';
-import { getTransactionFees } from './util';
+import { deployContractWithDeployer, getTransactionFees } from './util';
 
 const { getSelectors } = require('./js/diamond.js')
 
@@ -27,16 +27,33 @@ async function main() {
     const txArgs = await getTransactionFees();
 
     // deploy
-    const getterFacet = await ethers.getContractFactory('SubnetActorGetterFacet');
+    const getterFacet = await deployContractWithDeployer(
+      deployer,
+      "SubnetActorGetterFacet",
+      {},
+      txArgs
+    );
     const getterSelectors = getSelectors(getterFacet);
-    console.log("getter selectors:", getSelectors);
+    console.log("getter address:", getterFacet.address, "selectors:", getSelectors);
 
-    const managerFacet = await ethers.getContractFactory('SubnetActorManagerFacet');
+    const managerFacet = await deployContractWithDeployer(
+      deployer,
+      "SubnetActorManagerFacet",
+      LIBMAP,
+      txArgs
+    );
     const managerSelectors = getSelectors(managerFacet);
-    console.log("manager selectors:", managerSelectors);
+    console.log("manager address:", managerFacet.address, "selectors:", managerSelectors);
 
     const registry = await ethers.getContractFactory('SubnetRegistry', { signer: deployer, libraries: LIBMAP });
-    const contract = await registry.deploy(gatewayAddress, getterSelectors, managerSelectors, txArgs);
+    const contract = await registry.deploy(
+      gatewayAddress, 
+      getterFacet.address,
+      managerFacet.address,
+      getterSelectors,
+      managerSelectors, 
+      txArgs
+    );
 
     // FEVM: 
     console.log(`registry contract deployed to: ${contract.address}`);
