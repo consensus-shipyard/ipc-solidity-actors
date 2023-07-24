@@ -8,6 +8,10 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import "../src/SubnetRegistry.sol";
+
+import "../src/subnet/SubnetActorGetterFacet.sol";
+import "../src/subnet/SubnetActorManagerFacet.sol";
+
 import "../src/lib/SubnetIDHelper.sol";
 
 contract SubnetRegistryTest is Test {
@@ -29,6 +33,9 @@ contract SubnetRegistryTest is Test {
     function setUp() public {
         bytes4[] memory mockedSelectors = new bytes4[](1);
         mockedSelectors[0] = new bytes4(1);
+
+        address getter = address(new SubnetActorGetterFacet());
+        address manager = address(new SubnetActorManagerFacet());
 
         sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, address(0), address(0), mockedSelectors, mockedSelectors);
     }

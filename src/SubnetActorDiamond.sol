@@ -7,9 +7,10 @@ import {IDiamond} from "./interfaces/IDiamond.sol";
 import {GatewayCannotBeZero, NotGateway, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
-import {SubnetID} from "./structs/Subnet.sol";
+import {SubnetID, Subnet} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 import {Status} from "./enums/Status.sol";
+import {GatewayDiamond} from "./GatewayDiamond.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
