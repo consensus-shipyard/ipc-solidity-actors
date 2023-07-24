@@ -13,7 +13,9 @@ struct VotingStorage {
     uint64 lastVotingExecutedEpoch;
     /// @notice Initial epoch number
     uint64 genesisEpoch;
+    /// @notice Percentage of majority
     uint8 majorityPercentage;
+    /// @notice Checkpoint submission period
     uint64 submissionPeriod;
     /// @notice Contains the executable epochs that are ready to be executed, but has yet to be executed.
     /// This usually happens when previous submission epoch has not executed, but the next submission
@@ -51,10 +53,11 @@ library LibVoting {
         if (epoch <= s.lastVotingExecutedEpoch) {
             revert EpochAlreadyExecuted();
         }
-        if (epoch > s.genesisEpoch) {
-            if ((epoch - s.genesisEpoch) % s.submissionPeriod != 0) {
-                revert EpochNotVotable();
-            }
+        if (epoch < s.genesisEpoch) {
+            revert EpochNotVotable();
+        }
+        if ((epoch - s.genesisEpoch) % s.submissionPeriod != 0) {
+            revert EpochNotVotable();
         }
     }
 
