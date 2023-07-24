@@ -49,9 +49,8 @@ contract SubnetRegistry {
     }
 
     /// @notice Deploys a new subnet actor.
-    /// @param _params The constructor params for Subnet Actor. Note that memory is needed as SubnetActorDiamond requires
-    /// the params to be memory.
-    function newSubnetActor(SubnetActor.ConstructParams memory _params) external returns (address subnetAddr) {
+    /// @param _params The constructor params for Subnet Actor.
+    function newSubnetActor(SubnetActorDiamond.ConstructParams calldata _params) external returns (address subnetAddr) {
         if (_params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
