@@ -78,7 +78,7 @@ contract SubnetRegistry {
 
         subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
         ++userNonces[msg.sender];
-        
+
         emit SubnetDeployed(subnetAddr);
     }
 
@@ -86,10 +86,12 @@ contract SubnetRegistry {
     /// deployed by a user
     function latestSubnetDeployed(address owner) external view returns (address subnet) {
         uint64 nonce = userNonces[owner];
-        if (nonce == 0) {
-            revert CannotFindSubnet();
+        // need unchecked when nonce == 0 or else will underflow
+        unchecked {
+            nonce -= 1;
         }
-        subnet = subnets[owner][userNonces[owner] - 1];
+
+        subnet = subnets[owner][nonce];
         if (subnet == address(0)) {
             revert CannotFindSubnet();
         }
