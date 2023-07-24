@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
 
-contract SubnetRegistry is CloneFactory {
+contract SubnetRegistry {
     address public immutable gateway;
 
     /// The base contract address for clone factory
