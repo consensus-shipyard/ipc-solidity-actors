@@ -1,8 +1,6 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {SubnetActor} from "./SubnetActor.sol";
-
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
 import {SubnetActorGetterFacet} from "./subnet/SubnetActorGetterFacet.sol";
 import {SubnetActorManagerFacet} from "./subnet/SubnetActorManagerFacet.sol";
