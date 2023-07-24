@@ -8,6 +8,7 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import "../src/SubnetRegistry.sol";
+import "../src/lib/SubnetIDHelper.sol";
 
 contract SubnetRegistryTest is Test {
     using SubnetIDHelper for SubnetID;
