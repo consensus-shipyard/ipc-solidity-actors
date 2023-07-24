@@ -16,6 +16,16 @@ contract SubnetRegistry {
     /// The subnet manager facet functions selectors
     bytes4[] public subnetManagerSelectors;
 
+    /// @notice Mapping that tracks the deployed subnet actors per user.
+    /// Key is the hash of Subnet ID, values are addresses.
+    /// mapping owner => nonce => subnet
+    mapping(address => mapping(uint64 => address)) public subnets;
+
+    /// @notice Mapping that tracks the latest nonce of the deployed
+    /// subnet for each user.
+    /// owner => nonce
+    mapping(address => uint64) public userNonces;
+
     /// @notice Event emitted when a new subnet is deployed.
     event SubnetDeployed(address subnetAddr);
 
@@ -70,5 +80,23 @@ contract SubnetRegistry {
         subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
 
         emit SubnetDeployed(subnetAddr);
+    }
+
+    /// @notice Returns the address of the latest subnet actor
+    /// deployed by a user
+    function latestSubnetDeployed(address owner) external view returns (address subnet) {
+        subnet = subnets[owner][userNonces[owner] - 1];
+        if (subnet == address(0)) {
+            revert ZeroGatewayAddress();
+        }
+    }
+
+    /// @notice Returns the address of a subnet actor deployed for a
+    /// specific nonce by a user
+    function getSubnetDeployedByNonce(address owner, uint64 nonce) external view returns (address subnet) {
+        subnet = subnets[owner][nonce];
+        if (subnet == address(0)) {
+            revert ZeroGatewayAddress();
+        }
     }
 }

@@ -27,7 +27,7 @@ contract SubnetRegistryTest is Test {
     SubnetRegistry sr;
 
     function setUp() public {
-        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, new bytes4[](0), new bytes4[](0));
+        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, address(0), address(0), new bytes4[](0), new bytes4[](0));
     }
 
     function test_Registry_Deployment_Works() public {
