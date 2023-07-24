@@ -6,7 +6,7 @@ import {SubnetActor} from "./SubnetActor.sol";
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
 import {SubnetActorGetterFacet} from "./subnet/SubnetActorGetterFacet.sol";
 import {SubnetActorManagerFacet} from "./subnet/SubnetActorManagerFacet.sol";
-import {LibDiamond} from "./lib/LibDiamond.sol";
+import {IDiamond} from "./interfaces/IDiamond.sol";
 
 import {SubnetID} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
