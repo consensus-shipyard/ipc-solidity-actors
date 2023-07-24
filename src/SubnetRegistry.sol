@@ -48,12 +48,15 @@ contract SubnetRegistry {
         subnetManagerSelectors = _subnetManagerSelectors;
     }
 
-    function newSubnetActor(SubnetActor.ConstructParams calldata _params) external returns (address subnetAddr) {
+    /// @notice Deploys a new subnet actor.
+    /// @param _params The constructor params for Subnet Actor. Note that memory is needed as SubnetActorDiamond requires
+    /// the params to be memory.
+    function newSubnetActor(SubnetActor.ConstructParams memory _params) external returns (address subnetAddr) {
         if (_params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
 
-        IDiamond.FacetCut[] memory diamondCut = IDiamond.FacetCut[](2);
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](2);
 
         // set the diamond cut for subnet getter
         diamondCut[0] = IDiamond.FacetCut({
