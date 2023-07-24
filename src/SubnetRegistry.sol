@@ -2,6 +2,12 @@
 pragma solidity 0.8.19;
 
 import {SubnetActor} from "./SubnetActor.sol";
+
+import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
+import {SubnetActorGetterFacet} from "./subnet/SubnetActorGetterFacet.sol";
+import {SubnetActorManagerFacet} from "./subnet/SubnetActorManagerFacet.sol";
+import {LibDiamond} from "./lib/LibDiamond.sol";
+
 import {SubnetID} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 
@@ -34,12 +40,32 @@ contract SubnetRegistry {
         gateway = _gateway;
     }
 
-    function newSubnetActor(SubnetActor.ConstructParams calldata params) external returns (address subnetAddr) {
+    function newSubnetActor(
+        bytes4[] _getterSelectors,
+        bytes4[] _managerSelectors,
+        SubnetActor.ConstructParams calldata _params
+    ) external returns (address subnetAddr) {
         if (params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
 
-        subnetAddr = address(new SubnetActor(params));
+        IDiamond.FacetCut[] memory diamondCut = IDiamond.FacetCut[](2);
+
+        // set the diamond cut for subnet getter
+        diamondCut[0] = IDiamond.FacetCut({
+            facetAddress: address(new SubnetActorGetterFacet()),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: _getterSelectors
+        });
+
+        // set the diamond cut for subnet manager
+        diamondCut[1] = IDiamond.FacetCut({
+            facetAddress: address(new SubnetActorManagerFacet()),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: _managerSelectors
+        });
+
+        subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
 
         subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
         ++userNonces[msg.sender];
