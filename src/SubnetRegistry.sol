@@ -30,7 +30,7 @@ contract SubnetRegistry {
     event SubnetDeployed(address subnetAddr);
 
     error WrongGateway();
-    error ZeroGatewayAddress();
+    error CannotFindSubnet();
     error UnknownSubnet();
 
     constructor(
@@ -82,9 +82,13 @@ contract SubnetRegistry {
     /// @notice Returns the address of the latest subnet actor
     /// deployed by a user
     function latestSubnetDeployed(address owner) external view returns (address subnet) {
+        uint64 nonce = userNonces[owner];
+        if (nonce == 0) {
+            revert CannotFindSubnet();
+        }
         subnet = subnets[owner][userNonces[owner] - 1];
         if (subnet == address(0)) {
-            revert ZeroGatewayAddress();
+            revert CannotFindSubnet();
         }
     }
 
@@ -93,7 +97,7 @@ contract SubnetRegistry {
     function getSubnetDeployedByNonce(address owner, uint64 nonce) external view returns (address subnet) {
         subnet = subnets[owner][nonce];
         if (subnet == address(0)) {
-            revert ZeroGatewayAddress();
+            revert CannotFindSubnet();
         }
     }
 }

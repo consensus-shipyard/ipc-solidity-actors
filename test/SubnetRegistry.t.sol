@@ -32,12 +32,15 @@ contract SubnetRegistryTest is Test {
 
     function setUp() public {
         bytes4[] memory mockedSelectors = new bytes4[](1);
-        mockedSelectors[0] = 0x00000001;
+        mockedSelectors[0] = 0x6cb2ecee;
+
+        bytes4[] memory mockedSelectors2 = new bytes4[](1);
+        mockedSelectors2[0] = 0x133f74ea;
 
         address getter = address(new SubnetActorGetterFacet());
         address manager = address(new SubnetActorManagerFacet());
 
-        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, address(0), address(0), mockedSelectors, mockedSelectors);
+        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, getter, manager, mockedSelectors, mockedSelectors2);
     }
 
     function test_Registry_Deployment_Works() public {
