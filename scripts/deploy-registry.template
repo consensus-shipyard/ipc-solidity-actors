@@ -26,7 +26,14 @@ async function main() {
     const managerFacet = await deployContractWithDeployer(
       deployer,
       "SubnetActorManagerFacet",
-      LIBMAP,
+      {
+        AccountHelper: LIBMAP['AccountHelper'],
+        CheckpointHelper: LIBMAP['CheckpointHelper'],
+        EpochVoteSubmissionHelper: LIBMAP['EpochVoteSubmissionHelper'],
+        ExecutableQueueHelper: LIBMAP['ExecutableQueueHelper'],
+        SubnetIDHelper: LIBMAP['SubnetIDHelper'],
+        CrossMsgHelper: LIBMAP['CrossMsgHelper'],
+      },
       txArgs
     );
     const managerSelectors = getSelectors(managerFacet);

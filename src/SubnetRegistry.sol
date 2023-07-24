@@ -7,7 +7,7 @@ import {IDiamond} from "./interfaces/IDiamond.sol";
 contract SubnetRegistry {
     address public immutable gateway;
 
-    /// The base contract address for clone factory
+    /// The getter and manager facet shared by diamond
     address public getterFacet;
     address public managerFacet;
 
@@ -50,7 +50,7 @@ contract SubnetRegistry {
     }
 
     /// @notice Deploys a new subnet actor.
-    /// @param _params The constructor params for Subnet Actor.
+    /// @param _params The constructor params for Subnet Actor Diamond.
     function newSubnetActor(
         SubnetActorDiamond.ConstructorParams calldata _params
     ) external returns (address subnetAddr) {
@@ -74,9 +74,6 @@ contract SubnetRegistry {
             functionSelectors: subnetManagerSelectors
         });
 
-        // we can reduce gas by using clone factory as well, but it
-        // involves quite some change, will use clone factory is
-        // gas is a big issue.
         subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
 
         emit SubnetDeployed(subnetAddr);
