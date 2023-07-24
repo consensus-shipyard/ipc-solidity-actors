@@ -76,6 +76,7 @@ library LibVoting {
     function initGenesisEpoch(uint64 genesisEpoch) internal {
         VotingStorage storage s = votingStorage();
         s.genesisEpoch = genesisEpoch;
+        s.executableQueue.genesisEpoch = genesisEpoch;
     }
 
     /// @notice method that gives the epoch for a given block number and checkpoint period
