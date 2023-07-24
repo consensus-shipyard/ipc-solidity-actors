@@ -2,13 +2,15 @@
 pragma solidity 0.8.19;
 
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
-import {SubnetActorGetterFacet} from "./subnet/SubnetActorGetterFacet.sol";
-import {SubnetActorManagerFacet} from "./subnet/SubnetActorManagerFacet.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
+import {CloneFactory} from "./CloneFactory.sol";
 
-contract SubnetRegistry {
-
+contract SubnetRegistry is CloneFactory {
     address public immutable gateway;
+
+    /// The base contract address for clone factory
+    address public getterFacet;
+    address public managerFacet;
 
     /// The subnet getter facet functions selectors
     bytes4[] public subnetGetterSelectors;
@@ -22,8 +24,11 @@ contract SubnetRegistry {
     error ZeroGatewayAddress();
     error UnknownSubnet();
 
-    constructor(address _gateway, bytes4[] memory _subnetGetterSelectors, bytes4[] memory _subnetManagerSelectors) {
+    constructor(address _gateway, address _getterFacet, address _managerFacet, bytes4[] memory _subnetGetterSelectors, bytes4[] memory _subnetManagerSelectors) {
         gateway = _gateway;
+
+        getterFacet = _getterFacet;
+        managerFacet = _managerFacet;
 
         subnetGetterSelectors = _subnetGetterSelectors;
         subnetManagerSelectors = _subnetManagerSelectors;
@@ -40,14 +45,14 @@ contract SubnetRegistry {
 
         // set the diamond cut for subnet getter
         diamondCut[0] = IDiamond.FacetCut({
-            facetAddress: address(new SubnetActorGetterFacet()),
+            facetAddress: createClone(getterFacet),
             action: IDiamond.FacetCutAction.Add,
             functionSelectors: subnetGetterSelectors
         });
 
         // set the diamond cut for subnet manager
         diamondCut[1] = IDiamond.FacetCut({
-            facetAddress: address(new SubnetActorManagerFacet()),
+            facetAddress: address(managerFacet),
             action: IDiamond.FacetCutAction.Add,
             functionSelectors: subnetManagerSelectors
         });
