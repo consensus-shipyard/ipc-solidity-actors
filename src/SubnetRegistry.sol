@@ -26,6 +26,9 @@ contract SubnetRegistry {
 
     address public immutable gateway;
 
+    bytes4[] public subnetGetterSelectors;
+    bytes4[] public subnetManagerSelectors;
+
     /// @notice Event emitted when a new subnet is deployed.
     event SubnetDeployed(address subnetAddr);
 
@@ -33,18 +36,17 @@ contract SubnetRegistry {
     error ZeroGatewayAddress();
     error UnknownSubnet();
 
-    constructor(address _gateway) {
+    constructor(address _gateway, bytes4[] _subnetGetterSelectors, bytes4[] _subnetManagerSelectors) {
         if (_gateway == address(0)) {
             revert ZeroGatewayAddress();
         }
         gateway = _gateway;
+
+        subnetGetterSelectors = _subnetGetterSelectors;
+        subnetManagerSelectors = _subnetManagerSelectors;
     }
 
-    function newSubnetActor(
-        bytes4[] _getterSelectors,
-        bytes4[] _managerSelectors,
-        SubnetActor.ConstructParams calldata _params
-    ) external returns (address subnetAddr) {
+    function newSubnetActor(SubnetActor.ConstructParams calldata _params) external returns (address subnetAddr) {
         if (params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
@@ -55,14 +57,14 @@ contract SubnetRegistry {
         diamondCut[0] = IDiamond.FacetCut({
             facetAddress: address(new SubnetActorGetterFacet()),
             action: IDiamond.FacetCutAction.Add,
-            functionSelectors: _getterSelectors
+            functionSelectors: subnetGetterSelectors
         });
 
         // set the diamond cut for subnet manager
         diamondCut[1] = IDiamond.FacetCut({
             facetAddress: address(new SubnetActorManagerFacet()),
             action: IDiamond.FacetCutAction.Add,
-            functionSelectors: _managerSelectors
+            functionSelectors: subnetManagerSelectors
         });
 
         subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
