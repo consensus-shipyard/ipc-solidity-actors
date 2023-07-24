@@ -24,7 +24,13 @@ contract SubnetRegistry is CloneFactory {
     error ZeroGatewayAddress();
     error UnknownSubnet();
 
-    constructor(address _gateway, address _getterFacet, address _managerFacet, bytes4[] memory _subnetGetterSelectors, bytes4[] memory _subnetManagerSelectors) {
+    constructor(
+        address _gateway,
+        address _getterFacet,
+        address _managerFacet,
+        bytes4[] memory _subnetGetterSelectors,
+        bytes4[] memory _subnetManagerSelectors
+    ) {
         gateway = _gateway;
 
         getterFacet = _getterFacet;
@@ -36,7 +42,9 @@ contract SubnetRegistry is CloneFactory {
 
     /// @notice Deploys a new subnet actor.
     /// @param _params The constructor params for Subnet Actor.
-    function newSubnetActor(SubnetActorDiamond.ConstructorParams calldata _params) external returns (address subnetAddr) {
+    function newSubnetActor(
+        SubnetActorDiamond.ConstructorParams calldata _params
+    ) external returns (address subnetAddr) {
         if (_params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
@@ -58,7 +66,7 @@ contract SubnetRegistry is CloneFactory {
         });
 
         // we can reduce gas by using clone factory as well, but it
-        // involves quite some change, will use clone factory is 
+        // involves quite some change, will use clone factory is
         // gas is a big issue.
         subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
 

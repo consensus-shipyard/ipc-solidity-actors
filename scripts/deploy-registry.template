@@ -42,7 +42,10 @@ async function main() {
     const managerSelectors = getSelectors(managerFacet);
     console.log("manager address:", managerFacet.address, "selectors:", managerSelectors);
 
-    const registry = await ethers.getContractFactory('SubnetRegistry', { signer: deployer, libraries: LIBMAP });
+    const registry = await ethers.getContractFactory('SubnetRegistry', { signer: deployer, libraries: {
+      "SubnetIDHelper": LIBMAP["SubnetIDHelper"]
+    }});
+
     const contract = await registry.deploy(
       gatewayAddress, 
       getterFacet.address,
