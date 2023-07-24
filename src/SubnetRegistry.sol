@@ -38,7 +38,7 @@ contract SubnetRegistry {
     error ZeroGatewayAddress();
     error UnknownSubnet();
 
-    constructor(address _gateway, bytes4[] _subnetGetterSelectors, bytes4[] _subnetManagerSelectors) {
+    constructor(address _gateway, bytes4[] memory _subnetGetterSelectors, bytes4[] memory _subnetManagerSelectors) {
         if (_gateway == address(0)) {
             revert ZeroGatewayAddress();
         }
