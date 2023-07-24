@@ -1,4 +1,4 @@
-import hre, { ethers } from 'hardhat';
+import { ethers } from 'hardhat';
 import { deployContractWithDeployer, getTransactionFees } from './util';
 
 const { getSelectors } = require('./js/diamond.js')
@@ -15,9 +15,6 @@ const LIBMAP = {
 
 async function main() {
   try {
-
-    await hre.run('compile');
-
     const [deployer] = await ethers.getSigners();
     const balance = await deployer.getBalance();
 
