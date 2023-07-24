@@ -1,6 +1,8 @@
 import hre, { ethers } from 'hardhat';
 import { getTransactionFees } from './util';
 
+const { getSelectors } = require('./js/diamond.js')
+
 async function main() {
   try {
 
@@ -15,8 +17,14 @@ async function main() {
     const txArgs = await getTransactionFees();
 
     // deploy
+    const getterFacet = await ethers.getContractFactory('SubnetActorGetterFacet');
+    const getterSelectors = getSelectors(getterFacet);
+
+    const managerFacet = await ethers.getContractFactory('SubnetActorManagerFacet');
+    const managerSelectors = getSelectors(managerFacet);
+
     const registry = await ethers.getContractFactory('SubnetRegistry', { signer: deployer, libraries: LIBMAP });
-    const contract = await registry.deploy(gatewayAddress, txArgs);
+    const contract = await registry.deploy(gatewayAddress, getterSelectors, managerSelectors, txArgs);
 
     // FEVM: 
     console.log(`registry contract deployed to: ${contract.address}`);
