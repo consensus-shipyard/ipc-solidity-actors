@@ -76,6 +76,9 @@ contract SubnetRegistry {
 
         subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
 
+        subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
+        ++userNonces[msg.sender];
+        
         emit SubnetDeployed(subnetAddr);
     }
 
