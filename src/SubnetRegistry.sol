@@ -26,7 +26,9 @@ contract SubnetRegistry {
 
     address public immutable gateway;
 
+    /// The subnet getter facet functions selectors
     bytes4[] public subnetGetterSelectors;
+    /// The subnet manager facet functions selectors
     bytes4[] public subnetManagerSelectors;
 
     /// @notice Event emitted when a new subnet is deployed.
