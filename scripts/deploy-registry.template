@@ -58,6 +58,21 @@ async function main() {
     // FEVM: 
     console.log(`registry contract deployed to: ${contract.address}`);
 
+
+    const constructorParams = {
+      parentId: { root: 31415926, route: [] },
+      name: ethers.utils.formatBytes32String('Subnet'),
+      ipcGatewayAddr: GATEWAY,
+      consensus: 0,
+      minActivationCollateral: ethers.utils.parseEther("1"),
+      minValidators: 3,
+      bottomUpCheckPeriod: 10,
+      topDownCheckPeriod: 10,
+      majorityPercentage: 66,
+      genesis: 0
+    };
+    await contract.newSubnetActor(constructorParams);
+
     process.exit(0);
   } catch (error) {
     console.error(error);
