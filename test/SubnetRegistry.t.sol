@@ -53,7 +53,7 @@ contract SubnetRegistryTest is Test {
         uint8 _majorityPercentage
     ) public {
         vm.startPrank(DEFAULT_SENDER);
-        SubnetActor.ConstructParams memory params = SubnetActor.ConstructParams({
+        SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             name: _name,
             ipcGatewayAddr: _ipcGatewayAddr,
@@ -65,7 +65,7 @@ contract SubnetRegistryTest is Test {
             majorityPercentage: _majorityPercentage,
             genesis: _genesis
         });
-        sr.newSubnetActor(params, new bytes4[](0), new bytes4[](0));
+        sr.newSubnetActor(params);
         require(sr.latestSubnetDeployed(DEFAULT_SENDER) != address(0));
         require(sr.subnets(DEFAULT_SENDER, 0) != address(0), "fails");
         require(sr.getSubnetDeployedByNonce(DEFAULT_SENDER, 0) == sr.latestSubnetDeployed(DEFAULT_SENDER));
