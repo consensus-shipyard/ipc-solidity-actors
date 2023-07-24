@@ -3,7 +3,6 @@ pragma solidity 0.8.19;
 
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
-import {CloneFactory} from "./CloneFactory.sol";
 
 contract SubnetRegistry is CloneFactory {
     address public immutable gateway;
@@ -53,14 +52,14 @@ contract SubnetRegistry is CloneFactory {
 
         // set the diamond cut for subnet getter
         diamondCut[0] = IDiamond.FacetCut({
-            facetAddress: createClone(getterFacet),
+            facetAddress: getterFacet,
             action: IDiamond.FacetCutAction.Add,
             functionSelectors: subnetGetterSelectors
         });
 
         // set the diamond cut for subnet manager
         diamondCut[1] = IDiamond.FacetCut({
-            facetAddress: address(managerFacet),
+            facetAddress: managerFacet,
             action: IDiamond.FacetCutAction.Add,
             functionSelectors: subnetManagerSelectors
         });

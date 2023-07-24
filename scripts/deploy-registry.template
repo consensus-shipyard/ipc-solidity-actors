@@ -3,16 +3,6 @@ import { deployContractWithDeployer, getTransactionFees } from './util';
 
 const { getSelectors } = require('./js/diamond.js')
 
-const GATEWAY = '0x4A04DDb64568C5721f6387a6e85FE1585cF7AB9e';
-const LIBMAP = {
-  AccountHelper: '0x66678Fc409698D82b3e410fd7DA2c66D7c3519Ad',
-  CheckpointHelper: '0xA09a74EbE98A67a8EB7bdA5ed7723Dd4c7E0A738',
-  EpochVoteSubmissionHelper: '0xBe824993678eF316eB3572CcAcDc9bD25138952D',
-  ExecutableQueueHelper: '0x5B3C5AE1dFEa8D6E2cDE31D3C26dEFbB27e4E2A9',
-  SubnetIDHelper: '0x9cd4b43C82bcC717b88e3D85F53B71c2947357A2',
-  CrossMsgHelper: '0xefAdA657fE12557Ab515625b4b39C6797df2c843',
-};
-
 async function main() {
   try {
     const [deployer] = await ethers.getSigners();
@@ -20,7 +10,7 @@ async function main() {
 
     console.log(`Deploying contracts with account: ${deployer.address} and balance: ${balance.toString()}`);
 
-    const gatewayAddress = GATEWAY;
+    const gatewayAddress = GATEWAY.gateway;
     const txArgs = await getTransactionFees();
 
     // deploy
@@ -57,21 +47,6 @@ async function main() {
 
     // FEVM: 
     console.log(`registry contract deployed to: ${contract.address}`);
-
-
-    const constructorParams = {
-      parentId: { root: 31415926, route: [] },
-      name: ethers.utils.formatBytes32String('Subnet'),
-      ipcGatewayAddr: GATEWAY,
-      consensus: 0,
-      minActivationCollateral: ethers.utils.parseEther("1"),
-      minValidators: 3,
-      bottomUpCheckPeriod: 10,
-      topDownCheckPeriod: 10,
-      majorityPercentage: 66,
-      genesis: 0
-    };
-    await contract.newSubnetActor(constructorParams);
 
     process.exit(0);
   } catch (error) {
