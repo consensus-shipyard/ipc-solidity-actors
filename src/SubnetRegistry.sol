@@ -57,6 +57,9 @@ contract SubnetRegistry is CloneFactory {
             functionSelectors: subnetManagerSelectors
         });
 
+        // we can reduce gas by using clone factory as well, but it
+        // involves quite some change, will use clone factory is 
+        // gas is a big issue.
         subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
 
         emit SubnetDeployed(subnetAddr);
