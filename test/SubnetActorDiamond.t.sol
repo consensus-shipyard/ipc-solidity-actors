@@ -799,7 +799,6 @@ contract SubnetActorDiamondTest is Test {
         vm.prank(validator);
         vm.expectRevert(EpochAlreadyExecuted.selector);
         saManager.submitCheckpoint(checkpoint);
-
     }
 
     function testSubnetActorDiamond_SubmitCheckpoint_Fails_NotAccount() public {

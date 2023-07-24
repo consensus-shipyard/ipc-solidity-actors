@@ -428,7 +428,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter2.initialized() == true);
         require(gwGetter2.getGenesisEpoch() == 50);
     }
-    
+
     function testGatewayDiamond_GatewayDiamond_InitGenesisEpoch_Fails_NotSystemActor() public {
         vm.expectRevert(NotSystemActor.selector);
         gwManager.initGenesisEpoch(50);
