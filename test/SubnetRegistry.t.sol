@@ -26,7 +26,7 @@ contract SubnetRegistryTest is Test {
     SubnetRegistry sr;
 
     function setUp() public {
-        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR);
+        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, new bytes4[](0), new bytes4[](0));
     }
 
     function test_Registry_Deployment_Works() public {
@@ -65,7 +65,7 @@ contract SubnetRegistryTest is Test {
             majorityPercentage: _majorityPercentage,
             genesis: _genesis
         });
-        sr.newSubnetActor(params);
+        sr.newSubnetActor(params, new bytes4[](0), new bytes4[](0));
         require(sr.latestSubnetDeployed(DEFAULT_SENDER) != address(0));
         require(sr.subnets(DEFAULT_SENDER, 0) != address(0), "fails");
         require(sr.getSubnetDeployedByNonce(DEFAULT_SENDER, 0) == sr.latestSubnetDeployed(DEFAULT_SENDER));
