@@ -6,11 +6,7 @@ import {SubnetActorGetterFacet} from "./subnet/SubnetActorGetterFacet.sol";
 import {SubnetActorManagerFacet} from "./subnet/SubnetActorManagerFacet.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
 
-import {SubnetID} from "./structs/Subnet.sol";
-import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
-
 contract SubnetRegistry {
-    using SubnetIDHelper for SubnetID;
 
     address public immutable gateway;
 
