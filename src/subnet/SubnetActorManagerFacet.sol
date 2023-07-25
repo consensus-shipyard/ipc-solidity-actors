@@ -68,6 +68,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             if (s.status == Status.Inactive) {
                 if (s.totalStake >= s.minActivationCollateral) {
                     s.status = Status.Active;
+                    IGateway(s.ipcGatewayAddr).activateSubnet();
                 }
             }
             IGateway(s.ipcGatewayAddr).addStake{value: validatorStake}();

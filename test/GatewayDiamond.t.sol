@@ -484,7 +484,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, totalAmount);
 
         registerSubnet(registerAmount, subnetAddress);
-        addStake(stakeAmount, subnetAddress);
+        addStakeAndActivate(stakeAmount, subnetAddress);
 
         (, uint256 totalStaked, , , , ) = getSubnet(subnetAddress);
 
@@ -503,15 +503,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwManager.releaseStake(registerAmount);
 
         (, , , , , Status statusInactive) = getSubnet(subnetAddress);
-        require(statusInactive == Status.Inactive);
+        require(statusInactive == Status.Inactive, "statusInactive == Status.Inactive");
 
         vm.deal(subnetAddress, stakeAmount);
-        addStake(stakeAmount, subnetAddress);
+        addStakeAndActivate(stakeAmount, subnetAddress);
 
         (, uint256 staked, , , , Status statusActive) = getSubnet(subnetAddress);
 
-        require(staked == stakeAmount);
-        require(statusActive == Status.Active);
+        require(staked == stakeAmount, "staked == stakeAmount");
+
+        require(statusActive == Status.Active, "statusActive == Status.Active");
     }
 
     function testGatewayDiamond_AddStake_Works_NotEnoughFundsToReactivate() public {
@@ -526,7 +527,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwManager.releaseStake(registerAmount);
 
         vm.deal(subnetAddress, stakeAmount);
-        addStake(stakeAmount, subnetAddress);
+        addStakeAndActivate(stakeAmount, subnetAddress);
 
         (, uint256 staked, , , , Status status) = getSubnet(subnetAddress);
 
@@ -548,7 +549,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         registerSubnet(registerAmount, subnetAddress);
 
         for (uint256 i = 0; i < numberOfStakes; i++) {
-            addStake(singleStakeAmount, subnetAddress);
+            addStakeAndActivate(singleStakeAmount, subnetAddress);
 
             expectedStakedAmount += singleStakeAmount;
         }
@@ -584,7 +585,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, fullAmount);
 
         registerSubnet(registerAmount, subnetAddress);
-        addStake(stakeAmount, subnetAddress);
+        addStakeAndActivate(stakeAmount, subnetAddress);
 
         gwManager.releaseStake(fullAmount);
 
@@ -620,7 +621,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, totalAmount);
 
         registerSubnet(registerAmount, subnetAddress);
-        addStake(partialAmount, subnetAddress);
+        addStakeAndActivate(partialAmount, subnetAddress);
 
         gwManager.releaseStake(partialAmount);
 
@@ -2333,7 +2334,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function callback() public view {
-        console.log("callback called");
+        // console.log("callback called");
     }
 
     function fund(address funderAddress, uint256 fundAmount) internal {
@@ -2426,11 +2427,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         return checkpoint;
     }
 
-    function addStake(uint256 stakeAmount, address subnetAddress) internal {
+    function addStakeAndActivate(uint256 stakeAmount, address subnetAddress) internal {
         uint256 balanceBefore = subnetAddress.balance;
         (, uint256 stakedBefore, , , , ) = getSubnet(subnetAddress);
 
         gwManager.addStake{value: stakeAmount}();
+        gwManager.activateSubnet();
 
         uint256 balanceAfter = subnetAddress.balance;
         (, uint256 stakedAfter, , , , ) = getSubnet(subnetAddress);

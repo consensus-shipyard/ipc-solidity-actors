@@ -68,6 +68,15 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         }
 
         subnet.stake += msg.value;
+    }
+
+    /// @notice activateSubnet - activates the subnet if it has sufficient collateral
+    function activateSubnet() external {
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
+
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
 
         if (subnet.status == Status.Inactive) {
             if (subnet.stake >= s.minStake) {

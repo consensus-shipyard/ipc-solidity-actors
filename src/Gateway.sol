@@ -281,6 +281,21 @@ contract Gateway is IGateway, ReentrancyGuard, Voting {
         }
     }
 
+    /// @notice activateSubnet - activates the subnet if it has sufficient collateral
+    function activateSubnet() external {
+        (bool registered, Subnet storage subnet) = _getSubnet(msg.sender);
+
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
+
+        if (subnet.status == Status.Inactive) {
+            if (subnet.stake >= minStake) {
+                subnet.status = Status.Active;
+            }
+        }
+    }
+
     /// @notice release collateral for an existing subnet
     function releaseStake(uint256 amount) external nonReentrant {
         if (amount == 0) {

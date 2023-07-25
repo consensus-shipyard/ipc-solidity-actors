@@ -15,6 +15,9 @@ interface IGateway {
     /// AddStake adds stake to the collateral of a subnet.
     function addStake() external payable;
 
+    /// Activates a subnet with sufficient collateral.
+    function activateSubnet() external;
+
     /// Release stake recovers some collateral of the subnet
     function releaseStake(uint256 amount) external;
 
