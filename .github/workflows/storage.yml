@@ -19,6 +19,10 @@ jobs:
         with:
           node-version: '16.x'
           cache: 'npm'
+      - name: Install Foundry
+        uses: foundry-rs/foundry-toolchain@v1
+        with:
+          cache: false
       - name: Install Node dependencies
         run: npm i --unsafe-perm
       - name: Storage check
