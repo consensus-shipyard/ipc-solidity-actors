@@ -405,7 +405,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         registerSubnet(subnetCollateral, subnetAddress);
         require(gwGetter.totalSubnets() == 1);
-        Subnet[] memory subnets = gw.listSubnets();
+        Subnet[] memory subnets = gwGetter.listSubnets();
         require(subnets.length == 1, "subnets.length == 1");
 
         SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(subnetAddress);
@@ -454,7 +454,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         }
 
         require(gwGetter.totalSubnets() == numberOfSubnets);
-        Subnet[] memory subnets = gw.listSubnets();
+        Subnet[] memory subnets = gwGetter.listSubnets();
         require(subnets.length == numberOfSubnets, "subnets.length == numberOfSubnets");
     }
 
