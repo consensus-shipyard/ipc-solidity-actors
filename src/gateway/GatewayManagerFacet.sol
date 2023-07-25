@@ -31,7 +31,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         s.initialized = true;
     }
 
-    /// @notice register a subnet in the gateway. called by a subnet when it reaches the threshold stake
+    /// @notice register a subnet in the gateway. It is called by a subnet when it reaches the threshold stake
     function register() external payable {
         if (msg.value < s.minStake) {
             revert NotEnoughFunds();
@@ -49,6 +49,9 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         subnet.stake = msg.value;
         subnet.status = Status.Active;
         subnet.genesisEpoch = block.number;
+
+        s.subnetKeys.push(subnetId.toHash());
+
         s.totalSubnets += 1;
     }
 

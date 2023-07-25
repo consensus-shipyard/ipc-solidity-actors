@@ -28,6 +28,8 @@ struct GatewayActorStorage {
     /// @notice List of subnets
     /// SubnetID => Subnet
     mapping(bytes32 => Subnet) subnets;
+    /// @notice Keys of the registered subnets. Useful to iterate through them
+    bytes32[] subnetKeys;
     /// @notice bottom-up period in number of epochs for the subnet
     uint64 bottomUpCheckPeriod;
     /// @notice Postbox keeps track of all the cross-net messages triggered by
