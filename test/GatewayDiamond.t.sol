@@ -282,7 +282,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.crossMsgFee() == CROSS_MSG_FEE);
     }
 
-    function testGatewayDiamond_GatewayDiamond_Constructor() public view {
+    function testGatewayDiamond_Constructor() public view {
         require(gwGetter.totalSubnets() == 0, "totalSubnets");
         require(gwGetter.bottomUpNonce() == 0, "bottomUpNonce");
         require(gwGetter.minStake() == MIN_COLLATERAL_AMOUNT, "minStake");
@@ -297,11 +297,11 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE, "majorityPercentage");
     }
 
-    function testGatewayDiamond_GatewayDiamond_LoupeFunction() public view {
+    function testGatewayDiamond_LoupeFunction() public view {
         require(louper.facets().length == 4);
     }
 
-    function testGatewayDiamond_GatewayDiamond_Deployment_Works_Root(uint64 checkpointPeriod) public {
+    function testGatewayDiamond_Deployment_Works_Root(uint64 checkpointPeriod) public {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
 
         GatewayDiamond dep;
@@ -335,7 +335,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         );
     }
 
-    function testGatewayDiamond_GatewayDiamond_Deployment_Works_NotRoot(uint64 checkpointPeriod) public {
+    function testGatewayDiamond_Deployment_Works_NotRoot(uint64 checkpointPeriod) public {
         vm.assume(checkpointPeriod >= DEFAULT_CHECKPOINT_PERIOD);
 
         address[] memory path = new address[](2);
@@ -397,7 +397,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(depGetter.majorityPercentage() == 100, "gw.majorityPercentage() == 100");
     }
 
-    function testGatewayDiamond_GatewayDiamond_Register_Works_SingleSubnet(uint256 subnetCollateral) public {
+    function testGatewayDiamond_Register_Works_SingleSubnet(uint256 subnetCollateral) public {
         vm.assume(subnetCollateral >= MIN_COLLATERAL_AMOUNT && subnetCollateral < type(uint64).max);
         address subnetAddress = vm.addr(100);
         vm.prank(subnetAddress);
@@ -405,6 +405,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         registerSubnet(subnetCollateral, subnetAddress);
         require(gwGetter.totalSubnets() == 1);
+        Subnet[] memory subnets = gw.listSubnets();
+        require(subnets.length == 1, "subnets.length == 1");
 
         SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(subnetAddress);
 
@@ -421,7 +423,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(id.equals(subnetId));
     }
 
-    function testGatewayDiamond_GatewayDiamond_InitGenesisEpoch_Works() public {
+    function testGatewayDiamond_InitGenesisEpoch_Works() public {
         vm.prank(FilAddress.SYSTEM_ACTOR);
         gwManager2.initGenesisEpoch(50);
 
@@ -429,18 +431,18 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter2.getGenesisEpoch() == 50);
     }
 
-    function testGatewayDiamond_GatewayDiamond_InitGenesisEpoch_Fails_NotSystemActor() public {
+    function testGatewayDiamond_InitGenesisEpoch_Fails_NotSystemActor() public {
         vm.expectRevert(NotSystemActor.selector);
         gwManager.initGenesisEpoch(50);
     }
 
-    function testGatewayDiamond_GatewayDiamond_InitGenesisEpoch_Fails_AlreadyInitialized() public {
+    function testGatewayDiamond_InitGenesisEpoch_Fails_AlreadyInitialized() public {
         vm.prank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(AlreadyInitialized.selector);
         gwManager.initGenesisEpoch(50);
     }
 
-    function testGatewayDiamond_GatewayDiamond_Register_Works_MultipleSubnets(uint8 numberOfSubnets) public {
+    function testGatewayDiamond_Register_Works_MultipleSubnets(uint8 numberOfSubnets) public {
         vm.assume(numberOfSubnets > 0);
 
         for (uint256 i = 1; i <= numberOfSubnets; i++) {
@@ -451,18 +453,19 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
         }
 
-        require(gwGetter.listSubnets().length == numberOfSubnets);
         require(gwGetter.totalSubnets() == numberOfSubnets);
+        Subnet[] memory subnets = gw.listSubnets();
+        require(subnets.length == numberOfSubnets, "subnets.length == numberOfSubnets");
     }
 
-    function testGatewayDiamond_GatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
+    function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
         vm.assume(collateral < MIN_COLLATERAL_AMOUNT);
         vm.expectRevert(NotEnoughFunds.selector);
 
         gwManager.register{value: collateral}();
     }
 
-    function testGatewayDiamond_GatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
+    function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert(AlreadyRegisteredSubnet.selector);
