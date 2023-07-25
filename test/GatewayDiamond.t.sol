@@ -451,6 +451,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
         }
 
+        require(gwGetter.listSubnets().length == numberOfSubnets);
         require(gwGetter.totalSubnets() == numberOfSubnets);
     }
 

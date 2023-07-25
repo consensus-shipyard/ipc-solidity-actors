@@ -157,4 +157,19 @@ contract GatewayGetterFacet {
     function majorityPercentage() public view returns (uint64) {
         return LibVoting.majorityPercentage();
     }
+
+    /// @notice returns the list of registered subnets in IPC
+    /// @return subnet - the list of subnets
+    function listSubnets() external view returns (Subnet[] memory) {
+        uint256 size = s.subnetKeys.length;
+        Subnet[] memory out = new Subnet[](size);
+        for (uint256 i = 0; i < size; ) {
+            bytes32 key = s.subnetKeys[i];
+            out[i] = s.subnets[key];
+            unchecked {
+                ++i;
+            }
+        }
+        return out;
+    }
 }
