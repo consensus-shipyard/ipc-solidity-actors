@@ -1,13 +1,14 @@
 import { HardhatUserConfig, task } from "hardhat/config";
 import '@typechain/hardhat';
+import "hardhat-storage-layout-changes";
 
 import "@nomicfoundation/hardhat-foundry";
 import "@nomiclabs/hardhat-ethers";
 import "hardhat-deploy";
-import 'hardhat-contract-sizer';
+import "hardhat-contract-sizer";
 
-import dotenv from 'dotenv';
-import fs from 'fs';
+import dotenv from "dotenv";
+import fs from "fs";
 import { HardhatRuntimeEnvironment } from "hardhat/types";
 
 dotenv.config();
@@ -115,7 +116,6 @@ task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args
   await hre.run('deploy-sa-diamond-and-facets');
 });
 
-
 /** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
   defaultNetwork: "calibrationnet",
@@ -156,8 +156,19 @@ const config: HardhatUserConfig = {
     outDir: 'typechain',
     target: 'ethers-v5',
   },
+  paths: {
+    storageLayouts: ".storage-layouts",
+  },
+  storageLayoutChanges: {
+    contracts: [
+      'GatewayDiamond',
+      'SubnetActorDiamond',
+      'GatewayActorModifiers',
+      'SubnetActorModifiers',
+    ],
+    fullPath: false,
+  },
 };
-
 
 export default config;
 
