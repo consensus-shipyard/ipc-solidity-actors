@@ -82,12 +82,28 @@ contract GatewayGetterFacet {
         return subnet.topDownMsgs[index];
     }
 
-    function getTopDownMsgs(SubnetID calldata subnetId) external view returns (CrossMsg[] memory) {
+    /// @notice get the list of top down messages from nonce, we may also consider introducing pagination.
+    /// @param subnetId - The subnet id to fetch messages from
+    /// @param fromNonce - The starting nonce to get top down messages, inclusive.
+    function getTopDownMsgs(SubnetID calldata subnetId, uint64 fromNonce) external view returns (CrossMsg[] memory) {
         (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
         if (!registered) {
-            revert NotRegisteredSubnet();
+            return new CrossMsg[](0);
         }
-        return subnet.topDownMsgs;
+
+        uint256 totalLength = subnet.topDownMsgs.length;
+        uint256 startingNonce = uint256(fromNonce);
+        if (startingNonce >= totalLength) {
+            return new CrossMsg[](0);
+        }
+
+        uint256 msgLength = totalLength - startingNonce;
+        CrossMsg[] memory messages = new CrossMsg[](msgLength);
+        for (uint256 i = 0; i < msgLength; i++) {
+            messages[i] = subnet.topDownMsgs[i + startingNonce];
+        }
+
+        return messages;
     }
 
     /// @notice Get the latest applied top down nonce
