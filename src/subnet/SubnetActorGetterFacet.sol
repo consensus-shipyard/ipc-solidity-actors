@@ -88,6 +88,10 @@ contract SubnetActorGetterFacet {
         return s.topDownCheckPeriod;
     }
 
+    function bottomUpCheckPeriod() external view returns (uint64) {
+        return s.bottomUpCheckPeriod;
+    }
+
     function genesis() external view returns (bytes memory) {
         return s.genesis;
     }
