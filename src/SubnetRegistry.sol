@@ -3,8 +3,9 @@ pragma solidity 0.8.19;
 
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
+import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.sol";
 
-contract SubnetRegistry {
+contract SubnetRegistry is ReentrancyGuard {
     address public immutable gateway;
 
     /// The getter and manager facet shared by diamond
@@ -64,7 +65,7 @@ contract SubnetRegistry {
     /// @param _params The constructor params for Subnet Actor Diamond.
     function newSubnetActor(
         SubnetActorDiamond.ConstructorParams calldata _params
-    ) external returns (address subnetAddr) {
+    ) external nonReentrant returns (address subnetAddr) {
         if (_params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
@@ -85,12 +86,13 @@ contract SubnetRegistry {
             functionSelectors: subnetManagerSelectors
         });
 
+        // slither-disable-next-line reentrancy-benign
+        subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
+
         subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
         ++userNonces[msg.sender];
 
         emit SubnetDeployed(subnetAddr);
-
-        subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
     }
 
     /// @notice Returns the address of the latest subnet actor
