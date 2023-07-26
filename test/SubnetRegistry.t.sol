@@ -8,7 +8,7 @@ import "forge-std/Test.sol";
 import "forge-std/console.sol";
 
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
-import {SubnetActorManagerFacet} from"../src/subnet/SubnetActorManagerFacet.sol";
+import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {SubnetID} from "../src/structs/Subnet.sol";
 import {SubnetRegistry} from "../src/SubnetRegistry.sol";
