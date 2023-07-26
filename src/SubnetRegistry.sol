@@ -3,8 +3,9 @@ pragma solidity 0.8.19;
 
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
+import {ReentrancyGuard} from "openzeppelin-contracts/security/ReentrancyGuard.sol";
 
-contract SubnetRegistry {
+contract SubnetRegistry is ReentrancyGuard {
     address public immutable gateway;
 
     /// The getter and manager facet shared by diamond
@@ -29,9 +30,11 @@ contract SubnetRegistry {
     /// @notice Event emitted when a new subnet is deployed.
     event SubnetDeployed(address subnetAddr);
 
+    error FacetCannotBeZero();
     error WrongGateway();
     error CannotFindSubnet();
     error UnknownSubnet();
+    error GatewayCannotBeZero();
 
     constructor(
         address _gateway,
@@ -40,8 +43,17 @@ contract SubnetRegistry {
         bytes4[] memory _subnetGetterSelectors,
         bytes4[] memory _subnetManagerSelectors
     ) {
-        gateway = _gateway;
+        if (_gateway == address(0)) {
+            revert GatewayCannotBeZero();
+        }
+        if (_getterFacet == address(0)) {
+            revert FacetCannotBeZero();
+        }
+        if (_managerFacet == address(0)) {
+            revert FacetCannotBeZero();
+        }
 
+        gateway = _gateway;
         getterFacet = _getterFacet;
         managerFacet = _managerFacet;
 
@@ -53,7 +65,7 @@ contract SubnetRegistry {
     /// @param _params The constructor params for Subnet Actor Diamond.
     function newSubnetActor(
         SubnetActorDiamond.ConstructorParams calldata _params
-    ) external returns (address subnetAddr) {
+    ) external nonReentrant returns (address subnetAddr) {
         if (_params.ipcGatewayAddr != gateway) {
             revert WrongGateway();
         }
@@ -74,6 +86,7 @@ contract SubnetRegistry {
             functionSelectors: subnetManagerSelectors
         });
 
+        // slither-disable-next-line reentrancy-benign
         subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
 
         subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
