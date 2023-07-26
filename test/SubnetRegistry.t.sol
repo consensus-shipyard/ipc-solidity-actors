@@ -9,6 +9,11 @@ import "forge-std/console.sol";
 
 import "../src/SubnetRegistry.sol";
 
+import "../src/subnet/SubnetActorGetterFacet.sol";
+import "../src/subnet/SubnetActorManagerFacet.sol";
+
+import "../src/lib/SubnetIDHelper.sol";
+
 contract SubnetRegistryTest is Test {
     using SubnetIDHelper for SubnetID;
 
@@ -26,7 +31,16 @@ contract SubnetRegistryTest is Test {
     SubnetRegistry sr;
 
     function setUp() public {
-        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR);
+        bytes4[] memory mockedSelectors = new bytes4[](1);
+        mockedSelectors[0] = 0x6cb2ecee;
+
+        bytes4[] memory mockedSelectors2 = new bytes4[](1);
+        mockedSelectors2[0] = 0x133f74ea;
+
+        address getter = address(new SubnetActorGetterFacet());
+        address manager = address(new SubnetActorManagerFacet());
+
+        sr = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, getter, manager, mockedSelectors, mockedSelectors2);
     }
 
     function test_Registry_Deployment_Works() public {
@@ -53,7 +67,7 @@ contract SubnetRegistryTest is Test {
         uint8 _majorityPercentage
     ) public {
         vm.startPrank(DEFAULT_SENDER);
-        SubnetActor.ConstructParams memory params = SubnetActor.ConstructParams({
+        SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             name: _name,
             ipcGatewayAddr: _ipcGatewayAddr,
