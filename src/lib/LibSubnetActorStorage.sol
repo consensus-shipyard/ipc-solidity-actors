@@ -64,7 +64,7 @@ struct SubnetActorStorage {
     bytes32 currentSubnetHash;
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 minValidators;
-    /// @notice Minimal number that a validator requires to stake to be added to the validator set of the subnet.
+    /// @notice Minimal collateral that a validator requires to stake to be added to the validator set of the subnet.
     uint256 minActivationCollateral;
 }
 
