@@ -29,9 +29,11 @@ contract SubnetRegistry {
     /// @notice Event emitted when a new subnet is deployed.
     event SubnetDeployed(address subnetAddr);
 
+    error FacetCannotBeZero();
     error WrongGateway();
     error CannotFindSubnet();
     error UnknownSubnet();
+    error GatewayCannotBeZero();
 
     constructor(
         address _gateway,
@@ -40,8 +42,17 @@ contract SubnetRegistry {
         bytes4[] memory _subnetGetterSelectors,
         bytes4[] memory _subnetManagerSelectors
     ) {
-        gateway = _gateway;
+        if (_gateway == address(0)) {
+            revert GatewayCannotBeZero();
+        }
+        if (_getterFacet == address(0)) {
+            revert FacetCannotBeZero();
+        }
+        if (_managerFacet == address(0)) {
+            revert FacetCannotBeZero();
+        }
 
+        gateway = _gateway;
         getterFacet = _getterFacet;
         managerFacet = _managerFacet;
 
@@ -74,12 +85,12 @@ contract SubnetRegistry {
             functionSelectors: subnetManagerSelectors
         });
 
-        subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
-
         subnets[msg.sender][userNonces[msg.sender]] = subnetAddr;
         ++userNonces[msg.sender];
 
         emit SubnetDeployed(subnetAddr);
+
+        subnetAddr = address(new SubnetActorDiamond(diamondCut, _params));
     }
 
     /// @notice Returns the address of the latest subnet actor

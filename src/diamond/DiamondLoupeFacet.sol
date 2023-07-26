@@ -62,11 +62,13 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
             uint256 numSelectors = numFacetSelectors[facetIndex];
             bytes4[] memory selectors = facets_[facetIndex].functionSelectors;
             // setting the number of selectors
+            // slither-disable-next-line assembly
             assembly {
                 mstore(selectors, numSelectors)
             }
         }
         // setting the number of facets
+        // slither-disable-next-line assembly
         assembly {
             mstore(facets_, numFacets)
         }
@@ -92,6 +94,7 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
             }
         }
         // Set the number of selectors in the array
+        // slither-disable-next-line assembly
         assembly {
             mstore(_facetFunctionSelectors, numSelectors)
         }
@@ -127,6 +130,7 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
             numFacets++;
         }
         // Set the number of facet addresses in the array
+        // slither-disable-next-line assembly
         assembly {
             mstore(facetAddresses_, numFacets)
         }
