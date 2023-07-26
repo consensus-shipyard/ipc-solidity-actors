@@ -23,18 +23,6 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
 struct SubnetActorStorage {
-    /// @notice Total collateral currently deposited in the GW from the subnet
-    uint256 totalStake;
-    /// @notice Sequence number that uniquely identifies a validator set.
-    uint64 configurationNumber;
-    /// @notice current status of the subnet
-    Status status;
-    /// @notice contains the last executed checkpoint hash
-    bytes32 prevExecutedCheckpointHash;
-    /// @notice contains all committed bottom-up checkpoint at specific epoch
-    mapping(uint64 => BottomUpCheckpoint) committedCheckpoints;
-    /// @notice List of validators in the subnet
-    EnumerableSet.AddressSet validators;
     /// @notice contains voted submissions for a given epoch
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => EpochVoteBottomUpSubmission) epochVoteSubmissions;
@@ -46,27 +34,39 @@ struct SubnetActorStorage {
     mapping(address => string) validatorNetAddresses;
     /// @notice validator address to validator worker address
     mapping(address => FvmAddress) validatorWorkerAddresses;
-    /// @notice ID of the parent subnet
-    SubnetID parentId;
+    /// @notice contains all committed bottom-up checkpoint at specific epoch
+    mapping(uint64 => BottomUpCheckpoint) committedCheckpoints;
     /// @notice genesis block
     bytes genesis;
-    /// immutable params
-
+    /// @notice Total collateral currently deposited in the GW from the subnet
+    uint256 totalStake;
+    /// @notice Minimal activation collateral
+    uint256 minActivationCollateral;
+    /// @notice Sequence number that uniquely identifies a validator set.
+    uint64 configurationNumber;
     /// @notice number of blocks in a top-down epoch
     uint64 topDownCheckPeriod;
     /// @notice number of blocks in a bottom-up epoch
     uint64 bottomUpCheckPeriod;
-    /// @notice Type of consensus algorithm.
-    ConsensusType consensus;
-    /// @notice Address of the IPC gateway for the subnet
-    address ipcGatewayAddr;
+    /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
+    uint64 minValidators;
     /// @notice Human-readable name of the subnet.
     bytes32 name;
     // @notice Hash of the current subnet id
     bytes32 currentSubnetHash;
-    /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
-    uint64 minValidators;
-    uint256 minActivationCollateral;
+    /// @notice contains the last executed checkpoint hash
+    bytes32 prevExecutedCheckpointHash;
+    /// @notice Address of the IPC gateway for the subnet
+    address ipcGatewayAddr;
+    /// @notice Type of consensus algorithm.
+    /// @notice current status of the subnet
+    Status status;
+    /// @notice List of validators in the subnet
+    EnumerableSet.AddressSet validators;
+    /// @notice ID of the parent subnet
+    SubnetID parentId;
+    /// immutable params
+    ConsensusType consensus;
 }
 
 library LibSubnetActorStorage {
