@@ -56,7 +56,7 @@ contract SubnetActorDiamond {
         s.topDownCheckPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
             ? MIN_CHECKPOINT_PERIOD
             : params.topDownCheckPeriod;
-        s.bottomUpCheckPeriod = LibVoting.getSubmissionPeriod();
+        s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.status = Status.Instantiated;
 
         s.genesis = params.genesis;
