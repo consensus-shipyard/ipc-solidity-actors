@@ -156,4 +156,22 @@ contract SubnetActorGetterFacet {
 
         return ValidatorSet({validators: details, configurationNumber: s.configurationNumber});
     }
+
+    /// @notice returns the list of registered subnets in IPC
+    function listBottomUpCheckpoits(
+        uint64 fromEpoch,
+        uint64 toEpoch
+    ) external view returns (BottomUpCheckpoint[] memory) {
+        uint64 size = toEpoch - fromEpoch;
+        BottomUpCheckpoint[] memory out = new BottomUpCheckpoint[](size);
+
+        for (uint64 i = 0; i < size; ) {
+            out[i] = s.committedCheckpoints[fromEpoch + i];
+            unchecked {
+                i++;
+            }
+        }
+
+        return out;
+    }
 }
