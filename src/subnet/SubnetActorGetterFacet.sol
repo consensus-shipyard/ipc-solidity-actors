@@ -162,13 +162,17 @@ contract SubnetActorGetterFacet {
         uint64 fromEpoch,
         uint64 toEpoch
     ) external view returns (BottomUpCheckpoint[] memory) {
-        uint64 size = toEpoch - fromEpoch;
+        uint64 period = s.bottomUpCheckPeriod;
+
+        uint64 size = (toEpoch - fromEpoch) / period;
         BottomUpCheckpoint[] memory out = new BottomUpCheckpoint[](size);
 
+        uint64 nextEpoch = toEpoch;
         for (uint64 i = 0; i < size; ) {
-            out[i] = s.committedCheckpoints[fromEpoch + i];
+            out[i] = s.committedCheckpoints[nextEpoch];
             unchecked {
                 i++;
+                nextEpoch += period;
             }
         }
 
