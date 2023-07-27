@@ -163,8 +163,10 @@ contract SubnetActorGetterFacet {
         uint64 toEpoch
     ) external view returns (BottomUpCheckpoint[] memory) {
         uint64 period = s.bottomUpCheckPeriod;
-
+    
+        // slither-disable-next-line divide-before-multiply
         uint64 from = (fromEpoch / period) * period;
+        // slither-disable-next-line divide-before-multiply
         uint64 to = (toEpoch / period) * period;
 
         uint64 size = (to - from) / period;
