@@ -158,7 +158,7 @@ contract SubnetActorGetterFacet {
     }
 
     /// @notice returns the list of registered subnets in IPC
-    function listBottomUpCheckpoits(
+    function listBottomUpCheckpoints(
         uint64 fromEpoch,
         uint64 toEpoch
     ) external view returns (BottomUpCheckpoint[] memory) {
