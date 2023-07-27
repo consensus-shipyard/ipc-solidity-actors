@@ -167,7 +167,7 @@ contract SubnetActorGetterFacet {
         uint64 size = (toEpoch - fromEpoch) / period;
         BottomUpCheckpoint[] memory out = new BottomUpCheckpoint[](size);
 
-        uint64 nextEpoch = toEpoch;
+        uint64 nextEpoch = fromEpoch;
         for (uint64 i = 0; i < size; ) {
             out[i] = s.committedCheckpoints[nextEpoch];
             unchecked {
