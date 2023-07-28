@@ -146,7 +146,7 @@ contract SubnetActorGetterFacet {
         ValidatorInfo[] memory details = new ValidatorInfo[](length);
         address a;
 
-        for (uint256 i = 0; i < length;) {
+        for (uint256 i = 0; i < length; ) {
             a = s.validators.at(i);
             details[i] = ValidatorInfo({
                 addr: a,
