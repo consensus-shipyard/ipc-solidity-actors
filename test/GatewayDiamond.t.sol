@@ -2333,7 +2333,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function callback() public view {
-        console.log("callback called");
+        // console.log("callback called");
     }
 
     function fund(address funderAddress, uint256 fundAmount) internal {

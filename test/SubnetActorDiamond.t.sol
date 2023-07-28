@@ -695,7 +695,7 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function callback() public view {
-        console.log("callback called");
+        // console.log("callback called");
     }
 
     function testSubnetActorDiamond_SubmitCheckpoint_Works_MostVotedWeightEqualToThreshold_Abort() public {

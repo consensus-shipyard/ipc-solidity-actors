@@ -136,26 +136,6 @@ contract GatewayGetterFacet {
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
     }
 
-    /// @notice returns the current bottom-up checkpoint
-    /// @param epoch - the epoch to check
-    /// @return exists - whether the checkpoint exists
-    /// @return checkpoint - the checkpoint struct
-    function bottomUpCheckpointAtEpoch(
-        uint64 epoch
-    ) public view returns (bool exists, BottomUpCheckpoint memory checkpoint) {
-        checkpoint = s.bottomUpCheckpoints[epoch];
-        exists = !checkpoint.source.isEmpty();
-    }
-
-    /// @notice returns the historical bottom-up checkpoint hash
-    /// @param epoch - the epoch to check
-    /// @return exists - whether the checkpoint exists
-    /// @return hash - the hash of the checkpoint
-    function bottomUpCheckpointHashAtEpoch(uint64 epoch) external view returns (bool, bytes32) {
-        (bool exists, BottomUpCheckpoint memory checkpoint) = bottomUpCheckpointAtEpoch(epoch);
-        return (exists, checkpoint.toHash());
-    }
-
     function getGenesisEpoch() public view returns (uint64) {
         // slither-disable-next-line unused-return
         return LibVoting.getGenesisEpoch();
