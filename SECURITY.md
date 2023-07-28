@@ -2,4 +2,4 @@
 
 ## Reporting a vulnerability
 
-**Please report any security-sensitive issues through consensuslab@protool.ai**
+**Please report any security-sensitive issues through consensuslab@protocol.ai**
