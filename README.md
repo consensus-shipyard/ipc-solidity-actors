@@ -21,7 +21,7 @@ The project accommodates the following main contracts
 
 ## High-level Overview
 
-The high-level overview of the IPC is presented in these [paper](https://research.protocol.ai/publications/hierarchical-consensus-a-horizontal-scaling-framework-for-blockchains/delarocha2022.pdf), [post](https://docs.filecoin.io/basics/interplanetary-consensus/overview/) and [video](https://www.youtube.com/watch?v=G7d5KNRZdp0). 
+The original idea of IPC is presented in these [paper](https://research.protocol.ai/publications/hierarchical-consensus-a-horizontal-scaling-framework-for-blockchains/delarocha2022.pdf), [post](https://docs.filecoin.io/basics/interplanetary-consensus/overview/) and [video](https://www.youtube.com/watch?v=G7d5KNRZdp0). The protocol has evolved a lot since the original paper, so take it as a high-level description of the system. 
 
 ## Specification
 
