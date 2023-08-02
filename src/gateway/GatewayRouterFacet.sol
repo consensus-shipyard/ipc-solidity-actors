@@ -19,7 +19,6 @@ import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
