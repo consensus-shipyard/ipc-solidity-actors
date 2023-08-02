@@ -29,7 +29,8 @@ export async function deploy(libs: { [key in string]: string }) {
     const FacetNames = [
         'GatewayGetterFacet',
         'GatewayManagerFacet',
-        'GatewayRouterFacet'
+        'GatewayRouterFacet',
+        'GatewayMessengerFacet'
     ]
 
     const facetCuts = []
@@ -78,6 +79,27 @@ export async function deploy(libs: { [key in string]: string }) {
         action: FacetCutAction.Add,
         functionSelectors: getSelectors(managerFacet)
     })
+
+    // ----
+
+        const messengerFacetLibs: Libraries = {
+            "AccountHelper": libs["AccountHelper"],
+            "SubnetIDHelper": libs["SubnetIDHelper"],
+            "StorableMsgHelper": libs["StorableMsgHelper"]
+        }
+
+        const messengerFacet = await deployContractWithDeployer(
+            deployer,
+            "GatewayMessengerFacet",
+            messngerFacetLibs,
+            txArgs
+        );
+
+        facetCuts.push({
+            facetAddress: messengerFacet.address,
+            action: FacetCutAction.Add,
+            functionSelectors: getSelectors(messengerFacet)
+        })
 
     // ----
 
