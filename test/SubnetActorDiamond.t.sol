@@ -212,7 +212,6 @@ contract SubnetActorDiamondTest is Test {
 
         BottomUpCheckpoint[] memory l = saGetter.listBottomUpCheckpoints(0, 10);
         require(l.length == 0, "listBottomUpCheckpoints");
-
     }
 
     function testSubnetActorDiamond_Deployments_Fail_GatewayCannotBeZero() public {
