@@ -210,7 +210,7 @@ contract SubnetActorDiamondTest is Test {
 
         require(saGetter.getValidatorSet().validators.length == 0, "empty validator set");
 
-        BottomUpCheckpoint[] memory l = saGetter.listBottomUpCheckpoints(0, 0);
+        BottomUpCheckpoint[] memory l = saGetter.listBottomUpCheckpoints(0, 10);
         require(l.length == 0, "listBottomUpCheckpoints");
 
     }
@@ -479,6 +479,11 @@ contract SubnetActorDiamondTest is Test {
         require(fee == checkpoint.fee);
         require(prevHash == checkpoint.prevHash);
         require(proof.length == 0);
+        (bool exists, BottomUpCheckpoint memory ch) = saGetter.bottomUpCheckpointAtEpoch(epoch);
+        require(checkpoint.toHash() == ch.toHash());
+        bytes32 hb;
+        (exists, hb) = saGetter.bottomUpCheckpointHashAtEpoch(epoch);
+        require(checkpoint.toHash() == hb);
     }
 
     function testSubnetActorDiamond_SubnetCheckpoint_Works_ExecutedFromQueue() public {
