@@ -334,8 +334,9 @@ contract SubnetActorDiamondTest is Test {
         require(result.length == 1);
         require(offset == 7);
 
-        vm.expectRevert(NotEnoughValidatorsInSubnet.selector);
         (result, offset) = saGetter.getValidators(10, 10);
+        require(result.length == 0);
+        require(offset == 0);
     }
 
     function testSubnetActorDiamond_MultipleJoins_Fuzz_GetValidators(uint256 offset, uint256 limit, uint256 n) public {
