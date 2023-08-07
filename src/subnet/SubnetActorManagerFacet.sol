@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {Status} from "../enums/Status.sol";
-import {CollateralIsZero, EmptyNetAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
@@ -204,9 +204,17 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotValidator();
         }
         if (bytes(newNetAddr).length == 0) {
-            revert EmptyNetAddress();
+            revert EmptyAddress();
         }
         s.validatorNetAddresses[validator] = newNetAddr;
+    }
+
+    function setValidatorWorkerAddr(FvmAddress calldata newWorkerAddr) external {
+        address validator = msg.sender;
+        if (!s.validators.contains(validator)) {
+            revert NotValidator();
+        }
+        s.validatorWorkerAddresses[validator] = newWorkerAddr;
     }
 
     /// @notice submits a vote for a checkpoint
