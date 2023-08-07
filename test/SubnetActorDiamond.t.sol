@@ -456,29 +456,29 @@ contract SubnetActorDiamondTest is Test {
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
         string memory result = saGetter.validatorNetAddr(validator);
-        require(keccak256(bytes(result)) == keccak256(bytes(DEFAULT_NET_ADDR)), "result == oldNetAddr");
+        require(keccak256(bytes(result)) == keccak256(bytes(DEFAULT_NET_ADDR)), "result == DEFAULT_NET_ADDR");
 
         vm.prank(validator);
         saManager.setValidatorNetAddr(newNetAddr);
 
         result = saGetter.validatorNetAddr(validator);
-        require(keccak256(bytes(result)) == keccak256(bytes(newNetAddr)), "result == newNetAddr");
+        require(keccak256(bytes(result)) == keccak256(bytes(newNetAddr)), "netAddr == newNetAddr");
     }
 
-    function testSubnetActorDiamond_SetValidatorNetAddr_NotValidator() public payable {
-        address validator = address(0);
+    function testSubnetActorDiamond_SetValidatorNetAddr_Fails_NotValidator() public payable {
+        address validator = address(1235);
 
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
         string memory result = saGetter.validatorNetAddr(validator);
-        require(keccak256(bytes(result)) == keccak256(bytes(DEFAULT_NET_ADDR)), "result == oldNetAddr");
+        require(keccak256(bytes(result)) == keccak256(bytes(DEFAULT_NET_ADDR)), "netAddr == DEFAULT_NET_ADDR");
 
-        vm.prank(validator);
+        vm.prank(address(1234));
         vm.expectRevert(NotValidator.selector);
         saManager.setValidatorNetAddr("newNetAddr");
     }
 
-    function testSubnetActorDiamond_SetValidatorNetAddr_EmptyNetAddr() public payable {
+    function testSubnetActorDiamond_SetValidatorNetAddr_Fails_EmptyNetAddr() public payable {
         address validator = address(1235);
 
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
