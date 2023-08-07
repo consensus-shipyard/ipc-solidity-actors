@@ -122,7 +122,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
         // submit the vote
         bool shouldExecuteVote = _submitBottomUpVote({
-            voteSubmission : voteSubmission,
+            voteSubmission: voteSubmission,
             submission: checkpoint,
             submitterAddress: msg.sender,
             submitterWeight: s.stake[msg.sender]
@@ -213,10 +213,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         shouldExecuteVote = LibVoting.submitVote({
             vote: voteSubmission.vote,
             submissionHash: submissionHash,
-            submitterAddress : submitterAddress,
-            submitterWeight : submitterWeight,
-            epoch : submission.epoch,
-            totalWeight : s.totalStake
+            submitterAddress: submitterAddress,
+            submitterWeight: submitterWeight,
+            epoch: submission.epoch,
+            totalWeight: s.totalStake
         });
 
         // store the submission only the first time

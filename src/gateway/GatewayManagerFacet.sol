@@ -140,7 +140,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg({
             subnet: subnetId,
             signer: msg.sender,
-            to:to,
+            to: to,
             value: msg.value - s.crossMsgFee
         });
 

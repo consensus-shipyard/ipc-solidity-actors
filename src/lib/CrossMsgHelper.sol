@@ -90,11 +90,7 @@ library CrossMsgHelper {
         bytes memory data = abi.encodeWithSelector(crossMsg.message.method, params);
 
         if (value > 0) {
-            return Address.functionCallWithValue({
-                target: recipient,
-                data: data,
-                value: value
-            });
+            return Address.functionCallWithValue({target: recipient, data: data, value: value});
         }
 
         return Address.functionCall(recipient, data);

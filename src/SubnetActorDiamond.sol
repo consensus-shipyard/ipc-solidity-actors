@@ -39,11 +39,7 @@ contract SubnetActorDiamond {
 
     constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
         LibDiamond.setContractOwner(msg.sender);
-        LibDiamond.diamondCut({
-            _diamondCut: _diamondCut,
-            _init: address(0),
-            _calldata: new bytes(0)
-        });
+        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
 
         s.parentId = params.parentId;
         s.name = params.name;
