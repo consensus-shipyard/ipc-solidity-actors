@@ -338,6 +338,39 @@ contract SubnetActorDiamondTest is Test {
         (result, offset) = saGetter.getValidators(10, 10);
     }
 
+    function testSubnetActorDiamond_MultipleJoins_Fuzz_GetValidators(uint256 offset, uint256 limit) public {
+        vm.assume(offset < 100);
+        vm.assume(limit < 100);
+
+        address validator1 = vm.addr(1231);
+        address validator2 = vm.addr(1232);
+        address validator3 = vm.addr(1233);
+        address validator4 = vm.addr(1234);
+        address validator5 = vm.addr(1235);
+        address validator6 = vm.addr(1236);
+        address validator7 = vm.addr(1237);
+        address validator8 = vm.addr(1238);
+        address validator9 = vm.addr(1239);
+
+        _assertJoin(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator2, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator3, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator4, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator5, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator6, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator7, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator8, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator9, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        require(saGetter.validatorCount() == 9);
+        require(saGetter.getAllValidators().length == 9);
+        require(saGetter.getValidatorSet().validators.length == 9);
+
+        address[] memory result;
+        uint256 newOffset;
+        (result, newOffset) = saGetter.getValidators(offset, limit);
+    }
+
     function testSubnetActorDiamond_Join_Works_CallRegister() public {
         address validator = vm.addr(1235);
 
