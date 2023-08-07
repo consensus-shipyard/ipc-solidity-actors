@@ -126,19 +126,18 @@ contract SubnetActorGetterFacet {
     /// @notice get n validators in the subnet starting with index.
     function getValidators(uint256 offset, uint256 limit) external view returns (address[] memory, uint256) {
         uint256 n = s.validators.length();
-        address[] memory result = new address[](limit);
+        address[] memory empty = new address[](0);
         if (limit == 0) {
-            return (result, offset);
-        }
-        if (limit > n) {
-            limit = n;
+            return (empty, 0);
         }
         if (n <= offset) {
-            return (result, n);
+            return (empty, 0);
         }
+
         if (limit > n - offset) {
             limit = n - offset;
         }
+        address[] memory result = new address[](limit);
 
         for (uint256 i = 0; i < limit; ) {
             result[i] = s.validators.at(i + offset);
