@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {Status} from "../enums/Status.sol";
+import {NotEnoughValidatorsInSubnet} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {SubnetID} from "../structs/Subnet.sol";
 import {ValidatorInfo, ValidatorSet} from "../structs/Validator.sol";
@@ -108,8 +109,7 @@ contract SubnetActorGetterFacet {
     }
 
     /// @notice get all the validators in the subnet.
-    /// TODO: we can introduce pagination
-    function getValidators() external view returns (address[] memory) {
+    function getAllValidators() external view returns (address[] memory) {
         uint256 length = s.validators.length();
         address[] memory result = new address[](length);
 
@@ -121,6 +121,27 @@ contract SubnetActorGetterFacet {
         }
 
         return result;
+    }
+
+    /// @notice get n validators in the subnet starting with index.
+    function getValidators(uint256 offset, uint256 limit) external view returns (address[] memory, uint256) {
+        uint256 n = s.validators.length();
+        if (n <= offset) {
+            revert NotEnoughValidatorsInSubnet();
+        }
+        if (limit > n - offset) {
+            limit = n - offset;
+        }
+        address[] memory result = new address[](limit);
+
+        for (uint256 i = 0; i < limit; ) {
+            result[i] = s.validators.at(i + offset);
+            unchecked {
+                ++i;
+            }
+        }
+
+        return (result, offset + limit);
     }
 
     /// @notice get the full details of the validators, not just their addresses.

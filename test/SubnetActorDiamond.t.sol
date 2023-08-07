@@ -206,7 +206,7 @@ contract SubnetActorDiamondTest is Test {
 
         require(saGetter.bottomUpCheckPeriod() == _checkPeriod, "bottomUpCheckPeriod");
 
-        require(saGetter.getValidators().length == 0, "empty validators");
+        require(saGetter.getAllValidators().length == 0, "empty validators");
 
         require(saGetter.getValidatorSet().validators.length == 0, "empty validator set");
 
@@ -292,10 +292,50 @@ contract SubnetActorDiamondTest is Test {
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
         require(saGetter.validatorCount() == 1);
-        require(saGetter.getValidators().length == 1);
+        require(saGetter.getAllValidators().length == 1);
         require(saGetter.getValidatorSet().validators.length == 1);
         require(saGetter.getValidatorSet().configurationNumber == 0);
         require(saGetter.validatorAt(0) == validator);
+    }
+
+    function testSubnetActorDiamond_MultipleJoins_Works_GetValidators() public {
+        address validator1 = vm.addr(1231);
+        address validator2 = vm.addr(1232);
+        address validator3 = vm.addr(1233);
+        address validator4 = vm.addr(1234);
+        address validator5 = vm.addr(1235);
+        address validator6 = vm.addr(1236);
+        address validator7 = vm.addr(1237);
+
+        _assertJoin(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator2, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator3, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator4, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator5, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator6, DEFAULT_MIN_VALIDATOR_STAKE);
+        _assertJoin(validator7, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        require(saGetter.validatorCount() == 7);
+        require(saGetter.getAllValidators().length == 7);
+        require(saGetter.getValidatorSet().validators.length == 7);
+
+        address[] memory result;
+        uint256 offset;
+
+        (result, offset) = saGetter.getValidators(0, 2);
+        require(result.length == 2);
+        require(offset == 2);
+
+        (result, offset) = saGetter.getValidators(2, 4);
+        require(result.length == 4);
+        require(offset == 6);
+
+        (result, offset) = saGetter.getValidators(6, 10);
+        require(result.length == 1);
+        require(offset == 7);
+
+        vm.expectRevert(NotEnoughValidatorsInSubnet.selector);
+        (result, offset) = saGetter.getValidators(10, 10);
     }
 
     function testSubnetActorDiamond_Join_Works_CallRegister() public {
