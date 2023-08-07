@@ -121,6 +121,12 @@ contract SubnetActorGetterFacet {
         return s.validators.at(index);
     }
 
+    /// @notice get validator network address
+    /// @param addr - validator address
+    function validatorNetAddr(address addr) external view returns (string memory) {
+        return s.validatorNetAddresses[addr];
+    }
+
     /// @notice get all the validators in the subnet.
     /// TODO: we can introduce pagination
     function getValidators() external view returns (address[] memory) {

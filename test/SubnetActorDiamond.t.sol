@@ -448,6 +448,46 @@ contract SubnetActorDiamondTest is Test {
         saManager.kill();
     }
 
+    function testSubnetActorDiamond_SetValidatorNetAddr_Works() public payable {
+        string memory newNetAddr = "1.2.3.4";
+
+        address validator = address(1235);
+
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        string memory result = saGetter.validatorNetAddr(validator);
+        require(keccak256(bytes(result)) == keccak256(bytes(DEFAULT_NET_ADDR)), "result == oldNetAddr");
+
+        vm.prank(validator);
+        saManager.setValidatorNetAddr(newNetAddr);
+
+        result = saGetter.validatorNetAddr(validator);
+        require(keccak256(bytes(result)) == keccak256(bytes(newNetAddr)), "result == newNetAddr");
+    }
+
+    function testSubnetActorDiamond_SetValidatorNetAddr_NotValidator() public payable {
+        address validator = address(0);
+
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        string memory result = saGetter.validatorNetAddr(validator);
+        require(keccak256(bytes(result)) == keccak256(bytes(DEFAULT_NET_ADDR)), "result == oldNetAddr");
+
+        vm.prank(validator);
+        vm.expectRevert(NotValidator.selector);
+        saManager.setValidatorNetAddr("newNetAddr");
+    }
+
+    function testSubnetActorDiamond_SetValidatorNetAddr_EmptyNetAddr() public payable {
+        address validator = address(1235);
+
+        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        vm.prank(validator);
+        vm.expectRevert(EmptyNetAddress.selector);
+        saManager.setValidatorNetAddr("");
+    }
+
     function testSubnetActorDiamond_SubmitCheckpoint_Works_Executed() public {
         address validator = vm.addr(100);
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);

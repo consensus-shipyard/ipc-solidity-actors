@@ -6,7 +6,7 @@ import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {BottomUpCheckpoint, CrossMsg, ChildCheck} from "../structs/Checkpoint.sol";
 import {SubnetID} from "../structs/Subnet.sol";
-import {CollateralIsZero, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, MessageNotSorted, NoRewardToWithdraw} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, EmptyNetAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, MessageNotSorted, NoRewardToWithdraw} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
@@ -197,6 +197,17 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         EpochVoteBottomUpSubmission storage voteSubmission = s.epochVoteSubmissions[epoch];
 
         return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
+    }
+
+    function setValidatorNetAddr(string calldata newNetAddr) external {
+        address validator = msg.sender;
+        if (!s.validators.contains(validator)) {
+            revert NotValidator();
+        }
+        if (bytes(newNetAddr).length == 0) {
+            revert EmptyNetAddress();
+        }
+        s.validatorNetAddresses[validator] = newNetAddr;
     }
 
     /// @notice submits a vote for a checkpoint
