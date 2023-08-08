@@ -336,10 +336,28 @@ contract SubnetActorDiamondTest is Test {
         require(gwGetter.listSubnets().length == 0, "listSubnets correct");
         require(saGetter.validatorCount() == 0, "validatorCount correct");
 
-        _assertJoin(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
+        address validator = vm.addr(1234);
 
-        require(saGetter.validatorCount() == 1, "validatorCount correct");
-        require(gwGetter.listSubnets().length == 1, "listSubnets correct");
+        vm.startPrank(validator);
+        vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        require(validator.balance == DEFAULT_MIN_VALIDATOR_STAKE, "balance() == DEFAULT_MIN_VALIDATOR_STAKE");
+        require(saGetter.stake(validator) == 0, "stake(validator) == 0");
+        require(saGetter.totalStake() == 0, "totalStake() == 0");
+
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(
+            DEFAULT_NET_ADDR,
+            FvmAddress({addrType: 1, payload: new bytes(20)})
+        );
+
+        require(saGetter.stake(validator) == DEFAULT_MIN_VALIDATOR_STAKE);
+        require(saGetter.totalStake() == DEFAULT_MIN_VALIDATOR_STAKE);
+        require(validator.balance == 0);
+
+        vm.stopPrank();
+
+        require(saGetter.validatorCount() == 1, "validatorCount() correct");
+        require(gwGetter.listSubnets().length == 1, "listSubnets() correct");
     }
 
     function testSubnetActorDiamond_Join_Works_NoNewValidator_CollateralNotEnough() public {
