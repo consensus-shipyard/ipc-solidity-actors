@@ -328,6 +328,17 @@ contract SubnetActorDiamondTest is Test {
         _assertJoin(vm.addr(1235), DEFAULT_MIN_VALIDATOR_STAKE);
 
         require(saGetter.validatorCount() == 2);
+        require(gwGetter.listSubnets().length == 1);
+    }
+
+    function testSubnetActorDiamond_Join_Works_OneValidatorWithMinimumStake() public {
+        require(gwGetter.listSubnets().length == 0, "listSubnets correct");
+        require(saGetter.validatorCount() == 0, "validatorCount correct");
+
+        _assertJoin(vm.addr(1234), DEFAULT_MIN_VALIDATOR_STAKE);
+
+        require(saGetter.validatorCount() == 1, "validatorCount correct");
+        require(gwGetter.listSubnets().length == 1, "listSubnets correct");
     }
 
     function testSubnetActorDiamond_Join_Works_NoNewValidator_CollateralNotEnough() public {
