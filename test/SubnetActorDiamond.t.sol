@@ -321,6 +321,7 @@ contract SubnetActorDiamondTest is Test {
         saManager.join{value: amount}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
 
         require(saGetter.validatorCount() == 0);
+        require(gwGetter.listSubnets().length == 0);
     }
 
     function testSubnetActorDiamond_Join_Works_MultipleNewValidators() public {
