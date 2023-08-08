@@ -17,8 +17,13 @@ response=$(curl -s -X POST -H "Content-Type: application/json" --data '{
 # Extract the chain ID from the response using jq (ensure jq is installed)
 chain_id=$(echo $response | jq -r '.result')
 
-# Export the chain ID as an environmental variable
-export CHAIN_ID=$chain_id
-
-# Print the chain ID for verification (optional)
-echo "[*] Target network Chain ID: $CHAIN_ID"
+# Double-check that this is a valid chain-id
+if [[ "$chain_id" =~ ^0x[0-9a-fA-F]+$ ]]; then
+   # Export the chain ID as an environmental variable
+   export CHAIN_ID=$chain_id
+   # Print the chain ID for verification (optional)
+   echo "[*] Target network Chain ID: $CHAIN_ID"
+else
+  echo "[*] Error getting a valid hexadecimal chain ID"
+  exit 1
+fi
