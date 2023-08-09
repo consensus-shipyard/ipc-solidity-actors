@@ -125,6 +125,8 @@ contract SubnetActorGetterFacet {
 
     /// @notice get no more than `limit` number of validators starting from the validator with index `offset`
     /// @dev It returns an empty array[] and 0 if there are no validators to return according to the input parameters
+    /// @param offset The first index of the first validator to return
+    /// @param limit The maximum number of validators to return
     /// @return the array of validators, the size of that array is no more than `limit`
     /// @return the next `offset`
     function getRangeOfValidators(uint256 offset, uint256 limit) external view returns (address[] memory, uint256) {
