@@ -206,7 +206,7 @@ contract SubnetActorDiamondTest is Test {
 
         require(saGetter.bottomUpCheckPeriod() == _checkPeriod, "bottomUpCheckPeriod");
 
-        require(saGetter.getAllValidators().length == 0, "empty validators");
+        require(saGetter.getValidators().length == 0, "empty validators");
 
         require(saGetter.getValidatorSet().validators.length == 0, "empty validator set");
 
@@ -292,7 +292,7 @@ contract SubnetActorDiamondTest is Test {
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
         require(saGetter.validatorCount() == 1);
-        require(saGetter.getAllValidators().length == 1);
+        require(saGetter.getValidators().length == 1);
         require(saGetter.getValidatorSet().validators.length == 1);
         require(saGetter.getValidatorSet().configurationNumber == 0);
         require(saGetter.validatorAt(0) == validator);
@@ -316,25 +316,37 @@ contract SubnetActorDiamondTest is Test {
         _assertJoin(validator7, DEFAULT_MIN_VALIDATOR_STAKE);
 
         require(saGetter.validatorCount() == 7);
-        require(saGetter.getAllValidators().length == 7);
+        require(saGetter.getValidators().length == 7);
         require(saGetter.getValidatorSet().validators.length == 7);
 
         address[] memory result;
         uint256 offset;
 
-        (result, offset) = saGetter.getValidators(0, 2);
+        (result, offset) = saGetter.getRangeOfValidators(0, 2);
         require(result.length == 2);
         require(offset == 2);
 
-        (result, offset) = saGetter.getValidators(2, 4);
+        (result, offset) = saGetter.getRangeOfValidators(0, 0);
+        require(result.length == 0);
+        require(offset == 0);
+
+        (result, offset) = saGetter.getRangeOfValidators(10, 0);
+        require(result.length == 0);
+        require(offset == 0);
+
+        (result, offset) = saGetter.getRangeOfValidators(2, 4);
         require(result.length == 4);
         require(offset == 6);
 
-        (result, offset) = saGetter.getValidators(6, 10);
+        (result, offset) = saGetter.getRangeOfValidators(2, 0);
+        require(result.length == 0);
+        require(offset == 0);
+
+        (result, offset) = saGetter.getRangeOfValidators(6, 10);
         require(result.length == 1);
         require(offset == 7);
 
-        (result, offset) = saGetter.getValidators(10, 10);
+        (result, offset) = saGetter.getRangeOfValidators(10, 10);
         require(result.length == 0);
         require(offset == 0);
     }
@@ -355,13 +367,13 @@ contract SubnetActorDiamondTest is Test {
         }
 
         require(saGetter.validatorCount() == n);
-        require(saGetter.getAllValidators().length == n);
+        require(saGetter.getValidators().length == n);
         require(saGetter.getValidatorSet().validators.length == n);
 
         address[] memory result;
         uint256 newOffset;
 
-        (result, newOffset) = saGetter.getValidators(offset, limit);
+        (result, newOffset) = saGetter.getRangeOfValidators(offset, limit);
         if (limit == 0 || n <= offset) {
             require(result.length == 0, "result.length == 0");
         } else {

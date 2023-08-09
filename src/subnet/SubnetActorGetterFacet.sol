@@ -109,7 +109,7 @@ contract SubnetActorGetterFacet {
     }
 
     /// @notice get all the validators in the subnet.
-    function getAllValidators() external view returns (address[] memory) {
+    function getValidators() external view returns (address[] memory) {
         uint256 length = s.validators.length();
         address[] memory result = new address[](length);
 
@@ -123,8 +123,11 @@ contract SubnetActorGetterFacet {
         return result;
     }
 
-    /// @notice get n validators of the subnet from a range offset to limit.
-    function getValidators(uint256 offset, uint256 limit) external view returns (address[] memory, uint256) {
+    /// @notice get no more than `limit` number of validators starting from the validator with index `offset`
+    /// @dev It returns an empty array[] and 0 if there are no validators to return according to the input parameters
+    /// @return the array of validators, the size of that array is no more than `limit`
+    /// @return the next `offset`
+    function getRangeOfValidators(uint256 offset, uint256 limit) external view returns (address[] memory, uint256) {
         uint256 n = s.validators.length();
         address[] memory empty = new address[](0);
         if (limit == 0) {
