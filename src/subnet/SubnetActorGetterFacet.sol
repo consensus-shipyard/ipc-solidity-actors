@@ -128,7 +128,7 @@ contract SubnetActorGetterFacet {
     /// @param offset The first index of the first validator to return
     /// @param limit The maximum number of validators to return
     /// @return the array of validators, the size of that array is no more than `limit`
-    /// @return the next `offset`
+    /// @return the next `offset` that needs to query the next range of validators
     function getRangeOfValidators(uint256 offset, uint256 limit) external view returns (address[] memory, uint256) {
         uint256 n = s.validators.length();
         address[] memory empty = new address[](0);
