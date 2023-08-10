@@ -124,6 +124,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
         EpochVoteBottomUpSubmission storage voteSubmission = s.epochVoteSubmissions[checkpoint.epoch];
 
+        emit BottomUpCheckpointSubmitted(checkpoint, msg.sender);
+
         // submit the vote
         bool shouldExecuteVote = _submitBottomUpVote({
             voteSubmission: voteSubmission,
@@ -132,11 +134,9 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             submitterWeight: s.stake[msg.sender]
         });
 
-        emit BottomUpCheckpointSubmitted(checkpoint, msg.sender);
-
         if (shouldExecuteVote) {
-            _commitCheckpoint(voteSubmission);
             emit BottomUpCheckpointExecuted(checkpoint.epoch, msg.sender);
+            _commitCheckpoint(voteSubmission);
         } else {
             // try to get the next executable epoch from the queue
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibVoting.getNextExecutableEpoch();
@@ -144,8 +144,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             if (isExecutableEpoch) {
                 EpochVoteBottomUpSubmission storage nextVoteSubmission = s.epochVoteSubmissions[nextExecutableEpoch];
 
-                _commitCheckpoint(nextVoteSubmission);
                 emit NextBottomUpCheckpointExecuted(nextExecutableEpoch, msg.sender);
+                _commitCheckpoint(nextVoteSubmission);
             }
         }
     }
