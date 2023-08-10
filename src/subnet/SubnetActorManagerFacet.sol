@@ -30,8 +30,9 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
     using FvmAddressHelper for FvmAddress;
 
-    event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter, bool shouldExecute);
+    event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter);
     event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
+    event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
 
     /// @notice method that allows a validator to join the subnet
     /// @param netAddr - the network address of the validator
@@ -131,7 +132,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             submitterWeight: s.stake[msg.sender]
         });
 
-        emit BottomUpCheckpointSubmitted(checkpoint, msg.sender, shouldExecuteVote);
+        emit BottomUpCheckpointSubmitted(checkpoint, msg.sender);
 
         if (shouldExecuteVote) {
             _commitCheckpoint(voteSubmission);
@@ -144,7 +145,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
                 EpochVoteBottomUpSubmission storage nextVoteSubmission = s.epochVoteSubmissions[nextExecutableEpoch];
 
                 _commitCheckpoint(nextVoteSubmission);
-                emit BottomUpCheckpointExecuted(checkpoint.epoch, msg.sender);
+                emit NextBottomUpCheckpointExecuted(nextExecutableEpoch, msg.sender);
             }
         }
     }
