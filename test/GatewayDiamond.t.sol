@@ -1475,27 +1475,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
         SubnetID memory from = gwGetter.getNetworkName().createSubnetId(caller);
 
-        CrossMsg memory crossMsg = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(caller)}),
-                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)}),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
-            wrapped: true
-        });
-
         vm.prank(caller);
 
-        Messenger messengerContract = new Messenger(address(gatewayDiamond));
+        Messenger messengerContract = new Messenger(address(gatewayDiamond), gwGetter.getNetworkName());
         vm.deal(address(messengerContract), 10 ether);
-        messengerContract.sendMessage(crossMsg);
+        messengerContract.sendMessage(destinationSubnet, receiver);
 
         (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
 
-        require(crossMsg.message.applyType(gwGetter.getNetworkName()) == IPCMsgType.TopDown);
         require(id.equals(destinationSubnet));
         require(nonce == 1);
         require(circSupply == CROSS_MSG_FEE + 1);

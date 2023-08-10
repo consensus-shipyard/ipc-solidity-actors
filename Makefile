@@ -25,10 +25,10 @@ check-subnet:
 # Development support
 
 lint:
-	solhint 'src/**/*.sol'
+	solhint 'src/**/*.sol' 'examples/contracts/**/*.sol'
 
 format:
-	npx prettier --check -w 'src/**/*.sol' 'test/*.sol'
+	npx prettier --check -w 'src/**/*.sol' 'test/*.sol' 'examples/contracts/**/*.sol'
 
 build:
 	forge build
