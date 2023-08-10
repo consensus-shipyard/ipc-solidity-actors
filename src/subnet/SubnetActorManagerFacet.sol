@@ -30,15 +30,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     using EpochVoteSubmissionHelper for EpochVoteSubmission;
     using FvmAddressHelper for FvmAddress;
 
-    event BottomUpCheckpointSubmitted(
-        BottomUpCheckpoint checkpoint,
-        address submitter,
-        bool shouldExecute
-    );
-    event BottomUpCheckpointExecuted(
-        uint64 epoch,
-        address submitter
-    );
+    event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter, bool shouldExecute);
+    event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
 
     /// @notice method that allows a validator to join the subnet
     /// @param netAddr - the network address of the validator
@@ -143,7 +136,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (shouldExecuteVote) {
             _commitCheckpoint(voteSubmission);
             emit BottomUpCheckpointExecuted(checkpoint.epoch, msg.sender);
-
         } else {
             // try to get the next executable epoch from the queue
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibVoting.getNextExecutableEpoch();
