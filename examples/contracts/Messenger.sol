@@ -14,7 +14,7 @@ import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
  * @title Messenger
  * @notice An example of a contract that allows users to send transactions cross-subnet.
  */
-contract Messenger {
+contract DemoCrossMessenger {
     using FvmAddressHelper for FvmAddress;
 
     event MessageSent(IPCAddress from, IPCAddress to, uint256 value);

@@ -31,7 +31,7 @@ import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
-import {Messenger} from "../examples/contracts/Messenger.sol";
+import {DemoCrossMessenger} from "../examples/contracts/Messenger.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -1462,10 +1462,13 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_SendCrossMessage_MessengerContract() public {
-        address caller = vm.addr(100);
-        vm.prank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 1 + CROSS_MSG_FEE + 1);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        address user = vm.addr(300);
+        vm.deal(user, CROSS_MSG_FEE + 1);
+
+        address provider = vm.addr(100);
+        vm.prank(provider);
+        vm.deal(provider, MIN_COLLATERAL_AMOUNT + 1);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, provider);
 
         address receiver = address(this); // callback to reward() method
         vm.prank(receiver);
@@ -1473,10 +1476,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
 
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
-        SubnetID memory from = gwGetter.getNetworkName().createSubnetId(caller);
+        SubnetID memory from = gwGetter.getNetworkName().createSubnetId(provider);
 
-        vm.startPrank(caller);
-        Messenger messengerContract = new Messenger(address(gatewayDiamond), gwGetter.getNetworkName());
+        vm.startPrank(provider);
+        DemoCrossMessenger messengerContract = new DemoCrossMessenger(
+            address(gatewayDiamond),
+            gwGetter.getNetworkName()
+        );
+        vm.stopPrank();
+
+        vm.startPrank(user);
         messengerContract.sendMessage{value: CROSS_MSG_FEE + 1}(destinationSubnet, receiver, CROSS_MSG_FEE + 1);
         vm.stopPrank();
 
