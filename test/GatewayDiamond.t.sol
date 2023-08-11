@@ -1479,7 +1479,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         Messenger messengerContract = new Messenger(address(gatewayDiamond), gwGetter.getNetworkName());
         vm.deal(address(messengerContract), 10 ether);
-        messengerContract.sendMessage(destinationSubnet, receiver);
+        messengerContract.sendMessage(destinationSubnet, receiver, 10 gwei, 1);
 
         (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
 

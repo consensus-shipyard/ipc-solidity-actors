@@ -3,44 +3,66 @@ pragma solidity 0.8.19;
 
 import {METHOD_SEND} from "../../src/constants/Constants.sol";
 import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {GatewayCannotBeZero} from "../../src/errors/IPCErrors.sol";
+import {GatewayCannotBeZero, ZeroAddress} from "../../src/errors/IPCErrors.sol";
 import {IGateway} from "../../src/interfaces/IGateway.sol";
 import {GatewayMessengerFacet} from "../../src/gateway/GatewayMessengerFacet.sol";
 import {IPCAddress, SubnetID} from "../../src/structs/Subnet.sol";
 import {CrossMsg, StorableMsg} from "../../src/structs/Checkpoint.sol";
 import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
 
+/**
+ * @title Messenger
+ * @notice An example of a contract that allows users to send transactions cross-subnet.
+ */
 contract Messenger {
     using FvmAddressHelper for FvmAddress;
 
-    GatewayMessengerFacet private sender;
-    SubnetID public subnet;
-    uint64 public nonce;
-    uint256 public constant CROSS_MSG_FEE = 10 gwei;
+    event MessageSent(IPCAddress from, IPCAddress to, uint256 value);
 
-    constructor(address _gateway, SubnetID memory _subnet) {
-        if (_gateway == address(0)) {
+    GatewayMessengerFacet private messenger;
+    SubnetID public localSubnet;
+    uint64 public nonce;
+    uint256 public constant DEFAULT_CROSS_MSG_FEE = 10 gwei;
+
+    constructor(address gw, SubnetID memory subnet) {
+        if (gw == address(0)) {
             revert GatewayCannotBeZero();
         }
         nonce = 0;
-        subnet = _subnet;
-        sender = new GatewayMessengerFacet();
-        sender = GatewayMessengerFacet(address(_gateway));
+        localSubnet = subnet;
+        messenger = new GatewayMessengerFacet();
+        messenger = GatewayMessengerFacet(address(gw));
     }
 
-    function sendMessage(SubnetID memory dstSubnet, address dstUser) external payable {
+    function sendMessage(SubnetID memory destinationSubnet, address receiver, uint256 fee, uint256 amount) external payable {
+        if (receiver == address(0)) {
+            revert ZeroAddress();
+        }
+        address sender = msg.sender;
+
+        IPCAddress memory from = IPCAddress({subnetId: localSubnet, rawAddress: FvmAddressHelper.from(sender)});
+        IPCAddress memory to = IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)});
+        if (fee < DEFAULT_CROSS_MSG_FEE) {
+            fee = DEFAULT_CROSS_MSG_FEE;
+        }
+        uint256 value = fee + amount;
+
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-                from: IPCAddress({subnetId: subnet, rawAddress: FvmAddressHelper.from(msg.sender)}),
-                to: IPCAddress({subnetId: dstSubnet, rawAddress: FvmAddressHelper.from(dstUser)}),
-                value: CROSS_MSG_FEE + 1,
+                from: from,
+                to: to,
+                value: value,
                 nonce: nonce,
                 method: METHOD_SEND,
                 params: new bytes(0)
             }),
             wrapped: true
         });
+
         ++nonce;
-        sender.sendCrossMessage{value: CROSS_MSG_FEE + 1}(crossMsg);
+        emit MessageSent(from, to, value);
+
+        //slither-disable-next-line arbitrary-send-eth
+        messenger.sendCrossMessage{value: value}(crossMsg);
     }
 }
