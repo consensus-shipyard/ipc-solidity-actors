@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {METHOD_SEND} from "../../src/constants/Constants.sol";
 import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {GatewayCannotBeZero, ZeroAddress} from "../../src/errors/IPCErrors.sol";
+import {GatewayCannotBeZero, ZeroAddress, InvalidAmount} from "../../src/errors/IPCErrors.sol";
 import {IGateway} from "../../src/interfaces/IGateway.sol";
 import {GatewayMessengerFacet} from "../../src/gateway/GatewayMessengerFacet.sol";
 import {IPCAddress, SubnetID} from "../../src/structs/Subnet.sol";
@@ -34,18 +34,19 @@ contract Messenger {
         messenger = GatewayMessengerFacet(address(gw));
     }
 
-    function sendMessage(SubnetID memory destinationSubnet, address receiver, uint256 fee, uint256 amount) external payable {
+    function sendMessage(SubnetID memory destinationSubnet, address receiver, uint256 amount) external payable {
         if (receiver == address(0)) {
             revert ZeroAddress();
+        }
+        if (amount < DEFAULT_CROSS_MSG_FEE) {
+            revert InvalidAmount();
         }
         address sender = msg.sender;
 
         IPCAddress memory from = IPCAddress({subnetId: localSubnet, rawAddress: FvmAddressHelper.from(sender)});
         IPCAddress memory to = IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)});
-        if (fee < DEFAULT_CROSS_MSG_FEE) {
-            fee = DEFAULT_CROSS_MSG_FEE;
-        }
-        uint256 value = fee + amount;
+
+        uint256 value = amount;
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({

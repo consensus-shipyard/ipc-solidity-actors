@@ -15,6 +15,7 @@ error EpochNotVotable();
 error GatewayCannotBeZero();
 error InconsistentPrevCheckpoint();
 error InvalidActorAddress();
+error InvalidAmount();
 error InvalidCheckpointEpoch();
 error InvalidCheckpointSource();
 error InvalidCrossMsgDstSubnet();

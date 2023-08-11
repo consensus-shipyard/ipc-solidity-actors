@@ -1464,7 +1464,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_SendCrossMessage_MessengerContract() public {
         address caller = vm.addr(100);
         vm.prank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, MIN_COLLATERAL_AMOUNT + 1 + CROSS_MSG_FEE + 1);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
 
         address receiver = address(this); // callback to reward() method
@@ -1475,11 +1475,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
         SubnetID memory from = gwGetter.getNetworkName().createSubnetId(caller);
 
-        vm.prank(caller);
-
+        vm.startPrank(caller);
         Messenger messengerContract = new Messenger(address(gatewayDiamond), gwGetter.getNetworkName());
-        vm.deal(address(messengerContract), 10 ether);
-        messengerContract.sendMessage(destinationSubnet, receiver, 10 gwei, 1);
+        messengerContract.sendMessage{value: CROSS_MSG_FEE + 1}(destinationSubnet, receiver, CROSS_MSG_FEE + 1);
+        vm.stopPrank();
 
         (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
 
