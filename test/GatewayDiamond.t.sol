@@ -32,6 +32,9 @@ import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DemoCrossMessenger} from "../examples/contracts/Messenger.sol";
+import {DemoTokenMessenger} from "../examples/contracts/TokenMessenger.sol";
+import {DummyERC20} from "./ERC20Helper.sol";
+import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -1488,6 +1491,84 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.startPrank(user);
         messengerContract.sendMessage{value: CROSS_MSG_FEE + 1}(destinationSubnet, receiver, CROSS_MSG_FEE + 1);
         vm.stopPrank();
+
+        (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
+
+        require(id.equals(destinationSubnet));
+        require(nonce == 1);
+        require(circSupply == CROSS_MSG_FEE + 1);
+        require(gwGetter.getNetworkName().equals(destinationSubnet.commonParent(from)));
+        require(gwGetter.appliedTopDownNonce() == 1);
+
+        CrossMsg[] memory msgs = gwGetter.getTopDownMsgs(id, 0);
+        require(msgs.length == 1);
+        (bool exists, uint64 n) = gwGetter.getAppliedTopDownNonce(id);
+        require(exists);
+        require(n == 1);
+    }
+
+    function testGatewayDiamond_SendCrossMessage_TokenMessengerContract() public {
+        address user = vm.addr(300);
+        vm.deal(user, 1 ether);
+
+        address srcTokenOwner = vm.addr(405);
+        vm.startPrank(srcTokenOwner);
+        DummyERC20 srcToken = new DummyERC20("SrcToken", "SRC", 100 ether);
+        vm.deal(address(srcToken), 100 ether);
+        srcToken.transfer(user, 10 ether);
+        require(srcToken.balanceOf(user) == 10 ether, "balanceOf(user)");
+        require(srcToken.balanceOf(srcTokenOwner) == 90 ether, "balanceOf(srcTokenOwner)");
+        require(srcToken.totalSupply() == 100 ether, "srcToken.totalSupply");
+        require(address(srcToken).balance == 100 ether, "(srcToken).balance");
+        vm.stopPrank();
+
+        address dstTokenOwner = vm.addr(406);
+        vm.startPrank(dstTokenOwner);
+        DummyERC20 dstToken = new DummyERC20("DstToken", "DST", 0);
+        vm.stopPrank();
+
+        address provider = vm.addr(100);
+        vm.prank(provider);
+        vm.deal(provider, MIN_COLLATERAL_AMOUNT + 1);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, provider);
+
+        address receiver = address(this); // callback to reward() method
+        vm.prank(receiver);
+        vm.deal(receiver, MIN_COLLATERAL_AMOUNT + 1);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+
+        SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
+        SubnetID memory from = gwGetter.getNetworkName().createSubnetId(provider);
+
+        vm.startPrank(provider);
+        DemoCrossMessenger messenger = new DemoCrossMessenger(
+            address(gatewayDiamond),
+            gwGetter.getNetworkName()
+        );
+        DemoTokenMessenger tokenMessenger = new DemoTokenMessenger(
+            address(messenger)
+        );
+        vm.stopPrank();
+
+        vm.deal(address(tokenMessenger), 1 ether);
+        require(address(tokenMessenger).balance == 1 ether, "address(tokenMessenger).balance == 5");
+
+        vm.startPrank(address(srcToken));
+        require(address(srcToken).balance >= 10 ether, "address(srcTokenOwner).balance >= 10 ether");
+        address payable payableTokenMessenger = payable(address(tokenMessenger));
+        payableTokenMessenger.transfer(10 ether);
+        require(address(tokenMessenger).balance == 11 ether, "address(tokenMessenger).balance == 11");
+        vm.stopPrank();
+
+        vm.startPrank(user);
+        srcToken.approve(address(tokenMessenger), 10 ether);
+        require(address(srcToken).balance == 90 ether, "(address(srcToken).balance == 90");
+
+        console.log("tokenMessenger balance: ", address(tokenMessenger).balance );
+        tokenMessenger.sendToken(address(srcToken), destinationSubnet, receiver, 10 ether);
+        vm.stopPrank();
+
+        console.log(">>>> checks");
 
         (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
 

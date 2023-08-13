@@ -17,12 +17,12 @@ import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
 contract DemoCrossMessenger {
     using FvmAddressHelper for FvmAddress;
 
-    event MessageSent(IPCAddress from, IPCAddress to, uint256 value);
-
     GatewayMessengerFacet private messenger;
     SubnetID public localSubnet;
     uint64 public nonce;
     uint256 public constant DEFAULT_CROSS_MSG_FEE = 10 gwei;
+
+    event MessageSent(IPCAddress from, IPCAddress to, uint256 value);
 
     constructor(address gw, SubnetID memory subnet) {
         if (gw == address(0)) {
@@ -34,14 +34,17 @@ contract DemoCrossMessenger {
         messenger = GatewayMessengerFacet(address(gw));
     }
 
-    function sendMessage(SubnetID memory destinationSubnet, address receiver, uint256 amount) external payable {
+    function sendMessage(SubnetID memory destinationSubnet, address receiver, uint256 amount) public payable {
+        sendMessageFrom(msg.sender, destinationSubnet, receiver, amount);
+    }
+
+    function sendMessageFrom(address sender, SubnetID memory destinationSubnet, address receiver, uint256 amount) public payable {
         if (receiver == address(0)) {
             revert ZeroAddress();
         }
         if (amount < DEFAULT_CROSS_MSG_FEE) {
             revert InvalidAmount();
         }
-        address sender = msg.sender;
 
         IPCAddress memory from = IPCAddress({subnetId: localSubnet, rawAddress: FvmAddressHelper.from(sender)});
         IPCAddress memory to = IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)});
@@ -50,13 +53,13 @@ contract DemoCrossMessenger {
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-                from: from,
-                to: to,
-                value: value,
-                nonce: nonce,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
+            from: from,
+            to: to,
+            value: value,
+            nonce: nonce,
+            method: METHOD_SEND,
+            params: new bytes(0)
+        }),
             wrapped: true
         });
 
