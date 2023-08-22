@@ -34,7 +34,7 @@ import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {Messenger} from "../examples/contracts/Messenger.sol";
 import {TokenMessenger} from "../examples/contracts/TokenMessenger.sol";
 import {DummyERC20} from "./ERC20Helper.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
+import {ERC20} from "openzeppelin-contracts/token/ERC20/ERC20.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
