@@ -1,13 +1,17 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/access/Ownable.sol";
+import "openzeppelin-contracts/token/ERC20/ERC20.sol";
+import "openzeppelin-contracts/access/Ownable.sol";
 
 contract DummyERC20 is ERC20, Ownable {
     uint256 public currentSupply = 0;
 
-    constructor(string memory _name, string memory _symbol, uint256 _initialSupply) ERC20(_name, _symbol) {
+    constructor(
+        string memory _name,
+        string memory _symbol,
+        uint256 _initialSupply
+    ) Ownable(msg.sender) ERC20(_name, _symbol) {
         _mint(owner(), _initialSupply);
     }
 
