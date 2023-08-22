@@ -62,13 +62,7 @@ contract Messenger {
         });
 
         // emit event and increase nonce
-        emit MessageSent({
-            from: from,
-            to:to,
-            nonce: nonce++,
-            messageBody:messageBody
-        });
-
+        emit MessageSent({from: from, to: to, nonce: nonce++, messageBody: messageBody});
 
         // slither-disable-next-line arbitrary-send-eth
         messenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE}(crossMsg);

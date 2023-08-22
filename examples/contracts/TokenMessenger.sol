@@ -44,11 +44,7 @@ contract TokenMessenger is ReentrancyGuard {
     ) external nonReentrant {
         uint256 startingBalance = IERC20(tokenContract).balanceOf(address(this));
 
-        IERC20(tokenContract).safeTransferFrom({
-            from: msg.sender,
-            to: address(this),
-            value: amount
-        });
+        IERC20(tokenContract).safeTransferFrom({from: msg.sender, to: address(this), value: amount});
 
         uint256 endingBalance = IERC20(tokenContract).balanceOf(address(this));
 
@@ -64,14 +60,10 @@ contract TokenMessenger is ReentrancyGuard {
             destinationSubnet: destinationSubnet,
             receiver: receiver,
             nonce: lastEventNonce++,
-            value:amount
+            value: amount
         });
 
-        messenger.sendMessage({
-            destinationSubnet: destinationSubnet,
-            receiver: receiver,
-            messageBody: payload
-        });
+        messenger.sendMessage({destinationSubnet: destinationSubnet, receiver: receiver, messageBody: payload});
     }
 
     receive() external payable {}
