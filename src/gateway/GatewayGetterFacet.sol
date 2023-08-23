@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {CrossMsg, BottomUpCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
-import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {SubnetID, Subnet, SubnetDTO} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
@@ -57,7 +57,7 @@ contract GatewayGetterFacet {
     /// @param subnetId the id of the subnet
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
-    function getSubnet(SubnetID calldata subnetId) external view returns (bool, Subnet memory) {
+    function getSubnet(SubnetID calldata subnetId) external view returns (bool, SubnetDTO memory) {
         // slither-disable-next-line unused-return
         return LibGateway.getSubnet(subnetId);
     }
