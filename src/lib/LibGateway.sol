@@ -86,7 +86,7 @@ library LibGateway {
         SubnetID calldata subnetId,
         uint256 fromBlock,
         uint256 toBlock
-    ) external view returns (CrossMsg[] memory) {
+    ) internal view returns (CrossMsg[] memory) {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
 
         // invalid from block number
