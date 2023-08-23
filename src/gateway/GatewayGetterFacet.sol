@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {CrossMsg, BottomUpCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
-import {SubnetID, Subnet, SubnetDTO} from "../structs/Subnet.sol";
+import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
@@ -57,7 +57,7 @@ contract GatewayGetterFacet {
     /// @param subnetId the id of the subnet
     /// @return found whether the subnet exists
     /// @return subnet -  the subnet struct
-    function getSubnet(SubnetID calldata subnetId) external view returns (bool, SubnetDTO memory) {
+    function getSubnet(SubnetID calldata subnetId) external view returns (bool, Subnet memory) {
         // slither-disable-next-line unused-return
         return LibGateway.getSubnet(subnetId);
     }
@@ -82,42 +82,7 @@ contract GatewayGetterFacet {
         uint256 fromBlock,
         uint256 toBlock
     ) external view returns (CrossMsg[] memory) {
-        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
-        if (!registered) {
-            return new CrossMsg[](0);
-        }
-
-        // invalid from block number
-        if (fromBlock > toBlock) {
-            return new CrossMsg[](0);
-        }
-
-        uint256 msgLength = 0;
-        for (uint256 i = fromBlock; i <= toBlock; ) {
-            msgLength += subnet.topDownMsgs[i].length;
-            unchecked {
-                i++;
-            }
-        }
-
-        CrossMsg[] memory messages = new CrossMsg[](msgLength);
-        uint256 index = 0;
-        for (uint256 i = fromBlock; i <= toBlock; ) {
-            // perform copy
-            for (uint256 j = 0; j < subnet.topDownMsgs[i].length; ) {
-                messages[index] = subnet.topDownMsgs[i][j];
-                unchecked {
-                    j++;
-                    index++;
-                }
-            }
-
-            unchecked {
-                i++;
-            }
-        }
-
-        return messages;
+        return LibGateway.getTopDownMsgs(subnetId, fromBlock, toBlock);
     }
 
     /// @notice Get the latest applied top down nonce

@@ -15,17 +15,6 @@ struct SubnetID {
     address[] route;
 }
 
-struct SubnetDTO {
-    uint256 stake;
-    uint256 genesisEpoch;
-    uint256 circSupply;
-    uint64 topDownNonce;
-    uint64 appliedBottomUpNonce;
-    Status status;
-    SubnetID id;
-    BottomUpCheckpoint prevCheckpoint;
-}
-
 struct Subnet {
     uint256 stake;
     uint256 genesisEpoch;
@@ -35,8 +24,6 @@ struct Subnet {
     Status status;
     SubnetID id;
     BottomUpCheckpoint prevCheckpoint;
-    /// @notice a mapping of block number to cross messages
-    mapping(uint256 => CrossMsg[]) topDownMsgs;
 }
 
 struct IPCAddress {
