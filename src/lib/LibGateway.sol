@@ -51,7 +51,7 @@ library LibGateway {
         subnet.topDownNonce += 1;
         subnet.circSupply += crossMessage.message.value;
 
-        s.topDownMsgs[block.number].push(crossMessage);
+        s.topDownMsgs[subnetId.toHash()][block.number].push(crossMessage);
     }
 
     /// @notice commit bottomup messages for their execution in the subnet. Adds the message to the checkpoint for future execution
@@ -94,9 +94,10 @@ library LibGateway {
             return new CrossMsg[](0);
         }
 
+        bytes32 subnetHash = subnetId.toHash();
         uint256 msgLength = 0;
         for (uint256 i = fromBlock; i <= toBlock; ) {
-            msgLength += s.topDownMsgs[subnetId][i].length;
+            msgLength += s.topDownMsgs[subnetHash][i].length;
             unchecked {
                 i++;
             }
@@ -106,8 +107,8 @@ library LibGateway {
         uint256 index = 0;
         for (uint256 i = fromBlock; i <= toBlock; ) {
             // perform copy
-            for (uint256 j = 0; j < s.topDownMsgs[subnetId][i].length; ) {
-                messages[index] = s.topDownMsgs[subnetId][i][j];
+            for (uint256 j = 0; j < s.topDownMsgs[subnetHash][i].length; ) {
+                messages[index] = s.topDownMsgs[subnetHash][i][j];
                 unchecked {
                     j++;
                     index++;
