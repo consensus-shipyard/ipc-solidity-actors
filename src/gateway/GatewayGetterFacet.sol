@@ -70,37 +70,50 @@ contract GatewayGetterFacet {
     function getSubnetTopDownMsgsLength(SubnetID memory subnetId) external view returns (uint256) {
         // slither-disable-next-line unused-return
         (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
-        return subnet.topDownMsgs.length;
+        return subnet.topDownNonce;
     }
 
-    /// @notice get the top-down message at the given index for the given subnet
-    function getSubnetTopDownMsg(SubnetID memory subnetId, uint256 index) external view returns (CrossMsg memory) {
-        // slither-disable-next-line unused-return
-        (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
-        return subnet.topDownMsgs[index];
-    }
-
-    /// @notice get the list of top down messages from nonce, we may also consider introducing pagination.
+    /// @notice get the list of top down messages from block number, we may also consider introducing pagination.
     /// @param subnetId - The subnet id to fetch messages from
-    /// @param fromNonce - The starting nonce to get top down messages, inclusive.
-    function getTopDownMsgs(SubnetID calldata subnetId, uint64 fromNonce) external view returns (CrossMsg[] memory) {
+    /// @param fromBlock - The starting block to get top down messages, inclusive.
+    /// @param toBlock - The ending block to get top down messages, inclusive.
+    function getTopDownMsgs(
+        SubnetID calldata subnetId,
+        uint256 fromBlock,
+        uint256 toBlock
+    ) external view returns (CrossMsg[] memory) {
         (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
         if (!registered) {
             return new CrossMsg[](0);
         }
 
-        uint256 totalLength = subnet.topDownMsgs.length;
-        uint256 startingNonce = uint256(fromNonce);
-        if (startingNonce >= totalLength) {
+        // invalid from block number
+        if (fromBlock > toBlock) {
             return new CrossMsg[](0);
         }
 
-        uint256 msgLength = totalLength - startingNonce;
-        CrossMsg[] memory messages = new CrossMsg[](msgLength);
-        for (uint256 i = 0; i < msgLength; ) {
-            messages[i] = subnet.topDownMsgs[i + startingNonce];
+        uint256 msgLength = 0;
+        for (uint256 i = fromBlock; i <= toBlock; ) {
+            msgLength += subnet.topDownMsgs[i].length;
             unchecked {
-                ++i;
+                i++;
+            }
+        }
+
+        CrossMsg[] memory messages = new CrossMsg[](msgLength);
+        uint256 index = 0;
+        for (uint256 i = fromBlock; i <= toBlock; ) {
+            // perform copy
+            for (uint256 j = 0; j < subnet.topDownMsgs[i].length; ) {
+                messages[index] = subnet.topDownMsgs[i][j];
+                unchecked {
+                    j++;
+                    index++;
+                }
+            }
+
+            unchecked {
+                i++;
             }
         }
 

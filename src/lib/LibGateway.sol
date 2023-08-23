@@ -50,7 +50,7 @@ library LibGateway {
         crossMessage.message.nonce = subnet.topDownNonce;
         subnet.topDownNonce += 1;
         subnet.circSupply += crossMessage.message.value;
-        subnet.topDownMsgs.push(crossMessage);
+        subnet.topDownMsgs[block.number].push(crossMessage);
     }
 
     /// @notice commit bottomup messages for their execution in the subnet. Adds the message to the checkpoint for future execution

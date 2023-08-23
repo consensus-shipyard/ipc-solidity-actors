@@ -24,7 +24,8 @@ struct Subnet {
     Status status;
     SubnetID id;
     BottomUpCheckpoint prevCheckpoint;
-    CrossMsg[] topDownMsgs;
+    /// @notice a mapping of block number to cross messages
+    mapping(uint256 => CrossMsg[]) topDownMsgs;
 }
 
 struct IPCAddress {

@@ -1453,7 +1453,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.getNetworkName().equals(destinationSubnet.commonParent(from)));
         require(gwGetter.appliedTopDownNonce() == 1);
 
-        CrossMsg[] memory msgs = gwGetter.getTopDownMsgs(id, 0);
+        CrossMsg[] memory msgs = gwGetter.getTopDownMsgs(id, block.number, block.number);
         require(msgs.length == 1);
         (bool exists, uint64 n) = gwGetter.getAppliedTopDownNonce(id);
         require(exists);
@@ -2280,8 +2280,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(nonce == expectedNonce);
         require(circSupply == expectedCircSupply);
 
+        CrossMsg[] memory topDownMsgs = gwGetter.getTopDownMsgs(subnetId, block.number, block.number);
         for (uint256 msgIndex = 0; msgIndex < expectedTopDownMsgsLength; msgIndex++) {
-            CrossMsg memory topDownMsg = gwGetter.getSubnetTopDownMsg(subnetId, msgIndex);
+            CrossMsg memory topDownMsg = topDownMsgs[msgIndex];
 
             require(topDownMsg.message.nonce == msgIndex);
             require(topDownMsg.message.value == fundAmountWithSubtractedFee);
