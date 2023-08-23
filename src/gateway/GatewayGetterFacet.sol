@@ -82,7 +82,7 @@ contract GatewayGetterFacet {
         uint256 fromBlock,
         uint256 toBlock
     ) external view returns (CrossMsg[] memory) {
-        return LibGateway.getTopDownMsgs(subnetId, fromBlock, toBlock);
+        return LibGateway.getTopDownMsgs({subnetId: subnetId, fromBlock: fromBlock, toBlock: toBlock});
     }
 
     /// @notice Get the latest applied top down nonce
