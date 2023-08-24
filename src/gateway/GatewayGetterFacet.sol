@@ -70,6 +70,7 @@ contract GatewayGetterFacet {
     function getSubnetTopDownMsgsLength(SubnetID memory subnetId) external view returns (uint256) {
         // slither-disable-next-line unused-return
         (, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
+        // With every new message, the nonce is added by one, the current nonce should be equal to the top down message length.
         return subnet.topDownNonce;
     }
 
