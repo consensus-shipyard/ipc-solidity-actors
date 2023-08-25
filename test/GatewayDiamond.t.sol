@@ -264,12 +264,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         saDiamond = new SubnetActorDiamond(saDiamondCut, saConstructorParams);
         saManager = SubnetActorManagerFacet(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
-
-        targetContract(address(gatewayDiamond));
     }
 
     function invariant_CrossMsgFee() public view {
-        require(gwGetter.crossMsgFee() == CROSS_MSG_FEE);
+        require(gwGetter.crossMsgFee() == CROSS_MSG_FEE, "gw.crossMsgFee == CROSS_MSG_FEE");
     }
 
     function testGatewayDiamond_Constructor() public view {
