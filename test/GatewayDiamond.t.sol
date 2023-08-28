@@ -101,6 +101,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
     }
 
+    fallback() external payable {}
+
     function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         gwRouter = new GatewayRouterFacet();
         gwManager = new GatewayManagerFacet();
@@ -144,6 +146,49 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gatewayDiamond = new GatewayDiamond(diamondCut, params);
 
         return gatewayDiamond;
+    }
+
+    function createNewDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
+        GatewayRouterFacet nr = new GatewayRouterFacet();
+        GatewayManagerFacet nm = new GatewayManagerFacet();
+        GatewayGetterFacet ng = new GatewayGetterFacet();
+        GatewayMessengerFacet nmes = new GatewayMessengerFacet();
+
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](4);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+            facetAddress: address(nr),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwRouterSelectors
+        })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+            facetAddress: address(nm),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwManagerSelectors
+        })
+        );
+
+        diamondCut[2] = (
+            IDiamond.FacetCut({
+            facetAddress: address(ng),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwGetterSelectors
+        })
+        );
+
+        diamondCut[3] = (
+            IDiamond.FacetCut({
+            facetAddress: address(nmes),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwMessengerSelectors
+        })
+        );
+
+        return new GatewayDiamond(diamondCut, params);
     }
 
     function setUp() public {
@@ -1468,10 +1513,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address user = vm.addr(300);
         vm.deal(user, CROSS_MSG_FEE + 1);
 
-        address provider = vm.addr(100);
-        vm.prank(provider);
-        vm.deal(provider, MIN_COLLATERAL_AMOUNT + 1);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, provider);
+        address sender = vm.addr(100);
+        vm.deal(sender, MIN_COLLATERAL_AMOUNT + 1);
+        vm.prank(sender);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, sender);
 
         address receiver = address(this); // callback to reward() method
         vm.prank(receiver);
@@ -1479,35 +1524,154 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
 
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
-        SubnetID memory from = gwGetter.getNetworkName().createSubnetId(provider);
+        SubnetID memory sourceSubnet = gwGetter.getNetworkName().createSubnetId(sender);
 
-        vm.startPrank(provider);
+        GatewayDiamond destinationGWDiamond = createGWForSubnet(destinationSubnet);
+        vm.deal(address(destinationGWDiamond), MIN_COLLATERAL_AMOUNT + 100 ether);
+
+        checkSubnets(sourceSubnet, destinationSubnet);
+
+        vm.startPrank(sender);
         Messenger messengerContract = new Messenger(address(gatewayDiamond), gwGetter.getNetworkName());
         vm.stopPrank();
 
+        console.log("receiver balance before:", address(receiver).balance);
+        console.log("fee:", CROSS_MSG_FEE);
         vm.startPrank(user);
-        messengerContract.sendMessage{value: CROSS_MSG_FEE + 1}(destinationSubnet, receiver, EMPTY_BYTES);
+        bytes32 msgId = messengerContract.sendMessage{value: CROSS_MSG_FEE + 1}(destinationSubnet, receiver, EMPTY_BYTES);
         vm.stopPrank();
 
-        (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
-        require(id.equals(destinationSubnet), "id.equals(destinationSubnet)");
-        require(nonce == 1, "nonce == 1");
-        require(circSupply == CROSS_MSG_FEE, "circSupply == CROSS_MSG_FEE");
-        require(
-            gwGetter.getNetworkName().equals(destinationSubnet.commonParent(from)),
-            "gwGetter.getNetworkName().equals(destinationSubnet.commonParent(from))"
-        );
-        require(gwGetter.appliedTopDownNonce() == 1, "gwGetter.appliedTopDownNonce() == 1");
+        console.log("topdown msgs to source:", gwGetter.getSubnetTopDownMsgsLength(sourceSubnet));
+        console.log("topdown msgs to destination:", gwGetter.getSubnetTopDownMsgsLength(destinationSubnet));
 
-        CrossMsg[] memory msgs = gwGetter.getTopDownMsgs(id, 0);
-        require(msgs.length == 1, "msgs.length == 1");
-        (bool exists, uint64 n) = gwGetter.getAppliedTopDownNonce(id);
-        require(exists, "exists");
-        require(n == 1, "n==1");
+        CrossMsg[] memory topDownMsgs = gwGetter.getTopDownMsgs(destinationSubnet, 0);
+        require(topDownMsgs.length == 1, "topDownMsgs.length == 1");
+        require(topDownMsgs[0].toHash()==msgId, "topDownMsgs[0].toHash()==msgId");
+
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
+            epoch: DEFAULT_CHECKPOINT_PERIOD,
+            topDownMsgs: topDownMsgs
+        });
+
+        submitTopDownCheckpoint(checkpoint);
+
+        vm.deal(sender, MIN_COLLATERAL_AMOUNT + 100 ether);
+
+        destinationSubmitTopDownCheckpoint(destinationGWDiamond, checkpoint, msgId);
+
+        // ----
+
+        console.log("receiver balance:", address(receiver).balance);
+        require(address(receiver).balance==2, "address(receiver).balance==2");
+    }
+
+    function createGWForSubnet(SubnetID memory subnetId) public returns (GatewayDiamond) {
+        address[] memory path = new address[](1);
+        path[0] = ROOTNET_ADDRESS;
+
+        address[] memory path2 = new address[](2);
+        path2[0] = CHILD_NETWORK_ADDRESS;
+        path2[1] = CHILD_NETWORK_ADDRESS_2;
+
+        // create a gateway actor.
+
+        GatewayDiamond.ConstructorParams memory gwConstructorParams = GatewayDiamond.ConstructorParams({
+            networkName: subnetId,
+            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            msgFee: CROSS_MSG_FEE,
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+        });
+
+        GatewayDiamond subnetGWDiamond = createNewDiamond(gwConstructorParams);
+
+        return subnetGWDiamond;
+    }
+
+    function checkSubnets(SubnetID memory src, SubnetID memory dst) public {
+        console.log("src subnet:", src.toString());
+        console.log("dst subnet:", dst.toString());
+
+        Subnet[] memory sn = gwGetter.listSubnets();
+        require(sn.length == 2, "sn.length == 2");
+        console.log(sn[0].id.toString());
+        console.log(sn[1].id.toString());
+
+        require(gwGetter.totalSubnets() == 2, "gwGetter.totalSubnets() == 2");
+
+    }
+
+    function submitTopDownCheckpoint(TopDownCheckpoint memory checkpoint) public {
+        address[] memory validators = setupValidators();
+        vm.prank(validators[0]);
+        gwRouter.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[1]);
+        gwRouter.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[2]);
+        gwRouter.submitTopDownCheckpoint(checkpoint);
+    }
+
+    function setupValidators2(GatewayDiamond gw) internal returns (address[] memory) {
+        GatewayManagerFacet dstgwManager = new GatewayManagerFacet();
+        dstgwManager = GatewayManagerFacet(address(gw));
+
+        address validator1 = vm.addr(2001);
+        address validator2 = vm.addr(2002);
+        address validator3 = vm.addr(2003);
+        address[] memory validators = new address[](3);
+        uint256[] memory weights = new uint256[](3);
+
+        vm.deal(validator1, 10);
+        vm.deal(validator2, 10);
+        vm.deal(validator3, 10);
+
+        validators[0] = validator1;
+        validators[1] = validator2;
+        validators[2] = validator3;
+
+        weights[0] = 100;
+        weights[1] = 100;
+        weights[2] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        dstgwManager.setMembership(validators, weights);
+
+        return validators;
+    }
+
+    function destinationSubmitTopDownCheckpoint(GatewayDiamond gw, TopDownCheckpoint memory checkpoint, bytes32 msgId) public {
+        GatewayGetterFacet dstgwGetter = new GatewayGetterFacet();
+        GatewayMessengerFacet dstgwMessenger = new GatewayMessengerFacet();
+        GatewayRouterFacet dstgwRouter = new GatewayRouterFacet();
+        GatewayManagerFacet dstgwManager = new GatewayManagerFacet();
+
+        dstgwRouter = GatewayRouterFacet(address(gw));
+        dstgwMessenger = GatewayMessengerFacet(address(gw));
+        dstgwGetter = GatewayGetterFacet(address(gw));
+        dstgwManager = GatewayManagerFacet(address(gw));
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        dstgwManager.initGenesisEpoch(0);
+
+        console.log("dstgwGetter.getNetworkName():", dstgwGetter.getNetworkName().toString());
+
+        address[] memory validators = setupValidators2(gw);
+        vm.prank(validators[0]);
+        dstgwRouter.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[1]);
+        dstgwRouter.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[2]);
+        dstgwRouter.submitTopDownCheckpoint(checkpoint);
+
+        //dstgwMessenger.propagate{value: CROSS_MSG_FEE}(msgId);
     }
 
     function testGatewayDiamond_SendCrossMessage_TokenMessengerContract() public {
-        address user = vm.addr(300);
+        address user = vm.addr(900);
         vm.deal(user, 10 ether);
 
         address srcTokenOwner = vm.addr(405);
@@ -1528,7 +1692,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(address(dstToken), 100 ether);
         vm.stopPrank();
 
-        address provider = vm.addr(100);
+        address provider = vm.addr(910);
         vm.deal(provider, 10 ether);
         vm.startPrank(provider);
         registerSubnet(MIN_COLLATERAL_AMOUNT, provider);
@@ -2081,7 +2245,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.submitTopDownCheckpoint(checkpoint);
 
         vm.prank(validators[2]);
-
         gwRouter.submitTopDownCheckpoint(checkpoint);
 
         (, uint256 first, uint256 last) = gwGetter.executableQueue();
@@ -2337,9 +2500,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function setupValidators() internal returns (address[] memory) {
-        address validator1 = vm.addr(100);
-        address validator2 = vm.addr(200);
-        address validator3 = vm.addr(300);
+        address validator1 = vm.addr(1001);
+        address validator2 = vm.addr(1002);
+        address validator3 = vm.addr(1003);
         address[] memory validators = new address[](3);
         uint256[] memory weights = new uint256[](3);
 
@@ -2484,18 +2647,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function registerSubnetGW(uint256 collateral, address subnetAddress, GatewayDiamond gw) internal {
-        gwRouter = GatewayRouterFacet(address(gw));
-        gwManager = GatewayManagerFacet(address(gw));
-        gwGetter = GatewayGetterFacet(address(gw));
+        GatewayManagerFacet tmpManager = GatewayManagerFacet(address(gw));
+        GatewayGetterFacet tmpGetter = GatewayGetterFacet(address(gw));
 
-        gwManager.register{value: collateral}();
+        tmpManager.register{value: collateral}();
 
         (SubnetID memory id, uint256 stake, uint256 topDownNonce, , uint256 circSupply, Status status) = getSubnetGW(
             subnetAddress,
             gw
         );
 
-        SubnetID memory parentNetwork = gwGetter.getNetworkName();
+        SubnetID memory parentNetwork = tmpGetter.getNetworkName();
 
         require(
             id.toHash() == parentNetwork.createSubnetId(subnetAddress).toHash(),
@@ -2515,13 +2677,11 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address subnetAddress,
         GatewayDiamond gw
     ) internal returns (SubnetID memory, uint256, uint256, uint256, uint256, Status) {
-        gwRouter = GatewayRouterFacet(address(gw));
-        gwManager = GatewayManagerFacet(address(gw));
-        gwGetter = GatewayGetterFacet(address(gw));
+        GatewayGetterFacet tmpGWGetter = GatewayGetterFacet(address(gw));
 
-        SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(subnetAddress);
+        SubnetID memory subnetId = tmpGWGetter.getNetworkName().createSubnetId(subnetAddress);
 
-        Subnet memory subnet = gwGetter.subnets(subnetId.toHash());
+        Subnet memory subnet = tmpGWGetter.subnets(subnetId.toHash());
 
         return (
             subnet.id,

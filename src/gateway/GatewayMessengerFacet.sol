@@ -12,6 +12,8 @@ import {LibGateway} from "../lib/LibGateway.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
+import "forge-std/console.sol";
+
 contract GatewayMessengerFacet is GatewayActorModifiers {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
@@ -82,10 +84,13 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
     function _commitCrossMessage(
         CrossMsg memory crossMessage
     ) internal returns (bool shouldBurn, bool shouldDistributeRewards) {
+        console.log(">>>_commitCrossMessage");
         SubnetID memory to = crossMessage.message.to.subnetId;
         if (to.isEmpty()) {
             revert InvalidCrossMsgDstSubnet();
         }
+        console.log(">>>_commitCrossMessage to:", to.toString());
+        console.log(">>>_commitCrossMessage network:", s.networkName.toString());
         // destination is the current network, you are better off with a good old message, no cross needed
         if (to.equals(s.networkName)) {
             revert CannotSendCrossMsgToItself();

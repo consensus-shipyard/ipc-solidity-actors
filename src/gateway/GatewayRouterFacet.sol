@@ -20,6 +20,8 @@ import {LibGateway} from "../lib/LibGateway.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
+import "forge-std/console.sol";
+
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
     using SubnetIDHelper for SubnetID;
@@ -127,6 +129,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             topDownMsgs = _markMostVotedSubmissionExecuted(voteSubmission);
         }
 
+        console.log("vote weight:", voteSubmission.vote.totalSubmissionWeight);
+        console.log("shouldExecuteVote:", shouldExecuteVote);
+        console.log("should execute top dwn msgs:", topDownMsgs.length);
+
         // no messages executed in the current submission, let's get the next executable epoch from the queue to see if it can be executed already
         if (topDownMsgs.length == 0) {
             (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibVoting.getNextExecutableEpoch();
@@ -192,6 +198,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDstSubnet();
         }
+        console.log("_applyMsg");
+        console.log(address(this));
+        console.log(address(this).balance);
         if (crossMsg.message.method == METHOD_SEND) {
             if (crossMsg.message.value > address(this).balance) {
                 revert NotEnoughBalance();
@@ -201,10 +210,12 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         IPCMsgType applyType = crossMsg.message.applyType(s.networkName);
 
         // If the cross-message destination is the current network.
+        console.log(">>>>>>");
+        console.log(s.networkName.toString());
+        console.log(crossMsg.message.to.subnetId.toString());
         if (crossMsg.message.to.subnetId.equals(s.networkName)) {
             // forwarder will always be empty subnet when we reach here from submitTopDownCheckpoint
             // so we check against it to not reach here in coverage
-
             if (applyType == IPCMsgType.BottomUp) {
                 if (!forwarder.isEmpty()) {
                     (bool registered, Subnet storage subnet) = LibGateway.getSubnet(forwarder);
@@ -225,7 +236,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
                 }
                 s.appliedTopDownNonce += 1;
             }
-
             // slither-disable-next-line unused-return
             crossMsg.execute();
             return;

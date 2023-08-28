@@ -9,6 +9,7 @@ import {GatewayMessengerFacet} from "../../src/gateway/GatewayMessengerFacet.sol
 import {IPCAddress, SubnetID} from "../../src/structs/Subnet.sol";
 import {CrossMsg, StorableMsg} from "../../src/structs/Checkpoint.sol";
 import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
+import {CrossMsgHelper} from "../../src/lib/CrossMsgHelper.sol";
 
 /**
  * @title Messenger
@@ -16,6 +17,7 @@ import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
  */
 contract Messenger {
     using FvmAddressHelper for FvmAddress;
+    using CrossMsgHelper for CrossMsg;
 
     // Gateway facet used to send messages
     GatewayMessengerFacet private immutable messenger;
@@ -41,7 +43,7 @@ contract Messenger {
         SubnetID calldata destinationSubnet,
         address receiver,
         bytes calldata messageBody
-    ) public payable {
+    ) public payable returns (bytes32) {
         if (receiver == address(0)) {
             revert ZeroAddress();
         }
@@ -53,7 +55,7 @@ contract Messenger {
             message: StorableMsg({
                 from: from,
                 to: to,
-                value: DEFAULT_CROSS_MSG_FEE,
+                value: msg.value,
                 nonce: nonce,
                 method: METHOD_SEND,
                 params: messageBody
@@ -65,6 +67,8 @@ contract Messenger {
         emit MessageSent({from: from, to: to, nonce: nonce++, messageBody: messageBody});
 
         // slither-disable-next-line arbitrary-send-eth
-        messenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE}(crossMsg);
+        messenger.sendCrossMessage{value: msg.value}(crossMsg);
+
+        return crossMsg.toHash();
     }
 }
