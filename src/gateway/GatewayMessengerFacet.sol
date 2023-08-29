@@ -22,12 +22,17 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
     /// @notice sends an arbitrary cross message from the current subnet to the destination subnet
     /// @param crossMsg - message to send
     function sendCrossMessage(CrossMsg calldata crossMsg) external payable hasFee {
+        console.log(">>> sendCrossMessage");
+        console.log("crossMsg.value", crossMsg.message.value);
+        console.log("msg.value", msg.value);
+        console.log("---");
         // There can be many semantics of the (rawAddress, msg.sender) pairs.
         // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
         // They can be equal, we can propagate the real sender address only or both.
         // We are going to use the simplest implementation for now and define the appropriate interpretation later
         // based on the business requirements.
-        if (crossMsg.message.value != msg.value) {
+
+        if (crossMsg.message.value != msg.value - s.crossMsgFee) {
             revert NotEnoughFunds();
         }
 
@@ -39,6 +44,8 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
 
         // commit cross-message for propagation
         (bool shouldBurn, bool shouldDistributeRewards) = _commitCrossMessage(crossMsg);
+        console.log("shouldBurn:", shouldBurn);
+        console.log("shouldDistributeRewards:", shouldDistributeRewards);
 
         _crossMsgSideEffects({
             v: crossMsg.message.value,
@@ -133,6 +140,10 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         bool shouldBurn,
         bool shouldDistributeRewards
     ) internal {
+        console.log(">>> _crossMsgSideEffects");
+        console.log("fee: ", s.crossMsgFee);
+        console.log("caller balance before:", address(msg.sender).balance);
+
         if (shouldBurn) {
             payable(BURNT_FUNDS_ACTOR).sendValue(v);
         }
@@ -140,5 +151,6 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         if (shouldDistributeRewards) {
             LibGateway.distributeRewards(toSubnetId.getActor(), s.crossMsgFee);
         }
+        console.log("caller balance after:", address(msg.sender).balance);
     }
 }

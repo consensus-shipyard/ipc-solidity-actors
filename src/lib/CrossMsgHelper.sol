@@ -77,16 +77,19 @@ library CrossMsgHelper {
     function execute(CrossMsg calldata crossMsg) public returns (bytes memory) {
         uint256 value = crossMsg.message.value;
         address recipient = crossMsg.message.to.rawAddress.extractEvmAddress().normalize();
-        console.log("execute");
-        console.log(value);
-        console.log(recipient);
-        console.logBytes4(crossMsg.message.method);
+        console.log(">>>> execute:");
+        console.log("crossMsg.value:", value);
+        console.log("msg.value:", msg.value);
+        console.log("recipient:", recipient);
 
         if (crossMsg.message.method == METHOD_SEND) {
-            console.log("METHOD_SEND");
+            console.log("METHOD_SEND received");
             Address.sendValue(payable(recipient), value);
             return EMPTY_BYTES;
         }
+
+        console.logBytes4(crossMsg.message.method);
+        console.logBytes(crossMsg.message.params);
 
         bytes memory params = crossMsg.message.params;
 
@@ -94,11 +97,18 @@ library CrossMsgHelper {
             params = abi.encode(crossMsg);
         }
 
-        bytes memory data = abi.encodeWithSelector(crossMsg.message.method, params);
+        //bytes memory data = abi.encodeWithSelector(crossMsg.message.method, params);
+        bytes memory data = params;
+        console.logBytes(data);
 
         if (value > 0) {
             return Address.functionCallWithValue({target: recipient, data: data, value: value});
         }
+        console.log("Address.functionCall");
+        console.log("Address this:", address(this));
+        //(address a, uint256 ff) = abi.decode(params, (address,uint256));
+        //console.log("decoded:", a);
+        //console.log("decoded:", ff);
 
         return Address.functionCall(recipient, data);
     }

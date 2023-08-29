@@ -13,6 +13,8 @@ import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 
+import "forge-std/console.sol";
+
 library LibGateway {
     using FilAddress for address;
     using FilAddress for address payable;
@@ -38,6 +40,9 @@ library LibGateway {
     /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution
     /// @param crossMessage - the cross message to be committed
     function commitTopDownMsg(CrossMsg memory crossMessage) internal {
+        console.log(">>> commitTopDownMsg");
+        console.log("crossMsg.message.value:", crossMessage.message.value);
+        console.log("msg.value:", msg.value);
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         SubnetID memory subnetId = crossMessage.message.to.subnetId.down(s.networkName);
 

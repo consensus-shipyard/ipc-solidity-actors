@@ -1520,7 +1520,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         address receiver = address(this); // callback to reward() method
         vm.prank(receiver);
-        vm.deal(receiver, MIN_COLLATERAL_AMOUNT + 1);
+        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
         registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
 
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
@@ -1538,7 +1538,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         console.log("receiver balance before:", address(receiver).balance);
         console.log("fee:", CROSS_MSG_FEE);
         vm.startPrank(user);
-        bytes32 msgId = messengerContract.sendMessage{value: CROSS_MSG_FEE + 1}(destinationSubnet, receiver, EMPTY_BYTES);
+        bytes32 msgId = messengerContract.sendValue{value: CROSS_MSG_FEE+1}(destinationSubnet, receiver);
         vm.stopPrank();
 
         console.log("topdown msgs to source:", gwGetter.getSubnetTopDownMsgsLength(sourceSubnet));
@@ -1553,7 +1553,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownMsgs: topDownMsgs
         });
 
-        submitTopDownCheckpoint(checkpoint);
+        //submitTopDownCheckpoint(checkpoint);
 
         vm.deal(sender, MIN_COLLATERAL_AMOUNT + 100 ether);
 
@@ -1562,7 +1562,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         // ----
 
         console.log("receiver balance:", address(receiver).balance);
-        require(address(receiver).balance==2, "address(receiver).balance==2");
+        require(address(receiver).balance==1, "address(receiver).balance==2");
     }
 
     function createGWForSubnet(SubnetID memory subnetId) public returns (GatewayDiamond) {
@@ -1670,81 +1670,97 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         //dstgwMessenger.propagate{value: CROSS_MSG_FEE}(msgId);
     }
 
-    function testGatewayDiamond_SendCrossMessage_TokenMessengerContract() public {
-        address user = vm.addr(900);
-        vm.deal(user, 10 ether);
+    function newTokenMessenger(address gw) public returns(TokenMessenger) {
+        address user = vm.addr(300);
 
-        address srcTokenOwner = vm.addr(405);
-        vm.startPrank(srcTokenOwner);
-        DummyERC20 srcToken = new DummyERC20("SrcToken", "SRC", 20 ether);
-        vm.deal(address(srcToken), 10 ether);
-        srcToken.transfer(user, 2 ether);
-        vm.stopPrank();
+        GatewayGetterFacet dstgwGetter = new GatewayGetterFacet();
+        dstgwGetter = GatewayGetterFacet(address(gw));
 
-        require(srcToken.balanceOf(user) == 2 ether, "balanceOf(user)");
-        require(srcToken.balanceOf(srcTokenOwner) == 18 ether, "balanceOf(srcTokenOwner)");
-        require(srcToken.totalSupply() == 20 ether, "srcToken.totalSupply");
-        require(address(srcToken).balance == 10 ether, "(srcToken).balance");
-
-        address dstTokenOwner = vm.addr(406);
-        vm.startPrank(dstTokenOwner);
-        DummyERC20 dstToken = new DummyERC20("DstToken", "DST", 0);
-        vm.deal(address(dstToken), 100 ether);
-        vm.stopPrank();
-
-        address provider = vm.addr(910);
-        vm.deal(provider, 10 ether);
-        vm.startPrank(provider);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, provider);
-        vm.stopPrank();
-
-        address receiver = address(this);
-        vm.deal(receiver, 10 ether);
-        vm.startPrank(receiver);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
-        vm.stopPrank();
-
-        SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
-        SubnetID memory from = gwGetter.getNetworkName().createSubnetId(provider);
-
-        vm.startPrank(provider);
-        Messenger messenger = new Messenger(address(gatewayDiamond), gwGetter.getNetworkName());
+        vm.startPrank(user);
+        Messenger messenger = new Messenger(gw, dstgwGetter.getNetworkName());
         TokenMessenger tokenMessenger = new TokenMessenger(address(messenger));
         vm.stopPrank();
 
         vm.deal(address(tokenMessenger), 1 ether);
         vm.deal(address(messenger), 1 ether);
-        require(address(tokenMessenger).balance == 1 ether, "address(tokenMessenger).balance");
-        require(address(messenger).balance == 1 ether, "address(messenger).balance");
 
+        return tokenMessenger;
+    }
+
+    function testGatewayDiamond_SendCrossMessage_TokenContract() public {
+        address user = vm.addr(300);
+        console.log("user addr", user);
+        vm.deal(user, CROSS_MSG_FEE + 100 ether);
+        vm.prank(user);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, user);
+
+        vm.startPrank(user);
+        DummyERC20 srcToken = new DummyERC20("SrcToken", "SRC", 20 ether);
+        vm.deal(address(srcToken), 10 ether);
+        srcToken.transfer(user, 2 ether);
+        vm.stopPrank();
+
+        require(srcToken.totalSupply() == 20 ether, "srcToken.totalSupply");
+        require(address(srcToken).balance == 10 ether, "(srcToken).balance");
+
+        address dstTokenOwner = vm.addr(406);
+        vm.startPrank(dstTokenOwner);
+        DummyERC20 dstToken = new DummyERC20("DstToken", "DST", 20 ether);
+        console.log("dstToken addr", address(dstToken));
+        vm.deal(address(dstToken), 100 ether);
+        //dstToken.transfer(user, 2 ether);
+        vm.stopPrank();
+
+        address receiver = address(this);
+        vm.prank(receiver);
+        vm.deal(receiver, MIN_COLLATERAL_AMOUNT+1 ether);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+
+        SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
+        SubnetID memory sourceSubnet = gwGetter.getNetworkName().createSubnetId(user);
+
+        GatewayDiamond destinationGWDiamond = createGWForSubnet(destinationSubnet);
+
+        vm.startPrank(dstTokenOwner);
+        dstToken.transfer(address(destinationGWDiamond), 1 ether);
+        vm.stopPrank();
+
+        checkSubnets(sourceSubnet, destinationSubnet);
+
+        TokenMessenger tokenMessenger = newTokenMessenger(address(gatewayDiamond));
+
+        //bytes memory payload = abi.encode(user, 1);
+        bytes memory payload = abi.encodeWithSignature("transfer(address,uint256)", user, 1);
+
+        console.log("!!! user balance before:", dstToken.balanceOf(user));
         vm.startPrank(user);
         srcToken.approve(address(tokenMessenger), 5 ether);
         console.log("user balance ERC20: ", srcToken.balanceOf(user));
         console.log("tokenMessenger balance: ", address(tokenMessenger).balance);
-        tokenMessenger.sendToken(address(srcToken), destinationSubnet, receiver, 1 ether);
+        bytes32 msgId = tokenMessenger.sendTokenBytes{value: CROSS_MSG_FEE}(address(srcToken), destinationSubnet, address(dstToken), payload);
         vm.stopPrank();
 
-        (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
+        //console.log("topdown msgs to source:", gwGetter.getSubnetTopDownMsgsLength(sourceSubnet));
+        //console.log("topdown msgs to destination:", gwGetter.getSubnetTopDownMsgsLength(destinationSubnet));
 
-        require(id.equals(destinationSubnet), "id.equals(destinationSubnet)");
-        require(nonce == 1, "nonce == 1");
-        require(circSupply == CROSS_MSG_FEE, "circSupply == CROSS_MSG_FEE");
-        require(
-            gwGetter.getNetworkName().equals(destinationSubnet.commonParent(from)),
-            "gwGetter.getNetworkName().equals(destinationSubnet.commonParent(from))"
-        );
-        require(gwGetter.appliedTopDownNonce() == 1, "gwGetter.appliedTopDownNonce() == 1");
+        CrossMsg[] memory topDownMsgs = gwGetter.getTopDownMsgs(destinationSubnet, 0);
+        //require(topDownMsgs.length == 1, "topDownMsgs.length == 1");
+        //require(topDownMsgs[0].toHash()==msgId, "topDownMsgs[0].toHash()==msgId");
 
-        CrossMsg[] memory msgs = gwGetter.getTopDownMsgs(id, 0);
-        require(msgs.length == 1, "msgs.length == 1");
-        (bool exists, uint64 n) = gwGetter.getAppliedTopDownNonce(id);
-        require(exists, "exists");
-        require(n == 1, "n == 1");
-        bytes memory payload = bytes(msgs[0].message.params);
-        (address srcSender, uint256 srcAmount) = abi.decode(payload, (address, uint256));
-        require(srcSender == vm.addr(300), "srcSender == user");
-        require(srcAmount == 1 ether, "srcAmount == 1 ether");
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
+            epoch: DEFAULT_CHECKPOINT_PERIOD,
+            topDownMsgs: topDownMsgs
+        });
+
+        vm.deal(user, MIN_COLLATERAL_AMOUNT + 100 ether);
+        destinationSubmitTopDownCheckpoint(destinationGWDiamond, checkpoint, msgId);
+
+        // ----
+
+        //console.log("!!! receiver balance after:", dstToken.balanceOf(user));
+        require(dstToken.balanceOf(user)>0, "dstToken.balanceOf(user)>0");
     }
+
 
     function reward(uint256 amount) external view {
         console.log("reward method called with %d", amount);

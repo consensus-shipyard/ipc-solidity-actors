@@ -198,9 +198,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDstSubnet();
         }
-        console.log("_applyMsg");
-        console.log(address(this));
-        console.log(address(this).balance);
+        console.log(">>> _applyMsg");
+        console.log("crossMsg.message.value:", crossMsg.message.value);
+        console.log("msg.value:", msg.value);
         if (crossMsg.message.method == METHOD_SEND) {
             if (crossMsg.message.value > address(this).balance) {
                 revert NotEnoughBalance();

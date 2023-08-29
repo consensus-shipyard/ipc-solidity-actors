@@ -40,8 +40,9 @@ contract TokenMessenger is ReentrancyGuard {
         address tokenContract,
         SubnetID memory destinationSubnet,
         address receiver,
-        uint256 amount
-    ) external nonReentrant {
+        address user
+    ) public payable nonReentrant returns (bytes32) {
+        uint256 amount = 1;
         uint256 startingBalance = IERC20(tokenContract).balanceOf(address(this));
 
         IERC20(tokenContract).safeTransferFrom({from: msg.sender, to: address(this), value: amount});
@@ -52,7 +53,8 @@ contract TokenMessenger is ReentrancyGuard {
             revert NoTransfer();
         }
 
-        bytes memory payload = abi.encode(msg.sender, amount);
+        bytes memory payload = abi.encode(user, amount);
+        bytes4 method = bytes4(keccak256("transfer(address,uint256)"));
 
         emit TokenSent({
             tokenContract: tokenContract,
@@ -63,7 +65,38 @@ contract TokenMessenger is ReentrancyGuard {
             value: amount
         });
 
-        messenger.sendMessage({destinationSubnet: destinationSubnet, receiver: receiver, messageBody: payload});
+        return messenger.sendMessage{value: msg.value}({destinationSubnet: destinationSubnet, receiver: receiver, method: method, messageBody: payload});
+    }
+
+    function sendTokenBytes(
+        address tokenContract,
+        SubnetID memory destinationSubnet,
+        address receiver,
+        bytes memory payload
+    ) public payable nonReentrant returns (bytes32) {
+        uint256 amount = 1;
+        uint256 startingBalance = IERC20(tokenContract).balanceOf(address(this));
+
+        IERC20(tokenContract).safeTransferFrom({from: msg.sender, to: address(this), value: amount});
+
+        uint256 endingBalance = IERC20(tokenContract).balanceOf(address(this));
+
+        if (endingBalance <= startingBalance) {
+            revert NoTransfer();
+        }
+
+        bytes4 method = bytes4(keccak256("transfer(address,uint256)"));
+
+        emit TokenSent({
+            tokenContract: tokenContract,
+            sender: msg.sender,
+            destinationSubnet: destinationSubnet,
+            receiver: receiver,
+            nonce: lastEventNonce++,
+            value: amount
+        });
+
+        return messenger.sendMessage{value: msg.value}({destinationSubnet: destinationSubnet, receiver: receiver, method: method, messageBody: payload});
     }
 
     receive() external payable {}
