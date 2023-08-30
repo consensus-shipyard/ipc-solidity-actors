@@ -17,15 +17,10 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
     using SubnetIDHelper for SubnetID;
     using StorableMsgHelper for StorableMsg;
 
-    /// @notice sends an arbitrary cross message from the current subnet to the destination subnet
+    /// @notice sends an arbitrary cross message from the local subnet to the destination subnet
     /// @param crossMsg - message to send
     function sendCrossMessage(CrossMsg calldata crossMsg) external payable hasFee {
-        // There can be many semantics of the (rawAddress, msg.sender) pairs.
-        // It depends on who is allowed to call sendCrossMessage method and what we want to get as a result.
-        // They can be equal, we can propagate the real sender address only or both.
-        // We are going to use the simplest implementation for now and define the appropriate interpretation later
-        // based on the business requirements.
-        if (crossMsg.message.value != msg.value) {
+        if (crossMsg.message.value != msg.value - s.crossMsgFee) {
             revert NotEnoughFunds();
         }
 
