@@ -197,21 +197,20 @@ contract CrossMsgHelperTest is Test {
         address recipient = address(this);
 
         crossMsg.message.to.rawAddress = FvmAddressHelper.from(recipient);
-        crossMsg.message.method = this.callback.selector;
+        crossMsg.message.method = this.callbackWrapped.selector;
         crossMsg.message.value = 0;
         crossMsg.message.params = abi.encode(EMPTY_BYTES);
         crossMsg.wrapped = true;
 
         vm.deal(sender, 1 ether);
 
-        vm.expectCall(recipient, crossMsg.message.value, abi.encodeCall(this.callback, abi.encode(EMPTY_BYTES)));
-
+        vm.expectCall(recipient, crossMsg.message.value, abi.encodeCall(this.callbackWrapped, crossMsg));
         bytes memory result = crossMsg.execute();
-        bytes memory decoded = abi.decode(result, (bytes));
 
+        bytes memory decoded = abi.decode(result, (bytes));
         CrossMsg memory decodedCrossMsg = abi.decode(decoded, (CrossMsg));
 
-        require(decodedCrossMsg.toHash() == crossMsg.toHash());
+        require(decodedCrossMsg.toHash() == crossMsg.toHash(), "decoded.toHash() == crossMsg.toHash()");
     }
 
     function test_Execute_Fails_InvalidMethod() public {
@@ -224,8 +223,11 @@ contract CrossMsgHelperTest is Test {
     }
 
     function callback(bytes calldata params) public payable returns (bytes memory) {
-        console.logBytes(params);
         return params;
+    }
+
+    function callbackWrapped(CrossMsg memory w) public payable returns (bytes memory) {
+        return abi.encode(w);
     }
 
     function test_IsSorted_Works_SingleMsg() public {

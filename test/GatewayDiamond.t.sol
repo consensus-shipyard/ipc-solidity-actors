@@ -1854,8 +1854,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         dstToken.transfer(address(destinationGWDiamond), targetTokenValue);
         vm.stopPrank();
 
-        bytes memory payload = abi.encode(user, targetTokenValue);
-
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
                 from: IPCAddress({
@@ -1866,7 +1864,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                 value: 0,
                 nonce: 0,
                 method: bytes4(keccak256("transfer(address,uint256)")),
-                params: payload
+                params: abi.encode(user, targetTokenValue)
             }),
             wrapped: false
         });
