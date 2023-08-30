@@ -1815,20 +1815,19 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             from: IPCAddress({subnetId: sourceSubnet, rawAddress: FvmAddressHelper.from(srcToken)}),
             to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(dstToken)}),
             value: CROSS_MSG_FEE,
-            nonce: nonce,
+            nonce: 0,
             method: METHOD_SEND,
             params: payload
         }),
             wrapped: false
         });
-        gwMessenger.sendCrossMessage(crossMsg);
 
         console.log("!!! user balance before:", dstToken.balanceOf(user));
         vm.startPrank(user);
-        srcToken.approve(address(tokenMessenger), 5 ether);
+        srcToken.approve(address(this), 5 ether);
         console.log("user balance ERC20: ", srcToken.balanceOf(user));
-        console.log("tokenMessenger balance: ", address(tokenMessenger).balance);
-        bytes32 msgId = tokenMessenger.sendTokenBytes{value: CROSS_MSG_FEE}(address(srcToken), destinationSubnet, address(dstToken), payload);
+        console.log("tokenMessenger balance: ", address(this).balance);
+        gwMessenger.sendCrossMessage(crossMsg);
         vm.stopPrank();
 
         CrossMsg[] memory topDownMsgs = gwGetter.getTopDownMsgs(destinationSubnet, 0);
@@ -1839,9 +1838,72 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         });
 
         vm.deal(user, MIN_COLLATERAL_AMOUNT + 100 ether);
-        destinationSubmitTopDownCheckpoint(destinationGWDiamond, checkpoint, msgId);
+        destinationSubmitTopDownCheckpoint(destinationGWDiamond, checkpoint);
 
         require(dstToken.balanceOf(user)>0, "dstToken.balanceOf(user)>0");
+    }
+
+    function checkSubnets(SubnetID memory src, SubnetID memory dst) public {
+        console.log("src subnet:", src.toString());
+        console.log("dst subnet:", dst.toString());
+
+        Subnet[] memory sn = gwGetter.listSubnets();
+        require(sn.length == 2, "sn.length == 2");
+        console.log(sn[0].id.toString());
+        console.log(sn[1].id.toString());
+
+        require(gwGetter.totalSubnets() == 2, "gwGetter.totalSubnets() == 2");
+
+    }
+
+    function createGWForSubnet(SubnetID memory subnetId) public returns (GatewayDiamond) {
+        address[] memory path = new address[](1);
+        path[0] = ROOTNET_ADDRESS;
+
+        address[] memory path2 = new address[](2);
+        path2[0] = CHILD_NETWORK_ADDRESS;
+        path2[1] = CHILD_NETWORK_ADDRESS_2;
+
+        // create a gateway actor.
+
+        GatewayDiamond.ConstructorParams memory gwConstructorParams = GatewayDiamond.ConstructorParams({
+            networkName: subnetId,
+            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            msgFee: CROSS_MSG_FEE,
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+        });
+
+        GatewayDiamond subnetGWDiamond = createNewDiamond(gwConstructorParams);
+
+        return subnetGWDiamond;
+    }
+
+    function destinationSubmitTopDownCheckpoint(GatewayDiamond gw, TopDownCheckpoint memory checkpoint) public {
+        GatewayGetterFacet dstgwGetter = new GatewayGetterFacet();
+        GatewayMessengerFacet dstgwMessenger = new GatewayMessengerFacet();
+        GatewayRouterFacet dstgwRouter = new GatewayRouterFacet();
+        GatewayManagerFacet dstgwManager = new GatewayManagerFacet();
+
+        dstgwRouter = GatewayRouterFacet(address(gw));
+        dstgwMessenger = GatewayMessengerFacet(address(gw));
+        dstgwGetter = GatewayGetterFacet(address(gw));
+        dstgwManager = GatewayManagerFacet(address(gw));
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        dstgwManager.initGenesisEpoch(0);
+
+        console.log("dstgwGetter.getNetworkName():", dstgwGetter.getNetworkName().toString());
+
+        address[] memory validators = setupValidators2(gw);
+        vm.prank(validators[0]);
+        dstgwRouter.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[1]);
+        dstgwRouter.submitTopDownCheckpoint(checkpoint);
+
+        vm.prank(validators[2]);
+        dstgwRouter.submitTopDownCheckpoint(checkpoint);
     }
 
 
