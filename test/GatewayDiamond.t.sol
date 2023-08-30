@@ -1641,10 +1641,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.prank(caller);
         vm.expectRevert(NotSystemActor.selector);
 
-        ParentFinality memory finality = ParentFinality({
-            height: block.number,
-            blockHash: bytes32(0)
-        });
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
         gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
     }
@@ -2437,10 +2434,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
-        ParentFinality memory finality = ParentFinality({
-            height: block.number,
-            blockHash: bytes32(0)
-        });
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
         gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
 
@@ -2488,10 +2482,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(validator, 1);
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
-        ParentFinality memory finality = ParentFinality({
-            height: block.number,
-            blockHash: bytes32(0)
-        });
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
         gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
     }
 
