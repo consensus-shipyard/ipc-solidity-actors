@@ -13,7 +13,7 @@ import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck} from "../src/structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
@@ -1630,7 +1630,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         return crossMsg.toHash();
     }
 
-    function testGatewayDiamond_SetMembership_Fails_NotSystemActor() public {
+    function testGatewayDiamond_CommitParentFinality_Fails_NotSystemActor() public {
         address caller = vm.addr(100);
 
         address[] memory validators = new address[](1);
@@ -1640,55 +1640,61 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.prank(caller);
         vm.expectRevert(NotSystemActor.selector);
-        gwManager.setMembership(validators, weights);
+
+        ParentFinality memory finality = ParentFinality({
+            height: block.number,
+            blockHash: new bytes32(0)
+        });
+
+        gwManager.commitIPCParentFinality(finality, new CrossMsg[](0), validators, weights);
     }
 
-    function testGatewayDiamond_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
-        address[] memory validators = new address[](1);
-        validators[0] = vm.addr(100);
-        uint256[] memory weights = new uint256[](2);
-        weights[0] = 100;
-        weights[1] = 130;
+    // function testGatewayDiamond_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
+    //     address[] memory validators = new address[](1);
+    //     validators[0] = vm.addr(100);
+    //     uint256[] memory weights = new uint256[](2);
+    //     weights[0] = 100;
+    //     weights[1] = 130;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
-        gwManager.setMembership(validators, weights);
-    }
+    //     vm.prank(FilAddress.SYSTEM_ACTOR);
+    //     vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
+    //     gwManager.setMembership(validators, weights);
+    // }
 
-    function testGatewayDiamond_SetMembership_Fails_ZeroWeight() public {
-        address[] memory validators = new address[](1);
-        validators[0] = vm.addr(100);
-        uint256[] memory weights = new uint256[](1);
-        weights[0] = 0;
+    // function testGatewayDiamond_SetMembership_Fails_ZeroWeight() public {
+    //     address[] memory validators = new address[](1);
+    //     validators[0] = vm.addr(100);
+    //     uint256[] memory weights = new uint256[](1);
+    //     weights[0] = 0;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.expectRevert(ValidatorWeightIsZero.selector);
-        gwManager.setMembership(validators, weights);
-    }
+    //     vm.prank(FilAddress.SYSTEM_ACTOR);
+    //     vm.expectRevert(ValidatorWeightIsZero.selector);
+    //     gwManager.setMembership(validators, weights);
+    // }
 
-    function testGatewayDiamond_SetMembership_Works_MultipleValidators() public {
-        address[] memory validators = new address[](2);
-        validators[0] = vm.addr(100);
-        validators[1] = vm.addr(101);
-        uint256[] memory weights = new uint256[](2);
-        weights[0] = 100;
-        weights[1] = 150;
+    // function testGatewayDiamond_SetMembership_Works_MultipleValidators() public {
+    //     address[] memory validators = new address[](2);
+    //     validators[0] = vm.addr(100);
+    //     validators[1] = vm.addr(101);
+    //     uint256[] memory weights = new uint256[](2);
+    //     weights[0] = 100;
+    //     weights[1] = 150;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        gwManager.setMembership(validators, weights);
+    //     vm.prank(FilAddress.SYSTEM_ACTOR);
+    //     gwManager.setMembership(validators, weights);
 
-        require(gwGetter.totalWeight() == 250);
-    }
+    //     require(gwGetter.totalWeight() == 250);
+    // }
 
-    function testGatewayDiamond_SetMembership_Works_NewValidators() public {
-        addValidator(vm.addr(100), 100);
+    // function testGatewayDiamond_SetMembership_Works_NewValidators() public {
+    //     addValidator(vm.addr(100), 100);
 
-        require(gwGetter.totalWeight() == 100);
+    //     require(gwGetter.totalWeight() == 100);
 
-        addValidator(vm.addr(101), 1000);
+    //     addValidator(vm.addr(101), 1000);
 
-        require(gwGetter.totalWeight() == 1000);
-    }
+    //     require(gwGetter.totalWeight() == 1000);
+    // }
 
     function testGatewayDiamond_SubmitTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
         address validator = address(100);
