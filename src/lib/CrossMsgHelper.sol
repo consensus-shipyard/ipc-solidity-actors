@@ -10,6 +10,8 @@ import {FvmAddress} from "../structs/FvmAddress.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
+import "forge-std/console.sol";
+
 /// @title Helper library for manipulating StorableMsg struct
 /// @author LimeChain team
 library CrossMsgHelper {
@@ -88,6 +90,7 @@ library CrossMsgHelper {
         }
 
         bytes memory data = bytes.concat(crossMsg.message.method, params);
+        console.logBytes(data);
 
         if (value > 0) {
             return Address.functionCallWithValue({target: recipient, data: data, value: value});

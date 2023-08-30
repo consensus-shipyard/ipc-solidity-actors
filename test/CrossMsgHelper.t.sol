@@ -161,16 +161,35 @@ contract CrossMsgHelperTest is Test {
         crossMsg.message.to.rawAddress = FvmAddressHelper.from(recipient);
         crossMsg.message.method = this.callback.selector;
         crossMsg.message.value = 1;
-        crossMsg.message.params = EMPTY_BYTES;
+        crossMsg.message.params = abi.encode(EMPTY_BYTES);
+        crossMsg.wrapped = false;
 
         vm.deal(sender, 1 ether);
-
-        vm.expectCall(recipient, crossMsg.message.value, crossMsg.message.params);
+        vm.expectCall(recipient, crossMsg.message.value, abi.encodeCall(this.callback, EMPTY_BYTES));
 
         bytes memory result = crossMsg.execute();
         bytes memory decoded = abi.decode(result, (bytes));
 
-        require(keccak256(decoded) == keccak256(crossMsg.message.params));
+        require(keccak256(decoded) == keccak256(EMPTY_BYTES));
+    }
+
+    function test_Execute_Works_FunctionCallWithoutValue() public {
+        address sender = address(this);
+        address recipient = address(this);
+
+        crossMsg.message.to.rawAddress = FvmAddressHelper.from(recipient);
+        crossMsg.message.method = this.callback.selector;
+        crossMsg.message.value = 0;
+        crossMsg.message.params = abi.encode(EMPTY_BYTES);
+        crossMsg.wrapped = false;
+
+        vm.deal(sender, 1 ether);
+        vm.expectCall(recipient, crossMsg.message.value, abi.encodeCall(this.callback, EMPTY_BYTES));
+
+        bytes memory result = crossMsg.execute();
+        bytes memory decoded = abi.decode(result, (bytes));
+
+        require(keccak256(decoded) == keccak256(EMPTY_BYTES));
     }
 
     function test_Execute_Works_FunctionCall_Wrapped() public {
@@ -180,12 +199,12 @@ contract CrossMsgHelperTest is Test {
         crossMsg.message.to.rawAddress = FvmAddressHelper.from(recipient);
         crossMsg.message.method = this.callback.selector;
         crossMsg.message.value = 0;
-        crossMsg.message.params = EMPTY_BYTES;
+        crossMsg.message.params = abi.encode(EMPTY_BYTES);
         crossMsg.wrapped = true;
 
         vm.deal(sender, 1 ether);
 
-        vm.expectCall(recipient, crossMsg.message.value, crossMsg.message.params);
+        vm.expectCall(recipient, crossMsg.message.value, abi.encodeCall(this.callback, abi.encode(EMPTY_BYTES)));
 
         bytes memory result = crossMsg.execute();
         bytes memory decoded = abi.decode(result, (bytes));
@@ -205,6 +224,7 @@ contract CrossMsgHelperTest is Test {
     }
 
     function callback(bytes calldata params) public payable returns (bytes memory) {
+        console.logBytes(params);
         return params;
     }
 
