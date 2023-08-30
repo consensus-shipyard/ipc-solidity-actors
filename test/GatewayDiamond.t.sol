@@ -1729,8 +1729,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         TokenMessenger tokenMessenger = newTokenMessenger(address(gatewayDiamond));
 
-        //bytes memory payload = abi.encode(user, 1);
-        bytes memory payload = abi.encodeWithSignature("transfer(address,uint256)", user, 1);
+        bytes memory payload = abi.encode(user, 1);
+
+       // bytes memory payload = abi.encodeWithSignature("transfer(address,uint256)", user, 1);
+        //console.log(">>> payload");
+        //console.logBytes(payload);
+        //payload = abi.encode(user, 1);
+        //console.log(">>> payload 2");
+        //console.logBytes(payload);
 
         console.log("!!! user balance before:", dstToken.balanceOf(user));
         vm.startPrank(user);

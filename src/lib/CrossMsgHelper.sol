@@ -97,8 +97,10 @@ library CrossMsgHelper {
             params = abi.encode(crossMsg);
         }
 
+        bytes memory data = bytes.concat(crossMsg.message.method, params);
+
         //bytes memory data = abi.encodeWithSelector(crossMsg.message.method, params);
-        bytes memory data = params;
+        //bytes memory data = params;
         console.logBytes(data);
 
         if (value > 0) {
