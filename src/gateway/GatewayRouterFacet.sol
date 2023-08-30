@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {EMPTY_HASH, METHOD_SEND} from "../constants/Constants.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ParentFinality} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
@@ -140,6 +140,20 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
         //only execute the messages and update the last executed checkpoint when we have majority
         _applyMessages(SubnetID(0, new address[](0)), topDownMsgs);
+    }
+
+    /// @notice commit the ipc parent finality into storage
+    function commitParentFinality(
+        ParentFinality calldata finality,
+        CrossMsg[] calldata crossMsgs,
+        address[] calldata validators,
+        uint256[] calldata weights
+    ) external systemActorOnly {
+        LibGateway.commitParentFinality(finality);
+
+        LibGateway.setMembership(validators, weights);
+
+        _applyMessages(SubnetID(0, new address[](0)), crossMsgs);
     }
 
     /// @notice marks a checkpoint as executed based on the last vote that reached majority

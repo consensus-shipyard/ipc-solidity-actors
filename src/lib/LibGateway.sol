@@ -5,7 +5,7 @@ import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
-import {NotRegisteredSubnet, InvalidActorAddress} from "../errors/IPCErrors.sol";
+import {NotRegisteredSubnet, InvalidActorAddress, ValidatorWeightIsZero, ValidatorsAndWeightsLengthMismatch} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
@@ -47,6 +47,45 @@ library LibGateway {
     function commitParentFinality(ParentFinality calldata finality) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         s.parentFinalities[finality.height] = finality;
+    }
+
+    /// @notice set up the top-down validators and their voting power
+    /// @param validators - list of validator addresses
+    /// @param weights - list of validators voting powers
+    function setMembership(address[] memory validators, uint256[] memory weights) internal {
+        if (validators.length != weights.length) {
+            revert ValidatorsAndWeightsLengthMismatch();
+        }
+
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+
+        // invalidate the previous validator set
+        ++s.validatorNonce;
+
+        uint256 totalValidatorsWeight = 0;
+
+        // setup the new validator set
+        uint256 validatorsLength = validators.length;
+        for (uint256 validatorIndex = 0; validatorIndex < validatorsLength; ) {
+            address validatorAddress = validators[validatorIndex];
+            if (validatorAddress != address(0)) {
+                uint256 validatorWeight = weights[validatorIndex];
+
+                if (validatorWeight == 0) {
+                    revert ValidatorWeightIsZero();
+                }
+
+                s.validatorSet[s.validatorNonce][validatorAddress] = validatorWeight;
+
+                totalValidatorsWeight += validatorWeight;
+            }
+
+            unchecked {
+                ++validatorIndex;
+            }
+        }
+
+        s.totalWeight = totalValidatorsWeight;
     }
 
     /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution
