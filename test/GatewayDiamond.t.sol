@@ -1812,25 +1812,28 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-            from: IPCAddress({subnetId: sourceSubnet, rawAddress: FvmAddressHelper.from(srcToken)}),
-            to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(dstToken)}),
-            value: CROSS_MSG_FEE,
-            nonce: 0,
-            method: METHOD_SEND,
-            params: payload
+                from: IPCAddress({subnetId: sourceSubnet, rawAddress: FvmAddressHelper.from(address(srcToken))}),
+                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(dstToken))}),
+                value: CROSS_MSG_FEE,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: payload
         }),
             wrapped: false
         });
 
         console.log("!!! user balance before:", dstToken.balanceOf(user));
         vm.startPrank(user);
+
         srcToken.approve(address(this), 5 ether);
         console.log("user balance ERC20: ", srcToken.balanceOf(user));
         console.log("tokenMessenger balance: ", address(this).balance);
-        gwMessenger.sendCrossMessage(crossMsg);
+
+        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE}(crossMsg);
+
         vm.stopPrank();
 
-        CrossMsg[] memory topDownMsgs = gwGetter.getTopDownMsgs(destinationSubnet, 0);
+        CrossMsg[] memory topDownMsgs = gwGetter.getTopDownMsgs(destinationSubnet, block.number, block.number);
 
         TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
             epoch: DEFAULT_CHECKPOINT_PERIOD,
@@ -1877,6 +1880,76 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond subnetGWDiamond = createNewDiamond(gwConstructorParams);
 
         return subnetGWDiamond;
+    }
+
+    function setupValidators2(GatewayDiamond gw) internal returns (address[] memory) {
+        GatewayManagerFacet dstgwManager = new GatewayManagerFacet();
+        dstgwManager = GatewayManagerFacet(address(gw));
+
+        address validator1 = vm.addr(2001);
+        address validator2 = vm.addr(2002);
+        address validator3 = vm.addr(2003);
+        address[] memory validators = new address[](3);
+        uint256[] memory weights = new uint256[](3);
+
+        vm.deal(validator1, 10);
+        vm.deal(validator2, 10);
+        vm.deal(validator3, 10);
+
+        validators[0] = validator1;
+        validators[1] = validator2;
+        validators[2] = validator3;
+
+        weights[0] = 100;
+        weights[1] = 100;
+        weights[2] = 100;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        dstgwManager.setMembership(validators, weights);
+
+        return validators;
+    }
+    function createNewDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
+        GatewayRouterFacet nr = new GatewayRouterFacet();
+        GatewayManagerFacet nm = new GatewayManagerFacet();
+        GatewayGetterFacet ng = new GatewayGetterFacet();
+        GatewayMessengerFacet nmes = new GatewayMessengerFacet();
+
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](4);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+            facetAddress: address(nr),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwRouterSelectors
+        })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+            facetAddress: address(nm),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwManagerSelectors
+        })
+        );
+
+        diamondCut[2] = (
+            IDiamond.FacetCut({
+            facetAddress: address(ng),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwGetterSelectors
+        })
+        );
+
+        diamondCut[3] = (
+            IDiamond.FacetCut({
+            facetAddress: address(nmes),
+            action: IDiamond.FacetCutAction.Add,
+            functionSelectors: gwMessengerSelectors
+        })
+        );
+
+        return new GatewayDiamond(diamondCut, params);
     }
 
     function destinationSubmitTopDownCheckpoint(GatewayDiamond gw, TopDownCheckpoint memory checkpoint) public {
