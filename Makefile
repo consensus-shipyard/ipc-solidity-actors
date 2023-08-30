@@ -34,7 +34,13 @@ build:
 	forge build
 
 test:
-	forge test -vvv --ffi
+	install-eth-abi forge-test
+
+forge-test:
+    forge test -vvv --ffi
+
+install-eth-abi:
+    pip install eth_abi
 
 storage:
 	npx hardhat storage-layout --update
