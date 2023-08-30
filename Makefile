@@ -33,8 +33,7 @@ format:
 build:
 	forge build
 
-test:
-	install-eth-abi forge-test
+test: install-eth-abi forge-test
 
 forge-test:
     forge test -vvv --ffi
