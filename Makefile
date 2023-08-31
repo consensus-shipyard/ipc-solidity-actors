@@ -34,7 +34,7 @@ build:
 	forge build
 
 test:
-    forge test -vvv --ffi
+	forge test -vvv --ffi
 
 install-dev: install-npm-package install-eth-abi
 
@@ -42,7 +42,7 @@ install-npm-package:
 	npm install --save-dev
 
 install-eth-abi:
-    python -m ensurepip --upgrade && pip install eth_abi
+	python -m ensurepip --upgrade && pip install eth_abi
 
 storage:
 	npx hardhat storage-layout --update
