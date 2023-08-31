@@ -6,13 +6,14 @@ import {FvmAddress} from "../../../src/structs/FvmAddress.sol";
 import {GatewayMessengerFacet} from "../../../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayGetterFacet} from "../../../src/gateway/GatewayGetterFacet.sol";
 import {CrossMsg, StorableMsg} from "../../../src/structs/Checkpoint.sol";
-import {GatewayCannotBeZero} from "../../../src/errors/IPCErrors.sol";
+import {GatewayCannotBeZero, NotEnoughFunds} from "../../../src/errors/IPCErrors.sol";
 import {IERC20} from "../../../lib/openzeppelin-contracts/contracts/token/ERC20/IERC20.sol";
 import {SafeERC20} from "../../../lib/openzeppelin-contracts/contracts/token/ERC20/utils/SafeERC20.sol";
 import {ReentrancyGuard} from "../../../lib/openzeppelin-contracts/contracts/security/ReentrancyGuard.sol";
 import {FvmAddressHelper} from "../../../src/lib/FvmAddressHelper.sol";
 
 error NoTransfer();
+error ZeroAddress();
 
 /**
  * @title TokenMessenger
@@ -27,6 +28,9 @@ contract ERC20TokenMessenger is ReentrancyGuard {
     GatewayMessengerFacet private immutable messenger;
     // Gateway facet used to get information about the subnet
     GatewayGetterFacet private immutable info;
+    // Cross-net fee
+    uint256 public constant DEFAULT_CROSS_MSG_FEE = 10 gwei;
+
 
     event TokenSent(
         address tokenContract,
@@ -53,6 +57,15 @@ contract ERC20TokenMessenger is ReentrancyGuard {
         address user,
         uint256 amount
     ) public payable nonReentrant {
+        if (receiver == address(0)) {
+            revert ZeroAddress();
+        }
+        if (user == address(0)) {
+            revert ZeroAddress();
+        }
+        if (msg.value != DEFAULT_CROSS_MSG_FEE ) {
+            revert NotEnoughFunds();
+        }
         uint256 startingBalance = IERC20(tokenContract).balanceOf(address(this));
 
         IERC20(tokenContract).safeTransferFrom({from: msg.sender, to: address(this), value: amount});
