@@ -1718,6 +1718,41 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(committedFinality.blockHash == finality.blockHash, "blockHash not equal");
     }
 
+    function testGatewayDiamond_CommitParentFinality_BigNumberOfMessages() public {
+        uint256 n = 2000;
+        address[] memory validators = new address[](1);
+        validators[0] = vm.addr(100);
+        vm.deal(validators[0], 1);
+        uint256[] memory weights = new uint[](1);
+        weights[0] = 100;
+
+        CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
+        for (uint64 i = 0; i < n; i++) {
+            topDownMsgs[i] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: gwGetter.getNetworkName(),
+                        rawAddress: FvmAddressHelper.from(address(this))
+                    }),
+                    to: IPCAddress({
+                        subnetId: gwGetter.getNetworkName(),
+                        rawAddress: FvmAddressHelper.from(address(this))
+                    }),
+                    value: 0,
+                    nonce: i,
+                    method: this.callback.selector,
+                    params: EMPTY_BYTES
+                }),
+                wrapped: false
+            });
+        }
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        gwRouter.commitParentFinality(finality, topDownMsgs, validators, weights);
+    }
+
     function testGatewayDiamond_SubmitTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
         address validator = address(100);
 
