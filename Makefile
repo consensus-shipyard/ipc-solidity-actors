@@ -42,7 +42,7 @@ install-npm-package:
 	npm install --save-dev
 
 install-eth-abi:
-	curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py && rm get-pip.py && ~/.local/bin/pip install eth_abi
+	curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py && rm get-pip.py && pip install eth_abi
 
 storage:
 	npx hardhat storage-layout --update
