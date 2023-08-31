@@ -1660,40 +1660,44 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
     }
 
-    // function testGatewayDiamond_SetMembership_Fails_ZeroWeight() public {
-    //     address[] memory validators = new address[](1);
-    //     validators[0] = vm.addr(100);
-    //     uint256[] memory weights = new uint256[](1);
-    //     weights[0] = 0;
+    function testGatewayDiamond_CommitParentFinality_Fails_ZeroWeight() public {
+        address[] memory validators = new address[](1);
+        validators[0] = vm.addr(100);
+        uint256[] memory weights = new uint256[](1);
+        weights[0] = 0;
 
-    //     vm.prank(FilAddress.SYSTEM_ACTOR);
-    //     vm.expectRevert(ValidatorWeightIsZero.selector);
-    //     gwManager.setMembership(validators, weights);
-    // }
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(ValidatorWeightIsZero.selector);
 
-    // function testGatewayDiamond_SetMembership_Works_MultipleValidators() public {
-    //     address[] memory validators = new address[](2);
-    //     validators[0] = vm.addr(100);
-    //     validators[1] = vm.addr(101);
-    //     uint256[] memory weights = new uint256[](2);
-    //     weights[0] = 100;
-    //     weights[1] = 150;
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+    }
 
-    //     vm.prank(FilAddress.SYSTEM_ACTOR);
-    //     gwManager.setMembership(validators, weights);
+    function testGatewayDiamond_CommitParentFinality_Works_MultipleValidators() public {
+        address[] memory validators = new address[](2);
+        validators[0] = vm.addr(100);
+        validators[1] = vm.addr(101);
+        uint256[] memory weights = new uint256[](2);
+        weights[0] = 100;
+        weights[1] = 150;
 
-    //     require(gwGetter.totalWeight() == 250);
-    // }
+        vm.prank(FilAddress.SYSTEM_ACTOR);
 
-    // function testGatewayDiamond_SetMembership_Works_NewValidators() public {
-    //     addValidator(vm.addr(100), 100);
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
 
-    //     require(gwGetter.totalWeight() == 100);
+        require(gwGetter.totalWeight() == 250);
+    }
 
-    //     addValidator(vm.addr(101), 1000);
+    function testGatewayDiamond_CommitParentFinality_Works_NewValidators() public {
+        addValidator(vm.addr(100), 100);
 
-    //     require(gwGetter.totalWeight() == 1000);
-    // }
+        require(gwGetter.totalWeight() == 100);
+
+        addValidator(vm.addr(101), 1000);
+
+        require(gwGetter.totalWeight() == 1000);
+    }
 
     function testGatewayDiamond_SubmitTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
         address validator = address(100);
