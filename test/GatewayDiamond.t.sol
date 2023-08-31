@@ -1699,6 +1699,25 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.totalWeight() == 1000);
     }
 
+    function testGatewayDiamond_CommitParentFinality_Works_WithQuery() public {
+        address[] memory validators = new address[](2);
+        validators[0] = vm.addr(100);
+        validators[1] = vm.addr(101);
+        uint256[] memory weights = new uint256[](2);
+        weights[0] = 100;
+        weights[1] = 150;
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+
+        ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
+
+        require(committedFinality.height == finality.height, "height not equal");
+        require(committedFinality.blockHash == finality.blockHash, "blockHash not equal");
+    }
+
     function testGatewayDiamond_SubmitTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
         address validator = address(100);
 
