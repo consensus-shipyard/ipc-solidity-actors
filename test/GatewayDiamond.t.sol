@@ -1646,17 +1646,19 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
     }
 
-    // function testGatewayDiamond_SetMembership_Fails_ValidatorsAndWeightsNotEqual() public {
-    //     address[] memory validators = new address[](1);
-    //     validators[0] = vm.addr(100);
-    //     uint256[] memory weights = new uint256[](2);
-    //     weights[0] = 100;
-    //     weights[1] = 130;
+    function testGatewayDiamond_CommitParentFinality_Fails_ValidatorsAndWeightsNotEqual() public {
+        address[] memory validators = new address[](1);
+        validators[0] = vm.addr(100);
+        uint256[] memory weights = new uint256[](2);
+        weights[0] = 100;
+        weights[1] = 130;
 
-    //     vm.prank(FilAddress.SYSTEM_ACTOR);
-    //     vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
-    //     gwManager.setMembership(validators, weights);
-    // }
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
+
+        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+    }
 
     // function testGatewayDiamond_SetMembership_Fails_ZeroWeight() public {
     //     address[] memory validators = new address[](1);
