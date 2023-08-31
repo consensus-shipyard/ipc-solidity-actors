@@ -32,6 +32,7 @@ import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DummyERC20} from "./ERC20Helper.sol";
+import {ERC20TokenMessenger} from "../examples/contracts/cross-token/ERC20TokenMessenger.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -1887,6 +1888,82 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         console.log("user balance on destination subnet after:", dstToken.balanceOf(user));
         require(dstToken.balanceOf(user) == targetTokenValue, "dstToken.balanceOf(user) == targetTokenValue");
+    }
+
+    function testGatewayDiamond_SendCrossMessage_ExampleTokenContract() public {
+        uint256 targetTokenValue = 321;
+
+        address user = vm.addr(300);
+        console.log("user addr", user);
+        vm.deal(user, CROSS_MSG_FEE + MIN_COLLATERAL_AMOUNT);
+        vm.prank(user);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, user);
+
+        vm.startPrank(user);
+        DummyERC20 srcToken = new DummyERC20("SrcToken", "SRC", 20 ether);
+        vm.deal(address(srcToken), 10 ether);
+        srcToken.transfer(user, 2 ether);
+        vm.stopPrank();
+
+        address dstTokenOwner = vm.addr(406);
+        vm.startPrank(dstTokenOwner);
+        DummyERC20 dstToken = new DummyERC20("DstToken", "DST", 20 ether);
+        console.log("dstToken addr", address(dstToken));
+        vm.deal(address(dstToken), 10 ether);
+        vm.stopPrank();
+
+        address receiver = address(this);
+        vm.prank(receiver);
+        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
+        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
+
+        SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
+
+        GatewayDiamond destinationGWDiamond = createGWForSubnet(destinationSubnet);
+
+        vm.startPrank(dstTokenOwner);
+        dstToken.transfer(address(destinationGWDiamond), CROSS_MSG_FEE);
+        vm.stopPrank();
+
+        ERC20TokenMessenger tokenMessenger = newTokenMessenger(address(gatewayDiamond));
+
+        console.log("user balance on destination subnet before:", dstToken.balanceOf(user));
+        vm.startPrank(user);
+        srcToken.approve(address(tokenMessenger), targetTokenValue);
+        tokenMessenger.sendToken{value: CROSS_MSG_FEE}(
+            address(srcToken),
+            destinationSubnet,
+            address(dstToken),
+            user,
+            targetTokenValue
+        );
+        vm.stopPrank();
+
+        CrossMsg[] memory topDownMsgs = gwGetter.getTopDownMsgs(destinationSubnet, block.number, block.number);
+        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
+            epoch: DEFAULT_CHECKPOINT_PERIOD,
+            topDownMsgs: topDownMsgs
+        });
+
+        vm.deal(user, MIN_COLLATERAL_AMOUNT + 100 ether);
+        destinationSubmitTopDownCheckpoint(destinationGWDiamond, checkpoint);
+
+        require(dstToken.balanceOf(user) == targetTokenValue, "dstToken.balanceOf(user) == targetTokenValue");
+    }
+
+    function newTokenMessenger(address gw) public returns (ERC20TokenMessenger) {
+        address user = vm.addr(300);
+
+        GatewayGetterFacet dstgwGetter = new GatewayGetterFacet();
+        dstgwGetter = GatewayGetterFacet(address(gw));
+
+        vm.startPrank(user);
+        ERC20TokenMessenger tokenMessenger = new ERC20TokenMessenger(gw);
+        vm.stopPrank();
+
+        vm.deal(address(tokenMessenger), 1 ether);
+
+        return tokenMessenger;
     }
 
     function testGatewayDiamond_SubmitTopDownCheckpoint_Fails_NotValidator() public {
