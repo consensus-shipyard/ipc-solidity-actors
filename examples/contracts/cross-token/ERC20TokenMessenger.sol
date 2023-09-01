@@ -17,7 +17,7 @@ error ZeroAddress();
 
 /**
  * @title TokenMessenger
- * @notice An example of a contract that allows users to send a token cross-subnet.
+ * @notice An example of a contract that allows users to send a token across subnets.
  */
 contract ERC20TokenMessenger is ReentrancyGuard {
     using FvmAddressHelper for FvmAddress;
@@ -33,11 +33,11 @@ contract ERC20TokenMessenger is ReentrancyGuard {
 
 
     event TokenSent(
-        address tokenContract,
+        address sourceContract,
         address sender,
         SubnetID destinationSubnet,
+        address destinationContract,
         address receiver,
-        address user,
         uint64 nonce,
         uint256 value
     );
@@ -51,26 +51,26 @@ contract ERC20TokenMessenger is ReentrancyGuard {
     }
 
     function sendToken(
-        address tokenContract,
+        address sourceContract,
         SubnetID memory destinationSubnet,
+        address destinationContract,
         address receiver,
-        address user,
         uint256 amount
     ) public payable nonReentrant {
-        if (receiver == address(0)) {
+        if (destinationContract == address(0)) {
             revert ZeroAddress();
         }
-        if (user == address(0)) {
+        if (receiver == address(0)) {
             revert ZeroAddress();
         }
         if (msg.value != DEFAULT_CROSS_MSG_FEE ) {
             revert NotEnoughFunds();
         }
-        uint256 startingBalance = IERC20(tokenContract).balanceOf(address(this));
+        uint256 startingBalance = IERC20(sourceContract).balanceOf(address(this));
 
-        IERC20(tokenContract).safeTransferFrom({from: msg.sender, to: address(this), value: amount});
+        IERC20(sourceContract).safeTransferFrom({from: msg.sender, to: address(this), value: amount});
 
-        uint256 endingBalance = IERC20(tokenContract).balanceOf(address(this));
+        uint256 endingBalance = IERC20(sourceContract).balanceOf(address(this));
 
         if (endingBalance <= startingBalance) {
             revert NoTransfer();
@@ -80,23 +80,23 @@ contract ERC20TokenMessenger is ReentrancyGuard {
             message: StorableMsg({
             from: IPCAddress({
             subnetId: info.getNetworkName(),
-            rawAddress: FvmAddressHelper.from(address(tokenContract))
+            rawAddress: FvmAddressHelper.from(sourceContract)
         }),
-            to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(receiver))}),
+            to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(destinationContract)}),
             value: 0,
             nonce: nonce,
             method: bytes4(keccak256("transfer(address,uint256)")),
-            params: abi.encode(user, amount)
+            params: abi.encode(receiver, amount)
         }),
             wrapped: false
         });
 
         emit TokenSent({
-            tokenContract: tokenContract,
+            sourceContract: sourceContract,
             sender: msg.sender,
             destinationSubnet: destinationSubnet,
+            destinationContract: destinationContract,
             receiver: receiver,
-            user: user,
             nonce: nonce++,
             value: amount
         });
