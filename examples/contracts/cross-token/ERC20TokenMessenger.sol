@@ -31,7 +31,6 @@ contract ERC20TokenMessenger is ReentrancyGuard {
     // Cross-net fee
     uint256 public constant DEFAULT_CROSS_MSG_FEE = 10 gwei;
 
-
     event TokenSent(
         address sourceContract,
         address sender,
@@ -56,7 +55,7 @@ contract ERC20TokenMessenger is ReentrancyGuard {
         address destinationContract,
         address receiver,
         uint256 amount
-    ) public payable nonReentrant {
+    ) external payable nonReentrant {
         if (destinationContract == address(0)) {
             revert ZeroAddress();
         }
@@ -66,6 +65,20 @@ contract ERC20TokenMessenger is ReentrancyGuard {
         if (msg.value != DEFAULT_CROSS_MSG_FEE ) {
             revert NotEnoughFunds();
         }
+
+        uint64 lastNonce = nonce;
+
+        emit TokenSent({
+            sourceContract: sourceContract,
+            sender: msg.sender,
+            destinationSubnet: destinationSubnet,
+            destinationContract: destinationContract,
+            receiver: receiver,
+            nonce: lastNonce,
+            value: amount
+        });
+        nonce++;
+
         uint256 startingBalance = IERC20(sourceContract).balanceOf(address(this));
 
         IERC20(sourceContract).safeTransferFrom({from: msg.sender, to: address(this), value: amount});
@@ -78,27 +91,17 @@ contract ERC20TokenMessenger is ReentrancyGuard {
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
-            from: IPCAddress({
-            subnetId: info.getNetworkName(),
-            rawAddress: FvmAddressHelper.from(sourceContract)
-        }),
-            to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(destinationContract)}),
-            value: 0,
-            nonce: nonce,
-            method: bytes4(keccak256("transfer(address,uint256)")),
-            params: abi.encode(receiver, amount)
-        }),
+                from: IPCAddress({
+                    subnetId: info.getNetworkName(),
+                    rawAddress: FvmAddressHelper.from(sourceContract)
+                }),
+                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(destinationContract)}),
+                value: 0,
+                nonce: lastNonce,
+                method: bytes4(keccak256("transfer(address,uint256)")),
+                params: abi.encode(receiver, amount)
+            }),
             wrapped: false
-        });
-
-        emit TokenSent({
-            sourceContract: sourceContract,
-            sender: msg.sender,
-            destinationSubnet: destinationSubnet,
-            destinationContract: destinationContract,
-            receiver: receiver,
-            nonce: nonce++,
-            value: amount
         });
 
         return messenger.sendCrossMessage{value: msg.value}(crossMsg);
