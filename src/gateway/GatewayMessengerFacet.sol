@@ -17,8 +17,13 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
     using SubnetIDHelper for SubnetID;
     using StorableMsgHelper for StorableMsg;
 
-    /// @notice sends an arbitrary cross message from the local subnet to the destination subnet
-    /// @param crossMsg - message to send
+    /**
+     * @dev sends an arbitrary cross-message from the local subnet to the destination subnet.
+     *
+     * IMPORTANT: `msg.value` is expected to equal to the value sent in `crossMsg.value` plus the cross-messaging fee.
+     *
+     * @param crossMsg - a cross-message to send
+     */
     function sendCrossMessage(CrossMsg calldata crossMsg) external payable hasFee {
         if (crossMsg.message.value != msg.value - s.crossMsgFee) {
             revert NotEnoughFunds();
@@ -41,8 +46,10 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         });
     }
 
-    /// @notice propagates the populated cross net message for the given cid
-    /// @param msgCid - the cid of the cross-net message
+    /**
+     * @dev propagates the populated cross net message for the given cid
+     * @param msgCid - the cid of the cross-net message
+     */
     function propagate(bytes32 msgCid) external payable hasFee {
         CrossMsg storage crossMsg = s.postbox[msgCid];
 
@@ -68,12 +75,14 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         }
     }
 
-    /// @notice Commit the cross message to storage. It outputs a flag signaling
-    /// if the committed messages was bottom-up and some funds need to be
-    /// burnt or if a top-down message fee needs to be distributed.
-    ///
-    /// It also validates that destination subnet ID is not empty
-    /// and not equal to the current network.
+    /**
+     * @dev Commit the cross message to storage. It outputs a flag signaling
+     * if the committed messages was bottom-up and some funds need to be
+     * burnt or if a top-down message fee needs to be distributed.
+     *
+     * It also validates that destination subnet ID is not empty
+     * and not equal to the current network.
+     */
     function _commitCrossMessage(
         CrossMsg memory crossMessage
     ) internal returns (bool shouldBurn, bool shouldDistributeRewards) {
@@ -111,12 +120,15 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         return (shouldBurn = false, shouldDistributeRewards = true);
     }
 
-    /// @notice transaction side-effects from the commitment of a cross-net message. It burns funds
-    /// and propagates the corresponding rewards.
-    /// @param v - the value of the committed cross-net message
-    /// @param toSubnetId - the destination subnet of the committed cross-net message
-    /// @param shouldBurn - flag if the message should burn funds
-    /// @param shouldDistributeRewards - flag if the message should distribute rewards
+    /**
+     * @dev Performs transaction side-effects from the commitment of a cross-net message. It burns funds
+     * and propagates the corresponding rewards.
+     *
+     * @param v - the value of the committed cross-net message
+     * @param toSubnetId - the destination subnet of the committed cross-net message
+     * @param shouldBurn - flag if the message should burn funds
+     * @param shouldDistributeRewards - flag if the message should distribute rewards
+     */
     function _crossMsgSideEffects(
         uint256 v,
         SubnetID memory toSubnetId,
