@@ -145,14 +145,16 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice commit the ipc parent finality into storage
     function commitParentFinality(
         ParentFinality calldata finality,
-        CrossMsg[] calldata crossMsgs,
         address[] calldata validators,
         uint256[] calldata weights
     ) external systemActorOnly {
         LibGateway.commitParentFinality(finality);
 
         LibGateway.setMembership(validators, weights);
+    }
 
+    /// @notice apply cross messages
+    function applyCrossMessages(CrossMsg[] calldata crossMsgs) external systemActorOnly {
         _applyMessages(SubnetID(0, new address[](0)), crossMsgs);
     }
 

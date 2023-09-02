@@ -1643,7 +1643,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+        gwRouter.commitParentFinality(finality, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Fails_ValidatorsAndWeightsNotEqual() public {
@@ -1657,7 +1657,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+        gwRouter.commitParentFinality(finality, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Fails_ZeroWeight() public {
@@ -1670,7 +1670,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.expectRevert(ValidatorWeightIsZero.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+        gwRouter.commitParentFinality(finality, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_MultipleValidators() public {
@@ -1684,7 +1684,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+        gwRouter.commitParentFinality(finality, validators, weights);
 
         require(gwGetter.totalWeight() == 250);
     }
@@ -1710,7 +1710,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+        gwRouter.commitParentFinality(finality, validators, weights);
 
         ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
 
@@ -1749,8 +1749,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
-        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, topDownMsgs, validators, weights);
+        gwRouter.applyCrossMessages(topDownMsgs);
     }
 
     function testGatewayDiamond_SubmitTopDownCheckpoint_Fails_EpochAlreadyExecuted() public {
@@ -2496,7 +2495,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+        gwRouter.commitParentFinality(finality, validators, weights);
 
         return validators;
     }
@@ -2543,7 +2542,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, new CrossMsg[](0), validators, weights);
+        gwRouter.commitParentFinality(finality, validators, weights);
     }
 
     function destinationSubmitTopDownCheckpoint(GatewayDiamond gw, TopDownCheckpoint memory checkpoint) public {
