@@ -69,17 +69,16 @@ library LibGateway {
 
         // setup the new validator set
         uint256 validatorsLength = validators.length;
+        FvmAddress memory zero = FvmAddressHelper.from(address(0));
         for (uint256 validatorIndex = 0; validatorIndex < validatorsLength; ) {
-            bytes32 fvmAddressHash = validators[validatorIndex].toHash();
-
-            if (validatorAddress != address(0)) {
+            if (FvmAddressHelper.equal(validators[validatorIndex], zero)) {
                 uint256 validatorWeight = weights[validatorIndex];
 
                 if (validatorWeight == 0) {
                     revert ValidatorWeightIsZero();
                 }
 
-                s.validatorSet[s.validatorNonce][fvmAddressHash] = validatorWeight;
+                s.validatorSet[s.validatorNonce][validators[validatorIndex].toHash()] = validatorWeight;
 
                 totalValidatorsWeight += validatorWeight;
             }
