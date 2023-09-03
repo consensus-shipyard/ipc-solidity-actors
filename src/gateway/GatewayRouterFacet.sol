@@ -32,7 +32,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice commit the ipc parent finality into storage
     function commitParentFinality(
         ParentFinality calldata finality,
-        address[] calldata validators,
+        FvmAddress[] calldata validators,
         uint256[] calldata weights
     ) external systemActorOnly {
         LibGateway.commitParentFinality(finality);

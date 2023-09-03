@@ -1312,52 +1312,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwMessenger.propagate(bytes32(""));
     }
 
-    function setupWhiteListMethod(address caller) internal returns (bytes32) {
-        address[] memory validators = setupValidators();
-
-        registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
-
-        CrossMsg memory crossMsg = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({
-                    subnetId: gwGetter.getNetworkName().createSubnetId(caller),
-                    rawAddress: FvmAddressHelper.from(caller)
-                }),
-                to: IPCAddress({
-                    subnetId: gwGetter.getNetworkName().createSubnetId(address(this)),
-                    rawAddress: FvmAddressHelper.from(address(this))
-                }),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
-            wrapped: false
-        });
-
-        // we add a validator with 10 times as much weight as the default validator.
-        // This way we have 10/11 votes and we reach majority, setting the message in postbox
-        // addValidator(caller, 1000);
-
-        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
-        topDownMsgs[0] = crossMsg;
-        TopDownCheckpoint memory checkpoint = TopDownCheckpoint({
-            epoch: DEFAULT_CHECKPOINT_PERIOD,
-            topDownMsgs: topDownMsgs
-        });
-
-        vm.prank(validators[0]);
-        gwRouter.submitTopDownCheckpoint(checkpoint);
-
-        vm.prank(validators[1]);
-        gwRouter.submitTopDownCheckpoint(checkpoint);
-
-        vm.prank(validators[2]);
-        gwRouter.submitTopDownCheckpoint(checkpoint);
-
-        return crossMsg.toHash();
-    }
-
     function testGatewayDiamond_CommitParentFinality_Fails_NotSystemActor() public {
         address caller = vm.addr(100);
 
