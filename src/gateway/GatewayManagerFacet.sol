@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
-import {CrossMsg} from "../structs/Checkpoint.sol";
+import {CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
@@ -111,6 +111,11 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         }
 
         payable(subnet.id.getActor()).sendValue(amount);
+    }
+
+    /// @notice commit the ipc parent finality into storage
+    function commitIPCParentFinality(ParentFinality calldata finality) external {
+        LibGateway.commitParentFinality(finality);
     }
 
     /// @notice kill an existing subnet. It's balance must be empty

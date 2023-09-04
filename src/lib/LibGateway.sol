@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {CrossMsg, BottomUpCheckpoint} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
 import {NotRegisteredSubnet, InvalidActorAddress} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
@@ -33,6 +33,20 @@ library LibGateway {
         epoch = LibVoting.getNextEpoch(block.number, s.bottomUpCheckPeriod);
         checkpoint = s.bottomUpCheckpoints[epoch];
         exists = !checkpoint.source.isEmpty();
+    }
+
+    /// @notice obtain the ipc parent finality at certain block number
+    /// @param blockNumber - the block number to obtain the finality
+    function getParentFinality(uint256 blockNumber) internal view returns (ParentFinality memory) {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        return s.parentFinalities[blockNumber];
+    }
+
+    /// @notice commit the ipc parent finality into storage
+    /// @param finality - the finality to be committed
+    function commitParentFinality(ParentFinality calldata finality) internal {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        s.parentFinalities[finality.height] = finality;
     }
 
     /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution
