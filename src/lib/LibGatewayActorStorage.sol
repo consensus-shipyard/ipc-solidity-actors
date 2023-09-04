@@ -25,8 +25,8 @@ struct GatewayActorStorage {
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpoints;
     /// @notice List of validators and how many votes of the total each validator has for top-down messages
-    // validatorNonce => validator => weight
-    mapping(uint256 => mapping(address => uint256)) validatorSet;
+    // validatorNonce => validator fvm address => weight
+    mapping(uint256 => mapping(bytes32 => uint256)) validatorSet;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists

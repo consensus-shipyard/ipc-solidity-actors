@@ -12,10 +12,13 @@ import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
+import {FvmAddress} from "../structs/FvmAddress.sol";
+import {FvmAddressHelper} from "./FvmAddressHelper.sol";
 
 library LibGateway {
     using FilAddress for address;
     using FilAddress for address payable;
+    using FvmAddressHelper for FvmAddress;
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
     using CheckpointHelper for BottomUpCheckpoint;
@@ -52,7 +55,7 @@ library LibGateway {
     /// @notice set up the top-down validators and their voting power
     /// @param validators - list of validator addresses
     /// @param weights - list of validators voting powers
-    function setMembership(address[] memory validators, uint256[] memory weights) internal {
+    function setMembership(FvmAddress[] memory validators, uint256[] memory weights) internal {
         if (validators.length != weights.length) {
             revert ValidatorsAndWeightsLengthMismatch();
         }
@@ -67,7 +70,8 @@ library LibGateway {
         // setup the new validator set
         uint256 validatorsLength = validators.length;
         for (uint256 validatorIndex = 0; validatorIndex < validatorsLength; ) {
-            address validatorAddress = validators[validatorIndex];
+            bytes32 fvmAddressHash = validators[validatorIndex].toHash();
+
             if (validatorAddress != address(0)) {
                 uint256 validatorWeight = weights[validatorIndex];
 
@@ -75,7 +79,7 @@ library LibGateway {
                     revert ValidatorWeightIsZero();
                 }
 
-                s.validatorSet[s.validatorNonce][validatorAddress] = validatorWeight;
+                s.validatorSet[s.validatorNonce][fvmAddressHash] = validatorWeight;
 
                 totalValidatorsWeight += validatorWeight;
             }
