@@ -44,5 +44,4 @@ error SubnetNotActive();
 error ValidatorAlreadyVoted();
 error ValidatorWeightIsZero();
 error ValidatorsAndWeightsLengthMismatch();
-error WorkerKeyInvalid();
 error WrongCheckpointSource();
