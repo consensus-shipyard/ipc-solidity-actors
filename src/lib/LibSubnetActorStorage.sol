@@ -22,11 +22,9 @@ struct SubnetActorStorage {
     /// @notice validator address to validator net address
     mapping(address => string) validatorNetAddresses;
     /// @notice validator address to validator worker address
-    mapping(address => FvmAddress) validatorWorkerAddresses;
+    mapping(address => string) validatorWorkerKeys;
     /// @notice contains all committed bottom-up checkpoint at specific epoch
     mapping(uint64 => BottomUpCheckpoint) committedCheckpoints;
-    /// @notice genesis block
-    bytes genesis;
     /// @notice Total collateral currently deposited in the GW from the subnet
     uint256 totalStake;
     /// @notice Minimal activation collateral

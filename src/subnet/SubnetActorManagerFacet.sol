@@ -36,7 +36,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that allows a validator to join the subnet
     /// @param netAddr - the network address of the validator
-    function join(string calldata netAddr, FvmAddress calldata workerAddr) external payable notKilled {
+    function join(string calldata netAddr, string calldata workerKey) external payable notKilled {
         uint256 validatorStake = msg.value;
         address validator = msg.sender;
         if (validatorStake == 0) {
@@ -51,7 +51,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
                 // slither-disable-next-line unused-return
                 s.validators.add(validator);
                 s.validatorNetAddresses[validator] = netAddr;
-                s.validatorWorkerAddresses[validator] = workerAddr;
+                s.validatorWorkerKeys[validator] = workerKey;
             }
         }
 
@@ -217,12 +217,12 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.validatorNetAddresses[validator] = newNetAddr;
     }
 
-    function setValidatorWorkerAddr(FvmAddress calldata newWorkerAddr) external {
+    function setValidatorWorkerKey(string calldata newWorkerKey) external {
         address validator = msg.sender;
         if (!s.validators.contains(validator)) {
             revert NotValidator();
         }
-        s.validatorWorkerAddresses[validator] = newWorkerAddr;
+        s.validatorWorkerKeys[validator] = newWorkerKey;
     }
 
     /// @notice submits a vote for a checkpoint

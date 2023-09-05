@@ -79,10 +79,6 @@ contract SubnetActorGetterFacet {
         return s.bottomUpCheckPeriod;
     }
 
-    function genesis() external view returns (bytes memory) {
-        return s.genesis;
-    }
-
     function majorityPercentage() external view returns (uint64) {
         return LibVoting.majorityPercentage();
     }
@@ -118,8 +114,8 @@ contract SubnetActorGetterFacet {
 
     /// @notice get validator worker address
     /// @param addr - validator address
-    function validatorWorkerAddr(address addr) external view returns (FvmAddress memory) {
-        return s.validatorWorkerAddresses[addr];
+    function validatorWorkerKey(address addr) external view returns (string memory) {
+        return s.validatorWorkerKeys[addr];
     }
 
     /// @notice get all the validators in the subnet.
@@ -180,7 +176,7 @@ contract SubnetActorGetterFacet {
             details[i] = ValidatorInfo({
                 addr: a,
                 weight: s.stake[a],
-                workerAddr: s.validatorWorkerAddresses[a],
+                workerKey: s.validatorWorkerKeys[a],
                 netAddresses: s.validatorNetAddresses[a]
             });
             unchecked {

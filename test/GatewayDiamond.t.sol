@@ -49,6 +49,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     string private constant DEFAULT_NET_ADDR = "netAddr";
+    string private constant DEFAULT_WORKER_KEY = "workerKey";
     bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
@@ -243,8 +244,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            genesis: GENESIS
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
         saManager = new SubnetActorManagerFacet();
@@ -2621,10 +2621,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function _join(address validatorAddress) internal {
         vm.prank(validatorAddress);
         vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT + 1);
-        saManager.join{value: MIN_COLLATERAL_AMOUNT}(
-            DEFAULT_NET_ADDR,
-            FvmAddress({addrType: 1, payload: new bytes(20)})
-        );
+        saManager.join{value: MIN_COLLATERAL_AMOUNT}(DEFAULT_NET_ADDR, DEFAULT_WORKER_KEY);
 
         require(saGetter.status() == Status.Active);
     }

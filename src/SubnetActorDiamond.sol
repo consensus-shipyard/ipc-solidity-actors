@@ -34,7 +34,6 @@ contract SubnetActorDiamond {
         uint64 bottomUpCheckPeriod;
         uint64 topDownCheckPeriod;
         uint8 majorityPercentage;
-        bytes genesis;
     }
 
     constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
@@ -58,7 +57,6 @@ contract SubnetActorDiamond {
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.status = Status.Instantiated;
 
-        s.genesis = params.genesis;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
         // NOTE: we currently use 0 as the genesisEpoch for subnets so checkpoints
         // are submitted directly from epoch 0.

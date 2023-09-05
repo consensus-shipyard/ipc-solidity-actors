@@ -41,7 +41,7 @@ contract SubnetActorDiamondTest is Test {
     uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     string private constant DEFAULT_NET_ADDR = "netAddr";
-    bytes private constant GENESIS = EMPTY_BYTES;
+    string private constant DEFAULT_WORKER_KEY = "workerKey";
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 private constant ROOTNET_CHAINID = 123;
@@ -173,7 +173,6 @@ contract SubnetActorDiamondTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            GENESIS,
             DEFAULT_MAJORITY_PERCENTAGE
         );
     }
@@ -184,7 +183,6 @@ contract SubnetActorDiamondTest is Test {
         uint256 _minActivationCollateral,
         uint64 _minValidators,
         uint64 _checkPeriod,
-        bytes calldata _genesis,
         uint8 _majorityPercentage
     ) public {
         vm.assume(_minActivationCollateral > DEFAULT_MIN_VALIDATOR_STAKE);
@@ -199,7 +197,6 @@ contract SubnetActorDiamondTest is Test {
             _minActivationCollateral,
             _minValidators,
             _checkPeriod,
-            _genesis,
             _majorityPercentage
         );
 
@@ -231,8 +228,7 @@ contract SubnetActorDiamondTest is Test {
                 minValidators: DEFAULT_MIN_VALIDATORS,
                 bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
                 topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-                genesis: EMPTY_BYTES
+                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
             }),
             address(saDupGetterFaucet),
             address(saDupMangerFaucet)
@@ -259,7 +255,7 @@ contract SubnetActorDiamondTest is Test {
         vm.prank(validator);
         vm.expectRevert(CollateralIsZero.selector);
 
-        saManager.join(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
+        saManager.join(DEFAULT_NET_ADDR, DEFAULT_WORKER_KEY);
     }
 
     function testSubnetActorDiamond_Join_Fail_AlreadyKilled() public {
@@ -273,10 +269,7 @@ contract SubnetActorDiamondTest is Test {
         vm.prank(validator);
         vm.deal(validator, DEFAULT_MIN_VALIDATOR_STAKE + 1);
 
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(
-            DEFAULT_NET_ADDR,
-            FvmAddress({addrType: 1, payload: new bytes(20)})
-        );
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(DEFAULT_NET_ADDR, DEFAULT_WORKER_KEY);
     }
 
     function testSubnetActorDiamond_Join_Works_CallAddStake() public {
@@ -406,7 +399,7 @@ contract SubnetActorDiamondTest is Test {
         vm.prank(validator);
         vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gwManager.register.selector), 0);
         vm.expectCall(GATEWAY_ADDRESS, amount, abi.encodeWithSelector(gwManager.addStake.selector), 0);
-        saManager.join{value: amount}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
+        saManager.join{value: amount}(DEFAULT_NET_ADDR, DEFAULT_WORKER_KEY);
 
         require(saGetter.validatorCount() == 0);
         require(gwGetter.listSubnets().length == 0);
@@ -433,10 +426,7 @@ contract SubnetActorDiamondTest is Test {
         require(saGetter.stake(validator) == 0, "stake(validator) == 0");
         require(saGetter.totalStake() == 0, "totalStake() == 0");
 
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(
-            DEFAULT_NET_ADDR,
-            FvmAddress({addrType: 1, payload: new bytes(20)})
-        );
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(DEFAULT_NET_ADDR, DEFAULT_WORKER_KEY);
 
         require(saGetter.stake(validator) == DEFAULT_MIN_VALIDATOR_STAKE);
         require(saGetter.totalStake() == DEFAULT_MIN_VALIDATOR_STAKE);
@@ -606,33 +596,30 @@ contract SubnetActorDiamondTest is Test {
         saManager.setValidatorNetAddr("");
     }
 
-    function testSubnetActorDiamond_SetValidatorWorkerAddr_Works() public payable {
+    function testSubnetActorDiamond_SetValidatorWorkerKey_Works() public payable {
         address validator = address(1235);
-        FvmAddress memory newWorkerAddr = FvmAddressHelper.from(validator);
-        FvmAddress memory defaultWorkerAddr = FvmAddress({addrType: 1, payload: new bytes(20)});
+        string memory newWorkerKey = "newWorkerKey";
 
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
-        FvmAddress memory result = saGetter.validatorWorkerAddr(validator);
-        require(result.addrType == defaultWorkerAddr.addrType);
-        require(keccak256(result.payload) == keccak256(defaultWorkerAddr.payload));
+        string memory result = saGetter.validatorWorkerKey(validator);
+        require(keccak256(bytes(result)) == keccak256(bytes(DEFAULT_WORKER_KEY)));
 
         vm.prank(validator);
-        saManager.setValidatorWorkerAddr(newWorkerAddr);
+        saManager.setValidatorWorkerKey(newWorkerKey);
 
-        result = saGetter.validatorWorkerAddr(validator);
-        require(result.addrType == newWorkerAddr.addrType);
-        require(keccak256(result.payload) == keccak256(newWorkerAddr.payload));
+        result = saGetter.validatorWorkerKey(validator);
+        require(keccak256(bytes(result)) == keccak256(bytes(newWorkerKey)));
     }
 
-    function testSubnetActorDiamond_SetValidatorWorkerAddr_Fails_NotValidator() public payable {
+    function testSubnetActorDiamond_SetValidatorWorkerKey_Fails_NotValidator() public payable {
         address validator = address(1235);
-        FvmAddress memory workerAddr = FvmAddressHelper.from(validator);
+        string memory workerKey = "newWorkerKey";
         _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
 
         vm.prank(address(1234));
         vm.expectRevert(NotValidator.selector);
-        saManager.setValidatorWorkerAddr(workerAddr);
+        saManager.setValidatorWorkerKey(workerKey);
     }
 
     function testSubnetActorDiamond_SubmitCheckpoint_Works_Executed() public {
@@ -879,7 +866,6 @@ contract SubnetActorDiamondTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            GENESIS,
             majorityPercentage
         );
 
@@ -932,7 +918,6 @@ contract SubnetActorDiamondTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            GENESIS,
             DEFAULT_MAJORITY_PERCENTAGE
         );
 
@@ -958,7 +943,6 @@ contract SubnetActorDiamondTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            GENESIS,
             DEFAULT_MAJORITY_PERCENTAGE
         );
 
@@ -1155,8 +1139,7 @@ contract SubnetActorDiamondTest is Test {
         uint256 stakeBefore = saGetter.stake(validator);
         uint256 totalStakeBefore = saGetter.totalStake();
 
-        saManager.join{value: amount}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
-
+        saManager.join{value: amount}(DEFAULT_NET_ADDR, DEFAULT_WORKER_KEY);
         require(saGetter.stake(validator) == stakeBefore + amount);
         require(saGetter.totalStake() == totalStakeBefore + amount);
         require(validator.balance == balanceBefore - amount);
@@ -1209,7 +1192,6 @@ contract SubnetActorDiamondTest is Test {
         uint256 _minActivationCollateral,
         uint64 _minValidators,
         uint64 _checkPeriod,
-        bytes memory _genesis,
         uint8 _majorityPercentage
     ) public {
         SubnetID memory _parentId = gwGetter.getNetworkName();
@@ -1246,8 +1228,7 @@ contract SubnetActorDiamondTest is Test {
                 minValidators: _minValidators,
                 bottomUpCheckPeriod: _checkPeriod,
                 topDownCheckPeriod: _checkPeriod,
-                majorityPercentage: _majorityPercentage,
-                genesis: _genesis
+                majorityPercentage: _majorityPercentage
             })
         );
 
@@ -1265,10 +1246,6 @@ contract SubnetActorDiamondTest is Test {
         );
         require(saGetter.minValidators() == _minValidators, "saGetter.minValidators() == _minValidators");
         require(saGetter.topDownCheckPeriod() == _checkPeriod, "saGetter.topDownCheckPeriod() == _checkPeriod");
-        require(
-            keccak256(saGetter.genesis()) == keccak256(_genesis),
-            "keccak256(saGetter.genesis()) == keccak256(_genesis)"
-        );
         require(
             saGetter.majorityPercentage() == _majorityPercentage,
             "saGetter.majorityPercentage() == _majorityPercentage"

@@ -22,7 +22,6 @@ contract SubnetRegistryTest is Test {
     bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
     uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
-    bytes private constant GENESIS = EMPTY_BYTES;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 private constant ROOTNET_CHAINID = 123;
 
@@ -73,8 +72,7 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            genesis: GENESIS
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         vm.expectRevert(WrongGateway.selector);
         registry.newSubnetActor(params);
@@ -91,8 +89,7 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            genesis: GENESIS
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         registry.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -110,8 +107,7 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            genesis: GENESIS
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         registry.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -126,7 +122,6 @@ contract SubnetRegistryTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            GENESIS,
             DEFAULT_MAJORITY_PERCENTAGE
         );
     }
@@ -138,7 +133,6 @@ contract SubnetRegistryTest is Test {
         uint256 _minActivationCollateral,
         uint64 _minValidators,
         uint64 _checkPeriod,
-        bytes memory _genesis,
         uint8 _majorityPercentage
     ) public {
         vm.startPrank(DEFAULT_SENDER);
@@ -151,8 +145,7 @@ contract SubnetRegistryTest is Test {
             minValidators: _minValidators,
             bottomUpCheckPeriod: _checkPeriod,
             topDownCheckPeriod: _checkPeriod,
-            majorityPercentage: _majorityPercentage,
-            genesis: _genesis
+            majorityPercentage: _majorityPercentage
         });
         registry.newSubnetActor(params);
         require(registry.latestSubnetDeployed(DEFAULT_SENDER) != address(0));

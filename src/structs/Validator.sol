@@ -6,7 +6,7 @@ import {FvmAddress} from "../structs/FvmAddress.sol";
 struct ValidatorInfo {
     address addr;
     uint256 weight;
-    FvmAddress workerAddr;
+    string workerKey;
     string netAddresses;
 }
 
