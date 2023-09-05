@@ -5,7 +5,7 @@ import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
-import {NotRegisteredSubnet, InvalidActorAddress, ValidatorWeightIsZero, ValidatorsAndWeightsLengthMismatch} from "../errors/IPCErrors.sol";
+import {NotRegisteredSubnet, InvalidActorAddress, ValidatorWeightIsZero, ValidatorsAndWeightsLengthMismatch, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
@@ -42,14 +42,25 @@ library LibGateway {
     /// @param blockNumber - the block number to obtain the finality
     function getParentFinality(uint256 blockNumber) internal view returns (ParentFinality memory) {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        return s.parentFinalities[blockNumber];
+        return s.finalitiesMap[blockNumber];
+    }
+
+    /// @notice obtain the latest committed ipc parent finality
+    function getLatestParentFinality() internal view returns (ParentFinality memory) {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        return getParentFinality(s.latestParentHeight);
     }
 
     /// @notice commit the ipc parent finality into storage
     /// @param finality - the finality to be committed
     function commitParentFinality(ParentFinality calldata finality) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        s.parentFinalities[finality.height] = finality;
+        
+        if (s.latestParentHeight >= finality.height) {
+            revert ParentFinalityAlreadyCommitted();
+        }
+        s.finalitiesMap[finality.height] = finality;
+        s.latestParentHeight = finality.height;
     }
 
     /// @notice set up the top-down validators and their voting power

@@ -16,7 +16,9 @@ struct GatewayActorStorage {
     /// SubnetID => blockNumber => messages
     mapping(bytes32 => mapping(uint256 => CrossMsg[])) topDownMsgs;
     /// @notice The parent finalities. Key is the block number, value is the finality struct.
-    mapping(uint256 => ParentFinality) parentFinalities;
+    mapping(uint256 => ParentFinality) finalitiesMap;
+    /// @notice The latest parent height committed.
+    uint256 latestParentHeight;
     /// @notice Postbox keeps track of all the cross-net messages triggered by
     /// an actor that need to be propagated further through the hierarchy.
     /// cross-net message id => CrossMsg

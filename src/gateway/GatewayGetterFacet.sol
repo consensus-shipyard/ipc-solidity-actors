@@ -57,6 +57,10 @@ contract GatewayGetterFacet {
         return LibGateway.getParentFinality(blockNumber);
     }
 
+    function getLatestParentFinality() external view returns (ParentFinality memory) {
+        return LibGateway.getLatestParentFinality();
+    }
+
     /// @notice returns the subnet with the given id
     /// @param subnetId the id of the subnet
     /// @return found whether the subnet exists
