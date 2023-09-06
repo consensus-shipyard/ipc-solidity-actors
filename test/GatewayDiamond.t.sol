@@ -1045,7 +1045,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
-        vm.expectRevert(NotEnoughFunds.selector);
+        vm.expectRevert(InvalidCrossMsgValue.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
