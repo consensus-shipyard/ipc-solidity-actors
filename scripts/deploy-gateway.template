@@ -105,10 +105,9 @@ export async function deploy(libs: { [key in string]: string }) {
 
     const routerFacetLibs: Libraries = {
         "CrossMsgHelper": libs["CrossMsgHelper"],
-        "ExecutableQueueHelper": libs["ExecutableQueueHelper"],
-        "CheckpointHelper": libs["CheckpointHelper"],
         "SubnetIDHelper": libs["SubnetIDHelper"],
-        "StorableMsgHelper": libs["StorableMsgHelper"]
+        "AccountHelper": libs["AccountHelper"],
++       "StorableMsgHelper": libs["StorableMsgHelper"]
     }
 
     const routerFacet = await deployContractWithDeployer(
