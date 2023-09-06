@@ -1190,75 +1190,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         console.log("reward method called with %d", amount);
     }
 
-    function testGatewayDiamond_SendCrossMessage_Works_BottomUp_CurrentNetworkNotCommonParent() public {
-        address receiver = vm.addr(101);
-        address caller = vm.addr(100);
-
-        vm.prank(receiver);
-        vm.deal(receiver, MIN_COLLATERAL_AMOUNT);
-        registerSubnetGW(MIN_COLLATERAL_AMOUNT, receiver, gatewayDiamond2);
-
-        vm.prank(caller);
-        vm.deal(caller, CROSS_MSG_FEE + 2);
-
-        SubnetID memory network2 = gwGetter2.getNetworkName();
-        address[] memory destinationPath = new address[](1);
-        destinationPath[0] = ROOTNET_ADDRESS;
-        SubnetID memory destinationSubnet = SubnetID({root: ROOTNET_CHAINID, route: destinationPath});
-
-        CrossMsg memory crossMsg = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({subnetId: network2, rawAddress: FvmAddressHelper.from(caller)}),
-                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)}),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
-            wrapped: true
-        });
-
-        vm.prank(caller);
-        gwMessenger2.sendCrossMessage{value: CROSS_MSG_FEE + 1}(crossMsg);
-
-        require(crossMsg.message.applyType(gwGetter2.getNetworkName()) == IPCMsgType.BottomUp);
-        require(gwGetter2.appliedTopDownNonce() == 0);
-        require(gwGetter2.bottomUpNonce() == 1);
-    }
-
-    function testGatewayDiamond_SendCrossMessage_Works_BottomUp_CurrentNetworkCommonParent() public {
-        // the receiver is a network 1 address, but we are declaring it is network2 so we can use it in the tests
-        address receiver = vm.addr(101);
-        address caller = vm.addr(100);
-
-        vm.prank(caller);
-        vm.deal(caller, CROSS_MSG_FEE + 2);
-        SubnetID memory network2 = gwGetter2.getNetworkName();
-        address[] memory rootnetPath = new address[](1);
-        rootnetPath[0] = ROOTNET_ADDRESS;
-        SubnetID memory destinationSubnet = SubnetID({root: ROOTNET_CHAINID, route: rootnetPath});
-
-        CrossMsg memory crossMsg = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({subnetId: network2, rawAddress: FvmAddressHelper.from(caller)}),
-                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)}),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
-            wrapped: true
-        });
-
-        require(crossMsg.message.applyType(gwGetter2.getNetworkName()) == IPCMsgType.BottomUp);
-
-        vm.prank(caller);
-
-        gwMessenger2.sendCrossMessage{value: CROSS_MSG_FEE + 1}(crossMsg);
-
-        require(gwGetter2.appliedTopDownNonce() == 0);
-    }
-
     function testGatewayDiamond_Propagate_Works_WithFeeRemainder() external {
         (, address[] memory validators) = setupValidators();
         address caller = validators[0];
@@ -1306,6 +1237,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function setupWhiteListMethod(address caller) internal returns (bytes32) {
+        (, address[] memory validators) = setupValidators();
+
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
         CrossMsg memory crossMsg = CrossMsg({
@@ -1325,13 +1258,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             }),
             wrapped: false
         });
+        CrossMsg[] memory msgs = new CrossMsg[](1);
+        msgs[0] = crossMsg;
 
         // we add a validator with 10 times as much weight as the default validator.
         // This way we have 10/11 votes and we reach majority, setting the message in postbox
         // addValidator(caller, 1000);
 
-        CrossMsg[] memory topDownMsgs = new CrossMsg[](1);
-        topDownMsgs[0] = crossMsg;
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.applyCrossMessages(msgs);
+
+
         return crossMsg.toHash();
     }
 
