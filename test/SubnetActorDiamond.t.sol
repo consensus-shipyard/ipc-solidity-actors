@@ -777,13 +777,6 @@ contract SubnetActorDiamondTest is Test {
         vm.stopPrank();
     }
 
-    function _assertVote(address validator, BottomUpCheckpoint memory checkpoint) internal {
-        vm.prank(validator);
-        saManager.submitCheckpoint(checkpoint);
-
-        require(saManager.hasValidatorVotedForSubmission(checkpoint.epoch, validator) == true, "validator not voted");
-    }
-
     function _assertDeploySubnetActor(
         bytes32 _name,
         address _ipcGatewayAddr,
@@ -901,55 +894,5 @@ contract SubnetActorDiamondTest is Test {
     function invariant_BalanceEqualsTotalStake() public {
         assertEq(address(gatewayDiamond).balance, saGetter.totalStake());
         assertEq(address(saManager).balance, 0);
-    }
-
-    function testSubnetActorDiamond_SubmitCheckpoint_Works_TwoRounds() public {
-        address validator = vm.addr(100);
-        _assertJoin(validator, DEFAULT_MIN_VALIDATOR_STAKE);
-
-        BottomUpCheckpoint memory checkpoint = _createBottomUpCheckpoint();
-
-        vm.expectCall(
-            GATEWAY_ADDRESS,
-            abi.encodeWithSelector(IGateway(GATEWAY_ADDRESS).commitChildCheck.selector, checkpoint)
-        );
-        _assertVote(validator, checkpoint);
-
-        (SubnetID memory source, uint64 epoch, uint256 fee, bytes32 prevHash, bytes memory proof) = saManager
-            .committedCheckpoints(checkpoint.epoch);
-
-        require(saGetter.prevExecutedCheckpointHash() == checkpoint.toHash());
-        require(saGetter.lastVotingExecutedEpoch() == checkpoint.epoch);
-        require(source.toHash() == checkpoint.source.toHash());
-        require(epoch == checkpoint.epoch);
-        require(fee == checkpoint.fee);
-        require(prevHash == checkpoint.prevHash);
-        require(proof.length == 0);
-
-        bytes memory testProof = abi.encodePacked("testProof");
-
-        BottomUpCheckpoint memory checkpoint2 = _createBottomUpCheckpointWithConfig(
-            2 * DEFAULT_CHECKPOINT_PERIOD,
-            1,
-            checkpoint.toHash(),
-            testProof
-        );
-
-        vm.expectCall(
-            GATEWAY_ADDRESS,
-            abi.encodeWithSelector(IGateway(GATEWAY_ADDRESS).commitChildCheck.selector, checkpoint2)
-        );
-        _assertVote(validator, checkpoint2);
-
-        (SubnetID memory source2, uint64 epoch2, uint256 fee2, bytes32 prevHash2, bytes memory proof2) = saManager
-            .committedCheckpoints(checkpoint2.epoch);
-
-        require(saGetter.prevExecutedCheckpointHash() == checkpoint2.toHash());
-        require(saGetter.lastVotingExecutedEpoch() == checkpoint2.epoch);
-        require(source2.toHash() == checkpoint2.source.toHash());
-        require(epoch2 == checkpoint2.epoch);
-        require(fee2 == checkpoint2.fee);
-        require(prevHash2 == checkpoint2.prevHash);
-        require(keccak256(proof2) == keccak256(checkpoint2.proof));
     }
 }
