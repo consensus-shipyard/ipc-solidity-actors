@@ -1268,7 +1268,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.applyCrossMessages(msgs);
 
-
         return crossMsg.toHash();
     }
 
