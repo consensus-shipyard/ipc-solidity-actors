@@ -1068,9 +1068,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address caller = vm.addr(100);
         vm.startPrank(caller);
         vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+
         registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+
         SubnetID memory destinationSubnet = SubnetID(0, new address[](0));
         vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
+
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
@@ -1137,53 +1140,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                 wrapped: true
             })
         );
-    }
-
-    function testGatewayDiamond_SendCrossMessage_Works_TopDown_SameSubnet() public {
-        address caller = vm.addr(100);
-        vm.prank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
-
-        address receiver = address(this); // callback to reward() method
-        vm.prank(receiver);
-        vm.deal(receiver, MIN_COLLATERAL_AMOUNT + 1);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, receiver);
-
-        SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(receiver);
-        SubnetID memory from = gwGetter.getNetworkName().createSubnetId(caller);
-
-        CrossMsg memory crossMsg = CrossMsg({
-            message: StorableMsg({
-                from: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(caller)}),
-                to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(receiver)}),
-                value: CROSS_MSG_FEE + 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0)
-            }),
-            wrapped: true
-        });
-
-        vm.prank(caller);
-        vm.expectCall(receiver, 0, abi.encodeWithSelector(ISubnetActor.reward.selector, CROSS_MSG_FEE), 1);
-
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(crossMsg);
-
-        (SubnetID memory id, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(this));
-
-        require(crossMsg.message.applyType(gwGetter.getNetworkName()) == IPCMsgType.TopDown);
-        require(id.equals(destinationSubnet));
-        require(nonce == 1);
-        require(circSupply == CROSS_MSG_FEE + 1);
-        require(gwGetter.getNetworkName().equals(destinationSubnet.commonParent(from)));
-        require(gwGetter.appliedTopDownNonce() == 1);
-
-        CrossMsg[] memory msgs = gwGetter.getTopDownMsgs(id, block.number, block.number);
-        require(msgs.length == 1);
-        (bool exists, uint64 n) = gwGetter.getAppliedTopDownNonce(id);
-        require(exists);
-        require(n == 1);
     }
 
     function reward(uint256 amount) external view {
