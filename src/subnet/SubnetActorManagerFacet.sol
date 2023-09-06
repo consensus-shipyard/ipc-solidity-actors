@@ -104,52 +104,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         IGateway(s.ipcGatewayAddr).kill();
     }
 
-    /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
-    /// @param checkpoint - the batch messages data
-    function submitCheckpoint(BottomUpCheckpoint calldata checkpoint) external {
-        LibVoting.applyValidEpochOnly(checkpoint.epoch);
-
-        if (s.status != Status.Active) {
-            revert SubnetNotActive();
-        }
-        if (!s.validators.contains(msg.sender)) {
-            revert NotValidator();
-        }
-        if (checkpoint.source.toHash() != s.currentSubnetHash) {
-            revert WrongCheckpointSource();
-        }
-        if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) {
-            revert MessagesNotSorted();
-        }
-
-        EpochVoteBottomUpSubmission storage voteSubmission = s.epochVoteSubmissions[checkpoint.epoch];
-
-        emit BottomUpCheckpointSubmitted(checkpoint, msg.sender);
-
-        // submit the vote
-        bool shouldExecuteVote = _submitBottomUpVote({
-            voteSubmission: voteSubmission,
-            submission: checkpoint,
-            submitterAddress: msg.sender,
-            submitterWeight: s.stake[msg.sender]
-        });
-
-        if (shouldExecuteVote) {
-            emit BottomUpCheckpointExecuted(checkpoint.epoch, msg.sender);
-            _commitCheckpoint(voteSubmission);
-        } else {
-            // try to get the next executable epoch from the queue
-            (uint64 nextExecutableEpoch, bool isExecutableEpoch) = LibVoting.getNextExecutableEpoch();
-
-            if (isExecutableEpoch) {
-                EpochVoteBottomUpSubmission storage nextVoteSubmission = s.epochVoteSubmissions[nextExecutableEpoch];
-
-                emit NextBottomUpCheckpointExecuted(nextExecutableEpoch, msg.sender);
-                _commitCheckpoint(nextVoteSubmission);
-            }
-        }
-    }
-
     /// @notice method that distributes the rewards for the subnet to validators.
     function reward(uint256 amount) external onlyGateway {
         uint256 validatorsLength = s.validators.length();
@@ -223,52 +177,5 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotValidator();
         }
         s.validatorWorkerAddresses[validator] = newWorkerAddr;
-    }
-
-    /// @notice submits a vote for a checkpoint
-    /// @param voteSubmission - the vote submission data
-    /// @param submitterAddress - the validator that submits the vote
-    /// @param submitterWeight - the weight of the validator
-    function _submitBottomUpVote(
-        EpochVoteBottomUpSubmission storage voteSubmission,
-        BottomUpCheckpoint calldata submission,
-        address submitterAddress,
-        uint256 submitterWeight
-    ) internal returns (bool shouldExecuteVote) {
-        bytes32 submissionHash = submission.toHash();
-
-        shouldExecuteVote = LibVoting.submitVote({
-            vote: voteSubmission.vote,
-            submissionHash: submissionHash,
-            submitterAddress: submitterAddress,
-            submitterWeight: submitterWeight,
-            epoch: submission.epoch,
-            totalWeight: s.totalStake
-        });
-
-        // store the submission only the first time
-        if (voteSubmission.submissions[submissionHash].isEmpty()) {
-            voteSubmission.submissions[submissionHash] = submission;
-        }
-    }
-
-    /// @notice method that commits a checkpoint after reaching majority
-    /// @param voteSubmission - the last vote submission that reached majority for commit
-    function _commitCheckpoint(EpochVoteBottomUpSubmission storage voteSubmission) internal {
-        BottomUpCheckpoint storage checkpoint = voteSubmission.submissions[voteSubmission.vote.mostVotedSubmission];
-        /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
-
-        if (s.prevExecutedCheckpointHash != checkpoint.prevHash) {
-            voteSubmission.vote.reset();
-            LibVoting.removeFromExecutableQueue(checkpoint.epoch);
-            return;
-        }
-
-        LibVoting.markSubmissionExecuted(checkpoint.epoch);
-
-        s.committedCheckpoints[checkpoint.epoch] = checkpoint;
-        s.prevExecutedCheckpointHash = checkpoint.toHash();
-
-        IGateway(s.ipcGatewayAddr).commitChildCheck(checkpoint);
     }
 }
