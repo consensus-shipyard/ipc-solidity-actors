@@ -1004,7 +1004,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                         subnetId: SubnetID({root: 0, route: new address[](0)}),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    value: CROSS_MSG_FEE + 1,
+                    value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0)
@@ -1029,7 +1029,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
-                    value: CROSS_MSG_FEE + 1,
+                    value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0)
@@ -1082,7 +1082,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
-                    value: CROSS_MSG_FEE + 1,
+                    value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0)
@@ -1107,7 +1107,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
-                    value: CROSS_MSG_FEE + 1,
+                    value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0)
