@@ -55,7 +55,7 @@ library LibGateway {
     /// @param finality - the finality to be committed
     function commitParentFinality(ParentFinality calldata finality) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        
+
         if (s.latestParentHeight > finality.height) {
             revert ParentFinalityAlreadyCommitted();
         }
@@ -80,16 +80,19 @@ library LibGateway {
 
         // setup the new validator set
         uint256 validatorsLength = validators.length;
+        FvmAddress memory zero = FvmAddressHelper.from(address(0));
         for (uint256 validatorIndex = 0; validatorIndex < validatorsLength; ) {
-            uint256 validatorWeight = weights[validatorIndex];
+            if (!FvmAddressHelper.equal(validators[validatorIndex], zero)) {
+                uint256 validatorWeight = weights[validatorIndex];
 
-            if (validatorWeight == 0) {
-                revert ValidatorWeightIsZero();
+                if (validatorWeight == 0) {
+                    revert ValidatorWeightIsZero();
+                }
+
+                s.validatorSet[s.validatorNonce][validators[validatorIndex].toHash()] = validatorWeight;
+
+                totalValidatorsWeight += validatorWeight;
             }
-
-            s.validatorSet[s.validatorNonce][validators[validatorIndex].toHash()] = validatorWeight;
-
-            totalValidatorsWeight += validatorWeight;
 
             unchecked {
                 ++validatorIndex;
