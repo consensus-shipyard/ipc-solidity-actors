@@ -1237,8 +1237,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function setupWhiteListMethod(address caller) internal returns (bytes32) {
-        (, address[] memory validators) = setupValidators();
-
         registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
 
         CrossMsg memory crossMsg = CrossMsg({
