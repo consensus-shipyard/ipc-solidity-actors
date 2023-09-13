@@ -166,7 +166,7 @@ contract GatewayGetterFacet {
     /// @notice get the membership corresponding to the target configuration number
     /// @param n the configuration number
     function getMembership(uint64 n) external view returns (Membership memory) {
-        return s.membership[n];
+        return LibGateway.getMembership(n);
     }
 
     /// @notice get the configuration number
