@@ -163,7 +163,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         LibGateway.commitBottomUpMsg(crossMsg);
     }
 
-    // /// @notice set a new membership directly
+    /// @notice set a new membership directly
     function setMembership(FvmAddress[] memory validators, uint256[] memory weights) external systemActorOnly {
         LibGateway.setMembership(validators, weights);
     }
