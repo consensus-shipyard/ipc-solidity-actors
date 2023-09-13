@@ -30,6 +30,9 @@ async function main() {
       deployer,
       "SubnetActorManagerFacet",
       {
+        "CrossMsgHelper": libs["CrossMsgHelper"],
+        "SubnetIDHelper": libs["SubnetIDHelper"],
+        "CheckpointHelper": libs["CheckpointHelper"]
       },
       txArgs
     );
