@@ -149,15 +149,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         proof = s.committedCheckpoints[e].proof;
     }
 
-    /// @notice whether a validator has voted for a checkpoint submission during an epoch
-    /// @param epoch - the epoch to check
-    /// @param submitter - the validator to check
-    function hasValidatorVotedForSubmission(uint64 epoch, address submitter) external view returns (bool) {
-        EpochVoteBottomUpSubmission storage voteSubmission = s.epochVoteSubmissions[epoch];
-
-        return voteSubmission.vote.submitters[voteSubmission.vote.nonce][submitter];
-    }
-
     function setValidatorNetAddr(string calldata newNetAddr) external {
         address validator = msg.sender;
         if (!s.validators.contains(validator)) {
