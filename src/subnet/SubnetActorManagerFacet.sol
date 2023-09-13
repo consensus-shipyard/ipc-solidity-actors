@@ -2,11 +2,10 @@
 pragma solidity 0.8.19;
 
 import {Status} from "../enums/Status.sol";
-import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
-import {EpochVoteBottomUpSubmission, EpochVoteSubmission} from "../structs/EpochVoteSubmission.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
@@ -27,7 +26,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     using CheckpointHelper for BottomUpCheckpoint;
     using FilAddress for address;
     using Address for address payable;
-    using EpochVoteSubmissionHelper for EpochVoteSubmission;
     using FvmAddressHelper for FvmAddress;
 
     event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter);
@@ -177,5 +175,38 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotValidator();
         }
         s.validatorWorkerAddresses[validator] = newWorkerAddr;
+    }
+
+    /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
+    /// @param checkpoint - the batch messages data
+    function submitCheckpoint(BottomUpCheckpoint calldata checkpoint) external {
+        if (s.status != Status.Active) {
+            revert SubnetNotActive();
+        }
+        if (!s.validators.contains(msg.sender)) {
+            revert NotValidator();
+        }
+        if (checkpoint.source.toHash() != s.currentSubnetHash) {
+            revert WrongCheckpointSource();
+        }
+        if (!CrossMsgHelper.isSorted(checkpoint.crossMsgs)) {
+            revert MessagesNotSorted();
+        }
+
+        _commitCheckpoint(checkpoint);
+    }
+
+    /// @notice method that commits a checkpoint after reaching majority
+    /// @param checkpoint - the batch messages data
+    function _commitCheckpoint(BottomUpCheckpoint calldata checkpoint) internal {
+        /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
+        if (s.prevExecutedCheckpointHash != checkpoint.prevHash) {
+            revert InconsistentPrevCheckpoint();
+        }
+
+        s.committedCheckpoints[checkpoint.epoch] = checkpoint;
+        s.prevExecutedCheckpointHash = checkpoint.toHash();
+
+        IGateway(s.ipcGatewayAddr).commitChildCheck(checkpoint);
     }
 }

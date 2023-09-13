@@ -20,4 +20,7 @@ interface ISubnetActor {
 
     /// Tracks the accumulated rewards for each validator.
     function reward(uint256 amount) external;
+
+    /// SubmitCheckpoint accepts signed checkpoint votes for validators.
+    function submitCheckpoint(BottomUpCheckpoint calldata checkpoint) external;
 }

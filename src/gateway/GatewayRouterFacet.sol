@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {EMPTY_HASH, METHOD_SEND} from "../constants/Constants.sol";
-import {CrossMsg, StorableMsg, ParentFinality} from "../structs/Checkpoint.sol";
+import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
@@ -25,6 +25,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
     using SubnetIDHelper for SubnetID;
+    using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
@@ -38,6 +39,70 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         LibGateway.commitParentFinality(finality);
 
         LibGateway.setMembership(validators, weights);
+    }
+
+    /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
+    function commitChildCheck(BottomUpCheckpoint calldata commit) external {
+        if (!s.initialized) {
+            revert NotInitialized();
+        }
+        if (commit.source.getActor().normalize() != msg.sender) {
+            revert InvalidCheckpointSource();
+        }
+
+        // slither-disable-next-line unused-return
+        (, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
+        if (subnet.status != Status.Active) {
+            revert SubnetNotActive();
+        }
+        if (subnet.prevCheckpoint.epoch >= commit.epoch) {
+            revert InvalidCheckpointEpoch();
+        }
+        if (commit.prevHash != EMPTY_HASH) {
+            if (commit.prevHash != subnet.prevCheckpoint.toHash()) {
+                revert InconsistentPrevCheckpoint();
+            }
+        }
+
+        // get checkpoint for the current template being populated
+        (bool checkpointExists, uint64 nextCheckEpoch, BottomUpCheckpoint storage checkpoint) = LibGateway
+            .getCurrentBottomUpCheckpoint();
+
+        // create a checkpoint template if it doesn't exists
+        if (!checkpointExists) {
+            checkpoint.source = s.networkName;
+            checkpoint.epoch = nextCheckEpoch;
+        }
+
+        checkpoint.setChildCheck({
+            commit: commit,
+            children: s.children,
+            checks: s.checks,
+            currentEpoch: nextCheckEpoch
+        });
+
+        uint256 totalValue = 0;
+        uint256 crossMsgLength = commit.crossMsgs.length;
+        for (uint256 i = 0; i < crossMsgLength; ) {
+            totalValue += commit.crossMsgs[i].message.value;
+            unchecked {
+                ++i;
+            }
+        }
+
+        totalValue += commit.fee + checkpoint.fee; // add fee that is already in checkpoint as well. For example from release message interacting with the same checkpoint
+
+        if (subnet.circSupply < totalValue) {
+            revert NotEnoughSubnetCircSupply();
+        }
+
+        subnet.circSupply -= totalValue;
+
+        subnet.prevCheckpoint = commit;
+
+        _applyMessages(commit.source, commit.crossMsgs);
+
+        LibGateway.distributeRewards(msg.sender, commit.fee);
     }
 
     /// @notice apply cross messages
