@@ -95,10 +95,7 @@ library LibGateway {
 
                 s.validatorSetWeights[s.configurationNumber][validators[i].toHash()] = validatorWeight;
 
-                membership.validators.push(Validator({
-                    addr: validators[i],
-                    weight: validatorWeight
-                }));
+                membership.validators.push(Validator({addr: validators[i], weight: validatorWeight}));
 
                 totalValidatorsWeight += validatorWeight;
             }
