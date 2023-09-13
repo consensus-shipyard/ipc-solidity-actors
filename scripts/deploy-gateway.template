@@ -108,7 +108,7 @@ export async function deploy(libs: { [key in string]: string }) {
         "SubnetIDHelper": libs["SubnetIDHelper"],
         "AccountHelper": libs["AccountHelper"],
         "CheckpointHelper": libs["CheckpointHelper"],
-+       "StorableMsgHelper": libs["StorableMsgHelper"]
+        "StorableMsgHelper": libs["StorableMsgHelper"]
     }
 
     const routerFacet = await deployContractWithDeployer(
