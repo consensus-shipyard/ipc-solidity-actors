@@ -30,9 +30,9 @@ async function main() {
       deployer,
       "SubnetActorManagerFacet",
       {
-        "CrossMsgHelper": libs["CrossMsgHelper"],
-        "SubnetIDHelper": libs["SubnetIDHelper"],
-        "CheckpointHelper": libs["CheckpointHelper"]
+        "CrossMsgHelper": LIBMAP["CrossMsgHelper"],
+        "SubnetIDHelper": LIBMAP["SubnetIDHelper"],
+        "CheckpointHelper": LIBMAP["CheckpointHelper"]
       },
       txArgs
     );
