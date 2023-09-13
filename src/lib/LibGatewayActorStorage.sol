@@ -5,6 +5,7 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint, CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {Membership} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
@@ -28,7 +29,13 @@ struct GatewayActorStorage {
     mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpoints;
     /// @notice List of validators and how many votes of the total each validator has for top-down messages
     // validatorNonce => validator fvm address => weight
-    mapping(uint256 => mapping(bytes32 => uint256)) validatorSet;
+    mapping(uint256 => mapping(bytes32 => uint256)) validatorSetWeights;
+    /// @notice The current configuration number.
+    uint64 configurationNumber;
+    /// @notice List of validators and their weights for each configuration number
+    mapping(uint64 => Membership) membership;
+    /// @notice total votes of all validators in the current membership
+    uint256 currentTotalWeight;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists
@@ -42,12 +49,8 @@ struct GatewayActorStorage {
     SubnetID networkName;
     /// @notice Minimum stake required to create a new subnet
     uint256 minStake;
-    /// @notice sequence number that uniquely identifies a validator set
-    uint256 validatorNonce;
     /// @notice fee amount charged per cross message
     uint256 crossMsgFee;
-    /// @notice total votes of all validators
-    uint256 totalWeight;
     /// @notice nonce for bottom-up messages
     uint64 bottomUpNonce;
     /// @notice AppliedNonces keep track of the next nonce of the message to be applied.

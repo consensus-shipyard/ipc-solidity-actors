@@ -4,6 +4,7 @@ pragma solidity 0.8.19;
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {Membership} from "../structs/Validator.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
@@ -104,8 +105,8 @@ contract GatewayGetterFacet {
         return (true, subnet.topDownNonce);
     }
 
-    function totalWeight() public view returns (uint256) {
-        return s.totalWeight;
+    function currentTotalWeight() public view returns (uint256) {
+        return s.currentTotalWeight;
     }
 
     function appliedTopDownNonce() public view returns (uint64) {
@@ -155,5 +156,21 @@ contract GatewayGetterFacet {
             }
         }
         return out;
+    }
+
+    /// @notice get the current membership
+    function getCurrentMembership() external view returns (Membership memory) {
+        return s.membership[s.configurationNumber];
+    }
+
+    /// @notice get the membership corresponding to the target configuration number
+    /// @param n the configuration number
+    function getMembership(uint64 n) external view returns (Membership memory) {
+        return s.membership[n];
+    }
+
+    /// @notice get the configuration number
+    function getConfigurationNumber() external view returns (uint64) {
+        return s.configurationNumber;
     }
 }

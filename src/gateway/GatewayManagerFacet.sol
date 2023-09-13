@@ -7,6 +7,7 @@ import {Status} from "../enums/Status.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {AlreadyInitialized, AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
+import {ValidatorInfo, ValidatorSet} from "../structs/Validator.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -160,5 +161,10 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         });
 
         LibGateway.commitBottomUpMsg(crossMsg);
+    }
+
+    // /// @notice set a new membership directly
+    function setMembership(FvmAddress[] memory validators, uint256[] memory weights) external systemActorOnly {
+        LibGateway.setMembership(validators, weights);
     }
 }

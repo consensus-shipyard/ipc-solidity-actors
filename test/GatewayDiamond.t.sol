@@ -16,6 +16,7 @@ import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
+import {ValidatorSet, ValidatorInfo, Membership, Validator} from "../src/structs/Validator.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
@@ -1281,17 +1282,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
         gwRouter.commitParentFinality(finality, validators, weights);
 
-        require(gwGetter.totalWeight() == 250);
+        require(gwGetter.currentTotalWeight() == 250);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_NewValidators() public {
         addValidator(vm.addr(100), 100);
 
-        require(gwGetter.totalWeight() == 100);
+        require(gwGetter.currentTotalWeight() == 100);
 
         addValidator(vm.addr(101), 1000);
 
-        require(gwGetter.totalWeight() == 1000);
+        require(gwGetter.currentTotalWeight() == 1000);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_WithQuery() public {
@@ -1346,6 +1347,33 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
         gwRouter.applyCrossMessages(topDownMsgs);
+    }
+
+    function testGatewayDiamond_GetCurrentMembership() public {
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+
+        FvmAddress[] memory validators = new FvmAddress[](2);
+        validators[0] = FvmAddressHelper.from(address(this));
+        validators[1] = FvmAddressHelper.from(address(vm.addr(201)));
+
+        uint256[] memory weights = new uint256[](2);
+        weights[0] = 100;
+        weights[1] = 200;
+
+        uint64 previousConfigurationNumer = gwGetter.getConfigurationNumber();
+        uint64 lastConfigurationNumer = previousConfigurationNumer + 1;
+        gwManager.setMembership(validators, weights);
+        require(gwGetter.getConfigurationNumber() == 1 + previousConfigurationNumer, "getConfigurationNumber correct");
+
+        Membership memory newMb = gwGetter.getCurrentMembership();
+        require(newMb.configurationNumber == 1 + previousConfigurationNumer, "newMb.configurationNumber correct");
+        require(newMb.validators.length == 2, "nnewMb.validators.length correct");
+        require(newMb.totalWeight == 300, "newMb.totalWeight correct");
+
+        Membership memory mbn = gwGetter.getMembership(lastConfigurationNumer);
+        require(mbn.configurationNumber == 1 + previousConfigurationNumer, "mbn.configurationNumber correct");
+        require(mbn.validators.length == 2, "mbn.validators.length correct");
+        require(mbn.totalWeight == 300, "mbn.totalWeight correct");
     }
 
     function setupValidators() internal returns (FvmAddress[] memory validators, address[] memory addresses) {
