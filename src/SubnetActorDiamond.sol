@@ -32,20 +32,23 @@ contract SubnetActorDiamond {
     }
 
     constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
-        LibDiamond.setContractOwner(msg.sender);
-        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
-
-        s.parentId = params.parentId;
-        s.name = params.name;
         if (params.ipcGatewayAddr == address(0)) {
             revert GatewayCannotBeZero();
         }
-        if (params.topDownCheckPeriod == 0 || params.bottomUpCheckPeriod == 0) {
+        // topDownCheckPeriod can be equal 0, since validators can propose anything they want.
+        // The bottomUpCheckPeriod should be non-zero for now.
+        if (params.bottomUpCheckPeriod == 0) {
             revert InvalidSubmissionPeriod();
         }
         if (params.minActivationCollateral == 0) {
             revert InvalidCollateral();
         }
+
+        LibDiamond.setContractOwner(msg.sender);
+        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
+
+        s.parentId = params.parentId;
+        s.name = params.name;
         s.ipcGatewayAddr = params.ipcGatewayAddr;
         s.consensus = params.consensus;
         s.minActivationCollateral = params.minActivationCollateral;
@@ -53,7 +56,6 @@ contract SubnetActorDiamond {
         s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.status = Status.Instantiated;
-
         s.genesis = params.genesis;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
         // NOTE: we currently use 0 as the genesisEpoch for subnets so checkpoints

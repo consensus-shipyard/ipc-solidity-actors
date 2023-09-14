@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
-import {InvalidCollateral} from "./errors/IPCErrors.sol";
+import {InvalidCollateral, InvalidSubmissionPeriod} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID} from "./structs/Subnet.sol";
@@ -27,19 +27,23 @@ contract GatewayDiamond {
     }
 
     constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
-        LibDiamond.setContractOwner(msg.sender);
-        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
-
         if (params.minCollateral == 0) {
             revert InvalidCollateral();
         }
+        // topDownCheckPeriod can be equal 0, since validators can propose anything they want.
+        // The bottomUpCheckPeriod should be non-zero for now.
+        if (params.bottomUpCheckPeriod == 0) {
+            revert InvalidSubmissionPeriod();
+        }
+
+        LibDiamond.setContractOwner(msg.sender);
+        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
 
         s.networkName = params.networkName;
         s.minStake = params.minCollateral;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
-        s.minStake = params.minCollateral;
 
         // the root doesn't need to be explicitly initialized
         if (s.networkName.isRoot()) {
