@@ -16,11 +16,7 @@ contract GatewayDiamond {
 
     using SubnetIDHelper for SubnetID;
 
-    // @notice uint8 constant MIN_CHECKPOINT_PERIOD = 10;
     uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;
-
-    /// @notice minimum checkpoint period. Values get clamped to this
-    uint8 public constant MIN_CHECKPOINT_PERIOD = 10;
 
     struct ConstructorParams {
         SubnetID networkName;
@@ -36,12 +32,8 @@ contract GatewayDiamond {
 
         s.networkName = params.networkName;
         s.minStake = MIN_COLLATERAL_AMOUNT;
-        s.bottomUpCheckPeriod = params.bottomUpCheckPeriod < MIN_CHECKPOINT_PERIOD
-            ? MIN_CHECKPOINT_PERIOD
-            : params.bottomUpCheckPeriod;
-        s.topDownCheckPeriod = params.topDownCheckPeriod < MIN_CHECKPOINT_PERIOD
-            ? MIN_CHECKPOINT_PERIOD
-            : params.topDownCheckPeriod;
+        s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
+        s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
 
         // the root doesn't need to be explicitly initialized
