@@ -216,8 +216,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwMessenger = GatewayMessengerFacet(address(gatewayDiamond));
         louper = DiamondLoupeFacet(address(gatewayDiamond));
 
-        addValidator(TOPDOWN_VALIDATOR_1, 100);
-
         gwConstructorParams.networkName = SubnetID({root: ROOTNET_CHAINID, route: path2});
 
         gatewayDiamond2 = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
@@ -265,6 +263,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         saDiamond = new SubnetActorDiamond(saDiamondCut, saConstructorParams);
         saManager = SubnetActorManagerFacet(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
+
+        addValidator(TOPDOWN_VALIDATOR_1, 100);
     }
 
     function invariant_CrossMsgFee() public view {
@@ -1234,12 +1234,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = 100;
 
+        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
+
         vm.prank(caller);
         vm.expectRevert(NotSystemActor.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, validators, weights);
+        gwRouter.commitParentFinality(finality, n, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Fails_ValidatorsAndWeightsNotEqual() public {
@@ -1249,11 +1251,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights[0] = 100;
         weights[1] = 130;
 
+        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
         vm.prank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, validators, weights);
+        gwRouter.commitParentFinality(finality, n, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Fails_ZeroWeight() public {
@@ -1262,11 +1265,13 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = 0;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
+
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(ValidatorWeightIsZero.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, validators, weights);
+        gwRouter.commitParentFinality(finality, n, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_MultipleValidators() public {
@@ -1277,10 +1282,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights[0] = 100;
         weights[1] = 150;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, validators, weights);
+
+        gwRouter.commitParentFinality(finality, gwGetter.getLastConfigurationNumber() + 1, validators, weights);
+        gwManager.updateMembership();
 
         require(gwGetter.currentTotalWeight() == 250);
     }
@@ -1288,11 +1295,11 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_CommitParentFinality_Works_NewValidators() public {
         addValidator(vm.addr(100), 100);
 
-        require(gwGetter.currentTotalWeight() == 100);
+        require(gwGetter.lastTotalWeight() == 100);
 
         addValidator(vm.addr(101), 1000);
 
-        require(gwGetter.currentTotalWeight() == 1000);
+        require(gwGetter.lastTotalWeight() == 1000);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_WithQuery() public {
@@ -1303,10 +1310,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights[0] = 100;
         weights[1] = 150;
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, validators, weights);
+
+        gwRouter.commitParentFinality(finality, gwGetter.getLastConfigurationNumber() + 1, validators, weights);
+        gwManager.updateMembership();
 
         ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
 
@@ -1349,9 +1358,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.applyCrossMessages(topDownMsgs);
     }
 
-    function testGatewayDiamond_GetCurrentMembership() public {
+    function testGatewayDiamond_Membership() public {
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
+        Membership memory lastMb;
+        Membership memory curMb;
+
+        uint64 initConfigurationNumber = gwGetter.getLastConfigurationNumber();
+        uint64 newConfigurationNumber = initConfigurationNumber;
+
+        // new configuration
         FvmAddress[] memory validators = new FvmAddress[](2);
         validators[0] = FvmAddressHelper.from(address(this));
         validators[1] = FvmAddressHelper.from(address(vm.addr(201)));
@@ -1360,20 +1376,39 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights[0] = 100;
         weights[1] = 200;
 
-        uint64 previousConfigurationNumer = gwGetter.getConfigurationNumber();
-        uint64 lastConfigurationNumer = previousConfigurationNumer + 1;
-        gwManager.setMembership(validators, weights);
-        require(gwGetter.getConfigurationNumber() == 1 + previousConfigurationNumer, "getConfigurationNumber correct");
+        gwManager.newMembership(++newConfigurationNumber, validators, weights);
+        lastMb = gwGetter.getLastMembership();
+        require(gwGetter.getLastConfigurationNumber() == newConfigurationNumber, "last n correct");
+        require(gwGetter.getCurrentConfigurationNumber() != newConfigurationNumber, "current n correct");
+        require(lastMb.configurationNumber == newConfigurationNumber, "lastMb.n correct");
+        require(lastMb.validators.length == 2, "lastMb.validators.length correct");
+        require(lastMb.totalWeight == 300, "lastMb.totalWeight correct");
 
-        Membership memory newMb = gwGetter.getCurrentMembership();
-        require(newMb.configurationNumber == 1 + previousConfigurationNumer, "newMb.configurationNumber correct");
-        require(newMb.validators.length == 2, "nnewMb.validators.length correct");
-        require(newMb.totalWeight == 300, "newMb.totalWeight correct");
+        // new configuration
+        validators = new FvmAddress[](3);
+        validators[0] = FvmAddressHelper.from(address(this));
+        validators[1] = FvmAddressHelper.from(address(vm.addr(201)));
+        validators[2] = FvmAddressHelper.from(address(vm.addr(301)));
 
-        Membership memory mbn = gwGetter.getMembership(lastConfigurationNumer);
-        require(mbn.configurationNumber == 1 + previousConfigurationNumer, "mbn.configurationNumber correct");
-        require(mbn.validators.length == 2, "mbn.validators.length correct");
-        require(mbn.totalWeight == 300, "mbn.totalWeight correct");
+        weights = new uint256[](3);
+        weights[0] = 100;
+        weights[1] = 200;
+        weights[2] = 300;
+
+        gwManager.newMembership(++newConfigurationNumber, validators, weights);
+        lastMb = gwGetter.getLastMembership();
+        require(lastMb.configurationNumber == newConfigurationNumber, "nlast.configurationNumber correct");
+        require(lastMb.validators.length == 3, "lastMb.validators.length correct");
+        require(lastMb.totalWeight == 600, "lastMb.totalWeight correct");
+
+        // update
+        curMb = gwManager.updateMembership();
+        console.log(newConfigurationNumber);
+        console.log(curMb.configurationNumber);
+        require(gwGetter.getCurrentConfigurationNumber() == newConfigurationNumber, "current n correct");
+        require(curMb.configurationNumber == newConfigurationNumber, "curMb.configurationNumber correct");
+        require(curMb.validators.length == 3, "curMb.validators.length correct");
+        require(curMb.totalWeight == 600, "curMb.totalWeight correct");
     }
 
     function setupValidators() internal returns (FvmAddress[] memory validators, address[] memory addresses) {
@@ -1397,11 +1432,13 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights[1] = 100;
         weights[2] = 100;
 
+        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
+
         vm.prank(FilAddress.SYSTEM_ACTOR);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, validators, weights);
+        gwRouter.commitParentFinality(finality, n, validators, weights);
     }
 
     function addValidator(address validator) internal {
@@ -1415,10 +1452,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights[0] = weight;
 
         vm.deal(validator, 1);
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, validators, weights);
+        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
+
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.commitParentFinality(finality, n, validators, weights);
+        vm.stopPrank();
     }
 
     function callback() public view {

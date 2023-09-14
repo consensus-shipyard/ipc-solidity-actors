@@ -105,10 +105,6 @@ contract GatewayGetterFacet {
         return (true, subnet.topDownNonce);
     }
 
-    function currentTotalWeight() public view returns (uint256) {
-        return s.currentTotalWeight;
-    }
-
     function appliedTopDownNonce() public view returns (uint64) {
         return s.appliedTopDownNonce;
     }
@@ -158,19 +154,33 @@ contract GatewayGetterFacet {
         return out;
     }
 
+    /// @notice get the last membership received from the parent
+    function getLastMembership() external view returns (Membership memory) {
+        return s.lastMembership;
+    }
+
+    /// @notice get the last configuration number received from the parent
+    function getLastConfigurationNumber() external view returns (uint64) {
+        return s.lastMembership.configurationNumber;
+    }
+
+    /// @notice get the last total weight for the membership received from the parent
+    function lastTotalWeight() public view returns (uint256) {
+        return s.lastMembership.totalWeight;
+    }
+
     /// @notice get the current membership
     function getCurrentMembership() external view returns (Membership memory) {
-        return s.membership[s.configurationNumber];
+        return s.currentMembership;
     }
 
-    /// @notice get the membership corresponding to the target configuration number
-    /// @param n the configuration number
-    function getMembership(uint64 n) external view returns (Membership memory) {
-        return LibGateway.getMembership(n);
+    /// @notice get the current configuration number
+    function getCurrentConfigurationNumber() external view returns (uint64) {
+        return s.currentMembership.configurationNumber;
     }
 
-    /// @notice get the configuration number
-    function getConfigurationNumber() external view returns (uint64) {
-        return s.configurationNumber;
+    /// @notice get the current membership validators total weight
+    function currentTotalWeight() public view returns (uint256) {
+        return s.currentMembership.totalWeight;
     }
 }

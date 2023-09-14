@@ -33,12 +33,12 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice commit the ipc parent finality into storage
     function commitParentFinality(
         ParentFinality calldata finality,
+        uint64 n,
         FvmAddress[] calldata validators,
         uint256[] calldata weights
     ) external systemActorOnly {
         LibGateway.commitParentFinality(finality);
-
-        LibGateway.setMembership(validators, weights);
+        LibGateway.newMembership(n, validators, weights);
     }
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority

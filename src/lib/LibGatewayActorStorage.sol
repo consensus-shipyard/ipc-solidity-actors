@@ -30,12 +30,10 @@ struct GatewayActorStorage {
     /// @notice List of validators and how many votes of the total each validator has for top-down messages
     // validatorNonce => validator fvm address => weight
     mapping(uint256 => mapping(bytes32 => uint256)) validatorSetWeights;
-    /// @notice The current configuration number.
-    uint64 configurationNumber;
-    /// @notice List of validators and their weights for each configuration number
-    mapping(uint64 => Membership) membership;
-    /// @notice total votes of all validators in the current membership
-    uint256 currentTotalWeight;
+    /// @notice The current membership of the child subnet
+    Membership currentMembership;
+    /// @notice The last membership received from the parent
+    Membership lastMembership;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists
