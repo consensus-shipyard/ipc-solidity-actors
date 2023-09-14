@@ -80,7 +80,7 @@ library LibGateway {
             return;
         }
 
-        uint256 l = validators.length;
+        uint256 len = validators.length;
         uint256 totalValidatorsWeight;
 
         s.lastMembership.configurationNumber = n;
@@ -88,7 +88,7 @@ library LibGateway {
         delete s.lastMembership.validators;
 
         FvmAddress memory zero = FvmAddressHelper.from(address(0));
-        for (uint256 i = 0; i < l; ) {
+        for (uint256 i = 0; i < len; ) {
             if (!FvmAddressHelper.equal(validators[i], zero)) {
                 uint256 validatorWeight = weights[i];
 

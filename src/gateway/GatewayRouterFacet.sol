@@ -38,7 +38,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256[] calldata weights
     ) external systemActorOnly {
         LibGateway.commitParentFinality(finality);
-        LibGateway.newMembership(n, validators, weights);
+        LibGateway.newMembership({n: n, validators: validators, weights: weights});
     }
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority

@@ -169,7 +169,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         FvmAddress[] memory validators,
         uint256[] memory weights
     ) external systemActorOnly {
-        LibGateway.newMembership(n, validators, weights);
+        LibGateway.newMembership({n: n, validators: validators, weights: weights});
     }
 
     /// @notice updates the membership of the child subnet and returns it
