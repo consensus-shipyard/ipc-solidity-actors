@@ -21,6 +21,7 @@ error InvalidCrossMsgDstSubnet();
 error InvalidCrossMsgFromSubnet();
 error InvalidCrossMsgNonce();
 error InvalidMajorityPercentage();
+error InvalidSubmissionPeriod();
 error MessagesNotSorted();
 error NoRewardToWithdraw();
 error NoValidatorsInSubnet();
