@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
+import {InvalidCollateral} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID} from "./structs/Subnet.sol";
@@ -16,12 +17,11 @@ contract GatewayDiamond {
 
     using SubnetIDHelper for SubnetID;
 
-    uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;
-
     struct ConstructorParams {
         SubnetID networkName;
         uint64 bottomUpCheckPeriod;
         uint64 topDownCheckPeriod;
+        uint256 minCollateral;
         uint256 msgFee;
         uint8 majorityPercentage;
     }
@@ -30,11 +30,16 @@ contract GatewayDiamond {
         LibDiamond.setContractOwner(msg.sender);
         LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
 
+        if (params.minCollateral == 0) {
+            revert InvalidCollateral();
+        }
+
         s.networkName = params.networkName;
-        s.minStake = MIN_COLLATERAL_AMOUNT;
+        s.minStake = params.minCollateral;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
+        s.minStake = params.minCollateral;
 
         // the root doesn't need to be explicitly initialized
         if (s.networkName.isRoot()) {

@@ -157,6 +157,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: 1,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
@@ -307,6 +308,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: checkpointPeriod,
             topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: 1,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
@@ -345,6 +347,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: checkpointPeriod,
             topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: 1,
             majorityPercentage: 100
         });
 
@@ -881,6 +884,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: 1,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -910,6 +914,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
+            minCollateral: 1,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -937,6 +942,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
+            minCollateral: 1,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -967,6 +973,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
+            minCollateral: 1,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);

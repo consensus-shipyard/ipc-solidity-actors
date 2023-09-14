@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {SubnetActorStorage} from "./lib/LibSubnetActorStorage.sol";
 import {ConsensusType} from "./enums/ConsensusType.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
-import {GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod} from "./errors/IPCErrors.sol";
+import {GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod, InvalidCollateral} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID} from "./structs/Subnet.sol";
@@ -17,8 +17,6 @@ contract SubnetActorDiamond {
     SubnetActorStorage internal s;
 
     using SubnetIDHelper for SubnetID;
-
-    uint256 public constant MIN_COLLATERAL_AMOUNT = 1 ether;
 
     struct ConstructorParams {
         SubnetID parentId;
@@ -45,11 +43,12 @@ contract SubnetActorDiamond {
         if (params.topDownCheckPeriod == 0 || params.bottomUpCheckPeriod == 0) {
             revert InvalidSubmissionPeriod();
         }
+        if (params.minActivationCollateral == 0) {
+            revert InvalidCollateral();
+        }
         s.ipcGatewayAddr = params.ipcGatewayAddr;
         s.consensus = params.consensus;
-        s.minActivationCollateral = params.minActivationCollateral < MIN_COLLATERAL_AMOUNT
-            ? MIN_COLLATERAL_AMOUNT
-            : params.minActivationCollateral;
+        s.minActivationCollateral = params.minActivationCollateral;
         s.minValidators = params.minValidators;
         s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
