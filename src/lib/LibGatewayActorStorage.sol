@@ -34,6 +34,8 @@ struct GatewayActorStorage {
     Membership currentMembership;
     /// @notice The last membership received from the parent and adopted
     Membership lastMembership;
+    /// @notice height => Signature[]
+    mapping(uint256 => bytes[]) signatures;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists

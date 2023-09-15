@@ -23,6 +23,8 @@ error InvalidCrossMsgDstSubnet();
 error InvalidCrossMsgFromSubnet();
 error InvalidCrossMsgNonce();
 error InvalidMajorityPercentage();
+error InvalidSignature();
+error InvalidSignatureLength();
 error InvalidSubmissionPeriod();
 error MessagesNotSorted();
 error NoRewardToWithdraw();

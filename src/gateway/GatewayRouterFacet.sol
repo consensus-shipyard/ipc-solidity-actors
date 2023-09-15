@@ -8,7 +8,9 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch} from "../errors/IPCErrors.sol";
+import {IPCMsgType} from "../enums/IPCMsgType.sol";
+import {Membership} from "../structs/Validator.sol";
+import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, InvalidSignatureLength} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive} from "../errors/IPCErrors.sol";
@@ -21,6 +23,7 @@ import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
@@ -29,6 +32,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using CrossMsgHelper for CrossMsg;
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
+
+    event SignaturesUpdated(uint256 h, Membership membership, bytes signature);
+    event SignatureInvalid(uint256 h, Membership membership, bytes signature);
 
     /// @notice commit the ipc parent finality into storage
     /// @param finality - the parent finality
@@ -178,5 +184,40 @@ contract GatewayRouterFacet is GatewayActorModifiers {
                 ++i;
             }
         }
+    }
+
+    /// @notice checks whether the provided provided signature is valid and accumulates it.
+    /// The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.
+    /// @param h - height when the signature was created
+    /// @param membership - the membership at height `h`
+    /// @param signature - added signature
+    function newSignature(
+        uint256 h,
+        Membership calldata membership,
+        bytes calldata signature
+    ) external systemActorOnly {
+        if (signature.length != 65) {
+            revert InvalidSignatureLength();
+        }
+        bytes32 hash = s.finalitiesMap[h].blockHash;
+
+        (address signer, ECDSA.RecoverError err, ) = ECDSA.tryRecover(hash, signature);
+        if (err != ECDSA.RecoverError.NoError) {
+            revert InvalidSignature();
+        }
+
+        uint256 len = membership.validators.length;
+        for (uint256 i = 0; i < len; ) {
+            if (signer == membership.validators[i].addr.extractEvmAddress().normalize()) {
+                s.signatures[h].push(signature);
+                emit SignaturesUpdated({h: h, membership: membership, signature: signature});
+                return;
+            }
+
+            unchecked {
+                ++i;
+            }
+        }
+        emit SignatureInvalid({h: h, membership: membership, signature: signature});
     }
 }
