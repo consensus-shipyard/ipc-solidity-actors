@@ -165,7 +165,7 @@ contract GatewayGetterFacet {
     }
 
     /// @notice get the last total weight for the membership received from the parent
-    function lastTotalWeight() public view returns (uint256) {
+    function getLastTotalWeight() public view returns (uint256) {
         return s.lastMembership.totalWeight;
     }
 
@@ -180,7 +180,7 @@ contract GatewayGetterFacet {
     }
 
     /// @notice get the current membership validators total weight
-    function currentTotalWeight() public view returns (uint256) {
+    function getCurrentTotalWeight() public view returns (uint256) {
         return s.currentMembership.totalWeight;
     }
 }

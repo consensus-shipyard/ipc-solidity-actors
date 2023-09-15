@@ -1296,17 +1296,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.commitParentFinality(finality, gwGetter.getLastConfigurationNumber() + 1, validators, weights);
         gwManager.updateMembership();
 
-        require(gwGetter.currentTotalWeight() == 250);
+        require(gwGetter.getCurrentTotalWeight() == 250);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_NewValidators() public {
         addValidator(vm.addr(100), 100);
 
-        require(gwGetter.lastTotalWeight() == 100);
+        require(gwGetter.getLastTotalWeight() == 100);
 
         addValidator(vm.addr(101), 1000);
 
-        require(gwGetter.lastTotalWeight() == 1000);
+        require(gwGetter.getLastTotalWeight() == 1000);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_WithQuery() public {
