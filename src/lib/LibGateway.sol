@@ -24,7 +24,7 @@ library LibGateway {
     using CrossMsgHelper for CrossMsg;
     using CheckpointHelper for BottomUpCheckpoint;
 
-    event NewMembership(uint64 n, FvmAddress[] validators, uint256[] weights);
+    event MembershipReceived(uint64 n, FvmAddress[] validators, uint256[] weights);
     event MembershipUpdated(uint64 n, Validator[] validators, uint256 totalWeight);
 
     /// @notice returns the current bottom-up checkpoint
@@ -73,7 +73,7 @@ library LibGateway {
     /// @param validators - list of validator addresses
     /// @param weights - list of validators voting powers
     function newMembership(uint64 n, FvmAddress[] memory validators, uint256[] memory weights) internal {
-        emit NewMembership({n: n, validators: validators, weights: weights});
+        emit MembershipReceived({n: n, validators: validators, weights: weights});
 
         if (validators.length != weights.length) {
             revert ValidatorsAndWeightsLengthMismatch();
