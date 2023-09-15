@@ -40,12 +40,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using StorableMsgHelper for StorableMsg;
     using FvmAddressHelper for FvmAddress;
 
-    uint64 constant MIN_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant MAX_NONCE = type(uint64).max;
     address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
     bytes32 private constant DEFAULT_NETWORK_NAME = bytes32("test");
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
+    uint64 constant DEFAULT_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     string private constant DEFAULT_NET_ADDR = "netAddr";
     bytes private constant GENESIS = EMPTY_BYTES;
@@ -158,6 +158,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
@@ -231,7 +232,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             name: DEFAULT_NETWORK_NAME,
             ipcGatewayAddr: address(gatewayDiamond),
             consensus: ConsensusType.Mir,
-            minActivationCollateral: MIN_COLLATERAL_AMOUNT,
+            minActivationCollateral: DEFAULT_COLLATERAL_AMOUNT,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
@@ -274,7 +275,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_Constructor() public view {
         require(gwGetter.totalSubnets() == 0, "totalSubnets");
         require(gwGetter.bottomUpNonce() == 0, "bottomUpNonce");
-        require(gwGetter.minStake() == MIN_COLLATERAL_AMOUNT, "minStake");
+        require(gwGetter.minStake() == DEFAULT_COLLATERAL_AMOUNT, "minStake");
 
         require(gwGetter.crossMsgFee() == CROSS_MSG_FEE, "crossMsgFee");
         require(gwGetter.bottomUpCheckPeriod() == DEFAULT_CHECKPOINT_PERIOD, "bottomUpCheckPeriod");
@@ -308,6 +309,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: checkpointPeriod,
             topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
 
@@ -320,7 +322,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         require(networkName.isRoot(), "networkName.isRoot()");
         require(depGetter.initialized() == true, "gw.initialized() == true");
-        require(depGetter.minStake() == MIN_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
+        require(depGetter.minStake() == DEFAULT_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
         require(depGetter.bottomUpCheckPeriod() == checkpointPeriod, "gw.bottomUpCheckPeriod() == checkpointPeriod");
         require(depGetter.topDownCheckPeriod() == checkpointPeriod, "gw.topDownCheckPeriod() == checkpointPeriod");
         require(
@@ -346,6 +348,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: checkpointPeriod,
             topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: 100
         });
 
@@ -385,14 +388,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         require(networkName.isRoot() == false, "networkName.isRoot()");
         require(depGetter.initialized() == false, "gw.initialized() == false");
-        require(depGetter.minStake() == MIN_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
+        require(depGetter.minStake() == DEFAULT_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
         require(depGetter.bottomUpCheckPeriod() == checkpointPeriod, "gw.bottomUpCheckPeriod() == checkpointPeriod");
         require(depGetter.topDownCheckPeriod() == checkpointPeriod, "gw.topDownCheckPeriod() == checkpointPeriod");
         require(depGetter.majorityPercentage() == 100, "gw.majorityPercentage() == 100");
     }
 
     function testGatewayDiamond_Register_Works_SingleSubnet(uint256 subnetCollateral) public {
-        vm.assume(subnetCollateral >= MIN_COLLATERAL_AMOUNT && subnetCollateral < type(uint64).max);
+        vm.assume(subnetCollateral >= DEFAULT_COLLATERAL_AMOUNT && subnetCollateral < type(uint64).max);
         address subnetAddress = vm.addr(100);
         vm.prank(subnetAddress);
         vm.deal(subnetAddress, subnetCollateral);
@@ -442,9 +445,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         for (uint256 i = 1; i <= numberOfSubnets; i++) {
             address subnetAddress = vm.addr(i);
             vm.prank(subnetAddress);
-            vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+            vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-            registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+            registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
         }
 
         require(gwGetter.totalSubnets() == numberOfSubnets);
@@ -453,23 +456,23 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
-        vm.assume(collateral < MIN_COLLATERAL_AMOUNT);
+        vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
         vm.expectRevert(NotEnoughFunds.selector);
 
         gwManager.register{value: collateral}();
     }
 
     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
-        registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert(AlreadyRegisteredSubnet.selector);
 
-        gwManager.register{value: MIN_COLLATERAL_AMOUNT}();
+        gwManager.register{value: DEFAULT_COLLATERAL_AMOUNT}();
     }
 
     function testGatewayDiamond_AddStake_Works_SingleStaking(uint256 stakeAmount, uint256 registerAmount) public {
         address subnetAddress = vm.addr(100);
-        vm.assume(registerAmount >= MIN_COLLATERAL_AMOUNT && registerAmount < type(uint64).max);
+        vm.assume(registerAmount >= DEFAULT_COLLATERAL_AMOUNT && registerAmount < type(uint64).max);
         vm.assume(stakeAmount > 0 && stakeAmount < type(uint256).max - registerAmount);
 
         uint256 totalAmount = stakeAmount + registerAmount;
@@ -487,8 +490,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
     function testGatewayDiamond_AddStake_Works_Reactivate() public {
         address subnetAddress = vm.addr(100);
-        uint256 registerAmount = MIN_COLLATERAL_AMOUNT;
-        uint256 stakeAmount = MIN_COLLATERAL_AMOUNT;
+        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
+        uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT;
 
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, registerAmount);
@@ -510,8 +513,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
     function testGatewayDiamond_AddStake_Works_NotEnoughFundsToReactivate() public {
         address subnetAddress = vm.addr(100);
-        uint256 registerAmount = MIN_COLLATERAL_AMOUNT;
-        uint256 stakeAmount = MIN_COLLATERAL_AMOUNT - 1;
+        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
+        uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT - 1;
 
         vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, registerAmount);
@@ -533,7 +536,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         address subnetAddress = address(1);
         uint256 singleStakeAmount = 1 ether;
-        uint256 registerAmount = MIN_COLLATERAL_AMOUNT;
+        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
         uint256 expectedStakedAmount = registerAmount;
 
         vm.startPrank(subnetAddress);
@@ -553,7 +556,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_AddStake_Fail_ZeroAmount() public {
-        registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert(NotEnoughFunds.selector);
 
@@ -568,7 +571,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
     function testGatewayDiamond_ReleaseStake_Works_FullAmount(uint256 stakeAmount) public {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
-        uint256 registerAmount = MIN_COLLATERAL_AMOUNT;
+        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
 
         vm.assume(stakeAmount > 0 && stakeAmount < type(uint256).max - registerAmount);
 
@@ -592,19 +595,19 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_ReleaseStake_Works_SubnetInactive() public {
         address subnetAddress = vm.addr(100);
         vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        gwManager.releaseStake(MIN_COLLATERAL_AMOUNT / 2);
+        gwManager.releaseStake(DEFAULT_COLLATERAL_AMOUNT / 2);
 
         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
-        require(stake == MIN_COLLATERAL_AMOUNT / 2, "stake == MIN_COLLATERAL_AMOUNT / 2");
+        require(stake == DEFAULT_COLLATERAL_AMOUNT / 2, "stake == MIN_COLLATERAL_AMOUNT / 2");
         require(status == Status.Inactive, "status == Status.Inactive");
     }
 
     function testGatewayDiamond_ReleaseStake_Works_PartialAmount(uint256 partialAmount) public {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
-        uint256 registerAmount = MIN_COLLATERAL_AMOUNT;
+        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
 
         vm.assume(partialAmount > registerAmount && partialAmount < type(uint256).max - registerAmount);
 
@@ -626,7 +629,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_ReleaseStake_Fail_ZeroAmount() public {
-        registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert(CannotReleaseZero.selector);
 
@@ -637,7 +640,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint256 releaseAmount,
         uint256 subnetBalance
     ) public {
-        vm.assume(subnetBalance > MIN_COLLATERAL_AMOUNT);
+        vm.assume(subnetBalance > DEFAULT_COLLATERAL_AMOUNT);
         vm.assume(releaseAmount > subnetBalance && releaseAmount < type(uint256).max - subnetBalance);
 
         address subnetAddress = vm.addr(100);
@@ -661,15 +664,15 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address subnetAddress = vm.addr(100);
 
         vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
         gwManager.releaseStake(10);
 
         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
-        require(stake == MIN_COLLATERAL_AMOUNT - 10, "stake should be MIN_COLLATERAL_AMOUNT - 10");
+        require(stake == DEFAULT_COLLATERAL_AMOUNT - 10, "stake should be MIN_COLLATERAL_AMOUNT - 10");
         require(status == Status.Inactive, "status should be Inactive");
     }
 
@@ -689,9 +692,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
 
         vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
         vm.stopPrank();
         vm.prank(subnetAddress);
         vm.deal(address(gatewayDiamond), 1);
@@ -702,9 +705,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
 
         vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, MIN_COLLATERAL_AMOUNT);
+        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-        registerSubnet(MIN_COLLATERAL_AMOUNT, subnetAddress);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
         require(subnetAddress.balance == 0);
 
@@ -720,7 +723,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(circSupply == 0);
         require(status == Status.Unset);
         require(gwGetter.totalSubnets() == 0);
-        require(subnetAddress.balance == MIN_COLLATERAL_AMOUNT);
+        require(subnetAddress.balance == DEFAULT_COLLATERAL_AMOUNT);
     }
 
     function testGatewayDiamond_Kill_Fail_SubnetNotExists() public {
@@ -882,6 +885,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -911,6 +915,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -938,6 +943,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -968,6 +974,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -990,8 +997,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_SendCrossMessage_Fails_NoDestination() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
@@ -1018,8 +1025,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_SendCrossMessage_Fails_NoCurrentNetwork() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName();
         vm.expectRevert(CannotSendCrossMsgToItself.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
@@ -1043,8 +1050,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_SendCrossMessage_Fails_DifferentMessageValue() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
         vm.expectRevert(InvalidCrossMsgValue.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
@@ -1068,9 +1075,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_SendCrossMessage_Fails_EmptyNetwork() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
 
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         SubnetID memory destinationSubnet = SubnetID(0, new address[](0));
         vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
@@ -1096,8 +1103,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_SendCrossMessage_Fails_InvalidCrossMsgFromSubnet() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
         vm.expectRevert(InvalidCrossMsgFromSubnet.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
@@ -1121,8 +1128,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughGas() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, MIN_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
-        registerSubnet(MIN_COLLATERAL_AMOUNT, caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
         vm.expectRevert(NotEnoughFee.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE - 1}(
@@ -1194,7 +1201,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function setupWhiteListMethod(address caller) internal returns (bytes32) {
-        registerSubnet(MIN_COLLATERAL_AMOUNT, address(this));
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
         CrossMsg memory crossMsg = CrossMsg({
             message: StorableMsg({
@@ -1515,8 +1522,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
     function _join(address validatorAddress) internal {
         vm.prank(validatorAddress);
-        vm.deal(validatorAddress, MIN_COLLATERAL_AMOUNT + 1);
-        saManager.join{value: MIN_COLLATERAL_AMOUNT}(
+        vm.deal(validatorAddress, DEFAULT_COLLATERAL_AMOUNT + 1);
+        saManager.join{value: DEFAULT_COLLATERAL_AMOUNT}(
             DEFAULT_NET_ADDR,
             FvmAddress({addrType: 1, payload: new bytes(20)})
         );
