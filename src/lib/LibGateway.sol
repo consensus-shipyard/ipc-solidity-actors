@@ -6,7 +6,7 @@ import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActo
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
 import {Membership, Validator} from "../structs/Validator.sol";
-import {InvalidConfigurationNumber, NotRegisteredSubnet, InvalidActorAddress, ValidatorWeightIsZero, ValidatorsAndWeightsLengthMismatch, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
+import {OldConfigurationNumber, NotRegisteredSubnet, InvalidActorAddress, ValidatorWeightIsZero, ValidatorsAndWeightsLengthMismatch, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
@@ -23,6 +23,9 @@ library LibGateway {
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
     using CheckpointHelper for BottomUpCheckpoint;
+
+    event NewMembership(uint64 n, FvmAddress[] validators, uint256[] weights);
+    event MembershipUpdated(uint64 n, Validator[] validators, uint256 totalWeight);
 
     /// @notice returns the current bottom-up checkpoint
     /// @return exists - whether the checkpoint exists
@@ -70,16 +73,27 @@ library LibGateway {
     /// @param validators - list of validator addresses
     /// @param weights - list of validators voting powers
     function newMembership(uint64 n, FvmAddress[] memory validators, uint256[] memory weights) internal {
-        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        emit NewMembership({n: n, validators: validators, weights: weights});
 
         if (validators.length != weights.length) {
             revert ValidatorsAndWeightsLengthMismatch();
         }
 
-        if (n <= s.lastMembership.configurationNumber) {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+
+        // Most of the time there are no changes in membership
+        // and we will call this function for the same configuration number and validators.
+        // In this case we just ignore this membership message.
+        if (n == 0 || n == s.lastMembership.configurationNumber) {
             return;
         }
+        // We reject messages with configuration numbers from the past and revert the call.
+        if (n < s.lastMembership.configurationNumber) {
+            revert OldConfigurationNumber();
+        }
 
+        // If the input configuration number is greater than the configuration number of the last membership then
+        // store it.
         uint256 len = validators.length;
         uint256 totalValidatorsWeight;
 
@@ -114,7 +128,9 @@ library LibGateway {
     function updateMembership() internal returns (Membership memory) {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         s.currentMembership = s.lastMembership;
-        return s.currentMembership;
+        Membership memory mb = s.currentMembership;
+        emit MembershipUpdated({n: mb.configurationNumber, validators: mb.validators, totalWeight: mb.totalWeight});
+        return mb;
     }
 
     /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution

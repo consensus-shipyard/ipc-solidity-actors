@@ -17,7 +17,7 @@ error InconsistentPrevCheckpoint();
 error InvalidActorAddress();
 error InvalidCheckpointEpoch();
 error InvalidCheckpointSource();
-error InvalidConfigurationNumber();
+error OldConfigurationNumber();
 error InvalidCrossMsgDstSubnet();
 error InvalidCrossMsgFromSubnet();
 error InvalidCrossMsgNonce();
