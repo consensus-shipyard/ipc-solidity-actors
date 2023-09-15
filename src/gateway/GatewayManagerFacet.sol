@@ -172,7 +172,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         LibGateway.newMembership({n: n, validators: validators, weights: weights});
     }
 
-    /// @notice updates the membership of the child subnet and returns it
+    /// @notice updates the current membership of the child subnet to the last received one and returns the new value
     function updateMembership() external systemActorOnly returns (Membership memory) {
         return LibGateway.updateMembership();
     }
