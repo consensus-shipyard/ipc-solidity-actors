@@ -1403,8 +1403,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         // update
         curMb = gwManager.updateMembership();
-        console.log(newConfigurationNumber);
-        console.log(curMb.configurationNumber);
         require(gwGetter.getCurrentConfigurationNumber() == newConfigurationNumber, "current n correct");
         require(curMb.configurationNumber == newConfigurationNumber, "curMb.configurationNumber correct");
         require(curMb.validators.length == 3, "curMb.validators.length correct");

@@ -96,8 +96,7 @@ library LibGateway {
                     revert ValidatorWeightIsZero();
                 }
 
-                //TODO Verify we can remove it
-                // s.validatorSetWeights[s.configurationNumber][validators[i].toHash()] = validatorWeight;
+                s.validatorSetWeights[n][validators[i].toHash()] = validatorWeight;
 
                 s.lastMembership.validators.push(Validator({addr: validators[i], weight: validatorWeight}));
 

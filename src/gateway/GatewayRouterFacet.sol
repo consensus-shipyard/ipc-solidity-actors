@@ -31,6 +31,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using StorableMsgHelper for StorableMsg;
 
     /// @notice commit the ipc parent finality into storage
+    /// @param finality - the parent finality
+    /// @param n - the configuration number for the next membership
+    /// @param validators - the validators of the next membership
+    /// @param weights - the weights of the validators
     function commitParentFinality(
         ParentFinality calldata finality,
         uint64 n,
