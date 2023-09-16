@@ -35,6 +35,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
     event SignaturesUpdated(uint256 h, bytes32 pof, Membership membership, bytes signature);
     event SignatureInvalid(uint256 h, bytes32 pof, Membership membership, bytes signature);
+    event PoFThresholdReached(uint256 h, bytes32 pof, Membership membership, uint256 threshold);
 
     /// @notice commit the ipc parent finality into storage
     /// @param finality - the parent finality
@@ -206,18 +207,31 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert InvalidSignature();
         }
 
-        uint256 len = membership.validators.length;
-        for (uint256 i = 0; i < len; ) {
-            if (signer == membership.validators[i].addr.extractEvmAddress().normalize()) {
-                s.collectedSignatures[h].push(signature);
+        uint256 signersNumber = membership.validators.length;
+        uint256 signerIndex;
+        bool signerExists;
+        for (signerIndex = 0; signerIndex < signersNumber; ) {
+            if (signer == membership.validators[signerIndex].addr.extractEvmAddress().normalize()) {
+                s.bottomUpCollectedSignatures[h][pof].push(signature);
                 emit SignaturesUpdated({h: h, pof: pof, membership: membership, signature: signature});
-                return;
+                signerExists = true;
+                break;
             }
 
             unchecked {
-                ++i;
+                ++signerIndex;
             }
         }
-        emit SignatureInvalid({h: h, pof: pof, membership: membership, signature: signature});
+
+        if (signerExists) {
+            uint256 threshold = s.bottomUpCollectedSignaturesThreshold[h][pof];
+            threshold += membership.validators[signerIndex].weight;
+
+            if (threshold >= membership.totalWeight) {
+                emit PoFThresholdReached({h: h, pof: pof, membership: membership, threshold: threshold});
+            }
+        } else {
+            emit SignatureInvalid({h: h, pof: pof, membership: membership, signature: signature});
+        }
     }
 }
