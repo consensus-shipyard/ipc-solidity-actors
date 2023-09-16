@@ -33,8 +33,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
 
-    event SignaturesUpdated(uint256 h, Membership membership, bytes signature);
-    event SignatureInvalid(uint256 h, Membership membership, bytes signature);
+    event SignaturesUpdated(uint256 h, bytes32 pof, Membership membership, bytes signature);
+    event SignatureInvalid(uint256 h, bytes32 pof, Membership membership, bytes signature);
 
     /// @notice commit the ipc parent finality into storage
     /// @param finality - the parent finality
@@ -186,22 +186,22 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
     }
 
-    /// @notice checks whether the provided provided signature is valid and accumulates it.
-    /// The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.
+    /// @notice checks whether the provided proof-of-finality signature for a block at height `h ` is valid and accumulates it.
     /// @param h - height when the signature was created
+    /// @param pof - proof of finality
     /// @param membership - the membership at height `h`
     /// @param signature - added signature
     function newSignature(
         uint256 h,
+        bytes32 pof,
         Membership calldata membership,
         bytes calldata signature
     ) external systemActorOnly {
         if (signature.length != 65) {
             revert InvalidSignatureLength();
         }
-        bytes32 hash = s.finalitiesMap[h].blockHash;
 
-        (address signer, ECDSA.RecoverError err, ) = ECDSA.tryRecover(hash, signature);
+        (address signer, ECDSA.RecoverError err, ) = ECDSA.tryRecover(pof, signature);
         if (err != ECDSA.RecoverError.NoError) {
             revert InvalidSignature();
         }
@@ -209,8 +209,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 len = membership.validators.length;
         for (uint256 i = 0; i < len; ) {
             if (signer == membership.validators[i].addr.extractEvmAddress().normalize()) {
-                s.signatures[h].push(signature);
-                emit SignaturesUpdated({h: h, membership: membership, signature: signature});
+                s.collectedSignatures[h].push(signature);
+                emit SignaturesUpdated({h: h, pof: pof, membership: membership, signature: signature});
                 return;
             }
 
@@ -218,6 +218,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
                 ++i;
             }
         }
-        emit SignatureInvalid({h: h, membership: membership, signature: signature});
+        emit SignatureInvalid({h: h, pof: pof, membership: membership, signature: signature});
     }
 }

@@ -34,8 +34,10 @@ struct GatewayActorStorage {
     Membership currentMembership;
     /// @notice The last membership received from the parent and adopted
     Membership lastMembership;
-    /// @notice height => Signature[]
-    mapping(uint256 => bytes[]) signatures;
+    /// @notice The signatures collected for the proof of finality at height `h`
+    mapping(uint256 => bytes[]) collectedSignatures;
+    /// @notice Bottom-up proof of finality for a block at height `h`
+    mapping(uint256 => bytes32) bottomUpProofOfFinalities;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists
