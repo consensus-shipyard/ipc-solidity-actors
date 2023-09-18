@@ -188,30 +188,26 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     }
 
     /// @notice checks whether the provided proof-of-finality signature for a block at height `h ` is valid and accumulates it.
-    /// @param h - height when the signature was created
-    /// @param pof - proof of finality
+    /// @param h - height
+    /// @param pof - proof of finality at height
     /// @param membership - the membership at height `h`
-    /// @param signature - added signature
+    /// @param signature - added signature as a vote for the pof
     function newSignature(
         uint256 h,
         bytes32 pof,
         Membership calldata membership,
         bytes calldata signature
     ) external systemActorOnly {
-        if (signature.length != 65) {
-            revert InvalidSignatureLength();
-        }
-
         (address signer, ECDSA.RecoverError err, ) = ECDSA.tryRecover(pof, signature);
         if (err != ECDSA.RecoverError.NoError) {
             revert InvalidSignature();
         }
 
-        uint256 signersNumber = membership.validators.length;
-        uint256 signerIndex;
+        uint256 validatorsNumber = membership.validators.length;
+        uint256 validatorIndex;
         bool signerExists;
-        for (signerIndex = 0; signerIndex < signersNumber; ) {
-            if (signer == membership.validators[signerIndex].addr.extractEvmAddress().normalize()) {
+        for (validatorIndex = 0; validatorIndex < validatorsNumber; ) {
+            if (signer == membership.validators[validatorIndex].addr.extractEvmAddress().normalize()) {
                 s.bottomUpCollectedSignatures[h][pof].push(signature);
                 emit SignaturesUpdated({h: h, pof: pof, membership: membership, signature: signature});
                 signerExists = true;
@@ -219,13 +215,13 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             }
 
             unchecked {
-                ++signerIndex;
+                ++validatorIndex;
             }
         }
 
         if (signerExists) {
             uint256 threshold = s.bottomUpCollectedSignaturesThreshold[h][pof];
-            threshold += membership.validators[signerIndex].weight;
+            threshold += membership.validators[validatorIndex].weight;
 
             if (threshold >= membership.totalWeight) {
                 emit PoFThresholdReached({h: h, pof: pof, membership: membership, threshold: threshold});
