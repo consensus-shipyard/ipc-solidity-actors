@@ -25,3 +25,8 @@ struct Membership {
     uint64 configurationNumber;
     uint256 totalWeight;
 }
+
+struct CheckpointThreshold {
+    uint256 weight;
+    bool reached;
+}

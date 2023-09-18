@@ -9,8 +9,8 @@ import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {Membership} from "../structs/Validator.sol";
-import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, InvalidSignatureLength} from "../errors/IPCErrors.sol";
+import {Membership, CheckpointThreshold} from "../structs/Validator.sol";
+import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, InvalidValidatorIndex, RepliedSignature} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive} from "../errors/IPCErrors.sol";
@@ -33,9 +33,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
 
-    event SignaturesUpdated(uint256 h, bytes32 pof, Membership membership, bytes signature);
-    event SignatureInvalid(uint256 h, bytes32 pof, Membership membership, bytes signature);
-    event PoFThresholdReached(uint256 h, bytes32 pof, Membership membership, uint256 threshold);
+    event CheckpointPassed(uint64 height, bytes32 checkpoint, Membership membership, uint256 threshold);
+    event CheckpointThresholdUpdated(uint64 height, bytes32 checkpoint, Membership membership, uint256 threshold);
 
     /// @notice commit the ipc parent finality into storage
     /// @param finality - the parent finality
@@ -187,47 +186,58 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
     }
 
-    /// @notice checks whether the provided proof-of-finality signature for a block at height `h ` is valid and accumulates it.
-    /// @param h - height
-    /// @param pof - proof of finality at height
+    /// @notice checks whether the provided checkpoint signature for a block at height `h ` is valid and accumulates it.
+    /// @param height - height
+    /// @param checkpoint - proof of finality at height
     /// @param membership - the membership at height `h`
+    /// @param validatorIndex - the index of the validator in the membership that signed the checkpoint
     /// @param signature - added signature as a vote for the pof
-    function newSignature(
-        uint256 h,
-        bytes32 pof,
+    function addCheckpointSignature(
+        uint64 height,
+        bytes32 checkpoint,
         Membership calldata membership,
+        uint64 validatorIndex,
         bytes calldata signature
     ) external systemActorOnly {
-        (address signer, ECDSA.RecoverError err, ) = ECDSA.tryRecover(pof, signature);
+        (address recoveredSignatory, ECDSA.RecoverError err, ) = ECDSA.tryRecover(checkpoint, signature);
         if (err != ECDSA.RecoverError.NoError) {
             revert InvalidSignature();
         }
 
-        uint256 validatorsNumber = membership.validators.length;
-        uint256 validatorIndex;
-        bool signerExists;
-        for (validatorIndex = 0; validatorIndex < validatorsNumber; ) {
-            if (signer == membership.validators[validatorIndex].addr.extractEvmAddress().normalize()) {
-                s.bottomUpCollectedSignatures[h][pof].push(signature);
-                emit SignaturesUpdated({h: h, pof: pof, membership: membership, signature: signature});
-                signerExists = true;
-                break;
-            }
-
-            unchecked {
-                ++validatorIndex;
-            }
+        if (s.bottomUpCollectedSignatures[height][signature]) {
+            revert RepliedSignature();
         }
 
-        if (signerExists) {
-            uint256 threshold = s.bottomUpCollectedSignaturesThreshold[h][pof];
-            threshold += membership.validators[validatorIndex].weight;
+        if (validatorIndex >= membership.validators.length) {
+            revert InvalidValidatorIndex();
+        }
 
-            if (threshold >= membership.totalWeight) {
-                emit PoFThresholdReached({h: h, pof: pof, membership: membership, threshold: threshold});
+        address validator = membership.validators[validatorIndex].addr.extractEvmAddress().normalize();
+
+        if (validator == recoveredSignatory) {
+            s.bottomUpCollectedSignatures[height][signature] = true;
+
+            CheckpointThreshold memory threshold = s.bottomUpCollectedSignaturesThreshold[height];
+            threshold.weight += membership.validators[validatorIndex].weight;
+
+            if (threshold.weight >= membership.totalWeight) {
+                if (!threshold.reached) {
+                    threshold.reached = true;
+                    emit CheckpointPassed({
+                        height: height,
+                        checkpoint: checkpoint,
+                        membership: membership,
+                        threshold: threshold.weight
+                    });
+                } else {
+                    emit CheckpointThresholdUpdated({
+                        height: height,
+                        checkpoint: checkpoint,
+                        membership: membership,
+                        threshold: threshold.weight
+                    });
+                }
             }
-        } else {
-            emit SignatureInvalid({h: h, pof: pof, membership: membership, signature: signature});
         }
     }
 }

@@ -5,7 +5,7 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint, CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {Membership} from "../structs/Validator.sol";
+import {Membership, CheckpointThreshold} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
@@ -24,9 +24,6 @@ struct GatewayActorStorage {
     /// an actor that need to be propagated further through the hierarchy.
     /// cross-net message id => CrossMsg
     mapping(bytes32 => CrossMsg) postbox;
-    /// @notice BottomUpCheckpoints in the GW per epoch
-    // slither-disable-next-line uninitialized-state
-    mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpoints;
     /// @notice List of validators and how many votes of the total each validator has for top-down messages
     // configurationNumber => validator fvm address => weight
     mapping(uint64 => mapping(bytes32 => uint256)) validatorSetWeights;
@@ -34,12 +31,14 @@ struct GatewayActorStorage {
     Membership currentMembership;
     /// @notice The last membership received from the parent and adopted
     Membership lastMembership;
+    mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpointsLegacy;
+    /// @notice A mapping of block numbers to bottom-up checkpoints (proof of finality)
+    // slither-disable-next-line uninitialized-state
+    mapping(uint64 => bytes32) bottomUpCheckpoints;
     /// @notice The signatures collected for the proof of finality at height `h`
-    mapping(uint256 => mapping(bytes32 => bytes[])) bottomUpCollectedSignatures;
+    mapping(uint64 => mapping(bytes => bool)) bottomUpCollectedSignatures;
     /// @notice The signatures collected for the proof of finality at height `h`
-    mapping(uint256 => mapping(bytes32 => uint256)) bottomUpCollectedSignaturesThreshold;
-    /// @notice Bottom-up proof of finality for a block at height `h`
-    mapping(uint256 => bytes32) bottomUpProofOfFinalities;
+    mapping(uint64 => CheckpointThreshold) bottomUpCollectedSignaturesThreshold;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists
