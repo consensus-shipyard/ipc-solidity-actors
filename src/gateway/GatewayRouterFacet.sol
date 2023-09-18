@@ -9,7 +9,7 @@ import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {Membership, CheckpointThreshold} from "../structs/Validator.sol";
+import {Membership, CheckpointQuorum} from "../structs/Validator.sol";
 import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, InvalidValidatorIndex, RepliedSignature} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
@@ -33,8 +33,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
 
-    event CheckpointPassed(uint64 height, bytes32 checkpoint, Membership membership, uint256 threshold);
-    event CheckpointThresholdUpdated(uint64 height, bytes32 checkpoint, Membership membership, uint256 threshold);
+    event QuorumReached(uint64 height, bytes32 checkpoint, Membership membership, uint256 weight);
+    event QuorumUpdated(uint64 height, bytes32 checkpoint, Membership membership, uint256 weight);
 
     /// @notice commit the ipc parent finality into storage
     /// @param finality - the parent finality
@@ -186,12 +186,12 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
     }
 
-    /// @notice checks whether the provided checkpoint signature for a block at height `h ` is valid and accumulates it.
-    /// @param height - height
-    /// @param checkpoint - proof of finality at height
+    /// @notice checks whether the provided checkpoint signature for a block at height `h ` is valid and accumulates that it.
+    /// @param height - the height of the block in the checkpoint
+    /// @param checkpoint - the hash of the checkpoint at height `h`
     /// @param membership - the membership at height `h`
     /// @param validatorIndex - the index of the validator in the membership that signed the checkpoint
-    /// @param signature - added signature as a vote for the pof
+    /// @param signature - the signature of the checkpoint
     function addCheckpointSignature(
         uint64 height,
         bytes32 checkpoint,
@@ -217,24 +217,24 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (validator == recoveredSignatory) {
             s.bottomUpCollectedSignatures[height][signature] = true;
 
-            CheckpointThreshold memory threshold = s.bottomUpCollectedSignaturesThreshold[height];
-            threshold.weight += membership.validators[validatorIndex].weight;
+            CheckpointQuorum memory quorum = s.bottomUpCheckpointQuorum[height];
+            quorum.weight += membership.validators[validatorIndex].weight;
 
-            if (threshold.weight >= membership.totalWeight) {
-                if (!threshold.reached) {
-                    threshold.reached = true;
-                    emit CheckpointPassed({
+            if (quorum.weight >= membership.totalWeight) {
+                if (!quorum.reached) {
+                    quorum.reached = true;
+                    emit QuorumReached({
                         height: height,
                         checkpoint: checkpoint,
                         membership: membership,
-                        threshold: threshold.weight
+                        weight: quorum.weight
                     });
                 } else {
-                    emit CheckpointThresholdUpdated({
+                    emit QuorumUpdated({
                         height: height,
                         checkpoint: checkpoint,
                         membership: membership,
-                        threshold: threshold.weight
+                        weight: quorum.weight
                     });
                 }
             }

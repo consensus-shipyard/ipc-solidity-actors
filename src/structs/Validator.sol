@@ -26,7 +26,7 @@ struct Membership {
     uint256 totalWeight;
 }
 
-struct CheckpointThreshold {
+struct CheckpointQuorum {
     uint256 weight;
     bool reached;
 }

@@ -5,7 +5,7 @@ import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint, CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {Membership, CheckpointThreshold} from "../structs/Validator.sol";
+import {Membership, CheckpointQuorum} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
@@ -35,10 +35,10 @@ struct GatewayActorStorage {
     /// @notice A mapping of block numbers to bottom-up checkpoints (proof of finality)
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => bytes32) bottomUpCheckpoints;
-    /// @notice The signatures collected for the proof of finality at height `h`
+    /// @notice The signatures collected for checkpoint at height `h`
     mapping(uint64 => mapping(bytes => bool)) bottomUpCollectedSignatures;
-    /// @notice The signatures collected for the proof of finality at height `h`
-    mapping(uint64 => CheckpointThreshold) bottomUpCollectedSignaturesThreshold;
+    /// @notice The signatures collected for the checkpoint at height `h`
+    mapping(uint64 => CheckpointQuorum) bottomUpCheckpointQuorum;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists
