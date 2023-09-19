@@ -50,3 +50,4 @@ error WorkerAddressInvalid();
 error WrongCheckpointSource();
 error ParentFinalityAlreadyCommitted();
 error InvalidCrossMsgValue();
+error InvalidConfigurationNumber();

@@ -7,7 +7,7 @@ import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {NotGateway, SubnetAlreadyKilled} from "../errors/IPCErrors.sol";
 import {EpochVoteBottomUpSubmission} from "../structs/EpochVoteSubmission.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {SubnetID} from "../structs/Subnet.sol";
+import {SubnetID, Validator, ValidatorChange} from "../structs/Subnet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
@@ -31,8 +31,6 @@ struct SubnetActorStorage {
     uint256 totalStake;
     /// @notice Minimal activation collateral
     uint256 minActivationCollateral;
-    /// @notice Sequence number that uniquely identifies a validator set.
-    uint64 configurationNumber;
     /// @notice number of blocks in a top-down epoch
     uint64 topDownCheckPeriod;
     /// @notice number of blocks in a bottom-up epoch
@@ -50,12 +48,20 @@ struct SubnetActorStorage {
     /// @notice Type of consensus algorithm.
     /// @notice current status of the subnet
     Status status;
-    /// @notice List of validators in the subnet
-    EnumerableSet.AddressSet validators;
     /// @notice ID of the parent subnet
     SubnetID parentId;
     /// immutable params
     ConsensusType consensus;
+
+    // ============ Validator Related ===========
+    /// @notice Sequence number that uniquely identifies a validator set.
+    uint64 configurationNumber;
+    /// @notice The set of validators changes to be committed
+    ValidatorChange[] validatorSetChanges;
+    /// @notice List of validators in the subnet that are currently
+    EnumerableSet.AddressSet validators;
+    /// @notice address to validator information
+    mapping(address => Validator) validatorInfo;
 }
 
 library LibSubnetActorStorage {

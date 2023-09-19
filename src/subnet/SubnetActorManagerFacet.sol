@@ -2,12 +2,12 @@
 pragma solidity 0.8.19;
 
 import {Status} from "../enums/Status.sol";
-import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, InconsistentPrevCheckpoint, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {SubnetID} from "../structs/Subnet.sol";
+import {SubnetID, SubnetOpt, ValidatorChange, Validator} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
@@ -31,8 +31,60 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter);
     event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
+    /// @notice Emitted when there is an update in the validator set.
+    event ValidatorUpdate(ValidatorChange change);
+
+    /// @notice method that allows a potential validator wants to join the subnet
+    /// @param extraInfo the extra data associated with this join operation.
+    function joinSubnet(bytes calldata extraInfo) external payable notKilled {
+        uint256 validatorStake = msg.value;
+        address validatorAddress = msg.sender;
+
+        if (validatorStake == 0) {
+            revert CollateralIsZero();
+        }
+
+        uint64 configurationNumber = s.configurationNumber;
+        s.configurationNumber = configurationNumber + 1;
+
+        Validator memory validator = Validator({
+            validator: validatorAddress,
+            weight: validatorStake,
+            info: extraInfo
+        });
+
+        ValidatorChange memory change = ValidatorChange({
+            validator: validator,
+            configurationNumber: configurationNumber,
+            operation: SubnetOpt.Join
+        });
+        _appendValidatorChange(change);
+
+        emit ValidatorUpdate(change);
+    }
+
+    /// @notice method that allows a validator to leave the subnet
+    function leaveSubnet() external notKilled {
+        Validator memory validator = s.validatorInfo[msg.sender];
+        if (validator.weight == 0) {
+            revert NotValidator();
+        }
+
+        uint64 configurationNumber = s.configurationNumber;
+        s.configurationNumber = configurationNumber + 1;
+
+        ValidatorChange memory change = ValidatorChange({
+            validator: validator,
+            configurationNumber: configurationNumber,
+            operation: SubnetOpt.Leave
+        });
+        _appendValidatorChange(change);
+
+        emit ValidatorUpdate(change);
+    }
 
     /// @notice method that allows a validator to join the subnet
+    /// @notice this method will be deprecated and become internal
     /// @param netAddr - the network address of the validator
     function join(string calldata netAddr, FvmAddress calldata workerAddr) external payable notKilled {
         uint256 validatorStake = msg.value;
@@ -199,5 +251,22 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.prevExecutedCheckpointHash = checkpoint.toHash();
 
         IGateway(s.ipcGatewayAddr).commitChildCheck(checkpoint);
+    }
+
+    /// @notice append a new validator change, ensures the configuration number in the updates are sequential
+    function _appendValidatorChange(ValidatorChange memory change) internal {
+        uint256 length = s.validatorSetChanges.length;
+
+        if (length != 0) {
+            // ensure the configuration number is consequential
+            uint64 nextConfigurationNumber = s.validatorSetChanges[length-1].configurationNumber + 1;
+            if (nextConfigurationNumber != change.configurationNumber) {
+                // this should rarely happen
+                revert InvalidConfigurationNumber();
+            }
+        }
+
+        s.validatorSetChanges.push(change);
+        return;
     }
 }
