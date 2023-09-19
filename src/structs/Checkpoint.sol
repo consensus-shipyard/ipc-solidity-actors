@@ -21,6 +21,26 @@ struct BottomUpCheckpoint {
     bytes proof;
 }
 
+/// @notice A bottom-up checkpoint struct.
+// TODO: Remove old BottomUpCheckpoint and update all the codebase.
+struct BottomUpCheckpointNew {
+    /// @dev Child subnet ID, for replay protection from other subnets where the exact same validators operate.
+    /// Alternatively it can be appended to the hash before signing, similar to how we use the chain ID.
+    SubnetID subnetID;
+    /// @dev The height of the child subnet at which this checkpoint was cut.
+    /// Has to follow the previous checkpoint by bottom_up_checkpoint_period
+    uint64 blockHeight;
+    /// @dev The ID of the validator set which is going to sign the next checkpoint.
+    /// This one expected to be signed by the ID reported in the previous checkpoint.
+    /// 0 could mean "no change".
+    uint64 nextConfigurationNumber;
+    /// @dev Some kind of hash over the bottom-up messages.
+    /// By not including cross messages here directly, we can be compatible with IPLD Resolver based
+    /// approach where the messages are fetched with Bitswap and provided by Fendermint, or the full-fat
+    /// approach we need with Lotus, where the messages are part of the relayed transaction.
+    bytes32 crossMessagesHash;
+}
+
 struct TopDownCheckpoint {
     uint64 epoch;
     CrossMsg[] topDownMsgs;

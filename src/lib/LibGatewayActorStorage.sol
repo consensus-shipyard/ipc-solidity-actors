@@ -3,9 +3,9 @@ pragma solidity 0.8.19;
 
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
-import {BottomUpCheckpoint, CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, BottomUpCheckpointNew, CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {Membership, CheckpointQuorum} from "../structs/Validator.sol";
+import {Membership, CheckpointQuorum, CheckpointMembership} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
@@ -32,11 +32,14 @@ struct GatewayActorStorage {
     /// @notice The last membership received from the parent and adopted
     Membership lastMembership;
     mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpointsLegacy;
-    /// @notice A mapping of block numbers to bottom-up checkpoints (proof of finality)
+    /// @notice A mapping of block numbers to bottom-up checkpoints
     // slither-disable-next-line uninitialized-state
-    mapping(uint64 => bytes32) bottomUpCheckpoints;
-    /// @notice The signatures collected for checkpoint at height `h`
-    mapping(uint64 => mapping(bytes => bool)) bottomUpCollectedSignatures;
+    mapping(uint64 => BottomUpCheckpointNew) bottomUpCheckpoints;
+    /// @notice A mapping of block numbers to bottom-up checkpoint membership data
+    // slither-disable-next-line uninitialized-state
+    mapping(uint64 => CheckpointMembership) bottomUpCheckpointMembership;
+    /// @notice The validators have already sent signatures at height `h`
+    mapping(uint64 => mapping(address => bool)) bottomUpCollectedSignatures;
     /// @notice The signatures collected for the checkpoint at height `h`
     mapping(uint64 => CheckpointQuorum) bottomUpCheckpointQuorum;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]

@@ -26,6 +26,11 @@ struct Membership {
     uint256 totalWeight;
 }
 
+struct CheckpointMembership {
+    bytes32 rootHash;
+    uint256 totalWeight;
+}
+
 struct CheckpointQuorum {
     uint256 weight;
     bool reached;
