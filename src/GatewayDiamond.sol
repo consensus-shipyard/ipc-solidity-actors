@@ -36,6 +36,10 @@ contract GatewayDiamond {
             revert InvalidSubmissionPeriod();
         }
 
+        if (params.majorityPercentage > 100) {
+            revert InvalidMajorityPercentage();
+        }
+
         LibDiamond.setContractOwner(msg.sender);
         LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
 
@@ -44,6 +48,7 @@ contract GatewayDiamond {
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
+        s.majorityPercentage = params.majorityPercentage;
 
         // the root doesn't need to be explicitly initialized
         if (s.networkName.isRoot()) {

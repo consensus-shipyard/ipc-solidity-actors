@@ -245,4 +245,10 @@ library LibGateway {
         subnet = s.subnets[subnetId.toHash()];
         found = !subnet.id.isEmpty();
     }
+
+    /// @notice returns the threshold corresponding to the majority percentage
+    function getThreshold(uint256 weight) internal view returns (uint256) {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        return (weight * s.majorityPercentage) / 100;
+    }
 }

@@ -3,9 +3,9 @@ pragma solidity 0.8.19;
 
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
-import {BottomUpCheckpoint, BottomUpCheckpointNew, CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, BottomUpCheckpointNew, CrossMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {Membership, CheckpointQuorum, CheckpointMembership} from "../structs/Validator.sol";
+import {Membership} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
@@ -35,13 +35,11 @@ struct GatewayActorStorage {
     /// @notice A mapping of block numbers to bottom-up checkpoints
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => BottomUpCheckpointNew) bottomUpCheckpoints;
-    /// @notice A mapping of block numbers to bottom-up checkpoint membership data
+    /// @notice A mapping of block numbers to checkpoint data
     // slither-disable-next-line uninitialized-state
-    mapping(uint64 => CheckpointMembership) bottomUpCheckpointMembership;
+    mapping(uint64 => CheckpointInfo) bottomUpCheckpointInfo;
     /// @notice The validators have already sent signatures at height `h`
     mapping(uint64 => mapping(address => bool)) bottomUpCollectedSignatures;
-    /// @notice The signatures collected for the checkpoint at height `h`
-    mapping(uint64 => CheckpointQuorum) bottomUpCheckpointQuorum;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists
@@ -57,6 +55,8 @@ struct GatewayActorStorage {
     uint256 minStake;
     /// @notice fee amount charged per cross message
     uint256 crossMsgFee;
+    /// @notice majority percentage value
+    uint8 majorityPercentage;
     /// @notice nonce for bottom-up messages
     uint64 bottomUpNonce;
     /// @notice AppliedNonces keep track of the next nonce of the message to be applied.
