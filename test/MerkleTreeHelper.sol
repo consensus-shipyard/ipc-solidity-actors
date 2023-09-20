@@ -1,11 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import { Merkle } from "murky/Merkle.sol";
+import {Merkle} from "murky/Merkle.sol";
 
 library MerkleTreeHelper {
-
-    function createMerkleProofsForValidators(address[] memory addrs, uint256[] memory weight) internal returns (bytes32, bytes32[][] memory) {
+    function createMerkleProofsForValidators(
+        address[] memory addrs,
+        uint256[] memory weight
+    ) internal returns (bytes32, bytes32[][] memory) {
         Merkle merkleTree = new Merkle();
 
         if (addrs.length != weight.length) {

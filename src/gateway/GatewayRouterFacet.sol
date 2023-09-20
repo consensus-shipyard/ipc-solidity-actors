@@ -266,7 +266,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
             revert CheckpointAlreadyExists();
         }
-        if (s.bottomUpCheckpointInfo[checkpoint.blockHeight].rootHash.length > 0) {
+        if (s.bottomUpCheckpointInfo[checkpoint.blockHeight].threshold > 0) {
             revert CheckpointInfoAlreadyExists();
         }
         if (membershipWeight == 0) {
