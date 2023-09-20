@@ -11,6 +11,12 @@ use std::path::{Path, PathBuf};
 fn main() {
     // Run with `cargo build -vv` to see output from any `eprintln!` or `println!`.
 
+    // We are not building anything, could be imported as crate.
+    if std::env::var("BUILD_BINDINGS").ok().is_none() {
+        return;
+    }
+    println!("build new binding!");
+
     // Use the env var set by the Makefile, or fall back to the default.
     let ipc_actors_dir = workspace_dir()
         .parent()
