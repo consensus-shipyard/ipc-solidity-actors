@@ -204,7 +204,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert CheckpointNotCreated();
         }
 
-        CheckpointInfo memory checkpointInfo = s.bottomUpCheckpointInfo[height];
+        CheckpointInfo storage checkpointInfo = s.bottomUpCheckpointInfo[height];
         if (checkpointInfo.rootHash.length == 0) {
             revert CheckpointMembershipNotCreated();
         }
@@ -223,7 +223,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         // The validator is allowed to send a signature if it was in the membership at the target height
-        bytes32 validatorLeaf = keccak256(abi.encode(recoveredSignatory, weight));
+        // Constructing leaf: https://github.com/OpenZeppelin/merkle-tree#leaf-hash
+        bytes32 validatorLeaf = keccak256(bytes.concat(keccak256(abi.encode(recoveredSignatory, weight))));
         bool valid = MerkleProof.verify({proof: membershipProof, root: checkpointInfo.rootHash, leaf: validatorLeaf});
         if (!valid) {
             revert NotAuthorized(recoveredSignatory);
