@@ -8,8 +8,10 @@ if [[ ! $SKIP_COMPILE ]]; then
     make compile-abi
 fi
 
-# update the rust biinding
-make rust-binding
+# update the rust biinding if we need not rust binding
+if [[ ! $SKIP_RUST_BINDING ]]; then
+    make rust-binding
+fi
 
 # checks if there are changes in rust binding
 if [[ `git status ./binding --porcelain` ]]; then 
