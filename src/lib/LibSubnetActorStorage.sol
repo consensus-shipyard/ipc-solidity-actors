@@ -56,11 +56,11 @@ struct SubnetActorStorage {
     // ============ Validator Related ===========
     /// @notice Sequence number that uniquely identifies a validator set.
     uint64 configurationNumber;
-    /// @notice The set of validators changes to be committed
+    /// @notice The set of validators changes to be committed.
     ValidatorChange[] validatorSetChanges;
-    /// @notice List of validators in the subnet that are currently
+    /// @notice List of validators in the subnet that are currently active.
     EnumerableSet.AddressSet validators;
-    /// @notice address to validator information
+    /// @notice address to validator information.
     mapping(address => Validator) validatorInfo;
 }
 
