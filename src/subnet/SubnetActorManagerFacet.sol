@@ -258,7 +258,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         uint256 length = s.validatorSetChanges.length;
 
         if (length != 0) {
-            // ensure the configuration number is consequential
+            // ensure the configuration number is sequential
             uint64 nextConfigurationNumber = s.validatorSetChanges[length-1].configurationNumber + 1;
             if (nextConfigurationNumber != change.configurationNumber) {
                 // this should rarely happen
