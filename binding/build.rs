@@ -15,7 +15,6 @@ fn main() {
     if std::env::var("BUILD_BINDINGS").ok().is_none() {
         return;
     }
-    println!("build new binding!");
 
     // Use the env var set by the Makefile, or fall back to the default.
     let ipc_actors_dir = workspace_dir()
