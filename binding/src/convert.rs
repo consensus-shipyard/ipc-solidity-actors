@@ -1,7 +1,6 @@
 /// The type conversion for fvm address to evm solidity contracts. We need this convenient macro because
 /// the abigen is creating the same struct but under different modules. This save a lot of
 /// code.
-#[macro_export]
 macro_rules! fvm_address_conversion {
     ($module:ident) => {
         impl TryFrom<fvm_shared::address::Address> for $module::FvmAddress {
@@ -29,7 +28,7 @@ macro_rules! fvm_address_conversion {
 
 /// Converts a Rust type FVM address into its underlying payload
 /// so it can be represented internally in a Solidity contract.
-pub fn addr_payload_to_bytes(
+pub(crate) fn addr_payload_to_bytes(
     payload: fvm_shared::address::Payload,
 ) -> anyhow::Result<ethers::types::Bytes> {
     match payload {
@@ -49,12 +48,15 @@ pub fn addr_payload_to_bytes(
 
 /// It takes the bytes from an FVMAddress represented in Solidity and
 /// converts it into the corresponding FVM address Rust type.
-pub fn bytes_to_fvm_addr(
+pub(crate)fn bytes_to_fvm_addr(
     protocol: u8,
     bytes: &[u8],
 ) -> anyhow::Result<fvm_shared::address::Address> {
     let addr = match protocol {
-        1 => fvm_shared::address::Address::from_bytes(&[[1u8].as_slice(), bytes].concat())?,
+        1 => {
+            let merged = [[1u8].as_slice(), bytes].concat();
+            fvm_shared::address::Address::from_bytes(&merged)?
+        }
         4 => {
             let mut data = ethers::abi::decode(
                 &[ethers::abi::ParamType::Tuple(vec![
