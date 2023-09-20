@@ -11,7 +11,7 @@ compile-abi:
 	./ops/compile-abi.sh $(OUTPUT)
 
 rust-binding:
-	cargo build --release --manifest-path ./binding/Cargo.toml -p fendermint_vm_ipc_actors
+	cargo build --release --manifest-path ./binding/Cargo.toml -p fendermint_vm_ipc_actors && rm ./binding/target
 
 # ==============================================================================
 # Running security checks within the local computer
