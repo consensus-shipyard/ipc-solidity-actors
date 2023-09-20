@@ -8,7 +8,7 @@ if [[ ! $SKIP_COMPILE ]]; then
     make compile-abi
 fi
 
-# update the rust biinding if we need not rust binding
+# update the rust binding if we need it
 if [[ ! $SKIP_RUST_BINDING ]]; then
     make rust-binding
 fi
