@@ -1,7 +1,9 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-# sometime one cannot compile abi on mac
+# sometime one cannot compile abi on mac, just a way to ignore compilation
+# if one really cannot compile abi and obtains the `out` folder from other
+# sources. Use with care.
 if [[ ! $SKIP_COMPILE ]]; then
     make compile-abi
 fi
