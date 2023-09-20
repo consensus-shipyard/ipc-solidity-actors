@@ -7,4 +7,12 @@
 if [[ ! $SKIP_COMPILE ]]; then
     make compile-abi
 fi
+
+# update the rust biinding
 make rust-binding
+
+# checks if there are changes in rust binding
+if [[ `git status ./binding --porcelain` ]]; then 
+    echo "** not all rust bindings changes committed, please commit them **\n";
+    exit 1;
+fi;
