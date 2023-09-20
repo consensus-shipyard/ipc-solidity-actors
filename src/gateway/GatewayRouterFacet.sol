@@ -209,10 +209,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert CheckpointMembershipNotCreated();
         }
 
-        bytes32 checkpointHash = checkpoint.toHash();
+        bytes32 checkpointHash = checkpointInfo.hash;
 
         // slither-disable-next-line unused-return
-        (address recoveredSignatory, ECDSA.RecoverError err, ) = ECDSA.tryRecover(checkpointInfo.hash, signature);
+        (address recoveredSignatory, ECDSA.RecoverError err, ) = ECDSA.tryRecover(checkpointHash, signature);
         if (err != ECDSA.RecoverError.NoError) {
             revert InvalidSignature();
         }
