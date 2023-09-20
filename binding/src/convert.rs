@@ -26,6 +26,30 @@ macro_rules! fvm_address_conversion {
     };
 }
 
+/// There are common types between the different facets, such as SubnetID. A util macro that handles the common
+/// type conversions
+macro_rules! common_type_conversion {
+    ($module1:ident, $module2:ident) => {
+        impl From<$module1::SubnetID> for $module2::SubnetID {
+            fn from(value: $module1::SubnetID) -> Self {
+                $module2::SubnetID {
+                    root: value.root,
+                    route: value.route,
+                }
+            }
+        }
+
+        impl From<$module2::SubnetID> for $module1::SubnetID {
+            fn from(value: $module2::SubnetID) -> Self {
+                $module1::SubnetID {
+                    root: value.root,
+                    route: value.route,
+                }
+            }
+        }
+    };
+}
+
 /// Converts a Rust type FVM address into its underlying payload
 /// so it can be represented internally in a Solidity contract.
 pub(crate) fn addr_payload_to_bytes(
@@ -48,7 +72,7 @@ pub(crate) fn addr_payload_to_bytes(
 
 /// It takes the bytes from an FVMAddress represented in Solidity and
 /// converts it into the corresponding FVM address Rust type.
-pub(crate)fn bytes_to_fvm_addr(
+pub(crate) fn bytes_to_fvm_addr(
     protocol: u8,
     bytes: &[u8],
 ) -> anyhow::Result<fvm_shared::address::Address> {
