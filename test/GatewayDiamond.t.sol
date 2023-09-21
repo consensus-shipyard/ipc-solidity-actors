@@ -1426,7 +1426,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         BottomUpCheckpointNew memory checkpoint = BottomUpCheckpointNew({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
-            blockHash : keccak256("block"),
+            blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages")
         });
@@ -1446,7 +1446,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         checkpoint = BottomUpCheckpointNew({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
-            blockHash : keccak256("block"),
+            blockHash: keccak256("block"),
             nextConfigurationNumber: 2,
             crossMessagesHash: keccak256("newmessages")
         });
@@ -1466,7 +1466,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         BottomUpCheckpointNew memory checkpoint = BottomUpCheckpointNew({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
-            blockHash : keccak256("block"),
+            blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages")
         });
@@ -1504,7 +1504,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         BottomUpCheckpointNew memory checkpoint = BottomUpCheckpointNew({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
-            blockHash : keccak256("block"),
+            blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages")
         });
