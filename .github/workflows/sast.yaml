@@ -6,6 +6,24 @@ on:
   pull_request:
 
 jobs:
+  binding:
+    name: Rust binding check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: rustfmt,clippy
+      - name: Install Node dependencies
+        run: npm i --unsafe-perm
+      - name: Install solidity plugin
+        run: npm i --unsafe-perm prettier prettier-plugin-solidity
+      - name: Prettier check
+        run: npx prettier --check 'src/**/*.sol' 'test/*.sol'
+      - name: Solhint check
+        run: npx solhint 'src/**/*.sol'
+
   slither:
     name: Slither check
     runs-on: ubuntu-latest
