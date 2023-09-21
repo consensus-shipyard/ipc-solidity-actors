@@ -30,6 +30,8 @@ struct BottomUpCheckpointNew {
     /// @dev The height of the child subnet at which this checkpoint was cut.
     /// Has to follow the previous checkpoint by checkpoint period.
     uint64 blockHeight;
+    /// @dev The hash of the block.
+    bytes32 blockHash;
     /// @dev The number of the membership (validator set) which is going to sign the next checkpoint.
     /// This one expected to be signed by the validators from the membership reported in the previous checkpoint.
     /// 0 could mean "no change".

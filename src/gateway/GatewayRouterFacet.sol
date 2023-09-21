@@ -205,7 +205,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         CheckpointInfo storage checkpointInfo = s.bottomUpCheckpointInfo[height];
-        if (checkpointInfo.rootHash.length == 0) {
+        if (checkpointInfo.threshold == 0) {
             revert CheckpointMembershipNotCreated();
         }
 
