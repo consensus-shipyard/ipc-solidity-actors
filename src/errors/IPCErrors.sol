@@ -8,6 +8,7 @@ error CannotReleaseZero();
 error CannotSendCrossMsgToItself();
 error CheckpointAlreadyExists();
 error CheckpointInfoAlreadyExists();
+error IncompleteCheckpointExists();
 error CheckpointNotChained();
 error CollateralIsZero();
 error CollateralStillLockedInSubnet();

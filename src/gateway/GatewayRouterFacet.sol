@@ -11,7 +11,7 @@ import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Validator.sol";
 import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay} from "../errors/IPCErrors.sol";
-import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists} from "../errors/IPCErrors.sol";
+import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -25,6 +25,7 @@ import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
 import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
@@ -34,6 +35,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using CrossMsgHelper for CrossMsg;
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
+    using EnumerableSet for EnumerableSet.UintSet;
 
     event QuorumReached(uint64 height, bytes32 checkpoint, uint256 quorumWeight);
     event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
@@ -269,14 +271,19 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (s.bottomUpCheckpointInfo[checkpoint.blockHeight].threshold > 0) {
             revert CheckpointInfoAlreadyExists();
         }
+        if (s.incompleteCheckpoint.contains(checkpoint.blockHeight)) {
+            revert IncompleteCheckpointExists();
+        }
+
         if (membershipWeight == 0) {
             revert ZeroMembershipWeight();
         }
 
         uint256 threshold = LibGateway.getThreshold(membershipWeight);
 
+        // store checkpoint
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
-
+        s.incompleteCheckpoint.add(checkpoint.blockHeight);
         s.bottomUpCheckpointInfo[checkpoint.blockHeight] = CheckpointInfo({
             hash: checkpoint.toHash(),
             rootHash: membershipRootHash,

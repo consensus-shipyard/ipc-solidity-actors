@@ -1457,6 +1457,55 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.stopPrank();
     }
 
+    function testGatewayDiamond_listIncompleteCheckpoints() public {
+        (, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
+
+        (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpointNew memory checkpoint1 = BottomUpCheckpointNew({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 1,
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages1")
+        });
+
+        BottomUpCheckpointNew memory checkpoint2 = BottomUpCheckpointNew({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 2,
+            blockHash: keccak256("block2"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages2")
+        });
+
+        // create a checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.createBottomUpCheckpoint(checkpoint1, membershipRoot, 10);
+        gwRouter.createBottomUpCheckpoint(checkpoint2, membershipRoot, 25);
+        vm.stopPrank();
+
+        uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
+
+        require(heights.length == 2, "heights.length == 2");
+        require(heights[0] == 1, "heights[0] == 1");
+        require(heights[1] == 2, "heights[1] == 2");
+
+        CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
+        require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
+        require(info.threshold == 7, "info.threshold == 10");
+
+        info = gwGetter.getCheckpointInfo(2);
+        require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
+        require(info.threshold == 17, "info.threshold == 25");
+
+        BottomUpCheckpointNew[] memory incomplete = gwGetter.getIncompleteCheckpoints();
+        require(incomplete.length == 2, "incomplete.length == 2");
+        require(incomplete[0].blockHeight == 1, "incomplete[0].blockHeight");
+        require(incomplete[0].blockHash == keccak256("block1"), "incomplete[0].blockHash");
+        require(incomplete[1].blockHeight == 2, "incomplete[1].blockHeight");
+        require(incomplete[1].blockHash == keccak256("block2"), "incomplete[1].blockHash");
+    }
+
     function testGatewayDiamond_addCheckpointSignature() public {
         (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
 

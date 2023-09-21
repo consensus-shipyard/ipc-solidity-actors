@@ -8,6 +8,7 @@ import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 struct GatewayActorStorage {
     /// @notice List of subnets
@@ -38,6 +39,9 @@ struct GatewayActorStorage {
     /// @notice A mapping of block numbers to checkpoint data
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => CheckpointInfo) bottomUpCheckpointInfo;
+    /// @notice A list of incomplete checkpoints.
+    // slither-disable-next-line uninitialized-state
+    EnumerableSet.UintSet incompleteCheckpoint;
     /// @notice The validators have already sent signatures at height `h`
     mapping(uint64 => mapping(address => bool)) bottomUpCollectedSignatures;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
