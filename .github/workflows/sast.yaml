@@ -37,17 +37,6 @@ jobs:
         run: npx prettier --check 'src/**/*.sol' 'test/*.sol'
       - name: Solhint check
         run: npx solhint 'src/**/*.sol'
-      - name: Compile contracts
-        run: make compile-abi
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: stable
-          components: rustfmt,clippy
-      - name: Run rust binding
-        run: make rust-binding
-      - name: Check rust binding
-        run: make check-rust-binding
 
   codespell:
     runs-on: ubuntu-latest

@@ -29,3 +29,13 @@ jobs:
 
       - name: Run tests
         run: forge test -vvv --ffi
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: stable
+          components: rustfmt,clippy
+      - name: Run rust binding
+        run: make rust-binding
+      - name: Check rust binding
+        run: make check-rust-binding
