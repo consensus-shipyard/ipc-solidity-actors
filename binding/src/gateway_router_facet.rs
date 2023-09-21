@@ -7,7 +7,7 @@ pub use gateway_router_facet::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types
+    non_camel_case_types,
 )]
 pub mod gateway_router_facet {
     #[allow(deprecated)]
@@ -477,8 +477,9 @@ pub mod gateway_router_facet {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static GATEWAYROUTERFACET_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
-        ::ethers::contract::Lazy::new(__abi);
+    pub static GATEWAYROUTERFACET_ABI: ::ethers::contract::Lazy<
+        ::ethers::core::abi::Abi,
+    > = ::ethers::contract::Lazy::new(__abi);
     pub struct GatewayRouterFacet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GatewayRouterFacet<M> {
         fn clone(&self) -> Self {
@@ -510,11 +511,13 @@ pub mod gateway_router_facet {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(::ethers::contract::Contract::new(
-                address.into(),
-                GATEWAYROUTERFACET_ABI.clone(),
-                client,
-            ))
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    GATEWAYROUTERFACET_ABI.clone(),
+                    client,
+                ),
+            )
         }
         ///Calls the contract's `applyCrossMessages` (0x3dde36ec) function
         pub fn apply_cross_messages(
@@ -547,8 +550,7 @@ pub mod gateway_router_facet {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-        for GatewayRouterFacet<M>
-    {
+    for GatewayRouterFacet<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -562,7 +564,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "AddressEmptyCode", abi = "AddressEmptyCode(address)")]
     pub struct AddressEmptyCode {
@@ -577,7 +579,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "AddressInsufficientBalance",
@@ -595,7 +597,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "FailedInnerCall", abi = "FailedInnerCall()")]
     pub struct FailedInnerCall;
@@ -608,7 +610,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "InconsistentPrevCheckpoint",
@@ -624,7 +626,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidActorAddress", abi = "InvalidActorAddress()")]
     pub struct InvalidActorAddress;
@@ -637,7 +639,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidCheckpointEpoch", abi = "InvalidCheckpointEpoch()")]
     pub struct InvalidCheckpointEpoch;
@@ -650,7 +652,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidCheckpointSource", abi = "InvalidCheckpointSource()")]
     pub struct InvalidCheckpointSource;
@@ -663,7 +665,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidCrossMsgDstSubnet", abi = "InvalidCrossMsgDstSubnet()")]
     pub struct InvalidCrossMsgDstSubnet;
@@ -676,7 +678,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidCrossMsgNonce", abi = "InvalidCrossMsgNonce()")]
     pub struct InvalidCrossMsgNonce;
@@ -689,7 +691,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotEnoughBalance", abi = "NotEnoughBalance()")]
     pub struct NotEnoughBalance;
@@ -702,12 +704,9 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[etherror(
-        name = "NotEnoughSubnetCircSupply",
-        abi = "NotEnoughSubnetCircSupply()"
-    )]
+    #[etherror(name = "NotEnoughSubnetCircSupply", abi = "NotEnoughSubnetCircSupply()")]
     pub struct NotEnoughSubnetCircSupply;
     ///Custom Error type `NotInitialized` with signature `NotInitialized()` and selector `0x87138d5c`
     #[derive(
@@ -718,7 +717,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotInitialized", abi = "NotInitialized()")]
     pub struct NotInitialized;
@@ -731,7 +730,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotRegisteredSubnet", abi = "NotRegisteredSubnet()")]
     pub struct NotRegisteredSubnet;
@@ -744,7 +743,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotSystemActor", abi = "NotSystemActor()")]
     pub struct NotSystemActor;
@@ -757,7 +756,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "ParentFinalityAlreadyCommitted",
@@ -773,7 +772,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "SubnetNotActive", abi = "SubnetNotActive()")]
     pub struct SubnetNotActive;
@@ -786,7 +785,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "ValidatorWeightIsZero", abi = "ValidatorWeightIsZero()")]
     pub struct ValidatorWeightIsZero;
@@ -799,7 +798,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "ValidatorsAndWeightsLengthMismatch",
@@ -836,89 +835,99 @@ pub mod gateway_router_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) =
-                <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::RevertString(decoded));
             }
-            if let Ok(decoded) = <AddressEmptyCode as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <AddressEmptyCode as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::AddressEmptyCode(decoded));
             }
-            if let Ok(decoded) =
-                <AddressInsufficientBalance as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <AddressInsufficientBalance as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::AddressInsufficientBalance(decoded));
             }
-            if let Ok(decoded) = <FailedInnerCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <FailedInnerCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::FailedInnerCall(decoded));
             }
-            if let Ok(decoded) =
-                <InconsistentPrevCheckpoint as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InconsistentPrevCheckpoint as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InconsistentPrevCheckpoint(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidActorAddress as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidActorAddress as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidActorAddress(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCheckpointEpoch(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCheckpointSource(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidCrossMsgDstSubnet as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCrossMsgDstSubnet as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCrossMsgDstSubnet(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidCrossMsgNonce as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCrossMsgNonce as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCrossMsgNonce(decoded));
             }
-            if let Ok(decoded) = <NotEnoughBalance as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <NotEnoughBalance as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotEnoughBalance(decoded));
             }
-            if let Ok(decoded) =
-                <NotEnoughSubnetCircSupply as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <NotEnoughSubnetCircSupply as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotEnoughSubnetCircSupply(decoded));
             }
-            if let Ok(decoded) = <NotInitialized as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <NotInitialized as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotInitialized(decoded));
             }
-            if let Ok(decoded) =
-                <NotRegisteredSubnet as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <NotRegisteredSubnet as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotRegisteredSubnet(decoded));
             }
-            if let Ok(decoded) = <NotSystemActor as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <NotSystemActor as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotSystemActor(decoded));
             }
-            if let Ok(decoded) =
-                <ParentFinalityAlreadyCommitted as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ParentFinalityAlreadyCommitted as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ParentFinalityAlreadyCommitted(decoded));
             }
-            if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::SubnetNotActive(decoded));
             }
-            if let Ok(decoded) =
-                <ValidatorWeightIsZero as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ValidatorWeightIsZero as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorWeightIsZero(decoded));
             }
-            if let Ok(decoded) =
-                <ValidatorsAndWeightsLengthMismatch as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ValidatorsAndWeightsLengthMismatch as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorsAndWeightsLengthMismatch(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -927,11 +936,15 @@ pub mod gateway_router_facet {
     impl ::ethers::core::abi::AbiEncode for GatewayRouterFacetErrors {
         fn encode(self) -> ::std::vec::Vec<u8> {
             match self {
-                Self::AddressEmptyCode(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::AddressEmptyCode(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::AddressInsufficientBalance(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::FailedInnerCall(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::FailedInnerCall(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::InconsistentPrevCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -950,19 +963,27 @@ pub mod gateway_router_facet {
                 Self::InvalidCrossMsgNonce(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::NotEnoughBalance(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NotEnoughBalance(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::NotEnoughSubnetCircSupply(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::NotInitialized(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NotInitialized(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::NotRegisteredSubnet(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::NotSystemActor(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NotSystemActor(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::SubnetNotActive(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::SubnetNotActive(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::ValidatorWeightIsZero(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1057,24 +1078,44 @@ pub mod gateway_router_facet {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
                 Self::AddressEmptyCode(element) => ::core::fmt::Display::fmt(element, f),
-                Self::AddressInsufficientBalance(element) => ::core::fmt::Display::fmt(element, f),
+                Self::AddressInsufficientBalance(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::FailedInnerCall(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InconsistentPrevCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidActorAddress(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCheckpointEpoch(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCheckpointSource(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCrossMsgDstSubnet(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCrossMsgNonce(element) => ::core::fmt::Display::fmt(element, f),
+                Self::InconsistentPrevCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidActorAddress(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCheckpointEpoch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCheckpointSource(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCrossMsgDstSubnet(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCrossMsgNonce(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::NotEnoughBalance(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NotEnoughSubnetCircSupply(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotEnoughSubnetCircSupply(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::NotInitialized(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NotRegisteredSubnet(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotRegisteredSubnet(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::NotSystemActor(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::SubnetNotActive(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ValidatorWeightIsZero(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ValidatorWeightIsZero(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::ValidatorsAndWeightsLengthMismatch(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1157,7 +1198,8 @@ pub mod gateway_router_facet {
             Self::NotSystemActor(value)
         }
     }
-    impl ::core::convert::From<ParentFinalityAlreadyCommitted> for GatewayRouterFacetErrors {
+    impl ::core::convert::From<ParentFinalityAlreadyCommitted>
+    for GatewayRouterFacetErrors {
         fn from(value: ParentFinalityAlreadyCommitted) -> Self {
             Self::ParentFinalityAlreadyCommitted(value)
         }
@@ -1172,7 +1214,8 @@ pub mod gateway_router_facet {
             Self::ValidatorWeightIsZero(value)
         }
     }
-    impl ::core::convert::From<ValidatorsAndWeightsLengthMismatch> for GatewayRouterFacetErrors {
+    impl ::core::convert::From<ValidatorsAndWeightsLengthMismatch>
+    for GatewayRouterFacetErrors {
         fn from(value: ValidatorsAndWeightsLengthMismatch) -> Self {
             Self::ValidatorsAndWeightsLengthMismatch(value)
         }
@@ -1186,7 +1229,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "applyCrossMessages",
@@ -1204,7 +1247,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "commitChildCheck",
@@ -1222,7 +1265,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "commitParentFinality",
@@ -1245,19 +1288,19 @@ pub mod gateway_router_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) =
-                <ApplyCrossMessagesCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ApplyCrossMessagesCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ApplyCrossMessages(decoded));
             }
-            if let Ok(decoded) =
-                <CommitChildCheckCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CommitChildCheckCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CommitChildCheck(decoded));
             }
-            if let Ok(decoded) =
-                <CommitParentFinalityCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CommitParentFinalityCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CommitParentFinality(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -1269,7 +1312,9 @@ pub mod gateway_router_facet {
                 Self::ApplyCrossMessages(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::CommitChildCheck(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::CommitChildCheck(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::CommitParentFinality(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1279,9 +1324,13 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::ApplyCrossMessages(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ApplyCrossMessages(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::CommitChildCheck(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CommitParentFinality(element) => ::core::fmt::Display::fmt(element, f),
+                Self::CommitParentFinality(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
         }
     }
@@ -1309,7 +1358,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct BottomUpCheckpoint {
         pub source: SubnetID,
@@ -1329,7 +1378,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ChildCheck {
         pub source: SubnetID,
@@ -1344,7 +1393,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct CrossMsg {
         pub message: StorableMsg,
@@ -1359,7 +1408,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct FvmAddress {
         pub addr_type: u8,
@@ -1374,7 +1423,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct Ipcaddress {
         pub subnet_id: SubnetID,
@@ -1389,7 +1438,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ParentFinality {
         pub height: ::ethers::core::types::U256,
@@ -1404,7 +1453,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct StorableMsg {
         pub from: Ipcaddress,
@@ -1423,7 +1472,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct SubnetID {
         pub root: u64,

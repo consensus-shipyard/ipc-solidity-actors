@@ -27,17 +27,5 @@ jobs:
         with:
           cache: false
 
-      # - name: Run tests
-      #   run: forge test -vvv --ffi
-
-      - name: Compile contracts
-        run: make compile-abi
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: stable
-          components: rustfmt,clippy
-      - name: Run rust binding
-        run: make rust-binding
-      - name: Check rust binding
-        run: make check-rust-binding
+      - name: Run tests
+        run: forge test -vvv --ffi
