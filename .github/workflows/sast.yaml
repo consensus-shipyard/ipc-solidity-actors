@@ -10,6 +10,8 @@ jobs:
     name: Rust binding check
     runs-on: ubuntu-latest
     steps:
+      - name: Check out the project
+        uses: actions/checkout@v3
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
         with:
