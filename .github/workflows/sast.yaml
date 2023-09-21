@@ -15,14 +15,10 @@ jobs:
         with:
           toolchain: stable
           components: rustfmt,clippy
-      - name: Install Node dependencies
-        run: npm i --unsafe-perm
-      - name: Install solidity plugin
-        run: npm i --unsafe-perm prettier prettier-plugin-solidity
-      - name: Prettier check
-        run: npx prettier --check 'src/**/*.sol' 'test/*.sol'
-      - name: Solhint check
-        run: npx solhint 'src/**/*.sol'
+      - name: Run rust binding
+        run: make rust-binding
+      - name: Check rust binding
+        run: make check-rust-binding
 
   slither:
     name: Slither check
