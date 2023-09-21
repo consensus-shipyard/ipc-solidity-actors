@@ -3,14 +3,13 @@ pragma solidity 0.8.19;
 
 import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
-import {InvalidCollateral, InvalidSubmissionPeriod} from "./errors/IPCErrors.sol";
+import {InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibVoting} from "./lib/LibVoting.sol";
 import {SubnetID} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
-error InvalidMajorityPercentage();
 
 contract GatewayDiamond {
     GatewayActorStorage internal s;
