@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Validator.sol";
@@ -50,8 +50,9 @@ contract GatewayGetterFacet {
         return s.networkName;
     }
 
+    // TODO: remove or add a new getter
     function bottomUpCheckpoints(uint64 e) external view returns (BottomUpCheckpoint memory) {
-        return s.bottomUpCheckpoints[e];
+        return s.bottomUpCheckpointsLegacy[e];
     }
 
     function getParentFinality(uint256 blockNumber) external view returns (ParentFinality memory) {
@@ -182,5 +183,15 @@ contract GatewayGetterFacet {
     /// @notice get the current membership validators total weight
     function getCurrentTotalWeight() public view returns (uint256) {
         return s.currentMembership.totalWeight;
+    }
+
+    /// @notice get the checkpoint information corresponding to the block height
+    function getCheckpointInfo(uint64 h) public view returns (CheckpointInfo memory) {
+        return s.bottomUpCheckpointInfo[h];
+    }
+
+    /// @notice get the checkpoint current weight corresponding to the block height
+    function getCheckpointCurrentWeight(uint64 h) public view returns (uint256) {
+        return s.bottomUpCheckpointInfo[h].currentWeight;
     }
 }

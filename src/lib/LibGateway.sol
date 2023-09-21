@@ -27,6 +27,7 @@ library LibGateway {
     event MembershipReceived(uint64 n, FvmAddress[] validators, uint256[] weights);
     event MembershipUpdated(uint64 n, Validator[] validators, uint256 totalWeight);
 
+    // TODO: remove or add a new getter
     /// @notice returns the current bottom-up checkpoint
     /// @return exists - whether the checkpoint exists
     /// @return epoch - the epoch of the checkpoint
@@ -38,7 +39,7 @@ library LibGateway {
     {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         epoch = LibVoting.getNextEpoch(block.number, s.bottomUpCheckPeriod);
-        checkpoint = s.bottomUpCheckpoints[epoch];
+        checkpoint = s.bottomUpCheckpointsLegacy[epoch];
         exists = !checkpoint.source.isEmpty();
     }
 
@@ -265,5 +266,11 @@ library LibGateway {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         subnet = s.subnets[subnetId.toHash()];
         found = !subnet.id.isEmpty();
+    }
+
+    /// @notice returns the threshold corresponding to the majority percentage
+    function getThreshold(uint256 weight) internal view returns (uint256) {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        return (weight * s.majorityPercentage) / 100;
     }
 }
