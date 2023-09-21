@@ -124,9 +124,31 @@ library LibGateway {
         s.lastMembership.totalWeight = totalValidatorsWeight;
     }
 
+    /// @dev compares two memberships and returns true if they are equal
+    function membershipEqual(Membership memory mb1, Membership memory mb2) internal pure returns (bool) {
+        if (mb1.configurationNumber != mb2.configurationNumber) {
+            return false;
+        }
+        if (mb1.totalWeight != mb2.totalWeight) {
+            return false;
+        }
+        if (mb1.validators.length != mb2.validators.length) {
+            return false;
+        }
+        bytes32 h1 = keccak256(abi.encode(mb1.validators));
+        bytes32 h2 = keccak256(abi.encode(mb2.validators));
+
+        return h1 == h2;
+    }
+
     /// @notice update the membership of the child subnet and returns it
     function updateMembership() internal returns (Membership memory) {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+
+        if (membershipEqual(s.currentMembership, s.lastMembership)) {
+            return s.currentMembership;
+        }
+
         s.currentMembership = s.lastMembership;
         Membership memory mb = s.currentMembership;
         emit MembershipUpdated({n: mb.configurationNumber, validators: mb.validators, totalWeight: mb.totalWeight});
