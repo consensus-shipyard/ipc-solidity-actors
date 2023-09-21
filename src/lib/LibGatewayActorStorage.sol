@@ -55,7 +55,7 @@ struct GatewayActorStorage {
     uint256 minStake;
     /// @notice fee amount charged per cross message
     uint256 crossMsgFee;
-    /// @notice majority percentage value
+    /// @notice majority percentage value (must be greater than or equal to 51)
     uint8 majorityPercentage;
     /// @notice nonce for bottom-up messages
     uint64 bottomUpNonce;

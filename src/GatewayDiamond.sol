@@ -36,7 +36,7 @@ contract GatewayDiamond {
             revert InvalidSubmissionPeriod();
         }
 
-        if (params.majorityPercentage > 100) {
+        if (params.majorityPercentage < 51 || params.majorityPercentage > 100) {
             revert InvalidMajorityPercentage();
         }
 

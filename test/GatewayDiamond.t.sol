@@ -1418,7 +1418,44 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(curMb.totalWeight == 600, "curMb.totalWeight correct");
     }
 
-    function testGatewayDiamond_adding_bottomUp_signatures() public {
+    function testGatewayDiamond_createBottomUpCheckpoint() public {
+        (, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
+
+        (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpointNew memory checkpoint = BottomUpCheckpointNew({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 1,
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages")
+        });
+
+        // failed to create a checkpoint with zero membership weight
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(ZeroMembershipWeight.selector);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 0);
+        vm.stopPrank();
+
+        // create a checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
+
+        // failed to create a checkpoint with the same height
+        checkpoint = BottomUpCheckpointNew({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 1,
+            nextConfigurationNumber: 2,
+            crossMessagesHash: keccak256("newmessages")
+        });
+
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(CheckpointAlreadyExists.selector);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
+    }
+
+    function testGatewayDiamond_addCheckpointSignature() public {
         (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
@@ -1455,7 +1492,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.getCheckpointCurrentWeight(1) == totalWeight(weights), "checkpoint weight was updated");
     }
 
-    function testGatewayDiamond_adding_bottomUp_signatures_notauthorized() public {
+    function testGatewayDiamond_addCheckpointSignature_notAuthorized() public {
         (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
