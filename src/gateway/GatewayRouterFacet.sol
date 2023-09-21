@@ -271,9 +271,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (s.bottomUpCheckpointInfo[checkpoint.blockHeight].threshold > 0) {
             revert CheckpointInfoAlreadyExists();
         }
-        if (s.incompleteCheckpoint.contains(checkpoint.blockHeight)) {
-            revert IncompleteCheckpointExists();
-        }
 
         if (membershipWeight == 0) {
             revert ZeroMembershipWeight();
@@ -283,7 +280,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
         // store checkpoint
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
-        s.incompleteCheckpoint.add(checkpoint.blockHeight);
+        bool ok = s.incompleteCheckpoint.add(checkpoint.blockHeight);
+        if (!ok) {
+            revert IncompleteCheckpointExists();
+        }
         s.bottomUpCheckpointInfo[checkpoint.blockHeight] = CheckpointInfo({
             hash: checkpoint.toHash(),
             rootHash: membershipRootHash,
