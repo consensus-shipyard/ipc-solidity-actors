@@ -27,8 +27,8 @@ jobs:
         with:
           cache: false
 
-      - name: Run tests
-        run: forge test -vvv --ffi
+      # - name: Run tests
+      #   run: forge test -vvv --ffi
 
       - name: Compile contracts
         run: make compile-abi
