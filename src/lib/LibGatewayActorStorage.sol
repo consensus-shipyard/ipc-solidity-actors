@@ -39,11 +39,14 @@ struct GatewayActorStorage {
     /// @notice A mapping of block numbers to checkpoint data
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => CheckpointInfo) bottomUpCheckpointInfo;
+    /// @notice The height of the last bottom-up checkpoint registered in the parent.
+    /// All checkpoint with the height less than or equal to that number can be garbage collected in the child subnet.
+    uint64 bottomUpCheckpointRetentionIndex;
     /// @notice A list of incomplete checkpoints.
     // slither-disable-next-line uninitialized-state
-    EnumerableSet.UintSet incompleteCheckpoint;
+    EnumerableSet.UintSet incompleteCheckpoints;
     /// @notice The validators have already sent signatures at height `h`
-    mapping(uint64 => mapping(address => bool)) bottomUpCollectedSignatures;
+    mapping(uint64 => EnumerableSet.AddressSet) bottomUpCollectedSignatures;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists

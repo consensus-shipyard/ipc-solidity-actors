@@ -1577,6 +1577,48 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.stopPrank();
     }
 
+    function testGatewayDiamond_garbage_collect_bottomUpCheckpoints() public {
+        (, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
+
+        (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
+
+        uint64 index = gwGetter.getBottomUpRetentionIndex();
+        require(index == 0);
+
+        BottomUpCheckpointNew memory checkpoint;
+
+        // create a checkpoint
+        uint64 n = 10;
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        for (uint64 i = 1; i <= n; i++) {
+            checkpoint = BottomUpCheckpointNew({
+                subnetID: gwGetter.getNetworkName(),
+                blockHeight: i,
+                blockHash: keccak256("block"),
+                nextConfigurationNumber: 1,
+                crossMessagesHash: keccak256("messages")
+            });
+
+            gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        }
+        vm.stopPrank();
+
+        index = gwGetter.getBottomUpRetentionIndex();
+        require(index == 0);
+
+        uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
+        require(heights.length == n, "heights.len == n");
+
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.pruneBottomUpCheckpoints(4);
+        vm.stopPrank();
+
+        index = gwGetter.getBottomUpRetentionIndex();
+        require(index == 4, "index updated");
+        heights = gwGetter.getIncompleteCheckpointHeights();
+        require(heights.length == n - 3, "index decreased");
+    }
+
     function totalWeight(uint256[] memory weights) internal pure returns (uint256 sum) {
         for (uint64 i = 0; i < 3; i++) {
             sum += weights[i];

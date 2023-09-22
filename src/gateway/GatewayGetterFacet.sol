@@ -199,12 +199,12 @@ contract GatewayGetterFacet {
 
     /// @notice get the incomplete checkpoint heights
     function getIncompleteCheckpointHeights() public view returns (uint256[] memory) {
-        return s.incompleteCheckpoint.values();
+        return s.incompleteCheckpoints.values();
     }
 
     /// @notice get the incomplete checkpoints
     function getIncompleteCheckpoints() public view returns (BottomUpCheckpointNew[] memory) {
-        uint256[] memory heights = s.incompleteCheckpoint.values();
+        uint256[] memory heights = s.incompleteCheckpoints.values();
         uint256 size = heights.length;
 
         BottomUpCheckpointNew[] memory checkpoints = new BottomUpCheckpointNew[](size);
@@ -215,5 +215,10 @@ contract GatewayGetterFacet {
             }
         }
         return checkpoints;
+    }
+
+    /// @notice get the bottom-up checkpoint retention index
+    function getBottomUpRetentionIndex() public view returns (uint64) {
+        return s.bottomUpCheckpointRetentionIndex;
     }
 }
