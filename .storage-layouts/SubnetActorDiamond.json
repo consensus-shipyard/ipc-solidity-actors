@@ -7,10 +7,14 @@
       "offset": 0,
       "slot": "0",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "type": "t_struct(SubnetActorStorage)10401_storage"
 =======
       "type": "t_struct(SubnetActorStorage)10275_storage"
 >>>>>>> 7748a92 (interface)
+=======
+      "type": "t_struct(SubnetActorStorage)10329_storage"
+>>>>>>> f640da2 (confirm with configuration number)
     }
   ],
   "types": {
@@ -32,16 +36,22 @@
       "numberOfBytes": "32"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_array(t_struct(ChildCheck)11867_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11867_storage",
 =======
     "t_array(t_struct(ChildCheck)11741_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11741_storage",
 >>>>>>> 7748a92 (interface)
+=======
+    "t_array(t_struct(ChildCheck)11795_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)11795_storage",
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_array(t_struct(CrossMsg)11873_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)11873_storage",
@@ -49,14 +59,18 @@
     "t_array(t_struct(CrossMsg)11747_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)11747_storage",
 >>>>>>> 7748a92 (interface)
+=======
+    "t_array(t_struct(CrossMsg)11801_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)11801_storage",
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
     },
-    "t_array(t_struct(StakingRelease)11908_storage)dyn_storage": {
-      "base": "t_struct(StakingRelease)11908_storage",
+    "t_array(t_struct(ValidatorChange)11923_storage)dyn_storage": {
+      "base": "t_struct(ValidatorChange)11923_storage",
       "encoding": "dynamic_array",
-      "label": "struct StakingRelease[]",
+      "label": "struct ValidatorChange[]",
       "numberOfBytes": "32"
     },
     "t_bool": {
@@ -79,11 +93,16 @@
       "label": "bytes",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
     "t_enum(ConsensusType)4990": {
+=======
+    "t_enum(ConsensusType)4984": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "enum ConsensusType",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_enum(Status)5004": {
 =======
@@ -94,16 +113,17 @@
     },
     "t_enum(Status)4560": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_enum(Status)4998": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
     },
-    "t_mapping(t_address,t_array(t_struct(StakingRelease)11908_storage)dyn_storage)": {
-      "encoding": "mapping",
-      "key": "t_address",
-      "label": "mapping(address => struct StakingRelease[])",
-      "numberOfBytes": "32",
-      "value": "t_array(t_struct(StakingRelease)11908_storage)dyn_storage"
+    "t_enum(SubnetOpt)11926": {
+      "encoding": "inplace",
+      "label": "enum SubnetOpt",
+      "numberOfBytes": "1"
     },
     "t_mapping(t_address,t_bool)": {
       "encoding": "mapping",
@@ -120,26 +140,38 @@
       "value": "t_string_storage"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_address,t_struct(FvmAddress)11952_storage)": {
 =======
     "t_mapping(t_address,t_struct(FvmAddress)11826_storage)": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_mapping(t_address,t_struct(FvmAddress)11880_storage)": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct FvmAddress)",
       "numberOfBytes": "32",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "value": "t_struct(FvmAddress)11952_storage"
 =======
       "value": "t_struct(FvmAddress)11826_storage"
+=======
+      "value": "t_struct(FvmAddress)11880_storage"
+>>>>>>> f640da2 (confirm with configuration number)
     },
-    "t_mapping(t_address,t_struct(Validator)11926_storage)": {
+    "t_mapping(t_address,t_struct(Validator)11914_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
       "value": "t_struct(Validator)11926_storage"
 >>>>>>> 7748a92 (interface)
+=======
+      "value": "t_struct(Validator)11914_storage"
+>>>>>>> f640da2 (confirm with configuration number)
     },
     "t_mapping(t_address,t_uint256)": {
       "encoding": "mapping",
@@ -148,6 +180,7 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_mapping(t_bytes32,t_struct(BottomUpCheckpointLegacy)11820_storage)": {
 =======
@@ -160,15 +193,22 @@
     },
     "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11694_storage)": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
 <<<<<<< HEAD
+<<<<<<< HEAD
       "value": "t_struct(BottomUpCheckpointLegacy)11820_storage"
 =======
       "value": "t_struct(BottomUpCheckpoint)11694_storage"
 >>>>>>> 7748a92 (interface)
+=======
+      "value": "t_struct(BottomUpCheckpoint)11748_storage"
+>>>>>>> f640da2 (confirm with configuration number)
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -192,14 +232,19 @@
       "value": "t_mapping(t_bytes32,t_uint256)"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)11820_storage)": {
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11694_storage)": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(BottomUpCheckpointLegacy)11820_storage"
     },
@@ -209,10 +254,16 @@
     },
     "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11804_storage)": {
 >>>>>>> 7748a92 (interface)
+=======
+      "value": "t_struct(BottomUpCheckpoint)11748_storage"
+    },
+    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteBottomUpSubmission)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(EpochVoteBottomUpSubmission)11930_storage"
 =======
@@ -225,6 +276,9 @@
       "numberOfBytes": "32",
       "value": "t_struct(StakingChange)11883_storage"
 >>>>>>> 7748a92 (interface)
+=======
+      "value": "t_struct(EpochVoteBottomUpSubmission)11858_storage"
+>>>>>>> f640da2 (confirm with configuration number)
     },
     "t_string_storage": {
       "encoding": "bytes",
@@ -247,23 +301,32 @@
       "numberOfBytes": "64"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(BottomUpCheckpointLegacy)11820_storage": {
 =======
     "t_struct(BottomUpCheckpoint)11694_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(BottomUpCheckpoint)11748_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct BottomUpCheckpointLegacy",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11803,
 =======
           "astId": 11677,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11731,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)11978_storage"
         },
@@ -275,6 +338,12 @@
         {
           "astId": 11679,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(SubnetID)11906_storage"
+        },
+        {
+          "astId": 11733,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epoch",
           "offset": 0,
@@ -283,10 +352,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11807,
 =======
           "astId": 11681,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11735,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "fee",
           "offset": 0,
@@ -295,14 +368,19 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11811,
 =======
           "astId": 11685,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11739,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_array(t_struct(CrossMsg)11873_storage)dyn_storage"
         },
@@ -314,10 +392,17 @@
         {
           "astId": 11689,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
+        },
+        {
+          "astId": 11743,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "children",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_array(t_struct(ChildCheck)11867_storage)dyn_storage"
         },
@@ -329,6 +414,12 @@
         {
           "astId": 11691,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_array(t_struct(ChildCheck)11795_storage)dyn_storage"
+        },
+        {
+          "astId": 11745,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevHash",
           "offset": 0,
@@ -337,10 +428,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11819,
 =======
           "astId": 11693,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11747,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "proof",
           "offset": 0,
@@ -351,23 +446,32 @@
       "numberOfBytes": "256"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(ChildCheck)11867_storage": {
 =======
     "t_struct(ChildCheck)11741_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(ChildCheck)11795_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11863,
 =======
           "astId": 11737,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11791,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)11978_storage"
         },
@@ -379,6 +483,12 @@
         {
           "astId": 11740,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(SubnetID)11906_storage"
+        },
+        {
+          "astId": 11794,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "checks",
           "offset": 0,
@@ -389,23 +499,32 @@
       "numberOfBytes": "96"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(CrossMsg)11873_storage": {
 =======
     "t_struct(CrossMsg)11747_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(CrossMsg)11801_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11870,
 =======
           "astId": 11744,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11798,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(StorableMsg)11888_storage"
         },
@@ -417,6 +536,12 @@
         {
           "astId": 11746,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(StorableMsg)11816_storage"
+        },
+        {
+          "astId": 11800,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "wrapped",
           "offset": 0,
@@ -427,23 +552,32 @@
       "numberOfBytes": "384"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(EpochVoteBottomUpSubmission)11930_storage": {
 =======
     "t_struct(EpochVoteBottomUpSubmission)11804_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(EpochVoteBottomUpSubmission)11858_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct EpochVoteBottomUpSubmission",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11924,
 =======
           "astId": 11798,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11852,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "vote",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(EpochVoteSubmission)11912_storage"
         },
@@ -455,33 +589,51 @@
         {
           "astId": 11803,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(EpochVoteSubmission)11840_storage"
+        },
+        {
+          "astId": 11857,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
 <<<<<<< HEAD
+<<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpointLegacy)11820_storage)"
 =======
           "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11694_storage)"
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)"
+>>>>>>> f640da2 (confirm with configuration number)
         }
       ],
       "numberOfBytes": "192"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(EpochVoteSubmission)11912_storage": {
 =======
     "t_struct(EpochVoteSubmission)11786_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(EpochVoteSubmission)11840_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11895,
 =======
           "astId": 11769,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11823,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -490,10 +642,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11897,
 =======
           "astId": 11771,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11825,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -502,10 +658,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11899,
 =======
           "astId": 11773,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11827,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -514,10 +674,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11905,
 =======
           "astId": 11779,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11833,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submitters",
           "offset": 0,
@@ -526,10 +690,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11911,
 =======
           "astId": 11785,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11839,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissionWeights",
           "offset": 0,
@@ -540,19 +708,27 @@
       "numberOfBytes": "160"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(FvmAddress)11952_storage": {
 =======
     "t_struct(FvmAddress)11826_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(FvmAddress)11880_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11949,
 =======
           "astId": 11823,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11877,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "addrType",
           "offset": 0,
@@ -561,10 +737,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11951,
 =======
           "astId": 11825,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11879,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "payload",
           "offset": 0,
@@ -575,23 +755,32 @@
       "numberOfBytes": "64"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(IPCAddress)12005_storage": {
 =======
     "t_struct(IPCAddress)11946_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(IPCAddress)11953_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 12001,
 =======
           "astId": 11942,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11949,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)11978_storage"
         },
@@ -603,15 +792,25 @@
         {
           "astId": 11945,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(SubnetID)11906_storage"
+        },
+        {
+          "astId": 11952,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
 <<<<<<< HEAD
+<<<<<<< HEAD
           "type": "t_struct(FvmAddress)11952_storage"
 =======
           "type": "t_struct(FvmAddress)11826_storage"
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(FvmAddress)11880_storage"
+>>>>>>> f640da2 (confirm with configuration number)
         }
       ],
       "numberOfBytes": "128"
@@ -639,6 +838,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(StorableMsg)11888_storage": {
 =======
@@ -760,19 +960,27 @@
     },
     "t_struct(StorableMsg)11762_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(StorableMsg)11816_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11876,
 =======
           "astId": 11750,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11804,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(IPCAddress)12005_storage"
         },
@@ -784,10 +992,17 @@
         {
           "astId": 11753,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(IPCAddress)11953_storage"
+        },
+        {
+          "astId": 11807,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(IPCAddress)12005_storage"
         },
@@ -799,6 +1014,12 @@
         {
           "astId": 11755,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_struct(IPCAddress)11953_storage"
+        },
+        {
+          "astId": 11809,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "value",
           "offset": 0,
@@ -807,10 +1028,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11883,
 =======
           "astId": 11757,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11811,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -819,10 +1044,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11885,
 =======
           "astId": 11759,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11813,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "method",
           "offset": 8,
@@ -831,10 +1060,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11887,
 =======
           "astId": 11761,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11815,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "params",
           "offset": 0,
@@ -845,23 +1078,32 @@
       "numberOfBytes": "352"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(SubnetActorStorage)10401_storage": {
 =======
     "t_struct(SubnetActorStorage)10275_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(SubnetActorStorage)10329_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10325,
 =======
           "astId": 10187,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10242,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11930_storage)"
         },
@@ -873,6 +1115,12 @@
         {
           "astId": 10192,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)"
+        },
+        {
+          "astId": 10247,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "stake",
           "offset": 0,
@@ -881,10 +1129,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10335,
 =======
           "astId": 10197,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10252,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "accumulatedRewards",
           "offset": 0,
@@ -893,10 +1145,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10340,
 =======
           "astId": 10202,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10257,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorNetAddresses",
           "offset": 0,
@@ -905,14 +1161,19 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10346,
 =======
           "astId": 10208,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10263,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorWorkerAddresses",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_address,t_struct(FvmAddress)11952_storage)"
         },
@@ -924,10 +1185,17 @@
         {
           "astId": 10214,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_mapping(t_address,t_struct(FvmAddress)11880_storage)"
+        },
+        {
+          "astId": 10269,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "committedCheckpoints",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)11820_storage)"
         },
@@ -939,6 +1207,12 @@
         {
           "astId": 10217,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)"
+        },
+        {
+          "astId": 10272,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "genesis",
           "offset": 0,
@@ -947,10 +1221,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10358,
 =======
           "astId": 10220,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10275,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalStake",
           "offset": 0,
@@ -959,10 +1237,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10361,
 =======
           "astId": 10223,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10278,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minActivationCollateral",
           "offset": 0,
@@ -971,41 +1253,54 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10364,
 =======
           "astId": 10226,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10281,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "configurationNumber",
+          "label": "topDownCheckPeriod",
           "offset": 0,
           "slot": "9",
           "type": "t_uint64"
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10367,
 =======
           "astId": 10229,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10284,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "topDownCheckPeriod",
+          "label": "bottomUpCheckPeriod",
           "offset": 8,
           "slot": "9",
           "type": "t_uint64"
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10370,
 =======
           "astId": 10232,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10287,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "bottomUpCheckPeriod",
+          "label": "minValidators",
           "offset": 16,
           "slot": "9",
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 10373,
 =======
@@ -1023,6 +1318,9 @@
 =======
           "astId": 10238,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10290,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "name",
           "offset": 0,
@@ -1031,10 +1329,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10378,
 =======
           "astId": 10240,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10292,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "currentSubnetHash",
           "offset": 0,
@@ -1043,10 +1345,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10381,
 =======
           "astId": 10243,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10295,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevExecutedCheckpointHash",
           "offset": 0,
@@ -1055,10 +1361,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10384,
 =======
           "astId": 10246,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10298,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "ipcGatewayAddr",
           "offset": 0,
@@ -1067,14 +1377,19 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10388,
 =======
           "astId": 10250,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 10302,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "status",
           "offset": 20,
           "slot": "13",
+<<<<<<< HEAD
           "type": "t_enum(Status)5004"
         },
         {
@@ -1110,20 +1425,63 @@
         {
           "astId": 10262,
 >>>>>>> 7748a92 (interface)
+=======
+          "type": "t_enum(Status)4998"
+        },
+        {
+          "astId": 10306,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "parentId",
+          "offset": 0,
+          "slot": "14",
+          "type": "t_struct(SubnetID)11906_storage"
+        },
+        {
+          "astId": 10310,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "consensus",
           "offset": 0,
+          "slot": "16",
+          "type": "t_enum(ConsensusType)4984"
+        },
+        {
+          "astId": 10313,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "configurationNumber",
+          "offset": 1,
+          "slot": "16",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 10318,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "validatorSetChanges",
+          "offset": 0,
+          "slot": "17",
+          "type": "t_array(t_struct(ValidatorChange)11923_storage)dyn_storage"
+        },
+        {
+          "astId": 10322,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "validators",
+          "offset": 0,
           "slot": "18",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_enum(ConsensusType)4990"
 =======
           "type": "t_enum(ConsensusType)4546"
+=======
+          "type": "t_struct(AddressSet)3420_storage"
+>>>>>>> f640da2 (confirm with configuration number)
         },
         {
-          "astId": 10266,
+          "astId": 10328,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "validatorSet",
+          "label": "validatorInfo",
           "offset": 0,
+<<<<<<< HEAD
           "slot": "19",
           "type": "t_struct(ValidatorSet)11939_storage"
         },
@@ -1143,24 +1501,36 @@
           "slot": "24",
           "type": "t_struct(StakingReleaseQueue)11919_storage"
 >>>>>>> 7748a92 (interface)
+=======
+          "slot": "20",
+          "type": "t_mapping(t_address,t_struct(Validator)11914_storage)"
+>>>>>>> f640da2 (confirm with configuration number)
         }
       ],
-      "numberOfBytes": "832"
+      "numberOfBytes": "672"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(SubnetID)11978_storage": {
 =======
     "t_struct(SubnetID)11852_storage": {
 >>>>>>> 7748a92 (interface)
+=======
+    "t_struct(SubnetID)11906_storage": {
+>>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11973,
 =======
           "astId": 11847,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11901,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "root",
           "offset": 0,
@@ -1169,10 +1539,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11977,
 =======
           "astId": 11851,
 >>>>>>> 7748a92 (interface)
+=======
+          "astId": 11905,
+>>>>>>> f640da2 (confirm with configuration number)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "route",
           "offset": 0,
@@ -1182,64 +1556,67 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(Validator)11926_storage": {
+    "t_struct(Validator)11914_storage": {
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
-          "astId": 11922,
+          "astId": 11908,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "collateral",
+          "label": "validator",
           "offset": 0,
           "slot": "0",
+          "type": "t_address"
+        },
+        {
+          "astId": 11910,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "weight",
+          "offset": 0,
+          "slot": "1",
           "type": "t_uint256"
         },
         {
-          "astId": 11925,
+          "astId": 11913,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "data",
+          "label": "info",
           "offset": 0,
-          "slot": "1",
+          "slot": "2",
           "type": "t_bytes_storage"
         }
       ],
-      "numberOfBytes": "64"
+      "numberOfBytes": "96"
     },
-    "t_struct(ValidatorSet)11939_storage": {
+    "t_struct(ValidatorChange)11923_storage": {
       "encoding": "inplace",
-      "label": "struct ValidatorSet",
+      "label": "struct ValidatorChange",
       "members": [
         {
-          "astId": 11929,
+          "astId": 11917,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "activeLimit",
+          "label": "validator",
           "offset": 0,
           "slot": "0",
-          "type": "t_uint16"
+          "type": "t_struct(Validator)11914_storage"
         },
         {
-          "astId": 11932,
+          "astId": 11919,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "totalValidators",
-          "offset": 2,
-          "slot": "0",
-          "type": "t_uint16"
-        },
-        {
-          "astId": 11938,
-          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "validators",
+          "label": "configurationNumber",
           "offset": 0,
-          "slot": "1",
-          "type": "t_mapping(t_address,t_struct(Validator)11926_storage)"
+          "slot": "3",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 11922,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "operation",
+          "offset": 8,
+          "slot": "3",
+          "type": "t_enum(SubnetOpt)11926"
         }
       ],
-      "numberOfBytes": "64"
-    },
-    "t_uint16": {
-      "encoding": "inplace",
-      "label": "uint16",
-      "numberOfBytes": "2"
+      "numberOfBytes": "128"
     },
     "t_uint256": {
       "encoding": "inplace",

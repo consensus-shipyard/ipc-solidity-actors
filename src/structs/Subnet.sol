@@ -41,12 +41,10 @@ struct StakingChange {
 struct StakingChangeSet {
     /// @notice The next configuration number to assign to new changes.
     uint64 nextConfigurationNumber;
-    /// @notice The total number of changes recorded in the set.
-    uint64 totalChanges;
+    /// @notice The starting configuration number stored.
+    uint64 startConfigurationNumber;
     /// The details of the changes, mapping of configuration number to changes.
     mapping(uint64 => StakingChange) changes;
-    /// The details of the changes, mapping of validator address to configuration number.
-    mapping(address => uint64) validators;
 }
 
 /// Each staking release amount and time
@@ -65,9 +63,12 @@ struct StakingReleaseQueue {
     mapping(address => StakingRelease[]) releases;
 }
 
+/// Keeping track of the validator information. There are two types of collaterals:
+///     - Active: The amount of collateral actually confirmed in child subnet
+///     - Total: Aside from Active, there is also the collateral has been supplied, but not yet confirmed in child.
 struct Validator {
-    /// The collateral the validator has staked
-    uint256 collateral;
+    uint256 activeCollateral;
+    uint256 totalCollateral;
     /// The data associated with the validator, i.e. offchain network address.
     /// This information is not important to the protocol, offchain should know how
     /// to parse or decode the bytes.
@@ -85,8 +86,6 @@ struct Validator {
 ///
 /// With each validator staking change, waiting validators can be promoted to active validators
 /// and active validators can be knocked off.
-///
-/// @NOTE THAT THE LIST OF ACTIVE VALIDATORS ARE MAINTAINED OFFCHAIN DUE TO GAS CONCERNS!
 struct ValidatorSet {
     /// The total number of active validators allowed.
     uint16 activeLimit;
