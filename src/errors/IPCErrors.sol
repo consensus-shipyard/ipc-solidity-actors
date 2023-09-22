@@ -61,3 +61,4 @@ error ParentFinalityAlreadyCommitted();
 error InvalidCrossMsgValue();
 error ZeroMembershipWeight();
 error WithdrawExceedingCollateral();
+error CannotConfirmFutureChanges();

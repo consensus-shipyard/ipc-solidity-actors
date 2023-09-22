@@ -4,47 +4,28 @@ pragma solidity 0.8.19;
 import {IGateway} from "../interfaces/IGateway.sol";
 import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage.sol";
 import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet} from "../structs/Subnet.sol";
-import {WithdrawExceedingCollateral} from "../errors/IPCErrors.sol";
+import {WithdrawExceedingCollateral, CannotConfirmFutureChanges} from "../errors/IPCErrors.sol";
 
 /// The util library for `StakingChangeSet`
 library LibStakingChangeSet {
+    event NewStakingRequest(StakingOperation op, address validator, uint256 amount, uint64 configurationNumber);
+
     /// @notice Perform upsert operation to the withdraw changes, return total value to withdraw
     /// @notice of the validator.
     /// Each insert will increment the configuration number by 1, update will not.
-    function upsertWithdraw(
-        StakingChangeSet storage changes,
-        address validator,
-        uint256 amount
-    ) internal pure returns (uint256 total) {
-        require(false, "not implemented");
+    function withdrawRequest(StakingChangeSet storage changes, address validator, uint256 amount) internal {
+        uint64 configurationNumber = changes.nextConfigurationNumber;
+        changes.nextConfigurationNumber = configurationNumber + 1;
 
-        // Sh! Silent the warning now. Will remove once implemented;
-        changes;
-        validator;
-        amount;
-
-        total = 0;
+        emit NewStakingRequest(StakingOperation.Deposit, validator, amount, configurationNumber);
     }
 
     /// @notice Perform upsert operation to the deposit changes
-    /// Each insert will increment the configuration number by 1, update will not.
-    function upsertDeposit(StakingChangeSet storage changes, address validator, uint256 amount) internal pure {
-        require(false, "not implemented");
+    function depositRequest(StakingChangeSet storage changes, address validator, uint256 amount) internal {
+        uint64 configurationNumber = changes.nextConfigurationNumber;
+        changes.nextConfigurationNumber = configurationNumber + 1;
 
-        // Sh! Silent the warning now. Will remove once implemented;
-        changes;
-        validator;
-        amount;
-    }
-
-    /// @notice Check if there are any changes
-    function isEmpty(StakingChangeSet storage changes) internal view returns (bool) {
-        return changes.totalChanges == 0;
-    }
-
-    /// @notice Get the starting configuration number in the change set
-    function startConfigurationNumber(StakingChangeSet storage changes) internal view returns (uint64) {
-        return changes.nextConfigurationNumber - changes.totalChanges;
+        emit NewStakingRequest(StakingOperation.Withdraw, validator, amount, configurationNumber);
     }
 
     /// @notice Get the change at configuration number
@@ -53,6 +34,10 @@ library LibStakingChangeSet {
         uint64 configurationNumber
     ) internal view returns (StakingChange storage) {
         return changes.changes[configurationNumber];
+    }
+
+    function purgeChange(StakingChangeSet storage changes, uint64 configurationNumber) internal {
+        delete changes.changes[configurationNumber];
     }
 }
 
@@ -84,21 +69,41 @@ library LibStakingRelaseQueue {
 /// The util library for `ValidatorSet`
 library LibValidatorSet {
     /// @notice Get the collateral of the validator.
-    function getCollateral(
+    function getActiveCollateral(
         ValidatorSet storage validators,
         address validator
     ) internal view returns (uint256 collateral) {
-        collateral = validators.validators[validator].collateral;
+        collateral = validators.validators[validator].activeCollateral;
     }
 
-    /// @notice Validator increases its collateral by amount.
-    function deposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
-        validators.validators[validator].collateral += amount;
+    /// @notice Validator increases its total collateral by amount.
+    function recordDeposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
+        validators.validators[validator].totalCollateral += amount;
     }
 
-    /// @notice Validator reduces its collateral by amount.
-    function withdraw(ValidatorSet storage validators, address validator, uint256 amount) internal {
-        validators.validators[validator].collateral -= amount;
+    /// @notice Validator reduces its total collateral by amount.
+    function recordWithdraw(ValidatorSet storage validators, address validator, uint256 amount) internal {
+        uint256 total = validators.validators[validator].totalCollateral;
+        if (total < amount) {
+            revert WithdrawExceedingCollateral();
+        }
+
+        total -= amount;
+        validators.validators[validator].totalCollateral = total;
+    }
+
+    /// @notice Validator increases its active collateral by amount.
+    function updateActive(
+        ValidatorSet storage validators,
+        address validator,
+        uint256 amount,
+        StakingOperation op
+    ) internal {
+        if (op == StakingOperation.Deposit) {
+            validators.validators[validator].activeCollateral += amount;
+        } else {
+            validators.validators[validator].activeCollateral -= amount;
+        }
     }
 }
 
@@ -107,47 +112,56 @@ library LibStaking {
     using LibStakingChangeSet for StakingChangeSet;
     using LibValidatorSet for ValidatorSet;
 
-    /// @notice Deposit into the collateral
+    event ConfigurantionNumberConfirmed(uint64 number);
+
+    /// @notice Deposit the collateral
     function deposit(address validator, uint256 amount) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
 
-        s.changeSet.upsertDeposit(validator, amount);
-        IGateway(s.ipcGatewayAddr).addStake{value: amount}();
+        s.changeSet.depositRequest(validator, amount);
+        s.validatorSet.recordDeposit(validator, amount);
     }
 
-    /// @notice Withdraw `msg.value` amount of collateral by `msg.sender`
-    function withdraw() internal {
+    /// @notice Withdraw the collateral
+    function withdraw(address validator, uint256 amount) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
 
-        uint256 totalWithdraw = s.changeSet.upsertWithdraw(msg.sender, msg.value);
-
-        if (s.validatorSet.getCollateral(msg.sender) < totalWithdraw) {
-            revert WithdrawExceedingCollateral();
-        }
+        s.changeSet.withdrawRequest(validator, amount);
+        s.validatorSet.recordWithdraw(validator, amount);
     }
 
     /// @notice Confirm the changes in bottom up checkpoint submission, only call this in bottom up checkpoint execution.
-    function confirmChange() internal {
+    function confirmChange(uint64 configurationNumber) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         StakingChangeSet storage changeSet = s.changeSet;
 
-        uint64 start = changeSet.startConfigurationNumber();
-        uint64 end = changeSet.nextConfigurationNumber;
-        for (uint64 i = start; i < end; ) {
+        if (configurationNumber >= changeSet.nextConfigurationNumber) {
+            revert CannotConfirmFutureChanges();
+        }
+
+        uint64 start = changeSet.startConfigurationNumber;
+        for (uint64 i = start; i <= configurationNumber; ) {
             StakingChange storage change = changeSet.getChange(i);
             address validator = change.validator;
             uint256 amount = change.amount;
 
             if (change.op == StakingOperation.Withdraw) {
-                s.validatorSet.withdraw(validator, amount);
+                s.validatorSet.updateActive(validator, amount, StakingOperation.Withdraw);
                 s.releaseQueue.addNewRelease(validator, amount);
             } else {
-                s.validatorSet.deposit(validator, amount);
+                s.validatorSet.updateActive(validator, amount, StakingOperation.Deposit);
+                IGateway(s.ipcGatewayAddr).addStake{value: amount}();
             }
+
+            changeSet.purgeChange(i);
 
             unchecked {
                 i++;
             }
         }
+
+        changeSet.startConfigurationNumber = configurationNumber + 1;
+
+        emit ConfigurantionNumberConfirmed(configurationNumber);
     }
 }
