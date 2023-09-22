@@ -17,7 +17,12 @@ library LibStakingChangeSet {
         uint64 configurationNumber = changes.nextConfigurationNumber;
         changes.nextConfigurationNumber = configurationNumber + 1;
 
-        emit NewStakingRequest(StakingOperation.Deposit, validator, amount, configurationNumber);
+        emit NewStakingRequest({
+            op: StakingOperation.Deposit,
+            validator: validator,
+            amount: amount,
+            configurationNumber: configurationNumber
+        });
     }
 
     /// @notice Perform upsert operation to the deposit changes
@@ -25,7 +30,12 @@ library LibStakingChangeSet {
         uint64 configurationNumber = changes.nextConfigurationNumber;
         changes.nextConfigurationNumber = configurationNumber + 1;
 
-        emit NewStakingRequest(StakingOperation.Withdraw, validator, amount, configurationNumber);
+        emit NewStakingRequest({
+            op: StakingOperation.Withdraw,
+            validator: validator,
+            amount: amount,
+            configurationNumber: configurationNumber
+        });
     }
 
     /// @notice Get the change at configuration number
@@ -146,10 +156,10 @@ library LibStaking {
             uint256 amount = change.amount;
 
             if (change.op == StakingOperation.Withdraw) {
-                s.validatorSet.updateActive(validator, amount, StakingOperation.Withdraw);
+                s.validatorSet.updateActive({validator: validator, amount: amount, op: StakingOperation.Withdraw});
                 s.releaseQueue.addNewRelease(validator, amount);
             } else {
-                s.validatorSet.updateActive(validator, amount, StakingOperation.Deposit);
+                s.validatorSet.updateActive({validator: validator, amount: amount, op: StakingOperation.Deposit});
                 IGateway(s.ipcGatewayAddr).addStake{value: amount}();
             }
 
