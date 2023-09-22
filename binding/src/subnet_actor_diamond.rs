@@ -165,6 +165,15 @@ pub mod subnet_actor_diamond {
                     },],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("InvalidMajorityPercentage"),
                     ::std::vec![::ethers::core::abi::ethabi::AbiError {
                         name: ::std::borrow::ToOwned::to_owned("InvalidMajorityPercentage",),
@@ -177,6 +186,17 @@ pub mod subnet_actor_diamond {
                         name: ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod",),
                         inputs: ::std::vec![],
                     },],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "InvalidSubmissionPeriod",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("NoBytecodeAtAddress"),
@@ -229,7 +249,11 @@ pub mod subnet_actor_diamond {
     pub static SUBNETACTORDIAMOND_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
+<<<<<<< HEAD
     const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x91W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[c\n\x82\xDDs`\xE3\x1B`\x80R`\x01`\x01`\xE0\x1B\x03\x19\x16`\x84R`\x7F\x19`\xA4\x01`\x80\xFD[`\rT`\x01`\x01`\xA0\x1B\x03\x163\x03`\xA4W\0[c\xE7\xE6\x01\xDB`\xE0\x1B`\x80R`\x04`\x80\xFD\xFE\xA2dipfsX\"\x12 |2\xE6\xBC\x90\xE7D\xC1a\xD2\xA6TF\r5\xDEn.1w\xC3\xBC\xC8\xEB\xD7\xD0\xEB\xFD\x0F\x83BBdsolcC\0\x08\x13\x003";
+=======
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x91W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[c\n\x82\xDDs`\xE3\x1B`\x80R`\x01`\x01`\xE0\x1B\x03\x19\x16`\x84R`\x7F\x19`\xA4\x01`\x80\xFD[`\rT`\x01`\x01`\xA0\x1B\x03\x163\x03`\xA4W\0[c\xE7\xE6\x01\xDB`\xE0\x1B`\x80R`\x04`\x80\xFD\xFE\xA2dipfsX\"\x12 @R\x8B\xE3\xE0\xD1\xB0\xEC\xF44cH\x08\xFET\xDDD\x8E\xBC\x825OJaK\xC9o\x96\x88\x1A{\x9AdsolcC\0\x08\x13\x003";
+>>>>>>> 32e65e5 (binding update)
     /// The deployed bytecode of the contract.
     pub static SUBNETACTORDIAMOND_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
@@ -264,11 +288,21 @@ pub mod subnet_actor_diamond {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
+<<<<<<< HEAD
             Self(::ethers::contract::Contract::new(
                 address.into(),
                 SUBNETACTORDIAMOND_ABI.clone(),
                 client,
             ))
+=======
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    SUBNETACTORDIAMOND_ABI.clone(),
+                    client,
+                ),
+            )
+>>>>>>> 32e65e5 (binding update)
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
@@ -388,7 +422,11 @@ pub mod subnet_actor_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> 32e65e5 (binding update)
     )]
     #[etherror(name = "InvalidCollateral", abi = "InvalidCollateral()")]
     pub struct InvalidCollateral;
@@ -417,7 +455,11 @@ pub mod subnet_actor_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> 32e65e5 (binding update)
     )]
     #[etherror(name = "InvalidSubmissionPeriod", abi = "InvalidSubmissionPeriod()")]
     pub struct InvalidSubmissionPeriod;
@@ -529,6 +571,7 @@ pub mod subnet_actor_diamond {
             {
                 return Ok(Self::InitializationFunctionReverted(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::InvalidCollateral(decoded));
@@ -546,6 +589,26 @@ pub mod subnet_actor_diamond {
             if let Ok(decoded) =
                 <NoBytecodeAtAddress as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidCollateral(decoded));
+            }
+            if let Ok(decoded) = <InvalidMajorityPercentage as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidMajorityPercentage(decoded));
+            }
+            if let Ok(decoded) = <InvalidSubmissionPeriod as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidSubmissionPeriod(decoded));
+            }
+            if let Ok(decoded) = <NoBytecodeAtAddress as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> 32e65e5 (binding update)
                 return Ok(Self::NoBytecodeAtAddress(decoded));
             }
             if let Ok(decoded) =
@@ -578,7 +641,13 @@ pub mod subnet_actor_diamond {
                 Self::InitializationFunctionReverted(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::InvalidCollateral(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::InvalidCollateral(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> 32e65e5 (binding update)
                 Self::InvalidMajorityPercentage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -666,9 +735,21 @@ pub mod subnet_actor_diamond {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::InvalidCollateral(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::InvalidMajorityPercentage(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidSubmissionPeriod(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NoBytecodeAtAddress(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::InvalidMajorityPercentage(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidSubmissionPeriod(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NoBytecodeAtAddress(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> 32e65e5 (binding update)
                 Self::NoSelectorsProvidedForFacetForCut(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
