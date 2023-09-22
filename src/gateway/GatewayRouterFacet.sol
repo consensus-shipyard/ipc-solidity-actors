@@ -10,7 +10,7 @@ import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Validator.sol";
-import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionIndex} from "../errors/IPCErrors.sol";
+import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionIndex, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcess} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
@@ -313,7 +313,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             delete s.bottomUpCheckpoints[h];
             delete s.bottomUpCheckpointInfo[h];
             delete s.bottomUpCollectedSignatures[h];
-            s.incompleteCheckpoints.remove(h);
+            bool ok = s.incompleteCheckpoints.remove(h);
+            if (!ok) {
+                revert FailedRemoveIncompleteCheckpoint();
+            }
 
             unchecked {
                 ++h;
