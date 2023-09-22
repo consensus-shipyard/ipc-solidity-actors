@@ -66,3 +66,4 @@ error WrongCheckpointSource();
 error ParentFinalityAlreadyCommitted();
 error InvalidCrossMsgValue();
 error ZeroMembershipWeight();
+error WithdrawExceedingCollateral();
