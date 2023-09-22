@@ -11,7 +11,7 @@ import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Validator.sol";
 import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionIndex, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
-import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcess} from "../errors/IPCErrors.sol";
+import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcess, FailedAddIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -202,7 +202,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 weight,
         bytes memory signature
     ) external {
-        if (height <= s.bottomUpCheckpointRetentionIndex) {
+        if (height < s.bottomUpCheckpointRetentionIndex) {
             revert CheckpointAlreadyProcess();
         }
         BottomUpCheckpointNew memory checkpoint = s.bottomUpCheckpoints[height];
@@ -239,7 +239,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         // All checks passed.
         // Adding signature and emitting events.
 
-        s.bottomUpCollectedSignatures[height].add(recoveredSignatory);
+        bool ok = s.bottomUpCollectedSignatures[height].add(recoveredSignatory);
+        if (!ok) {
+            revert FailedAddIncompleteCheckpoint();
+        }
         checkpointInfo.currentWeight += weight;
 
         if (checkpointInfo.currentWeight >= checkpointInfo.threshold) {
@@ -269,7 +272,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         bytes32 membershipRootHash,
         uint256 membershipWeight
     ) external systemActorOnly {
-        if (checkpoint.blockHeight <= s.bottomUpCheckpointRetentionIndex) {
+        if (checkpoint.blockHeight < s.bottomUpCheckpointRetentionIndex) {
             revert CheckpointAlreadyProcess();
         }
         if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
@@ -289,7 +292,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
         bool ok = s.incompleteCheckpoints.add(checkpoint.blockHeight);
         if (!ok) {
-            revert IncompleteCheckpointExists();
+            revert FailedAddIncompleteCheckpoint();
         }
         s.bottomUpCheckpointInfo[checkpoint.blockHeight] = CheckpointInfo({
             hash: checkpoint.toHash(),
@@ -301,7 +304,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     }
 
     /// @notice garbage collect all checkpoints and related data for heights lower than `newIndex`.
-    /// @param newIndex - the height of the last checkpoint registered in the parent subnet
+    /// @param newIndex - new retention index
     function pruneBottomUpCheckpoints(uint64 newIndex) external systemActorOnly {
         uint64 oldRetentionIndex = s.bottomUpCheckpointRetentionIndex;
 

@@ -41,6 +41,7 @@ struct GatewayActorStorage {
     mapping(uint64 => CheckpointInfo) bottomUpCheckpointInfo;
     /// @notice The height of the last bottom-up checkpoint registered in the parent.
     /// All checkpoint with the height less than or equal to that number can be garbage collected in the child subnet.
+    /// @dev Initial retention index is 1.
     uint64 bottomUpCheckpointRetentionIndex;
     /// @notice A list of incomplete checkpoints.
     // slither-disable-next-line uninitialized-state

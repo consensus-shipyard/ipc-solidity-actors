@@ -10,6 +10,7 @@ error CheckpointAlreadyExists();
 error CheckpointAlreadyProcess();
 error CheckpointInfoAlreadyExists();
 error IncompleteCheckpointExists();
+error FailedAddIncompleteCheckpoint();
 error FailedRemoveIncompleteCheckpoint();
 error CheckpointNotChained();
 error CollateralIsZero();
