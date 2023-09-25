@@ -3,8 +3,8 @@ pragma solidity 0.8.19;
 
 import {IGateway} from "../interfaces/IGateway.sol";
 import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage.sol";
-import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet} from "../structs/Subnet.sol";
-import {WithdrawExceedingCollateral, CannotConfirmFutureChanges} from "../errors/IPCErrors.sol";
+import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases} from "../structs/Subnet.sol";
+import {WithdrawExceedingCollateral, CannotConfirmFutureChanges, NoCollateralToWithdraw} from "../errors/IPCErrors.sol";
 
 /// The util library for `StakingChangeSet`
 library LibStakingChangeSet {
@@ -51,39 +51,95 @@ library LibStakingChangeSet {
     }
 }
 
+library LibAddressStakingReleases {
+    /// @notice Add new release to the storage. Caller makes sure the release.releasedAt is ordered
+    /// @notice in ascending order. This method does not do checks on this.
+    function push(AddressStakingReleases storage self, StakingRelease memory release) internal {
+        uint16 length = self.length;
+        uint16 nextIdx = self.startIdx + length;
+
+        self.releases[nextIdx] = release;
+        self.length = length + 1;
+    }
+
+    /// @notice Perform compaction on releases, i.e. aggregates the amount that can be release
+    /// @notice and removes them from storage. Returns the total amount to release and the new
+    /// @notice number of pending releases after compaction.
+    function compact(AddressStakingReleases storage self) internal returns (uint256, uint16) {
+        uint16 length = self.length;
+        if (self.length == 0) {
+            revert NoCollateralToWithdraw();
+        }
+
+        uint16 i = self.startIdx;
+        uint16 newLength = length;
+        uint256 amount = 0;
+        while (i < length) {
+            StakingRelease memory release = self.releases[i];
+
+            // releases are ordered ascending by releaseAt, no need to check
+            // further as they will still be locked.
+            if (release.releaseAt > block.number) {
+                break;
+            }
+
+            amount += release.amount;
+            delete self.releases[i];
+
+            unchecked {
+                i++;
+                newLength--;
+            }
+        }
+
+        self.startIdx = i;
+        self.length = newLength;
+
+        return (amount, newLength);
+    }
+}
+
 /// The util library for `StakingReleaseQueue`
 library LibStakingRelaseQueue {
-    function setLockDuration(StakingReleaseQueue storage queue, uint256 blocks) internal {
-        queue.lockingDuration = blocks;
+    using LibAddressStakingReleases for AddressStakingReleases;
+
+    event NewCollateralRelease(address validator, uint256 amount, uint256 releaseBlock);
+
+    function setLockDuration(StakingReleaseQueue storage self, uint256 blocks) internal {
+        self.lockingDuration = blocks;
     }
 
     /// @notice Set the amount and time for release collateral
-    function addNewRelease(StakingReleaseQueue storage queue, address validator, uint256 amount) internal {
-        uint256 releaseBlock = block.number + queue.lockingDuration;
-        StakingRelease memory release = StakingRelease({releaseAt: releaseBlock, amount: amount});
+    function addNewRelease(StakingReleaseQueue storage self, address validator, uint256 amount) internal {
+        uint256 releaseAt = block.number + self.lockingDuration;
+        StakingRelease memory release = StakingRelease({releaseAt: releaseAt, amount: amount});
 
-        queue.releases[validator].push(release);
+        self.releases[validator].push(release);
+
+        emit NewCollateralRelease({validator: validator, amount: amount, releaseBlock: releaseAt});
     }
 
-    /// @notice Validator claim the collateral that are released
-    function claim(StakingReleaseQueue storage queue, address validator, uint256 amount) internal pure {
-        require(false, "not implemented yet");
+    /// @notice Validator claim the available collateral that are released
+    function claim(StakingReleaseQueue storage self, address validator) internal {
+        (uint256 amount, uint16 newLength) = self.releases[validator].compact();
 
-        // Sh! Silent the warning now. Will remove once implemented;
-        validator;
-        amount;
-        queue;
+        if (newLength == 0) {
+            delete self.releases[validator];
+        }
+
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        IGateway(s.ipcGatewayAddr).releaseStake(amount);
     }
 }
 
 /// The util library for `ValidatorSet`
 library LibValidatorSet {
-    /// @notice Get the collateral of the validator.
-    function getActiveCollateral(
+    /// @notice Get the confirmed collateral of the validator.
+    function getConfirmedCollateral(
         ValidatorSet storage validators,
         address validator
     ) internal view returns (uint256 collateral) {
-        collateral = validators.validators[validator].activeCollateral;
+        collateral = validators.validators[validator].confirmedCollateral;
     }
 
     /// @notice Validator increases its total collateral by amount.
@@ -102,17 +158,17 @@ library LibValidatorSet {
         validators.validators[validator].totalCollateral = total;
     }
 
-    /// @notice Validator increases its active collateral by amount.
-    function updateActive(
+    /// @notice Confirm the changes in validators' collateral.
+    function confirmChange(
         ValidatorSet storage validators,
         address validator,
         uint256 amount,
         StakingOperation op
     ) internal {
         if (op == StakingOperation.Deposit) {
-            validators.validators[validator].activeCollateral += amount;
+            validators.validators[validator].confirmedCollateral += amount;
         } else {
-            validators.validators[validator].activeCollateral -= amount;
+            validators.validators[validator].confirmedCollateral -= amount;
         }
     }
 }
@@ -156,10 +212,10 @@ library LibStaking {
             uint256 amount = change.amount;
 
             if (change.op == StakingOperation.Withdraw) {
-                s.validatorSet.updateActive({validator: validator, amount: amount, op: StakingOperation.Withdraw});
+                s.validatorSet.confirmChange({validator: validator, amount: amount, op: StakingOperation.Withdraw});
                 s.releaseQueue.addNewRelease(validator, amount);
             } else {
-                s.validatorSet.updateActive({validator: validator, amount: amount, op: StakingOperation.Deposit});
+                s.validatorSet.confirmChange({validator: validator, amount: amount, op: StakingOperation.Deposit});
                 IGateway(s.ipcGatewayAddr).addStake{value: amount}();
             }
 

@@ -62,3 +62,4 @@ error InvalidCrossMsgValue();
 error ZeroMembershipWeight();
 error WithdrawExceedingCollateral();
 error CannotConfirmFutureChanges();
+error NoCollateralToWithdraw();

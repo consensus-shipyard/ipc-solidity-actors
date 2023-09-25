@@ -55,19 +55,27 @@ struct StakingRelease {
     uint256 amount;
 }
 
+/// Tracks the staking relases of an address. Mimics the implementation of array in solidity, this
+/// way is more aigned with our use case.
+struct AddressStakingReleases {
+    uint16 length;
+    uint16 startIdx;
+    mapping(uint16 => StakingRelease) releases;
+}
+
 /// Manages the staking release queue
 struct StakingReleaseQueue {
     /// @notice The number of blocks that locks the collateral.
     uint256 lockingDuration;
     /// @notice Keeps track of the validators and their releases.
-    mapping(address => StakingRelease[]) releases;
+    mapping(address => AddressStakingReleases) releases;
 }
 
 /// Keeping track of the validator information. There are two types of collaterals:
-///     - Active: The amount of collateral actually confirmed in child subnet
-///     - Total: Aside from Active, there is also the collateral has been supplied, but not yet confirmed in child.
+///     - Confirmed: The amount of collateral actually confirmed in child subnet
+///     - Total: Aside from Confirmed, there is also the collateral has been supplied, but not yet confirmed in child.
 struct Validator {
-    uint256 activeCollateral;
+    uint256 confirmedCollateral;
     uint256 totalCollateral;
     /// The data associated with the validator, i.e. offchain network address.
     /// This information is not important to the protocol, offchain should know how
