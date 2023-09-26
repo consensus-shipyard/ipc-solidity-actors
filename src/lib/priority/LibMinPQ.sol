@@ -105,7 +105,6 @@ library LibMinPQ {
 
     function sink(MinPQ storage self, ValidatorSet storage validators, uint16 pos, uint256 value) internal {
         uint16 childPos = pos * 2;
-        bool firstLarger = false;
         uint256 childCollateral = 0;
 
         uint16 size = self.inner.size;
@@ -113,11 +112,7 @@ library LibMinPQ {
         while (childPos <= size) {
             if (childPos < size) {
                 // select the min of the two children
-                (firstLarger, childCollateral) = firstPosLarger(self, validators, childPos, childPos + 1);
-                if (firstLarger) {
-                    // this means the next child is actually smaller
-                    childPos += 1;
-                }
+                (childPos, childCollateral) = smallerPosition(self, validators, childPos, childPos + 1);
             } else {
                 childCollateral = self.inner.getCollateral(validators, childPos);
             }
@@ -133,20 +128,20 @@ library LibMinPQ {
         }
     }
 
-    /// @notice Get the larger index of pos1 and pos2.
-    function firstPosLarger(
+    /// @notice Get the smaller index of pos1 and pos2.
+    function smallerPosition(
         MinPQ storage self,
         ValidatorSet storage validators,
         uint16 pos1,
         uint16 pos2
-    ) internal view returns (bool, uint256) {
+    ) internal view returns (uint16, uint256) {
         uint256 value1 = self.inner.getCollateral(validators, pos1);
         uint256 value2 = self.inner.getCollateral(validators, pos2);
 
-        if (firstValueLarger(value1, value2)) {
-            return (true, value1);
+        if (!firstValueLarger(value1, value2)) {
+            return (pos1, value1);
         }
-        return (false, value2);
+        return (pos2, value2);
     }
 
     function firstValueLarger(uint256 v1, uint256 v2) internal pure returns (bool) {
