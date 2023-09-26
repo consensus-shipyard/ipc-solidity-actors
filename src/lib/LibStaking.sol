@@ -158,18 +158,12 @@ library LibValidatorSet {
         validators.validators[validator].totalCollateral = total;
     }
 
-    /// @notice Confirm the changes in validators' collateral.
-    function confirmChange(
-        ValidatorSet storage validators,
-        address validator,
-        uint256 amount,
-        StakingOperation op
-    ) internal {
-        if (op == StakingOperation.Deposit) {
-            validators.validators[validator].confirmedCollateral += amount;
-        } else {
-            validators.validators[validator].confirmedCollateral -= amount;
-        }
+    function confirmDeposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
+        validators.validators[validator].confirmedCollateral += amount;
+    }
+
+    function confirmWithdraw(ValidatorSet storage validators, address validator, uint256 amount) internal {
+        validators.validators[validator].confirmedCollateral -= amount;
     }
 }
 
@@ -212,10 +206,10 @@ library LibStaking {
             uint256 amount = change.amount;
 
             if (change.op == StakingOperation.Withdraw) {
-                s.validatorSet.confirmChange({validator: validator, amount: amount, op: StakingOperation.Withdraw});
+                s.validatorSet.confirmWithdraw(validator, amount);
                 s.releaseQueue.addNewRelease(validator, amount);
             } else {
-                s.validatorSet.confirmChange({validator: validator, amount: amount, op: StakingOperation.Deposit});
+                s.validatorSet.confirmDeposit(validator, amount);
                 IGateway(s.ipcGatewayAddr).addStake{value: amount}();
             }
 
