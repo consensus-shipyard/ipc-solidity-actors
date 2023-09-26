@@ -112,9 +112,9 @@ library LibMinPQ {
 
         while (childPos <= size) {
             if (childPos < size) {
-                // select the max of the two children
+                // select the min of the two children
                 (firstLarger, childCollateral) = firstPosLarger(self, validators, childPos, childPos + 1);
-                if (!firstLarger) {
+                if (firstLarger) {
                     // this means the next child is actually larger
                     childPos += 1;
                 }
