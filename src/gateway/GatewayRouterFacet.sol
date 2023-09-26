@@ -203,7 +203,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         bytes memory signature
     ) external {
         if (height < s.bottomUpCheckpointRetentionIndex) {
-            revert CheckpointAlreadyProcess();
+            revert CheckpointAlreadyProcessed();
         }
         BottomUpCheckpointNew memory checkpoint = s.bottomUpCheckpoints[height];
         if (checkpoint.blockHeight == 0) {
