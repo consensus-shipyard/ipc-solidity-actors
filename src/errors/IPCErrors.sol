@@ -7,7 +7,7 @@ error CallerHasNoStake();
 error CannotReleaseZero();
 error CannotSendCrossMsgToItself();
 error CheckpointAlreadyExists();
-error CheckpointAlreadyProcess();
+error CheckpointAlreadyProcessed();
 error CheckpointInfoAlreadyExists();
 error IncompleteCheckpointExists();
 error FailedAddIncompleteCheckpoint();

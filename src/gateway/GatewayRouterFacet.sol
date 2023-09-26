@@ -11,7 +11,7 @@ import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Validator.sol";
 import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionIndex, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
-import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcess, FailedAddIncompleteCheckpoint} from "../errors/IPCErrors.sol";
+import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -273,7 +273,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 membershipWeight
     ) external systemActorOnly {
         if (checkpoint.blockHeight < s.bottomUpCheckpointRetentionIndex) {
-            revert CheckpointAlreadyProcess();
+            revert CheckpointAlreadyProcessed();
         }
         if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
             revert CheckpointAlreadyExists();
