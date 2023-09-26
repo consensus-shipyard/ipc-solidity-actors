@@ -22,7 +22,7 @@ contract LibMinPQTest is Test {
         validators.confirmDeposit(addr, 100);
 
         minPQ.insert(validators, addr);
-        
+
         require(minPQ.getSize() == 1, "size not correct");
         (address minAddress, uint256 minValue) = minPQ.min(validators);
         require(minAddress == addr, "address not correct");
@@ -58,7 +58,7 @@ contract LibMinPQTest is Test {
 
             require(minPQ.getSize() == size, "size not correct");
             (minAddress, minValue) = minPQ.min(validators);
-	   
+
             require(minAddress == addr, "address not correct");
             require(minValue == 100 * i, "min collateral not correct");
 

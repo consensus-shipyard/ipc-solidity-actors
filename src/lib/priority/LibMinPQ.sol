@@ -14,7 +14,7 @@ library LibMinPQ {
     using LibPQ for PQ;
     using LibValidatorSet for ValidatorSet;
 
-    function getSize(MinPQ storage self) internal view returns (uint256) {
+    function getSize(MinPQ storage self) internal view returns (uint16) {
         return self.inner.size;
     }
 
@@ -25,7 +25,7 @@ library LibMinPQ {
     /// @notice Insert the validator address into this PQ.
     /// NOTE that caller should ensure the valdiator is not already in the queue.
     function insert(MinPQ storage self, ValidatorSet storage validators, address validator) internal {
-        uint256 size = self.inner.size + 1;
+        uint16 size = self.inner.size + 1;
 
         self.inner.addressToPos[validator] = size;
         self.inner.posToAddress[size] = validator;
@@ -39,7 +39,7 @@ library LibMinPQ {
     /// @notice Pop the minimal value in the priority queue.
     /// NOTE that caller should ensure the queue is not empty!
     function pop(MinPQ storage self, ValidatorSet storage validators) internal {
-        uint256 size = self.inner.size;
+        uint16 size = self.inner.size;
 
         self.inner.exchange(1, size);
 
@@ -58,7 +58,7 @@ library LibMinPQ {
         address validator,
         uint256 value
     ) internal {
-        uint256 pos = self.inner.addressToPos[validator];
+        uint16 pos = self.inner.addressToPos[validator];
         sink(self, validators, pos, value);
     }
 
@@ -70,7 +70,7 @@ library LibMinPQ {
         address validator,
         uint256 value
     ) internal {
-        uint256 pos = self.inner.addressToPos[validator];
+        uint16 pos = self.inner.addressToPos[validator];
         sink(self, validators, pos, value);
     }
 
@@ -85,13 +85,16 @@ library LibMinPQ {
     /***************************************************************************
      * Heap internal helper functions, should not be called by external functions
      ****************************************************************************/
-    function swim(MinPQ storage self, ValidatorSet storage validators, uint256 pos, uint256 value) internal {
+    function swim(MinPQ storage self, ValidatorSet storage validators, uint16 pos, uint256 value) internal {
+        uint16 parentPos;
+        uint256 parentCollateral;
+
         while (pos > 1) {
-            uint256 parentPos = pos / 2;
-            uint256 parentCollateral = self.inner.getCollateral(validators, parentPos);
+            parentPos = pos / 2;
+            parentCollateral = self.inner.getCollateral(validators, parentPos);
 
             // parent collateral is not more than that of the current child, heap condition met.
-            if (parentCollateral <= value) {
+            if (!firstValueLarger(parentCollateral, value)) {
                 break;
             }
 
@@ -100,22 +103,28 @@ library LibMinPQ {
         }
     }
 
-    function sink(MinPQ storage self, ValidatorSet storage validators, uint256 pos, uint256 value) internal {
-        uint256 childPos = pos * 2;
+    function sink(MinPQ storage self, ValidatorSet storage validators, uint16 pos, uint256 value) internal {
+        uint16 childPos = pos * 2;
+        bool firstLarger = false;
         uint256 childCollateral = 0;
-        uint256 size = self.inner.size;
+
+        uint16 size = self.inner.size;
 
         while (childPos <= size) {
             if (childPos < size) {
                 // select the max of the two children
-                (childPos, childCollateral) = larger(self, validators, childPos, childPos + 1);
+                (firstLarger, childCollateral) = firstPosLarger(self, validators, childPos, childPos + 1);
+                if (!firstLarger) {
+                    // this means the next child is actually larger
+                    childPos += 1;
+                }
             } else {
                 address childAddress = self.inner.posToAddress[childPos];
                 childCollateral = validators.getConfirmedCollateral(childAddress);
             }
 
             // parent, current idx, is not more than its two children, min heap condition is met.
-            if (value <= childCollateral) {
+            if (!firstValueLarger(value, childCollateral)) {
                 break;
             }
 
@@ -126,21 +135,22 @@ library LibMinPQ {
     }
 
     /// @notice Get the larger index of pos1 and pos2.
-    function larger(
+    function firstPosLarger(
         MinPQ storage self,
         ValidatorSet storage validators,
-        uint256 pos1,
-        uint256 pos2
-    ) internal view returns (uint256 idx, uint256 value) {
-        address addr1 = self.inner.posToAddress[pos1];
-        address addr2 = self.inner.posToAddress[pos2];
+        uint16 pos1,
+        uint16 pos2
+    ) internal view returns (bool, uint256) {
+        uint256 value1 = self.inner.getCollateral(validators, pos1);
+        uint256 value2 = self.inner.getCollateral(validators, pos2);
 
-        uint256 value1 = validators.getConfirmedCollateral(addr1);
-        uint256 value2 = validators.getConfirmedCollateral(addr2);
-
-        if (value1 > value2) {
-            return (pos1, value1);
+        if (firstValueLarger(value1, value2)) {
+            return (true, value1);
         }
-        return (pos2, value2);
+        return (false, value2);
+    }
+
+    function firstValueLarger(uint256 v1, uint256 v2) internal pure returns (bool) {
+        return v1 > v2;
     }
 }

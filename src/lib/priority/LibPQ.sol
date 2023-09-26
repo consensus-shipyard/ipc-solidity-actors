@@ -9,11 +9,11 @@ import {ValidatorSet} from "../../structs/Subnet.sol";
 /// The inner data structure for both min and max priority queue
 struct PQ {
     /// The size of the priority queue
-    uint256 size;
+    uint16 size;
     /// @notice The mapping from validator address to the position on the priority queue. Position is 1-based indexing.
-    mapping(address => uint256) addressToPos;
+    mapping(address => uint16) addressToPos;
     /// @notice The mapping from the position on the priority queue to validator address.
-    mapping(uint256 => address) posToAddress;
+    mapping(uint16 => address) posToAddress;
 }
 
 library LibPQ {
@@ -23,7 +23,7 @@ library LibPQ {
         return self.size == 0;
     }
 
-    function getSize(PQ storage self) internal view returns (uint256) {
+    function getSize(PQ storage self) internal view returns (uint16) {
         return self.size;
     }
 
@@ -31,7 +31,7 @@ library LibPQ {
         return self.addressToPos[validator] != 0;
     }
 
-    function del(PQ storage self, uint256 pos) internal {
+    function del(PQ storage self, uint16 pos) internal {
         address addr = self.posToAddress[pos];
         delete self.posToAddress[pos];
         delete self.addressToPos[addr];
@@ -40,13 +40,13 @@ library LibPQ {
     function getCollateral(
         PQ storage self,
         ValidatorSet storage validators,
-        uint256 pos
+        uint16 pos
     ) internal view returns (uint256) {
         address addr = self.posToAddress[pos];
         return validators.getConfirmedCollateral(addr);
     }
 
-    function exchange(PQ storage self, uint256 pos1, uint256 pos2) internal {
+    function exchange(PQ storage self, uint16 pos1, uint16 pos2) internal {
         address addr1 = self.posToAddress[pos1];
         address addr2 = self.posToAddress[pos2];
 
