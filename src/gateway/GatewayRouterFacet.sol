@@ -248,6 +248,11 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (checkpointInfo.currentWeight >= checkpointInfo.threshold) {
             if (!checkpointInfo.reached) {
                 checkpointInfo.reached = true;
+                // checkpoint is completed since the threshold has been reached
+                ok = s.incompleteCheckpoints.remove(checkpoint.blockHeight);
+                if (!ok) {
+                    revert FailedRemoveIncompleteCheckpoint();
+                }
                 emit QuorumReached({
                     height: height,
                     checkpoint: checkpointHash,
@@ -288,7 +293,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
         uint256 threshold = LibGateway.getThreshold(membershipWeight);
 
-        // store checkpoint
+        // process the checkpoint
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
         bool ok = s.incompleteCheckpoints.add(checkpoint.blockHeight);
         if (!ok) {
@@ -303,29 +308,25 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         });
     }
 
-    /// @notice garbage collect all checkpoints and related data for heights lower than `newIndex`.
-    /// @param newIndex - new retention index
-    function pruneBottomUpCheckpoints(uint64 newIndex) external systemActorOnly {
+    /// @notice set a new retention index and garbage collect all checkpoints in range [`retentionIndex`, `newRetentionIndex`).
+    /// @param newRetentionIndex - new retention index
+    function pruneBottomUpCheckpoints(uint64 newRetentionIndex) external systemActorOnly {
         uint64 oldRetentionIndex = s.bottomUpCheckpointRetentionIndex;
 
-        if (newIndex <= oldRetentionIndex) {
+        if (newRetentionIndex <= oldRetentionIndex) {
             revert InvalidRetentionIndex();
         }
 
-        for (uint64 h = oldRetentionIndex; h < newIndex; ) {
+        for (uint64 h = oldRetentionIndex; h < newRetentionIndex; ) {
             delete s.bottomUpCheckpoints[h];
             delete s.bottomUpCheckpointInfo[h];
             delete s.bottomUpCollectedSignatures[h];
-            bool ok = s.incompleteCheckpoints.remove(h);
-            if (!ok) {
-                revert FailedRemoveIncompleteCheckpoint();
-            }
 
             unchecked {
                 ++h;
             }
         }
 
-        s.bottomUpCheckpointRetentionIndex = newIndex;
+        s.bottomUpCheckpointRetentionIndex = newRetentionIndex;
     }
 }

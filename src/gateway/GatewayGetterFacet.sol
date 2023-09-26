@@ -221,4 +221,9 @@ contract GatewayGetterFacet {
     function getBottomUpRetentionIndex() public view returns (uint64) {
         return s.bottomUpCheckpointRetentionIndex;
     }
+
+    /// @notice get the threshold value for child subnet
+    function getChildThreshold(uint256 weight) public view returns (uint256) {
+        return LibGateway.getThreshold(weight);
+    }
 }

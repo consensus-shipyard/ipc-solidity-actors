@@ -39,8 +39,8 @@ struct GatewayActorStorage {
     /// @notice A mapping of block numbers to checkpoint data
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => CheckpointInfo) bottomUpCheckpointInfo;
-    /// @notice The height of the last bottom-up checkpoint registered in the parent.
-    /// All checkpoint with the height less than or equal to that number can be garbage collected in the child subnet.
+    /// @notice The height of the first bottom-up checkpoint that must be retained since they have not been processed in the parent.
+    /// All checkpoint with the height less than this number may be garbage collected in the child subnet.
     /// @dev Initial retention index is 1.
     uint64 bottomUpCheckpointRetentionIndex;
     /// @notice A list of incomplete checkpoints.
