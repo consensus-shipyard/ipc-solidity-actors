@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import "forge-std/Test.sol";
-import "forge-std/console.sol";
+import {Test} from "forge-std/Test.sol";
+import {console} from "forge-std/console.sol";
 
 import {MinPQ, LibMinPQ} from "../src/lib/priority/LibMinPQ.sol";
 import {LibValidatorSet} from "../src/lib/LibStaking.sol";
@@ -15,7 +15,7 @@ contract LibMinPQTest is Test {
     MinPQ private minPQ;
     ValidatorSet private validators;
 
-    function test_insertAndPop() public {
+    function test_minPQInsertAndPop() public {
         require(minPQ.getSize() == 0, "initial pq size not 0");
 
         for (uint256 i = 1; i < 100; i++) {
@@ -34,6 +34,7 @@ contract LibMinPQTest is Test {
 
             require(minPQ.getSize() == size, "size not correct");
             (minAddress, minValue) = minPQ.min(validators);
+            console.log(minAddress);
             require(minAddress == addr, "address not correct");
             require(minValue == 100 * i, "min collateral correct");
 
