@@ -15,6 +15,15 @@ contract LibMinPQTest is Test {
     MinPQ private minPQ;
     ValidatorSet private validators;
 
+    function printMQ() internal {
+        uint16 size = minPQ.getSize();
+        for (uint16 i = 1; i <= size; i++) {
+            address addr = minPQ.inner.posToAddress[i];
+            uint256 collateral = validators.getConfirmedCollateral(addr);
+            console.log("idx", i, addr, collateral);
+        }
+    }
+
     function test_minPQBasic() public {
         require(minPQ.getSize() == 0, "initial pq size not 0");
 
@@ -66,6 +75,8 @@ contract LibMinPQTest is Test {
             size++;
         }
 
+        printMQ();
+    
         size = total;
         for (uint256 i = 1; i <= total; i++) {
             address addr = address(uint160(i));
