@@ -191,9 +191,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
     }
 
-    /// @notice checks whether the provided checkpoint signature for a block at height `h ` is valid and accumulates that it.
+    /// @notice checks whether the provided checkpoint signature for the block at height `height` is valid and accumulates that it
+    /// @dev If adding the signature leads to reaching the threshold, then the checkpoint is removed from `incompleteCheckpoints`
     /// @param height - the height of the block in the checkpoint
-    /// @param membershipProof - a Merkle proof that the validator was in the membership at height `h`
+    /// @param membershipProof - a Merkle proof that the validator was in the membership at height `height` with weight `weight`
     /// @param weight - the weight of the validator
     /// @param signature - the signature of the checkpoint
     function addCheckpointSignature(
@@ -308,7 +309,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         });
     }
 
-    /// @notice set a new retention index and garbage collect all checkpoints in range [`retentionIndex`, `newRetentionIndex`).
+    /// @notice set a new retention index and garbage collect all checkpoints in range [`retentionIndex`, `newRetentionIndex`)
+    /// @dev `retentionIndex` is the number of the first incomplete checkpoints we must have to implement checkpointing
+    /// All checkpoints with a height less than `retentionIndex` may be removed from the history if needed.
     /// @param newRetentionIndex - new retention index
     function pruneBottomUpCheckpoints(uint64 newRetentionIndex) external systemActorOnly {
         uint64 oldRetentionIndex = s.bottomUpCheckpointRetentionIndex;
