@@ -50,28 +50,41 @@ library LibMinPQ {
         sink(self, validators, 1, value);
     }
 
+    /// @notice Reheapify the heap when the validator is deleted.
+    /// NOTE that caller should ensure the queue is not empty.
+    function deleteReheapify(MinPQ storage self, ValidatorSet storage validators, address validator) internal {
+        uint16 pos = self.inner.addressToPos[validator];
+        uint16 size = self.inner.size;
+
+        self.inner.exchange(size, size);
+
+        // remove the item
+        self.inner.size = size - 1;
+        self.inner.del(size);
+
+        // swim pos up in case exchanged index is smaller
+        uint256 val = self.inner.getCollateral(validators, pos);
+        swim(self, validators, pos, val);
+
+        // sink pos down in case updated pos is larger
+        val = self.inner.getCollateral(validators, pos);
+        sink(self, validators, pos, val);
+    }
+
     /// @notice Reheapify the heap when the collateral of a key has increased.
     /// NOTE that caller should ensure the queue is not empty.
-    function increaseReheapify(
-        MinPQ storage self,
-        ValidatorSet storage validators,
-        address validator,
-        uint256 value
-    ) internal {
+    function increaseReheapify(MinPQ storage self, ValidatorSet storage validators, address validator) internal {
         uint16 pos = self.inner.addressToPos[validator];
-        sink(self, validators, pos, value);
+        uint256 val = validators.getConfirmedCollateral(validator);
+        sink(self, validators, pos, val);
     }
 
     /// @notice Reheapify the heap when the collateral of a key has decreased.
     /// NOTE that caller should ensure the queue is not empty.
-    function descreaseReheapify(
-        MinPQ storage self,
-        ValidatorSet storage validators,
-        address validator,
-        uint256 value
-    ) internal {
+    function decreaseReheapify(MinPQ storage self, ValidatorSet storage validators, address validator) internal {
         uint16 pos = self.inner.addressToPos[validator];
-        sink(self, validators, pos, value);
+        uint256 val = validators.getConfirmedCollateral(validator);
+        swim(self, validators, pos, val);
     }
 
     /// @notice Get the minimal value in the priority queue.
