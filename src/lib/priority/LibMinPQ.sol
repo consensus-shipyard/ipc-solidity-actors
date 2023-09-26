@@ -121,6 +121,7 @@ library LibMinPQ {
 
             self.inner.exchange(childPos, pos);
             pos = childPos;
+            childPos = pos * 2;
         }
     }
 
