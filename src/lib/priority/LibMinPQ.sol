@@ -115,12 +115,11 @@ library LibMinPQ {
                 // select the min of the two children
                 (firstLarger, childCollateral) = firstPosLarger(self, validators, childPos, childPos + 1);
                 if (firstLarger) {
-                    // this means the next child is actually larger
+                    // this means the next child is actually smaller
                     childPos += 1;
                 }
             } else {
-                address childAddress = self.inner.posToAddress[childPos];
-                childCollateral = validators.getConfirmedCollateral(childAddress);
+                childCollateral = self.inner.getCollateral(validators, childPos);
             }
 
             // parent, current idx, is not more than its two children, min heap condition is met.

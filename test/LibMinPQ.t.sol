@@ -42,16 +42,17 @@ contract LibMinPQTest is Test {
     function test_minPQInsertAndPop() public {
         require(minPQ.getSize() == 0, "initial pq size not 0");
 
-        for (uint256 i = 1; i <= 100; i++) {
+        uint256 total = 100;
+        for (uint256 i = 1; i <= total; i++) {
             address addr = address(uint160(i));
             validators.confirmDeposit(addr, 100 * i);
         }
 
-        uint16 size = 1;
+        uint256 size = 1;
         address minAddress;
         uint256 minValue;
 
-        for (uint256 i = 100; i > 0; i--) {
+        for (uint256 i = total; i > 0; i--) {
             address addr = address(uint160(i));
 
             minPQ.insert(validators, addr);
@@ -65,8 +66,8 @@ contract LibMinPQTest is Test {
             size++;
         }
 
-        size = 100;
-        for (uint256 i = 1; i <= 100; i++) {
+        size = total;
+        for (uint256 i = 1; i <= total; i++) {
             address addr = address(uint160(i));
 
             (minAddress, minValue) = minPQ.min(validators);
