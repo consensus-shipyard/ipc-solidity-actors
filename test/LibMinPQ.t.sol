@@ -65,7 +65,7 @@ contract LibMinPQTest is Test {
         require(minPQ.getSize() == 2, "size not 2");
         (address minAddress, uint256 minValue) = minPQ.min(validators);
         require(minAddress == address(1), "address not 1 after increase");
-        require(minValue == 150, "min collateral 50");
+        require(minValue == 100, "min collateral not 100");
     }
 
     function test_minPQBasicDecrease() public {
@@ -80,7 +80,7 @@ contract LibMinPQTest is Test {
         minPQ.insert(validators, addr);
 
         validators.confirmWithdraw(address(1), 80);
-        minPQ.decreaseReheapify(validators, addr);
+        minPQ.decreaseReheapify(validators, address(1));
 
         require(minPQ.getSize() == 2, "size not 2");
         (address minAddress, uint256 minValue) = minPQ.min(validators);
