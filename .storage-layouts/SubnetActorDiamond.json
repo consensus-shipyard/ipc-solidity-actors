@@ -9,6 +9,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "type": "t_struct(SubnetActorStorage)10401_storage"
 =======
       "type": "t_struct(SubnetActorStorage)10275_storage"
@@ -19,6 +20,9 @@
 =======
       "type": "t_struct(SubnetActorStorage)11059_storage"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+      "type": "t_struct(SubnetActorStorage)10329_storage"
+>>>>>>> be6a160 (resolve conflicts)
     }
   ],
   "types": {
@@ -42,6 +46,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_array(t_struct(ChildCheck)11867_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11867_storage",
 =======
@@ -56,10 +61,15 @@
     "t_array(t_struct(ChildCheck)13943_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)13943_storage",
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_array(t_struct(ChildCheck)11795_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)11795_storage",
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -77,8 +87,18 @@
     "t_array(t_struct(CrossMsg)13949_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)13949_storage",
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_array(t_struct(CrossMsg)11801_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)11801_storage",
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
+      "numberOfBytes": "32"
+    },
+    "t_array(t_struct(ValidatorChange)11923_storage)dyn_storage": {
+      "base": "t_struct(ValidatorChange)11923_storage",
+      "encoding": "dynamic_array",
+      "label": "struct ValidatorChange[]",
       "numberOfBytes": "32"
     },
     "t_bool": {
@@ -113,6 +133,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_enum(Status)5004": {
 =======
     "t_enum(StakingOperation)11875": {
@@ -129,10 +150,17 @@
 =======
 =======
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+>>>>>>> be6a160 (resolve conflicts)
     "t_enum(Status)4998": {
 >>>>>>> f640da2 (confirm with configuration number)
       "encoding": "inplace",
       "label": "enum Status",
+      "numberOfBytes": "1"
+    },
+    "t_enum(SubnetOpt)11926": {
+      "encoding": "inplace",
+      "label": "enum SubnetOpt",
       "numberOfBytes": "1"
     },
     "t_mapping(t_address,t_bool)": {
@@ -149,6 +177,7 @@
       "numberOfBytes": "32",
       "value": "t_string_storage"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -169,10 +198,14 @@
     },
     "t_mapping(t_address,t_struct(FvmAddress)14028_storage)": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_mapping(t_address,t_struct(FvmAddress)11880_storage)": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct FvmAddress)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -185,12 +218,16 @@
 =======
       "value": "t_struct(FvmAddress)14028_storage"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+      "value": "t_struct(FvmAddress)11880_storage"
+>>>>>>> be6a160 (resolve conflicts)
     },
-    "t_mapping(t_address,t_struct(Validator)14133_storage)": {
+    "t_mapping(t_address,t_struct(Validator)11914_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(Validator)11926_storage"
@@ -201,6 +238,9 @@
 =======
       "value": "t_struct(Validator)14133_storage"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+      "value": "t_struct(Validator)11914_storage"
+>>>>>>> be6a160 (resolve conflicts)
     },
     "t_mapping(t_address,t_uint256)": {
       "encoding": "mapping",
@@ -209,6 +249,7 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -229,10 +270,14 @@
 =======
     "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13896_storage)": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -246,6 +291,9 @@
 =======
       "value": "t_struct(BottomUpCheckpoint)13896_storage"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+      "value": "t_struct(BottomUpCheckpoint)11748_storage"
+>>>>>>> be6a160 (resolve conflicts)
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -253,13 +301,6 @@
       "label": "mapping(bytes32 => uint256)",
       "numberOfBytes": "32",
       "value": "t_uint256"
-    },
-    "t_mapping(t_uint16,t_struct(StakingRelease)14105_storage)": {
-      "encoding": "mapping",
-      "key": "t_uint16",
-      "label": "mapping(uint16 => struct StakingRelease)",
-      "numberOfBytes": "32",
-      "value": "t_struct(StakingRelease)14105_storage"
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -278,6 +319,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)11820_storage)": {
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11694_storage)": {
@@ -288,10 +330,14 @@
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13896_storage)": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -313,10 +359,16 @@
     },
     "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14006_storage)": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+      "value": "t_struct(BottomUpCheckpoint)11748_storage"
+    },
+    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteBottomUpSubmission)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -343,6 +395,9 @@
 =======
       "value": "t_struct(StakingChange)14085_storage"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+      "value": "t_struct(EpochVoteBottomUpSubmission)11858_storage"
+>>>>>>> be6a160 (resolve conflicts)
     },
     "t_string_storage": {
       "encoding": "bytes",
@@ -364,6 +419,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -408,10 +464,14 @@
     },
     "t_struct(BottomUpCheckpoint)13896_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(BottomUpCheckpoint)11748_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct BottomUpCheckpointLegacy",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -425,10 +485,14 @@
 =======
           "astId": 13879,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11731,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -454,6 +518,12 @@
         {
           "astId": 13881,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(SubnetID)11906_storage"
+        },
+        {
+          "astId": 11733,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epoch",
           "offset": 0,
@@ -461,6 +531,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -474,6 +545,9 @@
 =======
           "astId": 13883,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11735,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "fee",
           "offset": 0,
@@ -481,6 +555,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -494,10 +569,14 @@
 =======
           "astId": 13887,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11739,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -523,10 +602,17 @@
         {
           "astId": 13891,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
+        },
+        {
+          "astId": 11743,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "children",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -552,6 +638,12 @@
         {
           "astId": 13893,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_array(t_struct(ChildCheck)11795_storage)dyn_storage"
+        },
+        {
+          "astId": 11745,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevHash",
           "offset": 0,
@@ -559,6 +651,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -572,6 +665,9 @@
 =======
           "astId": 13895,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11747,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "proof",
           "offset": 0,
@@ -581,6 +677,7 @@
       ],
       "numberOfBytes": "256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -594,10 +691,14 @@
 =======
     "t_struct(ChildCheck)13943_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(ChildCheck)11795_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -611,10 +712,14 @@
 =======
           "astId": 13939,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11791,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -640,6 +745,12 @@
         {
           "astId": 13942,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(SubnetID)11906_storage"
+        },
+        {
+          "astId": 11794,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "checks",
           "offset": 0,
@@ -649,6 +760,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -662,10 +774,14 @@
 =======
     "t_struct(CrossMsg)13949_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(CrossMsg)11801_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -679,10 +795,14 @@
 =======
           "astId": 13946,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11798,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -708,6 +828,12 @@
         {
           "astId": 13948,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(StorableMsg)11816_storage"
+        },
+        {
+          "astId": 11800,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "wrapped",
           "offset": 0,
@@ -717,6 +843,7 @@
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -730,10 +857,14 @@
 =======
     "t_struct(EpochVoteBottomUpSubmission)14006_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(EpochVoteBottomUpSubmission)11858_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct EpochVoteBottomUpSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -747,10 +878,14 @@
 =======
           "astId": 14000,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11852,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "vote",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -776,10 +911,17 @@
         {
           "astId": 14005,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(EpochVoteSubmission)11840_storage"
+        },
+        {
+          "astId": 11857,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -793,10 +935,14 @@
 =======
           "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13896_storage)"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)"
+>>>>>>> be6a160 (resolve conflicts)
         }
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -810,10 +956,14 @@
 =======
     "t_struct(EpochVoteSubmission)13988_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(EpochVoteSubmission)11840_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -827,6 +977,9 @@
 =======
           "astId": 13971,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11823,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -834,6 +987,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -847,6 +1001,9 @@
 =======
           "astId": 13973,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11825,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -854,6 +1011,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -867,6 +1025,9 @@
 =======
           "astId": 13975,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11827,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -874,6 +1035,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -887,6 +1049,9 @@
 =======
           "astId": 13981,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11833,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submitters",
           "offset": 0,
@@ -894,6 +1059,7 @@
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -907,6 +1073,9 @@
 =======
           "astId": 13987,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11839,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissionWeights",
           "offset": 0,
@@ -916,6 +1085,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -929,10 +1099,14 @@
 =======
     "t_struct(FvmAddress)14028_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(FvmAddress)11880_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -946,6 +1120,9 @@
 =======
           "astId": 14025,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11877,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "addrType",
           "offset": 0,
@@ -953,6 +1130,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -966,6 +1144,9 @@
 =======
           "astId": 14027,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11879,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "payload",
           "offset": 0,
@@ -975,6 +1156,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -988,10 +1170,14 @@
 =======
     "t_struct(IPCAddress)14153_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(IPCAddress)11953_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1005,10 +1191,14 @@
 =======
           "astId": 14149,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11949,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1034,10 +1224,17 @@
         {
           "astId": 14152,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(SubnetID)11906_storage"
+        },
+        {
+          "astId": 11952,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1051,6 +1248,9 @@
 =======
           "type": "t_struct(FvmAddress)14028_storage"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(FvmAddress)11880_storage"
+>>>>>>> be6a160 (resolve conflicts)
         }
       ],
       "numberOfBytes": "128"
@@ -1078,6 +1278,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1277,10 +1478,14 @@
 =======
     "t_struct(StorableMsg)13964_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(StorableMsg)11816_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1294,10 +1499,14 @@
 =======
           "astId": 13952,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11804,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1323,10 +1532,17 @@
         {
           "astId": 13955,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(IPCAddress)11953_storage"
+        },
+        {
+          "astId": 11807,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1352,6 +1568,12 @@
         {
           "astId": 13957,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_struct(IPCAddress)11953_storage"
+        },
+        {
+          "astId": 11809,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "value",
           "offset": 0,
@@ -1359,6 +1581,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1372,6 +1595,9 @@
 =======
           "astId": 13959,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11811,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -1379,6 +1605,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1392,6 +1619,9 @@
 =======
           "astId": 13961,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11813,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "method",
           "offset": 8,
@@ -1399,6 +1629,7 @@
           "type": "t_bytes4"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1412,6 +1643,9 @@
 =======
           "astId": 13963,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11815,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "params",
           "offset": 0,
@@ -1421,6 +1655,7 @@
       ],
       "numberOfBytes": "352"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1434,10 +1669,14 @@
 =======
     "t_struct(SubnetActorStorage)11059_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(SubnetActorStorage)10329_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1451,10 +1690,14 @@
 =======
           "astId": 10971,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10242,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1480,6 +1723,12 @@
         {
           "astId": 10976,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)"
+        },
+        {
+          "astId": 10247,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "stake",
           "offset": 0,
@@ -1487,6 +1736,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1500,6 +1750,9 @@
 =======
           "astId": 10981,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10252,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "accumulatedRewards",
           "offset": 0,
@@ -1507,6 +1760,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1520,6 +1774,9 @@
 =======
           "astId": 10986,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10257,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorNetAddresses",
           "offset": 0,
@@ -1527,6 +1784,7 @@
           "type": "t_mapping(t_address,t_string_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1540,10 +1798,14 @@
 =======
           "astId": 10992,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10263,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorWorkerAddresses",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1569,10 +1831,17 @@
         {
           "astId": 10998,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_mapping(t_address,t_struct(FvmAddress)11880_storage)"
+        },
+        {
+          "astId": 10269,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "committedCheckpoints",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1598,6 +1867,12 @@
         {
           "astId": 11001,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)"
+        },
+        {
+          "astId": 10272,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "genesis",
           "offset": 0,
@@ -1605,6 +1880,7 @@
           "type": "t_bytes_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1618,6 +1894,9 @@
 =======
           "astId": 11004,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10275,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalStake",
           "offset": 0,
@@ -1625,6 +1904,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1638,6 +1918,9 @@
 =======
           "astId": 11007,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10278,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minActivationCollateral",
           "offset": 0,
@@ -1645,6 +1928,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1658,13 +1942,17 @@
 =======
           "astId": 11010,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10281,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "configurationNumber",
+          "label": "topDownCheckPeriod",
           "offset": 0,
           "slot": "9",
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1678,13 +1966,17 @@
 =======
           "astId": 11013,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10284,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "topDownCheckPeriod",
+          "label": "bottomUpCheckPeriod",
           "offset": 8,
           "slot": "9",
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1698,13 +1990,17 @@
 =======
           "astId": 11016,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10287,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "bottomUpCheckPeriod",
+          "label": "minValidators",
           "offset": 16,
           "slot": "9",
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1734,6 +2030,9 @@
 =======
           "astId": 11022,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10290,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "name",
           "offset": 0,
@@ -1741,6 +2040,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1754,6 +2054,9 @@
 =======
           "astId": 11024,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10292,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "currentSubnetHash",
           "offset": 0,
@@ -1761,6 +2064,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1774,6 +2078,9 @@
 =======
           "astId": 11027,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10295,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevExecutedCheckpointHash",
           "offset": 0,
@@ -1781,6 +2088,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1794,6 +2102,9 @@
 =======
           "astId": 11030,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10298,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "ipcGatewayAddr",
           "offset": 0,
@@ -1801,6 +2112,7 @@
           "type": "t_address"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1814,6 +2126,9 @@
 =======
           "astId": 11034,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10302,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "status",
           "offset": 20,
@@ -1822,6 +2137,7 @@
           "type": "t_enum(Status)5004"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 10392,
 =======
@@ -1928,29 +2244,42 @@
 =======
           "slot": "16",
           "type": "t_struct(SubnetID)14054_storage"
+=======
+          "astId": 10306,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "parentId",
+          "offset": 0,
+          "slot": "14",
+          "type": "t_struct(SubnetID)11906_storage"
+>>>>>>> be6a160 (resolve conflicts)
         },
         {
-          "astId": 11046,
+          "astId": 10310,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "consensus",
           "offset": 0,
-          "slot": "18",
+          "slot": "16",
           "type": "t_enum(ConsensusType)4984"
         },
         {
-          "astId": 11050,
+          "astId": 10313,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "validatorSet",
-          "offset": 0,
-          "slot": "19",
-          "type": "t_struct(ValidatorSet)14146_storage"
+          "label": "configurationNumber",
+          "offset": 1,
+          "slot": "16",
+          "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
           "astId": 11054,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 10318,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "changeSet",
+          "label": "validatorSetChanges",
           "offset": 0,
+<<<<<<< HEAD
           "slot": "21",
 <<<<<<< HEAD
           "type": "t_struct(StakingChangeSet)11901_storage"
@@ -1969,19 +2298,37 @@
 >>>>>>> f640da2 (confirm with configuration number)
 =======
           "type": "t_struct(StakingChangeSet)14098_storage"
+=======
+          "slot": "17",
+          "type": "t_array(t_struct(ValidatorChange)11923_storage)dyn_storage"
+>>>>>>> be6a160 (resolve conflicts)
         },
         {
-          "astId": 11058,
+          "astId": 10322,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "releaseQueue",
+          "label": "validators",
           "offset": 0,
+<<<<<<< HEAD
           "slot": "23",
           "type": "t_struct(StakingReleaseQueue)14125_storage"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "slot": "18",
+          "type": "t_struct(AddressSet)3420_storage"
+        },
+        {
+          "astId": 10328,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "validatorInfo",
+          "offset": 0,
+          "slot": "20",
+          "type": "t_mapping(t_address,t_struct(Validator)11914_storage)"
+>>>>>>> be6a160 (resolve conflicts)
         }
       ],
-      "numberOfBytes": "800"
+      "numberOfBytes": "672"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1995,10 +2342,14 @@
 =======
     "t_struct(SubnetID)14054_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(SubnetID)11906_storage": {
+>>>>>>> be6a160 (resolve conflicts)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2012,6 +2363,9 @@
 =======
           "astId": 14049,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11901,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "root",
           "offset": 0,
@@ -2019,6 +2373,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2032,6 +2387,9 @@
 =======
           "astId": 14053,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11905,
+>>>>>>> be6a160 (resolve conflicts)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "route",
           "offset": 0,
@@ -2041,30 +2399,30 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(Validator)14133_storage": {
+    "t_struct(Validator)11914_storage": {
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
-          "astId": 14127,
+          "astId": 11908,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "confirmedCollateral",
+          "label": "validator",
           "offset": 0,
           "slot": "0",
-          "type": "t_uint256"
+          "type": "t_address"
         },
         {
-          "astId": 14129,
+          "astId": 11910,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "totalCollateral",
+          "label": "weight",
           "offset": 0,
           "slot": "1",
           "type": "t_uint256"
         },
         {
-          "astId": 14132,
+          "astId": 11913,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "data",
+          "label": "info",
           "offset": 0,
           "slot": "2",
           "type": "t_bytes_storage"
@@ -2072,41 +2430,36 @@
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(ValidatorSet)14146_storage": {
+    "t_struct(ValidatorChange)11923_storage": {
       "encoding": "inplace",
-      "label": "struct ValidatorSet",
+      "label": "struct ValidatorChange",
       "members": [
         {
-          "astId": 14136,
+          "astId": 11917,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "activeLimit",
+          "label": "validator",
           "offset": 0,
           "slot": "0",
-          "type": "t_uint16"
+          "type": "t_struct(Validator)11914_storage"
         },
         {
-          "astId": 14139,
+          "astId": 11919,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "totalValidators",
-          "offset": 2,
-          "slot": "0",
-          "type": "t_uint16"
-        },
-        {
-          "astId": 14145,
-          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "validators",
+          "label": "configurationNumber",
           "offset": 0,
-          "slot": "1",
-          "type": "t_mapping(t_address,t_struct(Validator)14133_storage)"
+          "slot": "3",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 11922,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "operation",
+          "offset": 8,
+          "slot": "3",
+          "type": "t_enum(SubnetOpt)11926"
         }
       ],
-      "numberOfBytes": "64"
-    },
-    "t_uint16": {
-      "encoding": "inplace",
-      "label": "uint16",
-      "numberOfBytes": "2"
+      "numberOfBytes": "128"
     },
     "t_uint256": {
       "encoding": "inplace",
