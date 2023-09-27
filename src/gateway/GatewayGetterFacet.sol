@@ -222,9 +222,9 @@ contract GatewayGetterFacet {
         return s.bottomUpCheckpointRetentionHeight;
     }
 
-    /// @notice returns the needed weight value corresponding to the majority percentage
-    /// @dev `majority` must be a valid number
-    function weightNeeded(uint256 weight, uint256 majority) public pure returns (uint256) {
-        return LibGateway.weightNeeded(weight, majority);
+    /// @notice Calculate the threshold required for quorum in this subnet
+    /// based on the configured majority percentage and the total weight of the validators.
+    function getQuorumThreshold(uint256 totalWeight) public view returns (uint256) {
+        return LibGateway.weightNeeded(totalWeight, s.majorityPercentage);
     }
 }

@@ -1493,16 +1493,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
         require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
         require(
-            info.threshold ==
-                gwGetter.weightNeeded(weights[0] + weights[1] + weights[2], gwGetter.majorityPercentage()),
+            info.threshold == gwGetter.getQuorumThreshold(weights[0] + weights[1] + weights[2]),
             "checkpoint 1 correct threshold"
         );
 
         info = gwGetter.getCheckpointInfo(2);
         require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
         require(
-            info.threshold ==
-                gwGetter.weightNeeded(weights[0] + weights[1] + weights[2], gwGetter.majorityPercentage()),
+            info.threshold == gwGetter.getQuorumThreshold(weights[0] + weights[1] + weights[2]),
             "checkpoint 2 correct threshold"
         );
 
