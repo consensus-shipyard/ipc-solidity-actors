@@ -98,6 +98,7 @@ contract LibMinPQTest is Test {
         }
 
         minPQ.deleteReheapify(validators, address(10));
+        require(!minPQ.contains(address(10)), "delete does not work");
 
         uint256 minValue = 0;
         for (uint256 i = total - 1; i > 0; i--) {
