@@ -3,6 +3,8 @@ pragma solidity 0.8.19;
 
 import {IGateway} from "../interfaces/IGateway.sol";
 import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage.sol";
+import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
+import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
 import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases} from "../structs/Subnet.sol";
 import {WithdrawExceedingCollateral, CannotConfirmFutureChanges, NoCollateralToWithdraw} from "../errors/IPCErrors.sol";
 
@@ -134,6 +136,17 @@ library LibStakingRelaseQueue {
 
 /// The util library for `ValidatorSet`
 library LibValidatorSet {
+    using LibMinPQ for MinPQ;
+    using LibMaxPQ for MaxPQ;
+
+    event ActiveValidatorCollateralUpdated(address validator, uint256 newCollateral);
+    event WaitingValidatorCollateralUpdated(address validator, uint256 newCollateral);
+    event NewActiveValidator(address validator, uint256 collateral);
+    event NewWaitingValidator(address validator, uint256 collateral);
+    event ActiveValidatorReplaced(address oldValidator, address newValidator);
+    event ActiveValidatorLeft(address validator);
+    event WaitingValidatorLeft(address validator);
+
     /// @notice Get the confirmed collateral of the validator.
     function getConfirmedCollateral(
         ValidatorSet storage validators,
@@ -158,12 +171,118 @@ library LibValidatorSet {
         validators.validators[validator].totalCollateral = total;
     }
 
-    function confirmDeposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
-        validators.validators[validator].confirmedCollateral += amount;
+    function confirmDeposit(ValidatorSet storage self, address validator, uint256 amount) internal {
+        uint256 newCollateral = self.validators[validator].confirmedCollateral + amount;
+        self.validators[validator].confirmedCollateral = newCollateral;
+
+        depositReshuffle({ self: self, maybeActive: validator, newCollateral: newCollateral });
     }
 
     function confirmWithdraw(ValidatorSet storage validators, address validator, uint256 amount) internal {
         validators.validators[validator].confirmedCollateral -= amount;
+    }
+
+    /***********************************************************************
+     * Internal helper functions, should not be called by external functions
+     ***********************************************************************/
+    /// @notice Reshuffles the active and waiting validators when a deposit is confirmed
+    function depositReshuffle(ValidatorSet storage self, address maybeActive, uint256 newCollateral) internal {
+        if (self.activeValidators.contains(maybeActive)) {
+            self.activeValidators.increaseReheapify(self, maybeActive);
+            emit ActiveValidatorCollateralUpdated(maybeActive, newCollateral);
+            return;
+        }
+
+        // incoming address is not active validator
+        uint16 activeLimit = self.activeLimit;
+        uint16 activeSize = self.activeValidators.getSize();
+        if (activeLimit > activeSize) {
+            // we can still take more active validators, just insert to the pq.
+            self.activeValidators.insert(self, maybeActive);
+            emit NewActiveValidator(maybeActive, newCollateral);
+            return;
+        }
+
+        // now we have enough active validators, we need to check:
+        // - if the incoming new collateral is more than the min active collateral,
+        //     - yes: 
+        //        - pop the min active validator
+        //        - remove the incoming validator from waiting validators
+        //        - insert incoming validator into active validators
+        //        - insert popped validator into waiting validators
+        //     - no:
+        //        - insert the incoming validator into waiting validators
+        (address minAddress, uint256 minActiveCollateral) = self.activeValidators.min(self);
+        if (minActiveCollateral < newCollateral) {
+            self.activeValidators.pop(self);
+            
+            if (self.waitingValidators.contains(maybeActive)) {
+                self.waitingValidators.deleteReheapify(self, maybeActive);
+            }
+
+            self.activeValidators.insert(self, maybeActive);
+            self.waitingValidators.insert(self, minAddress);
+
+            emit ActiveValidatorReplaced(minAddress, maybeActive);
+            return;
+        }
+
+        if (self.waitingValidators.contains(maybeActive)) {
+            self.waitingValidators.increaseReheapify(self, maybeActive);
+            emit WaitingValidatorCollateralUpdated(maybeActive, newCollateral);
+            return;
+        }
+
+        self.waitingValidators.insert(self, maybeActive);
+        emit NewWaitingValidator(maybeActive, newCollateral);
+    }
+
+    /// @notice Reshuffles the active and waiting validators when a withdraw is confirmed
+    function withdrawReshuffle(ValidatorSet storage self, address validator, uint256 newCollateral) internal {
+        if (self.waitingValidators.contains(validator)) {
+            if (newCollateral == 0) {
+                self.waitingValidators.deleteReheapify(self, validator);
+                emit WaitingValidatorLeft(validator);
+                return;
+            }
+            self.waitingValidators.decreaseReheapify(self, validator);
+            emit WaitingValidatorCollateralUpdated(validator, newCollateral);
+            return;
+        }
+
+        // the validator is an active validator!
+
+        if (newCollateral == 0) {
+            self.activeValidators.deleteReheapify(self, validator);
+            emit ActiveValidatorLeft(validator);
+
+            if (self.waitingValidators.getSize() != 0) {
+                (address toBePromoted, uint256 collateral) = self.waitingValidators.max(self);
+                self.activeValidators.insert(self, toBePromoted);
+                emit NewActiveValidator(toBePromoted, collateral);
+            }
+
+            return;
+        }
+
+        self.activeValidators.decreaseReheapify(self, validator);
+        
+        if (self.waitingValidators.getSize() == 0) {            
+            return;
+        }
+
+        (address mayBeDemoted, uint256 minActiveCollateral) = self.activeValidators.min(self);
+        (address mayBePromoted, uint256 maxWaitingCollateral) = self.waitingValidators.max(self);
+        if (minActiveCollateral < maxWaitingCollateral) {
+            self.activeValidators.pop(self);
+            self.waitingValidators.pop(self);
+            self.activeValidators.insert(self, mayBePromoted);
+
+            emit ActiveValidatorReplaced(mayBeDemoted, mayBePromoted);
+            return;
+        }
+
+        emit ActiveValidatorCollateralUpdated(validator, newCollateral);
     }
 }
 

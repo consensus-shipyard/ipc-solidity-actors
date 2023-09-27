@@ -5,6 +5,8 @@ import {SubnetID} from "./Subnet.sol";
 import {FvmAddress} from "./FvmAddress.sol";
 import {BottomUpCheckpoint, CrossMsg} from "./Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
+import {MaxPQ} from "../lib/priority/LibMaxPQ.sol";
+import {MinPQ} from "../lib/priority/LibMinPQ.sol";
 
 struct SubnetID {
     /// @notice chainID of the root subnet
@@ -101,6 +103,10 @@ struct ValidatorSet {
     uint16 totalValidators;
     /// The mapping of each validator address to its information.
     mapping(address => Validator) validators;
+    /// @notice The active validators tracked using min priority queue.
+    MinPQ activeValidators;
+    /// @notice The waiting validators trakced using max priority queue.
+    MaxPQ waitingValidators;
 }
 
 struct IPCAddress {
