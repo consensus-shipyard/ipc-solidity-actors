@@ -7,7 +7,7 @@ pub use subnet_actor_getter_facet::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types
+    non_camel_case_types,
 )]
 pub mod subnet_actor_getter_facet {
     #[allow(deprecated)]
@@ -308,6 +308,30 @@ pub mod subnet_actor_getter_facet {
                                     kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned("bytes"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getConfigurationNumber"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getConfigurationNumber",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                             ],
@@ -971,8 +995,9 @@ pub mod subnet_actor_getter_facet {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static SUBNETACTORGETTERFACET_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
-        ::ethers::contract::Lazy::new(__abi);
+    pub static SUBNETACTORGETTERFACET_ABI: ::ethers::contract::Lazy<
+        ::ethers::core::abi::Abi,
+    > = ::ethers::contract::Lazy::new(__abi);
     pub struct SubnetActorGetterFacet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SubnetActorGetterFacet<M> {
         fn clone(&self) -> Self {
@@ -1004,11 +1029,13 @@ pub mod subnet_actor_getter_facet {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(::ethers::contract::Contract::new(
-                address.into(),
-                SUBNETACTORGETTERFACET_ABI.clone(),
-                client,
-            ))
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    SUBNETACTORGETTERFACET_ABI.clone(),
+                    client,
+                ),
+            )
         }
         ///Calls the contract's `accumulatedRewards` (0x73f273fc) function
         pub fn accumulated_rewards(
@@ -1020,7 +1047,9 @@ pub mod subnet_actor_getter_facet {
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `bottomUpCheckPeriod` (0x06c46853) function
-        pub fn bottom_up_check_period(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
+        pub fn bottom_up_check_period(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([6, 196, 104, 83], ())
                 .expect("method not found (this should never happen)")
@@ -1060,13 +1089,26 @@ pub mod subnet_actor_getter_facet {
         ///Calls the contract's `genesis` (0xa7f0b3de) function
         pub fn genesis(
             &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::Bytes> {
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::ethers::core::types::Bytes,
+        > {
             self.0
                 .method_hash([167, 240, 179, 222], ())
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `getConfigurationNumber` (0x2e19ed6a) function
+        pub fn get_configuration_number(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([46, 25, 237, 106], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `getParent` (0x80f76021) function
-        pub fn get_parent(&self) -> ::ethers::contract::builders::ContractCall<M, SubnetID> {
+        pub fn get_parent(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, SubnetID> {
             self.0
                 .method_hash([128, 247, 96, 33], ())
                 .expect("method not found (this should never happen)")
@@ -1109,7 +1151,10 @@ pub mod subnet_actor_getter_facet {
         ///Calls the contract's `ipcGatewayAddr` (0xcfca2824) function
         pub fn ipc_gateway_addr(
             &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::Address> {
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::ethers::core::types::Address,
+        > {
             self.0
                 .method_hash([207, 202, 40, 36], ())
                 .expect("method not found (this should never happen)")
@@ -1127,14 +1172,18 @@ pub mod subnet_actor_getter_facet {
             &self,
             from_epoch: u64,
             to_epoch: u64,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::std::vec::Vec<BottomUpCheckpoint>>
-        {
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::std::vec::Vec<BottomUpCheckpoint>,
+        > {
             self.0
                 .method_hash([172, 156, 42, 111], (from_epoch, to_epoch))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `majorityPercentage` (0x599c7bd1) function
-        pub fn majority_percentage(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
+        pub fn majority_percentage(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([89, 156, 123, 209], ())
                 .expect("method not found (this should never happen)")
@@ -1148,7 +1197,9 @@ pub mod subnet_actor_getter_facet {
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `minValidators` (0xc5ab2241) function
-        pub fn min_validators(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
+        pub fn min_validators(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([197, 171, 34, 65], ())
                 .expect("method not found (this should never happen)")
@@ -1183,7 +1234,9 @@ pub mod subnet_actor_getter_facet {
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `topDownCheckPeriod` (0x7d9740f4) function
-        pub fn top_down_check_period(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
+        pub fn top_down_check_period(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([125, 151, 64, 244], ())
                 .expect("method not found (this should never happen)")
@@ -1200,7 +1253,10 @@ pub mod subnet_actor_getter_facet {
         pub fn validator_at(
             &self,
             index: ::ethers::core::types::U256,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::Address> {
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::ethers::core::types::Address,
+        > {
             self.0
                 .method_hash([50, 224, 170, 31], index)
                 .expect("method not found (this should never happen)")
@@ -1233,8 +1289,7 @@ pub mod subnet_actor_getter_facet {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-        for SubnetActorGetterFacet<M>
-    {
+    for SubnetActorGetterFacet<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -1248,7 +1303,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "accumulatedRewards", abi = "accumulatedRewards(address)")]
     pub struct AccumulatedRewardsCall {
@@ -1263,7 +1318,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "bottomUpCheckPeriod", abi = "bottomUpCheckPeriod()")]
     pub struct BottomUpCheckPeriodCall;
@@ -1276,7 +1331,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "bottomUpCheckpointAtEpoch",
@@ -1294,7 +1349,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "bottomUpCheckpointHashAtEpoch",
@@ -1312,7 +1367,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "consensus", abi = "consensus()")]
     pub struct ConsensusCall;
@@ -1325,7 +1380,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "executableQueue", abi = "executableQueue()")]
     pub struct ExecutableQueueCall;
@@ -1338,10 +1393,23 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "genesis", abi = "genesis()")]
     pub struct GenesisCall;
+    ///Container type for all input parameters for the `getConfigurationNumber` function with signature `getConfigurationNumber()` and selector `0x2e19ed6a`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "getConfigurationNumber", abi = "getConfigurationNumber()")]
+    pub struct GetConfigurationNumberCall;
     ///Container type for all input parameters for the `getParent` function with signature `getParent()` and selector `0x80f76021`
     #[derive(
         Clone,
@@ -1351,7 +1419,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "getParent", abi = "getParent()")]
     pub struct GetParentCall;
@@ -1364,7 +1432,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "getRangeOfValidators",
@@ -1383,7 +1451,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "getValidatorSet", abi = "getValidatorSet()")]
     pub struct GetValidatorSetCall;
@@ -1396,7 +1464,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "getValidators", abi = "getValidators()")]
     pub struct GetValidatorsCall;
@@ -1409,7 +1477,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "ipcGatewayAddr", abi = "ipcGatewayAddr()")]
     pub struct IpcGatewayAddrCall;
@@ -1422,7 +1490,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "lastVotingExecutedEpoch", abi = "lastVotingExecutedEpoch()")]
     pub struct LastVotingExecutedEpochCall;
@@ -1435,7 +1503,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "listBottomUpCheckpoints",
@@ -1454,7 +1522,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "majorityPercentage", abi = "majorityPercentage()")]
     pub struct MajorityPercentageCall;
@@ -1467,7 +1535,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "minActivationCollateral", abi = "minActivationCollateral()")]
     pub struct MinActivationCollateralCall;
@@ -1480,7 +1548,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "minValidators", abi = "minValidators()")]
     pub struct MinValidatorsCall;
@@ -1493,7 +1561,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "name", abi = "name()")]
     pub struct NameCall;
@@ -1506,12 +1574,9 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[ethcall(
-        name = "prevExecutedCheckpointHash",
-        abi = "prevExecutedCheckpointHash()"
-    )]
+    #[ethcall(name = "prevExecutedCheckpointHash", abi = "prevExecutedCheckpointHash()")]
     pub struct PrevExecutedCheckpointHashCall;
     ///Container type for all input parameters for the `stake` function with signature `stake(address)` and selector `0x26476204`
     #[derive(
@@ -1522,7 +1587,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "stake", abi = "stake(address)")]
     pub struct StakeCall {
@@ -1537,7 +1602,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "status", abi = "status()")]
     pub struct StatusCall;
@@ -1550,7 +1615,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "topDownCheckPeriod", abi = "topDownCheckPeriod()")]
     pub struct TopDownCheckPeriodCall;
@@ -1563,7 +1628,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "totalStake", abi = "totalStake()")]
     pub struct TotalStakeCall;
@@ -1576,7 +1641,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "validatorAt", abi = "validatorAt(uint256)")]
     pub struct ValidatorAtCall {
@@ -1591,7 +1656,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "validatorCount", abi = "validatorCount()")]
     pub struct ValidatorCountCall;
@@ -1604,7 +1669,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "validatorNetAddr", abi = "validatorNetAddr(address)")]
     pub struct ValidatorNetAddrCall {
@@ -1619,7 +1684,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(name = "validatorWorkerAddr", abi = "validatorWorkerAddr(address)")]
     pub struct ValidatorWorkerAddrCall {
@@ -1635,6 +1700,7 @@ pub mod subnet_actor_getter_facet {
         Consensus(ConsensusCall),
         ExecutableQueue(ExecutableQueueCall),
         Genesis(GenesisCall),
+        GetConfigurationNumber(GetConfigurationNumberCall),
         GetParent(GetParentCall),
         GetRangeOfValidators(GetRangeOfValidatorsCall),
         GetValidatorSet(GetValidatorSetCall),
@@ -1661,121 +1727,144 @@ pub mod subnet_actor_getter_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) =
-                <AccumulatedRewardsCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <AccumulatedRewardsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::AccumulatedRewards(decoded));
             }
-            if let Ok(decoded) =
-                <BottomUpCheckPeriodCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <BottomUpCheckPeriodCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::BottomUpCheckPeriod(decoded));
             }
-            if let Ok(decoded) =
-                <BottomUpCheckpointAtEpochCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <BottomUpCheckpointAtEpochCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::BottomUpCheckpointAtEpoch(decoded));
             }
-            if let Ok(decoded) =
-                <BottomUpCheckpointHashAtEpochCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <BottomUpCheckpointHashAtEpochCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::BottomUpCheckpointHashAtEpoch(decoded));
             }
-            if let Ok(decoded) = <ConsensusCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <ConsensusCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::Consensus(decoded));
             }
-            if let Ok(decoded) =
-                <ExecutableQueueCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ExecutableQueueCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ExecutableQueue(decoded));
             }
-            if let Ok(decoded) = <GenesisCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <GenesisCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::Genesis(decoded));
             }
-            if let Ok(decoded) = <GetParentCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <GetConfigurationNumberCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetConfigurationNumber(decoded));
+            }
+            if let Ok(decoded) = <GetParentCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::GetParent(decoded));
             }
-            if let Ok(decoded) =
-                <GetRangeOfValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <GetRangeOfValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::GetRangeOfValidators(decoded));
             }
-            if let Ok(decoded) =
-                <GetValidatorSetCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <GetValidatorSetCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::GetValidatorSet(decoded));
             }
-            if let Ok(decoded) = <GetValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <GetValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::GetValidators(decoded));
             }
-            if let Ok(decoded) =
-                <IpcGatewayAddrCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <IpcGatewayAddrCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::IpcGatewayAddr(decoded));
             }
-            if let Ok(decoded) =
-                <LastVotingExecutedEpochCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <LastVotingExecutedEpochCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::LastVotingExecutedEpoch(decoded));
             }
-            if let Ok(decoded) =
-                <ListBottomUpCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ListBottomUpCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ListBottomUpCheckpoints(decoded));
             }
-            if let Ok(decoded) =
-                <MajorityPercentageCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <MajorityPercentageCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::MajorityPercentage(decoded));
             }
-            if let Ok(decoded) =
-                <MinActivationCollateralCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <MinActivationCollateralCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::MinActivationCollateral(decoded));
             }
-            if let Ok(decoded) = <MinValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <MinValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::MinValidators(decoded));
             }
-            if let Ok(decoded) = <NameCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <NameCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::Name(decoded));
             }
-            if let Ok(decoded) =
-                <PrevExecutedCheckpointHashCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <PrevExecutedCheckpointHashCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::PrevExecutedCheckpointHash(decoded));
             }
-            if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::Stake(decoded));
             }
-            if let Ok(decoded) = <StatusCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <StatusCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::Status(decoded));
             }
-            if let Ok(decoded) =
-                <TopDownCheckPeriodCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <TopDownCheckPeriodCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::TopDownCheckPeriod(decoded));
             }
-            if let Ok(decoded) = <TotalStakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <TotalStakeCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::TotalStake(decoded));
             }
-            if let Ok(decoded) = <ValidatorAtCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <ValidatorAtCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorAt(decoded));
             }
-            if let Ok(decoded) =
-                <ValidatorCountCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ValidatorCountCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorCount(decoded));
             }
-            if let Ok(decoded) =
-                <ValidatorNetAddrCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ValidatorNetAddrCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorNetAddr(decoded));
             }
-            if let Ok(decoded) =
-                <ValidatorWorkerAddrCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ValidatorWorkerAddrCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorWorkerAddr(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -1796,16 +1885,31 @@ pub mod subnet_actor_getter_facet {
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::Consensus(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::ExecutableQueue(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::Consensus(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::ExecutableQueue(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::Genesis(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::GetParent(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::GetConfigurationNumber(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetParent(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::GetRangeOfValidators(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::GetValidatorSet(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::GetValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::IpcGatewayAddr(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::GetValidatorSet(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetValidators(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::IpcGatewayAddr(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::LastVotingExecutedEpoch(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1818,7 +1922,9 @@ pub mod subnet_actor_getter_facet {
                 Self::MinActivationCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::MinValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::MinValidators(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::Name(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::PrevExecutedCheckpointHash(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
@@ -1828,10 +1934,18 @@ pub mod subnet_actor_getter_facet {
                 Self::TopDownCheckPeriod(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::TotalStake(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::ValidatorAt(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::ValidatorCount(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::ValidatorNetAddr(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::TotalStake(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::ValidatorAt(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::ValidatorCount(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::ValidatorNetAddr(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::ValidatorWorkerAddr(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1841,35 +1955,60 @@ pub mod subnet_actor_getter_facet {
     impl ::core::fmt::Display for SubnetActorGetterFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::AccumulatedRewards(element) => ::core::fmt::Display::fmt(element, f),
-                Self::BottomUpCheckPeriod(element) => ::core::fmt::Display::fmt(element, f),
-                Self::BottomUpCheckpointAtEpoch(element) => ::core::fmt::Display::fmt(element, f),
+                Self::AccumulatedRewards(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BottomUpCheckPeriod(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BottomUpCheckpointAtEpoch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::Consensus(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExecutableQueue(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Genesis(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetConfigurationNumber(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::GetParent(element) => ::core::fmt::Display::fmt(element, f),
-                Self::GetRangeOfValidators(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetRangeOfValidators(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::GetValidatorSet(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetValidators(element) => ::core::fmt::Display::fmt(element, f),
                 Self::IpcGatewayAddr(element) => ::core::fmt::Display::fmt(element, f),
-                Self::LastVotingExecutedEpoch(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ListBottomUpCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
-                Self::MajorityPercentage(element) => ::core::fmt::Display::fmt(element, f),
-                Self::MinActivationCollateral(element) => ::core::fmt::Display::fmt(element, f),
+                Self::LastVotingExecutedEpoch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ListBottomUpCheckpoints(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::MajorityPercentage(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::MinActivationCollateral(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::MinValidators(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Name(element) => ::core::fmt::Display::fmt(element, f),
-                Self::PrevExecutedCheckpointHash(element) => ::core::fmt::Display::fmt(element, f),
+                Self::PrevExecutedCheckpointHash(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Status(element) => ::core::fmt::Display::fmt(element, f),
-                Self::TopDownCheckPeriod(element) => ::core::fmt::Display::fmt(element, f),
+                Self::TopDownCheckPeriod(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::TotalStake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ValidatorAt(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ValidatorCount(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ValidatorNetAddr(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ValidatorWorkerAddr(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ValidatorWorkerAddr(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
         }
     }
@@ -1883,12 +2022,14 @@ pub mod subnet_actor_getter_facet {
             Self::BottomUpCheckPeriod(value)
         }
     }
-    impl ::core::convert::From<BottomUpCheckpointAtEpochCall> for SubnetActorGetterFacetCalls {
+    impl ::core::convert::From<BottomUpCheckpointAtEpochCall>
+    for SubnetActorGetterFacetCalls {
         fn from(value: BottomUpCheckpointAtEpochCall) -> Self {
             Self::BottomUpCheckpointAtEpoch(value)
         }
     }
-    impl ::core::convert::From<BottomUpCheckpointHashAtEpochCall> for SubnetActorGetterFacetCalls {
+    impl ::core::convert::From<BottomUpCheckpointHashAtEpochCall>
+    for SubnetActorGetterFacetCalls {
         fn from(value: BottomUpCheckpointHashAtEpochCall) -> Self {
             Self::BottomUpCheckpointHashAtEpoch(value)
         }
@@ -1908,12 +2049,19 @@ pub mod subnet_actor_getter_facet {
             Self::Genesis(value)
         }
     }
+    impl ::core::convert::From<GetConfigurationNumberCall>
+    for SubnetActorGetterFacetCalls {
+        fn from(value: GetConfigurationNumberCall) -> Self {
+            Self::GetConfigurationNumber(value)
+        }
+    }
     impl ::core::convert::From<GetParentCall> for SubnetActorGetterFacetCalls {
         fn from(value: GetParentCall) -> Self {
             Self::GetParent(value)
         }
     }
-    impl ::core::convert::From<GetRangeOfValidatorsCall> for SubnetActorGetterFacetCalls {
+    impl ::core::convert::From<GetRangeOfValidatorsCall>
+    for SubnetActorGetterFacetCalls {
         fn from(value: GetRangeOfValidatorsCall) -> Self {
             Self::GetRangeOfValidators(value)
         }
@@ -1933,12 +2081,14 @@ pub mod subnet_actor_getter_facet {
             Self::IpcGatewayAddr(value)
         }
     }
-    impl ::core::convert::From<LastVotingExecutedEpochCall> for SubnetActorGetterFacetCalls {
+    impl ::core::convert::From<LastVotingExecutedEpochCall>
+    for SubnetActorGetterFacetCalls {
         fn from(value: LastVotingExecutedEpochCall) -> Self {
             Self::LastVotingExecutedEpoch(value)
         }
     }
-    impl ::core::convert::From<ListBottomUpCheckpointsCall> for SubnetActorGetterFacetCalls {
+    impl ::core::convert::From<ListBottomUpCheckpointsCall>
+    for SubnetActorGetterFacetCalls {
         fn from(value: ListBottomUpCheckpointsCall) -> Self {
             Self::ListBottomUpCheckpoints(value)
         }
@@ -1948,7 +2098,8 @@ pub mod subnet_actor_getter_facet {
             Self::MajorityPercentage(value)
         }
     }
-    impl ::core::convert::From<MinActivationCollateralCall> for SubnetActorGetterFacetCalls {
+    impl ::core::convert::From<MinActivationCollateralCall>
+    for SubnetActorGetterFacetCalls {
         fn from(value: MinActivationCollateralCall) -> Self {
             Self::MinActivationCollateral(value)
         }
@@ -1963,7 +2114,8 @@ pub mod subnet_actor_getter_facet {
             Self::Name(value)
         }
     }
-    impl ::core::convert::From<PrevExecutedCheckpointHashCall> for SubnetActorGetterFacetCalls {
+    impl ::core::convert::From<PrevExecutedCheckpointHashCall>
+    for SubnetActorGetterFacetCalls {
         fn from(value: PrevExecutedCheckpointHashCall) -> Self {
             Self::PrevExecutedCheckpointHash(value)
         }
@@ -2017,7 +2169,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct AccumulatedRewardsReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `bottomUpCheckPeriod` function with signature `bottomUpCheckPeriod()` and selector `0x06c46853`
@@ -2029,7 +2181,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct BottomUpCheckPeriodReturn(pub u64);
     ///Container type for all return fields from the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint64)` and selector `0x6cb2ecee`
@@ -2041,7 +2193,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct BottomUpCheckpointAtEpochReturn {
         pub exists: bool,
@@ -2056,7 +2208,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct BottomUpCheckpointHashAtEpochReturn(pub bool, pub [u8; 32]);
     ///Container type for all return fields from the `consensus` function with signature `consensus()` and selector `0x8ef3f761`
@@ -2068,7 +2220,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ConsensusReturn(pub u8);
     ///Container type for all return fields from the `executableQueue` function with signature `executableQueue()` and selector `0x10d500e1`
@@ -2080,7 +2232,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ExecutableQueueReturn(pub u64, pub u64, pub u64);
     ///Container type for all return fields from the `genesis` function with signature `genesis()` and selector `0xa7f0b3de`
@@ -2092,9 +2244,21 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct GenesisReturn(pub ::ethers::core::types::Bytes);
+    ///Container type for all return fields from the `getConfigurationNumber` function with signature `getConfigurationNumber()` and selector `0x2e19ed6a`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetConfigurationNumberReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `getParent` function with signature `getParent()` and selector `0x80f76021`
     #[derive(
         Clone,
@@ -2104,7 +2268,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct GetParentReturn(pub SubnetID);
     ///Container type for all return fields from the `getRangeOfValidators` function with signature `getRangeOfValidators(uint256,uint256)` and selector `0x1a1531fc`
@@ -2116,7 +2280,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct GetRangeOfValidatorsReturn(
         pub ::std::vec::Vec<::ethers::core::types::Address>,
@@ -2131,7 +2295,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct GetValidatorSetReturn(pub ValidatorSet);
     ///Container type for all return fields from the `getValidators` function with signature `getValidators()` and selector `0xb7ab4db5`
@@ -2143,7 +2307,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct GetValidatorsReturn(pub ::std::vec::Vec<::ethers::core::types::Address>);
     ///Container type for all return fields from the `ipcGatewayAddr` function with signature `ipcGatewayAddr()` and selector `0xcfca2824`
@@ -2155,7 +2319,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct IpcGatewayAddrReturn(pub ::ethers::core::types::Address);
     ///Container type for all return fields from the `lastVotingExecutedEpoch` function with signature `lastVotingExecutedEpoch()` and selector `0xad81e244`
@@ -2167,7 +2331,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct LastVotingExecutedEpochReturn(pub u64);
     ///Container type for all return fields from the `listBottomUpCheckpoints` function with signature `listBottomUpCheckpoints(uint64,uint64)` and selector `0xac9c2a6f`
@@ -2179,7 +2343,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ListBottomUpCheckpointsReturn(pub ::std::vec::Vec<BottomUpCheckpoint>);
     ///Container type for all return fields from the `majorityPercentage` function with signature `majorityPercentage()` and selector `0x599c7bd1`
@@ -2191,7 +2355,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct MajorityPercentageReturn(pub u64);
     ///Container type for all return fields from the `minActivationCollateral` function with signature `minActivationCollateral()` and selector `0x9e33bd02`
@@ -2203,7 +2367,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct MinActivationCollateralReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `minValidators` function with signature `minValidators()` and selector `0xc5ab2241`
@@ -2215,7 +2379,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct MinValidatorsReturn(pub u64);
     ///Container type for all return fields from the `name` function with signature `name()` and selector `0x06fdde03`
@@ -2227,7 +2391,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct NameReturn(pub [u8; 32]);
     ///Container type for all return fields from the `prevExecutedCheckpointHash` function with signature `prevExecutedCheckpointHash()` and selector `0x5f832dbf`
@@ -2239,7 +2403,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct PrevExecutedCheckpointHashReturn(pub [u8; 32]);
     ///Container type for all return fields from the `stake` function with signature `stake(address)` and selector `0x26476204`
@@ -2251,7 +2415,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct StakeReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `status` function with signature `status()` and selector `0x200d2ed2`
@@ -2263,7 +2427,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct StatusReturn(pub u8);
     ///Container type for all return fields from the `topDownCheckPeriod` function with signature `topDownCheckPeriod()` and selector `0x7d9740f4`
@@ -2275,7 +2439,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct TopDownCheckPeriodReturn(pub u64);
     ///Container type for all return fields from the `totalStake` function with signature `totalStake()` and selector `0x8b0e9f3f`
@@ -2287,7 +2451,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct TotalStakeReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `validatorAt` function with signature `validatorAt(uint256)` and selector `0x32e0aa1f`
@@ -2299,7 +2463,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ValidatorAtReturn(pub ::ethers::core::types::Address);
     ///Container type for all return fields from the `validatorCount` function with signature `validatorCount()` and selector `0x0f43a677`
@@ -2311,7 +2475,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ValidatorCountReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `validatorNetAddr` function with signature `validatorNetAddr(address)` and selector `0x950c8d46`
@@ -2323,7 +2487,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ValidatorNetAddrReturn(pub ::std::string::String);
     ///Container type for all return fields from the `validatorWorkerAddr` function with signature `validatorWorkerAddr(address)` and selector `0x74f189b4`
@@ -2335,7 +2499,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ValidatorWorkerAddrReturn(pub FvmAddress);
     ///`BottomUpCheckpoint((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes)`
@@ -2347,7 +2511,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct BottomUpCheckpoint {
         pub source: SubnetID,
@@ -2367,7 +2531,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ChildCheck {
         pub source: SubnetID,
@@ -2382,7 +2546,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct CrossMsg {
         pub message: StorableMsg,
@@ -2397,7 +2561,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct FvmAddress {
         pub addr_type: u8,
@@ -2412,7 +2576,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct Ipcaddress {
         pub subnet_id: SubnetID,
@@ -2427,7 +2591,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct StorableMsg {
         pub from: Ipcaddress,
@@ -2446,7 +2610,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct SubnetID {
         pub root: u64,
@@ -2461,7 +2625,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ValidatorInfo {
         pub addr: ::ethers::core::types::Address,
@@ -2478,7 +2642,7 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ValidatorSet {
         pub validators: ::std::vec::Vec<ValidatorInfo>,
