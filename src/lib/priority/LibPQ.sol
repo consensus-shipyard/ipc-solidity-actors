@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import {LibValidatorSet} from "../LibStaking.sol";
 import {ValidatorSet} from "../../structs/Subnet.sol";
+import {PQEmpty, PQDoesNotContainAddress} from "../../errors/IPCErrors.sol";
 
 /// The implementation that mimics the Java impl in https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html.
 
@@ -23,6 +24,12 @@ library LibPQ {
         return self.size == 0;
     }
 
+    function requireNotEmpty(PQ storage self) internal view {
+        if (self.size == 0) {
+            revert PQEmpty();
+        }
+    }
+
     function getSize(PQ storage self) internal view returns (uint16) {
         return self.size;
     }
@@ -31,13 +38,20 @@ library LibPQ {
         return self.addressToPos[validator] != 0;
     }
 
+    function getPosOrRevert(PQ storage self, address validator) internal view returns(uint16 pos) {
+        pos = self.addressToPos[validator];
+        if (pos == 0) {
+            revert PQDoesNotContainAddress();
+        }
+    }
+
     function del(PQ storage self, uint16 pos) internal {
         address addr = self.posToAddress[pos];
         delete self.posToAddress[pos];
         delete self.addressToPos[addr];
     }
 
-    function getCollateral(
+    function getConfirmedCollateral(
         PQ storage self,
         ValidatorSet storage validators,
         uint16 pos
