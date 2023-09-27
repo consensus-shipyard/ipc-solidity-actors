@@ -63,3 +63,5 @@ error ZeroMembershipWeight();
 error WithdrawExceedingCollateral();
 error CannotConfirmFutureChanges();
 error NoCollateralToWithdraw();
+error PQEmpty();
+error PQDoesNotContainAddress();
