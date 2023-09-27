@@ -42,7 +42,7 @@ struct GatewayActorStorage {
     /// @notice The height of the first bottom-up checkpoint that must be retained since they have not been processed in the parent.
     /// All checkpoint with the height less than this number may be garbage collected in the child subnet.
     /// @dev Initial retention index is 1.
-    uint64 bottomUpCheckpointRetentionIndex;
+    uint64 bottomUpCheckpointRetentionHeight;
     /// @notice A list of incomplete checkpoints.
     // slither-disable-next-line uninitialized-state
     EnumerableSet.UintSet incompleteCheckpoints;

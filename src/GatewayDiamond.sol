@@ -48,7 +48,7 @@ contract GatewayDiamond {
         s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
         s.majorityPercentage = params.majorityPercentage;
-        s.bottomUpCheckpointRetentionIndex = 1;
+        s.bottomUpCheckpointRetentionHeight = 1;
 
         // the root doesn't need to be explicitly initialized
         if (s.networkName.isRoot()) {

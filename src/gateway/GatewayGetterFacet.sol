@@ -219,7 +219,7 @@ contract GatewayGetterFacet {
 
     /// @notice get the bottom-up checkpoint retention index
     function getBottomUpRetentionIndex() public view returns (uint64) {
-        return s.bottomUpCheckpointRetentionIndex;
+        return s.bottomUpCheckpointRetentionHeight;
     }
 
     /// @notice get the threshold value for child subnet

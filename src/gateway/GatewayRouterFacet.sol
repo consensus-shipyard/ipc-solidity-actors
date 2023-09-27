@@ -10,7 +10,7 @@ import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Validator.sol";
-import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionIndex, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
+import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
@@ -203,7 +203,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 weight,
         bytes memory signature
     ) external {
-        if (height < s.bottomUpCheckpointRetentionIndex) {
+        if (height < s.bottomUpCheckpointRetentionHeight) {
             revert CheckpointAlreadyProcessed();
         }
         BottomUpCheckpointNew memory checkpoint = s.bottomUpCheckpoints[height];
@@ -278,7 +278,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         bytes32 membershipRootHash,
         uint256 membershipWeight
     ) external systemActorOnly {
-        if (checkpoint.blockHeight < s.bottomUpCheckpointRetentionIndex) {
+        if (checkpoint.blockHeight < s.bottomUpCheckpointRetentionHeight) {
             revert CheckpointAlreadyProcessed();
         }
         if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
@@ -314,13 +314,13 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// All checkpoints with a height less than `retentionHeight` are removed from the history, assuming they are committed to the parent.
     /// @param newRetentionHeight - the height of the oldest checkpoint to keep
     function pruneBottomUpCheckpoints(uint64 newRetentionHeight) external systemActorOnly {
-        uint64 oldRetentionIndex = s.bottomUpCheckpointRetentionIndex;
+        uint64 oldRetentionHeight = s.bottomUpCheckpointRetentionHeight;
 
-        if (newRetentionIndex <= oldRetentionIndex) {
-            revert InvalidRetentionIndex();
+        if (newRetentionHeight <= oldRetentionHeight) {
+            revert InvalidRetentionHeight();
         }
 
-        for (uint64 h = oldRetentionIndex; h < newRetentionIndex; ) {
+        for (uint64 h = oldRetentionHeight; h < newRetentionHeight; ) {
             delete s.bottomUpCheckpoints[h];
             delete s.bottomUpCheckpointInfo[h];
             delete s.bottomUpCollectedSignatures[h];
@@ -330,6 +330,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             }
         }
 
-        s.bottomUpCheckpointRetentionIndex = newRetentionIndex;
+        s.bottomUpCheckpointRetentionHeight = newRetentionHeight;
     }
 }

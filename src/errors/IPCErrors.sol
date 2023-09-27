@@ -53,7 +53,7 @@ error NotSystemActor();
 error NotRegisteredSubnet();
 error NotValidator();
 error PostboxNotExist();
-error InvalidRetentionIndex();
+error InvalidRetentionHeight();
 error SignatureReplay();
 error SubnetAlreadyKilled();
 error SubnetNotActive();
