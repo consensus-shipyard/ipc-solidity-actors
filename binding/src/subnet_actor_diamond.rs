@@ -156,6 +156,16 @@ pub mod subnet_actor_diamond {
                             },
                         ],
                     },],
+<<<<<<< HEAD
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                    ::std::vec![::ethers::core::abi::ethabi::AbiError {
+                        name: ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                        inputs: ::std::vec![],
+                    },],
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
@@ -165,20 +175,12 @@ pub mod subnet_actor_diamond {
                     },],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("InvalidMajorityPercentage"),
                     ::std::vec![::ethers::core::abi::ethabi::AbiError {
                         name: ::std::borrow::ToOwned::to_owned("InvalidMajorityPercentage",),
                         inputs: ::std::vec![],
                     },],
+<<<<<<< HEAD
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod"),
@@ -186,17 +188,15 @@ pub mod subnet_actor_diamond {
                         name: ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod",),
                         inputs: ::std::vec![],
                     },],
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "InvalidSubmissionPeriod",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
+                    ::std::vec![::ethers::core::abi::ethabi::AbiError {
+                        name: ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod",),
+                        inputs: ::std::vec![],
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("NoBytecodeAtAddress"),
@@ -250,10 +250,14 @@ pub mod subnet_actor_diamond {
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
 <<<<<<< HEAD
+<<<<<<< HEAD
     const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x91W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[c\n\x82\xDDs`\xE3\x1B`\x80R`\x01`\x01`\xE0\x1B\x03\x19\x16`\x84R`\x7F\x19`\xA4\x01`\x80\xFD[`\rT`\x01`\x01`\xA0\x1B\x03\x163\x03`\xA4W\0[c\xE7\xE6\x01\xDB`\xE0\x1B`\x80R`\x04`\x80\xFD\xFE\xA2dipfsX\"\x12 |2\xE6\xBC\x90\xE7D\xC1a\xD2\xA6TF\r5\xDEn.1w\xC3\xBC\xC8\xEB\xD7\xD0\xEB\xFD\x0F\x83BBdsolcC\0\x08\x13\x003";
 =======
     const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x91W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[c\n\x82\xDDs`\xE3\x1B`\x80R`\x01`\x01`\xE0\x1B\x03\x19\x16`\x84R`\x7F\x19`\xA4\x01`\x80\xFD[`\rT`\x01`\x01`\xA0\x1B\x03\x163\x03`\xA4W\0[c\xE7\xE6\x01\xDB`\xE0\x1B`\x80R`\x04`\x80\xFD\xFE\xA2dipfsX\"\x12 @R\x8B\xE3\xE0\xD1\xB0\xEC\xF44cH\x08\xFET\xDDD\x8E\xBC\x825OJaK\xC9o\x96\x88\x1A{\x9AdsolcC\0\x08\x13\x003";
 >>>>>>> 32e65e5 (binding update)
+=======
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6`\x10W`\x0E`\x16V[\0[`\x0E`BV[`\rT`\x01`\x01`\xA0\x1B\x03\x163\x14`@W`@Qc\xE7\xE6\x01\xDB`\xE0\x1B\x81R`\x04\x01`@Q\x80\x91\x03\x90\xFD[V[`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x81R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` \x81\x90R`@\x90\x91 T\x81\x90`\x01`\x01`\xA0\x1B\x03\x16\x80`\xB8W`@Qc\n\x82\xDDs`\xE3\x1B\x81R`\x01`\x01`\xE0\x1B\x03\x19`\x005\x16`\x04\x82\x01R`$\x01`@Q\x80\x91\x03\x90\xFD[6`\0\x807`\0\x806`\0\x84Z\xF4=`\0\x80>\x80\x80\x15`\xD6W=`\0\xF3[=`\0\xFD\xFE\xA2dipfsX\"\x12 >\xBFl!,\x9F\xAD/\xFB;\x08\x12B\x9F\xFD\x87\t\xA9\x1F\x0F\xA9B\x19B\x8F\xAB6O\xF17\x99\xB0dsolcC\0\x08\x13\x003";
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     /// The deployed bytecode of the contract.
     pub static SUBNETACTORDIAMOND_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
@@ -289,11 +293,15 @@ pub mod subnet_actor_diamond {
             client: ::std::sync::Arc<M>,
         ) -> Self {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
             Self(::ethers::contract::Contract::new(
                 address.into(),
                 SUBNETACTORDIAMOND_ABI.clone(),
                 client,
             ))
+<<<<<<< HEAD
 =======
             Self(
                 ::ethers::contract::Contract::new(
@@ -303,6 +311,8 @@ pub mod subnet_actor_diamond {
                 ),
             )
 >>>>>>> 32e65e5 (binding update)
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
@@ -423,10 +433,14 @@ pub mod subnet_actor_diamond {
         PartialEq,
         Eq,
 <<<<<<< HEAD
+<<<<<<< HEAD
         Hash,
 =======
         Hash
 >>>>>>> 32e65e5 (binding update)
+=======
+        Hash,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     )]
     #[etherror(name = "InvalidCollateral", abi = "InvalidCollateral()")]
     pub struct InvalidCollateral;
@@ -456,10 +470,14 @@ pub mod subnet_actor_diamond {
         PartialEq,
         Eq,
 <<<<<<< HEAD
+<<<<<<< HEAD
         Hash,
 =======
         Hash
 >>>>>>> 32e65e5 (binding update)
+=======
+        Hash,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     )]
     #[etherror(name = "InvalidSubmissionPeriod", abi = "InvalidSubmissionPeriod()")]
     pub struct InvalidSubmissionPeriod;
@@ -572,6 +590,7 @@ pub mod subnet_actor_diamond {
                 return Ok(Self::InitializationFunctionReverted(decoded));
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::InvalidCollateral(decoded));
@@ -593,22 +612,32 @@ pub mod subnet_actor_diamond {
             if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
+=======
+            if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 return Ok(Self::InvalidCollateral(decoded));
             }
-            if let Ok(decoded) = <InvalidMajorityPercentage as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <InvalidMajorityPercentage as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::InvalidMajorityPercentage(decoded));
             }
-            if let Ok(decoded) = <InvalidSubmissionPeriod as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <InvalidSubmissionPeriod as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::InvalidSubmissionPeriod(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <NoBytecodeAtAddress as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
 >>>>>>> 32e65e5 (binding update)
+=======
+            if let Ok(decoded) =
+                <NoBytecodeAtAddress as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 return Ok(Self::NoBytecodeAtAddress(decoded));
             }
             if let Ok(decoded) =
@@ -642,12 +671,16 @@ pub mod subnet_actor_diamond {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
                 Self::InvalidCollateral(element) => ::ethers::core::abi::AbiEncode::encode(element),
 =======
                 Self::InvalidCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
 >>>>>>> 32e65e5 (binding update)
+=======
+                Self::InvalidCollateral(element) => ::ethers::core::abi::AbiEncode::encode(element),
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::InvalidMajorityPercentage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -736,6 +769,7 @@ pub mod subnet_actor_diamond {
                 }
                 Self::InvalidCollateral(element) => ::core::fmt::Display::fmt(element, f),
 <<<<<<< HEAD
+<<<<<<< HEAD
                 Self::InvalidMajorityPercentage(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidSubmissionPeriod(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NoBytecodeAtAddress(element) => ::core::fmt::Display::fmt(element, f),
@@ -750,6 +784,11 @@ pub mod subnet_actor_diamond {
                     ::core::fmt::Display::fmt(element, f)
                 }
 >>>>>>> 32e65e5 (binding update)
+=======
+                Self::InvalidMajorityPercentage(element) => ::core::fmt::Display::fmt(element, f),
+                Self::InvalidSubmissionPeriod(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NoBytecodeAtAddress(element) => ::core::fmt::Display::fmt(element, f),
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::NoSelectorsProvidedForFacetForCut(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }

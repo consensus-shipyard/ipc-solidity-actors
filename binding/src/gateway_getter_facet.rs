@@ -313,6 +313,7 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
+<<<<<<< HEAD
                     ::std::borrow::ToOwned::to_owned("getBottomUpRetentionHeight"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -335,6 +336,8 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                     ::std::borrow::ToOwned::to_owned("getCheckpointCurrentWeight"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -511,6 +514,7 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
+<<<<<<< HEAD
                     ::std::borrow::ToOwned::to_owned("getIncompleteCheckpointHeights"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -582,6 +586,8 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                     ::std::borrow::ToOwned::to_owned("getLastConfigurationNumber"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -1742,6 +1748,7 @@ pub mod gateway_getter_facet {
                 .method_hash([158, 83, 11, 87], (subnet_id,))
                 .expect("method not found (this should never happen)")
         }
+<<<<<<< HEAD
         ///Calls the contract's `getBottomUpRetentionHeight` (0x3e37cfa2) function
         pub fn get_bottom_up_retention_height(
             &self,
@@ -1773,6 +1780,31 @@ pub mod gateway_getter_facet {
             &self,
         ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
+=======
+        ///Calls the contract's `getCheckpointCurrentWeight` (0xf7ceaf76) function
+        pub fn get_checkpoint_current_weight(
+            &self,
+            h: u64,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([247, 206, 175, 118], h)
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `getCheckpointInfo` (0x4512ff63) function
+        pub fn get_checkpoint_info(
+            &self,
+            h: u64,
+        ) -> ::ethers::contract::builders::ContractCall<M, CheckpointInfo> {
+            self.0
+                .method_hash([69, 18, 255, 99], h)
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `getCurrentConfigurationNumber` (0x544dddff) function
+        pub fn get_current_configuration_number(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
+            self.0
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 .method_hash([84, 77, 221, 255], ())
                 .expect("method not found (this should never happen)")
         }
@@ -1798,6 +1830,7 @@ pub mod gateway_getter_facet {
                 .method_hash([81, 57, 47, 192], ())
                 .expect("method not found (this should never happen)")
         }
+<<<<<<< HEAD
         ///Calls the contract's `getIncompleteCheckpointHeights` (0xa517218f) function
         pub fn get_incomplete_checkpoint_heights(
             &self,
@@ -1818,6 +1851,8 @@ pub mod gateway_getter_facet {
                 .method_hash([151, 4, 39, 102], ())
                 .expect("method not found (this should never happen)")
         }
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         ///Calls the contract's `getLastConfigurationNumber` (0xb1ba49b0) function
         pub fn get_last_configuration_number(
             &self,
@@ -2100,6 +2135,7 @@ pub mod gateway_getter_facet {
     pub struct GetAppliedTopDownNonceCall {
         pub subnet_id: SubnetID,
     }
+<<<<<<< HEAD
     ///Container type for all input parameters for the `getBottomUpRetentionHeight` function with signature `getBottomUpRetentionHeight()` and selector `0x3e37cfa2`
     #[derive(
         Clone,
@@ -2116,6 +2152,8 @@ pub mod gateway_getter_facet {
         abi = "getBottomUpRetentionHeight()"
     )]
     pub struct GetBottomUpRetentionHeightCall;
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     ///Container type for all input parameters for the `getCheckpointCurrentWeight` function with signature `getCheckpointCurrentWeight(uint64)` and selector `0xf7ceaf76`
     #[derive(
         Clone,
@@ -2204,6 +2242,7 @@ pub mod gateway_getter_facet {
     )]
     #[ethcall(name = "getGenesisEpoch", abi = "getGenesisEpoch()")]
     pub struct GetGenesisEpochCall;
+<<<<<<< HEAD
     ///Container type for all input parameters for the `getIncompleteCheckpointHeights` function with signature `getIncompleteCheckpointHeights()` and selector `0xa517218f`
     #[derive(
         Clone,
@@ -2233,6 +2272,8 @@ pub mod gateway_getter_facet {
     )]
     #[ethcall(name = "getIncompleteCheckpoints", abi = "getIncompleteCheckpoints()")]
     pub struct GetIncompleteCheckpointsCall;
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     ///Container type for all input parameters for the `getLastConfigurationNumber` function with signature `getLastConfigurationNumber()` and selector `0xb1ba49b0`
     #[derive(
         Clone,
@@ -2535,15 +2576,21 @@ pub mod gateway_getter_facet {
         CrossMsgFee(CrossMsgFeeCall),
         ExecutableQueue(ExecutableQueueCall),
         GetAppliedTopDownNonce(GetAppliedTopDownNonceCall),
+<<<<<<< HEAD
         GetBottomUpRetentionHeight(GetBottomUpRetentionHeightCall),
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         GetCheckpointCurrentWeight(GetCheckpointCurrentWeightCall),
         GetCheckpointInfo(GetCheckpointInfoCall),
         GetCurrentConfigurationNumber(GetCurrentConfigurationNumberCall),
         GetCurrentMembership(GetCurrentMembershipCall),
         GetCurrentTotalWeight(GetCurrentTotalWeightCall),
         GetGenesisEpoch(GetGenesisEpochCall),
+<<<<<<< HEAD
         GetIncompleteCheckpointHeights(GetIncompleteCheckpointHeightsCall),
         GetIncompleteCheckpoints(GetIncompleteCheckpointsCall),
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         GetLastConfigurationNumber(GetLastConfigurationNumberCall),
         GetLastMembership(GetLastMembershipCall),
         GetLastTotalWeight(GetLastTotalWeightCall),
@@ -2581,6 +2628,7 @@ pub mod gateway_getter_facet {
                 return Ok(Self::BottomUpCheckPeriod(decoded));
             }
             if let Ok(decoded) =
+<<<<<<< HEAD
                 <BottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::BottomUpCheckpoint(decoded));
@@ -2590,6 +2638,12 @@ pub mod gateway_getter_facet {
             {
                 return Ok(Self::BottomUpMessages(decoded));
             }
+=======
+                <BottomUpCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::BottomUpCheckpoints(decoded));
+            }
+>>>>>>> fa018d6 (Adding min priority queue (#209))
             if let Ok(decoded) = <BottomUpNonceCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::BottomUpNonce(decoded));
@@ -2608,11 +2662,14 @@ pub mod gateway_getter_facet {
                 return Ok(Self::GetAppliedTopDownNonce(decoded));
             }
             if let Ok(decoded) =
+<<<<<<< HEAD
                 <GetBottomUpRetentionHeightCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::GetBottomUpRetentionHeight(decoded));
             }
             if let Ok(decoded) =
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 <GetCheckpointCurrentWeightCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::GetCheckpointCurrentWeight(decoded));
@@ -2643,6 +2700,7 @@ pub mod gateway_getter_facet {
                 return Ok(Self::GetGenesisEpoch(decoded));
             }
             if let Ok(decoded) =
+<<<<<<< HEAD
                 <GetIncompleteCheckpointHeightsCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::GetIncompleteCheckpointHeights(decoded));
@@ -2653,6 +2711,8 @@ pub mod gateway_getter_facet {
                 return Ok(Self::GetIncompleteCheckpoints(decoded));
             }
             if let Ok(decoded) =
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 <GetLastConfigurationNumberCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::GetLastConfigurationNumber(decoded));
@@ -2682,11 +2742,14 @@ pub mod gateway_getter_facet {
             {
                 return Ok(Self::GetParentFinality(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <GetQuorumThresholdCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::GetQuorumThreshold(decoded));
             }
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
             if let Ok(decoded) = <GetSubnetCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::GetSubnet(decoded));
             }
@@ -2751,19 +2814,28 @@ pub mod gateway_getter_facet {
                 Self::BottomUpCheckPeriod(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::BottomUpCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::BottomUpMessages(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::BottomUpCheckpoints(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::BottomUpNonce(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::CrossMsgFee(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ExecutableQueue(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetAppliedTopDownNonce(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::GetBottomUpRetentionHeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::GetCheckpointCurrentWeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2778,12 +2850,15 @@ pub mod gateway_getter_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::GetGenesisEpoch(element) => ::ethers::core::abi::AbiEncode::encode(element),
+<<<<<<< HEAD
                 Self::GetIncompleteCheckpointHeights(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::GetIncompleteCheckpoints(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::GetLastConfigurationNumber(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2796,9 +2871,12 @@ pub mod gateway_getter_facet {
                 }
                 Self::GetNetworkName(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetParentFinality(element) => ::ethers::core::abi::AbiEncode::encode(element),
+<<<<<<< HEAD
                 Self::GetQuorumThreshold(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::GetSubnet(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetSubnetTopDownMsgsLength(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
@@ -2830,13 +2908,20 @@ pub mod gateway_getter_facet {
             match self {
                 Self::AppliedTopDownNonce(element) => ::core::fmt::Display::fmt(element, f),
                 Self::BottomUpCheckPeriod(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::BottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::BottomUpMessages(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::BottomUpCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::BottomUpNonce(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CrossMsgFee(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExecutableQueue(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetAppliedTopDownNonce(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::GetBottomUpRetentionHeight(element) => ::core::fmt::Display::fmt(element, f),
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::GetCheckpointCurrentWeight(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetCheckpointInfo(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetCurrentConfigurationNumber(element) => {
@@ -2845,10 +2930,13 @@ pub mod gateway_getter_facet {
                 Self::GetCurrentMembership(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetCurrentTotalWeight(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetGenesisEpoch(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::GetIncompleteCheckpointHeights(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::GetIncompleteCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::GetLastConfigurationNumber(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetLastMembership(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetLastTotalWeight(element) => ::core::fmt::Display::fmt(element, f),
@@ -2914,11 +3002,14 @@ pub mod gateway_getter_facet {
             Self::GetAppliedTopDownNonce(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<GetBottomUpRetentionHeightCall> for GatewayGetterFacetCalls {
         fn from(value: GetBottomUpRetentionHeightCall) -> Self {
             Self::GetBottomUpRetentionHeight(value)
         }
     }
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     impl ::core::convert::From<GetCheckpointCurrentWeightCall> for GatewayGetterFacetCalls {
         fn from(value: GetCheckpointCurrentWeightCall) -> Self {
             Self::GetCheckpointCurrentWeight(value)
@@ -2949,6 +3040,7 @@ pub mod gateway_getter_facet {
             Self::GetGenesisEpoch(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<GetIncompleteCheckpointHeightsCall> for GatewayGetterFacetCalls {
         fn from(value: GetIncompleteCheckpointHeightsCall) -> Self {
             Self::GetIncompleteCheckpointHeights(value)
@@ -2959,6 +3051,8 @@ pub mod gateway_getter_facet {
             Self::GetIncompleteCheckpoints(value)
         }
     }
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     impl ::core::convert::From<GetLastConfigurationNumberCall> for GatewayGetterFacetCalls {
         fn from(value: GetLastConfigurationNumberCall) -> Self {
             Self::GetLastConfigurationNumber(value)
@@ -3155,6 +3249,7 @@ pub mod gateway_getter_facet {
         Hash,
     )]
     pub struct GetAppliedTopDownNonceReturn(pub bool, pub u64);
+<<<<<<< HEAD
     ///Container type for all return fields from the `getBottomUpRetentionHeight` function with signature `getBottomUpRetentionHeight()` and selector `0x3e37cfa2`
     #[derive(
         Clone,
@@ -3167,6 +3262,8 @@ pub mod gateway_getter_facet {
         Hash,
     )]
     pub struct GetBottomUpRetentionHeightReturn(pub u64);
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     ///Container type for all return fields from the `getCheckpointCurrentWeight` function with signature `getCheckpointCurrentWeight(uint64)` and selector `0xf7ceaf76`
     #[derive(
         Clone,
@@ -3239,6 +3336,7 @@ pub mod gateway_getter_facet {
         Hash,
     )]
     pub struct GetGenesisEpochReturn(pub u64);
+<<<<<<< HEAD
     ///Container type for all return fields from the `getIncompleteCheckpointHeights` function with signature `getIncompleteCheckpointHeights()` and selector `0xa517218f`
     #[derive(
         Clone,
@@ -3265,6 +3363,8 @@ pub mod gateway_getter_facet {
         Hash,
     )]
     pub struct GetIncompleteCheckpointsReturn(pub ::std::vec::Vec<BottomUpCheckpoint>);
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     ///Container type for all return fields from the `getLastConfigurationNumber` function with signature `getLastConfigurationNumber()` and selector `0xb1ba49b0`
     #[derive(
         Clone,
@@ -3510,7 +3610,11 @@ pub mod gateway_getter_facet {
         Hash,
     )]
     pub struct TotalSubnetsReturn(pub u64);
+<<<<<<< HEAD
     ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
+=======
+    ///`BottomUpCheckpoint((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes)`
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,

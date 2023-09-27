@@ -1160,7 +1160,11 @@ pub mod subnet_actor_getter_facet {
             &self,
             from_epoch: u64,
             to_epoch: u64,
+<<<<<<< HEAD
         ) -> ::ethers::contract::builders::ContractCall<M, ::std::vec::Vec<BottomUpCheckpointLegacy>>
+=======
+        ) -> ::ethers::contract::builders::ContractCall<M, ::std::vec::Vec<BottomUpCheckpoint>>
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         {
             self.0
                 .method_hash([172, 156, 42, 111], (from_epoch, to_epoch))

@@ -47,6 +47,9 @@ pub mod gateway_diamond {
                                     ),
                                 ),
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                             ],),
                             ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                             ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
@@ -54,6 +57,7 @@ pub mod gateway_diamond {
                             ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                             ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
                         ],),
+<<<<<<< HEAD
 =======
                                 ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                 ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
@@ -63,6 +67,8 @@ pub mod gateway_diamond {
                             ],
                         ),
 >>>>>>> 32e65e5 (binding update)
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                         internal_type: ::core::option::Option::Some(
                             ::std::borrow::ToOwned::to_owned(
                                 "struct GatewayDiamond.ConstructorParams",
@@ -155,6 +161,16 @@ pub mod gateway_diamond {
                             },
                         ],
                     },],
+<<<<<<< HEAD
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                    ::std::vec![::ethers::core::abi::ethabi::AbiError {
+                        name: ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                        inputs: ::std::vec![],
+                    },],
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
@@ -164,20 +180,12 @@ pub mod gateway_diamond {
                     },],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("InvalidMajorityPercentage"),
                     ::std::vec![::ethers::core::abi::ethabi::AbiError {
                         name: ::std::borrow::ToOwned::to_owned("InvalidMajorityPercentage",),
                         inputs: ::std::vec![],
                     },],
+<<<<<<< HEAD
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod"),
@@ -185,17 +193,15 @@ pub mod gateway_diamond {
                         name: ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod",),
                         inputs: ::std::vec![],
                     },],
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "InvalidSubmissionPeriod",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
+                    ::std::vec![::ethers::core::abi::ethabi::AbiError {
+                        name: ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod",),
+                        inputs: ::std::vec![],
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("NoBytecodeAtAddress"),
@@ -242,10 +248,14 @@ pub mod gateway_diamond {
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
 <<<<<<< HEAD
+<<<<<<< HEAD
     const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x87W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[`$\x90`@Q\x90c\n\x82\xDDs`\xE3\x1B\x82R`\x04\x82\x01R\xFD[`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`\xE9WP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[c\n\x82\xDDs`\xE3\x1B`\x80R`\x84R`$`\x80\xFD\xFE\xA2dipfsX\"\x12 F\x92\xAC\xD5\xD1w|\xA3\x8D\x19K)\xDD\x8Br\xA4#M\xA5\xE8\x19\x11\xC5\"\xCF\xD1\x11\x9E\"\x04\xCA@dsolcC\0\x08\x13\x003";
 =======
     const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x87W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[`$\x90`@Q\x90c\n\x82\xDDs`\xE3\x1B\x82R`\x04\x82\x01R\xFD[`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`\xE9WP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[c\n\x82\xDDs`\xE3\x1B`\x80R`\x84R`$`\x80\xFD\xFE\xA2dipfsX\"\x12 ,\xAFUt\xA3\xC0\xF8\xE3;>\xE0\x9B\xC13\xF3\xFCFK(2\xB0\xF1^m\x863P\x8C\x18\xC8!sdsolcC\0\x08\x13\x003";
 >>>>>>> 32e65e5 (binding update)
+=======
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6`\x10W`\x0E`\x13V[\0[`\x0E[`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x81R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` \x81\x90R`@\x90\x91 T\x81\x90`\x01`\x01`\xA0\x1B\x03\x16\x80`\x89W`@Qc\n\x82\xDDs`\xE3\x1B\x81R`\x01`\x01`\xE0\x1B\x03\x19`\x005\x16`\x04\x82\x01R`$\x01`@Q\x80\x91\x03\x90\xFD[6`\0\x807`\0\x806`\0\x84Z\xF4=`\0\x80>\x80\x80\x15`\xA7W=`\0\xF3[=`\0\xFD\xFE\xA2dipfsX\"\x12 \x87w\xF4>\xD2\x10\x07\xA2I\x8E\x01yD\x91\xB3\xC4\xDCxH\x96\x8B\xD3f[\x1A\xA8\xE4\x03\xD51)\xE8dsolcC\0\x08\x13\x003";
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     /// The deployed bytecode of the contract.
     pub static GATEWAYDIAMOND_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
@@ -281,11 +291,15 @@ pub mod gateway_diamond {
             client: ::std::sync::Arc<M>,
         ) -> Self {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
             Self(::ethers::contract::Contract::new(
                 address.into(),
                 GATEWAYDIAMOND_ABI.clone(),
                 client,
             ))
+<<<<<<< HEAD
 =======
             Self(
                 ::ethers::contract::Contract::new(
@@ -295,6 +309,8 @@ pub mod gateway_diamond {
                 ),
             )
 >>>>>>> 32e65e5 (binding update)
+=======
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
@@ -402,10 +418,14 @@ pub mod gateway_diamond {
         PartialEq,
         Eq,
 <<<<<<< HEAD
+<<<<<<< HEAD
         Hash,
 =======
         Hash
 >>>>>>> 32e65e5 (binding update)
+=======
+        Hash,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     )]
     #[etherror(name = "InvalidCollateral", abi = "InvalidCollateral()")]
     pub struct InvalidCollateral;
@@ -435,10 +455,14 @@ pub mod gateway_diamond {
         PartialEq,
         Eq,
 <<<<<<< HEAD
+<<<<<<< HEAD
         Hash,
 =======
         Hash
 >>>>>>> 32e65e5 (binding update)
+=======
+        Hash,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     )]
     #[etherror(name = "InvalidSubmissionPeriod", abi = "InvalidSubmissionPeriod()")]
     pub struct InvalidSubmissionPeriod;
@@ -531,6 +555,7 @@ pub mod gateway_diamond {
                 return Ok(Self::InitializationFunctionReverted(decoded));
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
             if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::InvalidCollateral(decoded));
@@ -552,22 +577,32 @@ pub mod gateway_diamond {
             if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
+=======
+            if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 return Ok(Self::InvalidCollateral(decoded));
             }
-            if let Ok(decoded) = <InvalidMajorityPercentage as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <InvalidMajorityPercentage as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::InvalidMajorityPercentage(decoded));
             }
-            if let Ok(decoded) = <InvalidSubmissionPeriod as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <InvalidSubmissionPeriod as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::InvalidSubmissionPeriod(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <NoBytecodeAtAddress as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
 >>>>>>> 32e65e5 (binding update)
+=======
+            if let Ok(decoded) =
+                <NoBytecodeAtAddress as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 return Ok(Self::NoBytecodeAtAddress(decoded));
             }
             if let Ok(decoded) =
@@ -595,12 +630,16 @@ pub mod gateway_diamond {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
 <<<<<<< HEAD
+<<<<<<< HEAD
                 Self::InvalidCollateral(element) => ::ethers::core::abi::AbiEncode::encode(element),
 =======
                 Self::InvalidCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
 >>>>>>> 32e65e5 (binding update)
+=======
+                Self::InvalidCollateral(element) => ::ethers::core::abi::AbiEncode::encode(element),
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::InvalidMajorityPercentage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -681,6 +720,7 @@ pub mod gateway_diamond {
                 }
                 Self::InvalidCollateral(element) => ::core::fmt::Display::fmt(element, f),
 <<<<<<< HEAD
+<<<<<<< HEAD
                 Self::InvalidMajorityPercentage(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidSubmissionPeriod(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NoBytecodeAtAddress(element) => ::core::fmt::Display::fmt(element, f),
@@ -695,6 +735,11 @@ pub mod gateway_diamond {
                     ::core::fmt::Display::fmt(element, f)
                 }
 >>>>>>> 32e65e5 (binding update)
+=======
+                Self::InvalidMajorityPercentage(element) => ::core::fmt::Display::fmt(element, f),
+                Self::InvalidSubmissionPeriod(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NoBytecodeAtAddress(element) => ::core::fmt::Display::fmt(element, f),
+>>>>>>> fa018d6 (Adding min priority queue (#209))
                 Self::NoSelectorsProvidedForFacetForCut(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }

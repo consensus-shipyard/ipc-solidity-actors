@@ -3,6 +3,7 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "astId": 10183,
 =======
       "astId": 9608,
@@ -10,10 +11,14 @@
 =======
       "astId": 10098,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "astId": 10106,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
       "label": "s",
       "offset": 0,
       "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "type": "t_struct(GatewayActorStorage)10171_storage"
@@ -23,6 +28,9 @@
 =======
       "type": "t_struct(GatewayActorStorage)10086_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "type": "t_struct(GatewayActorStorage)10094_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     }
   ],
   "types": {
@@ -45,6 +53,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_array(t_struct(ChildCheck)11867_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11867_storage",
 =======
@@ -55,10 +64,15 @@
     "t_array(t_struct(ChildCheck)11795_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11795_storage",
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_array(t_struct(ChildCheck)13943_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)13943_storage",
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_array(t_struct(CrossMsg)11873_storage)dyn_storage": {
@@ -71,10 +85,15 @@
     "t_array(t_struct(CrossMsg)11801_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)11801_storage",
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_array(t_struct(CrossMsg)13949_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)13949_storage",
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_array(t_struct(Validator)12032_storage)dyn_storage": {
@@ -87,6 +106,10 @@
     "t_array(t_struct(Validator)11980_storage)dyn_storage": {
       "base": "t_struct(Validator)11980_storage",
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_array(t_struct(Validator)14180_storage)dyn_storage": {
+      "base": "t_struct(Validator)14180_storage",
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "dynamic_array",
       "label": "struct Validator[]",
       "numberOfBytes": "32"
@@ -156,6 +179,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11873_storage)dyn_storage))": {
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11747_storage)dyn_storage))": {
@@ -163,10 +187,14 @@
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11801_storage)dyn_storage))": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13949_storage)dyn_storage))": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => mapping(uint256 => struct CrossMsg[]))",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)11873_storage)dyn_storage)"
@@ -182,10 +210,16 @@
     },
     "t_mapping(t_bytes32,t_struct(CrossMsg)11801_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13949_storage)dyn_storage)"
+    },
+    "t_mapping(t_bytes32,t_struct(CrossMsg)13949_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct CrossMsg)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(CrossMsg)11873_storage"
@@ -201,10 +235,16 @@
     },
     "t_mapping(t_bytes32,t_struct(Subnet)11946_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_struct(CrossMsg)13949_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(Subnet)14074_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct Subnet)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(Subnet)11998_storage"
@@ -220,10 +260,16 @@
     },
     "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)11788_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_struct(Subnet)14074_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)13936_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct TopDownCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(TopDownCheckpoint)11860_storage"
@@ -233,6 +279,9 @@
 =======
       "value": "t_struct(TopDownCheckpoint)11788_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_struct(TopDownCheckpoint)13936_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -243,6 +292,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)11873_storage)dyn_storage)": {
 =======
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)11747_storage)dyn_storage)": {
@@ -250,10 +300,14 @@
 =======
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)11801_storage)dyn_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13949_storage)dyn_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct CrossMsg[])",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_array(t_struct(CrossMsg)11873_storage)dyn_storage"
@@ -263,6 +317,9 @@
 =======
       "value": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_array(t_struct(CrossMsg)13949_storage)dyn_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -280,6 +337,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint256,t_struct(ParentFinality)11800_storage)": {
 =======
     "t_mapping(t_uint256,t_struct(ParentFinality)11674_storage)": {
@@ -287,10 +345,14 @@
 =======
     "t_mapping(t_uint256,t_struct(ParentFinality)11728_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_mapping(t_uint256,t_struct(ParentFinality)13876_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct ParentFinality)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(ParentFinality)11800_storage"
@@ -300,6 +362,9 @@
 =======
       "value": "t_struct(ParentFinality)11728_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_struct(ParentFinality)13876_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     },
     "t_mapping(t_uint64,t_array(t_struct(CrossMsg)11873_storage)dyn_storage)": {
       "encoding": "mapping",
@@ -331,6 +396,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(AddressSet)3420_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
@@ -345,10 +411,14 @@
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13896_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(BottomUpCheckpoint)11837_storage"
@@ -359,24 +429,32 @@
 =======
       "value": "t_struct(BottomUpCheckpoint)11748_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13896_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
     },
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)11765_storage)": {
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)13913_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointNew)",
       "numberOfBytes": "32",
-      "value": "t_struct(BottomUpCheckpointNew)11765_storage"
+      "value": "t_struct(BottomUpCheckpointNew)13913_storage"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(CheckpointInfo)11727_storage)": {
 >>>>>>> 7748a92 (interface)
 =======
     "t_mapping(t_uint64,t_struct(CheckpointInfo)11781_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_mapping(t_uint64,t_struct(CheckpointInfo)13929_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CheckpointInfo)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(CheckpointInfo)11853_storage"
@@ -392,10 +470,16 @@
     },
     "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)11849_storage)": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_struct(CheckpointInfo)13929_storage"
+    },
+    "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)13997_storage)": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteTopDownSubmission)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(EpochVoteTopDownSubmission)11921_storage"
@@ -426,10 +510,16 @@
     },
     "t_struct(BottomUpCheckpoint)11748_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+      "value": "t_struct(EpochVoteTopDownSubmission)13997_storage"
+    },
+    "t_struct(BottomUpCheckpoint)13896_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11824,
@@ -438,14 +528,17 @@
 =======
           "astId": 11731,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13879,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(SubnetID)11906_storage"
+          "type": "t_struct(SubnetID)14054_storage"
         },
         {
-          "astId": 11733,
+          "astId": 13881,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "epoch",
           "offset": 0,
@@ -453,7 +546,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 11735,
+          "astId": 13883,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "fee",
           "offset": 0,
@@ -461,23 +554,23 @@
           "type": "t_uint256"
         },
         {
-          "astId": 11739,
+          "astId": 13887,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
-          "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
+          "type": "t_array(t_struct(CrossMsg)13949_storage)dyn_storage"
         },
         {
-          "astId": 11743,
+          "astId": 13891,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "children",
           "offset": 0,
           "slot": "5",
-          "type": "t_array(t_struct(ChildCheck)11795_storage)dyn_storage"
+          "type": "t_array(t_struct(ChildCheck)13943_storage)dyn_storage"
         },
         {
-          "astId": 11745,
+          "astId": 13893,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "prevHash",
           "offset": 0,
@@ -485,7 +578,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 11747,
+          "astId": 13895,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "proof",
           "offset": 0,
@@ -495,21 +588,26 @@
       ],
       "numberOfBytes": "256"
     },
-    "t_struct(BottomUpCheckpointNew)11765_storage": {
+    "t_struct(BottomUpCheckpointNew)13913_storage": {
       "encoding": "inplace",
       "label": "struct BottomUpCheckpointNew",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11698,
 >>>>>>> 7748a92 (interface)
 =======
           "astId": 11752,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13900,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)11978_storage"
@@ -528,6 +626,12 @@
         {
           "astId": 11755,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(SubnetID)14054_storage"
+        },
+        {
+          "astId": 13903,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHeight",
           "offset": 0,
@@ -537,6 +641,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11830,
 =======
           "astId": 11704,
@@ -544,6 +649,9 @@
 =======
           "astId": 11758,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13906,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -553,6 +661,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11833,
 =======
           "astId": 11707,
@@ -560,6 +669,9 @@
 =======
           "astId": 11761,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13909,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -569,6 +681,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11836,
 =======
           "astId": 11710,
@@ -576,6 +689,9 @@
 =======
           "astId": 11764,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13912,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -585,6 +701,7 @@
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(BottomUpCheckpointLegacy)11820_storage": {
@@ -657,10 +774,14 @@
 =======
     "t_struct(CheckpointInfo)11781_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(CheckpointInfo)13929_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct CheckpointInfo",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11840,
@@ -670,6 +791,9 @@
 =======
           "astId": 11768,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13916,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "hash",
           "offset": 0,
@@ -679,6 +803,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11843,
 =======
           "astId": 11717,
@@ -686,6 +811,9 @@
 =======
           "astId": 11771,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13919,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rootHash",
           "offset": 0,
@@ -695,6 +823,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11846,
 =======
           "astId": 11720,
@@ -702,6 +831,9 @@
 =======
           "astId": 11774,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13922,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "threshold",
           "offset": 0,
@@ -711,6 +843,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11849,
 =======
           "astId": 11723,
@@ -718,6 +851,9 @@
 =======
           "astId": 11777,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13925,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentWeight",
           "offset": 0,
@@ -727,6 +863,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11852,
 =======
           "astId": 11726,
@@ -734,6 +871,9 @@
 =======
           "astId": 11780,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13928,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "reached",
           "offset": 0,
@@ -745,6 +885,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(ChildCheck)11867_storage": {
 =======
     "t_struct(ChildCheck)11741_storage": {
@@ -752,10 +893,14 @@
 =======
     "t_struct(ChildCheck)11795_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(ChildCheck)13943_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11863,
@@ -765,10 +910,14 @@
 =======
           "astId": 11791,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13939,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)11978_storage"
@@ -787,6 +936,12 @@
         {
           "astId": 11794,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(SubnetID)14054_storage"
+        },
+        {
+          "astId": 13942,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "checks",
           "offset": 0,
@@ -798,6 +953,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(CrossMsg)11873_storage": {
 =======
     "t_struct(CrossMsg)11747_storage": {
@@ -805,10 +961,14 @@
 =======
     "t_struct(CrossMsg)11801_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(CrossMsg)13949_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11870,
@@ -818,10 +978,14 @@
 =======
           "astId": 11798,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13946,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(StorableMsg)11888_storage"
@@ -840,6 +1004,12 @@
         {
           "astId": 11800,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(StorableMsg)13964_storage"
+        },
+        {
+          "astId": 13948,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "wrapped",
           "offset": 0,
@@ -851,6 +1021,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(EpochVoteSubmission)11912_storage": {
 =======
     "t_struct(EpochVoteSubmission)11786_storage": {
@@ -858,10 +1029,14 @@
 =======
     "t_struct(EpochVoteSubmission)11840_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(EpochVoteSubmission)13988_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11895,
@@ -871,6 +1046,9 @@
 =======
           "astId": 11823,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13971,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -880,6 +1058,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11897,
 =======
           "astId": 11771,
@@ -887,6 +1066,9 @@
 =======
           "astId": 11825,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13973,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -896,6 +1078,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11899,
 =======
           "astId": 11773,
@@ -903,6 +1086,9 @@
 =======
           "astId": 11827,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13975,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -912,6 +1098,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11905,
 =======
           "astId": 11779,
@@ -919,6 +1106,9 @@
 =======
           "astId": 11833,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13981,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "submitters",
           "offset": 0,
@@ -928,6 +1118,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11911,
 =======
           "astId": 11785,
@@ -935,6 +1126,9 @@
 =======
           "astId": 11839,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13987,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "submissionWeights",
           "offset": 0,
@@ -946,6 +1140,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(EpochVoteTopDownSubmission)11921_storage": {
 =======
     "t_struct(EpochVoteTopDownSubmission)11795_storage": {
@@ -953,10 +1148,14 @@
 =======
     "t_struct(EpochVoteTopDownSubmission)11849_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(EpochVoteTopDownSubmission)13997_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct EpochVoteTopDownSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11915,
@@ -966,10 +1165,14 @@
 =======
           "astId": 11843,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13991,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "vote",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(EpochVoteSubmission)11912_storage"
@@ -988,10 +1191,17 @@
         {
           "astId": 11848,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(EpochVoteSubmission)13988_storage"
+        },
+        {
+          "astId": 13996,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)11860_storage)"
@@ -1001,10 +1211,14 @@
 =======
           "type": "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)11788_storage)"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)13936_storage)"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         }
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(FvmAddress)11952_storage": {
@@ -1014,10 +1228,14 @@
 =======
     "t_struct(FvmAddress)11880_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(FvmAddress)14028_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11949,
@@ -1027,6 +1245,9 @@
 =======
           "astId": 11877,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14025,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addrType",
           "offset": 0,
@@ -1036,6 +1257,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11951,
 =======
           "astId": 11825,
@@ -1043,6 +1265,9 @@
 =======
           "astId": 11879,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14027,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "payload",
           "offset": 0,
@@ -1054,6 +1279,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(GatewayActorStorage)10171_storage": {
 =======
     "t_struct(GatewayActorStorage)9596_storage": {
@@ -1061,10 +1287,14 @@
 =======
     "t_struct(GatewayActorStorage)10086_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(GatewayActorStorage)10094_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct GatewayActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 10041,
@@ -1074,10 +1304,14 @@
 =======
           "astId": 9964,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 9972,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnets",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_struct(Subnet)11998_storage)"
@@ -1096,10 +1330,17 @@
         {
           "astId": 9973,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(Subnet)14074_storage)"
+        },
+        {
+          "astId": 9981,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11873_storage)dyn_storage))"
@@ -1118,10 +1359,17 @@
         {
           "astId": 9979,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13949_storage)dyn_storage))"
+        },
+        {
+          "astId": 9987,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "finalitiesMap",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint256,t_struct(ParentFinality)11800_storage)"
@@ -1140,6 +1388,12 @@
         {
           "astId": 9982,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13876_storage)"
+        },
+        {
+          "astId": 9990,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "latestParentHeight",
           "offset": 0,
@@ -1149,6 +1403,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10065,
 =======
           "astId": 9498,
@@ -1156,10 +1411,14 @@
 =======
           "astId": 9988,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 9996,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "postbox",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_struct(CrossMsg)11873_storage)"
@@ -1178,6 +1437,12 @@
         {
           "astId": 9995,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)13949_storage)"
+        },
+        {
+          "astId": 10003,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validatorSetWeights",
           "offset": 0,
@@ -1187,6 +1452,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10076,
 =======
           "astId": 9509,
@@ -1194,10 +1460,14 @@
 =======
           "astId": 9999,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10007,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentMembership",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(Membership)12041_storage"
@@ -1216,10 +1486,17 @@
         {
           "astId": 10003,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(Membership)14189_storage"
+        },
+        {
+          "astId": 10011,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "lastMembership",
           "offset": 0,
           "slot": "9",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(Membership)12041_storage"
@@ -1271,38 +1548,45 @@
 =======
           "type": "t_struct(Membership)11989_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(Membership)14189_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         },
         {
-          "astId": 10008,
+          "astId": 10016,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointsLegacy",
           "offset": 0,
           "slot": "12",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13896_storage)"
         },
         {
-          "astId": 10014,
+          "astId": 10022,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpoints",
           "offset": 0,
           "slot": "13",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)11765_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)13913_storage)"
         },
         {
-          "astId": 10020,
+          "astId": 10028,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointInfo",
           "offset": 0,
           "slot": "14",
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)11781_storage)"
+          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13929_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 9537,
 >>>>>>> 7748a92 (interface)
 =======
           "astId": 10027,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10035,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCollectedSignatures",
           "offset": 0,
@@ -1312,6 +1596,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10121,
 =======
           "astId": 9546,
@@ -1319,6 +1604,9 @@
 =======
           "astId": 10036,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10044,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "children",
           "offset": 0,
@@ -1328,6 +1616,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10130,
 =======
           "astId": 9555,
@@ -1335,6 +1624,9 @@
 =======
           "astId": 10045,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10053,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "checks",
           "offset": 0,
@@ -1342,6 +1634,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_mapping(t_bytes32,t_bool)))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 10136,
@@ -1358,19 +1651,26 @@
 =======
           "astId": 10051,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10059,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "18",
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)11849_storage)"
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)13997_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 9565,
 >>>>>>> 7748a92 (interface)
 =======
           "astId": 10055,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10063,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetKeys",
           "offset": 0,
@@ -1378,6 +1678,7 @@
           "type": "t_array(t_bytes32)dyn_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 10144,
@@ -1394,19 +1695,26 @@
 =======
           "astId": 10059,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10067,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "networkName",
           "offset": 0,
           "slot": "20",
-          "type": "t_struct(SubnetID)11906_storage"
+          "type": "t_struct(SubnetID)14054_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 9572,
 >>>>>>> 7748a92 (interface)
 =======
           "astId": 10062,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10070,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "minStake",
           "offset": 0,
@@ -1416,6 +1724,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10150,
 =======
           "astId": 9575,
@@ -1423,6 +1732,9 @@
 =======
           "astId": 10065,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10073,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMsgFee",
           "offset": 0,
@@ -1432,6 +1744,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10153,
 =======
           "astId": 9578,
@@ -1439,6 +1752,9 @@
 =======
           "astId": 10068,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10076,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "majorityPercentage",
           "offset": 0,
@@ -1448,6 +1764,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10156,
 =======
           "astId": 9581,
@@ -1455,6 +1772,9 @@
 =======
           "astId": 10071,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10079,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpNonce",
           "offset": 1,
@@ -1464,6 +1784,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10159,
 =======
           "astId": 9584,
@@ -1471,6 +1792,9 @@
 =======
           "astId": 10074,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10082,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedTopDownNonce",
           "offset": 9,
@@ -1480,6 +1804,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10162,
 =======
           "astId": 9587,
@@ -1487,6 +1812,9 @@
 =======
           "astId": 10077,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10085,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownCheckPeriod",
           "offset": 17,
@@ -1496,6 +1824,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10165,
 =======
           "astId": 9590,
@@ -1503,6 +1832,9 @@
 =======
           "astId": 10080,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10088,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalSubnets",
           "offset": 0,
@@ -1512,6 +1844,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10167,
 =======
           "astId": 9592,
@@ -1519,6 +1852,9 @@
 =======
           "astId": 10082,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10090,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckPeriod",
           "offset": 8,
@@ -1528,6 +1864,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 10170,
 =======
           "astId": 9595,
@@ -1535,6 +1872,9 @@
 =======
           "astId": 10085,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 10093,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "initialized",
           "offset": 16,
@@ -1546,6 +1886,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(IPCAddress)12005_storage": {
 =======
     "t_struct(IPCAddress)11946_storage": {
@@ -1553,10 +1894,14 @@
 =======
     "t_struct(IPCAddress)11953_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(IPCAddress)14153_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 12001,
@@ -1566,10 +1911,14 @@
 =======
           "astId": 11949,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14149,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)11978_storage"
@@ -1588,10 +1937,17 @@
         {
           "astId": 11952,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(SubnetID)14054_storage"
+        },
+        {
+          "astId": 14152,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(FvmAddress)11952_storage"
@@ -1601,10 +1957,14 @@
 =======
           "type": "t_struct(FvmAddress)11880_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(FvmAddress)14028_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         }
       ],
       "numberOfBytes": "128"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(Membership)12041_storage": {
@@ -1614,10 +1974,14 @@
 =======
     "t_struct(Membership)11989_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(Membership)14189_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct Membership",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 12036,
@@ -1627,10 +1991,14 @@
 =======
           "astId": 11984,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14184,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validators",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_array(t_struct(Validator)12032_storage)dyn_storage"
@@ -1649,6 +2017,12 @@
         {
           "astId": 11986,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_array(t_struct(Validator)14180_storage)dyn_storage"
+        },
+        {
+          "astId": 14186,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "configurationNumber",
           "offset": 0,
@@ -1658,6 +2032,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 12040,
 =======
           "astId": 11981,
@@ -1665,6 +2040,9 @@
 =======
           "astId": 11988,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14188,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalWeight",
           "offset": 0,
@@ -1676,6 +2054,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(ParentFinality)11800_storage": {
 =======
     "t_struct(ParentFinality)11674_storage": {
@@ -1683,10 +2062,14 @@
 =======
     "t_struct(ParentFinality)11728_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(ParentFinality)13876_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct ParentFinality",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11797,
@@ -1696,6 +2079,9 @@
 =======
           "astId": 11725,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13873,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "height",
           "offset": 0,
@@ -1705,6 +2091,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11799,
 =======
           "astId": 11673,
@@ -1712,6 +2099,9 @@
 =======
           "astId": 11727,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13875,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -1721,6 +2111,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(Set)3105_storage": {
@@ -1753,10 +2144,14 @@
 =======
     "t_struct(StorableMsg)11816_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(StorableMsg)13964_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11876,
@@ -1766,10 +2161,14 @@
 =======
           "astId": 11804,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13952,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(IPCAddress)12005_storage"
@@ -1788,10 +2187,17 @@
         {
           "astId": 11807,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(IPCAddress)14153_storage"
+        },
+        {
+          "astId": 13955,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(IPCAddress)12005_storage"
@@ -1810,6 +2216,12 @@
         {
           "astId": 11809,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(IPCAddress)14153_storage"
+        },
+        {
+          "astId": 13957,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "value",
           "offset": 0,
@@ -1819,6 +2231,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11883,
 =======
           "astId": 11757,
@@ -1826,6 +2239,9 @@
 =======
           "astId": 11811,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13959,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -1835,6 +2251,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11885,
 =======
           "astId": 11759,
@@ -1842,6 +2259,9 @@
 =======
           "astId": 11813,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13961,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "method",
           "offset": 8,
@@ -1851,6 +2271,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11887,
 =======
           "astId": 11761,
@@ -1858,6 +2279,9 @@
 =======
           "astId": 11815,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13963,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "params",
           "offset": 0,
@@ -1869,6 +2293,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(Subnet)11998_storage": {
 =======
     "t_struct(Subnet)11872_storage": {
@@ -1876,10 +2301,14 @@
 =======
     "t_struct(Subnet)11946_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(Subnet)14074_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct Subnet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11980,
@@ -1889,6 +2318,9 @@
 =======
           "astId": 11928,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14056,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "stake",
           "offset": 0,
@@ -1898,6 +2330,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11982,
 =======
           "astId": 11856,
@@ -1905,6 +2338,9 @@
 =======
           "astId": 11930,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14058,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "genesisEpoch",
           "offset": 0,
@@ -1914,6 +2350,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11984,
 =======
           "astId": 11858,
@@ -1921,6 +2358,9 @@
 =======
           "astId": 11932,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14060,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "circSupply",
           "offset": 0,
@@ -1930,6 +2370,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11986,
 =======
           "astId": 11860,
@@ -1937,6 +2378,9 @@
 =======
           "astId": 11934,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14062,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownNonce",
           "offset": 0,
@@ -1946,6 +2390,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11988,
 =======
           "astId": 11862,
@@ -1953,6 +2398,9 @@
 =======
           "astId": 11936,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14064,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedBottomUpNonce",
           "offset": 8,
@@ -1962,6 +2410,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11991,
 =======
           "astId": 11865,
@@ -1969,6 +2418,9 @@
 =======
           "astId": 11939,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14067,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "status",
           "offset": 16,
@@ -1986,12 +2438,17 @@
           "type": "t_enum(Status)4998"
         },
         {
+<<<<<<< HEAD
           "astId": 11942,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14070,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "id",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)11978_storage"
@@ -2010,10 +2467,17 @@
         {
           "astId": 11945,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(SubnetID)14054_storage"
+        },
+        {
+          "astId": 14073,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "prevCheckpoint",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(BottomUpCheckpointLegacy)11820_storage"
@@ -2023,10 +2487,14 @@
 =======
           "type": "t_struct(BottomUpCheckpoint)11748_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(BottomUpCheckpoint)13896_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         }
       ],
       "numberOfBytes": "448"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(SubnetID)11978_storage": {
@@ -2036,10 +2504,14 @@
 =======
     "t_struct(SubnetID)11906_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(SubnetID)14054_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11973,
@@ -2049,6 +2521,9 @@
 =======
           "astId": 11901,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14049,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "root",
           "offset": 0,
@@ -2058,6 +2533,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11977,
 =======
           "astId": 11851,
@@ -2065,6 +2541,9 @@
 =======
           "astId": 11905,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14053,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "route",
           "offset": 0,
@@ -2076,6 +2555,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(TopDownCheckpoint)11860_storage": {
 =======
     "t_struct(TopDownCheckpoint)11734_storage": {
@@ -2083,10 +2563,14 @@
 =======
     "t_struct(TopDownCheckpoint)11788_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(TopDownCheckpoint)13936_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct TopDownCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11855,
@@ -2096,6 +2580,9 @@
 =======
           "astId": 11783,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13931,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "epoch",
           "offset": 0,
@@ -2105,6 +2592,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11859,
 =======
           "astId": 11733,
@@ -2112,10 +2600,14 @@
 =======
           "astId": 11787,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 13935,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_array(t_struct(CrossMsg)11873_storage)dyn_storage"
@@ -2125,10 +2617,14 @@
 =======
           "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_array(t_struct(CrossMsg)13949_storage)dyn_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(UintSet)3577_storage": {
@@ -2153,10 +2649,14 @@
 =======
     "t_struct(Validator)11980_storage": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_struct(Validator)14180_storage": {
+>>>>>>> fa018d6 (Adding min priority queue (#209))
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 12028,
@@ -2166,6 +2666,9 @@
 =======
           "astId": 11976,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14176,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "weight",
           "offset": 0,
@@ -2175,6 +2678,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 12031,
 =======
           "astId": 11972,
@@ -2182,10 +2686,14 @@
 =======
           "astId": 11979,
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "astId": 14179,
+>>>>>>> fa018d6 (Adding min priority queue (#209))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addr",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(FvmAddress)11952_storage"
@@ -2195,6 +2703,9 @@
 =======
           "type": "t_struct(FvmAddress)11880_storage"
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+          "type": "t_struct(FvmAddress)14028_storage"
+>>>>>>> fa018d6 (Adding min priority queue (#209))
         }
       ],
       "numberOfBytes": "96"
