@@ -62,7 +62,7 @@ library LibAddressStakingReleases {
         self.length = length + 1;
     }
 
-    /// @notice Perform compaction on releases, i.e. aggregates the amount that can be release
+    /// @notice Perform compaction on releases, i.e. aggregates the amount that can be released
     /// @notice and removes them from storage. Returns the total amount to release and the new
     /// @notice number of pending releases after compaction.
     function compact(AddressStakingReleases storage self) internal returns (uint256, uint16) {
