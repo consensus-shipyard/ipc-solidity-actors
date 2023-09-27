@@ -56,7 +56,7 @@ library LibMinPQ {
         uint16 pos = self.inner.addressToPos[validator];
         uint16 size = self.inner.size;
 
-        self.inner.exchange(size, size);
+        self.inner.exchange(pos, size);
 
         // remove the item
         self.inner.size = size - 1;
