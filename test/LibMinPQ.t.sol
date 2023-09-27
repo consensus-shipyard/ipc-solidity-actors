@@ -18,7 +18,7 @@ contract LibMinPQTest is Test {
     function setUp() public {
         validators.activeLimit = 50000;
     }
-    
+
     function printMQ() internal view {
         uint16 size = minPQ.getSize();
         for (uint16 i = 1; i <= size; i++) {

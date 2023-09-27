@@ -38,7 +38,7 @@ library LibPQ {
         return self.addressToPos[validator] != 0;
     }
 
-    function getPosOrRevert(PQ storage self, address validator) internal view returns(uint16 pos) {
+    function getPosOrRevert(PQ storage self, address validator) internal view returns (uint16 pos) {
         pos = self.addressToPos[validator];
         if (pos == 0) {
             revert PQDoesNotContainAddress();

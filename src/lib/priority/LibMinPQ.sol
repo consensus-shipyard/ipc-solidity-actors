@@ -89,7 +89,7 @@ library LibMinPQ {
     /// NOTE that caller should ensure the queue is not empty!
     function min(MinPQ storage self, ValidatorSet storage validators) internal view returns (address, uint256) {
         self.inner.requireNotEmpty();
-        
+
         address addr = self.inner.posToAddress[1];
         uint256 collateral = validators.getConfirmedCollateral(addr);
         return (addr, collateral);

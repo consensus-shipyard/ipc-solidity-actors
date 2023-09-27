@@ -41,7 +41,7 @@ library LibMaxPQ {
     /// NOTE that caller should ensure the queue is not empty!
     function pop(MaxPQ storage self, ValidatorSet storage validators) internal {
         self.inner.requireNotEmpty();
-        
+
         uint16 size = self.inner.size;
 
         self.inner.exchange(1, size);
