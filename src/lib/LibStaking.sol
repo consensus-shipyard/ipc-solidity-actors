@@ -31,7 +31,7 @@ library LibStakingChangeSet {
         changes.nextConfigurationNumber = configurationNumber + 1;
 
         emit NewStakingRequest({
-            op: StakingOperation.Withdraw,
+            op: StakingOperation.Deposit,
             validator: validator,
             amount: amount,
             configurationNumber: configurationNumber
