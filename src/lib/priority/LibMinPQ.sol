@@ -33,7 +33,7 @@ library LibMinPQ {
         self.inner.size = size;
 
         uint256 confirmedCollateral = validators.getConfirmedCollateral(validator);
-        swim(self, validators, size, confirmedCollateral);
+        swim({self: self, validators: validators, pos: size, value: confirmedCollateral});
     }
 
     /// @notice Pop the minimal value in the priority queue.
@@ -47,7 +47,7 @@ library LibMinPQ {
         self.inner.del(size);
 
         uint256 value = self.inner.getCollateral(validators, 1);
-        sink(self, validators, 1, value);
+        sink({ self: self, validators: validators, pos: 1, value: value });
     }
 
     /// @notice Reheapify the heap when the validator is deleted.
@@ -64,11 +64,11 @@ library LibMinPQ {
 
         // swim pos up in case exchanged index is smaller
         uint256 val = self.inner.getCollateral(validators, pos);
-        swim(self, validators, pos, val);
+        swim({ self: self, validators: validators, pos: pos, value: val });
 
         // sink pos down in case updated pos is larger
         val = self.inner.getCollateral(validators, pos);
-        sink(self, validators, pos, val);
+        sink({ self: self, validators: validators, pos: pos, value: val });
     }
 
     /// @notice Reheapify the heap when the collateral of a key has increased.
@@ -76,7 +76,7 @@ library LibMinPQ {
     function increaseReheapify(MinPQ storage self, ValidatorSet storage validators, address validator) internal {
         uint16 pos = self.inner.addressToPos[validator];
         uint256 val = validators.getConfirmedCollateral(validator);
-        sink(self, validators, pos, val);
+        sink({ self: self, validators: validators, pos: pos, value: val });
     }
 
     /// @notice Reheapify the heap when the collateral of a key has decreased.
@@ -84,7 +84,7 @@ library LibMinPQ {
     function decreaseReheapify(MinPQ storage self, ValidatorSet storage validators, address validator) internal {
         uint16 pos = self.inner.addressToPos[validator];
         uint256 val = validators.getConfirmedCollateral(validator);
-        swim(self, validators, pos, val);
+        swim({ self: self, validators: validators, pos: pos, value: val });
     }
 
     /// @notice Get the minimal value in the priority queue.
@@ -125,7 +125,7 @@ library LibMinPQ {
         while (childPos <= size) {
             if (childPos < size) {
                 // select the min of the two children
-                (childPos, childCollateral) = smallerPosition(self, validators, childPos, childPos + 1);
+                (childPos, childCollateral) = smallerPosition({ self: self, validators: validators, pos1: childPos, pos2: childPos + 1 });
             } else {
                 childCollateral = self.inner.getCollateral(validators, childPos);
             }
