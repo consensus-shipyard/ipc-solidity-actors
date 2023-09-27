@@ -79,7 +79,7 @@ library LibMaxPQ {
     function increaseReheapify(MaxPQ storage self, ValidatorSet storage validators, address validator) internal {
         uint16 pos = self.inner.getPosOrRevert(validator);
         uint256 val = validators.getConfirmedCollateral(validator);
-        sink({self: self, validators: validators, pos: pos, value: val});
+        swim({self: self, validators: validators, pos: pos, value: val});
     }
 
     /// @notice Reheapify the heap when the collateral of a key has decreased.
@@ -87,7 +87,7 @@ library LibMaxPQ {
     function decreaseReheapify(MaxPQ storage self, ValidatorSet storage validators, address validator) internal {
         uint16 pos = self.inner.getPosOrRevert(validator);
         uint256 val = validators.getConfirmedCollateral(validator);
-        swim({self: self, validators: validators, pos: pos, value: val});
+        sink({self: self, validators: validators, pos: pos, value: val});
     }
 
     /// @notice Get the maximum value in the priority queue.
@@ -112,7 +112,7 @@ library LibMaxPQ {
             parentCollateral = self.inner.getConfirmedCollateral(validators, parentPos);
 
             // parent collateral is not larger than that of the current child, heap condition met.
-            if (firstValueSmaller(parentCollateral, value)) {
+            if (!firstValueSmaller(parentCollateral, value)) {
                 break;
             }
 

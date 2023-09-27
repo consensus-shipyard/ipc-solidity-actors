@@ -15,6 +15,10 @@ contract LibMaxPQTest is Test {
     MaxPQ private maxPQ;
     ValidatorSet private validators;
 
+    function setUp() public {
+        validators.activeLimit = 50000;
+    }
+
     function printMQ() internal view {
         uint16 size = maxPQ.getSize();
         for (uint16 i = 1; i <= size; i++) {
