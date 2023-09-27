@@ -309,11 +309,11 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         });
     }
 
-    /// @notice set a new retention index and garbage collect all checkpoints in range [`retentionIndex`, `newRetentionIndex`)
-    /// @dev `retentionIndex` is the number of the first incomplete checkpoints we must have to implement checkpointing
-    /// All checkpoints with a height less than `retentionIndex` may be removed from the history if needed.
-    /// @param newRetentionIndex - new retention index
-    function pruneBottomUpCheckpoints(uint64 newRetentionIndex) external systemActorOnly {
+    /// @notice Set a new checkpoint retention height and garbage collect all checkpoints in range [`retentionHeight`, `newRetentionHeight`)
+    /// @dev `retentionHeight` is the height of the first incomplete checkpointswe must keep to implement checkpointing.
+    /// All checkpoints with a height less than `retentionHeight` are removed from the history, assuming they are committed to the parent.
+    /// @param newRetentionHeight - the height of the oldest checkpoint to keep
+    function pruneBottomUpCheckpoints(uint64 newRetentionHeight) external systemActorOnly {
         uint64 oldRetentionIndex = s.bottomUpCheckpointRetentionIndex;
 
         if (newRetentionIndex <= oldRetentionIndex) {
