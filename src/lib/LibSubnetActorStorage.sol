@@ -57,7 +57,7 @@ struct SubnetActorStorage {
     /// immutable params
     ConsensusType consensus;
     // =========== Staking ===========
-    /// @notice the list of validators staked
+    /// @notice the list of validators staking
     ValidatorSet validatorSet;
     /// @notice Contains the list of changes to validator set. Configuration number is associated at each change.
     StakingChangeSet changeSet;
