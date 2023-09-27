@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {LibValidatorSet} from "../LibStaking.sol";
 import {ValidatorSet} from "../../structs/Subnet.sol";
 
-/// The implementation that mimics that in https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html.
+/// The implementation that mimics the Java impl in https://algs4.cs.princeton.edu/24pq/IndexMinPQ.java.html.
 
 /// The inner data structure for both min and max priority queue
 struct PQ {
