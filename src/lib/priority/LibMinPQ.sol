@@ -23,7 +23,7 @@ library LibMinPQ {
     }
 
     /// @notice Insert the validator address into this PQ.
-    /// NOTE that caller should ensure the valdiator is not already in the queue.
+    /// NOTE that caller should ensure the validator is not already in the queue.
     function insert(MinPQ storage self, ValidatorSet storage validators, address validator) internal {
         uint16 size = self.inner.size + 1;
 
