@@ -222,8 +222,9 @@ contract GatewayGetterFacet {
         return s.bottomUpCheckpointRetentionHeight;
     }
 
-    /// @notice get the threshold value for child subnet
-    function getChildThreshold(uint256 weight) public view returns (uint256) {
-        return LibGateway.getThreshold(weight);
+    /// @notice returns the needed weight value corresponding to the majority percentage
+    /// @dev `majority` must be a valid number
+    function weightNeeded(uint256 weight, uint256 majority) public pure returns (uint256) {
+        return LibGateway.weightNeeded(weight, majority);
     }
 }

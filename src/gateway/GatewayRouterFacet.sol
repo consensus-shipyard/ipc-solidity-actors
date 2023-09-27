@@ -292,7 +292,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert ZeroMembershipWeight();
         }
 
-        uint256 threshold = LibGateway.getThreshold(membershipWeight);
+        uint256 threshold = LibGateway.weightNeeded(membershipWeight, s.majorityPercentage);
 
         // process the checkpoint
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;

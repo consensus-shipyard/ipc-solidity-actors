@@ -1493,14 +1493,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
         require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
         require(
-            info.threshold == gwGetter.getChildThreshold(weights[0] + weights[1] + weights[2]),
+            info.threshold ==
+                gwGetter.weightNeeded(weights[0] + weights[1] + weights[2], gwGetter.majorityPercentage()),
             "checkpoint 1 correct threshold"
         );
 
         info = gwGetter.getCheckpointInfo(2);
         require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
         require(
-            info.threshold == gwGetter.getChildThreshold(weights[0] + weights[1] + weights[2]),
+            info.threshold ==
+                gwGetter.weightNeeded(weights[0] + weights[1] + weights[2], gwGetter.majorityPercentage()),
             "checkpoint 2 correct threshold"
         );
 
@@ -1598,7 +1600,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.getIncompleteCheckpointHeights().length == 1, "size is 1");
 
         info = gwGetter.getCheckpointInfo(1);
-        console.log(info.currentWeight);
 
         (v, r, s) = vm.sign(privKeys[2], keccak256(abi.encode(checkpoint)));
         signature = abi.encodePacked(r, s, v);
