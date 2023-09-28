@@ -166,8 +166,8 @@ contract LibValidatorSetTest is Test {
             validators.activeValidators.pop(validators);
         }
         (maxAddress, maxCollateral) = validators.activeValidators.min(validators);
-        require(maxAddress == address(1000), "address 1000 should be the last validator");
-        require(maxCollateral == 1000, "address 1000 collateral not 1000");
+        require(maxAddress == address(102), "address 1000 should be the last validator");
+        require(maxCollateral == 1001, "address 102 collateral not 1001");
     }
 
     /// @notice Exceeding active validator limit and there are waiting validators
@@ -183,28 +183,28 @@ contract LibValidatorSetTest is Test {
             require(validators.isActiveValidator(address(i)), "address should be active");
         }
 
-        for (uint160 i = 101; i <= 105; i++) {
+        for (uint160 i = 102; i <= 106; i++) {
             validators.confirmDeposit(address(i), 1);
             require(!validators.isActiveValidator(address(i)), "address should not be active");
         }
 
         // waiting validator makes deposit
-        validators.confirmDeposit(address(106), 1);
+        validators.confirmDeposit(address(107), 1);
 
         // ============= check expected result ==========
 
         /// check waiting validator
         require(validators.waitingValidators.getSize() == 6, "waiting validators should only have 6");
-        for (uint160 i = 101; i <= 106; i++) {
+        for (uint160 i = 102; i <= 107; i++) {
             require(!validators.isActiveValidator(address(i)), "address should not be active");
             require(validators.waitingValidators.contains(address(i)), "address should be waiting");
         }
 
-        for (uint160 i = 106; i >= 101; i--) {
+        for (uint160 i = 107; i >= 102; i--) {
             (address maxAddress, uint256 maxCollateral) = validators.waitingValidators.max(validators);
             validators.waitingValidators.pop(validators);
-            require(uint160(maxAddress) <= 106, "address too big");
-            require(uint160(maxAddress) >= 101, "address too small");
+            require(uint160(maxAddress) <= 107, "address too big");
+            require(uint160(maxAddress) >= 102, "address too small");
             require(maxCollateral == 1, "should have max collateral 2");
         }
 
@@ -239,7 +239,7 @@ contract LibValidatorSetTest is Test {
         // ============= check expected result ==========
 
         /// check waiting validator
-        require(validators.waitingValidators.getSize() == 6, "waiting validators should only have 6");
+        require(validators.waitingValidators.getSize() == 5, "waiting validators should only have 5");
         for (uint160 i = 103; i <= 107; i++) {
             require(!validators.isActiveValidator(address(i)), "address should not be active");
             require(validators.waitingValidators.contains(address(i)), "address should be waiting");
