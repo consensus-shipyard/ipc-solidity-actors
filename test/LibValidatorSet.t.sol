@@ -233,7 +233,7 @@ contract LibValidatorSetTest is Test {
             require(!validators.isActiveValidator(address(i)), "address should not be active");
         }
 
-        // waiting validator makes deposit
+        // waiting validator makes withdraw
         validators.confirmDeposit(address(107), 1);
 
         // ============= check expected result ==========
@@ -279,7 +279,6 @@ contract LibValidatorSetTest is Test {
             require(!validators.isActiveValidator(address(i)), "address should not be active");
         }
 
-        // waiting validator makes deposit
         validators.confirmWithdraw(address(107), 1);
 
         // ============= check expected result ==========
@@ -357,5 +356,91 @@ contract LibValidatorSetTest is Test {
         for (uint160 i = 3; i <= 102; i++) {
             require(validators.isActiveValidator(address(i)), "address should still be active");
         }
+    }
+
+    function test_validatorSet_activeVadalitorLeavesNoWaiting() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 1; i <= 100; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        validators.confirmWithdraw(address(1), 1);
+
+        /// check waiting validator
+        require(validators.activeValidators.getSize() == 99, "active validators should only have 99");
+        require(validators.waitingValidators.getSize() == 0, "waiting validators should only have 0");
+    }
+
+    function test_validatorSet_activeVadalitorLeavesWithWaiting() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 1; i <= 110; i++) {
+            validators.confirmDeposit(address(i), i);
+        }
+
+        validators.confirmWithdraw(address(11), 11);
+
+        require(!validators.isActiveValidator(address(11)), "address 11 should not be active");
+        require(!validators.waitingValidators.contains(address(11)), "address 11 should not be waiting");
+
+        require(validators.isActiveValidator(address(10)), "address 10 should be active");
+        require(!validators.waitingValidators.contains(address(10)), "address 10 should not be waiting");
+
+        require(validators.activeValidators.getSize() == 100, "active validators should only have 100");
+        require(validators.waitingValidators.getSize() == 9, "waiting validators should only have 9");
+
+        (address maxAddress, uint256 maxCollateral) = validators.waitingValidators.max(validators);
+        require(maxAddress == address(9), "max waiting validator should be address 9");
+        require(maxCollateral == 9, "max waiting validator collateral should be 9");
+
+        (address minAddress, uint256 minCollateral) = validators.activeValidators.min(validators);
+        require(minAddress == address(10), "min active validator should be address 10");
+        require(minCollateral == 10, "min active validator collateral should be 10");
+    }
+
+    function test_validatorSet_activeVadalitorWithdrawsWaitingTooSmall() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 3; i <= 102; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        for (uint160 i = 103; i <= 107; i++) {
+            validators.confirmDeposit(address(i), 2);
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+        }
+
+        validators.confirmWithdraw(address(11), 1);
+
+        require(validators.isActiveValidator(address(11)), "address 11 should still be active");
+    }
+
+    function test_validatorSet_activeVadalitorWithdrawsWaitingPromoted() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 3; i <= 102; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        for (uint160 i = 103; i <= 107; i++) {
+            validators.confirmDeposit(address(i), 2);
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+        }
+
+        validators.confirmWithdraw(address(11), 10);
+
+        require(!validators.isActiveValidator(address(11)), "address 11 should not be active");
+        require(validators.waitingValidators.contains(address(11)), "address 11 should be waiting");
+
+        require(validators.isActiveValidator(address(10)), "address 10 should be active");
+        require(!validators.waitingValidators.contains(address(10)), "address 10 should not be waiting");
     }
 }

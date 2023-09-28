@@ -268,13 +268,14 @@ library LibValidatorSet {
         }
 
         // the validator is an active validator!
-        
+
         if (newCollateral == 0) {
             self.activeValidators.deleteReheapify(self, validator);
             emit ActiveValidatorLeft(validator);
 
             if (self.waitingValidators.getSize() != 0) {
                 (address toBePromoted, uint256 collateral) = self.waitingValidators.max(self);
+                self.waitingValidators.pop(self);
                 self.activeValidators.insert(self, toBePromoted);
                 emit NewActiveValidator(toBePromoted, collateral);
             }
@@ -294,6 +295,7 @@ library LibValidatorSet {
             self.activeValidators.pop(self);
             self.waitingValidators.pop(self);
             self.activeValidators.insert(self, mayBePromoted);
+            self.waitingValidators.insert(self, mayBeDemoted);
 
             emit ActiveValidatorReplaced(mayBeDemoted, mayBePromoted);
             return;
