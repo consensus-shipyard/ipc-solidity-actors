@@ -43,14 +43,14 @@ contract LibValidatorSetTest is Test {
         for (uint160 i = 1; i < 100; i++) {
             validators.activeValidators.pop(validators);
         }
-    
+
         (address maxAddress, uint256 maxCollateral) = validators.activeValidators.min(validators);
         require(maxAddress == address(1), "address 1 should be the last validator");
         require(maxCollateral == 101, "address 1 collateral incorrect");
     }
 
     /// @notice Exceeding active validator limit and there is no waiting validators
-    /// Setup: 100 active validators with collateral less than 101. New validator 
+    /// Setup: 100 active validators with collateral less than 101. New validator
     ///        deposits 101.
     /// Expected: 100 active validators, max active deposit is 101. 1 waiting validator, collateral 1
     function test_validatorSet_exceedingActiveLimitNoWaiting() public {
@@ -67,19 +67,19 @@ contract LibValidatorSetTest is Test {
         require(!validators.activeValidators.contains(address(1)), "address 1 should not be active");
         require(validators.waitingValidators.contains(address(1)), "address 1 should be waiting");
         require(validators.waitingValidators.getSize() == 1, "waiting validators should only have 1");
-        
+
         // check new active validators
         for (uint160 i = 1; i < 100; i++) {
             validators.activeValidators.pop(validators);
         }
-    
+
         (address maxAddress, uint256 maxCollateral) = validators.activeValidators.min(validators);
         require(maxAddress == address(101), "address 101 should be the last validator");
         require(maxCollateral == 101, "address 101 collateral not 101");
     }
 
     /// @notice Exceeding active validator limit and there are waiting validators
-    /// Setup: 100 active validators with collateral btw 2 to 102. 5 waiting validators with collateral 1.
+    /// Setup: 100 active validators with collateral btw 2 to 101. 5 waiting validators with collateral 1.
     ///        Incoming validator is not active validator nor waiting validator with collateral 1000
     /// Expected: 100 active validators, max active deposit is 1000. 6 waiting validator, collateral 1 or 2
     function test_validatorSet_exceedingActiveLimitWithWaitingI() public {
@@ -98,8 +98,8 @@ contract LibValidatorSetTest is Test {
 
         // new validator
         validators.confirmDeposit(address(1000), 1000);
-        
-        // check expected result
+
+        // ============= check expected result ==========
 
         /// check waiting validator
         require(validators.waitingValidators.getSize() == 6, "waiting validators should only have 6");
@@ -117,5 +117,151 @@ contract LibValidatorSetTest is Test {
         (maxAddress, maxCollateral) = validators.activeValidators.min(validators);
         require(maxAddress == address(1000), "address 1000 should be the last validator");
         require(maxCollateral == 1000, "address 1000 collateral not 1000");
+    }
+
+    /// @notice Exceeding active validator limit and there are waiting validators
+    /// Setup: 100 active validators with collateral btw 2 to 101. 5 waiting validators with collateral 1.
+    ///        Incoming validator is a waiting validator with collateral 1000
+    /// Expected: 100 active validators, max active deposit is 1000. 5 waiting validator, collateral 1 or 2
+    function test_validatorSet_exceedingActiveLimitWithWaitingII() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 2; i <= 101; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        for (uint160 i = 102; i <= 106; i++) {
+            validators.confirmDeposit(address(i), 1);
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+        }
+
+        // waiting validator makes deposit
+        validators.confirmDeposit(address(102), 1000);
+
+        // ============= check expected result ==========
+
+        /// check waiting validator
+        require(validators.waitingValidators.getSize() == 5, "waiting validators should only have 5");
+        require(!validators.activeValidators.contains(address(2)), "address 2 should not be active");
+        require(validators.waitingValidators.contains(address(2)), "address 2 should be waiting");
+        require(!validators.waitingValidators.contains(address(102)), "address 102 should not be waiting");
+        require(validators.activeValidators.contains(address(102)), "address 102 should be active");
+
+        (address maxAddress, uint256 maxCollateral) = validators.waitingValidators.max(validators);
+        require(maxAddress == address(2), "address 2 should be the max collateral validtor");
+        require(maxCollateral == 2, "address 2 should have max collateral 2");
+
+        for (uint160 i = 106; i >= 103; i--) {
+            validators.waitingValidators.pop(validators);
+            (maxAddress, maxCollateral) = validators.waitingValidators.max(validators);
+            require(uint160(maxAddress) <= 106, "address too big");
+            require(uint160(maxAddress) >= 103, "address too small");
+            require(maxCollateral == 1, "should have max collateral 2");
+        }
+
+        // check new active validators
+        for (uint160 i = 1; i < 100; i++) {
+            validators.activeValidators.pop(validators);
+        }
+        (maxAddress, maxCollateral) = validators.activeValidators.min(validators);
+        require(maxAddress == address(1000), "address 1000 should be the last validator");
+        require(maxCollateral == 1000, "address 1000 collateral not 1000");
+    }
+
+    /// @notice Exceeding active validator limit and there are waiting validators
+    /// Setup: 100 active validators with collateral btw 2 to 101. 5 waiting validators with collateral 1.
+    ///        Incoming validator is not active nor waiting validator with collateral 1
+    /// Expected: 100 active validators no change. 6 waiting validator, collateral 1.
+    function test_validatorSet_exceedingActiveLimitWithWaitingIII() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 2; i <= 101; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        for (uint160 i = 101; i <= 105; i++) {
+            validators.confirmDeposit(address(i), 1);
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+        }
+
+        // waiting validator makes deposit
+        validators.confirmDeposit(address(106), 1);
+
+        // ============= check expected result ==========
+
+        /// check waiting validator
+        require(validators.waitingValidators.getSize() == 6, "waiting validators should only have 6");
+        for (uint160 i = 101; i <= 106; i++) {
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+            require(validators.waitingValidators.contains(address(i)), "address should be waiting");
+        }
+
+        for (uint160 i = 106; i >= 101; i--) {
+            (address maxAddress, uint256 maxCollateral) = validators.waitingValidators.max(validators);
+            validators.waitingValidators.pop(validators);
+            require(uint160(maxAddress) <= 106, "address too big");
+            require(uint160(maxAddress) >= 101, "address too small");
+            require(maxCollateral == 1, "should have max collateral 2");
+        }
+
+        // check active validators no change
+        require(validators.activeValidators.getSize() == 100, "active validators should only have 100");
+        for (uint160 i = 1; i <= 100; i++) {
+            require(validators.isActiveValidator(address(i)), "address should still be active");
+        }
+    }
+
+    /// @notice Exceeding active validator limit and there are waiting validators
+    /// Setup: 100 active validators with collateral btw 3 to 102. 5 waiting validators with collateral 1.
+    ///        Incoming validator is waiting validator with new collateral 2
+    /// Expected: 100 active validators no change. 5 waiting validator, collateral 1 or 2.
+    function test_validatorSet_exceedingActiveLimitWithWaitingIV() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 3; i <= 102; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        for (uint160 i = 103; i <= 107; i++) {
+            validators.confirmDeposit(address(i), 1);
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+        }
+
+        // waiting validator makes deposit
+        validators.confirmDeposit(address(107), 1);
+
+        // ============= check expected result ==========
+
+        /// check waiting validator
+        require(validators.waitingValidators.getSize() == 6, "waiting validators should only have 6");
+        for (uint160 i = 103; i <= 107; i++) {
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+            require(validators.waitingValidators.contains(address(i)), "address should be waiting");
+        }
+
+        (address maxAddress, uint256 maxCollateral) = validators.waitingValidators.max(validators);
+        require(maxAddress <= address(107), "max waiting validator should be 107");
+        require(maxCollateral == 2, "max collateral of waiting should be 2");
+
+        for (uint160 i = 106; i >= 103; i--) {
+            validators.waitingValidators.pop(validators);
+
+            (maxAddress, maxCollateral) = validators.waitingValidators.max(validators);
+            require(uint160(maxAddress) <= 106, "address too big");
+            require(uint160(maxAddress) >= 103, "address too small");
+            require(maxCollateral == 1, "should have max collateral 2");
+        }
+
+        // check active validators no change
+        require(validators.activeValidators.getSize() == 100, "active validators should only have 100");
+        for (uint160 i = 1; i <= 100; i++) {
+            require(validators.isActiveValidator(address(i)), "address should still be active");
+        }
     }
 }
