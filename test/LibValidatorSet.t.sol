@@ -210,7 +210,7 @@ contract LibValidatorSetTest is Test {
 
         // check active validators no change
         require(validators.activeValidators.getSize() == 100, "active validators should only have 100");
-        for (uint160 i = 1; i <= 100; i++) {
+        for (uint160 i = 2; i <= 101; i++) {
             require(validators.isActiveValidator(address(i)), "address should still be active");
         }
     }
@@ -260,7 +260,7 @@ contract LibValidatorSetTest is Test {
 
         // check active validators no change
         require(validators.activeValidators.getSize() == 100, "active validators should only have 100");
-        for (uint160 i = 1; i <= 100; i++) {
+        for (uint160 i = 3; i <= 102; i++) {
             require(validators.isActiveValidator(address(i)), "address should still be active");
         }
     }
