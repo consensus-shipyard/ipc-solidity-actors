@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpointLegacy, BottomUpCheckpoint, StorableMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Validator.sol";
@@ -16,7 +16,7 @@ contract GatewayGetterFacet {
     GatewayActorStorage internal s;
 
     using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for BottomUpCheckpoint;
+    using CheckpointHelper for BottomUpCheckpointLegacy;
 
     function crossMsgFee() external view returns (uint256) {
         return s.crossMsgFee;
@@ -50,9 +50,13 @@ contract GatewayGetterFacet {
         return s.networkName;
     }
 
-    // TODO: remove or add a new getter
-    function bottomUpCheckpoints(uint64 e) external view returns (BottomUpCheckpoint memory) {
+    // TODO: remove this getter
+    function bottomUpCheckpointsLegacy(uint64 e) external view returns (BottomUpCheckpointLegacy memory) {
         return s.bottomUpCheckpointsLegacy[e];
+    }
+
+    function bottomUpCheckpoints(uint64 e) external view returns (BottomUpCheckpoint memory) {
+        return s.bottomUpCheckpoints[e];
     }
 
     function getParentFinality(uint256 blockNumber) external view returns (ParentFinality memory) {

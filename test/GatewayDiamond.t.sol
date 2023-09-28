@@ -14,7 +14,7 @@ import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
-import {CrossMsg, BottomUpCheckpoint, BottomUpCheckpointNew, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpointLegacy, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
 import {ValidatorSet, ValidatorInfo, Membership, Validator} from "../src/structs/Validator.sol";
@@ -37,7 +37,7 @@ import {MerkleTreeHelper} from "./MerkleTreeHelper.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for BottomUpCheckpoint;
+    using CheckpointHelper for BottomUpCheckpointLegacy;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
     using FvmAddressHelper for FvmAddress;
@@ -1423,7 +1423,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
 
-        BottomUpCheckpointNew memory checkpoint = BottomUpCheckpointNew({
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
             blockHash: keccak256("block"),
@@ -1443,7 +1443,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.stopPrank();
 
         // failed to create a checkpoint with the same height
-        checkpoint = BottomUpCheckpointNew({
+        checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
             blockHash: keccak256("block"),
@@ -1463,7 +1463,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
 
-        BottomUpCheckpointNew memory checkpoint = BottomUpCheckpointNew({
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
             blockHash: keccak256("block"),
@@ -1501,7 +1501,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
 
-        BottomUpCheckpointNew memory checkpoint = BottomUpCheckpointNew({
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 1,
             blockHash: keccak256("block"),
@@ -1676,14 +1676,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function release(uint256 releaseAmount, uint256 crossMsgFee, uint64 epoch) internal {
-        BottomUpCheckpoint memory beforeRelease = gwGetter.bottomUpCheckpoints(epoch);
+        BottomUpCheckpointLegacy memory beforeRelease = gwGetter.bottomUpCheckpointsLegacy(epoch);
 
         uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
         uint256 expectedCheckpointDataFee = beforeRelease.fee + crossMsgFee;
 
         gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender));
 
-        BottomUpCheckpoint memory afterRelease = gwGetter.bottomUpCheckpoints(epoch);
+        BottomUpCheckpointLegacy memory afterRelease = gwGetter.bottomUpCheckpointsLegacy(epoch);
 
         require(afterRelease.fee == expectedCheckpointDataFee, "cpDataAfter.fee == expectedCheckpointDataFee");
         require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
@@ -1692,9 +1692,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     function createCheckpoint(
         address subnetAddress,
         uint64 blockNumber
-    ) internal view returns (BottomUpCheckpoint memory) {
+    ) internal view returns (BottomUpCheckpointLegacy memory) {
         SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(subnetAddress);
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+        BottomUpCheckpointLegacy memory checkpoint = BottomUpCheckpointLegacy({
             source: subnetId,
             epoch: blockNumber,
             fee: 0,

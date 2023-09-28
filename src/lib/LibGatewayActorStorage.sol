@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
-import {BottomUpCheckpoint, BottomUpCheckpointNew, CrossMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpointLegacy, BottomUpCheckpoint, CrossMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
@@ -31,10 +31,10 @@ struct GatewayActorStorage {
     Membership currentMembership;
     /// @notice The last membership received from the parent and adopted
     Membership lastMembership;
-    mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpointsLegacy;
+    mapping(uint64 => BottomUpCheckpointLegacy) bottomUpCheckpointsLegacy;
     /// @notice A mapping of block numbers to bottom-up checkpoints
     // slither-disable-next-line uninitialized-state
-    mapping(uint64 => BottomUpCheckpointNew) bottomUpCheckpoints;
+    mapping(uint64 => BottomUpCheckpoint) bottomUpCheckpoints;
     /// @notice A mapping of block numbers to checkpoint data
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => CheckpointInfo) bottomUpCheckpointInfo;

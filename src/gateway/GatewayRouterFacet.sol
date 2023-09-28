@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {EMPTY_HASH, METHOD_SEND} from "../constants/Constants.sol";
-import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, BottomUpCheckpointNew, CheckpointInfo} from "../structs/Checkpoint.sol";
+import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpointLegacy, BottomUpCheckpoint, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
@@ -29,8 +29,8 @@ import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
     using SubnetIDHelper for SubnetID;
+    using CheckpointHelper for BottomUpCheckpointLegacy;
     using CheckpointHelper for BottomUpCheckpoint;
-    using CheckpointHelper for BottomUpCheckpointNew;
     using CrossMsgHelper for CrossMsg;
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
@@ -54,7 +54,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     }
 
     /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
-    function commitChildCheck(BottomUpCheckpoint calldata commit) external {
+    function commitChildCheck(BottomUpCheckpointLegacy calldata commit) external {
         if (!s.initialized) {
             revert NotInitialized();
         }
@@ -77,7 +77,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         // get checkpoint for the current template being populated
-        (bool checkpointExists, uint64 nextCheckEpoch, BottomUpCheckpoint storage checkpoint) = LibGateway
+        (bool checkpointExists, uint64 nextCheckEpoch, BottomUpCheckpointLegacy storage checkpoint) = LibGateway
             .getCurrentBottomUpCheckpoint();
 
         // create a checkpoint template if it doesn't exists
@@ -199,7 +199,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 weight,
         bytes memory signature
     ) external {
-        BottomUpCheckpointNew memory checkpoint = s.bottomUpCheckpoints[height];
+        BottomUpCheckpoint memory checkpoint = s.bottomUpCheckpoints[height];
         if (checkpoint.blockHeight == 0) {
             revert CheckpointNotCreated();
         }
@@ -259,7 +259,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param membershipRootHash - a root hash of the Merkle tree built from the validator public keys and their weight
     /// @param membershipWeight - the total weight of the membership
     function createBottomUpCheckpoint(
-        BottomUpCheckpointNew calldata checkpoint,
+        BottomUpCheckpoint calldata checkpoint,
         bytes32 membershipRootHash,
         uint256 membershipWeight
     ) external systemActorOnly {

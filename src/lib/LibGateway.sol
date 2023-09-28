@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpointLegacy, ParentFinality} from "../structs/Checkpoint.sol";
 import {Membership, Validator} from "../structs/Validator.sol";
 import {OldConfigurationNumber, NotRegisteredSubnet, InvalidActorAddress, ValidatorWeightIsZero, ValidatorsAndWeightsLengthMismatch, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
@@ -22,7 +22,7 @@ library LibGateway {
     using FvmAddressHelper for FvmAddress;
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
-    using CheckpointHelper for BottomUpCheckpoint;
+    using CheckpointHelper for BottomUpCheckpointLegacy;
 
     event MembershipReceived(uint64 n, FvmAddress[] validators, uint256[] weights);
     event MembershipUpdated(uint64 n, Validator[] validators, uint256 totalWeight);
@@ -35,7 +35,7 @@ library LibGateway {
     function getCurrentBottomUpCheckpoint()
         internal
         view
-        returns (bool exists, uint64 epoch, BottomUpCheckpoint storage checkpoint)
+        returns (bool exists, uint64 epoch, BottomUpCheckpointLegacy storage checkpoint)
     {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         epoch = LibVoting.getNextEpoch(block.number, s.bottomUpCheckPeriod);
@@ -179,7 +179,7 @@ library LibGateway {
     /// @param crossMessage - the cross message to be committed
     function commitBottomUpMsg(CrossMsg memory crossMessage) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        (, , BottomUpCheckpoint storage checkpoint) = getCurrentBottomUpCheckpoint();
+        (, , BottomUpCheckpointLegacy storage checkpoint) = getCurrentBottomUpCheckpoint();
 
         crossMessage.message.nonce = s.bottomUpNonce;
 
