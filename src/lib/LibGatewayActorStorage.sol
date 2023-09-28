@@ -8,6 +8,7 @@ import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Validator.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 struct GatewayActorStorage {
     /// @notice List of subnets
@@ -40,8 +41,15 @@ struct GatewayActorStorage {
     /// @notice A mapping of block numbers to bottom-up cross-messages
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => CrossMsg[]) bottomUpMessages;
+    /// @notice The height of the first bottom-up checkpoint that must be retained since they have not been processed in the parent.
+    /// All checkpoint with the height less than this number may be garbage collected in the child subnet.
+    /// @dev Initial retention index is 1.
+    uint64 bottomUpCheckpointRetentionHeight;
+    /// @notice A list of incomplete checkpoints.
+    // slither-disable-next-line uninitialized-state
+    EnumerableSet.UintSet incompleteCheckpoints;
     /// @notice The validators have already sent signatures at height `h`
-    mapping(uint64 => mapping(address => bool)) bottomUpCollectedSignatures;
+    mapping(uint64 => EnumerableSet.AddressSet) bottomUpCollectedSignatures;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
     mapping(uint64 => mapping(bytes32 => uint256[2])) children;
     /// @notice epoch => SubnetID => check => exists

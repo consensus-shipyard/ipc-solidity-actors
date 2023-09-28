@@ -14,7 +14,7 @@ import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
-import {CrossMsg, BottomUpCheckpointLegacy, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, BottomUpCheckpointLegacy, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
 import {ValidatorSet, ValidatorInfo, Membership, Validator} from "../src/structs/Validator.sol";
@@ -37,7 +37,7 @@ import {MerkleTreeHelper} from "./MerkleTreeHelper.sol";
 
 contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for BottomUpCheckpointLegacy;
+    using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
     using FvmAddressHelper for FvmAddress;
@@ -1419,7 +1419,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_createBottomUpCheckpoint() public {
-        (, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
+        (, address[] memory addrs, uint256[] memory weights) = setupThreeValidatorsForCheckpoint();
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
 
@@ -1440,7 +1440,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // failed to create a checkpoint with the same height
@@ -1455,12 +1455,73 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(CheckpointAlreadyExists.selector);
-        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
     }
 
+    function testGatewayDiamond_listIncompleteCheckpoints() public {
+        (, address[] memory addrs, uint256[] memory weights) = setupThreeValidatorsForCheckpoint();
+
+        (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpoint memory checkpoint1 = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 1,
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages1"),
+            fee: 0
+        });
+
+        BottomUpCheckpoint memory checkpoint2 = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 2,
+            blockHash: keccak256("block2"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages2"),
+            fee: 0
+        });
+
+        // create a checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.createBottomUpCheckpoint(checkpoint1, membershipRoot, weights[0] + weights[1] + weights[2]);
+        gwRouter.createBottomUpCheckpoint(checkpoint2, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
+
+        uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
+
+        require(heights.length == 2, "heights.length == 2");
+        require(heights[0] == 1, "heights[0] == 1");
+        require(heights[1] == 2, "heights[1] == 2");
+
+        CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
+        require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
+        require(
+            info.threshold == gwGetter.getQuorumThreshold(weights[0] + weights[1] + weights[2]),
+            "checkpoint 1 correct threshold"
+        );
+
+        info = gwGetter.getCheckpointInfo(2);
+        require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
+        require(
+            info.threshold == gwGetter.getQuorumThreshold(weights[0] + weights[1] + weights[2]),
+            "checkpoint 2 correct threshold"
+        );
+
+        BottomUpCheckpoint[] memory incomplete = gwGetter.getIncompleteCheckpoints();
+        require(incomplete.length == 2, "incomplete.length == 2");
+        require(incomplete[0].blockHeight == 1, "incomplete[0].blockHeight");
+        require(incomplete[0].blockHash == keccak256("block1"), "incomplete[0].blockHash");
+        require(incomplete[1].blockHeight == 2, "incomplete[1].blockHeight");
+        require(incomplete[1].blockHash == keccak256("block2"), "incomplete[1].blockHash");
+    }
+
     function testGatewayDiamond_addCheckpointSignature() public {
-        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
+        (
+            uint256[] memory privKeys,
+            address[] memory addrs,
+            uint256[] memory weights
+        ) = setupThreeValidatorsForCheckpoint();
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
@@ -1476,7 +1537,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // adds signatures
@@ -1498,8 +1559,72 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.getCheckpointCurrentWeight(1) == totalWeight(weights), "checkpoint weight was updated");
     }
 
+    function testGatewayDiamond_addCheckpointSignature_quorum() public {
+        (
+            uint256[] memory privKeys,
+            address[] memory addrs,
+            uint256[] memory weights
+        ) = setupThreeValidatorsForCheckpoint();
+
+        (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
+            .createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 1,
+            blockHash: keccak256("block"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages"),
+            fee: 0
+        });
+
+        // create a checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
+
+        // adds signatures
+
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
+        bytes memory signature;
+
+        for (uint64 i = 0; i < 2; i++) {
+            (v, r, s) = vm.sign(privKeys[i], keccak256(abi.encode(checkpoint)));
+            signature = abi.encodePacked(r, s, v);
+
+            vm.startPrank(vm.addr(privKeys[i]));
+            gwRouter.addCheckpointSignature(1, membershipProofs[i], weights[i], signature);
+            vm.stopPrank();
+        }
+
+        CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
+        require(!info.reached, "not reached");
+        require(gwGetter.getIncompleteCheckpointHeights().length == 1, "size is 1");
+
+        info = gwGetter.getCheckpointInfo(1);
+
+        (v, r, s) = vm.sign(privKeys[2], keccak256(abi.encode(checkpoint)));
+        signature = abi.encodePacked(r, s, v);
+
+        vm.startPrank(vm.addr(privKeys[2]));
+        gwRouter.addCheckpointSignature(1, membershipProofs[2], weights[2], signature);
+        vm.stopPrank();
+
+        info = gwGetter.getCheckpointInfo(1);
+        require(info.reached, "reached");
+        require(gwGetter.getIncompleteCheckpointHeights().length == 0, "size is 0");
+
+        require(gwGetter.getCheckpointCurrentWeight(1) == totalWeight(weights), "checkpoint weight was updated");
+    }
+
     function testGatewayDiamond_addCheckpointSignature_notAuthorized() public {
-        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = setupValidatorsForCheckpoint();
+        (
+            uint256[] memory privKeys,
+            address[] memory addrs,
+            uint256[] memory weights
+        ) = setupThreeValidatorsForCheckpoint();
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
@@ -1530,6 +1655,49 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.expectRevert();
         gwRouter.addCheckpointSignature(1, membershipProofs[0], weights[1], signature);
         vm.stopPrank();
+    }
+
+    function testGatewayDiamond_garbage_collect_bottomUpCheckpoints() public {
+        (, address[] memory addrs, uint256[] memory weights) = setupThreeValidatorsForCheckpoint();
+
+        (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
+
+        uint64 index = gwGetter.getBottomUpRetentionHeight();
+        require(index == 1, "retention height is 1");
+
+        BottomUpCheckpoint memory checkpoint;
+
+        // create a checkpoint
+        uint64 n = 10;
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        for (uint64 i = 1; i <= n; i++) {
+            checkpoint = BottomUpCheckpoint({
+                subnetID: gwGetter.getNetworkName(),
+                blockHeight: i,
+                blockHash: keccak256("block"),
+                nextConfigurationNumber: 1,
+                crossMessagesHash: keccak256("messages"),
+                fee: 0
+            });
+
+            gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        }
+        vm.stopPrank();
+
+        index = gwGetter.getBottomUpRetentionHeight();
+        require(index == 1, "retention height is 1");
+
+        uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
+        require(heights.length == n, "heights.len == n");
+
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.pruneBottomUpCheckpoints(4);
+        vm.stopPrank();
+
+        index = gwGetter.getBottomUpRetentionHeight();
+        require(index == 4, "height updated");
+        heights = gwGetter.getIncompleteCheckpointHeights();
+        require(heights.length == n, "index the same");
     }
 
     function totalWeight(uint256[] memory weights) internal pure returns (uint256 sum) {
@@ -1569,7 +1737,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.commitParentFinality(finality, n, validators, weights);
     }
 
-    function setupValidatorsForCheckpoint()
+    function setupThreeValidatorsForCheckpoint()
         internal
         returns (uint256[] memory validatorKeys, address[] memory addresses, uint256[] memory weights)
     {
@@ -1591,7 +1759,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights = new uint256[](3);
         weights[0] = 100;
         weights[1] = 101;
-        weights[2] = 300;
+        weights[2] = 102;
     }
 
     function addValidator(address validator) internal {
