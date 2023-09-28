@@ -929,7 +929,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.warp(0);
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
-        release(releaseAmount, crossMsgFee, EPOCH_ONE);
+        release(releaseAmount);
     }
 
     function testGatewayDiamond_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -960,7 +960,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, releaseAmount + 1);
 
-        release(releaseAmount, crossMsgFee, EPOCH_ONE);
+        release(releaseAmount);
     }
 
     function testGatewayDiamond_Release_Works_NonEmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -991,9 +991,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, 2 * releaseAmount + 1);
 
-        release(releaseAmount, crossMsgFee, EPOCH_ONE);
+        release(releaseAmount);
 
-        release(releaseAmount, crossMsgFee, EPOCH_ONE);
+        release(releaseAmount);
     }
 
     function testGatewayDiamond_SendCrossMessage_Fails_NoDestination() public {
@@ -1428,8 +1428,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages"),
-            fee: 0
+            crossMessagesHash: keccak256("messages")
         });
 
         // failed to create a checkpoint with zero membership weight
@@ -1449,8 +1448,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 2,
-            crossMessagesHash: keccak256("newmessages"),
-            fee: 0
+            crossMessagesHash: keccak256("newmessages")
         });
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -1469,8 +1467,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block1"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages1"),
-            fee: 0
+            crossMessagesHash: keccak256("messages1")
         });
 
         BottomUpCheckpoint memory checkpoint2 = BottomUpCheckpoint({
@@ -1478,8 +1475,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 2,
             blockHash: keccak256("block2"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages2"),
-            fee: 0
+            crossMessagesHash: keccak256("messages2")
         });
 
         // create a checkpoint
@@ -1531,8 +1527,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages"),
-            fee: 0
+            crossMessagesHash: keccak256("messages")
         });
 
         // create a checkpoint
@@ -1574,8 +1569,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages"),
-            fee: 0
+            crossMessagesHash: keccak256("messages")
         });
 
         // create a checkpoint
@@ -1634,8 +1628,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages"),
-            fee: 0
+            crossMessagesHash: keccak256("messages")
         });
 
         // create a checkpoint
@@ -1676,8 +1669,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                 blockHeight: i,
                 blockHash: keccak256("block"),
                 nextConfigurationNumber: 1,
-                crossMessagesHash: keccak256("messages"),
-                fee: 0
+                crossMessagesHash: keccak256("messages")
             });
 
             gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
@@ -1847,17 +1839,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(saGetter.status() == Status.Active);
     }
 
-    function release(uint256 releaseAmount, uint256 crossMsgFee, uint64 epoch) internal {
-        BottomUpCheckpoint memory beforeRelease = gwGetter.bottomUpCheckpoint(epoch);
-
+    function release(uint256 releaseAmount) internal {
         uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
-        uint256 expectedCheckpointDataFee = beforeRelease.fee + crossMsgFee;
-
         gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender));
-
-        BottomUpCheckpoint memory afterRelease = gwGetter.bottomUpCheckpoint(epoch);
-
-        require(afterRelease.fee == expectedCheckpointDataFee, "cpDataAfter.fee == expectedCheckpointDataFee");
         require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
     }
 
