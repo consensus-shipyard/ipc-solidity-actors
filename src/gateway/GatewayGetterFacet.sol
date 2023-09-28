@@ -55,8 +55,12 @@ contract GatewayGetterFacet {
         return s.bottomUpCheckpointsLegacy[e];
     }
 
-    function bottomUpCheckpoints(uint64 e) external view returns (BottomUpCheckpoint memory) {
+    function bottomUpCheckpoint(uint64 e) external view returns (BottomUpCheckpoint memory) {
         return s.bottomUpCheckpoints[e];
+    }
+
+    function bottomUpMessages(uint64 e) external view returns (CrossMsg[] memory) {
+        return s.bottomUpMessages[e];
     }
 
     function getParentFinality(uint256 blockNumber) external view returns (ParentFinality memory) {

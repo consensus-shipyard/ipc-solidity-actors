@@ -13,7 +13,7 @@ struct GatewayActorStorage {
     /// @notice List of subnets
     /// SubnetID => Subnet
     mapping(bytes32 => Subnet) subnets;
-    /// @notice a mapping of block number to cross messages
+    /// @notice a mapping of block number to top-down cross-messages
     /// SubnetID => blockNumber => messages
     mapping(bytes32 => mapping(uint256 => CrossMsg[])) topDownMsgs;
     /// @notice The parent finalities. Key is the block number, value is the finality struct.
@@ -38,6 +38,9 @@ struct GatewayActorStorage {
     /// @notice A mapping of block numbers to checkpoint data
     // slither-disable-next-line uninitialized-state
     mapping(uint64 => CheckpointInfo) bottomUpCheckpointInfo;
+    /// @notice A mapping of block numbers to bottom-up cross-messages
+    // slither-disable-next-line uninitialized-state
+    mapping(uint64 => CrossMsg[]) bottomUpMessages;
     /// @notice The validators have already sent signatures at height `h`
     mapping(uint64 => mapping(address => bool)) bottomUpCollectedSignatures;
     /// @notice epoch => SubnetID => [childIndex, exists(0 - no, 1 - yes)]
