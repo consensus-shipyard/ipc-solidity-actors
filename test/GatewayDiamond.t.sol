@@ -1655,8 +1655,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
 
-        uint64 index = gwGetter.getBottomUpRetentionIndex();
-        require(index == 1, "retention index is 1");
+        uint64 index = gwGetter.getBottomUpRetentionHeight();
+        require(index == 1, "retention height is 1");
 
         BottomUpCheckpointNew memory checkpoint;
 
@@ -1676,8 +1676,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         }
         vm.stopPrank();
 
-        index = gwGetter.getBottomUpRetentionIndex();
-        require(index == 1, "retention index is 1");
+        index = gwGetter.getBottomUpRetentionHeight();
+        require(index == 1, "retention height is 1");
 
         uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
         require(heights.length == n, "heights.len == n");
@@ -1686,8 +1686,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.pruneBottomUpCheckpoints(4);
         vm.stopPrank();
 
-        index = gwGetter.getBottomUpRetentionIndex();
-        require(index == 4, "index updated");
+        index = gwGetter.getBottomUpRetentionHeight();
+        require(index == 4, "height updated");
         heights = gwGetter.getIncompleteCheckpointHeights();
         require(heights.length == n, "index the same");
     }
