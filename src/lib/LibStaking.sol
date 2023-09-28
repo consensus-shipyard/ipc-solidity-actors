@@ -155,6 +155,10 @@ library LibValidatorSet {
         collateral = validators.validators[validator].confirmedCollateral;
     }
 
+    function isActiveValidator(ValidatorSet storage self, address validator) internal view returns (bool) {
+        return self.activeValidators.contains(validator);
+    }
+
     /// @notice Validator increases its total collateral by amount.
     function recordDeposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
         validators.validators[validator].totalCollateral += amount;
@@ -175,11 +179,14 @@ library LibValidatorSet {
         uint256 newCollateral = self.validators[validator].confirmedCollateral + amount;
         self.validators[validator].confirmedCollateral = newCollateral;
 
-        depositReshuffle({ self: self, maybeActive: validator, newCollateral: newCollateral });
+        depositReshuffle({self: self, maybeActive: validator, newCollateral: newCollateral});
     }
 
-    function confirmWithdraw(ValidatorSet storage validators, address validator, uint256 amount) internal {
-        validators.validators[validator].confirmedCollateral -= amount;
+    function confirmWithdraw(ValidatorSet storage self, address validator, uint256 amount) internal {
+        uint256 newCollateral = self.validators[validator].confirmedCollateral - amount;
+        withdrawReshuffle({self: self, validator: validator, newCollateral: newCollateral});
+
+        self.validators[validator].confirmedCollateral = newCollateral;
     }
 
     /***********************************************************************
@@ -205,7 +212,7 @@ library LibValidatorSet {
 
         // now we have enough active validators, we need to check:
         // - if the incoming new collateral is more than the min active collateral,
-        //     - yes: 
+        //     - yes:
         //        - pop the min active validator
         //        - remove the incoming validator from waiting validators
         //        - insert incoming validator into active validators
@@ -215,7 +222,7 @@ library LibValidatorSet {
         (address minAddress, uint256 minActiveCollateral) = self.activeValidators.min(self);
         if (minActiveCollateral < newCollateral) {
             self.activeValidators.pop(self);
-            
+
             if (self.waitingValidators.contains(maybeActive)) {
                 self.waitingValidators.deleteReheapify(self, maybeActive);
             }
@@ -266,8 +273,8 @@ library LibValidatorSet {
         }
 
         self.activeValidators.decreaseReheapify(self, validator);
-        
-        if (self.waitingValidators.getSize() == 0) {            
+
+        if (self.waitingValidators.getSize() == 0) {
             return;
         }
 
