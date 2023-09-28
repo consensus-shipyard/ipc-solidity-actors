@@ -264,4 +264,99 @@ contract LibValidatorSetTest is Test {
             require(validators.isActiveValidator(address(i)), "address should still be active");
         }
     }
+
+    function test_validatorSet_waitingVadalitorLeaves() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 3; i <= 102; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        for (uint160 i = 103; i <= 107; i++) {
+            validators.confirmDeposit(address(i), 1);
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+        }
+
+        // waiting validator makes deposit
+        validators.confirmWithdraw(address(107), 1);
+
+        // ============= check expected result ==========
+
+        /// check waiting validator
+        require(!validators.waitingValidators.contains(address(107)), "address 107 should not be waiting");
+
+        require(validators.waitingValidators.getSize() == 4, "waiting validators should only have 4");
+        for (uint160 i = 103; i <= 106; i++) {
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+            require(validators.waitingValidators.contains(address(i)), "address should be waiting");
+        }
+
+        for (uint160 i = 106; i >= 103; i--) {
+            validators.waitingValidators.pop(validators);
+
+            (address maxAddress, uint256 maxCollateral) = validators.waitingValidators.max(validators);
+            require(uint160(maxAddress) <= 106, "address too big");
+            require(uint160(maxAddress) >= 103, "address too small");
+            require(maxCollateral == 1, "should have max collateral 2");
+        }
+
+        // check active validators no change
+        require(validators.activeValidators.getSize() == 100, "active validators should only have 100");
+        for (uint160 i = 3; i <= 102; i++) {
+            require(validators.isActiveValidator(address(i)), "address should still be active");
+        }
+    }
+
+    function test_validatorSet_waitingVadalitorReduceCollateral() public {
+        // setup
+        validators.activeLimit = 100;
+
+        for (uint160 i = 3; i <= 102; i++) {
+            validators.confirmDeposit(address(i), i);
+            require(validators.isActiveValidator(address(i)), "address should be active");
+        }
+
+        for (uint160 i = 103; i <= 107; i++) {
+            validators.confirmDeposit(address(i), 2);
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+        }
+
+        // waiting validator makes deposit
+        validators.confirmWithdraw(address(107), 1);
+
+        // ============= check expected result ==========
+
+        /// check waiting validator
+        require(!validators.waitingValidators.contains(address(107)), "address 107 should not be waiting");
+
+        require(validators.waitingValidators.getSize() == 4, "waiting validators should only have 4");
+        for (uint160 i = 103; i <= 107; i++) {
+            require(!validators.isActiveValidator(address(i)), "address should not be active");
+            require(validators.waitingValidators.contains(address(i)), "address should be waiting");
+        }
+
+        address maxAddress;
+        uint256 maxCollateral;
+
+        for (uint160 i = 106; i >= 103; i--) {
+            (maxAddress, maxCollateral) = validators.waitingValidators.max(validators);
+            require(uint160(maxAddress) <= 106, "address too big");
+            require(uint160(maxAddress) >= 103, "address too small");
+            require(maxCollateral == 2, "should have max collateral 2");
+
+            validators.waitingValidators.pop(validators);
+        }
+
+        (maxAddress, maxCollateral) = validators.waitingValidators.max(validators);
+        require(uint160(maxAddress) == 107, "address 107 should be min");
+        require(maxCollateral == 1, "address 107 should have max collateral 1");
+
+        // check active validators no change
+        require(validators.activeValidators.getSize() == 100, "active validators should only have 100");
+        for (uint160 i = 3; i <= 102; i++) {
+            require(validators.isActiveValidator(address(i)), "address should still be active");
+        }
+    }
 }

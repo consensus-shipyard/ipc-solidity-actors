@@ -6,7 +6,7 @@ import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
 import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases} from "../structs/Subnet.sol";
-import {WithdrawExceedingCollateral, CannotConfirmFutureChanges, NoCollateralToWithdraw} from "../errors/IPCErrors.sol";
+import {WithdrawExceedingCollateral, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator} from "../errors/IPCErrors.sol";
 
 /// The util library for `StakingChangeSet`
 library LibStakingChangeSet {
@@ -186,6 +186,11 @@ library LibValidatorSet {
         uint256 newCollateral = self.validators[validator].confirmedCollateral - amount;
         withdrawReshuffle({self: self, validator: validator, newCollateral: newCollateral});
 
+        if (newCollateral == 0) { 
+            delete self.validators[validator];
+            return;
+        }
+
         self.validators[validator].confirmedCollateral = newCollateral;
     }
 
@@ -257,8 +262,13 @@ library LibValidatorSet {
             return;
         }
 
-        // the validator is an active validator!
+        // sanity check
+        if(!self.activeValidators.contains(validator)) {
+            revert AddressShouldBeValidator();
+        }
 
+        // the validator is an active validator!
+        
         if (newCollateral == 0) {
             self.activeValidators.deleteReheapify(self, validator);
             emit ActiveValidatorLeft(validator);
