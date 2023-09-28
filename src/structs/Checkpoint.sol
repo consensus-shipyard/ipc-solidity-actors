@@ -41,6 +41,8 @@ struct BottomUpCheckpoint {
     /// approach where the messages are fetched with Bitswap and provided by Fendermint, or the full-fat
     /// approach we need with Lotus, where the messages are part of the relayed transaction.
     bytes32 crossMessagesHash;
+    /// @def Fee is a legacy field. Should be removed when we have the fee payment figured out in the execution use the new model.
+    uint256 fee;
 }
 
 struct CheckpointInfo {

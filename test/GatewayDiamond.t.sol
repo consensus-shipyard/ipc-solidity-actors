@@ -1428,7 +1428,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            crossMessagesHash: keccak256("messages"),
+            fee: 0
         });
 
         // failed to create a checkpoint with zero membership weight
@@ -1448,7 +1449,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 2,
-            crossMessagesHash: keccak256("newmessages")
+            crossMessagesHash: keccak256("newmessages"),
+            fee: 0
         });
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -1468,7 +1470,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            crossMessagesHash: keccak256("messages"),
+            fee: 0
         });
 
         // create a checkpoint
@@ -1506,7 +1509,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             blockHeight: 1,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            crossMessagesHash: keccak256("messages"),
+            fee: 0
         });
 
         // create a checkpoint
@@ -1676,14 +1680,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function release(uint256 releaseAmount, uint256 crossMsgFee, uint64 epoch) internal {
-        BottomUpCheckpointLegacy memory beforeRelease = gwGetter.bottomUpCheckpointsLegacy(epoch);
+        BottomUpCheckpoint memory beforeRelease = gwGetter.bottomUpCheckpoint(epoch);
 
         uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
         uint256 expectedCheckpointDataFee = beforeRelease.fee + crossMsgFee;
 
         gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender));
 
-        BottomUpCheckpointLegacy memory afterRelease = gwGetter.bottomUpCheckpointsLegacy(epoch);
+        BottomUpCheckpoint memory afterRelease = gwGetter.bottomUpCheckpoint(epoch);
 
         require(afterRelease.fee == expectedCheckpointDataFee, "cpDataAfter.fee == expectedCheckpointDataFee");
         require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");

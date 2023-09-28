@@ -50,11 +50,6 @@ contract GatewayGetterFacet {
         return s.networkName;
     }
 
-    // TODO: remove this getter
-    function bottomUpCheckpointsLegacy(uint64 e) external view returns (BottomUpCheckpointLegacy memory) {
-        return s.bottomUpCheckpointsLegacy[e];
-    }
-
     function bottomUpCheckpoint(uint64 e) external view returns (BottomUpCheckpoint memory) {
         return s.bottomUpCheckpoints[e];
     }
