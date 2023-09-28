@@ -299,7 +299,6 @@ contract LibValidatorSetTest is Test {
             require(maxCollateral == 1, "should have max collateral 2");
 
             validators.waitingValidators.pop(validators);
-
         }
 
         // check active validators no change

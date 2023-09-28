@@ -184,14 +184,14 @@ library LibValidatorSet {
 
     function confirmWithdraw(ValidatorSet storage self, address validator, uint256 amount) internal {
         uint256 newCollateral = self.validators[validator].confirmedCollateral - amount;
-        withdrawReshuffle({self: self, validator: validator, newCollateral: newCollateral});
 
-        if (newCollateral == 0) { 
+        if (newCollateral == 0) {
             delete self.validators[validator];
-            return;
+        } else {
+            self.validators[validator].confirmedCollateral = newCollateral;
         }
 
-        self.validators[validator].confirmedCollateral = newCollateral;
+        withdrawReshuffle({self: self, validator: validator, newCollateral: newCollateral});
     }
 
     /***********************************************************************
@@ -263,7 +263,7 @@ library LibValidatorSet {
         }
 
         // sanity check
-        if(!self.activeValidators.contains(validator)) {
+        if (!self.activeValidators.contains(validator)) {
             revert AddressShouldBeValidator();
         }
 
