@@ -260,6 +260,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             delete s.bottomUpCheckpoints[h];
             delete s.bottomUpCheckpointInfo[h];
             delete s.bottomUpCollectedSignatures[h];
+            delete s.bottomUpMessages[h];
 
             unchecked {
                 ++h;
