@@ -218,7 +218,7 @@ contract GatewayGetterFacet {
     }
 
     /// @notice get the bottom-up checkpoint retention index
-    function getBottomUpRetentionIndex() public view returns (uint64) {
+    function getBottomUpRetentionHeight() public view returns (uint64) {
         return s.bottomUpCheckpointRetentionHeight;
     }
 
