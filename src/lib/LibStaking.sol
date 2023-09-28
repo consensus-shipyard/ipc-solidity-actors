@@ -6,7 +6,7 @@ import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
 import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases} from "../structs/Subnet.sol";
-import {WithdrawExceedingCollateral, CannotConfirmFutureChanges, NoCollateralToWithdraw} from "../errors/IPCErrors.sol";
+import {WithdrawExceedingCollateral, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator} from "../errors/IPCErrors.sol";
 
 /// The util library for `StakingChangeSet`
 library LibStakingChangeSet {
@@ -155,6 +155,10 @@ library LibValidatorSet {
         collateral = validators.validators[validator].confirmedCollateral;
     }
 
+    function isActiveValidator(ValidatorSet storage self, address validator) internal view returns (bool) {
+        return self.activeValidators.contains(validator);
+    }
+
     /// @notice Validator increases its total collateral by amount.
     function recordDeposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
         validators.validators[validator].totalCollateral += amount;
@@ -175,11 +179,19 @@ library LibValidatorSet {
         uint256 newCollateral = self.validators[validator].confirmedCollateral + amount;
         self.validators[validator].confirmedCollateral = newCollateral;
 
-        depositReshuffle({ self: self, maybeActive: validator, newCollateral: newCollateral });
+        depositReshuffle({self: self, maybeActive: validator, newCollateral: newCollateral});
     }
 
-    function confirmWithdraw(ValidatorSet storage validators, address validator, uint256 amount) internal {
-        validators.validators[validator].confirmedCollateral -= amount;
+    function confirmWithdraw(ValidatorSet storage self, address validator, uint256 amount) internal {
+        uint256 newCollateral = self.validators[validator].confirmedCollateral - amount;
+
+        if (newCollateral == 0) {
+            delete self.validators[validator];
+        } else {
+            self.validators[validator].confirmedCollateral = newCollateral;
+        }
+
+        withdrawReshuffle({self: self, validator: validator, newCollateral: newCollateral});
     }
 
     /***********************************************************************
@@ -205,7 +217,7 @@ library LibValidatorSet {
 
         // now we have enough active validators, we need to check:
         // - if the incoming new collateral is more than the min active collateral,
-        //     - yes: 
+        //     - yes:
         //        - pop the min active validator
         //        - remove the incoming validator from waiting validators
         //        - insert incoming validator into active validators
@@ -215,7 +227,7 @@ library LibValidatorSet {
         (address minAddress, uint256 minActiveCollateral) = self.activeValidators.min(self);
         if (minActiveCollateral < newCollateral) {
             self.activeValidators.pop(self);
-            
+
             if (self.waitingValidators.contains(maybeActive)) {
                 self.waitingValidators.deleteReheapify(self, maybeActive);
             }
@@ -250,6 +262,11 @@ library LibValidatorSet {
             return;
         }
 
+        // sanity check
+        if (!self.activeValidators.contains(validator)) {
+            revert AddressShouldBeValidator();
+        }
+
         // the validator is an active validator!
 
         if (newCollateral == 0) {
@@ -258,6 +275,7 @@ library LibValidatorSet {
 
             if (self.waitingValidators.getSize() != 0) {
                 (address toBePromoted, uint256 collateral) = self.waitingValidators.max(self);
+                self.waitingValidators.pop(self);
                 self.activeValidators.insert(self, toBePromoted);
                 emit NewActiveValidator(toBePromoted, collateral);
             }
@@ -266,8 +284,8 @@ library LibValidatorSet {
         }
 
         self.activeValidators.decreaseReheapify(self, validator);
-        
-        if (self.waitingValidators.getSize() == 0) {            
+
+        if (self.waitingValidators.getSize() == 0) {
             return;
         }
 
@@ -277,6 +295,7 @@ library LibValidatorSet {
             self.activeValidators.pop(self);
             self.waitingValidators.pop(self);
             self.activeValidators.insert(self, mayBePromoted);
+            self.waitingValidators.insert(self, mayBeDemoted);
 
             emit ActiveValidatorReplaced(mayBeDemoted, mayBePromoted);
             return;
