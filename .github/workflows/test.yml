@@ -23,7 +23,7 @@ jobs:
         run: pip install eth_abi
 
       - name: Install lcov and genhtml
-        run:  sudo apt-get update && apt-get -y install lcov
+        run:  sudo apt-get update && sudo apt-get -y install lcov
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
