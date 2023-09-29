@@ -317,6 +317,30 @@ pub mod subnet_actor_getter_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("getConfigurationNumber"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getConfigurationNumber",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("getParent"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -1065,6 +1089,14 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([167, 240, 179, 222], ())
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `getConfigurationNumber` (0x2e19ed6a) function
+        pub fn get_configuration_number(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([46, 25, 237, 106], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `getParent` (0x80f76021) function
         pub fn get_parent(&self) -> ::ethers::contract::builders::ContractCall<M, SubnetID> {
             self.0
@@ -1342,6 +1374,19 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "genesis", abi = "genesis()")]
     pub struct GenesisCall;
+    ///Container type for all input parameters for the `getConfigurationNumber` function with signature `getConfigurationNumber()` and selector `0x2e19ed6a`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "getConfigurationNumber", abi = "getConfigurationNumber()")]
+    pub struct GetConfigurationNumberCall;
     ///Container type for all input parameters for the `getParent` function with signature `getParent()` and selector `0x80f76021`
     #[derive(
         Clone,
@@ -1635,6 +1680,7 @@ pub mod subnet_actor_getter_facet {
         Consensus(ConsensusCall),
         ExecutableQueue(ExecutableQueueCall),
         Genesis(GenesisCall),
+        GetConfigurationNumber(GetConfigurationNumberCall),
         GetParent(GetParentCall),
         GetRangeOfValidators(GetRangeOfValidatorsCall),
         GetValidatorSet(GetValidatorSetCall),
@@ -1691,6 +1737,11 @@ pub mod subnet_actor_getter_facet {
             }
             if let Ok(decoded) = <GenesisCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Genesis(decoded));
+            }
+            if let Ok(decoded) =
+                <GetConfigurationNumberCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::GetConfigurationNumber(decoded));
             }
             if let Ok(decoded) = <GetParentCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::GetParent(decoded));
@@ -1799,6 +1850,9 @@ pub mod subnet_actor_getter_facet {
                 Self::Consensus(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ExecutableQueue(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Genesis(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::GetConfigurationNumber(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::GetParent(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetRangeOfValidators(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
@@ -1850,6 +1904,7 @@ pub mod subnet_actor_getter_facet {
                 Self::Consensus(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ExecutableQueue(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Genesis(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetConfigurationNumber(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetParent(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetRangeOfValidators(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetValidatorSet(element) => ::core::fmt::Display::fmt(element, f),
@@ -1906,6 +1961,11 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<GenesisCall> for SubnetActorGetterFacetCalls {
         fn from(value: GenesisCall) -> Self {
             Self::Genesis(value)
+        }
+    }
+    impl ::core::convert::From<GetConfigurationNumberCall> for SubnetActorGetterFacetCalls {
+        fn from(value: GetConfigurationNumberCall) -> Self {
+            Self::GetConfigurationNumber(value)
         }
     }
     impl ::core::convert::From<GetParentCall> for SubnetActorGetterFacetCalls {
@@ -2095,6 +2155,18 @@ pub mod subnet_actor_getter_facet {
         Hash,
     )]
     pub struct GenesisReturn(pub ::ethers::core::types::Bytes);
+    ///Container type for all return fields from the `getConfigurationNumber` function with signature `getConfigurationNumber()` and selector `0x2e19ed6a`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    pub struct GetConfigurationNumberReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `getParent` function with signature `getParent()` and selector `0x80f76021`
     #[derive(
         Clone,
