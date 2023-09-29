@@ -22,10 +22,16 @@ jobs:
       - name: Install abi
         run: pip install eth_abi
 
+      - name: Install genhtml
+        run: pip install genhtml
+
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           cache: false
+
+      - name: Run coverage check
+        run: make coverage
 
       - name: Run tests
         run: forge test -vvv --ffi
