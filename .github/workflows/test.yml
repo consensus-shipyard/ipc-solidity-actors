@@ -22,8 +22,8 @@ jobs:
       - name: Install abi
         run: pip install eth_abi
 
-      - name: Install genhtml
-        run: pip install genhtml
+      - name: Install lcov and genhtml
+        run:  apt-get -y install lcov
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
