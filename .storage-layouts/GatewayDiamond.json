@@ -10,6 +10,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "type": "t_struct(GatewayActorStorage)10171_storage"
 =======
       "type": "t_struct(GatewayActorStorage)9596_storage"
@@ -23,6 +24,9 @@
 =======
       "type": "t_struct(GatewayActorStorage)10086_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "type": "t_struct(GatewayActorStorage)9606_storage"
+>>>>>>> ea9739e (update storage)
     }
   ],
   "types": {
@@ -47,6 +51,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_array(t_struct(ChildCheck)11867_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11867_storage",
 =======
@@ -65,10 +70,15 @@
     "t_array(t_struct(ChildCheck)11795_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11795_storage",
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_array(t_struct(ChildCheck)13945_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)13945_storage",
+>>>>>>> ea9739e (update storage)
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -91,10 +101,15 @@
     "t_array(t_struct(CrossMsg)11801_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)11801_storage",
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_array(t_struct(CrossMsg)13951_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)13951_storage",
+>>>>>>> ea9739e (update storage)
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -117,6 +132,10 @@
     "t_array(t_struct(Validator)11980_storage)dyn_storage": {
       "base": "t_struct(Validator)11980_storage",
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_array(t_struct(Validator)14194_storage)dyn_storage": {
+      "base": "t_struct(Validator)14194_storage",
+>>>>>>> ea9739e (update storage)
       "encoding": "dynamic_array",
       "label": "struct Validator[]",
       "numberOfBytes": "32"
@@ -148,10 +167,14 @@
       "numberOfBytes": "32"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_enum(Status)5004": {
 =======
     "t_enum(Status)4998": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_enum(Status)4560": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
@@ -188,6 +211,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11873_storage)dyn_storage))": {
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11747_storage)dyn_storage))": {
@@ -201,10 +225,14 @@
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11801_storage)dyn_storage))": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13951_storage)dyn_storage))": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => mapping(uint256 => struct CrossMsg[]))",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -232,10 +260,16 @@
     },
     "t_mapping(t_bytes32,t_struct(CrossMsg)11801_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13951_storage)dyn_storage)"
+    },
+    "t_mapping(t_bytes32,t_struct(CrossMsg)13951_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct CrossMsg)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -263,10 +297,16 @@
     },
     "t_mapping(t_bytes32,t_struct(Subnet)11946_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(CrossMsg)13951_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(Subnet)14080_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct Subnet)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -294,10 +334,16 @@
     },
     "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)11788_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(Subnet)14080_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)13938_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct TopDownCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -315,6 +361,9 @@
 =======
       "value": "t_struct(TopDownCheckpoint)11788_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(TopDownCheckpoint)13938_storage"
+>>>>>>> ea9739e (update storage)
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -323,6 +372,7 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -340,10 +390,14 @@
 =======
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)11801_storage)dyn_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13951_storage)dyn_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct CrossMsg[])",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -361,6 +415,9 @@
 =======
       "value": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_array(t_struct(CrossMsg)13951_storage)dyn_storage"
+>>>>>>> ea9739e (update storage)
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -380,6 +437,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint256,t_struct(ParentFinality)11800_storage)": {
 =======
     "t_mapping(t_uint256,t_struct(ParentFinality)11674_storage)": {
@@ -393,10 +451,14 @@
 =======
     "t_mapping(t_uint256,t_struct(ParentFinality)11728_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_mapping(t_uint256,t_struct(ParentFinality)13878_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct ParentFinality)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -414,6 +476,9 @@
 =======
       "value": "t_struct(ParentFinality)11728_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(ParentFinality)13878_storage"
+>>>>>>> ea9739e (update storage)
     },
     "t_mapping(t_uint64,t_array(t_struct(CrossMsg)11873_storage)dyn_storage)": {
       "encoding": "mapping",
@@ -447,6 +512,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(AddressSet)3420_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
@@ -467,10 +533,14 @@
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13898_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -489,14 +559,18 @@
 =======
       "value": "t_struct(BottomUpCheckpoint)11748_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13898_storage"
+>>>>>>> ea9739e (update storage)
     },
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)11765_storage)": {
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)13915_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointNew)",
       "numberOfBytes": "32",
-      "value": "t_struct(BottomUpCheckpointNew)11765_storage"
+      "value": "t_struct(BottomUpCheckpointNew)13915_storage"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -511,10 +585,14 @@
 =======
     "t_mapping(t_uint64,t_struct(CheckpointInfo)11781_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_mapping(t_uint64,t_struct(CheckpointInfo)13931_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CheckpointInfo)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -542,10 +620,16 @@
     },
     "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)11849_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(CheckpointInfo)13931_storage"
+    },
+    "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)13999_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteTopDownSubmission)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -588,10 +672,16 @@
     },
     "t_struct(BottomUpCheckpoint)11748_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(EpochVoteTopDownSubmission)13999_storage"
+    },
+    "t_struct(BottomUpCheckpoint)13898_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -608,14 +698,17 @@
 =======
           "astId": 11731,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13881,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(SubnetID)11906_storage"
+          "type": "t_struct(SubnetID)14060_storage"
         },
         {
-          "astId": 11733,
+          "astId": 13883,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "epoch",
           "offset": 0,
@@ -623,7 +716,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 11735,
+          "astId": 13885,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "fee",
           "offset": 0,
@@ -631,23 +724,23 @@
           "type": "t_uint256"
         },
         {
-          "astId": 11739,
+          "astId": 13889,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
-          "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
+          "type": "t_array(t_struct(CrossMsg)13951_storage)dyn_storage"
         },
         {
-          "astId": 11743,
+          "astId": 13893,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "children",
           "offset": 0,
           "slot": "5",
-          "type": "t_array(t_struct(ChildCheck)11795_storage)dyn_storage"
+          "type": "t_array(t_struct(ChildCheck)13945_storage)dyn_storage"
         },
         {
-          "astId": 11745,
+          "astId": 13895,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "prevHash",
           "offset": 0,
@@ -655,7 +748,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 11747,
+          "astId": 13897,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "proof",
           "offset": 0,
@@ -665,11 +758,12 @@
       ],
       "numberOfBytes": "256"
     },
-    "t_struct(BottomUpCheckpointNew)11765_storage": {
+    "t_struct(BottomUpCheckpointNew)13915_storage": {
       "encoding": "inplace",
       "label": "struct BottomUpCheckpointNew",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -684,10 +778,14 @@
 =======
           "astId": 11752,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13902,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -720,6 +818,12 @@
         {
           "astId": 11755,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 13905,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "blockHeight",
           "offset": 0,
@@ -727,6 +831,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -744,6 +849,9 @@
 =======
           "astId": 11758,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13908,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "blockHash",
           "offset": 0,
@@ -751,6 +859,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -768,6 +877,9 @@
 =======
           "astId": 11761,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13911,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -775,6 +887,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -792,6 +905,9 @@
 =======
           "astId": 11764,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13914,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -801,6 +917,7 @@
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -881,10 +998,14 @@
 =======
     "t_struct(CheckpointInfo)11781_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(CheckpointInfo)13931_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct CheckpointInfo",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -902,6 +1023,9 @@
 =======
           "astId": 11768,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13918,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "hash",
           "offset": 0,
@@ -909,6 +1033,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -926,6 +1051,9 @@
 =======
           "astId": 11771,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13921,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "rootHash",
           "offset": 0,
@@ -933,6 +1061,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -950,6 +1079,9 @@
 =======
           "astId": 11774,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13924,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "threshold",
           "offset": 0,
@@ -957,6 +1089,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -974,6 +1107,9 @@
 =======
           "astId": 11777,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13927,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "currentWeight",
           "offset": 0,
@@ -981,6 +1117,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -998,6 +1135,9 @@
 =======
           "astId": 11780,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13930,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "reached",
           "offset": 0,
@@ -1007,6 +1147,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1024,10 +1165,14 @@
 =======
     "t_struct(ChildCheck)11795_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(ChildCheck)13945_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1045,10 +1190,14 @@
 =======
           "astId": 11791,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13941,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1081,6 +1230,12 @@
         {
           "astId": 11794,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 13944,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "checks",
           "offset": 0,
@@ -1090,6 +1245,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1107,10 +1263,14 @@
 =======
     "t_struct(CrossMsg)11801_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(CrossMsg)13951_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1128,10 +1288,14 @@
 =======
           "astId": 11798,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13948,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1164,6 +1328,12 @@
         {
           "astId": 11800,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(StorableMsg)13966_storage"
+        },
+        {
+          "astId": 13950,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "wrapped",
           "offset": 0,
@@ -1173,6 +1343,7 @@
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1190,10 +1361,14 @@
 =======
     "t_struct(EpochVoteSubmission)11840_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(EpochVoteSubmission)13990_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1211,6 +1386,9 @@
 =======
           "astId": 11823,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13973,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "nonce",
           "offset": 0,
@@ -1218,6 +1396,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1235,6 +1414,9 @@
 =======
           "astId": 11825,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13975,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -1242,6 +1424,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1259,6 +1442,9 @@
 =======
           "astId": 11827,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13977,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -1266,6 +1452,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1283,6 +1470,9 @@
 =======
           "astId": 11833,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13983,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "submitters",
           "offset": 0,
@@ -1290,6 +1480,7 @@
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1307,6 +1498,9 @@
 =======
           "astId": 11839,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13989,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "submissionWeights",
           "offset": 0,
@@ -1316,6 +1510,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1333,10 +1528,14 @@
 =======
     "t_struct(EpochVoteTopDownSubmission)11849_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(EpochVoteTopDownSubmission)13999_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct EpochVoteTopDownSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1354,10 +1553,14 @@
 =======
           "astId": 11843,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13993,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "vote",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1390,10 +1593,17 @@
         {
           "astId": 11848,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(EpochVoteSubmission)13990_storage"
+        },
+        {
+          "astId": 13998,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1411,10 +1621,14 @@
 =======
           "type": "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)11788_storage)"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)13938_storage)"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1432,10 +1646,14 @@
 =======
     "t_struct(FvmAddress)11880_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(FvmAddress)14030_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1453,6 +1671,9 @@
 =======
           "astId": 11877,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14027,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "addrType",
           "offset": 0,
@@ -1460,6 +1681,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1477,6 +1699,9 @@
 =======
           "astId": 11879,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14029,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "payload",
           "offset": 0,
@@ -1486,6 +1711,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1503,10 +1729,14 @@
 =======
     "t_struct(GatewayActorStorage)10086_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(GatewayActorStorage)9606_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct GatewayActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1524,10 +1754,14 @@
 =======
           "astId": 9964,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9484,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnets",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1560,10 +1794,17 @@
         {
           "astId": 9973,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(Subnet)14080_storage)"
+        },
+        {
+          "astId": 9493,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1596,10 +1837,17 @@
         {
           "astId": 9979,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13951_storage)dyn_storage))"
+        },
+        {
+          "astId": 9499,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "finalitiesMap",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1632,6 +1880,12 @@
         {
           "astId": 9982,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13878_storage)"
+        },
+        {
+          "astId": 9502,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "latestParentHeight",
           "offset": 0,
@@ -1639,6 +1893,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1656,10 +1911,14 @@
 =======
           "astId": 9988,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9508,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "postbox",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1692,6 +1951,12 @@
         {
           "astId": 9995,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)13951_storage)"
+        },
+        {
+          "astId": 9515,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "validatorSetWeights",
           "offset": 0,
@@ -1699,6 +1964,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_uint256))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1716,10 +1982,14 @@
 =======
           "astId": 9999,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9519,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "currentMembership",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1752,10 +2022,17 @@
         {
           "astId": 10003,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(Membership)14203_storage"
+        },
+        {
+          "astId": 9523,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "lastMembership",
           "offset": 0,
           "slot": "9",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1815,32 +2092,36 @@
 =======
           "type": "t_struct(Membership)11989_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(Membership)14203_storage"
+>>>>>>> ea9739e (update storage)
         },
         {
-          "astId": 10008,
+          "astId": 9528,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckpointsLegacy",
           "offset": 0,
           "slot": "12",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13898_storage)"
         },
         {
-          "astId": 10014,
+          "astId": 9534,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckpoints",
           "offset": 0,
           "slot": "13",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)11765_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)13915_storage)"
         },
         {
-          "astId": 10020,
+          "astId": 9540,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckpointInfo",
           "offset": 0,
           "slot": "14",
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)11781_storage)"
+          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13931_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1855,6 +2136,9 @@
 =======
           "astId": 10027,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9547,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCollectedSignatures",
           "offset": 0,
@@ -1862,6 +2146,7 @@
           "type": "t_mapping(t_uint64,t_struct(AddressSet)3420_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1879,6 +2164,9 @@
 =======
           "astId": 10036,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9556,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "children",
           "offset": 0,
@@ -1886,6 +2174,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_array(t_uint256)2_storage))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1903,6 +2192,9 @@
 =======
           "astId": 10045,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9565,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "checks",
           "offset": 0,
@@ -1910,6 +2202,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_mapping(t_bytes32,t_bool)))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1934,13 +2227,17 @@
 =======
           "astId": 10051,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9571,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "18",
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)11849_storage)"
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)13999_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1955,6 +2252,9 @@
 =======
           "astId": 10055,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9575,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnetKeys",
           "offset": 0,
@@ -1962,6 +2262,7 @@
           "type": "t_array(t_bytes32)dyn_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1986,13 +2287,17 @@
 =======
           "astId": 10059,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9579,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "networkName",
           "offset": 0,
           "slot": "20",
-          "type": "t_struct(SubnetID)11906_storage"
+          "type": "t_struct(SubnetID)14060_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2007,6 +2312,9 @@
 =======
           "astId": 10062,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9582,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "minStake",
           "offset": 0,
@@ -2014,6 +2322,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2031,6 +2340,9 @@
 =======
           "astId": 10065,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9585,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "crossMsgFee",
           "offset": 0,
@@ -2038,6 +2350,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2055,6 +2368,9 @@
 =======
           "astId": 10068,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9588,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "majorityPercentage",
           "offset": 0,
@@ -2062,6 +2378,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2079,6 +2396,9 @@
 =======
           "astId": 10071,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9591,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpNonce",
           "offset": 1,
@@ -2086,6 +2406,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2103,6 +2424,9 @@
 =======
           "astId": 10074,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9594,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "appliedTopDownNonce",
           "offset": 9,
@@ -2110,6 +2434,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2127,6 +2452,9 @@
 =======
           "astId": 10077,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9597,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "topDownCheckPeriod",
           "offset": 17,
@@ -2134,6 +2462,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2151,6 +2480,9 @@
 =======
           "astId": 10080,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9600,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "totalSubnets",
           "offset": 0,
@@ -2158,6 +2490,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2175,6 +2508,9 @@
 =======
           "astId": 10082,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9602,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckPeriod",
           "offset": 8,
@@ -2182,6 +2518,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2199,6 +2536,9 @@
 =======
           "astId": 10085,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 9605,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "initialized",
           "offset": 16,
@@ -2208,6 +2548,7 @@
       ],
       "numberOfBytes": "928"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2225,10 +2566,14 @@
 =======
     "t_struct(IPCAddress)11953_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(IPCAddress)14167_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2246,10 +2591,14 @@
 =======
           "astId": 11949,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14163,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2282,10 +2631,17 @@
         {
           "astId": 11952,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 14166,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2303,10 +2659,14 @@
 =======
           "type": "t_struct(FvmAddress)11880_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(FvmAddress)14030_storage"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "128"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2324,10 +2684,14 @@
 =======
     "t_struct(Membership)11989_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(Membership)14203_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct Membership",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2345,10 +2709,14 @@
 =======
           "astId": 11984,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14198,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "validators",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2381,6 +2749,12 @@
         {
           "astId": 11986,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_array(t_struct(Validator)14194_storage)dyn_storage"
+        },
+        {
+          "astId": 14200,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "configurationNumber",
           "offset": 0,
@@ -2388,6 +2762,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2405,6 +2780,9 @@
 =======
           "astId": 11988,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14202,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "totalWeight",
           "offset": 0,
@@ -2414,6 +2792,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2431,10 +2810,14 @@
 =======
     "t_struct(ParentFinality)11728_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(ParentFinality)13878_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct ParentFinality",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2452,6 +2835,9 @@
 =======
           "astId": 11725,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13875,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "height",
           "offset": 0,
@@ -2459,6 +2845,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2476,6 +2863,9 @@
 =======
           "astId": 11727,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13877,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "blockHash",
           "offset": 0,
@@ -2485,6 +2875,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2525,10 +2916,14 @@
 =======
     "t_struct(StorableMsg)11816_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(StorableMsg)13966_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2546,10 +2941,14 @@
 =======
           "astId": 11804,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13954,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2582,10 +2981,17 @@
         {
           "astId": 11807,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(IPCAddress)14167_storage"
+        },
+        {
+          "astId": 13957,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2618,6 +3024,12 @@
         {
           "astId": 11809,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(IPCAddress)14167_storage"
+        },
+        {
+          "astId": 13959,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "value",
           "offset": 0,
@@ -2625,6 +3037,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2642,6 +3055,9 @@
 =======
           "astId": 11811,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13961,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "nonce",
           "offset": 0,
@@ -2649,6 +3065,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2666,6 +3083,9 @@
 =======
           "astId": 11813,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13963,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "method",
           "offset": 8,
@@ -2673,6 +3093,7 @@
           "type": "t_bytes4"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2690,6 +3111,9 @@
 =======
           "astId": 11815,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13965,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "params",
           "offset": 0,
@@ -2699,6 +3123,7 @@
       ],
       "numberOfBytes": "352"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2716,10 +3141,14 @@
 =======
     "t_struct(Subnet)11946_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(Subnet)14080_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct Subnet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2737,6 +3166,9 @@
 =======
           "astId": 11928,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14062,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "stake",
           "offset": 0,
@@ -2744,6 +3176,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2761,6 +3194,9 @@
 =======
           "astId": 11930,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14064,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "genesisEpoch",
           "offset": 0,
@@ -2768,6 +3204,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2785,6 +3222,9 @@
 =======
           "astId": 11932,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14066,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "circSupply",
           "offset": 0,
@@ -2792,6 +3232,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2809,6 +3250,9 @@
 =======
           "astId": 11934,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14068,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "topDownNonce",
           "offset": 0,
@@ -2816,6 +3260,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2833,6 +3278,9 @@
 =======
           "astId": 11936,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14070,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "appliedBottomUpNonce",
           "offset": 8,
@@ -2840,6 +3288,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2857,10 +3306,14 @@
 =======
           "astId": 11939,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14073,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "status",
           "offset": 16,
           "slot": "3",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_enum(Status)5004"
         },
@@ -2884,10 +3337,17 @@
 =======
           "astId": 11942,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_enum(Status)4560"
+        },
+        {
+          "astId": 14076,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "id",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2920,10 +3380,17 @@
         {
           "astId": 11945,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 14079,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "prevCheckpoint",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2941,10 +3408,14 @@
 =======
           "type": "t_struct(BottomUpCheckpoint)11748_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(BottomUpCheckpoint)13898_storage"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "448"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2962,10 +3433,14 @@
 =======
     "t_struct(SubnetID)11906_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(SubnetID)14060_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2983,6 +3458,9 @@
 =======
           "astId": 11901,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14055,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "root",
           "offset": 0,
@@ -2990,6 +3468,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3007,6 +3486,9 @@
 =======
           "astId": 11905,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14059,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "route",
           "offset": 0,
@@ -3016,6 +3498,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3033,10 +3516,14 @@
 =======
     "t_struct(TopDownCheckpoint)11788_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(TopDownCheckpoint)13938_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct TopDownCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3054,6 +3541,9 @@
 =======
           "astId": 11783,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13933,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "epoch",
           "offset": 0,
@@ -3061,6 +3551,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3078,10 +3569,14 @@
 =======
           "astId": 11787,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13937,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3099,10 +3594,14 @@
 =======
           "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_array(t_struct(CrossMsg)13951_storage)dyn_storage"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3135,10 +3634,14 @@
 =======
     "t_struct(Validator)11980_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(Validator)14194_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3156,6 +3659,9 @@
 =======
           "astId": 11976,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14190,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "weight",
           "offset": 0,
@@ -3163,6 +3669,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3180,10 +3687,14 @@
 =======
           "astId": 11979,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14193,
+>>>>>>> ea9739e (update storage)
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "addr",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3201,6 +3712,9 @@
 =======
           "type": "t_struct(FvmAddress)11880_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(FvmAddress)14030_storage"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "96"

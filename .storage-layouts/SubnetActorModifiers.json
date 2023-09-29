@@ -5,6 +5,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "astId": 10413,
 =======
       "astId": 10287,
@@ -18,10 +19,14 @@
 =======
       "astId": 10341,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "astId": 11073,
+>>>>>>> ea9739e (update storage)
       "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
       "label": "s",
       "offset": 0,
       "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -39,6 +44,9 @@
 =======
       "type": "t_struct(SubnetActorStorage)10329_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "type": "t_struct(SubnetActorStorage)11061_storage"
+>>>>>>> ea9739e (update storage)
     }
   ],
   "types": {
@@ -63,6 +71,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_array(t_struct(ChildCheck)11867_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11867_storage",
 =======
@@ -81,10 +90,15 @@
     "t_array(t_struct(ChildCheck)11795_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)11795_storage",
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_array(t_struct(ChildCheck)13945_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)13945_storage",
+>>>>>>> ea9739e (update storage)
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -107,14 +121,12 @@
     "t_array(t_struct(CrossMsg)11801_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)11801_storage",
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_array(t_struct(CrossMsg)13951_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)13951_storage",
+>>>>>>> ea9739e (update storage)
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
-      "numberOfBytes": "32"
-    },
-    "t_array(t_struct(ValidatorChange)11923_storage)dyn_storage": {
-      "base": "t_struct(ValidatorChange)11923_storage",
-      "encoding": "dynamic_array",
-      "label": "struct ValidatorChange[]",
       "numberOfBytes": "32"
     },
     "t_bool": {
@@ -138,14 +150,19 @@
       "numberOfBytes": "32"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_enum(ConsensusType)4990": {
 =======
     "t_enum(ConsensusType)4984": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_enum(ConsensusType)4546": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "enum ConsensusType",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -170,13 +187,16 @@
 >>>>>>> be6a160 (resolve conflicts)
     "t_enum(Status)4998": {
 >>>>>>> f640da2 (confirm with configuration number)
+=======
+    "t_enum(StakingOperation)14083": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
-      "label": "enum Status",
+      "label": "enum StakingOperation",
       "numberOfBytes": "1"
     },
-    "t_enum(SubnetOpt)11926": {
+    "t_enum(Status)4560": {
       "encoding": "inplace",
-      "label": "enum SubnetOpt",
+      "label": "enum Status",
       "numberOfBytes": "1"
     },
     "t_mapping(t_address,t_bool)": {
@@ -197,6 +217,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_address,t_struct(FvmAddress)11952_storage)": {
 =======
     "t_mapping(t_address,t_struct(FvmAddress)11826_storage)": {
@@ -206,10 +227,14 @@
 >>>>>>> f640da2 (confirm with configuration number)
 =======
     "t_mapping(t_address,t_struct(AddressStakingReleases)14115_storage)": {
+=======
+    "t_mapping(t_address,t_struct(AddressStakingReleases)14121_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct AddressStakingReleases)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
       "value": "t_struct(AddressStakingReleases)14115_storage"
     },
     "t_mapping(t_address,t_struct(FvmAddress)14028_storage)": {
@@ -217,10 +242,16 @@
 =======
     "t_mapping(t_address,t_struct(FvmAddress)11880_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(AddressStakingReleases)14121_storage"
+    },
+    "t_mapping(t_address,t_struct(FvmAddress)14030_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct FvmAddress)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -237,12 +268,16 @@
 =======
       "value": "t_struct(FvmAddress)11880_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(FvmAddress)14030_storage"
+>>>>>>> ea9739e (update storage)
     },
-    "t_mapping(t_address,t_struct(Validator)11914_storage)": {
+    "t_mapping(t_address,t_struct(Validator)14139_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -257,6 +292,16 @@
 =======
       "value": "t_struct(Validator)11914_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(Validator)14139_storage"
+    },
+    "t_mapping(t_address,t_uint16)": {
+      "encoding": "mapping",
+      "key": "t_address",
+      "label": "mapping(address => uint16)",
+      "numberOfBytes": "32",
+      "value": "t_uint16"
+>>>>>>> ea9739e (update storage)
     },
     "t_mapping(t_address,t_uint256)": {
       "encoding": "mapping",
@@ -265,6 +310,7 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -289,10 +335,14 @@
 =======
     "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13898_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -310,6 +360,9 @@
 =======
       "value": "t_struct(BottomUpCheckpoint)11748_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13898_storage"
+>>>>>>> ea9739e (update storage)
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -317,6 +370,20 @@
       "label": "mapping(bytes32 => uint256)",
       "numberOfBytes": "32",
       "value": "t_uint256"
+    },
+    "t_mapping(t_uint16,t_address)": {
+      "encoding": "mapping",
+      "key": "t_uint16",
+      "label": "mapping(uint16 => address)",
+      "numberOfBytes": "32",
+      "value": "t_address"
+    },
+    "t_mapping(t_uint16,t_struct(StakingRelease)14111_storage)": {
+      "encoding": "mapping",
+      "key": "t_uint16",
+      "label": "mapping(uint16 => struct StakingRelease)",
+      "numberOfBytes": "32",
+      "value": "t_struct(StakingRelease)14111_storage"
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -336,6 +403,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)11820_storage)": {
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11694_storage)": {
@@ -349,10 +417,14 @@
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13898_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -380,10 +452,16 @@
     },
     "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13898_storage"
+    },
+    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14008_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteBottomUpSubmission)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -398,10 +476,16 @@
     },
     "t_mapping(t_uint64,t_struct(StakingChange)14085_storage)": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+      "value": "t_struct(EpochVoteBottomUpSubmission)14008_storage"
+    },
+    "t_mapping(t_uint64,t_struct(StakingChange)14091_storage)": {
+>>>>>>> ea9739e (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct StakingChange)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(StakingChange)11883_storage"
 >>>>>>> 7748a92 (interface)
@@ -414,6 +498,9 @@
 =======
       "value": "t_struct(EpochVoteBottomUpSubmission)11858_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+      "value": "t_struct(StakingChange)14091_storage"
+>>>>>>> ea9739e (update storage)
     },
     "t_string_storage": {
       "encoding": "bytes",
@@ -439,6 +526,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(BottomUpCheckpointLegacy)11820_storage": {
 =======
     "t_struct(BottomUpCheckpoint)11694_storage": {
@@ -448,10 +536,45 @@
 >>>>>>> f640da2 (confirm with configuration number)
 =======
     "t_struct(AddressStakingReleases)14115_storage": {
+=======
+    "t_struct(AddressStakingReleases)14121_storage": {
       "encoding": "inplace",
       "label": "struct AddressStakingReleases",
       "members": [
         {
+          "astId": 14113,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "length",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_uint16"
+        },
+        {
+          "astId": 14115,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "startIdx",
+          "offset": 2,
+          "slot": "0",
+          "type": "t_uint16"
+        },
+        {
+          "astId": 14120,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "releases",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14111_storage)"
+        }
+      ],
+      "numberOfBytes": "64"
+    },
+    "t_struct(BottomUpCheckpoint)13898_storage": {
+>>>>>>> ea9739e (update storage)
+      "encoding": "inplace",
+      "label": "struct AddressStakingReleases",
+      "members": [
+        {
+<<<<<<< HEAD
           "astId": 14107,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "length",
@@ -504,10 +627,14 @@
 =======
           "astId": 11731,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13881,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -540,6 +667,12 @@
         {
           "astId": 11733,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 13883,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "epoch",
           "offset": 0,
@@ -547,6 +680,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -564,6 +698,9 @@
 =======
           "astId": 11735,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13885,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "fee",
           "offset": 0,
@@ -571,6 +708,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -588,10 +726,14 @@
 =======
           "astId": 11739,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13889,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -624,10 +766,17 @@
         {
           "astId": 11743,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_array(t_struct(CrossMsg)13951_storage)dyn_storage"
+        },
+        {
+          "astId": 13893,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "children",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -660,6 +809,12 @@
         {
           "astId": 11745,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_array(t_struct(ChildCheck)13945_storage)dyn_storage"
+        },
+        {
+          "astId": 13895,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "prevHash",
           "offset": 0,
@@ -667,6 +822,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -684,6 +840,9 @@
 =======
           "astId": 11747,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13897,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "proof",
           "offset": 0,
@@ -693,6 +852,7 @@
       ],
       "numberOfBytes": "256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -710,10 +870,14 @@
 =======
     "t_struct(ChildCheck)11795_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(ChildCheck)13945_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -731,10 +895,14 @@
 =======
           "astId": 11791,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13941,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -767,6 +935,12 @@
         {
           "astId": 11794,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 13944,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "checks",
           "offset": 0,
@@ -776,6 +950,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -793,10 +968,14 @@
 =======
     "t_struct(CrossMsg)11801_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(CrossMsg)13951_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -814,10 +993,14 @@
 =======
           "astId": 11798,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13948,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -850,6 +1033,12 @@
         {
           "astId": 11800,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(StorableMsg)13966_storage"
+        },
+        {
+          "astId": 13950,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "wrapped",
           "offset": 0,
@@ -859,6 +1048,7 @@
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -876,10 +1066,14 @@
 =======
     "t_struct(EpochVoteBottomUpSubmission)11858_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(EpochVoteBottomUpSubmission)14008_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct EpochVoteBottomUpSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -897,10 +1091,14 @@
 =======
           "astId": 11852,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14002,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "vote",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -933,10 +1131,17 @@
         {
           "astId": 11857,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(EpochVoteSubmission)13990_storage"
+        },
+        {
+          "astId": 14007,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -954,10 +1159,14 @@
 =======
           "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13898_storage)"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -975,10 +1184,14 @@
 =======
     "t_struct(EpochVoteSubmission)11840_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(EpochVoteSubmission)13990_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -996,6 +1209,9 @@
 =======
           "astId": 11823,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13973,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -1003,6 +1219,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1020,6 +1237,9 @@
 =======
           "astId": 11825,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13975,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -1027,6 +1247,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1044,6 +1265,9 @@
 =======
           "astId": 11827,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13977,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -1051,6 +1275,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1068,6 +1293,9 @@
 =======
           "astId": 11833,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13983,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "submitters",
           "offset": 0,
@@ -1075,6 +1303,7 @@
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1092,6 +1321,9 @@
 =======
           "astId": 11839,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13989,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "submissionWeights",
           "offset": 0,
@@ -1101,6 +1333,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1118,10 +1351,14 @@
 =======
     "t_struct(FvmAddress)11880_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(FvmAddress)14030_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1139,6 +1376,9 @@
 =======
           "astId": 11877,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14027,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "addrType",
           "offset": 0,
@@ -1146,6 +1386,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1163,6 +1404,9 @@
 =======
           "astId": 11879,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14029,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "payload",
           "offset": 0,
@@ -1172,6 +1416,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1189,10 +1434,14 @@
 =======
     "t_struct(IPCAddress)11953_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(IPCAddress)14167_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1210,10 +1459,14 @@
 =======
           "astId": 11949,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14163,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1246,10 +1499,17 @@
         {
           "astId": 11952,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 14166,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1267,9 +1527,73 @@
 =======
           "type": "t_struct(FvmAddress)11880_storage"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(FvmAddress)14030_storage"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "128"
+    },
+    "t_struct(MaxPQ)12463_storage": {
+      "encoding": "inplace",
+      "label": "struct MaxPQ",
+      "members": [
+        {
+          "astId": 12462,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "inner",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(PQ)13666_storage"
+        }
+      ],
+      "numberOfBytes": "96"
+    },
+    "t_struct(MinPQ)13059_storage": {
+      "encoding": "inplace",
+      "label": "struct MinPQ",
+      "members": [
+        {
+          "astId": 13058,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "inner",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(PQ)13666_storage"
+        }
+      ],
+      "numberOfBytes": "96"
+    },
+    "t_struct(PQ)13666_storage": {
+      "encoding": "inplace",
+      "label": "struct PQ",
+      "members": [
+        {
+          "astId": 13655,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "size",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_uint16"
+        },
+        {
+          "astId": 13660,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "addressToPos",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_mapping(t_address,t_uint16)"
+        },
+        {
+          "astId": 13665,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "posToAddress",
+          "offset": 0,
+          "slot": "2",
+          "type": "t_mapping(t_uint16,t_address)"
+        }
+      ],
+      "numberOfBytes": "96"
     },
     "t_struct(Set)3105_storage": {
       "encoding": "inplace",
@@ -1298,25 +1622,34 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(StorableMsg)11888_storage": {
 =======
     "t_struct(StakingChange)11883_storage": {
 =======
     "t_struct(StakingChange)14085_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(StakingChange)14091_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct StakingChange",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11878,
 =======
           "astId": 14080,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14086,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "op",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_enum(StakingOperation)11875"
         },
@@ -1328,6 +1661,12 @@
         {
           "astId": 14082,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_enum(StakingOperation)14083"
+        },
+        {
+          "astId": 14088,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "amount",
           "offset": 0,
@@ -1336,10 +1675,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11882,
 =======
           "astId": 14084,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14090,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validator",
           "offset": 0,
@@ -1350,19 +1693,27 @@
       "numberOfBytes": "96"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(StakingChangeSet)11901_storage": {
 =======
     "t_struct(StakingChangeSet)14098_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(StakingChangeSet)14104_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct StakingChangeSet",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11886,
 =======
           "astId": 14088,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14094,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -1370,6 +1721,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11889,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
@@ -1379,20 +1731,30 @@
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "startConfigurationNumber",
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14097,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "startConfigurationNumber",
+>>>>>>> ea9739e (update storage)
           "offset": 8,
           "slot": "0",
           "type": "t_uint64"
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11895,
 =======
           "astId": 14097,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14103,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "changes",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint64,t_struct(StakingChange)11883_storage)"
         },
@@ -1410,21 +1772,32 @@
     "t_struct(StakingRelease)11908_storage": {
 =======
           "type": "t_mapping(t_uint64,t_struct(StakingChange)14085_storage)"
+=======
+          "type": "t_mapping(t_uint64,t_struct(StakingChange)14091_storage)"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
     "t_struct(StakingRelease)14105_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(StakingRelease)14111_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct StakingRelease",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11904,
 =======
           "astId": 14101,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14107,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "releaseAt",
           "offset": 0,
@@ -1433,10 +1806,14 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11907,
 =======
           "astId": 14104,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14110,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "amount",
           "offset": 0,
@@ -1447,19 +1824,27 @@
       "numberOfBytes": "64"
     },
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(StakingReleaseQueue)11919_storage": {
 =======
     "t_struct(StakingReleaseQueue)14125_storage": {
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+    "t_struct(StakingReleaseQueue)14131_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct StakingReleaseQueue",
       "members": [
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11911,
 =======
           "astId": 14118,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14124,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "lockingDuration",
           "offset": 0,
@@ -1468,23 +1853,32 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11918,
 =======
           "astId": 14124,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 14130,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "releases",
           "offset": 0,
           "slot": "1",
 <<<<<<< HEAD
+<<<<<<< HEAD
           "type": "t_mapping(t_address,t_array(t_struct(StakingRelease)11908_storage)dyn_storage)"
 =======
           "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14115_storage)"
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14121_storage)"
+>>>>>>> ea9739e (update storage)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(StorableMsg)11762_storage": {
 >>>>>>> 7748a92 (interface)
@@ -1497,10 +1891,14 @@
 =======
     "t_struct(StorableMsg)11816_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(StorableMsg)13966_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1518,10 +1916,14 @@
 =======
           "astId": 11804,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13954,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1554,10 +1956,17 @@
         {
           "astId": 11807,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(IPCAddress)14167_storage"
+        },
+        {
+          "astId": 13957,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1590,6 +1999,12 @@
         {
           "astId": 11809,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_struct(IPCAddress)14167_storage"
+        },
+        {
+          "astId": 13959,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "value",
           "offset": 0,
@@ -1597,6 +2012,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1614,6 +2030,9 @@
 =======
           "astId": 11811,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13961,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -1621,6 +2040,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1638,6 +2058,9 @@
 =======
           "astId": 11813,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13963,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "method",
           "offset": 8,
@@ -1645,6 +2068,7 @@
           "type": "t_bytes4"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1662,6 +2086,9 @@
 =======
           "astId": 11815,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 13965,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "params",
           "offset": 0,
@@ -1671,6 +2098,7 @@
       ],
       "numberOfBytes": "352"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1688,10 +2116,14 @@
 =======
     "t_struct(SubnetActorStorage)10329_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(SubnetActorStorage)11061_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1709,10 +2141,14 @@
 =======
           "astId": 10242,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 10973,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1745,6 +2181,12 @@
         {
           "astId": 10247,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14008_storage)"
+        },
+        {
+          "astId": 10978,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "stake",
           "offset": 0,
@@ -1752,6 +2194,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1769,6 +2212,9 @@
 =======
           "astId": 10252,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 10983,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "accumulatedRewards",
           "offset": 0,
@@ -1776,6 +2222,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1793,6 +2240,9 @@
 =======
           "astId": 10257,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 10988,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validatorNetAddresses",
           "offset": 0,
@@ -1800,6 +2250,7 @@
           "type": "t_mapping(t_address,t_string_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1817,10 +2268,14 @@
 =======
           "astId": 10263,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 10994,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validatorWorkerAddresses",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1853,10 +2308,17 @@
         {
           "astId": 10269,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_address,t_struct(FvmAddress)14030_storage)"
+        },
+        {
+          "astId": 11000,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "committedCheckpoints",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1889,6 +2351,12 @@
         {
           "astId": 10272,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13898_storage)"
+        },
+        {
+          "astId": 11003,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "genesis",
           "offset": 0,
@@ -1896,6 +2364,7 @@
           "type": "t_bytes_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1913,6 +2382,9 @@
 =======
           "astId": 10275,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11006,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "totalStake",
           "offset": 0,
@@ -1920,6 +2392,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1937,6 +2410,9 @@
 =======
           "astId": 10278,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11009,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "minActivationCollateral",
           "offset": 0,
@@ -1944,6 +2420,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1961,13 +2438,17 @@
 =======
           "astId": 10281,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11012,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "topDownCheckPeriod",
+          "label": "configurationNumber",
           "offset": 0,
           "slot": "9",
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1985,13 +2466,17 @@
 =======
           "astId": 10284,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11015,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "bottomUpCheckPeriod",
+          "label": "topDownCheckPeriod",
           "offset": 8,
           "slot": "9",
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2009,13 +2494,17 @@
 =======
           "astId": 10287,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11018,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "minValidators",
+          "label": "bottomUpCheckPeriod",
           "offset": 16,
           "slot": "9",
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2027,6 +2516,9 @@
 =======
           "astId": 11019,
 >>>>>>> fa018d6 (Adding min priority queue (#209))
+=======
+          "astId": 11021,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "minValidators",
           "offset": 24,
@@ -2034,6 +2526,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 10376,
@@ -2049,6 +2542,9 @@
 =======
           "astId": 10290,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11024,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "name",
           "offset": 0,
@@ -2056,6 +2552,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2073,6 +2570,9 @@
 =======
           "astId": 10292,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11026,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "currentSubnetHash",
           "offset": 0,
@@ -2080,6 +2580,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2097,6 +2598,9 @@
 =======
           "astId": 10295,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11029,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "prevExecutedCheckpointHash",
           "offset": 0,
@@ -2104,6 +2608,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2121,6 +2626,9 @@
 =======
           "astId": 10298,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11032,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "ipcGatewayAddr",
           "offset": 0,
@@ -2128,6 +2636,7 @@
           "type": "t_address"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2145,10 +2654,14 @@
 =======
           "astId": 10302,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 11036,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "status",
           "offset": 20,
           "slot": "13",
+<<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_enum(Status)5004"
         },
@@ -2330,20 +2843,68 @@
 >>>>>>> fa018d6 (Adding min priority queue (#209))
 =======
           "slot": "18",
+=======
+          "type": "t_enum(Status)4560"
+        },
+        {
+          "astId": 11040,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "validators",
+          "offset": 0,
+          "slot": "14",
+>>>>>>> ea9739e (update storage)
           "type": "t_struct(AddressSet)3420_storage"
         },
         {
-          "astId": 10328,
+          "astId": 11044,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validatorInfo",
+          "label": "parentId",
           "offset": 0,
+<<<<<<< HEAD
           "slot": "20",
           "type": "t_mapping(t_address,t_struct(Validator)11914_storage)"
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "slot": "16",
+          "type": "t_struct(SubnetID)14060_storage"
+        },
+        {
+          "astId": 11048,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "consensus",
+          "offset": 0,
+          "slot": "18",
+          "type": "t_enum(ConsensusType)4546"
+        },
+        {
+          "astId": 11052,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "validatorSet",
+          "offset": 0,
+          "slot": "19",
+          "type": "t_struct(ValidatorSet)14160_storage"
+        },
+        {
+          "astId": 11056,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "changeSet",
+          "offset": 0,
+          "slot": "27",
+          "type": "t_struct(StakingChangeSet)14104_storage"
+        },
+        {
+          "astId": 11060,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "releaseQueue",
+          "offset": 0,
+          "slot": "29",
+          "type": "t_struct(StakingReleaseQueue)14131_storage"
+>>>>>>> ea9739e (update storage)
         }
       ],
-      "numberOfBytes": "672"
+      "numberOfBytes": "992"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2361,10 +2922,14 @@
 =======
     "t_struct(SubnetID)11906_storage": {
 >>>>>>> be6a160 (resolve conflicts)
+=======
+    "t_struct(SubnetID)14060_storage": {
+>>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2382,6 +2947,9 @@
 =======
           "astId": 11901,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14055,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "root",
           "offset": 0,
@@ -2389,6 +2957,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2406,6 +2975,9 @@
 =======
           "astId": 11905,
 >>>>>>> be6a160 (resolve conflicts)
+=======
+          "astId": 14059,
+>>>>>>> ea9739e (update storage)
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "route",
           "offset": 0,
@@ -2415,30 +2987,30 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(Validator)11914_storage": {
+    "t_struct(Validator)14139_storage": {
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
-          "astId": 11908,
+          "astId": 14133,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validator",
+          "label": "confirmedCollateral",
           "offset": 0,
           "slot": "0",
-          "type": "t_address"
+          "type": "t_uint256"
         },
         {
-          "astId": 11910,
+          "astId": 14135,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "weight",
+          "label": "totalCollateral",
           "offset": 0,
           "slot": "1",
           "type": "t_uint256"
         },
         {
-          "astId": 11913,
+          "astId": 14138,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "info",
+          "label": "data",
           "offset": 0,
           "slot": "2",
           "type": "t_bytes_storage"
@@ -2446,36 +3018,57 @@
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(ValidatorChange)11923_storage": {
+    "t_struct(ValidatorSet)14160_storage": {
       "encoding": "inplace",
-      "label": "struct ValidatorChange",
+      "label": "struct ValidatorSet",
       "members": [
         {
-          "astId": 11917,
+          "astId": 14142,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validator",
+          "label": "activeLimit",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(Validator)11914_storage"
+          "type": "t_uint16"
         },
         {
-          "astId": 11919,
+          "astId": 14145,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "configurationNumber",
+          "label": "totalValidators",
+          "offset": 2,
+          "slot": "0",
+          "type": "t_uint16"
+        },
+        {
+          "astId": 14151,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "validators",
           "offset": 0,
-          "slot": "3",
-          "type": "t_uint64"
+          "slot": "1",
+          "type": "t_mapping(t_address,t_struct(Validator)14139_storage)"
         },
         {
-          "astId": 11922,
+          "astId": 14155,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "operation",
-          "offset": 8,
-          "slot": "3",
-          "type": "t_enum(SubnetOpt)11926"
+          "label": "activeValidators",
+          "offset": 0,
+          "slot": "2",
+          "type": "t_struct(MinPQ)13059_storage"
+        },
+        {
+          "astId": 14159,
+          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
+          "label": "waitingValidators",
+          "offset": 0,
+          "slot": "5",
+          "type": "t_struct(MaxPQ)12463_storage"
         }
       ],
-      "numberOfBytes": "128"
+      "numberOfBytes": "256"
+    },
+    "t_uint16": {
+      "encoding": "inplace",
+      "label": "uint16",
+      "numberOfBytes": "2"
     },
     "t_uint256": {
       "encoding": "inplace",
