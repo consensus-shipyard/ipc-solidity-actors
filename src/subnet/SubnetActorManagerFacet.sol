@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {Status} from "../enums/Status.sol";
-import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
@@ -16,6 +16,7 @@ import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {SubnetActorModifiers} from "../lib/LibSubnetActorStorage.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
+import {LibStaking} from "../lib/LibStaking.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
@@ -199,5 +200,63 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.prevExecutedCheckpointHash = checkpoint.toHash();
 
         IGateway(s.ipcGatewayAddr).commitChildCheck(checkpoint);
+    }
+
+    /// @notice Set the data of a validator
+    function setData(bytes calldata data) external {
+        if (!LibStaking.hasStaked(msg.sender)) {
+            revert NotStakedBefore();
+        }
+        LibStaking.setValidatorData(msg.sender, data);
+    }
+
+    /// @notice method that allows a validator to join the subnet
+    /// @param data The offchain data that should be associated with the validator
+    function join2(bytes calldata data) external payable notKilled {
+        if (msg.value == 0) {
+            revert CollateralIsZero();
+        }
+
+        LibStaking.setValidatorData(msg.sender, data);
+        LibStaking.deposit(msg.sender, msg.value);
+    }
+
+    /// @notice method that allows a validator to increase their stake
+    function stake() external payable notKilled {
+        if (msg.value == 0) {
+            revert CollateralIsZero();
+        }
+
+        if (!LibStaking.hasStaked(msg.sender)) {
+            revert NotStakedBefore();
+        }
+
+        LibStaking.deposit(msg.sender, msg.value);
+    }
+
+    /// @notice method that allows a validator to leave the subnet
+    function leave2() external notKilled {
+        uint256 amount = LibStaking.totalValidatorCollateral(msg.sender);
+        if (amount == 0) {
+            revert NotValidator();
+        }
+
+        LibStaking.withdraw(msg.sender, amount);
+    }
+
+    /// @notice method that allows to kill the subnet when all validators left. It is not a privileged operation.
+    function kill2() external notKilled {
+        if (LibStaking.totalValidators() != 0) {
+            revert NotAllValidatorsHaveLeft();
+        }
+
+        s.status = Status.Killed;
+
+        IGateway(s.ipcGatewayAddr).kill();
+    }
+
+    /// @notice Valdiator claims their released collateral
+    function claim() external nonReentrant notKilled {
+        LibStaking.claimCollateral(msg.sender);
     }
 }

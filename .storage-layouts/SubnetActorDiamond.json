@@ -6,7 +6,7 @@
       "label": "s",
       "offset": 0,
       "slot": "0",
-      "type": "t_struct(SubnetActorStorage)11059_storage"
+      "type": "t_struct(SubnetActorStorage)11253_storage"
     }
   ],
   "types": {
@@ -27,14 +27,14 @@
       "label": "bytes32[]",
       "numberOfBytes": "32"
     },
-    "t_array(t_struct(ChildCheck)13943_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)13943_storage",
+    "t_array(t_struct(ChildCheck)14137_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)14137_storage",
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
-    "t_array(t_struct(CrossMsg)13949_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13949_storage",
+    "t_array(t_struct(CrossMsg)14143_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)14143_storage",
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
@@ -59,17 +59,17 @@
       "label": "bytes",
       "numberOfBytes": "32"
     },
-    "t_enum(ConsensusType)4984": {
+    "t_enum(ConsensusType)4546": {
       "encoding": "inplace",
       "label": "enum ConsensusType",
       "numberOfBytes": "1"
     },
-    "t_enum(StakingOperation)14077": {
+    "t_enum(StakingOperation)14275": {
       "encoding": "inplace",
       "label": "enum StakingOperation",
       "numberOfBytes": "1"
     },
-    "t_enum(Status)4998": {
+    "t_enum(Status)4560": {
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
@@ -88,26 +88,33 @@
       "numberOfBytes": "32",
       "value": "t_string_storage"
     },
-    "t_mapping(t_address,t_struct(AddressStakingReleases)14115_storage)": {
+    "t_mapping(t_address,t_struct(AddressStakingReleases)14313_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct AddressStakingReleases)",
       "numberOfBytes": "32",
-      "value": "t_struct(AddressStakingReleases)14115_storage"
+      "value": "t_struct(AddressStakingReleases)14313_storage"
     },
-    "t_mapping(t_address,t_struct(FvmAddress)14028_storage)": {
+    "t_mapping(t_address,t_struct(FvmAddress)14222_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct FvmAddress)",
       "numberOfBytes": "32",
-      "value": "t_struct(FvmAddress)14028_storage"
+      "value": "t_struct(FvmAddress)14222_storage"
     },
-    "t_mapping(t_address,t_struct(Validator)14133_storage)": {
+    "t_mapping(t_address,t_struct(Validator)14331_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
-      "value": "t_struct(Validator)14133_storage"
+      "value": "t_struct(Validator)14331_storage"
+    },
+    "t_mapping(t_address,t_uint16)": {
+      "encoding": "mapping",
+      "key": "t_address",
+      "label": "mapping(address => uint16)",
+      "numberOfBytes": "32",
+      "value": "t_uint16"
     },
     "t_mapping(t_address,t_uint256)": {
       "encoding": "mapping",
@@ -116,12 +123,12 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13896_storage)": {
+    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14090_storage)": {
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
-      "value": "t_struct(BottomUpCheckpoint)13896_storage"
+      "value": "t_struct(BottomUpCheckpoint)14090_storage"
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -130,12 +137,19 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
-    "t_mapping(t_uint16,t_struct(StakingRelease)14105_storage)": {
+    "t_mapping(t_uint16,t_address)": {
+      "encoding": "mapping",
+      "key": "t_uint16",
+      "label": "mapping(uint16 => address)",
+      "numberOfBytes": "32",
+      "value": "t_address"
+    },
+    "t_mapping(t_uint16,t_struct(StakingRelease)14303_storage)": {
       "encoding": "mapping",
       "key": "t_uint16",
       "label": "mapping(uint16 => struct StakingRelease)",
       "numberOfBytes": "32",
-      "value": "t_struct(StakingRelease)14105_storage"
+      "value": "t_struct(StakingRelease)14303_storage"
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -151,26 +165,26 @@
       "numberOfBytes": "32",
       "value": "t_mapping(t_bytes32,t_uint256)"
     },
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13896_storage)": {
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
-      "value": "t_struct(BottomUpCheckpoint)13896_storage"
+      "value": "t_struct(BottomUpCheckpoint)14090_storage"
     },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14006_storage)": {
+    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14200_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteBottomUpSubmission)",
       "numberOfBytes": "32",
-      "value": "t_struct(EpochVoteBottomUpSubmission)14006_storage"
+      "value": "t_struct(EpochVoteBottomUpSubmission)14200_storage"
     },
-    "t_mapping(t_uint64,t_struct(StakingChange)14085_storage)": {
+    "t_mapping(t_uint64,t_struct(StakingChange)14283_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct StakingChange)",
       "numberOfBytes": "32",
-      "value": "t_struct(StakingChange)14085_storage"
+      "value": "t_struct(StakingChange)14283_storage"
     },
     "t_string_storage": {
       "encoding": "bytes",
@@ -192,12 +206,12 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(AddressStakingReleases)14115_storage": {
+    "t_struct(AddressStakingReleases)14313_storage": {
       "encoding": "inplace",
       "label": "struct AddressStakingReleases",
       "members": [
         {
-          "astId": 14107,
+          "astId": 14305,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "length",
           "offset": 0,
@@ -205,7 +219,7 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14109,
+          "astId": 14307,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startIdx",
           "offset": 2,
@@ -213,30 +227,30 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14114,
+          "astId": 14312,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
-          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14105_storage)"
+          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14303_storage)"
         }
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(BottomUpCheckpoint)13896_storage": {
+    "t_struct(BottomUpCheckpoint)14090_storage": {
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
-          "astId": 13879,
+          "astId": 14073,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(SubnetID)14054_storage"
+          "type": "t_struct(SubnetID)14252_storage"
         },
         {
-          "astId": 13881,
+          "astId": 14075,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epoch",
           "offset": 0,
@@ -244,7 +258,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 13883,
+          "astId": 14077,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "fee",
           "offset": 0,
@@ -252,23 +266,23 @@
           "type": "t_uint256"
         },
         {
-          "astId": 13887,
+          "astId": 14081,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
-          "type": "t_array(t_struct(CrossMsg)13949_storage)dyn_storage"
+          "type": "t_array(t_struct(CrossMsg)14143_storage)dyn_storage"
         },
         {
-          "astId": 13891,
+          "astId": 14085,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "children",
           "offset": 0,
           "slot": "5",
-          "type": "t_array(t_struct(ChildCheck)13943_storage)dyn_storage"
+          "type": "t_array(t_struct(ChildCheck)14137_storage)dyn_storage"
         },
         {
-          "astId": 13893,
+          "astId": 14087,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevHash",
           "offset": 0,
@@ -276,7 +290,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 13895,
+          "astId": 14089,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "proof",
           "offset": 0,
@@ -286,20 +300,20 @@
       ],
       "numberOfBytes": "256"
     },
-    "t_struct(ChildCheck)13943_storage": {
+    "t_struct(ChildCheck)14137_storage": {
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
-          "astId": 13939,
+          "astId": 14133,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(SubnetID)14054_storage"
+          "type": "t_struct(SubnetID)14252_storage"
         },
         {
-          "astId": 13942,
+          "astId": 14136,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "checks",
           "offset": 0,
@@ -309,20 +323,20 @@
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(CrossMsg)13949_storage": {
+    "t_struct(CrossMsg)14143_storage": {
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
-          "astId": 13946,
+          "astId": 14140,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "message",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(StorableMsg)13964_storage"
+          "type": "t_struct(StorableMsg)14158_storage"
         },
         {
-          "astId": 13948,
+          "astId": 14142,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "wrapped",
           "offset": 0,
@@ -332,35 +346,35 @@
       ],
       "numberOfBytes": "384"
     },
-    "t_struct(EpochVoteBottomUpSubmission)14006_storage": {
+    "t_struct(EpochVoteBottomUpSubmission)14200_storage": {
       "encoding": "inplace",
       "label": "struct EpochVoteBottomUpSubmission",
       "members": [
         {
-          "astId": 14000,
+          "astId": 14194,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "vote",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(EpochVoteSubmission)13988_storage"
+          "type": "t_struct(EpochVoteSubmission)14182_storage"
         },
         {
-          "astId": 14005,
+          "astId": 14199,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13896_storage)"
+          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14090_storage)"
         }
       ],
       "numberOfBytes": "192"
     },
-    "t_struct(EpochVoteSubmission)13988_storage": {
+    "t_struct(EpochVoteSubmission)14182_storage": {
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
-          "astId": 13971,
+          "astId": 14165,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -368,7 +382,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 13973,
+          "astId": 14167,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -376,7 +390,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 13975,
+          "astId": 14169,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -384,7 +398,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 13981,
+          "astId": 14175,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submitters",
           "offset": 0,
@@ -392,7 +406,7 @@
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
-          "astId": 13987,
+          "astId": 14181,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissionWeights",
           "offset": 0,
@@ -402,12 +416,12 @@
       ],
       "numberOfBytes": "160"
     },
-    "t_struct(FvmAddress)14028_storage": {
+    "t_struct(FvmAddress)14222_storage": {
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
-          "astId": 14025,
+          "astId": 14219,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "addrType",
           "offset": 0,
@@ -415,7 +429,7 @@
           "type": "t_uint8"
         },
         {
-          "astId": 14027,
+          "astId": 14221,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "payload",
           "offset": 0,
@@ -425,28 +439,89 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(IPCAddress)14153_storage": {
+    "t_struct(IPCAddress)14359_storage": {
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
-          "astId": 14149,
+          "astId": 14355,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(SubnetID)14054_storage"
+          "type": "t_struct(SubnetID)14252_storage"
         },
         {
-          "astId": 14152,
+          "astId": 14358,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
-          "type": "t_struct(FvmAddress)14028_storage"
+          "type": "t_struct(FvmAddress)14222_storage"
         }
       ],
       "numberOfBytes": "128"
+    },
+    "t_struct(MaxPQ)12655_storage": {
+      "encoding": "inplace",
+      "label": "struct MaxPQ",
+      "members": [
+        {
+          "astId": 12654,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "inner",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(PQ)13858_storage"
+        }
+      ],
+      "numberOfBytes": "96"
+    },
+    "t_struct(MinPQ)13251_storage": {
+      "encoding": "inplace",
+      "label": "struct MinPQ",
+      "members": [
+        {
+          "astId": 13250,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "inner",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(PQ)13858_storage"
+        }
+      ],
+      "numberOfBytes": "96"
+    },
+    "t_struct(PQ)13858_storage": {
+      "encoding": "inplace",
+      "label": "struct PQ",
+      "members": [
+        {
+          "astId": 13847,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "size",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_uint16"
+        },
+        {
+          "astId": 13852,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "addressToPos",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_mapping(t_address,t_uint16)"
+        },
+        {
+          "astId": 13857,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "posToAddress",
+          "offset": 0,
+          "slot": "2",
+          "type": "t_mapping(t_uint16,t_address)"
+        }
+      ],
+      "numberOfBytes": "96"
     },
     "t_struct(Set)3105_storage": {
       "encoding": "inplace",
@@ -471,20 +546,20 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(StakingChange)14085_storage": {
+    "t_struct(StakingChange)14283_storage": {
       "encoding": "inplace",
       "label": "struct StakingChange",
       "members": [
         {
-          "astId": 14080,
+          "astId": 14278,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "op",
           "offset": 0,
           "slot": "0",
-          "type": "t_enum(StakingOperation)14077"
+          "type": "t_enum(StakingOperation)14275"
         },
         {
-          "astId": 14082,
+          "astId": 14280,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -492,7 +567,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14084,
+          "astId": 14282,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validator",
           "offset": 0,
@@ -502,12 +577,12 @@
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(StakingChangeSet)14098_storage": {
+    "t_struct(StakingChangeSet)14296_storage": {
       "encoding": "inplace",
       "label": "struct StakingChangeSet",
       "members": [
         {
-          "astId": 14088,
+          "astId": 14286,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -515,7 +590,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 14091,
+          "astId": 14289,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startConfigurationNumber",
           "offset": 8,
@@ -523,22 +598,22 @@
           "type": "t_uint64"
         },
         {
-          "astId": 14097,
+          "astId": 14295,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "changes",
           "offset": 0,
           "slot": "1",
-          "type": "t_mapping(t_uint64,t_struct(StakingChange)14085_storage)"
+          "type": "t_mapping(t_uint64,t_struct(StakingChange)14283_storage)"
         }
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(StakingRelease)14105_storage": {
+    "t_struct(StakingRelease)14303_storage": {
       "encoding": "inplace",
       "label": "struct StakingRelease",
       "members": [
         {
-          "astId": 14101,
+          "astId": 14299,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releaseAt",
           "offset": 0,
@@ -546,7 +621,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14104,
+          "astId": 14302,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -556,12 +631,12 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(StakingReleaseQueue)14125_storage": {
+    "t_struct(StakingReleaseQueue)14323_storage": {
       "encoding": "inplace",
       "label": "struct StakingReleaseQueue",
       "members": [
         {
-          "astId": 14118,
+          "astId": 14316,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "lockingDuration",
           "offset": 0,
@@ -569,38 +644,38 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14124,
+          "astId": 14322,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
-          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14115_storage)"
+          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14313_storage)"
         }
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(StorableMsg)13964_storage": {
+    "t_struct(StorableMsg)14158_storage": {
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
-          "astId": 13952,
+          "astId": 14146,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "from",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(IPCAddress)14153_storage"
+          "type": "t_struct(IPCAddress)14359_storage"
         },
         {
-          "astId": 13955,
+          "astId": 14149,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "to",
           "offset": 0,
           "slot": "4",
-          "type": "t_struct(IPCAddress)14153_storage"
+          "type": "t_struct(IPCAddress)14359_storage"
         },
         {
-          "astId": 13957,
+          "astId": 14151,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "value",
           "offset": 0,
@@ -608,7 +683,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 13959,
+          "astId": 14153,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -616,7 +691,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 13961,
+          "astId": 14155,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "method",
           "offset": 8,
@@ -624,7 +699,7 @@
           "type": "t_bytes4"
         },
         {
-          "astId": 13963,
+          "astId": 14157,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "params",
           "offset": 0,
@@ -634,20 +709,20 @@
       ],
       "numberOfBytes": "352"
     },
-    "t_struct(SubnetActorStorage)11059_storage": {
+    "t_struct(SubnetActorStorage)11253_storage": {
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
-          "astId": 10971,
+          "astId": 11165,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "0",
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14006_storage)"
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14200_storage)"
         },
         {
-          "astId": 10976,
+          "astId": 11170,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "stake",
           "offset": 0,
@@ -655,7 +730,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
-          "astId": 10981,
+          "astId": 11175,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "accumulatedRewards",
           "offset": 0,
@@ -663,7 +738,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
-          "astId": 10986,
+          "astId": 11180,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorNetAddresses",
           "offset": 0,
@@ -671,23 +746,23 @@
           "type": "t_mapping(t_address,t_string_storage)"
         },
         {
-          "astId": 10992,
+          "astId": 11186,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorWorkerAddresses",
           "offset": 0,
           "slot": "4",
-          "type": "t_mapping(t_address,t_struct(FvmAddress)14028_storage)"
+          "type": "t_mapping(t_address,t_struct(FvmAddress)14222_storage)"
         },
         {
-          "astId": 10998,
+          "astId": 11192,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "committedCheckpoints",
           "offset": 0,
           "slot": "5",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13896_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)"
         },
         {
-          "astId": 11001,
+          "astId": 11195,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "genesis",
           "offset": 0,
@@ -695,7 +770,7 @@
           "type": "t_bytes_storage"
         },
         {
-          "astId": 11004,
+          "astId": 11198,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalStake",
           "offset": 0,
@@ -703,7 +778,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 11007,
+          "astId": 11201,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minActivationCollateral",
           "offset": 0,
@@ -711,7 +786,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 11010,
+          "astId": 11204,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "configurationNumber",
           "offset": 0,
@@ -719,7 +794,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 11013,
+          "astId": 11207,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "topDownCheckPeriod",
           "offset": 8,
@@ -727,7 +802,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 11016,
+          "astId": 11210,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "bottomUpCheckPeriod",
           "offset": 16,
@@ -735,7 +810,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 11019,
+          "astId": 11213,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minValidators",
           "offset": 24,
@@ -743,7 +818,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 11022,
+          "astId": 11216,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "name",
           "offset": 0,
@@ -751,7 +826,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 11024,
+          "astId": 11218,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "currentSubnetHash",
           "offset": 0,
@@ -759,7 +834,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 11027,
+          "astId": 11221,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevExecutedCheckpointHash",
           "offset": 0,
@@ -767,7 +842,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 11030,
+          "astId": 11224,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "ipcGatewayAddr",
           "offset": 0,
@@ -775,15 +850,15 @@
           "type": "t_address"
         },
         {
-          "astId": 11034,
+          "astId": 11228,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "status",
           "offset": 20,
           "slot": "13",
-          "type": "t_enum(Status)4998"
+          "type": "t_enum(Status)4560"
         },
         {
-          "astId": 11038,
+          "astId": 11232,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validators",
           "offset": 0,
@@ -791,54 +866,54 @@
           "type": "t_struct(AddressSet)3420_storage"
         },
         {
-          "astId": 11042,
+          "astId": 11236,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "parentId",
           "offset": 0,
           "slot": "16",
-          "type": "t_struct(SubnetID)14054_storage"
+          "type": "t_struct(SubnetID)14252_storage"
         },
         {
-          "astId": 11046,
+          "astId": 11240,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "consensus",
           "offset": 0,
           "slot": "18",
-          "type": "t_enum(ConsensusType)4984"
+          "type": "t_enum(ConsensusType)4546"
         },
         {
-          "astId": 11050,
+          "astId": 11244,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorSet",
           "offset": 0,
           "slot": "19",
-          "type": "t_struct(ValidatorSet)14146_storage"
+          "type": "t_struct(ValidatorSet)14352_storage"
         },
         {
-          "astId": 11054,
+          "astId": 11248,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "changeSet",
           "offset": 0,
-          "slot": "21",
-          "type": "t_struct(StakingChangeSet)14098_storage"
+          "slot": "28",
+          "type": "t_struct(StakingChangeSet)14296_storage"
         },
         {
-          "astId": 11058,
+          "astId": 11252,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releaseQueue",
           "offset": 0,
-          "slot": "23",
-          "type": "t_struct(StakingReleaseQueue)14125_storage"
+          "slot": "30",
+          "type": "t_struct(StakingReleaseQueue)14323_storage"
         }
       ],
-      "numberOfBytes": "800"
+      "numberOfBytes": "1024"
     },
-    "t_struct(SubnetID)14054_storage": {
+    "t_struct(SubnetID)14252_storage": {
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
-          "astId": 14049,
+          "astId": 14247,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "root",
           "offset": 0,
@@ -846,7 +921,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 14053,
+          "astId": 14251,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "route",
           "offset": 0,
@@ -856,12 +931,12 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(Validator)14133_storage": {
+    "t_struct(Validator)14331_storage": {
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
-          "astId": 14127,
+          "astId": 14325,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "confirmedCollateral",
           "offset": 0,
@@ -869,7 +944,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14129,
+          "astId": 14327,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalCollateral",
           "offset": 0,
@@ -877,7 +952,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14132,
+          "astId": 14330,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "data",
           "offset": 0,
@@ -887,12 +962,12 @@
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(ValidatorSet)14146_storage": {
+    "t_struct(ValidatorSet)14352_storage": {
       "encoding": "inplace",
       "label": "struct ValidatorSet",
       "members": [
         {
-          "astId": 14136,
+          "astId": 14334,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "activeLimit",
           "offset": 0,
@@ -900,23 +975,39 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14139,
+          "astId": 14337,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
-          "label": "totalValidators",
-          "offset": 2,
-          "slot": "0",
-          "type": "t_uint16"
+          "label": "totalConfirmedCollateral",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_uint256"
         },
         {
-          "astId": 14145,
+          "astId": 14343,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validators",
           "offset": 0,
-          "slot": "1",
-          "type": "t_mapping(t_address,t_struct(Validator)14133_storage)"
+          "slot": "2",
+          "type": "t_mapping(t_address,t_struct(Validator)14331_storage)"
+        },
+        {
+          "astId": 14347,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "activeValidators",
+          "offset": 0,
+          "slot": "3",
+          "type": "t_struct(MinPQ)13251_storage"
+        },
+        {
+          "astId": 14351,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "waitingValidators",
+          "offset": 0,
+          "slot": "6",
+          "type": "t_struct(MaxPQ)12655_storage"
         }
       ],
-      "numberOfBytes": "64"
+      "numberOfBytes": "288"
     },
     "t_uint16": {
       "encoding": "inplace",
