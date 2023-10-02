@@ -7,7 +7,7 @@ pub use subnet_actor_manager_facet::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types,
+    non_camel_case_types
 )]
 pub mod subnet_actor_manager_facet {
     #[allow(deprecated)]
@@ -15,6 +15,18 @@ pub mod subnet_actor_manager_facet {
         ::ethers::core::abi::ethabi::Contract {
             constructor: ::core::option::Option::None,
             functions: ::core::convert::From::from([
+                (
+                    ::std::borrow::ToOwned::to_owned("claim"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("claim"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
                 (
                     ::std::borrow::ToOwned::to_owned("committedCheckpoints"),
                     ::std::vec![
@@ -87,6 +99,40 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("getValidator"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("getValidator"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("validatorAddress"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct Validator"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("join"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -119,10 +165,42 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("join2"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("join2"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("data"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("kill"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned("kill"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("kill2"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("kill2"),
                             inputs: ::std::vec![],
                             outputs: ::std::vec![],
                             constant: ::core::option::Option::None,
@@ -143,6 +221,18 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("leave2"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("leave2"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("reward"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -155,6 +245,26 @@ pub mod subnet_actor_manager_facet {
                                     ),
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("setMetadata"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("setMetadata"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("metadata"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes"),
                                     ),
                                 },
                             ],
@@ -210,6 +320,18 @@ pub mod subnet_actor_manager_facet {
                             outputs: ::std::vec![],
                             constant: ::core::option::Option::None,
                             state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("stake"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("stake"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
                         },
                     ],
                 ),
@@ -321,7 +443,7 @@ pub mod subnet_actor_manager_facet {
                                     ),
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned(
-                                            "struct BottomUpCheckpoint",
+                                            "struct BottomUpCheckpointLegacy",
                                         ),
                                     ),
                                 },
@@ -581,6 +703,17 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("NoCollateralToWithdraw"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "NoCollateralToWithdraw",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("NoRewardToWithdraw"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -632,6 +765,15 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("NotStakedBefore"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("NotStakedBefore"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("NotValidator"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -670,6 +812,17 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("WithdrawExceedingCollateral"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "WithdrawExceedingCollateral",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("WrongCheckpointSource"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -686,9 +839,8 @@ pub mod subnet_actor_manager_facet {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static SUBNETACTORMANAGERFACET_ABI: ::ethers::contract::Lazy<
-        ::ethers::core::abi::Abi,
-    > = ::ethers::contract::Lazy::new(__abi);
+    pub static SUBNETACTORMANAGERFACET_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
+        ::ethers::contract::Lazy::new(__abi);
     pub struct SubnetActorManagerFacet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SubnetActorManagerFacet<M> {
         fn clone(&self) -> Self {
@@ -720,13 +872,17 @@ pub mod subnet_actor_manager_facet {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(
-                ::ethers::contract::Contract::new(
-                    address.into(),
-                    SUBNETACTORMANAGERFACET_ABI.clone(),
-                    client,
-                ),
-            )
+            Self(::ethers::contract::Contract::new(
+                address.into(),
+                SUBNETACTORMANAGERFACET_ABI.clone(),
+                client,
+            ))
+        }
+        ///Calls the contract's `claim` (0x4e71d92d) function
+        pub fn claim(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([78, 113, 217, 45], ())
+                .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `committedCheckpoints` (0x98903748) function
         pub fn committed_checkpoints(
@@ -746,6 +902,15 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([152, 144, 55, 72], e)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `getValidator` (0x1904bb2e) function
+        pub fn get_validator(
+            &self,
+            validator_address: ::ethers::core::types::Address,
+        ) -> ::ethers::contract::builders::ContractCall<M, Validator> {
+            self.0
+                .method_hash([25, 4, 187, 46], validator_address)
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `join` (0x6cf6970a) function
         pub fn join(
             &self,
@@ -756,16 +921,37 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([108, 246, 151, 10], (net_addr, worker_addr))
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `join2` (0xedb0ff83) function
+        pub fn join_2(
+            &self,
+            data: ::ethers::core::types::Bytes,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([237, 176, 255, 131], data)
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `kill` (0x41c0e1b5) function
         pub fn kill(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([65, 192, 225, 181], ())
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `kill2` (0x2bb685bc) function
+        pub fn kill_2(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([43, 182, 133, 188], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `leave` (0xd66d9e19) function
         pub fn leave(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([214, 109, 158, 25], ())
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `leave2` (0xf5904fcf) function
+        pub fn leave_2(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([245, 144, 79, 207], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `reward` (0xa9fb763c) function
@@ -775,6 +961,15 @@ pub mod subnet_actor_manager_facet {
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([169, 251, 118, 60], amount)
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `setMetadata` (0xee57e36f) function
+        pub fn set_metadata(
+            &self,
+            metadata: ::ethers::core::types::Bytes,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([238, 87, 227, 111], metadata)
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `setValidatorNetAddr` (0x7cc4fc43) function
@@ -795,10 +990,16 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([232, 239, 135, 47], (new_worker_addr,))
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `stake` (0x3a4b66f1) function
+        pub fn stake(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([58, 75, 102, 241], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `submitCheckpoint` (0xf6fd8381) function
         pub fn submit_checkpoint(
             &self,
-            checkpoint: BottomUpCheckpoint,
+            checkpoint: BottomUpCheckpointLegacy,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([246, 253, 131, 129], (checkpoint,))
@@ -848,11 +1049,13 @@ pub mod subnet_actor_manager_facet {
             M,
             SubnetActorManagerFacetEvents,
         > {
-            self.0.event_with_filter(::core::default::Default::default())
+            self.0
+                .event_with_filter(::core::default::Default::default())
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-    for SubnetActorManagerFacet<M> {
+        for SubnetActorManagerFacet<M>
+    {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -866,7 +1069,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(
         name = "AddressInsufficientBalance",
@@ -884,7 +1087,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "CollateralIsZero", abi = "CollateralIsZero()")]
     pub struct CollateralIsZero;
@@ -897,7 +1100,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "EmptyAddress", abi = "EmptyAddress()")]
     pub struct EmptyAddress;
@@ -910,7 +1113,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "FailedInnerCall", abi = "FailedInnerCall()")]
     pub struct FailedInnerCall;
@@ -923,7 +1126,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(
         name = "InconsistentPrevCheckpoint",
@@ -939,10 +1142,23 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "MessagesNotSorted", abi = "MessagesNotSorted()")]
     pub struct MessagesNotSorted;
+    ///Custom Error type `NoCollateralToWithdraw` with signature `NoCollateralToWithdraw()` and selector `0x64b0557f`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(name = "NoCollateralToWithdraw", abi = "NoCollateralToWithdraw()")]
+    pub struct NoCollateralToWithdraw;
     ///Custom Error type `NoRewardToWithdraw` with signature `NoRewardToWithdraw()` and selector `0xce601f22`
     #[derive(
         Clone,
@@ -952,7 +1168,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "NoRewardToWithdraw", abi = "NoRewardToWithdraw()")]
     pub struct NoRewardToWithdraw;
@@ -965,7 +1181,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "NoValidatorsInSubnet", abi = "NoValidatorsInSubnet()")]
     pub struct NoValidatorsInSubnet;
@@ -978,7 +1194,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "NotAllValidatorsHaveLeft", abi = "NotAllValidatorsHaveLeft()")]
     pub struct NotAllValidatorsHaveLeft;
@@ -991,7 +1207,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(
         name = "NotEnoughBalanceForRewards",
@@ -1007,10 +1223,23 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "NotGateway", abi = "NotGateway()")]
     pub struct NotGateway;
+    ///Custom Error type `NotStakedBefore` with signature `NotStakedBefore()` and selector `0x528fc165`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(name = "NotStakedBefore", abi = "NotStakedBefore()")]
+    pub struct NotStakedBefore;
     ///Custom Error type `NotValidator` with signature `NotValidator()` and selector `0x2ec5b449`
     #[derive(
         Clone,
@@ -1020,7 +1249,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "NotValidator", abi = "NotValidator()")]
     pub struct NotValidator;
@@ -1033,7 +1262,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "ReentrancyError", abi = "ReentrancyError()")]
     pub struct ReentrancyError;
@@ -1046,7 +1275,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "SubnetAlreadyKilled", abi = "SubnetAlreadyKilled()")]
     pub struct SubnetAlreadyKilled;
@@ -1059,10 +1288,26 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "SubnetNotActive", abi = "SubnetNotActive()")]
     pub struct SubnetNotActive;
+    ///Custom Error type `WithdrawExceedingCollateral` with signature `WithdrawExceedingCollateral()` and selector `0xac693603`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(
+        name = "WithdrawExceedingCollateral",
+        abi = "WithdrawExceedingCollateral()"
+    )]
+    pub struct WithdrawExceedingCollateral;
     ///Custom Error type `WrongCheckpointSource` with signature `WrongCheckpointSource()` and selector `0x75ecc72d`
     #[derive(
         Clone,
@@ -1072,7 +1317,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[etherror(name = "WrongCheckpointSource", abi = "WrongCheckpointSource()")]
     pub struct WrongCheckpointSource;
@@ -1085,15 +1330,18 @@ pub mod subnet_actor_manager_facet {
         FailedInnerCall(FailedInnerCall),
         InconsistentPrevCheckpoint(InconsistentPrevCheckpoint),
         MessagesNotSorted(MessagesNotSorted),
+        NoCollateralToWithdraw(NoCollateralToWithdraw),
         NoRewardToWithdraw(NoRewardToWithdraw),
         NoValidatorsInSubnet(NoValidatorsInSubnet),
         NotAllValidatorsHaveLeft(NotAllValidatorsHaveLeft),
         NotEnoughBalanceForRewards(NotEnoughBalanceForRewards),
         NotGateway(NotGateway),
+        NotStakedBefore(NotStakedBefore),
         NotValidator(NotValidator),
         ReentrancyError(ReentrancyError),
         SubnetAlreadyKilled(SubnetAlreadyKilled),
         SubnetNotActive(SubnetNotActive),
+        WithdrawExceedingCollateral(WithdrawExceedingCollateral),
         WrongCheckpointSource(WrongCheckpointSource),
         /// The standard solidity revert string, with selector
         /// Error(string) -- 0x08c379a0
@@ -1104,89 +1352,88 @@ pub mod subnet_actor_manager_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) = <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::RevertString(decoded));
             }
-            if let Ok(decoded) = <AddressInsufficientBalance as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <AddressInsufficientBalance as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::AddressInsufficientBalance(decoded));
             }
-            if let Ok(decoded) = <CollateralIsZero as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <CollateralIsZero as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::CollateralIsZero(decoded));
             }
-            if let Ok(decoded) = <EmptyAddress as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <EmptyAddress as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::EmptyAddress(decoded));
             }
-            if let Ok(decoded) = <FailedInnerCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <FailedInnerCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::FailedInnerCall(decoded));
             }
-            if let Ok(decoded) = <InconsistentPrevCheckpoint as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <InconsistentPrevCheckpoint as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::InconsistentPrevCheckpoint(decoded));
             }
-            if let Ok(decoded) = <MessagesNotSorted as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <MessagesNotSorted as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::MessagesNotSorted(decoded));
             }
-            if let Ok(decoded) = <NoRewardToWithdraw as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <NoCollateralToWithdraw as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::NoCollateralToWithdraw(decoded));
+            }
+            if let Ok(decoded) =
+                <NoRewardToWithdraw as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::NoRewardToWithdraw(decoded));
             }
-            if let Ok(decoded) = <NoValidatorsInSubnet as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <NoValidatorsInSubnet as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::NoValidatorsInSubnet(decoded));
             }
-            if let Ok(decoded) = <NotAllValidatorsHaveLeft as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <NotAllValidatorsHaveLeft as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::NotAllValidatorsHaveLeft(decoded));
             }
-            if let Ok(decoded) = <NotEnoughBalanceForRewards as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <NotEnoughBalanceForRewards as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::NotEnoughBalanceForRewards(decoded));
             }
-            if let Ok(decoded) = <NotGateway as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <NotGateway as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::NotGateway(decoded));
             }
-            if let Ok(decoded) = <NotValidator as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <NotStakedBefore as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::NotStakedBefore(decoded));
+            }
+            if let Ok(decoded) = <NotValidator as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::NotValidator(decoded));
             }
-            if let Ok(decoded) = <ReentrancyError as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <ReentrancyError as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::ReentrancyError(decoded));
             }
-            if let Ok(decoded) = <SubnetAlreadyKilled as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <SubnetAlreadyKilled as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::SubnetAlreadyKilled(decoded));
             }
-            if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::SubnetNotActive(decoded));
             }
-            if let Ok(decoded) = <WrongCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <WithdrawExceedingCollateral as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::WithdrawExceedingCollateral(decoded));
+            }
+            if let Ok(decoded) =
+                <WrongCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::WrongCheckpointSource(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -1198,19 +1445,14 @@ pub mod subnet_actor_manager_facet {
                 Self::AddressInsufficientBalance(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::CollateralIsZero(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::EmptyAddress(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::FailedInnerCall(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
+                Self::CollateralIsZero(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::EmptyAddress(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::FailedInnerCall(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::InconsistentPrevCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::MessagesNotSorted(element) => {
+                Self::MessagesNotSorted(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NoCollateralToWithdraw(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NoRewardToWithdraw(element) => {
@@ -1225,19 +1467,15 @@ pub mod subnet_actor_manager_facet {
                 Self::NotEnoughBalanceForRewards(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::NotGateway(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::NotValidator(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::ReentrancyError(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
+                Self::NotGateway(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NotStakedBefore(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NotValidator(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::ReentrancyError(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SubnetAlreadyKilled(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::SubnetNotActive(element) => {
+                Self::SubnetNotActive(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::WithdrawExceedingCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::WrongCheckpointSource(element) => {
@@ -1252,61 +1490,77 @@ pub mod subnet_actor_manager_facet {
             match selector {
                 [0x08, 0xc3, 0x79, 0xa0] => true,
                 _ if selector
-                    == <AddressInsufficientBalance as ::ethers::contract::EthError>::selector() => {
+                    == <AddressInsufficientBalance as ::ethers::contract::EthError>::selector() =>
+                {
+                    true
+                }
+                _ if selector == <CollateralIsZero as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector == <EmptyAddress as ::ethers::contract::EthError>::selector() => true,
+                _ if selector == <FailedInnerCall as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <CollateralIsZero as ::ethers::contract::EthError>::selector() => {
+                    == <InconsistentPrevCheckpoint as ::ethers::contract::EthError>::selector() =>
+                {
                     true
                 }
                 _ if selector
-                    == <EmptyAddress as ::ethers::contract::EthError>::selector() => true,
-                _ if selector
-                    == <FailedInnerCall as ::ethers::contract::EthError>::selector() => {
+                    == <MessagesNotSorted as ::ethers::contract::EthError>::selector() =>
+                {
                     true
                 }
                 _ if selector
-                    == <InconsistentPrevCheckpoint as ::ethers::contract::EthError>::selector() => {
+                    == <NoCollateralToWithdraw as ::ethers::contract::EthError>::selector() =>
+                {
                     true
                 }
                 _ if selector
-                    == <MessagesNotSorted as ::ethers::contract::EthError>::selector() => {
+                    == <NoRewardToWithdraw as ::ethers::contract::EthError>::selector() =>
+                {
                     true
                 }
                 _ if selector
-                    == <NoRewardToWithdraw as ::ethers::contract::EthError>::selector() => {
+                    == <NoValidatorsInSubnet as ::ethers::contract::EthError>::selector() =>
+                {
                     true
                 }
                 _ if selector
-                    == <NoValidatorsInSubnet as ::ethers::contract::EthError>::selector() => {
+                    == <NotAllValidatorsHaveLeft as ::ethers::contract::EthError>::selector() =>
+                {
                     true
                 }
                 _ if selector
-                    == <NotAllValidatorsHaveLeft as ::ethers::contract::EthError>::selector() => {
+                    == <NotEnoughBalanceForRewards as ::ethers::contract::EthError>::selector() =>
+                {
+                    true
+                }
+                _ if selector == <NotGateway as ::ethers::contract::EthError>::selector() => true,
+                _ if selector == <NotStakedBefore as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector == <NotValidator as ::ethers::contract::EthError>::selector() => true,
+                _ if selector == <ReentrancyError as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <NotEnoughBalanceForRewards as ::ethers::contract::EthError>::selector() => {
+                    == <SubnetAlreadyKilled as ::ethers::contract::EthError>::selector() =>
+                {
+                    true
+                }
+                _ if selector == <SubnetNotActive as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <NotGateway as ::ethers::contract::EthError>::selector() => true,
-                _ if selector
-                    == <NotValidator as ::ethers::contract::EthError>::selector() => true,
-                _ if selector
-                    == <ReentrancyError as ::ethers::contract::EthError>::selector() => {
+                    == <WithdrawExceedingCollateral as ::ethers::contract::EthError>::selector(
+                    ) =>
+                {
                     true
                 }
                 _ if selector
-                    == <SubnetAlreadyKilled as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <SubnetNotActive as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <WrongCheckpointSource as ::ethers::contract::EthError>::selector() => {
+                    == <WrongCheckpointSource as ::ethers::contract::EthError>::selector() =>
+                {
                     true
                 }
                 _ => false,
@@ -1316,38 +1570,25 @@ pub mod subnet_actor_manager_facet {
     impl ::core::fmt::Display for SubnetActorManagerFacetErrors {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::AddressInsufficientBalance(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::AddressInsufficientBalance(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CollateralIsZero(element) => ::core::fmt::Display::fmt(element, f),
                 Self::EmptyAddress(element) => ::core::fmt::Display::fmt(element, f),
                 Self::FailedInnerCall(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InconsistentPrevCheckpoint(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::InconsistentPrevCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MessagesNotSorted(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NoRewardToWithdraw(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::NoValidatorsInSubnet(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::NotAllValidatorsHaveLeft(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::NotEnoughBalanceForRewards(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::NoCollateralToWithdraw(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NoRewardToWithdraw(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NoValidatorsInSubnet(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotAllValidatorsHaveLeft(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotEnoughBalanceForRewards(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotGateway(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotStakedBefore(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ReentrancyError(element) => ::core::fmt::Display::fmt(element, f),
-                Self::SubnetAlreadyKilled(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::SubnetAlreadyKilled(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubnetNotActive(element) => ::core::fmt::Display::fmt(element, f),
-                Self::WrongCheckpointSource(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::WithdrawExceedingCollateral(element) => ::core::fmt::Display::fmt(element, f),
+                Self::WrongCheckpointSource(element) => ::core::fmt::Display::fmt(element, f),
                 Self::RevertString(s) => ::core::fmt::Display::fmt(s, f),
             }
         }
@@ -1357,8 +1598,7 @@ pub mod subnet_actor_manager_facet {
             Self::RevertString(value)
         }
     }
-    impl ::core::convert::From<AddressInsufficientBalance>
-    for SubnetActorManagerFacetErrors {
+    impl ::core::convert::From<AddressInsufficientBalance> for SubnetActorManagerFacetErrors {
         fn from(value: AddressInsufficientBalance) -> Self {
             Self::AddressInsufficientBalance(value)
         }
@@ -1378,8 +1618,7 @@ pub mod subnet_actor_manager_facet {
             Self::FailedInnerCall(value)
         }
     }
-    impl ::core::convert::From<InconsistentPrevCheckpoint>
-    for SubnetActorManagerFacetErrors {
+    impl ::core::convert::From<InconsistentPrevCheckpoint> for SubnetActorManagerFacetErrors {
         fn from(value: InconsistentPrevCheckpoint) -> Self {
             Self::InconsistentPrevCheckpoint(value)
         }
@@ -1387,6 +1626,11 @@ pub mod subnet_actor_manager_facet {
     impl ::core::convert::From<MessagesNotSorted> for SubnetActorManagerFacetErrors {
         fn from(value: MessagesNotSorted) -> Self {
             Self::MessagesNotSorted(value)
+        }
+    }
+    impl ::core::convert::From<NoCollateralToWithdraw> for SubnetActorManagerFacetErrors {
+        fn from(value: NoCollateralToWithdraw) -> Self {
+            Self::NoCollateralToWithdraw(value)
         }
     }
     impl ::core::convert::From<NoRewardToWithdraw> for SubnetActorManagerFacetErrors {
@@ -1399,14 +1643,12 @@ pub mod subnet_actor_manager_facet {
             Self::NoValidatorsInSubnet(value)
         }
     }
-    impl ::core::convert::From<NotAllValidatorsHaveLeft>
-    for SubnetActorManagerFacetErrors {
+    impl ::core::convert::From<NotAllValidatorsHaveLeft> for SubnetActorManagerFacetErrors {
         fn from(value: NotAllValidatorsHaveLeft) -> Self {
             Self::NotAllValidatorsHaveLeft(value)
         }
     }
-    impl ::core::convert::From<NotEnoughBalanceForRewards>
-    for SubnetActorManagerFacetErrors {
+    impl ::core::convert::From<NotEnoughBalanceForRewards> for SubnetActorManagerFacetErrors {
         fn from(value: NotEnoughBalanceForRewards) -> Self {
             Self::NotEnoughBalanceForRewards(value)
         }
@@ -1414,6 +1656,11 @@ pub mod subnet_actor_manager_facet {
     impl ::core::convert::From<NotGateway> for SubnetActorManagerFacetErrors {
         fn from(value: NotGateway) -> Self {
             Self::NotGateway(value)
+        }
+    }
+    impl ::core::convert::From<NotStakedBefore> for SubnetActorManagerFacetErrors {
+        fn from(value: NotStakedBefore) -> Self {
+            Self::NotStakedBefore(value)
         }
     }
     impl ::core::convert::From<NotValidator> for SubnetActorManagerFacetErrors {
@@ -1436,6 +1683,11 @@ pub mod subnet_actor_manager_facet {
             Self::SubnetNotActive(value)
         }
     }
+    impl ::core::convert::From<WithdrawExceedingCollateral> for SubnetActorManagerFacetErrors {
+        fn from(value: WithdrawExceedingCollateral) -> Self {
+            Self::WithdrawExceedingCollateral(value)
+        }
+    }
     impl ::core::convert::From<WrongCheckpointSource> for SubnetActorManagerFacetErrors {
         fn from(value: WrongCheckpointSource) -> Self {
             Self::WrongCheckpointSource(value)
@@ -1449,7 +1701,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethevent(
         name = "BottomUpCheckpointExecuted",
@@ -1467,14 +1719,14 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethevent(
         name = "BottomUpCheckpointSubmitted",
         abi = "BottomUpCheckpointSubmitted(((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes),address)"
     )]
     pub struct BottomUpCheckpointSubmittedFilter {
-        pub checkpoint: BottomUpCheckpoint,
+        pub checkpoint: BottomUpCheckpointLegacy,
         pub submitter: ::ethers::core::types::Address,
     }
     #[derive(
@@ -1485,7 +1737,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethevent(
         name = "NextBottomUpCheckpointExecuted",
@@ -1508,23 +1760,17 @@ pub mod subnet_actor_manager_facet {
         ) -> ::core::result::Result<Self, ::ethers::core::abi::Error> {
             if let Ok(decoded) = BottomUpCheckpointExecutedFilter::decode_log(log) {
                 return Ok(
-                    SubnetActorManagerFacetEvents::BottomUpCheckpointExecutedFilter(
-                        decoded,
-                    ),
+                    SubnetActorManagerFacetEvents::BottomUpCheckpointExecutedFilter(decoded),
                 );
             }
             if let Ok(decoded) = BottomUpCheckpointSubmittedFilter::decode_log(log) {
                 return Ok(
-                    SubnetActorManagerFacetEvents::BottomUpCheckpointSubmittedFilter(
-                        decoded,
-                    ),
+                    SubnetActorManagerFacetEvents::BottomUpCheckpointSubmittedFilter(decoded),
                 );
             }
             if let Ok(decoded) = NextBottomUpCheckpointExecutedFilter::decode_log(log) {
                 return Ok(
-                    SubnetActorManagerFacetEvents::NextBottomUpCheckpointExecutedFilter(
-                        decoded,
-                    ),
+                    SubnetActorManagerFacetEvents::NextBottomUpCheckpointExecutedFilter(decoded),
                 );
             }
             Err(::ethers::core::abi::Error::InvalidData)
@@ -1545,24 +1791,34 @@ pub mod subnet_actor_manager_facet {
             }
         }
     }
-    impl ::core::convert::From<BottomUpCheckpointExecutedFilter>
-    for SubnetActorManagerFacetEvents {
+    impl ::core::convert::From<BottomUpCheckpointExecutedFilter> for SubnetActorManagerFacetEvents {
         fn from(value: BottomUpCheckpointExecutedFilter) -> Self {
             Self::BottomUpCheckpointExecutedFilter(value)
         }
     }
-    impl ::core::convert::From<BottomUpCheckpointSubmittedFilter>
-    for SubnetActorManagerFacetEvents {
+    impl ::core::convert::From<BottomUpCheckpointSubmittedFilter> for SubnetActorManagerFacetEvents {
         fn from(value: BottomUpCheckpointSubmittedFilter) -> Self {
             Self::BottomUpCheckpointSubmittedFilter(value)
         }
     }
-    impl ::core::convert::From<NextBottomUpCheckpointExecutedFilter>
-    for SubnetActorManagerFacetEvents {
+    impl ::core::convert::From<NextBottomUpCheckpointExecutedFilter> for SubnetActorManagerFacetEvents {
         fn from(value: NextBottomUpCheckpointExecutedFilter) -> Self {
             Self::NextBottomUpCheckpointExecutedFilter(value)
         }
     }
+    ///Container type for all input parameters for the `claim` function with signature `claim()` and selector `0x4e71d92d`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "claim", abi = "claim()")]
+    pub struct ClaimCall;
     ///Container type for all input parameters for the `committedCheckpoints` function with signature `committedCheckpoints(uint64)` and selector `0x98903748`
     #[derive(
         Clone,
@@ -1572,11 +1828,26 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "committedCheckpoints", abi = "committedCheckpoints(uint64)")]
     pub struct CommittedCheckpointsCall {
         pub e: u64,
+    }
+    ///Container type for all input parameters for the `getValidator` function with signature `getValidator(address)` and selector `0x1904bb2e`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "getValidator", abi = "getValidator(address)")]
+    pub struct GetValidatorCall {
+        pub validator_address: ::ethers::core::types::Address,
     }
     ///Container type for all input parameters for the `join` function with signature `join(string,(uint8,bytes))` and selector `0x6cf6970a`
     #[derive(
@@ -1587,12 +1858,27 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "join", abi = "join(string,(uint8,bytes))")]
     pub struct JoinCall {
         pub net_addr: ::std::string::String,
         pub worker_addr: FvmAddress,
+    }
+    ///Container type for all input parameters for the `join2` function with signature `join2(bytes)` and selector `0xedb0ff83`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "join2", abi = "join2(bytes)")]
+    pub struct Join2Call {
+        pub data: ::ethers::core::types::Bytes,
     }
     ///Container type for all input parameters for the `kill` function with signature `kill()` and selector `0x41c0e1b5`
     #[derive(
@@ -1603,10 +1889,23 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "kill", abi = "kill()")]
     pub struct KillCall;
+    ///Container type for all input parameters for the `kill2` function with signature `kill2()` and selector `0x2bb685bc`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "kill2", abi = "kill2()")]
+    pub struct Kill2Call;
     ///Container type for all input parameters for the `leave` function with signature `leave()` and selector `0xd66d9e19`
     #[derive(
         Clone,
@@ -1616,10 +1915,23 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "leave", abi = "leave()")]
     pub struct LeaveCall;
+    ///Container type for all input parameters for the `leave2` function with signature `leave2()` and selector `0xf5904fcf`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "leave2", abi = "leave2()")]
+    pub struct Leave2Call;
     ///Container type for all input parameters for the `reward` function with signature `reward(uint256)` and selector `0xa9fb763c`
     #[derive(
         Clone,
@@ -1629,11 +1941,26 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "reward", abi = "reward(uint256)")]
     pub struct RewardCall {
         pub amount: ::ethers::core::types::U256,
+    }
+    ///Container type for all input parameters for the `setMetadata` function with signature `setMetadata(bytes)` and selector `0xee57e36f`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "setMetadata", abi = "setMetadata(bytes)")]
+    pub struct SetMetadataCall {
+        pub metadata: ::ethers::core::types::Bytes,
     }
     ///Container type for all input parameters for the `setValidatorNetAddr` function with signature `setValidatorNetAddr(string)` and selector `0x7cc4fc43`
     #[derive(
@@ -1644,7 +1971,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "setValidatorNetAddr", abi = "setValidatorNetAddr(string)")]
     pub struct SetValidatorNetAddrCall {
@@ -1659,7 +1986,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(
         name = "setValidatorWorkerAddr",
@@ -1668,6 +1995,19 @@ pub mod subnet_actor_manager_facet {
     pub struct SetValidatorWorkerAddrCall {
         pub new_worker_addr: FvmAddress,
     }
+    ///Container type for all input parameters for the `stake` function with signature `stake()` and selector `0x3a4b66f1`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "stake", abi = "stake()")]
+    pub struct StakeCall;
     ///Container type for all input parameters for the `submitCheckpoint` function with signature `submitCheckpoint(((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes))` and selector `0xf6fd8381`
     #[derive(
         Clone,
@@ -1677,14 +2017,14 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(
         name = "submitCheckpoint",
         abi = "submitCheckpoint(((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes))"
     )]
     pub struct SubmitCheckpointCall {
-        pub checkpoint: BottomUpCheckpoint,
+        pub checkpoint: BottomUpCheckpointLegacy,
     }
     ///Container type for all input parameters for the `withdraw` function with signature `withdraw()` and selector `0x3ccfd60b`
     #[derive(
@@ -1695,20 +2035,27 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     #[ethcall(name = "withdraw", abi = "withdraw()")]
     pub struct WithdrawCall;
     ///Container type for all of the contract's call
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum SubnetActorManagerFacetCalls {
+        Claim(ClaimCall),
         CommittedCheckpoints(CommittedCheckpointsCall),
+        GetValidator(GetValidatorCall),
         Join(JoinCall),
+        Join2(Join2Call),
         Kill(KillCall),
+        Kill2(Kill2Call),
         Leave(LeaveCall),
+        Leave2(Leave2Call),
         Reward(RewardCall),
+        SetMetadata(SetMetadataCall),
         SetValidatorNetAddr(SetValidatorNetAddrCall),
         SetValidatorWorkerAddr(SetValidatorWorkerAddrCall),
+        Stake(StakeCall),
         SubmitCheckpoint(SubmitCheckpointCall),
         Withdraw(WithdrawCall),
     }
@@ -1717,49 +2064,61 @@ pub mod subnet_actor_manager_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) = <CommittedCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <ClaimCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Claim(decoded));
+            }
+            if let Ok(decoded) =
+                <CommittedCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::CommittedCheckpoints(decoded));
             }
-            if let Ok(decoded) = <JoinCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <GetValidatorCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::GetValidator(decoded));
+            }
+            if let Ok(decoded) = <JoinCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Join(decoded));
             }
-            if let Ok(decoded) = <KillCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <Join2Call as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Join2(decoded));
+            }
+            if let Ok(decoded) = <KillCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Kill(decoded));
             }
-            if let Ok(decoded) = <LeaveCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <Kill2Call as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Kill2(decoded));
+            }
+            if let Ok(decoded) = <LeaveCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Leave(decoded));
             }
-            if let Ok(decoded) = <RewardCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <Leave2Call as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Leave2(decoded));
+            }
+            if let Ok(decoded) = <RewardCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Reward(decoded));
             }
-            if let Ok(decoded) = <SetValidatorNetAddrCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <SetMetadataCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::SetMetadata(decoded));
+            }
+            if let Ok(decoded) =
+                <SetValidatorNetAddrCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::SetValidatorNetAddr(decoded));
             }
-            if let Ok(decoded) = <SetValidatorWorkerAddrCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) =
+                <SetValidatorWorkerAddrCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::SetValidatorWorkerAddr(decoded));
             }
-            if let Ok(decoded) = <SubmitCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Stake(decoded));
+            }
+            if let Ok(decoded) =
+                <SubmitCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
                 return Ok(Self::SubmitCheckpoint(decoded));
             }
-            if let Ok(decoded) = <WithdrawCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
+            if let Ok(decoded) = <WithdrawCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Withdraw(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -1768,53 +2127,66 @@ pub mod subnet_actor_manager_facet {
     impl ::ethers::core::abi::AbiEncode for SubnetActorManagerFacetCalls {
         fn encode(self) -> Vec<u8> {
             match self {
+                Self::Claim(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::CommittedCheckpoints(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::GetValidator(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Join(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::Join2(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Kill(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::Kill2(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Leave(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::Leave2(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Reward(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::SetMetadata(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SetValidatorNetAddr(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::SetValidatorWorkerAddr(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::SubmitCheckpoint(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::Withdraw(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
+                Self::Stake(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::SubmitCheckpoint(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::Withdraw(element) => ::ethers::core::abi::AbiEncode::encode(element),
             }
         }
     }
     impl ::core::fmt::Display for SubnetActorManagerFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::CommittedCheckpoints(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::Claim(element) => ::core::fmt::Display::fmt(element, f),
+                Self::CommittedCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Join(element) => ::core::fmt::Display::fmt(element, f),
+                Self::Join2(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Kill(element) => ::core::fmt::Display::fmt(element, f),
+                Self::Kill2(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Leave(element) => ::core::fmt::Display::fmt(element, f),
+                Self::Leave2(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Reward(element) => ::core::fmt::Display::fmt(element, f),
-                Self::SetValidatorNetAddr(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::SetValidatorWorkerAddr(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::SetMetadata(element) => ::core::fmt::Display::fmt(element, f),
+                Self::SetValidatorNetAddr(element) => ::core::fmt::Display::fmt(element, f),
+                Self::SetValidatorWorkerAddr(element) => ::core::fmt::Display::fmt(element, f),
+                Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubmitCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Withdraw(element) => ::core::fmt::Display::fmt(element, f),
             }
         }
     }
-    impl ::core::convert::From<CommittedCheckpointsCall>
-    for SubnetActorManagerFacetCalls {
+    impl ::core::convert::From<ClaimCall> for SubnetActorManagerFacetCalls {
+        fn from(value: ClaimCall) -> Self {
+            Self::Claim(value)
+        }
+    }
+    impl ::core::convert::From<CommittedCheckpointsCall> for SubnetActorManagerFacetCalls {
         fn from(value: CommittedCheckpointsCall) -> Self {
             Self::CommittedCheckpoints(value)
+        }
+    }
+    impl ::core::convert::From<GetValidatorCall> for SubnetActorManagerFacetCalls {
+        fn from(value: GetValidatorCall) -> Self {
+            Self::GetValidator(value)
         }
     }
     impl ::core::convert::From<JoinCall> for SubnetActorManagerFacetCalls {
@@ -1822,9 +2194,19 @@ pub mod subnet_actor_manager_facet {
             Self::Join(value)
         }
     }
+    impl ::core::convert::From<Join2Call> for SubnetActorManagerFacetCalls {
+        fn from(value: Join2Call) -> Self {
+            Self::Join2(value)
+        }
+    }
     impl ::core::convert::From<KillCall> for SubnetActorManagerFacetCalls {
         fn from(value: KillCall) -> Self {
             Self::Kill(value)
+        }
+    }
+    impl ::core::convert::From<Kill2Call> for SubnetActorManagerFacetCalls {
+        fn from(value: Kill2Call) -> Self {
+            Self::Kill2(value)
         }
     }
     impl ::core::convert::From<LeaveCall> for SubnetActorManagerFacetCalls {
@@ -1832,21 +2214,34 @@ pub mod subnet_actor_manager_facet {
             Self::Leave(value)
         }
     }
+    impl ::core::convert::From<Leave2Call> for SubnetActorManagerFacetCalls {
+        fn from(value: Leave2Call) -> Self {
+            Self::Leave2(value)
+        }
+    }
     impl ::core::convert::From<RewardCall> for SubnetActorManagerFacetCalls {
         fn from(value: RewardCall) -> Self {
             Self::Reward(value)
         }
     }
-    impl ::core::convert::From<SetValidatorNetAddrCall>
-    for SubnetActorManagerFacetCalls {
+    impl ::core::convert::From<SetMetadataCall> for SubnetActorManagerFacetCalls {
+        fn from(value: SetMetadataCall) -> Self {
+            Self::SetMetadata(value)
+        }
+    }
+    impl ::core::convert::From<SetValidatorNetAddrCall> for SubnetActorManagerFacetCalls {
         fn from(value: SetValidatorNetAddrCall) -> Self {
             Self::SetValidatorNetAddr(value)
         }
     }
-    impl ::core::convert::From<SetValidatorWorkerAddrCall>
-    for SubnetActorManagerFacetCalls {
+    impl ::core::convert::From<SetValidatorWorkerAddrCall> for SubnetActorManagerFacetCalls {
         fn from(value: SetValidatorWorkerAddrCall) -> Self {
             Self::SetValidatorWorkerAddr(value)
+        }
+    }
+    impl ::core::convert::From<StakeCall> for SubnetActorManagerFacetCalls {
+        fn from(value: StakeCall) -> Self {
+            Self::Stake(value)
         }
     }
     impl ::core::convert::From<SubmitCheckpointCall> for SubnetActorManagerFacetCalls {
@@ -1868,7 +2263,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct CommittedCheckpointsReturn {
         pub source: SubnetID,
@@ -1877,7 +2272,7 @@ pub mod subnet_actor_manager_facet {
         pub prev_hash: [u8; 32],
         pub proof: ::ethers::core::types::Bytes,
     }
-    ///`BottomUpCheckpoint((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes)`
+    ///Container type for all return fields from the `getValidator` function with signature `getValidator(address)` and selector `0x1904bb2e`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -1886,9 +2281,23 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
-    pub struct BottomUpCheckpoint {
+    pub struct GetValidatorReturn {
+        pub validator: Validator,
+    }
+    ///`BottomUpCheckpointLegacy((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes)`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    pub struct BottomUpCheckpointLegacy {
         pub source: SubnetID,
         pub epoch: u64,
         pub fee: ::ethers::core::types::U256,
@@ -1906,7 +2315,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct ChildCheck {
         pub source: SubnetID,
@@ -1921,7 +2330,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct CrossMsg {
         pub message: StorableMsg,
@@ -1936,7 +2345,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct FvmAddress {
         pub addr_type: u8,
@@ -1951,7 +2360,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct Ipcaddress {
         pub subnet_id: SubnetID,
@@ -1966,7 +2375,7 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct StorableMsg {
         pub from: Ipcaddress,
@@ -1985,10 +2394,26 @@ pub mod subnet_actor_manager_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash
+        Hash,
     )]
     pub struct SubnetID {
         pub root: u64,
         pub route: ::std::vec::Vec<::ethers::core::types::Address>,
+    }
+    ///`Validator(uint256,uint256,bytes)`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    pub struct Validator {
+        pub confirmed_collateral: ::ethers::core::types::U256,
+        pub total_collateral: ::ethers::core::types::U256,
+        pub data: ::ethers::core::types::Bytes,
     }
 }
