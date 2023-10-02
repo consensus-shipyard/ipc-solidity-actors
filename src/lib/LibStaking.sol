@@ -131,6 +131,7 @@ library LibStakingRelaseQueue {
 
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         IGateway(s.ipcGatewayAddr).releaseStake(amount);
+        payable(validator).transfer(amount);
     }
 }
 
@@ -159,6 +160,11 @@ library LibValidatorSet {
         return self.activeValidators.contains(validator);
     }
 
+    /// @notice Set validator data
+    function setData(ValidatorSet storage validators, address validator, bytes calldata data) internal {
+        validators.validators[validator].data = data;
+    }
+
     /// @notice Validator increases its total collateral by amount.
     function recordDeposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
         validators.validators[validator].totalCollateral += amount;
@@ -179,6 +185,8 @@ library LibValidatorSet {
         uint256 newCollateral = self.validators[validator].confirmedCollateral + amount;
         self.validators[validator].confirmedCollateral = newCollateral;
 
+        self.totalConfirmedCollateral += amount;
+
         depositReshuffle({self: self, maybeActive: validator, newCollateral: newCollateral});
     }
 
@@ -192,6 +200,8 @@ library LibValidatorSet {
         }
 
         withdrawReshuffle({self: self, validator: validator, newCollateral: newCollateral});
+
+        self.totalConfirmedCollateral -= amount;
     }
 
     /***********************************************************************
@@ -309,8 +319,35 @@ library LibStaking {
     using LibStakingRelaseQueue for StakingReleaseQueue;
     using LibStakingChangeSet for StakingChangeSet;
     using LibValidatorSet for ValidatorSet;
+    using LibMaxPQ for MaxPQ;
+    using LibMinPQ for MinPQ;
 
     event ConfigurantionNumberConfirmed(uint64 number);
+
+    /// @notice Checks if the validator has staked before
+    function hasStaked(address validator) internal view returns (bool) {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        return
+            s.validatorSet.waitingValidators.contains(validator) || s.validatorSet.activeValidators.contains(validator);
+    }
+
+    /// @notice Gets the total number of validators, including active and waiting
+    function totalValidators() internal view returns (uint16) {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        return s.validatorSet.waitingValidators.getSize() + s.validatorSet.activeValidators.getSize();
+    }
+
+    /// @notice Gets the total collateral the validators has staked.
+    function totalValidatorCollateral(address validator) internal view returns (uint256) {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        return s.validatorSet.validators[validator].totalCollateral;
+    }
+
+    /// @notice Set the validator data
+    function setValidatorData(address validator, bytes calldata data) internal {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        s.validatorSet.setData(validator, data);
+    }
 
     /// @notice Deposit the collateral
     function deposit(address validator, uint256 amount) internal {

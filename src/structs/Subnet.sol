@@ -99,8 +99,8 @@ struct Validator {
 struct ValidatorSet {
     /// The total number of active validators allowed.
     uint16 activeLimit;
-    /// The total number of validators currently in the set.
-    uint16 totalValidators;
+    /// The total collateral confirmed.
+    uint256 totalConfirmedCollateral;
     /// The mapping of each validator address to its information.
     mapping(address => Validator) validators;
     /// @notice The active validators tracked using min priority queue.
