@@ -16,6 +16,7 @@ import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {SubnetActorModifiers} from "../lib/LibSubnetActorStorage.sol";
 import {LibVoting} from "../lib/LibVoting.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
+import {LibStaking} from "../lib/LibStaking.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
@@ -33,67 +34,42 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
 
     /// @notice method that allows a validator to join the subnet
-    /// @param netAddr - the network address of the validator
-    function join(string calldata netAddr, FvmAddress calldata workerAddr) external payable notKilled {
-        uint256 validatorStake = msg.value;
-        address validator = msg.sender;
-        if (validatorStake == 0) {
+    /// @param data The offchain data that should be associated with the validator
+    function join(bytes calldata data) external payable notKilled {
+        if (msg.value == 0) {
             revert CollateralIsZero();
         }
 
-        s.stake[validator] += validatorStake;
-        s.totalStake += validatorStake;
+        LibStaking.setValidatorData(msg.sender, data);
+        LibStaking.deposit(msg.sender, msg.value);
+    }
 
-        if (s.stake[validator] >= s.minActivationCollateral) {
-            if (!s.validators.contains(validator)) {
-                // slither-disable-next-line unused-return
-                s.validators.add(validator);
-                s.validatorNetAddresses[validator] = netAddr;
-                s.validatorWorkerAddresses[validator] = workerAddr;
-            }
+    /// @notice method that allows a validator to increase their stake
+    function stake() external payable notKilled {
+        if (msg.value == 0) {
+            revert CollateralIsZero();
         }
 
-        if (s.status == Status.Instantiated) {
-            if (s.totalStake >= s.minActivationCollateral) {
-                s.status = Status.Active;
-                IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
-            }
-        } else {
-            if (s.status == Status.Inactive) {
-                if (s.totalStake >= s.minActivationCollateral) {
-                    s.status = Status.Active;
-                }
-            }
-            IGateway(s.ipcGatewayAddr).addStake{value: validatorStake}();
+        if (!LibStaking.hasStaked(msg.sender)) {
+            revert NotStakedBefore();
         }
+
+        LibStaking.deposit(msg.sender, msg.value);
     }
 
     /// @notice method that allows a validator to leave the subnet
     function leave() external nonReentrant notKilled {
-        uint256 amount = s.stake[msg.sender];
-
+        uint256 amount = LibStaking.totalValidatorCollateral(msg.sender);
         if (amount == 0) {
             revert NotValidator();
         }
 
-        s.stake[msg.sender] = 0;
-        s.totalStake -= amount;
-        // slither-disable-next-line unused-return
-        s.validators.remove(msg.sender);
-        if (s.status == Status.Active) {
-            if (s.totalStake < s.minActivationCollateral) {
-                s.status = Status.Inactive;
-            }
-        }
-
-        IGateway(s.ipcGatewayAddr).releaseStake(amount);
-
-        payable(msg.sender).sendValue(amount);
+        LibStaking.withdraw(msg.sender, amount);
     }
 
     /// @notice method that allows to kill the subnet when all validators left. It is not a privileged operation.
     function kill() external notKilled {
-        if (s.validators.length() != 0 || s.totalStake != 0) {
+        if (LibStaking.totalValidators() != 0) {
             revert NotAllValidatorsHaveLeft();
         }
 
