@@ -12,6 +12,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
+          ref: ${{ github.event.pull_request.head.ref }}
           submodules: recursive
 
       - name: Install python
@@ -41,7 +42,7 @@ jobs:
 
       - name: Commit bindings
         run: |
-          git config --global user.name 'AutoCommit'
-          git config --global user.email 'ai@protocol.ai'
+          git config --global user.name '${{ env.CI_COMMIT_AUTHOR }}'
+          git config --global user.email 'username@users.noreply.github.com'
           make commit-rust-binding
           
