@@ -1,68 +1,12 @@
 {
   "storage": [
     {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "astId": 10413,
-=======
-      "astId": 10287,
->>>>>>> 7748a92 (interface)
-=======
-      "astId": 10341,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-      "astId": 11071,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "astId": 10341,
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "astId": 11073,
->>>>>>> ea9739e (update storage)
-=======
-      "astId": 11225,
->>>>>>> 1aa4c46 (make compile)
-=======
-      "astId": 11265,
->>>>>>> c7070cd (add join leave)
+      "astId": 11842,
       "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
       "label": "s",
       "offset": 0,
       "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "type": "t_struct(SubnetActorStorage)10401_storage"
-=======
-      "type": "t_struct(SubnetActorStorage)10275_storage"
->>>>>>> 7748a92 (interface)
-=======
-      "type": "t_struct(SubnetActorStorage)10329_storage"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-      "type": "t_struct(SubnetActorStorage)11059_storage"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "type": "t_struct(SubnetActorStorage)10329_storage"
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "type": "t_struct(SubnetActorStorage)11061_storage"
->>>>>>> ea9739e (update storage)
-=======
-      "type": "t_struct(SubnetActorStorage)11213_storage"
->>>>>>> 1aa4c46 (make compile)
-=======
-      "type": "t_struct(SubnetActorStorage)11253_storage"
->>>>>>> c7070cd (add join leave)
+      "type": "t_struct(SubnetActorStorage)11830_storage"
     }
   ],
   "types": {
@@ -83,84 +27,14 @@
       "label": "bytes32[]",
       "numberOfBytes": "32"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_array(t_struct(ChildCheck)11867_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)11867_storage",
-=======
-    "t_array(t_struct(ChildCheck)11741_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)11741_storage",
->>>>>>> 7748a92 (interface)
-=======
-    "t_array(t_struct(ChildCheck)11795_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)11795_storage",
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_array(t_struct(ChildCheck)13943_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)13943_storage",
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_array(t_struct(ChildCheck)11795_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)11795_storage",
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_array(t_struct(ChildCheck)13945_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)13945_storage",
->>>>>>> ea9739e (update storage)
-=======
-    "t_array(t_struct(ChildCheck)14097_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)14097_storage",
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_array(t_struct(ChildCheck)14137_storage)dyn_storage": {
-      "base": "t_struct(ChildCheck)14137_storage",
->>>>>>> c7070cd (add join leave)
+    "t_array(t_struct(ChildCheck)14714_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)14714_storage",
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_array(t_struct(CrossMsg)11873_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)11873_storage",
-=======
-    "t_array(t_struct(CrossMsg)11747_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)11747_storage",
->>>>>>> 7748a92 (interface)
-=======
-    "t_array(t_struct(CrossMsg)11801_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)11801_storage",
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_array(t_struct(CrossMsg)13949_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13949_storage",
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_array(t_struct(CrossMsg)11801_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)11801_storage",
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_array(t_struct(CrossMsg)13951_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13951_storage",
->>>>>>> ea9739e (update storage)
-=======
-    "t_array(t_struct(CrossMsg)14103_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)14103_storage",
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_array(t_struct(CrossMsg)14143_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)14143_storage",
->>>>>>> c7070cd (add join leave)
+    "t_array(t_struct(CrossMsg)14720_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)14720_storage",
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
@@ -185,60 +59,17 @@
       "label": "bytes",
       "numberOfBytes": "32"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
     "t_enum(ConsensusType)4990": {
-=======
-    "t_enum(ConsensusType)4984": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_enum(ConsensusType)4546": {
->>>>>>> ea9739e (update storage)
       "encoding": "inplace",
       "label": "enum ConsensusType",
       "numberOfBytes": "1"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
+    "t_enum(StakingOperation)14852": {
+      "encoding": "inplace",
+      "label": "enum StakingOperation",
+      "numberOfBytes": "1"
+    },
     "t_enum(Status)5004": {
-=======
-    "t_enum(StakingOperation)11875": {
-=======
-    "t_enum(StakingOperation)14077": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-      "encoding": "inplace",
-      "label": "enum StakingOperation",
-      "numberOfBytes": "1"
-    },
-<<<<<<< HEAD
-    "t_enum(Status)4560": {
->>>>>>> 7748a92 (interface)
-=======
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
->>>>>>> be6a160 (resolve conflicts)
-    "t_enum(Status)4998": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_enum(StakingOperation)14083": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_enum(StakingOperation)14235": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_enum(StakingOperation)14275": {
->>>>>>> c7070cd (add join leave)
-      "encoding": "inplace",
-      "label": "enum StakingOperation",
-      "numberOfBytes": "1"
-    },
-    "t_enum(Status)4560": {
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
@@ -257,123 +88,26 @@
       "numberOfBytes": "32",
       "value": "t_string_storage"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_mapping(t_address,t_struct(FvmAddress)11952_storage)": {
-=======
-    "t_mapping(t_address,t_struct(FvmAddress)11826_storage)": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_mapping(t_address,t_struct(FvmAddress)11880_storage)": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_mapping(t_address,t_struct(AddressStakingReleases)14115_storage)": {
-=======
-    "t_mapping(t_address,t_struct(AddressStakingReleases)14121_storage)": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_mapping(t_address,t_struct(AddressStakingReleases)14273_storage)": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_mapping(t_address,t_struct(AddressStakingReleases)14313_storage)": {
->>>>>>> c7070cd (add join leave)
+    "t_mapping(t_address,t_struct(AddressStakingReleases)14890_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct AddressStakingReleases)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(AddressStakingReleases)14115_storage"
+      "value": "t_struct(AddressStakingReleases)14890_storage"
     },
-    "t_mapping(t_address,t_struct(FvmAddress)14028_storage)": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_mapping(t_address,t_struct(FvmAddress)11880_storage)": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "value": "t_struct(AddressStakingReleases)14121_storage"
-    },
-    "t_mapping(t_address,t_struct(FvmAddress)14030_storage)": {
->>>>>>> ea9739e (update storage)
-=======
-      "value": "t_struct(AddressStakingReleases)14273_storage"
-    },
-    "t_mapping(t_address,t_struct(FvmAddress)14182_storage)": {
->>>>>>> 1aa4c46 (make compile)
-=======
-      "value": "t_struct(AddressStakingReleases)14313_storage"
-    },
-    "t_mapping(t_address,t_struct(FvmAddress)14222_storage)": {
->>>>>>> c7070cd (add join leave)
+    "t_mapping(t_address,t_struct(FvmAddress)14799_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct FvmAddress)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(FvmAddress)11952_storage"
-=======
-      "value": "t_struct(FvmAddress)11826_storage"
-=======
-      "value": "t_struct(FvmAddress)11880_storage"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-      "value": "t_struct(FvmAddress)14028_storage"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "value": "t_struct(FvmAddress)11880_storage"
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "value": "t_struct(FvmAddress)14030_storage"
->>>>>>> ea9739e (update storage)
-=======
-      "value": "t_struct(FvmAddress)14182_storage"
->>>>>>> 1aa4c46 (make compile)
-=======
-      "value": "t_struct(FvmAddress)14222_storage"
->>>>>>> c7070cd (add join leave)
+      "value": "t_struct(FvmAddress)14799_storage"
     },
-    "t_mapping(t_address,t_struct(Validator)14331_storage)": {
+    "t_mapping(t_address,t_struct(Validator)14908_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(Validator)11926_storage"
->>>>>>> 7748a92 (interface)
-=======
-      "value": "t_struct(Validator)11914_storage"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-      "value": "t_struct(Validator)14133_storage"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "value": "t_struct(Validator)11914_storage"
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "value": "t_struct(Validator)14139_storage"
-=======
-      "value": "t_struct(Validator)14291_storage"
->>>>>>> 1aa4c46 (make compile)
-=======
-      "value": "t_struct(Validator)14331_storage"
->>>>>>> c7070cd (add join leave)
+      "value": "t_struct(Validator)14908_storage"
     },
     "t_mapping(t_address,t_uint16)": {
       "encoding": "mapping",
@@ -381,7 +115,6 @@
       "label": "mapping(address => uint16)",
       "numberOfBytes": "32",
       "value": "t_uint16"
->>>>>>> ea9739e (update storage)
     },
     "t_mapping(t_address,t_uint256)": {
       "encoding": "mapping",
@@ -390,75 +123,12 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpointLegacy)11820_storage)": {
-=======
-    "t_mapping(t_address,t_uint64)": {
-      "encoding": "mapping",
-      "key": "t_address",
-      "label": "mapping(address => uint64)",
-      "numberOfBytes": "32",
-      "value": "t_uint64"
-    },
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11694_storage)": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13896_storage)": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13898_storage)": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14050_storage)": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14090_storage)": {
->>>>>>> c7070cd (add join leave)
+    "t_mapping(t_bytes32,t_struct(BottomUpCheckpointLegacy)14667_storage)": {
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(BottomUpCheckpointLegacy)11820_storage"
-=======
-      "value": "t_struct(BottomUpCheckpoint)11694_storage"
->>>>>>> 7748a92 (interface)
-=======
-      "value": "t_struct(BottomUpCheckpoint)11748_storage"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-      "value": "t_struct(BottomUpCheckpoint)13896_storage"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "value": "t_struct(BottomUpCheckpoint)11748_storage"
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "value": "t_struct(BottomUpCheckpoint)13898_storage"
->>>>>>> ea9739e (update storage)
-=======
-      "value": "t_struct(BottomUpCheckpoint)14050_storage"
->>>>>>> 1aa4c46 (make compile)
-=======
-      "value": "t_struct(BottomUpCheckpoint)14090_storage"
->>>>>>> c7070cd (add join leave)
+      "value": "t_struct(BottomUpCheckpointLegacy)14667_storage"
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -474,12 +144,12 @@
       "numberOfBytes": "32",
       "value": "t_address"
     },
-    "t_mapping(t_uint16,t_struct(StakingRelease)14303_storage)": {
+    "t_mapping(t_uint16,t_struct(StakingRelease)14880_storage)": {
       "encoding": "mapping",
       "key": "t_uint16",
       "label": "mapping(uint16 => struct StakingRelease)",
       "numberOfBytes": "32",
-      "value": "t_struct(StakingRelease)14303_storage"
+      "value": "t_struct(StakingRelease)14880_storage"
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -495,148 +165,26 @@
       "numberOfBytes": "32",
       "value": "t_mapping(t_bytes32,t_uint256)"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)11820_storage)": {
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11694_storage)": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13896_storage)": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13898_storage)": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14050_storage)": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)": {
->>>>>>> c7070cd (add join leave)
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)14667_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(BottomUpCheckpointLegacy)11820_storage"
+      "value": "t_struct(BottomUpCheckpointLegacy)14667_storage"
     },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11930_storage)": {
-=======
-      "value": "t_struct(BottomUpCheckpoint)11694_storage"
-    },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11804_storage)": {
->>>>>>> 7748a92 (interface)
-=======
-      "value": "t_struct(BottomUpCheckpoint)11748_storage"
-    },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-      "value": "t_struct(BottomUpCheckpoint)13896_storage"
-    },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14006_storage)": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "value": "t_struct(BottomUpCheckpoint)11748_storage"
-    },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "value": "t_struct(BottomUpCheckpoint)13898_storage"
-    },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14008_storage)": {
->>>>>>> ea9739e (update storage)
-=======
-      "value": "t_struct(BottomUpCheckpoint)14050_storage"
-    },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14160_storage)": {
->>>>>>> 1aa4c46 (make compile)
-=======
-      "value": "t_struct(BottomUpCheckpoint)14090_storage"
-    },
-    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14200_storage)": {
->>>>>>> c7070cd (add join leave)
+    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14777_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteBottomUpSubmission)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(EpochVoteBottomUpSubmission)11930_storage"
-=======
-      "value": "t_struct(EpochVoteBottomUpSubmission)11804_storage"
+      "value": "t_struct(EpochVoteBottomUpSubmission)14777_storage"
     },
-    "t_mapping(t_uint64,t_struct(StakingChange)11883_storage)": {
-=======
-      "value": "t_struct(EpochVoteBottomUpSubmission)14006_storage"
-    },
-    "t_mapping(t_uint64,t_struct(StakingChange)14085_storage)": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "value": "t_struct(EpochVoteBottomUpSubmission)14008_storage"
-    },
-    "t_mapping(t_uint64,t_struct(StakingChange)14091_storage)": {
->>>>>>> ea9739e (update storage)
-=======
-      "value": "t_struct(EpochVoteBottomUpSubmission)14160_storage"
-    },
-    "t_mapping(t_uint64,t_struct(StakingChange)14243_storage)": {
->>>>>>> 1aa4c46 (make compile)
-=======
-      "value": "t_struct(EpochVoteBottomUpSubmission)14200_storage"
-    },
-    "t_mapping(t_uint64,t_struct(StakingChange)14283_storage)": {
->>>>>>> c7070cd (add join leave)
+    "t_mapping(t_uint64,t_struct(StakingChange)14860_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct StakingChange)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(StakingChange)11883_storage"
->>>>>>> 7748a92 (interface)
-=======
-      "value": "t_struct(EpochVoteBottomUpSubmission)11858_storage"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-      "value": "t_struct(StakingChange)14085_storage"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-      "value": "t_struct(EpochVoteBottomUpSubmission)11858_storage"
->>>>>>> be6a160 (resolve conflicts)
-=======
-      "value": "t_struct(StakingChange)14091_storage"
->>>>>>> ea9739e (update storage)
-=======
-      "value": "t_struct(StakingChange)14243_storage"
->>>>>>> 1aa4c46 (make compile)
-=======
-      "value": "t_struct(StakingChange)14283_storage"
->>>>>>> c7070cd (add join leave)
+      "value": "t_struct(StakingChange)14860_storage"
     },
     "t_string_storage": {
       "encoding": "bytes",
@@ -658,35 +206,12 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(BottomUpCheckpointLegacy)11820_storage": {
-=======
-    "t_struct(BottomUpCheckpoint)11694_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(BottomUpCheckpoint)11748_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(AddressStakingReleases)14115_storage": {
-=======
-    "t_struct(AddressStakingReleases)14121_storage": {
-=======
-    "t_struct(AddressStakingReleases)14273_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(AddressStakingReleases)14313_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(AddressStakingReleases)14890_storage": {
       "encoding": "inplace",
       "label": "struct AddressStakingReleases",
       "members": [
         {
-          "astId": 14305,
+          "astId": 14882,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "length",
           "offset": 0,
@@ -694,7 +219,7 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14307,
+          "astId": 14884,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "startIdx",
           "offset": 2,
@@ -702,151 +227,30 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14312,
+          "astId": 14889,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "releases",
           "offset": 0,
           "slot": "1",
-          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14303_storage)"
+          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14880_storage)"
         }
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(BottomUpCheckpoint)13898_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(BottomUpCheckpoint)14050_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(BottomUpCheckpoint)14090_storage": {
->>>>>>> c7070cd (add join leave)
-      "encoding": "inplace",
-      "label": "struct AddressStakingReleases",
-      "members": [
-        {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14107,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "length",
-          "offset": 0,
-          "slot": "0",
-          "type": "t_uint16"
-        },
-        {
-          "astId": 14109,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "startIdx",
-          "offset": 2,
-          "slot": "0",
-          "type": "t_uint16"
-        },
-        {
-          "astId": 14114,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "releases",
-          "offset": 0,
-          "slot": "1",
-          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14105_storage)"
-        }
-      ],
-      "numberOfBytes": "64"
-    },
-    "t_struct(BottomUpCheckpoint)13896_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(BottomUpCheckpoint)11748_storage": {
->>>>>>> be6a160 (resolve conflicts)
+    "t_struct(BottomUpCheckpointLegacy)14667_storage": {
       "encoding": "inplace",
       "label": "struct BottomUpCheckpointLegacy",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11803,
-=======
-          "astId": 11677,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11731,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13879,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11731,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13881,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14033,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14073,
->>>>>>> c7070cd (add join leave)
+          "astId": 14650,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)11978_storage"
+          "type": "t_struct(SubnetID)14829_storage"
         },
         {
-          "astId": 11805,
-=======
-          "type": "t_struct(SubnetID)11852_storage"
-        },
-        {
-          "astId": 11679,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(SubnetID)11906_storage"
-        },
-        {
-          "astId": 11733,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(SubnetID)14054_storage"
-        },
-        {
-          "astId": 13881,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(SubnetID)11906_storage"
-        },
-        {
-          "astId": 11733,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(SubnetID)14060_storage"
-        },
-        {
-          "astId": 13883,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(SubnetID)14212_storage"
-        },
-        {
-          "astId": 14035,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(SubnetID)14252_storage"
-        },
-        {
-          "astId": 14075,
->>>>>>> c7070cd (add join leave)
+          "astId": 14652,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "epoch",
           "offset": 0,
@@ -854,35 +258,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11807,
-=======
-          "astId": 11681,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11735,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13883,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11735,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13885,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14037,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14077,
->>>>>>> c7070cd (add join leave)
+          "astId": 14654,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "fee",
           "offset": 0,
@@ -890,149 +266,23 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11811,
-=======
-          "astId": 11685,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11739,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13887,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11739,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13889,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14041,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14081,
->>>>>>> c7070cd (add join leave)
+          "astId": 14658,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_array(t_struct(CrossMsg)11873_storage)dyn_storage"
+          "type": "t_array(t_struct(CrossMsg)14720_storage)dyn_storage"
         },
         {
-          "astId": 11815,
-=======
-          "type": "t_array(t_struct(CrossMsg)11747_storage)dyn_storage"
-        },
-        {
-          "astId": 11689,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
-        },
-        {
-          "astId": 11743,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_array(t_struct(CrossMsg)13949_storage)dyn_storage"
-        },
-        {
-          "astId": 13891,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_array(t_struct(CrossMsg)11801_storage)dyn_storage"
-        },
-        {
-          "astId": 11743,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_array(t_struct(CrossMsg)13951_storage)dyn_storage"
-        },
-        {
-          "astId": 13893,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_array(t_struct(CrossMsg)14103_storage)dyn_storage"
-        },
-        {
-          "astId": 14045,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_array(t_struct(CrossMsg)14143_storage)dyn_storage"
-        },
-        {
-          "astId": 14085,
->>>>>>> c7070cd (add join leave)
+          "astId": 14662,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "children",
           "offset": 0,
           "slot": "5",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_array(t_struct(ChildCheck)11867_storage)dyn_storage"
+          "type": "t_array(t_struct(ChildCheck)14714_storage)dyn_storage"
         },
         {
-          "astId": 11817,
-=======
-          "type": "t_array(t_struct(ChildCheck)11741_storage)dyn_storage"
-        },
-        {
-          "astId": 11691,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_array(t_struct(ChildCheck)11795_storage)dyn_storage"
-        },
-        {
-          "astId": 11745,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_array(t_struct(ChildCheck)13943_storage)dyn_storage"
-        },
-        {
-          "astId": 13893,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_array(t_struct(ChildCheck)11795_storage)dyn_storage"
-        },
-        {
-          "astId": 11745,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_array(t_struct(ChildCheck)13945_storage)dyn_storage"
-        },
-        {
-          "astId": 13895,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_array(t_struct(ChildCheck)14097_storage)dyn_storage"
-        },
-        {
-          "astId": 14047,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_array(t_struct(ChildCheck)14137_storage)dyn_storage"
-        },
-        {
-          "astId": 14087,
->>>>>>> c7070cd (add join leave)
+          "astId": 14664,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "prevHash",
           "offset": 0,
@@ -1040,35 +290,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11819,
-=======
-          "astId": 11693,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11747,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13895,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11747,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13897,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14049,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14089,
->>>>>>> c7070cd (add join leave)
+          "astId": 14666,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "proof",
           "offset": 0,
@@ -1078,125 +300,20 @@
       ],
       "numberOfBytes": "256"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(ChildCheck)11867_storage": {
-=======
-    "t_struct(ChildCheck)11741_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(ChildCheck)11795_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(ChildCheck)13943_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(ChildCheck)11795_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(ChildCheck)13945_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(ChildCheck)14097_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(ChildCheck)14137_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(ChildCheck)14714_storage": {
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11863,
-=======
-          "astId": 11737,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11791,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13939,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11791,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13941,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14093,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14133,
->>>>>>> c7070cd (add join leave)
+          "astId": 14710,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)11978_storage"
+          "type": "t_struct(SubnetID)14829_storage"
         },
         {
-          "astId": 11866,
-=======
-          "type": "t_struct(SubnetID)11852_storage"
-        },
-        {
-          "astId": 11740,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(SubnetID)11906_storage"
-        },
-        {
-          "astId": 11794,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(SubnetID)14054_storage"
-        },
-        {
-          "astId": 13942,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(SubnetID)11906_storage"
-        },
-        {
-          "astId": 11794,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(SubnetID)14060_storage"
-        },
-        {
-          "astId": 13944,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(SubnetID)14212_storage"
-        },
-        {
-          "astId": 14096,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(SubnetID)14252_storage"
-        },
-        {
-          "astId": 14136,
->>>>>>> c7070cd (add join leave)
+          "astId": 14713,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "checks",
           "offset": 0,
@@ -1206,125 +323,20 @@
       ],
       "numberOfBytes": "96"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(CrossMsg)11873_storage": {
-=======
-    "t_struct(CrossMsg)11747_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(CrossMsg)11801_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(CrossMsg)13949_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(CrossMsg)11801_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(CrossMsg)13951_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(CrossMsg)14103_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(CrossMsg)14143_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(CrossMsg)14720_storage": {
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11870,
-=======
-          "astId": 11744,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11798,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13946,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11798,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13948,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14100,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14140,
->>>>>>> c7070cd (add join leave)
+          "astId": 14717,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "message",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(StorableMsg)11888_storage"
+          "type": "t_struct(StorableMsg)14735_storage"
         },
         {
-          "astId": 11872,
-=======
-          "type": "t_struct(StorableMsg)11762_storage"
-        },
-        {
-          "astId": 11746,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(StorableMsg)11816_storage"
-        },
-        {
-          "astId": 11800,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(StorableMsg)13964_storage"
-        },
-        {
-          "astId": 13948,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(StorableMsg)11816_storage"
-        },
-        {
-          "astId": 11800,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(StorableMsg)13966_storage"
-        },
-        {
-          "astId": 13950,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(StorableMsg)14118_storage"
-        },
-        {
-          "astId": 14102,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(StorableMsg)14158_storage"
-        },
-        {
-          "astId": 14142,
->>>>>>> c7070cd (add join leave)
+          "astId": 14719,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "wrapped",
           "offset": 0,
@@ -1334,224 +346,35 @@
       ],
       "numberOfBytes": "384"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(EpochVoteBottomUpSubmission)11930_storage": {
-=======
-    "t_struct(EpochVoteBottomUpSubmission)11804_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(EpochVoteBottomUpSubmission)11858_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(EpochVoteBottomUpSubmission)14006_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(EpochVoteBottomUpSubmission)11858_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(EpochVoteBottomUpSubmission)14008_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(EpochVoteBottomUpSubmission)14160_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(EpochVoteBottomUpSubmission)14200_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(EpochVoteBottomUpSubmission)14777_storage": {
       "encoding": "inplace",
       "label": "struct EpochVoteBottomUpSubmission",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11924,
-=======
-          "astId": 11798,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11852,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 14000,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11852,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 14002,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14154,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14194,
->>>>>>> c7070cd (add join leave)
+          "astId": 14771,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "vote",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(EpochVoteSubmission)11912_storage"
+          "type": "t_struct(EpochVoteSubmission)14759_storage"
         },
         {
-          "astId": 11929,
-=======
-          "type": "t_struct(EpochVoteSubmission)11786_storage"
-        },
-        {
-          "astId": 11803,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(EpochVoteSubmission)11840_storage"
-        },
-        {
-          "astId": 11857,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(EpochVoteSubmission)13988_storage"
-        },
-        {
-          "astId": 14005,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(EpochVoteSubmission)11840_storage"
-        },
-        {
-          "astId": 11857,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(EpochVoteSubmission)13990_storage"
-        },
-        {
-          "astId": 14007,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(EpochVoteSubmission)14142_storage"
-        },
-        {
-          "astId": 14159,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(EpochVoteSubmission)14182_storage"
-        },
-        {
-          "astId": 14199,
->>>>>>> c7070cd (add join leave)
+          "astId": 14776,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpointLegacy)11820_storage)"
-=======
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11694_storage)"
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13896_storage)"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)11748_storage)"
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)13898_storage)"
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14050_storage)"
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14090_storage)"
->>>>>>> c7070cd (add join leave)
+          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpointLegacy)14667_storage)"
         }
       ],
       "numberOfBytes": "192"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(EpochVoteSubmission)11912_storage": {
-=======
-    "t_struct(EpochVoteSubmission)11786_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(EpochVoteSubmission)11840_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(EpochVoteSubmission)13988_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(EpochVoteSubmission)11840_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(EpochVoteSubmission)13990_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(EpochVoteSubmission)14142_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(EpochVoteSubmission)14182_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(EpochVoteSubmission)14759_storage": {
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11895,
-=======
-          "astId": 11769,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11823,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13971,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11823,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13973,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14125,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14165,
->>>>>>> c7070cd (add join leave)
+          "astId": 14742,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -1559,35 +382,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11897,
-=======
-          "astId": 11771,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11825,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13973,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11825,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13975,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14127,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14167,
->>>>>>> c7070cd (add join leave)
+          "astId": 14744,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -1595,35 +390,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11899,
-=======
-          "astId": 11773,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11827,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13975,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11827,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13977,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14129,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14169,
->>>>>>> c7070cd (add join leave)
+          "astId": 14746,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -1631,35 +398,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11905,
-=======
-          "astId": 11779,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11833,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13981,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11833,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13983,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14135,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14175,
->>>>>>> c7070cd (add join leave)
+          "astId": 14752,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "submitters",
           "offset": 0,
@@ -1667,35 +406,7 @@
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11911,
-=======
-          "astId": 11785,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11839,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13987,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11839,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13989,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14141,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14181,
->>>>>>> c7070cd (add join leave)
+          "astId": 14758,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "submissionWeights",
           "offset": 0,
@@ -1705,68 +416,12 @@
       ],
       "numberOfBytes": "160"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(FvmAddress)11952_storage": {
-=======
-    "t_struct(FvmAddress)11826_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(FvmAddress)11880_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(FvmAddress)14028_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(FvmAddress)11880_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(FvmAddress)14030_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(FvmAddress)14182_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(FvmAddress)14222_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(FvmAddress)14799_storage": {
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11949,
-=======
-          "astId": 11823,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11877,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 14025,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11877,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 14027,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14179,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14219,
->>>>>>> c7070cd (add join leave)
+          "astId": 14796,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "addrType",
           "offset": 0,
@@ -1774,35 +429,7 @@
           "type": "t_uint8"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11951,
-=======
-          "astId": 11825,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11879,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 14027,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11879,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 14029,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14181,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14221,
->>>>>>> c7070cd (add join leave)
+          "astId": 14798,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "payload",
           "offset": 0,
@@ -1812,198 +439,65 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(IPCAddress)12005_storage": {
-=======
-    "t_struct(IPCAddress)11946_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(IPCAddress)11953_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(IPCAddress)14153_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(IPCAddress)11953_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(IPCAddress)14167_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(IPCAddress)14319_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(IPCAddress)14359_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(IPCAddress)14936_storage": {
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 12001,
-=======
-          "astId": 11942,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11949,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 14149,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11949,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 14163,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14315,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14355,
->>>>>>> c7070cd (add join leave)
+          "astId": 14932,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)11978_storage"
+          "type": "t_struct(SubnetID)14829_storage"
         },
         {
-          "astId": 12004,
-=======
-          "type": "t_struct(SubnetID)11852_storage"
-        },
-        {
-          "astId": 11945,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(SubnetID)11906_storage"
-        },
-        {
-          "astId": 11952,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(SubnetID)14054_storage"
-        },
-        {
-          "astId": 14152,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(SubnetID)11906_storage"
-        },
-        {
-          "astId": 11952,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(SubnetID)14060_storage"
-        },
-        {
-          "astId": 14166,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(SubnetID)14212_storage"
-        },
-        {
-          "astId": 14318,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(SubnetID)14252_storage"
-        },
-        {
-          "astId": 14358,
->>>>>>> c7070cd (add join leave)
+          "astId": 14935,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(FvmAddress)11952_storage"
-=======
-          "type": "t_struct(FvmAddress)11826_storage"
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(FvmAddress)11880_storage"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(FvmAddress)14028_storage"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(FvmAddress)11880_storage"
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(FvmAddress)14030_storage"
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(FvmAddress)14182_storage"
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(FvmAddress)14222_storage"
->>>>>>> c7070cd (add join leave)
+          "type": "t_struct(FvmAddress)14799_storage"
         }
       ],
       "numberOfBytes": "128"
     },
-    "t_struct(MaxPQ)12655_storage": {
+    "t_struct(MaxPQ)13232_storage": {
       "encoding": "inplace",
       "label": "struct MaxPQ",
       "members": [
         {
-          "astId": 12654,
+          "astId": 13231,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "inner",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(PQ)13858_storage"
+          "type": "t_struct(PQ)14435_storage"
         }
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(MinPQ)13251_storage": {
+    "t_struct(MinPQ)13828_storage": {
       "encoding": "inplace",
       "label": "struct MinPQ",
       "members": [
         {
-          "astId": 13250,
+          "astId": 13827,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "inner",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(PQ)13858_storage"
+          "type": "t_struct(PQ)14435_storage"
         }
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(PQ)13858_storage": {
+    "t_struct(PQ)14435_storage": {
       "encoding": "inplace",
       "label": "struct PQ",
       "members": [
         {
-          "astId": 13847,
+          "astId": 14424,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "size",
           "offset": 0,
@@ -2011,7 +505,7 @@
           "type": "t_uint16"
         },
         {
-          "astId": 13852,
+          "astId": 14429,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "addressToPos",
           "offset": 0,
@@ -2019,7 +513,7 @@
           "type": "t_mapping(t_address,t_uint16)"
         },
         {
-          "astId": 13857,
+          "astId": 14434,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "posToAddress",
           "offset": 0,
@@ -2052,85 +546,20 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(StorableMsg)11888_storage": {
-=======
-    "t_struct(StakingChange)11883_storage": {
-=======
-    "t_struct(StakingChange)14085_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(StakingChange)14091_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(StakingChange)14243_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(StakingChange)14283_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(StakingChange)14860_storage": {
       "encoding": "inplace",
       "label": "struct StakingChange",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11878,
-=======
-          "astId": 14080,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14086,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14238,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14278,
->>>>>>> c7070cd (add join leave)
+          "astId": 14855,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "op",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_enum(StakingOperation)11875"
+          "type": "t_enum(StakingOperation)14852"
         },
         {
-          "astId": 11880,
-=======
-          "type": "t_enum(StakingOperation)14077"
-        },
-        {
-          "astId": 14082,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_enum(StakingOperation)14083"
-        },
-        {
-          "astId": 14088,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_enum(StakingOperation)14235"
-        },
-        {
-          "astId": 14240,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_enum(StakingOperation)14275"
-        },
-        {
-          "astId": 14280,
->>>>>>> c7070cd (add join leave)
+          "astId": 14857,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "amount",
           "offset": 0,
@@ -2138,23 +567,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11882,
-=======
-          "astId": 14084,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14090,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14242,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14282,
->>>>>>> c7070cd (add join leave)
+          "astId": 14859,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validator",
           "offset": 0,
@@ -2164,44 +577,12 @@
       ],
       "numberOfBytes": "96"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(StakingChangeSet)11901_storage": {
-=======
-    "t_struct(StakingChangeSet)14098_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(StakingChangeSet)14104_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(StakingChangeSet)14256_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(StakingChangeSet)14296_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(StakingChangeSet)14873_storage": {
       "encoding": "inplace",
       "label": "struct StakingChangeSet",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11886,
-=======
-          "astId": 14088,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14094,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14246,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14286,
->>>>>>> c7070cd (add join leave)
+          "astId": 14863,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -2209,123 +590,30 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11889,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "totalChanges",
-=======
-          "astId": 14091,
-=======
-          "astId": 14289,
->>>>>>> c7070cd (add join leave)
+          "astId": 14866,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "startConfigurationNumber",
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14097,
-=======
-          "astId": 14249,
->>>>>>> 1aa4c46 (make compile)
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "startConfigurationNumber",
->>>>>>> ea9739e (update storage)
           "offset": 8,
           "slot": "0",
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11895,
-=======
-          "astId": 14097,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14103,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14255,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14295,
->>>>>>> c7070cd (add join leave)
+          "astId": 14872,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "changes",
           "offset": 0,
           "slot": "1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_uint64,t_struct(StakingChange)11883_storage)"
-        },
-        {
-          "astId": 11900,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validators",
-          "offset": 0,
-          "slot": "2",
-          "type": "t_mapping(t_address,t_uint64)"
-        }
-      ],
-      "numberOfBytes": "96"
-    },
-    "t_struct(StakingRelease)11908_storage": {
-=======
-          "type": "t_mapping(t_uint64,t_struct(StakingChange)14085_storage)"
-=======
-          "type": "t_mapping(t_uint64,t_struct(StakingChange)14091_storage)"
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_mapping(t_uint64,t_struct(StakingChange)14243_storage)"
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_mapping(t_uint64,t_struct(StakingChange)14283_storage)"
->>>>>>> c7070cd (add join leave)
+          "type": "t_mapping(t_uint64,t_struct(StakingChange)14860_storage)"
         }
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(StakingRelease)14105_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(StakingRelease)14111_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(StakingRelease)14263_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(StakingRelease)14303_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(StakingRelease)14880_storage": {
       "encoding": "inplace",
       "label": "struct StakingRelease",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11904,
-=======
-          "astId": 14101,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14107,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14259,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14299,
->>>>>>> c7070cd (add join leave)
+          "astId": 14876,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "releaseAt",
           "offset": 0,
@@ -2333,23 +621,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11907,
-=======
-          "astId": 14104,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14110,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14262,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14302,
->>>>>>> c7070cd (add join leave)
+          "astId": 14879,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "amount",
           "offset": 0,
@@ -2359,44 +631,12 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(StakingReleaseQueue)11919_storage": {
-=======
-    "t_struct(StakingReleaseQueue)14125_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(StakingReleaseQueue)14131_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(StakingReleaseQueue)14283_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(StakingReleaseQueue)14323_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(StakingReleaseQueue)14900_storage": {
       "encoding": "inplace",
       "label": "struct StakingReleaseQueue",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11911,
-=======
-          "astId": 14118,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14124,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14276,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14316,
->>>>>>> c7070cd (add join leave)
+          "astId": 14893,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "lockingDuration",
           "offset": 0,
@@ -2404,219 +644,38 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11918,
-=======
-          "astId": 14124,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 14130,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14282,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14322,
->>>>>>> c7070cd (add join leave)
+          "astId": 14899,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "releases",
           "offset": 0,
           "slot": "1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_address,t_array(t_struct(StakingRelease)11908_storage)dyn_storage)"
-=======
-          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14115_storage)"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14121_storage)"
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14273_storage)"
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14313_storage)"
->>>>>>> c7070cd (add join leave)
+          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14890_storage)"
         }
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(StorableMsg)11762_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(StorableMsg)11816_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(StorableMsg)13964_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(StorableMsg)11816_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(StorableMsg)13966_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(StorableMsg)14118_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(StorableMsg)14158_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(StorableMsg)14735_storage": {
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11876,
-=======
-          "astId": 11750,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11804,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13952,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11804,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13954,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14106,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14146,
->>>>>>> c7070cd (add join leave)
+          "astId": 14723,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "from",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(IPCAddress)12005_storage"
+          "type": "t_struct(IPCAddress)14936_storage"
         },
         {
-          "astId": 11879,
-=======
-          "type": "t_struct(IPCAddress)11946_storage"
-        },
-        {
-          "astId": 11753,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(IPCAddress)11953_storage"
-        },
-        {
-          "astId": 11807,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(IPCAddress)14153_storage"
-        },
-        {
-          "astId": 13955,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(IPCAddress)11953_storage"
-        },
-        {
-          "astId": 11807,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(IPCAddress)14167_storage"
-        },
-        {
-          "astId": 13957,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(IPCAddress)14319_storage"
-        },
-        {
-          "astId": 14109,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(IPCAddress)14359_storage"
-        },
-        {
-          "astId": 14149,
->>>>>>> c7070cd (add join leave)
+          "astId": 14726,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "to",
           "offset": 0,
           "slot": "4",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(IPCAddress)12005_storage"
+          "type": "t_struct(IPCAddress)14936_storage"
         },
         {
-          "astId": 11881,
-=======
-          "type": "t_struct(IPCAddress)11946_storage"
-        },
-        {
-          "astId": 11755,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_struct(IPCAddress)11953_storage"
-        },
-        {
-          "astId": 11809,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(IPCAddress)14153_storage"
-        },
-        {
-          "astId": 13957,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_struct(IPCAddress)11953_storage"
-        },
-        {
-          "astId": 11809,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_struct(IPCAddress)14167_storage"
-        },
-        {
-          "astId": 13959,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_struct(IPCAddress)14319_storage"
-        },
-        {
-          "astId": 14111,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(IPCAddress)14359_storage"
-        },
-        {
-          "astId": 14151,
->>>>>>> c7070cd (add join leave)
+          "astId": 14728,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "value",
           "offset": 0,
@@ -2624,35 +683,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11883,
-=======
-          "astId": 11757,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11811,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13959,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11811,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13961,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14113,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14153,
->>>>>>> c7070cd (add join leave)
+          "astId": 14730,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -2660,35 +691,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11885,
-=======
-          "astId": 11759,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11813,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13961,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11813,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13963,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14115,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14155,
->>>>>>> c7070cd (add join leave)
+          "astId": 14732,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "method",
           "offset": 8,
@@ -2696,35 +699,7 @@
           "type": "t_bytes4"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11887,
-=======
-          "astId": 11761,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11815,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 13963,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11815,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 13965,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14117,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14157,
->>>>>>> c7070cd (add join leave)
+          "astId": 14734,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "params",
           "offset": 0,
@@ -2734,125 +709,20 @@
       ],
       "numberOfBytes": "352"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(SubnetActorStorage)10401_storage": {
-=======
-    "t_struct(SubnetActorStorage)10275_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(SubnetActorStorage)10329_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(SubnetActorStorage)11059_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(SubnetActorStorage)10329_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(SubnetActorStorage)11061_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(SubnetActorStorage)11213_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(SubnetActorStorage)11253_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(SubnetActorStorage)11830_storage": {
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10325,
-=======
-          "astId": 10187,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10242,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 10971,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10242,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 10973,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11125,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11165,
->>>>>>> c7070cd (add join leave)
+          "astId": 11742,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11930_storage)"
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14777_storage)"
         },
         {
-          "astId": 10330,
-=======
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11804_storage)"
-        },
-        {
-          "astId": 10192,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)"
-        },
-        {
-          "astId": 10247,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14006_storage)"
-        },
-        {
-          "astId": 10976,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)11858_storage)"
-        },
-        {
-          "astId": 10247,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14008_storage)"
-        },
-        {
-          "astId": 10978,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14160_storage)"
-        },
-        {
-          "astId": 11130,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14200_storage)"
-        },
-        {
-          "astId": 11170,
->>>>>>> c7070cd (add join leave)
+          "astId": 11747,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "stake",
           "offset": 0,
@@ -2860,35 +730,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10335,
-=======
-          "astId": 10197,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10252,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 10981,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10252,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 10983,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11135,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11175,
->>>>>>> c7070cd (add join leave)
+          "astId": 11752,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "accumulatedRewards",
           "offset": 0,
@@ -2896,35 +738,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10340,
-=======
-          "astId": 10202,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10257,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 10986,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10257,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 10988,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11140,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11180,
->>>>>>> c7070cd (add join leave)
+          "astId": 11757,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validatorNetAddresses",
           "offset": 0,
@@ -2932,149 +746,23 @@
           "type": "t_mapping(t_address,t_string_storage)"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10346,
-=======
-          "astId": 10208,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10263,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 10992,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10263,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 10994,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11146,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11186,
->>>>>>> c7070cd (add join leave)
+          "astId": 11763,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validatorWorkerAddresses",
           "offset": 0,
           "slot": "4",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_address,t_struct(FvmAddress)11952_storage)"
+          "type": "t_mapping(t_address,t_struct(FvmAddress)14799_storage)"
         },
         {
-          "astId": 10352,
-=======
-          "type": "t_mapping(t_address,t_struct(FvmAddress)11826_storage)"
-        },
-        {
-          "astId": 10214,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_mapping(t_address,t_struct(FvmAddress)11880_storage)"
-        },
-        {
-          "astId": 10269,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_mapping(t_address,t_struct(FvmAddress)14028_storage)"
-        },
-        {
-          "astId": 10998,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_mapping(t_address,t_struct(FvmAddress)11880_storage)"
-        },
-        {
-          "astId": 10269,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_mapping(t_address,t_struct(FvmAddress)14030_storage)"
-        },
-        {
-          "astId": 11000,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_mapping(t_address,t_struct(FvmAddress)14182_storage)"
-        },
-        {
-          "astId": 11152,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_mapping(t_address,t_struct(FvmAddress)14222_storage)"
-        },
-        {
-          "astId": 11192,
->>>>>>> c7070cd (add join leave)
+          "astId": 11769,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "committedCheckpoints",
           "offset": 0,
           "slot": "5",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)11820_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointLegacy)14667_storage)"
         },
         {
-          "astId": 10355,
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11694_storage)"
-        },
-        {
-          "astId": 10217,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)"
-        },
-        {
-          "astId": 10272,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13896_storage)"
-        },
-        {
-          "astId": 11001,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)11748_storage)"
-        },
-        {
-          "astId": 10272,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13898_storage)"
-        },
-        {
-          "astId": 11003,
->>>>>>> ea9739e (update storage)
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14050_storage)"
-        },
-        {
-          "astId": 11155,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)"
-        },
-        {
-          "astId": 11195,
->>>>>>> c7070cd (add join leave)
+          "astId": 11772,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "genesis",
           "offset": 0,
@@ -3082,35 +770,7 @@
           "type": "t_bytes_storage"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10358,
-=======
-          "astId": 10220,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10275,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11004,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10275,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11006,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11158,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11198,
->>>>>>> c7070cd (add join leave)
+          "astId": 11775,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "totalStake",
           "offset": 0,
@@ -3118,35 +778,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10361,
-=======
-          "astId": 10223,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10278,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11007,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10278,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11009,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11161,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11201,
->>>>>>> c7070cd (add join leave)
+          "astId": 11778,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "minActivationCollateral",
           "offset": 0,
@@ -3154,35 +786,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10364,
-=======
-          "astId": 10226,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10281,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11010,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10281,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11012,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11164,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11204,
->>>>>>> c7070cd (add join leave)
+          "astId": 11781,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "configurationNumber",
           "offset": 0,
@@ -3190,35 +794,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10367,
-=======
-          "astId": 10229,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10284,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11013,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10284,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11015,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11167,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11207,
->>>>>>> c7070cd (add join leave)
+          "astId": 11784,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "topDownCheckPeriod",
           "offset": 8,
@@ -3226,35 +802,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10370,
-=======
-          "astId": 10232,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10287,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11016,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10287,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11018,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11170,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11210,
->>>>>>> c7070cd (add join leave)
+          "astId": 11787,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "bottomUpCheckPeriod",
           "offset": 16,
@@ -3262,29 +810,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10373,
-=======
-          "astId": 10235,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11019,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11021,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11173,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11213,
->>>>>>> c7070cd (add join leave)
+          "astId": 11790,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "minValidators",
           "offset": 24,
@@ -3292,33 +818,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10376,
-=======
-          "astId": 10238,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10290,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11022,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10290,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11024,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11176,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11216,
->>>>>>> c7070cd (add join leave)
+          "astId": 11793,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "name",
           "offset": 0,
@@ -3326,35 +826,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10378,
-=======
-          "astId": 10240,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10292,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11024,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10292,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11026,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11178,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11218,
->>>>>>> c7070cd (add join leave)
+          "astId": 11795,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "currentSubnetHash",
           "offset": 0,
@@ -3362,35 +834,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10381,
-=======
-          "astId": 10243,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10295,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11027,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10295,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11029,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11181,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11221,
->>>>>>> c7070cd (add join leave)
+          "astId": 11798,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "prevExecutedCheckpointHash",
           "offset": 0,
@@ -3398,35 +842,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10384,
-=======
-          "astId": 10246,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10298,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11030,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10298,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11032,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11184,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11224,
->>>>>>> c7070cd (add join leave)
+          "astId": 11801,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "ipcGatewayAddr",
           "offset": 0,
@@ -3434,50 +850,15 @@
           "type": "t_address"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10388,
-=======
-          "astId": 10250,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 10302,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 11034,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10302,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 11036,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 11188,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 11228,
->>>>>>> c7070cd (add join leave)
+          "astId": 11805,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "status",
           "offset": 20,
           "slot": "13",
-<<<<<<< HEAD
-<<<<<<< HEAD
           "type": "t_enum(Status)5004"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 10392,
-=======
-          "astId": 10254,
->>>>>>> 7748a92 (interface)
+          "astId": 11809,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validators",
           "offset": 0,
@@ -3485,302 +866,54 @@
           "type": "t_struct(AddressSet)3420_storage"
         },
         {
-<<<<<<< HEAD
-          "astId": 10396,
-=======
-          "astId": 10258,
->>>>>>> 7748a92 (interface)
+          "astId": 11813,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "parentId",
           "offset": 0,
           "slot": "16",
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)11978_storage"
+          "type": "t_struct(SubnetID)14829_storage"
         },
         {
-          "astId": 10400,
-=======
-          "type": "t_struct(SubnetID)11852_storage"
-        },
-        {
-          "astId": 10262,
->>>>>>> 7748a92 (interface)
-=======
-          "type": "t_enum(Status)4998"
-        },
-        {
-<<<<<<< HEAD
-          "astId": 10306,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "parentId",
-          "offset": 0,
-          "slot": "14",
-          "type": "t_struct(SubnetID)11906_storage"
-        },
-        {
-          "astId": 10310,
->>>>>>> f640da2 (confirm with configuration number)
+          "astId": 11817,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "consensus",
           "offset": 0,
-          "slot": "16",
-          "type": "t_enum(ConsensusType)4984"
-        },
-        {
-          "astId": 10313,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "configurationNumber",
-          "offset": 1,
-          "slot": "16",
-          "type": "t_uint64"
-        },
-        {
-          "astId": 10318,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validatorSetChanges",
-          "offset": 0,
-          "slot": "17",
-          "type": "t_array(t_struct(ValidatorChange)11923_storage)dyn_storage"
-        },
-        {
-          "astId": 10322,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validators",
-          "offset": 0,
           "slot": "18",
-<<<<<<< HEAD
-<<<<<<< HEAD
           "type": "t_enum(ConsensusType)4990"
-=======
-          "type": "t_enum(ConsensusType)4546"
-=======
-=======
-          "astId": 11038,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validators",
-          "offset": 0,
-          "slot": "14",
->>>>>>> fa018d6 (Adding min priority queue (#209))
-          "type": "t_struct(AddressSet)3420_storage"
->>>>>>> f640da2 (confirm with configuration number)
         },
         {
-          "astId": 11042,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "parentId",
-          "offset": 0,
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "slot": "19",
-          "type": "t_struct(ValidatorSet)11939_storage"
-        },
-        {
-          "astId": 10270,
-=======
-          "slot": "16",
-          "type": "t_struct(SubnetID)14054_storage"
-=======
-          "astId": 10306,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "parentId",
-          "offset": 0,
-          "slot": "14",
-          "type": "t_struct(SubnetID)11906_storage"
->>>>>>> be6a160 (resolve conflicts)
-        },
-        {
-          "astId": 10310,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "consensus",
-          "offset": 0,
-          "slot": "16",
-          "type": "t_enum(ConsensusType)4984"
-        },
-        {
-          "astId": 10313,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "configurationNumber",
-          "offset": 1,
-          "slot": "16",
-          "type": "t_uint64"
-        },
-        {
-<<<<<<< HEAD
-          "astId": 11054,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 10318,
->>>>>>> be6a160 (resolve conflicts)
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validatorSetChanges",
-          "offset": 0,
-<<<<<<< HEAD
-          "slot": "21",
-<<<<<<< HEAD
-          "type": "t_struct(StakingChangeSet)11901_storage"
-        },
-        {
-          "astId": 10274,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "releaseQueue",
-          "offset": 0,
-          "slot": "24",
-          "type": "t_struct(StakingReleaseQueue)11919_storage"
->>>>>>> 7748a92 (interface)
-=======
-          "slot": "20",
-          "type": "t_mapping(t_address,t_struct(Validator)11914_storage)"
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "type": "t_struct(StakingChangeSet)14098_storage"
-=======
-          "slot": "17",
-          "type": "t_array(t_struct(ValidatorChange)11923_storage)dyn_storage"
->>>>>>> be6a160 (resolve conflicts)
-        },
-        {
-          "astId": 10322,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validators",
-          "offset": 0,
-<<<<<<< HEAD
-          "slot": "23",
-          "type": "t_struct(StakingReleaseQueue)14125_storage"
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "slot": "18",
-=======
-          "type": "t_enum(Status)4560"
-        },
-        {
-          "astId": 11232,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "validators",
-          "offset": 0,
-          "slot": "14",
->>>>>>> ea9739e (update storage)
-          "type": "t_struct(AddressSet)3420_storage"
-        },
-        {
-          "astId": 11236,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "parentId",
-          "offset": 0,
-<<<<<<< HEAD
-          "slot": "20",
-          "type": "t_mapping(t_address,t_struct(Validator)11914_storage)"
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "slot": "16",
-          "type": "t_struct(SubnetID)14252_storage"
-        },
-        {
-          "astId": 11240,
-          "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
-          "label": "consensus",
-          "offset": 0,
-          "slot": "18",
-          "type": "t_enum(ConsensusType)4546"
-        },
-        {
-          "astId": 11244,
+          "astId": 11821,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validatorSet",
           "offset": 0,
           "slot": "19",
-          "type": "t_struct(ValidatorSet)14352_storage"
+          "type": "t_struct(ValidatorSet)14929_storage"
         },
         {
-          "astId": 11248,
+          "astId": 11825,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "changeSet",
           "offset": 0,
           "slot": "28",
-          "type": "t_struct(StakingChangeSet)14296_storage"
+          "type": "t_struct(StakingChangeSet)14873_storage"
         },
         {
-          "astId": 11252,
+          "astId": 11829,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "releaseQueue",
           "offset": 0,
-<<<<<<< HEAD
-          "slot": "29",
-          "type": "t_struct(StakingReleaseQueue)14131_storage"
->>>>>>> ea9739e (update storage)
-=======
           "slot": "30",
-<<<<<<< HEAD
-          "type": "t_struct(StakingReleaseQueue)14283_storage"
->>>>>>> 1aa4c46 (make compile)
-=======
-          "type": "t_struct(StakingReleaseQueue)14323_storage"
->>>>>>> c7070cd (add join leave)
+          "type": "t_struct(StakingReleaseQueue)14900_storage"
         }
       ],
       "numberOfBytes": "1024"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(SubnetID)11978_storage": {
-=======
-    "t_struct(SubnetID)11852_storage": {
->>>>>>> 7748a92 (interface)
-=======
-    "t_struct(SubnetID)11906_storage": {
->>>>>>> f640da2 (confirm with configuration number)
-=======
-    "t_struct(SubnetID)14054_storage": {
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-    "t_struct(SubnetID)11906_storage": {
->>>>>>> be6a160 (resolve conflicts)
-=======
-    "t_struct(SubnetID)14060_storage": {
->>>>>>> ea9739e (update storage)
-=======
-    "t_struct(SubnetID)14212_storage": {
->>>>>>> 1aa4c46 (make compile)
-=======
-    "t_struct(SubnetID)14252_storage": {
->>>>>>> c7070cd (add join leave)
+    "t_struct(SubnetID)14829_storage": {
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11973,
-=======
-          "astId": 11847,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11901,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 14049,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11901,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 14055,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14207,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14247,
->>>>>>> c7070cd (add join leave)
+          "astId": 14824,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "root",
           "offset": 0,
@@ -3788,35 +921,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 11977,
-=======
-          "astId": 11851,
->>>>>>> 7748a92 (interface)
-=======
-          "astId": 11905,
->>>>>>> f640da2 (confirm with configuration number)
-=======
-          "astId": 14053,
->>>>>>> fa018d6 (Adding min priority queue (#209))
-=======
-          "astId": 11905,
->>>>>>> be6a160 (resolve conflicts)
-=======
-          "astId": 14059,
->>>>>>> ea9739e (update storage)
-=======
-          "astId": 14211,
->>>>>>> 1aa4c46 (make compile)
-=======
-          "astId": 14251,
->>>>>>> c7070cd (add join leave)
+          "astId": 14828,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "route",
           "offset": 0,
@@ -3826,12 +931,12 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(Validator)14331_storage": {
+    "t_struct(Validator)14908_storage": {
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
-          "astId": 14325,
+          "astId": 14902,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "confirmedCollateral",
           "offset": 0,
@@ -3839,7 +944,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14327,
+          "astId": 14904,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "totalCollateral",
           "offset": 0,
@@ -3847,7 +952,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14330,
+          "astId": 14907,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "data",
           "offset": 0,
@@ -3857,12 +962,12 @@
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(ValidatorSet)14352_storage": {
+    "t_struct(ValidatorSet)14929_storage": {
       "encoding": "inplace",
       "label": "struct ValidatorSet",
       "members": [
         {
-          "astId": 14334,
+          "astId": 14911,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "activeLimit",
           "offset": 0,
@@ -3870,7 +975,7 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14337,
+          "astId": 14914,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "totalConfirmedCollateral",
           "offset": 0,
@@ -3878,28 +983,28 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14343,
+          "astId": 14920,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "validators",
           "offset": 0,
           "slot": "2",
-          "type": "t_mapping(t_address,t_struct(Validator)14331_storage)"
+          "type": "t_mapping(t_address,t_struct(Validator)14908_storage)"
         },
         {
-          "astId": 14347,
+          "astId": 14924,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "activeValidators",
           "offset": 0,
           "slot": "3",
-          "type": "t_struct(MinPQ)13251_storage"
+          "type": "t_struct(MinPQ)13828_storage"
         },
         {
-          "astId": 14351,
+          "astId": 14928,
           "contract": "src/lib/LibSubnetActorStorage.sol:SubnetActorModifiers",
           "label": "waitingValidators",
           "offset": 0,
           "slot": "6",
-          "type": "t_struct(MaxPQ)12655_storage"
+          "type": "t_struct(MaxPQ)13232_storage"
         }
       ],
       "numberOfBytes": "288"

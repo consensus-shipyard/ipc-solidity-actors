@@ -7,7 +7,7 @@ pub use gateway_router_facet::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types
+    non_camel_case_types,
 )]
 pub mod gateway_router_facet {
     #[allow(deprecated)]
@@ -141,6 +141,125 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("commitChildCheck"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("commitChildCheck"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("commit"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                        ::std::boxed::Box::new(
+                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                ::std::boxed::Box::new(
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                        ::std::boxed::Box::new(
+                                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                        ),
+                                                                                    ),
+                                                                                ],
+                                                                            ),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                                ],
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                        ::std::boxed::Box::new(
+                                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                        ),
+                                                                                    ),
+                                                                                ],
+                                                                            ),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                                ],
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Bool,
+                                                        ],
+                                                    ),
+                                                ),
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                ::std::boxed::Box::new(
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                        ::std::boxed::Box::new(
+                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                ::std::boxed::Box::new(
+                                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                                                ),
+                                                            ),
+                                                        ],
+                                                    ),
+                                                ),
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned(
+                                            "struct BottomUpCheckpoint",
+                                        ),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("commitParentFinality"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -231,11 +350,7 @@ pub mod gateway_router_facet {
                                     ),
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned(
-<<<<<<< HEAD
-                                            "struct BottomUpCheckpoint",
-=======
                                             "struct BottomUpCheckpointNew",
->>>>>>> fa018d6 (Adding min priority queue (#209))
                                         ),
                                     ),
                                 },
@@ -266,33 +381,6 @@ pub mod gateway_router_facet {
                         },
                     ],
                 ),
-<<<<<<< HEAD
-                (
-                    ::std::borrow::ToOwned::to_owned("pruneBottomUpCheckpoints"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "pruneBottomUpCheckpoints",
-                            ),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned(
-                                        "newRetentionHeight",
-                                    ),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
-                                    ),
-                                },
-                            ],
-                            outputs: ::std::vec![],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
-                        },
-                    ],
-                ),
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
             ]),
             events: ::core::convert::From::from([
                 (
@@ -360,13 +448,27 @@ pub mod gateway_router_facet {
             ]),
             errors: ::core::convert::From::from([
                 (
-                    ::std::borrow::ToOwned::to_owned("CheckpointAlreadyExists"),
+                    ::std::borrow::ToOwned::to_owned("AddressEmptyCode"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("AddressEmptyCode"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("target"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("AddressInsufficientBalance"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
-<<<<<<< HEAD
-                                "CheckpointAlreadyExists",
-=======
                                 "AddressInsufficientBalance",
                             ),
                             inputs: ::std::vec![
@@ -440,82 +542,39 @@ pub mod gateway_router_facet {
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
                                 "InconsistentPrevCheckpoint",
->>>>>>> fa018d6 (Adding min priority queue (#209))
                             ),
                             inputs: ::std::vec![],
                         },
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("CheckpointAlreadyProcessed"),
+                    ::std::borrow::ToOwned::to_owned("InvalidActorAddress"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "CheckpointAlreadyProcessed",
+                                "InvalidActorAddress",
                             ),
                             inputs: ::std::vec![],
                         },
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("CheckpointInfoAlreadyExists"),
+                    ::std::borrow::ToOwned::to_owned("InvalidCheckpointEpoch"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "CheckpointInfoAlreadyExists",
+                                "InvalidCheckpointEpoch",
                             ),
                             inputs: ::std::vec![],
                         },
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("CheckpointMembershipNotCreated"),
+                    ::std::borrow::ToOwned::to_owned("InvalidCheckpointSource"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "CheckpointMembershipNotCreated",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("CheckpointNotCreated"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "CheckpointNotCreated",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("FailedAddIncompleteCheckpoint"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "FailedAddIncompleteCheckpoint",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("FailedAddSignatory"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("FailedAddSignatory"),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("FailedRemoveIncompleteCheckpoint"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "FailedRemoveIncompleteCheckpoint",
+                                "InvalidCheckpointSource",
                             ),
                             inputs: ::std::vec![],
                         },
@@ -544,9 +603,6 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
-<<<<<<< HEAD
-                    ::std::borrow::ToOwned::to_owned("InvalidRetentionHeight"),
-=======
                     ::std::borrow::ToOwned::to_owned("InvalidSignature"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -583,47 +639,20 @@ pub mod gateway_router_facet {
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("NotEnoughSubnetCircSupply"),
->>>>>>> fa018d6 (Adding min priority queue (#209))
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "InvalidRetentionHeight",
+                                "NotEnoughSubnetCircSupply",
                             ),
                             inputs: ::std::vec![],
                         },
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("InvalidSignature"),
+                    ::std::borrow::ToOwned::to_owned("NotInitialized"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("InvalidSignature"),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("NotAuthorized"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("NotAuthorized"),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                            ],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("NotEnoughBalance"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("NotEnoughBalance"),
+                            name: ::std::borrow::ToOwned::to_owned("NotInitialized"),
                             inputs: ::std::vec![],
                         },
                     ],
@@ -672,8 +701,6 @@ pub mod gateway_router_facet {
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("SignatureReplay"),
-<<<<<<< HEAD
-=======
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("SignatureReplay"),
@@ -683,10 +710,9 @@ pub mod gateway_router_facet {
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("SubnetNotActive"),
->>>>>>> fa018d6 (Adding min priority queue (#209))
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("SignatureReplay"),
+                            name: ::std::borrow::ToOwned::to_owned("SubnetNotActive"),
                             inputs: ::std::vec![],
                         },
                     ],
@@ -732,8 +758,9 @@ pub mod gateway_router_facet {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static GATEWAYROUTERFACET_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
-        ::ethers::contract::Lazy::new(__abi);
+    pub static GATEWAYROUTERFACET_ABI: ::ethers::contract::Lazy<
+        ::ethers::core::abi::Abi,
+    > = ::ethers::contract::Lazy::new(__abi);
     pub struct GatewayRouterFacet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GatewayRouterFacet<M> {
         fn clone(&self) -> Self {
@@ -765,11 +792,13 @@ pub mod gateway_router_facet {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(::ethers::contract::Contract::new(
-                address.into(),
-                GATEWAYROUTERFACET_ABI.clone(),
-                client,
-            ))
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    GATEWAYROUTERFACET_ABI.clone(),
+                    client,
+                ),
+            )
         }
         ///Calls the contract's `addCheckpointSignature` (0x2a04f220) function
         pub fn add_checkpoint_signature(
@@ -795,8 +824,6 @@ pub mod gateway_router_facet {
                 .method_hash([61, 222, 54, 236], cross_msgs)
                 .expect("method not found (this should never happen)")
         }
-<<<<<<< HEAD
-=======
         ///Calls the contract's `commitChildCheck` (0xd4e149a8) function
         pub fn commit_child_check(
             &self,
@@ -806,7 +833,6 @@ pub mod gateway_router_facet {
                 .method_hash([212, 225, 73, 168], (commit,))
                 .expect("method not found (this should never happen)")
         }
->>>>>>> fa018d6 (Adding min priority queue (#209))
         ///Calls the contract's `commitParentFinality` (0x9fa68440) function
         pub fn commit_parent_finality(
             &self,
@@ -822,11 +848,7 @@ pub mod gateway_router_facet {
         ///Calls the contract's `createBottomUpCheckpoint` (0xa656ca5b) function
         pub fn create_bottom_up_checkpoint(
             &self,
-<<<<<<< HEAD
-            checkpoint: BottomUpCheckpoint,
-=======
             checkpoint: BottomUpCheckpointNew,
->>>>>>> fa018d6 (Adding min priority queue (#209))
             membership_root_hash: [u8; 32],
             membership_weight: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
@@ -837,49 +859,44 @@ pub mod gateway_router_facet {
                 )
                 .expect("method not found (this should never happen)")
         }
-<<<<<<< HEAD
-        ///Calls the contract's `pruneBottomUpCheckpoints` (0xae00c298) function
-        pub fn prune_bottom_up_checkpoints(
-            &self,
-            new_retention_height: u64,
-        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
-            self.0
-                .method_hash([174, 0, 194, 152], new_retention_height)
-                .expect("method not found (this should never happen)")
-        }
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
         ///Gets the contract's `QuorumReached` event
         pub fn quorum_reached_filter(
             &self,
-        ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, QuorumReachedFilter>
-        {
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            QuorumReachedFilter,
+        > {
             self.0.event()
         }
         ///Gets the contract's `QuorumWeightUpdated` event
         pub fn quorum_weight_updated_filter(
             &self,
-        ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, QuorumWeightUpdatedFilter>
-        {
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            QuorumWeightUpdatedFilter,
+        > {
             self.0.event()
         }
         /// Returns an `Event` builder for all the events of this contract.
         pub fn events(
             &self,
-        ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, GatewayRouterFacetEvents>
-        {
-            self.0
-                .event_with_filter(::core::default::Default::default())
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            GatewayRouterFacetEvents,
+        > {
+            self.0.event_with_filter(::core::default::Default::default())
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
-        for GatewayRouterFacet<M>
-    {
+    for GatewayRouterFacet<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
     }
-    ///Custom Error type `CheckpointAlreadyExists` with signature `CheckpointAlreadyExists()` and selector `0xb8a1eae1`
+    ///Custom Error type `AddressEmptyCode` with signature `AddressEmptyCode(address)` and selector `0x9996b315`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -888,11 +905,13 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[etherror(name = "CheckpointAlreadyExists", abi = "CheckpointAlreadyExists()")]
-    pub struct CheckpointAlreadyExists;
-    ///Custom Error type `CheckpointAlreadyProcessed` with signature `CheckpointAlreadyProcessed()` and selector `0x76afb88d`
+    #[etherror(name = "AddressEmptyCode", abi = "AddressEmptyCode(address)")]
+    pub struct AddressEmptyCode {
+        pub target: ::ethers::core::types::Address,
+    }
+    ///Custom Error type `AddressInsufficientBalance` with signature `AddressInsufficientBalance(address)` and selector `0xcd786059`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -901,16 +920,12 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
-        name = "CheckpointAlreadyProcessed",
-        abi = "CheckpointAlreadyProcessed()"
+        name = "AddressInsufficientBalance",
+        abi = "AddressInsufficientBalance(address)"
     )]
-<<<<<<< HEAD
-    pub struct CheckpointAlreadyProcessed;
-    ///Custom Error type `CheckpointInfoAlreadyExists` with signature `CheckpointInfoAlreadyExists()` and selector `0xa04ff7c7`
-=======
     pub struct AddressInsufficientBalance {
         pub account: ::ethers::core::types::Address,
     }
@@ -923,7 +938,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "CheckpointAlreadyExists", abi = "CheckpointAlreadyExists()")]
     pub struct CheckpointAlreadyExists;
@@ -936,7 +951,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "CheckpointInfoAlreadyExists",
@@ -952,7 +967,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "CheckpointMembershipNotCreated",
@@ -968,12 +983,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "CheckpointNotCreated", abi = "CheckpointNotCreated()")]
     pub struct CheckpointNotCreated;
     ///Custom Error type `FailedInnerCall` with signature `FailedInnerCall()` and selector `0x1425ea42`
->>>>>>> fa018d6 (Adding min priority queue (#209))
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -982,9 +996,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
-<<<<<<< HEAD
-=======
+        Hash
     )]
     #[etherror(name = "FailedInnerCall", abi = "FailedInnerCall()")]
     pub struct FailedInnerCall;
@@ -997,15 +1009,14 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
->>>>>>> fa018d6 (Adding min priority queue (#209))
+        Hash
     )]
     #[etherror(
-        name = "CheckpointInfoAlreadyExists",
-        abi = "CheckpointInfoAlreadyExists()"
+        name = "InconsistentPrevCheckpoint",
+        abi = "InconsistentPrevCheckpoint()"
     )]
-    pub struct CheckpointInfoAlreadyExists;
-    ///Custom Error type `CheckpointMembershipNotCreated` with signature `CheckpointMembershipNotCreated()` and selector `0x009f833a`
+    pub struct InconsistentPrevCheckpoint;
+    ///Custom Error type `InvalidActorAddress` with signature `InvalidActorAddress()` and selector `0x70e45109`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1014,14 +1025,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[etherror(
-        name = "CheckpointMembershipNotCreated",
-        abi = "CheckpointMembershipNotCreated()"
-    )]
-    pub struct CheckpointMembershipNotCreated;
-    ///Custom Error type `CheckpointNotCreated` with signature `CheckpointNotCreated()` and selector `0x58cdd2e7`
+    #[etherror(name = "InvalidActorAddress", abi = "InvalidActorAddress()")]
+    pub struct InvalidActorAddress;
+    ///Custom Error type `InvalidCheckpointEpoch` with signature `InvalidCheckpointEpoch()` and selector `0xfae4eadb`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1030,11 +1038,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[etherror(name = "CheckpointNotCreated", abi = "CheckpointNotCreated()")]
-    pub struct CheckpointNotCreated;
-    ///Custom Error type `FailedAddIncompleteCheckpoint` with signature `FailedAddIncompleteCheckpoint()` and selector `0xee6c0267`
+    #[etherror(name = "InvalidCheckpointEpoch", abi = "InvalidCheckpointEpoch()")]
+    pub struct InvalidCheckpointEpoch;
+    ///Custom Error type `InvalidCheckpointSource` with signature `InvalidCheckpointSource()` and selector `0xfe72264e`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1043,42 +1051,10 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[etherror(
-        name = "FailedAddIncompleteCheckpoint",
-        abi = "FailedAddIncompleteCheckpoint()"
-    )]
-    pub struct FailedAddIncompleteCheckpoint;
-    ///Custom Error type `FailedAddSignatory` with signature `FailedAddSignatory()` and selector `0x3363140f`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "FailedAddSignatory", abi = "FailedAddSignatory()")]
-    pub struct FailedAddSignatory;
-    ///Custom Error type `FailedRemoveIncompleteCheckpoint` with signature `FailedRemoveIncompleteCheckpoint()` and selector `0x7e5145ed`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(
-        name = "FailedRemoveIncompleteCheckpoint",
-        abi = "FailedRemoveIncompleteCheckpoint()"
-    )]
-    pub struct FailedRemoveIncompleteCheckpoint;
+    #[etherror(name = "InvalidCheckpointSource", abi = "InvalidCheckpointSource()")]
+    pub struct InvalidCheckpointSource;
     ///Custom Error type `InvalidCrossMsgDstSubnet` with signature `InvalidCrossMsgDstSubnet()` and selector `0xc5f563eb`
     #[derive(
         Clone,
@@ -1088,7 +1064,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidCrossMsgDstSubnet", abi = "InvalidCrossMsgDstSubnet()")]
     pub struct InvalidCrossMsgDstSubnet;
@@ -1101,26 +1077,10 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidCrossMsgNonce", abi = "InvalidCrossMsgNonce()")]
     pub struct InvalidCrossMsgNonce;
-<<<<<<< HEAD
-    ///Custom Error type `InvalidRetentionHeight` with signature `InvalidRetentionHeight()` and selector `0x6819a3a9`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "InvalidRetentionHeight", abi = "InvalidRetentionHeight()")]
-    pub struct InvalidRetentionHeight;
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
     ///Custom Error type `InvalidSignature` with signature `InvalidSignature()` and selector `0x8baa579f`
     #[derive(
         Clone,
@@ -1130,7 +1090,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "InvalidSignature", abi = "InvalidSignature()")]
     pub struct InvalidSignature;
@@ -1143,7 +1103,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotAuthorized", abi = "NotAuthorized(address)")]
     pub struct NotAuthorized(pub ::ethers::core::types::Address);
@@ -1156,12 +1116,10 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotEnoughBalance", abi = "NotEnoughBalance()")]
     pub struct NotEnoughBalance;
-<<<<<<< HEAD
-=======
     ///Custom Error type `NotEnoughSubnetCircSupply` with signature `NotEnoughSubnetCircSupply()` and selector `0x74db2854`
     #[derive(
         Clone,
@@ -1171,12 +1129,9 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[etherror(
-        name = "NotEnoughSubnetCircSupply",
-        abi = "NotEnoughSubnetCircSupply()"
-    )]
+    #[etherror(name = "NotEnoughSubnetCircSupply", abi = "NotEnoughSubnetCircSupply()")]
     pub struct NotEnoughSubnetCircSupply;
     ///Custom Error type `NotInitialized` with signature `NotInitialized()` and selector `0x87138d5c`
     #[derive(
@@ -1187,11 +1142,10 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotInitialized", abi = "NotInitialized()")]
     pub struct NotInitialized;
->>>>>>> fa018d6 (Adding min priority queue (#209))
     ///Custom Error type `NotRegisteredSubnet` with signature `NotRegisteredSubnet()` and selector `0xe991abd0`
     #[derive(
         Clone,
@@ -1201,7 +1155,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotRegisteredSubnet", abi = "NotRegisteredSubnet()")]
     pub struct NotRegisteredSubnet;
@@ -1214,7 +1168,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "NotSystemActor", abi = "NotSystemActor()")]
     pub struct NotSystemActor;
@@ -1227,7 +1181,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "OldConfigurationNumber", abi = "OldConfigurationNumber()")]
     pub struct OldConfigurationNumber;
@@ -1240,7 +1194,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "ParentFinalityAlreadyCommitted",
@@ -1248,8 +1202,6 @@ pub mod gateway_router_facet {
     )]
     pub struct ParentFinalityAlreadyCommitted;
     ///Custom Error type `SignatureReplay` with signature `SignatureReplay()` and selector `0xb47fa1b2`
-<<<<<<< HEAD
-=======
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1258,12 +1210,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "SignatureReplay", abi = "SignatureReplay()")]
     pub struct SignatureReplay;
     ///Custom Error type `SubnetNotActive` with signature `SubnetNotActive()` and selector `0xc18316bf`
->>>>>>> fa018d6 (Adding min priority queue (#209))
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1272,10 +1223,10 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
-    #[etherror(name = "SignatureReplay", abi = "SignatureReplay()")]
-    pub struct SignatureReplay;
+    #[etherror(name = "SubnetNotActive", abi = "SubnetNotActive()")]
+    pub struct SubnetNotActive;
     ///Custom Error type `ValidatorWeightIsZero` with signature `ValidatorWeightIsZero()` and selector `0x389b457d`
     #[derive(
         Clone,
@@ -1285,7 +1236,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "ValidatorWeightIsZero", abi = "ValidatorWeightIsZero()")]
     pub struct ValidatorWeightIsZero;
@@ -1298,7 +1249,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(
         name = "ValidatorsAndWeightsLengthMismatch",
@@ -1314,26 +1265,13 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[etherror(name = "ZeroMembershipWeight", abi = "ZeroMembershipWeight()")]
     pub struct ZeroMembershipWeight;
     ///Container type for all of the contract's custom errors
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayRouterFacetErrors {
-<<<<<<< HEAD
-        CheckpointAlreadyExists(CheckpointAlreadyExists),
-        CheckpointAlreadyProcessed(CheckpointAlreadyProcessed),
-        CheckpointInfoAlreadyExists(CheckpointInfoAlreadyExists),
-        CheckpointMembershipNotCreated(CheckpointMembershipNotCreated),
-        CheckpointNotCreated(CheckpointNotCreated),
-        FailedAddIncompleteCheckpoint(FailedAddIncompleteCheckpoint),
-        FailedAddSignatory(FailedAddSignatory),
-        FailedRemoveIncompleteCheckpoint(FailedRemoveIncompleteCheckpoint),
-        InvalidCrossMsgDstSubnet(InvalidCrossMsgDstSubnet),
-        InvalidCrossMsgNonce(InvalidCrossMsgNonce),
-        InvalidRetentionHeight(InvalidRetentionHeight),
-=======
         AddressEmptyCode(AddressEmptyCode),
         AddressInsufficientBalance(AddressInsufficientBalance),
         CheckpointAlreadyExists(CheckpointAlreadyExists),
@@ -1347,19 +1285,17 @@ pub mod gateway_router_facet {
         InvalidCheckpointSource(InvalidCheckpointSource),
         InvalidCrossMsgDstSubnet(InvalidCrossMsgDstSubnet),
         InvalidCrossMsgNonce(InvalidCrossMsgNonce),
->>>>>>> fa018d6 (Adding min priority queue (#209))
         InvalidSignature(InvalidSignature),
         NotAuthorized(NotAuthorized),
         NotEnoughBalance(NotEnoughBalance),
+        NotEnoughSubnetCircSupply(NotEnoughSubnetCircSupply),
+        NotInitialized(NotInitialized),
         NotRegisteredSubnet(NotRegisteredSubnet),
         NotSystemActor(NotSystemActor),
         OldConfigurationNumber(OldConfigurationNumber),
         ParentFinalityAlreadyCommitted(ParentFinalityAlreadyCommitted),
         SignatureReplay(SignatureReplay),
-<<<<<<< HEAD
-=======
         SubnetNotActive(SubnetNotActive),
->>>>>>> fa018d6 (Adding min priority queue (#209))
         ValidatorWeightIsZero(ValidatorWeightIsZero),
         ValidatorsAndWeightsLengthMismatch(ValidatorsAndWeightsLengthMismatch),
         ZeroMembershipWeight(ZeroMembershipWeight),
@@ -1372,187 +1308,144 @@ pub mod gateway_router_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) =
-                <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::RevertString(decoded));
             }
-<<<<<<< HEAD
-            if let Ok(decoded) =
-                <CheckpointAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::CheckpointAlreadyExists(decoded));
-            }
-            if let Ok(decoded) =
-                <CheckpointAlreadyProcessed as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::CheckpointAlreadyProcessed(decoded));
-            }
-            if let Ok(decoded) =
-                <CheckpointInfoAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::CheckpointInfoAlreadyExists(decoded));
-            }
-            if let Ok(decoded) =
-                <CheckpointMembershipNotCreated as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::CheckpointMembershipNotCreated(decoded));
-            }
-            if let Ok(decoded) =
-                <CheckpointNotCreated as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::CheckpointNotCreated(decoded));
-            }
-            if let Ok(decoded) =
-                <FailedAddIncompleteCheckpoint as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::FailedAddIncompleteCheckpoint(decoded));
-            }
-            if let Ok(decoded) =
-                <FailedAddSignatory as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::FailedAddSignatory(decoded));
-            }
-            if let Ok(decoded) =
-                <FailedRemoveIncompleteCheckpoint as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::FailedRemoveIncompleteCheckpoint(decoded));
-            }
-            if let Ok(decoded) =
-=======
-            if let Ok(decoded) = <AddressEmptyCode as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <AddressEmptyCode as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::AddressEmptyCode(decoded));
             }
-            if let Ok(decoded) =
-                <AddressInsufficientBalance as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <AddressInsufficientBalance as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::AddressInsufficientBalance(decoded));
             }
-            if let Ok(decoded) =
-                <CheckpointAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CheckpointAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CheckpointAlreadyExists(decoded));
             }
-            if let Ok(decoded) =
-                <CheckpointInfoAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CheckpointInfoAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CheckpointInfoAlreadyExists(decoded));
             }
-            if let Ok(decoded) =
-                <CheckpointMembershipNotCreated as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CheckpointMembershipNotCreated as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CheckpointMembershipNotCreated(decoded));
             }
-            if let Ok(decoded) =
-                <CheckpointNotCreated as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CheckpointNotCreated as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CheckpointNotCreated(decoded));
             }
-            if let Ok(decoded) = <FailedInnerCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <FailedInnerCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::FailedInnerCall(decoded));
             }
-            if let Ok(decoded) =
-                <InconsistentPrevCheckpoint as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InconsistentPrevCheckpoint as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InconsistentPrevCheckpoint(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidActorAddress as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidActorAddress as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidActorAddress(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCheckpointEpoch(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCheckpointSource(decoded));
             }
-            if let Ok(decoded) =
->>>>>>> fa018d6 (Adding min priority queue (#209))
-                <InvalidCrossMsgDstSubnet as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCrossMsgDstSubnet as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCrossMsgDstSubnet(decoded));
             }
-            if let Ok(decoded) =
-                <InvalidCrossMsgNonce as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidCrossMsgNonce as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidCrossMsgNonce(decoded));
             }
-<<<<<<< HEAD
-            if let Ok(decoded) =
-                <InvalidRetentionHeight as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::InvalidRetentionHeight(decoded));
-            }
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
-            if let Ok(decoded) = <InvalidSignature as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <InvalidSignature as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::InvalidSignature(decoded));
             }
-            if let Ok(decoded) = <NotAuthorized as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <NotAuthorized as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotAuthorized(decoded));
             }
-            if let Ok(decoded) = <NotEnoughBalance as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <NotEnoughBalance as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotEnoughBalance(decoded));
             }
-            if let Ok(decoded) =
-<<<<<<< HEAD
-=======
-                <NotEnoughSubnetCircSupply as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <NotEnoughSubnetCircSupply as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotEnoughSubnetCircSupply(decoded));
             }
-            if let Ok(decoded) = <NotInitialized as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <NotInitialized as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotInitialized(decoded));
             }
-            if let Ok(decoded) =
->>>>>>> fa018d6 (Adding min priority queue (#209))
-                <NotRegisteredSubnet as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <NotRegisteredSubnet as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotRegisteredSubnet(decoded));
             }
-            if let Ok(decoded) = <NotSystemActor as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <NotSystemActor as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::NotSystemActor(decoded));
             }
-            if let Ok(decoded) =
-                <OldConfigurationNumber as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <OldConfigurationNumber as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::OldConfigurationNumber(decoded));
             }
-            if let Ok(decoded) =
-                <ParentFinalityAlreadyCommitted as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ParentFinalityAlreadyCommitted as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ParentFinalityAlreadyCommitted(decoded));
             }
-            if let Ok(decoded) = <SignatureReplay as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <SignatureReplay as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::SignatureReplay(decoded));
-<<<<<<< HEAD
-=======
             }
-            if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(data) {
+            if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::SubnetNotActive(decoded));
->>>>>>> fa018d6 (Adding min priority queue (#209))
             }
-            if let Ok(decoded) =
-                <ValidatorWeightIsZero as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ValidatorWeightIsZero as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorWeightIsZero(decoded));
             }
-            if let Ok(decoded) =
-                <ValidatorsAndWeightsLengthMismatch as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ValidatorsAndWeightsLengthMismatch as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ValidatorsAndWeightsLengthMismatch(decoded));
             }
-            if let Ok(decoded) =
-                <ZeroMembershipWeight as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ZeroMembershipWeight as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ZeroMembershipWeight(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -1561,19 +1454,9 @@ pub mod gateway_router_facet {
     impl ::ethers::core::abi::AbiEncode for GatewayRouterFacetErrors {
         fn encode(self) -> ::std::vec::Vec<u8> {
             match self {
-<<<<<<< HEAD
-                Self::CheckpointAlreadyExists(element) => {
+                Self::AddressEmptyCode(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::CheckpointAlreadyProcessed(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::CheckpointInfoAlreadyExists(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::CheckpointMembershipNotCreated(element) => {
-=======
-                Self::AddressEmptyCode(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::AddressInsufficientBalance(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1589,21 +1472,19 @@ pub mod gateway_router_facet {
                 Self::CheckpointNotCreated(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::FailedInnerCall(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::FailedInnerCall(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::InconsistentPrevCheckpoint(element) => {
->>>>>>> fa018d6 (Adding min priority queue (#209))
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::CheckpointNotCreated(element) => {
+                Self::InvalidActorAddress(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::FailedAddIncompleteCheckpoint(element) => {
+                Self::InvalidCheckpointEpoch(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::FailedAddSignatory(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::FailedRemoveIncompleteCheckpoint(element) => {
+                Self::InvalidCheckpointSource(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InvalidCrossMsgDstSubnet(element) => {
@@ -1612,37 +1493,39 @@ pub mod gateway_router_facet {
                 Self::InvalidCrossMsgNonce(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-<<<<<<< HEAD
-                Self::InvalidRetentionHeight(element) => {
+                Self::InvalidSignature(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::InvalidSignature(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::NotAuthorized(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::NotEnoughBalance(element) => ::ethers::core::abi::AbiEncode::encode(element),
-=======
-                Self::InvalidSignature(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::NotAuthorized(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::NotEnoughBalance(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NotAuthorized(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::NotEnoughBalance(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::NotEnoughSubnetCircSupply(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::NotInitialized(element) => ::ethers::core::abi::AbiEncode::encode(element),
->>>>>>> fa018d6 (Adding min priority queue (#209))
+                Self::NotInitialized(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::NotRegisteredSubnet(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::NotSystemActor(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::NotSystemActor(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::OldConfigurationNumber(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::SignatureReplay(element) => ::ethers::core::abi::AbiEncode::encode(element),
-<<<<<<< HEAD
-=======
-                Self::SubnetNotActive(element) => ::ethers::core::abi::AbiEncode::encode(element),
->>>>>>> fa018d6 (Adding min priority queue (#209))
+                Self::SignatureReplay(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::SubnetNotActive(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::ValidatorWeightIsZero(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1661,17 +1544,14 @@ pub mod gateway_router_facet {
             match selector {
                 [0x08, 0xc3, 0x79, 0xa0] => true,
                 _ if selector
-                    == <CheckpointAlreadyExists as ::ethers::contract::EthError>::selector() => {
+                    == <AddressEmptyCode as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <CheckpointAlreadyProcessed as ::ethers::contract::EthError>::selector() => {
+                    == <AddressInsufficientBalance as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-<<<<<<< HEAD
-                    == <CheckpointInfoAlreadyExists as ::ethers::contract::EthError>::selector() => {
-=======
                     == <CheckpointAlreadyExists as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1689,27 +1569,22 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <FailedInnerCall as ::ethers::contract::EthError>::selector() => {
->>>>>>> fa018d6 (Adding min priority queue (#209))
                     true
                 }
                 _ if selector
-                    == <CheckpointMembershipNotCreated as ::ethers::contract::EthError>::selector() => {
+                    == <InconsistentPrevCheckpoint as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <CheckpointNotCreated as ::ethers::contract::EthError>::selector() => {
+                    == <InvalidActorAddress as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <FailedAddIncompleteCheckpoint as ::ethers::contract::EthError>::selector() => {
+                    == <InvalidCheckpointEpoch as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <FailedAddSignatory as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <FailedRemoveIncompleteCheckpoint as ::ethers::contract::EthError>::selector() => {
+                    == <InvalidCheckpointSource as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1721,13 +1596,6 @@ pub mod gateway_router_facet {
                     true
                 }
                 _ if selector
-<<<<<<< HEAD
-                    == <InvalidRetentionHeight as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
                     == <InvalidSignature as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1737,6 +1605,14 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <NotEnoughBalance as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <NotEnoughSubnetCircSupply as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <NotInitialized as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1757,13 +1633,10 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <SignatureReplay as ::ethers::contract::EthError>::selector() => {
-<<<<<<< HEAD
-=======
                     true
                 }
                 _ if selector
                     == <SubnetNotActive as ::ethers::contract::EthError>::selector() => {
->>>>>>> fa018d6 (Adding min priority queue (#209))
                     true
                 }
                 _ if selector
@@ -1785,63 +1658,69 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetErrors {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-<<<<<<< HEAD
-                Self::CheckpointAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CheckpointAlreadyProcessed(element) => ::core::fmt::Display::fmt(element, f),
-=======
                 Self::AddressEmptyCode(element) => ::core::fmt::Display::fmt(element, f),
-                Self::AddressInsufficientBalance(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CheckpointAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
->>>>>>> fa018d6 (Adding min priority queue (#209))
-                Self::CheckpointInfoAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
+                Self::AddressInsufficientBalance(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CheckpointAlreadyExists(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CheckpointInfoAlreadyExists(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::CheckpointMembershipNotCreated(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::CheckpointNotCreated(element) => ::core::fmt::Display::fmt(element, f),
-<<<<<<< HEAD
-                Self::FailedAddIncompleteCheckpoint(element) => {
+                Self::CheckpointNotCreated(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::FailedAddSignatory(element) => ::core::fmt::Display::fmt(element, f),
-                Self::FailedRemoveIncompleteCheckpoint(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::InvalidCrossMsgDstSubnet(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCrossMsgNonce(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidRetentionHeight(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidSignature(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NotAuthorized(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NotEnoughBalance(element) => ::core::fmt::Display::fmt(element, f),
-=======
                 Self::FailedInnerCall(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InconsistentPrevCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidActorAddress(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCheckpointEpoch(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCheckpointSource(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCrossMsgDstSubnet(element) => ::core::fmt::Display::fmt(element, f),
-                Self::InvalidCrossMsgNonce(element) => ::core::fmt::Display::fmt(element, f),
+                Self::InconsistentPrevCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidActorAddress(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCheckpointEpoch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCheckpointSource(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCrossMsgDstSubnet(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCrossMsgNonce(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::InvalidSignature(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotAuthorized(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotEnoughBalance(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NotEnoughSubnetCircSupply(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotEnoughSubnetCircSupply(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::NotInitialized(element) => ::core::fmt::Display::fmt(element, f),
->>>>>>> fa018d6 (Adding min priority queue (#209))
-                Self::NotRegisteredSubnet(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotRegisteredSubnet(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::NotSystemActor(element) => ::core::fmt::Display::fmt(element, f),
-                Self::OldConfigurationNumber(element) => ::core::fmt::Display::fmt(element, f),
+                Self::OldConfigurationNumber(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::SignatureReplay(element) => ::core::fmt::Display::fmt(element, f),
-<<<<<<< HEAD
-=======
                 Self::SubnetNotActive(element) => ::core::fmt::Display::fmt(element, f),
->>>>>>> fa018d6 (Adding min priority queue (#209))
-                Self::ValidatorWeightIsZero(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ValidatorWeightIsZero(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::ValidatorsAndWeightsLengthMismatch(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::ZeroMembershipWeight(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ZeroMembershipWeight(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::RevertString(s) => ::core::fmt::Display::fmt(s, f),
             }
         }
@@ -1851,32 +1730,29 @@ pub mod gateway_router_facet {
             Self::RevertString(value)
         }
     }
+    impl ::core::convert::From<AddressEmptyCode> for GatewayRouterFacetErrors {
+        fn from(value: AddressEmptyCode) -> Self {
+            Self::AddressEmptyCode(value)
+        }
+    }
+    impl ::core::convert::From<AddressInsufficientBalance> for GatewayRouterFacetErrors {
+        fn from(value: AddressInsufficientBalance) -> Self {
+            Self::AddressInsufficientBalance(value)
+        }
+    }
     impl ::core::convert::From<CheckpointAlreadyExists> for GatewayRouterFacetErrors {
         fn from(value: CheckpointAlreadyExists) -> Self {
             Self::CheckpointAlreadyExists(value)
         }
     }
-    impl ::core::convert::From<CheckpointAlreadyProcessed> for GatewayRouterFacetErrors {
-        fn from(value: CheckpointAlreadyProcessed) -> Self {
-            Self::CheckpointAlreadyProcessed(value)
-        }
-    }
-<<<<<<< HEAD
-    impl ::core::convert::From<CheckpointInfoAlreadyExists> for GatewayRouterFacetErrors {
-        fn from(value: CheckpointInfoAlreadyExists) -> Self {
-            Self::CheckpointInfoAlreadyExists(value)
-=======
-    impl ::core::convert::From<CheckpointAlreadyExists> for GatewayRouterFacetErrors {
-        fn from(value: CheckpointAlreadyExists) -> Self {
-            Self::CheckpointAlreadyExists(value)
-        }
-    }
-    impl ::core::convert::From<CheckpointInfoAlreadyExists> for GatewayRouterFacetErrors {
+    impl ::core::convert::From<CheckpointInfoAlreadyExists>
+    for GatewayRouterFacetErrors {
         fn from(value: CheckpointInfoAlreadyExists) -> Self {
             Self::CheckpointInfoAlreadyExists(value)
         }
     }
-    impl ::core::convert::From<CheckpointMembershipNotCreated> for GatewayRouterFacetErrors {
+    impl ::core::convert::From<CheckpointMembershipNotCreated>
+    for GatewayRouterFacetErrors {
         fn from(value: CheckpointMembershipNotCreated) -> Self {
             Self::CheckpointMembershipNotCreated(value)
         }
@@ -1889,32 +1765,26 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<FailedInnerCall> for GatewayRouterFacetErrors {
         fn from(value: FailedInnerCall) -> Self {
             Self::FailedInnerCall(value)
->>>>>>> fa018d6 (Adding min priority queue (#209))
         }
     }
-    impl ::core::convert::From<CheckpointMembershipNotCreated> for GatewayRouterFacetErrors {
-        fn from(value: CheckpointMembershipNotCreated) -> Self {
-            Self::CheckpointMembershipNotCreated(value)
+    impl ::core::convert::From<InconsistentPrevCheckpoint> for GatewayRouterFacetErrors {
+        fn from(value: InconsistentPrevCheckpoint) -> Self {
+            Self::InconsistentPrevCheckpoint(value)
         }
     }
-    impl ::core::convert::From<CheckpointNotCreated> for GatewayRouterFacetErrors {
-        fn from(value: CheckpointNotCreated) -> Self {
-            Self::CheckpointNotCreated(value)
+    impl ::core::convert::From<InvalidActorAddress> for GatewayRouterFacetErrors {
+        fn from(value: InvalidActorAddress) -> Self {
+            Self::InvalidActorAddress(value)
         }
     }
-    impl ::core::convert::From<FailedAddIncompleteCheckpoint> for GatewayRouterFacetErrors {
-        fn from(value: FailedAddIncompleteCheckpoint) -> Self {
-            Self::FailedAddIncompleteCheckpoint(value)
+    impl ::core::convert::From<InvalidCheckpointEpoch> for GatewayRouterFacetErrors {
+        fn from(value: InvalidCheckpointEpoch) -> Self {
+            Self::InvalidCheckpointEpoch(value)
         }
     }
-    impl ::core::convert::From<FailedAddSignatory> for GatewayRouterFacetErrors {
-        fn from(value: FailedAddSignatory) -> Self {
-            Self::FailedAddSignatory(value)
-        }
-    }
-    impl ::core::convert::From<FailedRemoveIncompleteCheckpoint> for GatewayRouterFacetErrors {
-        fn from(value: FailedRemoveIncompleteCheckpoint) -> Self {
-            Self::FailedRemoveIncompleteCheckpoint(value)
+    impl ::core::convert::From<InvalidCheckpointSource> for GatewayRouterFacetErrors {
+        fn from(value: InvalidCheckpointSource) -> Self {
+            Self::InvalidCheckpointSource(value)
         }
     }
     impl ::core::convert::From<InvalidCrossMsgDstSubnet> for GatewayRouterFacetErrors {
@@ -1927,14 +1797,6 @@ pub mod gateway_router_facet {
             Self::InvalidCrossMsgNonce(value)
         }
     }
-<<<<<<< HEAD
-    impl ::core::convert::From<InvalidRetentionHeight> for GatewayRouterFacetErrors {
-        fn from(value: InvalidRetentionHeight) -> Self {
-            Self::InvalidRetentionHeight(value)
-        }
-    }
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
     impl ::core::convert::From<InvalidSignature> for GatewayRouterFacetErrors {
         fn from(value: InvalidSignature) -> Self {
             Self::InvalidSignature(value)
@@ -1948,6 +1810,16 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<NotEnoughBalance> for GatewayRouterFacetErrors {
         fn from(value: NotEnoughBalance) -> Self {
             Self::NotEnoughBalance(value)
+        }
+    }
+    impl ::core::convert::From<NotEnoughSubnetCircSupply> for GatewayRouterFacetErrors {
+        fn from(value: NotEnoughSubnetCircSupply) -> Self {
+            Self::NotEnoughSubnetCircSupply(value)
+        }
+    }
+    impl ::core::convert::From<NotInitialized> for GatewayRouterFacetErrors {
+        fn from(value: NotInitialized) -> Self {
+            Self::NotInitialized(value)
         }
     }
     impl ::core::convert::From<NotRegisteredSubnet> for GatewayRouterFacetErrors {
@@ -1965,7 +1837,8 @@ pub mod gateway_router_facet {
             Self::OldConfigurationNumber(value)
         }
     }
-    impl ::core::convert::From<ParentFinalityAlreadyCommitted> for GatewayRouterFacetErrors {
+    impl ::core::convert::From<ParentFinalityAlreadyCommitted>
+    for GatewayRouterFacetErrors {
         fn from(value: ParentFinalityAlreadyCommitted) -> Self {
             Self::ParentFinalityAlreadyCommitted(value)
         }
@@ -1973,14 +1846,11 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<SignatureReplay> for GatewayRouterFacetErrors {
         fn from(value: SignatureReplay) -> Self {
             Self::SignatureReplay(value)
-<<<<<<< HEAD
-=======
         }
     }
     impl ::core::convert::From<SubnetNotActive> for GatewayRouterFacetErrors {
         fn from(value: SubnetNotActive) -> Self {
             Self::SubnetNotActive(value)
->>>>>>> fa018d6 (Adding min priority queue (#209))
         }
     }
     impl ::core::convert::From<ValidatorWeightIsZero> for GatewayRouterFacetErrors {
@@ -1988,7 +1858,8 @@ pub mod gateway_router_facet {
             Self::ValidatorWeightIsZero(value)
         }
     }
-    impl ::core::convert::From<ValidatorsAndWeightsLengthMismatch> for GatewayRouterFacetErrors {
+    impl ::core::convert::From<ValidatorsAndWeightsLengthMismatch>
+    for GatewayRouterFacetErrors {
         fn from(value: ValidatorsAndWeightsLengthMismatch) -> Self {
             Self::ValidatorsAndWeightsLengthMismatch(value)
         }
@@ -2006,7 +1877,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethevent(name = "QuorumReached", abi = "QuorumReached(uint64,bytes32,uint256)")]
     pub struct QuorumReachedFilter {
@@ -2022,7 +1893,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethevent(
         name = "QuorumWeightUpdated",
@@ -2055,8 +1926,12 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetEvents {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::QuorumReachedFilter(element) => ::core::fmt::Display::fmt(element, f),
-                Self::QuorumWeightUpdatedFilter(element) => ::core::fmt::Display::fmt(element, f),
+                Self::QuorumReachedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::QuorumWeightUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
         }
     }
@@ -2079,7 +1954,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "addCheckpointSignature",
@@ -2100,7 +1975,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "applyCrossMessages",
@@ -2109,7 +1984,7 @@ pub mod gateway_router_facet {
     pub struct ApplyCrossMessagesCall {
         pub cross_msgs: ::std::vec::Vec<CrossMsg>,
     }
-    ///Container type for all input parameters for the `commitParentFinality` function with signature `commitParentFinality((uint256,bytes32),uint64,(uint8,bytes)[],uint256[])` and selector `0x9fa68440`
+    ///Container type for all input parameters for the `commitChildCheck` function with signature `commitChildCheck(((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes))` and selector `0xd4e149a8`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -2118,9 +1993,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
-<<<<<<< HEAD
-=======
+        Hash
     )]
     #[ethcall(
         name = "commitChildCheck",
@@ -2138,8 +2011,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
->>>>>>> fa018d6 (Adding min priority queue (#209))
+        Hash
     )]
     #[ethcall(
         name = "commitParentFinality",
@@ -2160,95 +2032,56 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethcall(
         name = "createBottomUpCheckpoint",
         abi = "createBottomUpCheckpoint(((uint64,address[]),uint64,bytes32,uint64,bytes32),bytes32,uint256)"
     )]
     pub struct CreateBottomUpCheckpointCall {
-<<<<<<< HEAD
-        pub checkpoint: BottomUpCheckpoint,
-        pub membership_root_hash: [u8; 32],
-        pub membership_weight: ::ethers::core::types::U256,
-    }
-    ///Container type for all input parameters for the `pruneBottomUpCheckpoints` function with signature `pruneBottomUpCheckpoints(uint64)` and selector `0xae00c298`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[ethcall(
-        name = "pruneBottomUpCheckpoints",
-        abi = "pruneBottomUpCheckpoints(uint64)"
-    )]
-    pub struct PruneBottomUpCheckpointsCall {
-        pub new_retention_height: u64,
-    }
-=======
         pub checkpoint: BottomUpCheckpointNew,
         pub membership_root_hash: [u8; 32],
         pub membership_weight: ::ethers::core::types::U256,
     }
->>>>>>> fa018d6 (Adding min priority queue (#209))
     ///Container type for all of the contract's call
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayRouterFacetCalls {
         AddCheckpointSignature(AddCheckpointSignatureCall),
         ApplyCrossMessages(ApplyCrossMessagesCall),
+        CommitChildCheck(CommitChildCheckCall),
         CommitParentFinality(CommitParentFinalityCall),
         CreateBottomUpCheckpoint(CreateBottomUpCheckpointCall),
-<<<<<<< HEAD
-        PruneBottomUpCheckpoints(PruneBottomUpCheckpointsCall),
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
     }
     impl ::ethers::core::abi::AbiDecode for GatewayRouterFacetCalls {
         fn decode(
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) =
-                <AddCheckpointSignatureCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <AddCheckpointSignatureCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::AddCheckpointSignature(decoded));
             }
-            if let Ok(decoded) =
-                <ApplyCrossMessagesCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <ApplyCrossMessagesCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::ApplyCrossMessages(decoded));
             }
-            if let Ok(decoded) =
-<<<<<<< HEAD
-=======
-                <CommitChildCheckCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CommitChildCheckCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CommitChildCheck(decoded));
             }
-            if let Ok(decoded) =
->>>>>>> fa018d6 (Adding min priority queue (#209))
-                <CommitParentFinalityCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CommitParentFinalityCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CommitParentFinality(decoded));
             }
-            if let Ok(decoded) =
-                <CreateBottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
+            if let Ok(decoded) = <CreateBottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
                 return Ok(Self::CreateBottomUpCheckpoint(decoded));
             }
-<<<<<<< HEAD
-            if let Ok(decoded) =
-                <PruneBottomUpCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::PruneBottomUpCheckpoints(decoded));
-            }
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
             Err(::ethers::core::abi::Error::InvalidData.into())
         }
     }
@@ -2261,20 +2094,13 @@ pub mod gateway_router_facet {
                 Self::ApplyCrossMessages(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-<<<<<<< HEAD
-=======
-                Self::CommitChildCheck(element) => ::ethers::core::abi::AbiEncode::encode(element),
->>>>>>> fa018d6 (Adding min priority queue (#209))
+                Self::CommitChildCheck(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::CommitParentFinality(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::CreateBottomUpCheckpoint(element) => {
-<<<<<<< HEAD
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::PruneBottomUpCheckpoints(element) => {
-=======
->>>>>>> fa018d6 (Adding min priority queue (#209))
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
             }
@@ -2283,17 +2109,19 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::AddCheckpointSignature(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ApplyCrossMessages(element) => ::core::fmt::Display::fmt(element, f),
-<<<<<<< HEAD
-                Self::CommitParentFinality(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CreateBottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
-                Self::PruneBottomUpCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
-=======
+                Self::AddCheckpointSignature(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ApplyCrossMessages(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::CommitChildCheck(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CommitParentFinality(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CreateBottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
->>>>>>> fa018d6 (Adding min priority queue (#209))
+                Self::CommitParentFinality(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CreateBottomUpCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
         }
     }
@@ -2307,26 +2135,23 @@ pub mod gateway_router_facet {
             Self::ApplyCrossMessages(value)
         }
     }
+    impl ::core::convert::From<CommitChildCheckCall> for GatewayRouterFacetCalls {
+        fn from(value: CommitChildCheckCall) -> Self {
+            Self::CommitChildCheck(value)
+        }
+    }
     impl ::core::convert::From<CommitParentFinalityCall> for GatewayRouterFacetCalls {
         fn from(value: CommitParentFinalityCall) -> Self {
             Self::CommitParentFinality(value)
         }
     }
-    impl ::core::convert::From<CreateBottomUpCheckpointCall> for GatewayRouterFacetCalls {
+    impl ::core::convert::From<CreateBottomUpCheckpointCall>
+    for GatewayRouterFacetCalls {
         fn from(value: CreateBottomUpCheckpointCall) -> Self {
             Self::CreateBottomUpCheckpoint(value)
         }
     }
-<<<<<<< HEAD
-    impl ::core::convert::From<PruneBottomUpCheckpointsCall> for GatewayRouterFacetCalls {
-        fn from(value: PruneBottomUpCheckpointsCall) -> Self {
-            Self::PruneBottomUpCheckpoints(value)
-        }
-    }
-    ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
-=======
     ///`BottomUpCheckpoint((uint64,address[]),uint64,uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[],((uint64,address[]),bytes32[])[],bytes32,bytes)`
->>>>>>> fa018d6 (Adding min priority queue (#209))
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2335,11 +2160,9 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct BottomUpCheckpoint {
-<<<<<<< HEAD
-=======
         pub source: SubnetID,
         pub epoch: u64,
         pub fee: ::ethers::core::types::U256,
@@ -2357,17 +2180,14 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct BottomUpCheckpointNew {
->>>>>>> fa018d6 (Adding min priority queue (#209))
         pub subnet_id: SubnetID,
         pub block_height: u64,
         pub block_hash: [u8; 32],
         pub next_configuration_number: u64,
         pub cross_messages_hash: [u8; 32],
-<<<<<<< HEAD
-=======
     }
     ///`ChildCheck((uint64,address[]),bytes32[])`
     #[derive(
@@ -2378,12 +2198,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ChildCheck {
         pub source: SubnetID,
         pub checks: ::std::vec::Vec<[u8; 32]>,
->>>>>>> fa018d6 (Adding min priority queue (#209))
     }
     ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)`
     #[derive(
@@ -2394,7 +2213,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct CrossMsg {
         pub message: StorableMsg,
@@ -2409,7 +2228,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct FvmAddress {
         pub addr_type: u8,
@@ -2424,7 +2243,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct Ipcaddress {
         pub subnet_id: SubnetID,
@@ -2439,7 +2258,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct ParentFinality {
         pub height: ::ethers::core::types::U256,
@@ -2454,7 +2273,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct StorableMsg {
         pub from: Ipcaddress,
@@ -2473,7 +2292,7 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct SubnetID {
         pub root: u64,

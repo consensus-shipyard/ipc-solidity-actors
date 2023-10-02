@@ -7,7 +7,7 @@ import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpointLegacy} from "../structs/Checkpoint.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {SubnetID} from "../structs/Subnet.sol";
+import {SubnetID, Validator} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
@@ -203,11 +203,19 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice Set the data of a validator
-    function setData(bytes calldata data) external {
+    function getValidator(address validatorAddress) external view returns (Validator memory validator) {
         if (!LibStaking.hasStaked(msg.sender)) {
             revert NotStakedBefore();
         }
-        LibStaking.setValidatorData(msg.sender, data);
+        validator = s.validatorSet.validators[validatorAddress];
+    }
+
+    /// @notice Set the data of a validator
+    function setMetadata(bytes calldata metadata) external {
+        if (!LibStaking.hasStaked(msg.sender)) {
+            revert NotStakedBefore();
+        }
+        LibStaking.setValidatorData(msg.sender, metadata);
     }
 
     /// @notice method that allows a validator to join the subnet
