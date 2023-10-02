@@ -94,7 +94,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that allows to kill the subnet when all validators left. It is not a privileged operation.
     function kill() external notKilled {
-        if (LibStaking.totalValidators() != 0) {
+        if (s.validators.length() != 0 || s.totalStake != 0) {
             revert NotAllValidatorsHaveLeft();
         }
 
@@ -235,12 +235,28 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice method that allows a validator to leave the subnet
-    function leave2() external nonReentrant notKilled {
+    function leave2() external notKilled {
         uint256 amount = LibStaking.totalValidatorCollateral(msg.sender);
         if (amount == 0) {
             revert NotValidator();
         }
 
         LibStaking.withdraw(msg.sender, amount);
+    }
+
+    /// @notice method that allows to kill the subnet when all validators left. It is not a privileged operation.
+    function kill2() external notKilled {
+        if (LibStaking.totalValidators() != 0) {
+            revert NotAllValidatorsHaveLeft();
+        }
+
+        s.status = Status.Killed;
+
+        IGateway(s.ipcGatewayAddr).kill();
+    }
+
+    /// @notice Valdiator claims their released collateral
+    function claim() external nonReentrant notKilled {
+        LibStaking.claimCollateral(msg.sender);
     }
 }
