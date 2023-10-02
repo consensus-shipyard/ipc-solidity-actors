@@ -10,7 +10,7 @@ interface ISubnetActor {
     /// Called by peers looking to join a subnet.
     ///
     /// It implements the basic logic to onboard new peers to the subnet.
-    function join(string calldata networkAddr, FvmAddress calldata workerAddr) external payable;
+    function join(bytes calldata data) external payable;
 
     /// Called by peers looking to leave a subnet.
     function leave() external;

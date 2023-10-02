@@ -66,3 +66,4 @@ error NoCollateralToWithdraw();
 error PQEmpty();
 error PQDoesNotContainAddress();
 error AddressShouldBeValidator();
+error NotStakedBefore();
