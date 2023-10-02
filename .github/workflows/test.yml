@@ -28,8 +28,8 @@ jobs:
         with:
           cache: false
 
-      # - name: Run tests
-      #   run: forge test -vvv --ffi
+      - name: Run tests
+        run: forge test -vvv --ffi
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
