@@ -43,5 +43,5 @@ jobs:
         run: |
           git config --global user.name 'AutoCommit'
           git config --global user.email 'ai@protocol.ai'
-          git commit -am "Automated rust binding"
-          git push origin dev
+          make commit-rust-binding
+          
