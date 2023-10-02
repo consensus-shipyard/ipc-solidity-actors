@@ -3,15 +3,15 @@ pragma solidity 0.8.19;
 
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {EMPTY_HASH, METHOD_SEND} from "../constants/Constants.sol";
-import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, BottomUpCheckpointNew, CheckpointInfo} from "../structs/Checkpoint.sol";
+import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {EpochVoteTopDownSubmission} from "../structs/EpochVoteSubmission.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Validator.sol";
-import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay} from "../errors/IPCErrors.sol";
-import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists} from "../errors/IPCErrors.sol";
+import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
+import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotInitialized, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {NotValidator, SubnetNotActive, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -25,15 +25,18 @@ import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
 import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
-    using CheckpointHelper for BottomUpCheckpointNew;
+    using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
     using FvmAddressHelper for FvmAddress;
     using StorableMsgHelper for StorableMsg;
+    using EnumerableSet for EnumerableSet.UintSet;
+    using EnumerableSet for EnumerableSet.AddressSet;
 
     event QuorumReached(uint64 height, bytes32 checkpoint, uint256 quorumWeight);
     event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
@@ -51,70 +54,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     ) external systemActorOnly {
         LibGateway.commitParentFinality(finality);
         LibGateway.newMembership({n: n, validators: validators, weights: weights});
-    }
-
-    /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
-    function commitChildCheck(BottomUpCheckpoint calldata commit) external {
-        if (!s.initialized) {
-            revert NotInitialized();
-        }
-        if (commit.source.getActor().normalize() != msg.sender) {
-            revert InvalidCheckpointSource();
-        }
-
-        // slither-disable-next-line unused-return
-        (, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
-        if (subnet.status != Status.Active) {
-            revert SubnetNotActive();
-        }
-        if (subnet.prevCheckpoint.epoch >= commit.epoch) {
-            revert InvalidCheckpointEpoch();
-        }
-        if (commit.prevHash != EMPTY_HASH) {
-            if (commit.prevHash != subnet.prevCheckpoint.toHash()) {
-                revert InconsistentPrevCheckpoint();
-            }
-        }
-
-        // get checkpoint for the current template being populated
-        (bool checkpointExists, uint64 nextCheckEpoch, BottomUpCheckpoint storage checkpoint) = LibGateway
-            .getCurrentBottomUpCheckpoint();
-
-        // create a checkpoint template if it doesn't exists
-        if (!checkpointExists) {
-            checkpoint.source = s.networkName;
-            checkpoint.epoch = nextCheckEpoch;
-        }
-
-        checkpoint.setChildCheck({
-            commit: commit,
-            children: s.children,
-            checks: s.checks,
-            currentEpoch: nextCheckEpoch
-        });
-
-        uint256 totalValue = 0;
-        uint256 crossMsgLength = commit.crossMsgs.length;
-        for (uint256 i = 0; i < crossMsgLength; ) {
-            totalValue += commit.crossMsgs[i].message.value;
-            unchecked {
-                ++i;
-            }
-        }
-
-        totalValue += commit.fee + checkpoint.fee; // add fee that is already in checkpoint as well. For example from release message interacting with the same checkpoint
-
-        if (subnet.circSupply < totalValue) {
-            revert NotEnoughSubnetCircSupply();
-        }
-
-        subnet.circSupply -= totalValue;
-
-        subnet.prevCheckpoint = commit;
-
-        _applyMessages(commit.source, commit.crossMsgs);
-
-        LibGateway.distributeRewards(msg.sender, commit.fee);
     }
 
     /// @notice apply cross messages
@@ -188,9 +127,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
     }
 
-    /// @notice checks whether the provided checkpoint signature for a block at height `h ` is valid and accumulates that it.
+    /// @notice checks whether the provided checkpoint signature for the block at height `height` is valid and accumulates that it
+    /// @dev If adding the signature leads to reaching the threshold, then the checkpoint is removed from `incompleteCheckpoints`
     /// @param height - the height of the block in the checkpoint
-    /// @param membershipProof - a Merkle proof that the validator was in the membership at height `h`
+    /// @param membershipProof - a Merkle proof that the validator was in the membership at height `height` with weight `weight`
     /// @param weight - the weight of the validator
     /// @param signature - the signature of the checkpoint
     function addCheckpointSignature(
@@ -199,7 +139,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 weight,
         bytes memory signature
     ) external {
-        BottomUpCheckpointNew memory checkpoint = s.bottomUpCheckpoints[height];
+        if (height < s.bottomUpCheckpointRetentionHeight) {
+            revert CheckpointAlreadyProcessed();
+        }
+        BottomUpCheckpoint memory checkpoint = s.bottomUpCheckpoints[height];
         if (checkpoint.blockHeight == 0) {
             revert CheckpointNotCreated();
         }
@@ -218,7 +161,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         // Check whether the validator has already sent a valid signature
-        if (s.bottomUpCollectedSignatures[height][recoveredSignatory]) {
+        if (s.bottomUpCollectedSignatures[height].contains(recoveredSignatory)) {
             revert SignatureReplay();
         }
 
@@ -233,12 +176,20 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         // All checks passed.
         // Adding signature and emitting events.
 
-        s.bottomUpCollectedSignatures[height][recoveredSignatory] = true;
+        bool ok = s.bottomUpCollectedSignatures[height].add(recoveredSignatory);
+        if (!ok) {
+            revert FailedAddSignatory();
+        }
         checkpointInfo.currentWeight += weight;
 
         if (checkpointInfo.currentWeight >= checkpointInfo.threshold) {
             if (!checkpointInfo.reached) {
                 checkpointInfo.reached = true;
+                // checkpoint is completed since the threshold has been reached
+                ok = s.incompleteCheckpoints.remove(checkpoint.blockHeight);
+                if (!ok) {
+                    revert FailedRemoveIncompleteCheckpoint();
+                }
                 emit QuorumReached({
                     height: height,
                     checkpoint: checkpointHash,
@@ -259,24 +210,32 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param membershipRootHash - a root hash of the Merkle tree built from the validator public keys and their weight
     /// @param membershipWeight - the total weight of the membership
     function createBottomUpCheckpoint(
-        BottomUpCheckpointNew calldata checkpoint,
+        BottomUpCheckpoint calldata checkpoint,
         bytes32 membershipRootHash,
         uint256 membershipWeight
     ) external systemActorOnly {
+        if (checkpoint.blockHeight < s.bottomUpCheckpointRetentionHeight) {
+            revert CheckpointAlreadyProcessed();
+        }
         if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
             revert CheckpointAlreadyExists();
         }
         if (s.bottomUpCheckpointInfo[checkpoint.blockHeight].threshold > 0) {
             revert CheckpointInfoAlreadyExists();
         }
+
         if (membershipWeight == 0) {
             revert ZeroMembershipWeight();
         }
 
-        uint256 threshold = LibGateway.getThreshold(membershipWeight);
+        uint256 threshold = LibGateway.weightNeeded(membershipWeight, s.majorityPercentage);
 
+        // process the checkpoint
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
-
+        bool ok = s.incompleteCheckpoints.add(checkpoint.blockHeight);
+        if (!ok) {
+            revert FailedAddIncompleteCheckpoint();
+        }
         s.bottomUpCheckpointInfo[checkpoint.blockHeight] = CheckpointInfo({
             hash: checkpoint.toHash(),
             rootHash: membershipRootHash,
@@ -284,5 +243,30 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             currentWeight: 0,
             reached: false
         });
+    }
+
+    /// @notice Set a new checkpoint retention height and garbage collect all checkpoints in range [`retentionHeight`, `newRetentionHeight`)
+    /// @dev `retentionHeight` is the height of the first incomplete checkpointswe must keep to implement checkpointing.
+    /// All checkpoints with a height less than `retentionHeight` are removed from the history, assuming they are committed to the parent.
+    /// @param newRetentionHeight - the height of the oldest checkpoint to keep
+    function pruneBottomUpCheckpoints(uint64 newRetentionHeight) external systemActorOnly {
+        uint64 oldRetentionHeight = s.bottomUpCheckpointRetentionHeight;
+
+        if (newRetentionHeight <= oldRetentionHeight) {
+            revert InvalidRetentionHeight();
+        }
+
+        for (uint64 h = oldRetentionHeight; h < newRetentionHeight; ) {
+            delete s.bottomUpCheckpoints[h];
+            delete s.bottomUpCheckpointInfo[h];
+            delete s.bottomUpCollectedSignatures[h];
+            delete s.bottomUpMessages[h];
+
+            unchecked {
+                ++h;
+            }
+        }
+
+        s.bottomUpCheckpointRetentionHeight = newRetentionHeight;
     }
 }
