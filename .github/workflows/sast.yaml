@@ -49,3 +49,24 @@ jobs:
           check_filenames: true
           path: src/*,script/*,scripts/*,test/*
           ignore_words_file: .codespellignore
+
+  rust-binding:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+
+      - name: Create binding
+        run: make compile-abi && make rust-binding && cargo fmt
+
+      - name: Commit bindings
+        run: |
+          git config --global user.name 'AutoCommit'
+          git config --global user.email 'ai@protocol.ai'
+          git commit -am "Automated rust binding"
+          git push origin dev
