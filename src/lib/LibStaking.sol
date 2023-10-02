@@ -122,7 +122,7 @@ library LibStakingRelaseQueue {
     }
 
     /// @notice Validator claim the available collateral that are released
-    function claim(StakingReleaseQueue storage self, address validator) internal {
+    function claim(StakingReleaseQueue storage self, address validator) internal returns (uint256) {
         (uint256 amount, uint16 newLength) = self.releases[validator].compact();
 
         if (newLength == 0) {
@@ -132,6 +132,8 @@ library LibStakingRelaseQueue {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         IGateway(s.ipcGatewayAddr).releaseStake(amount);
         payable(validator).transfer(amount);
+
+        return amount;
     }
 }
 
@@ -164,6 +166,10 @@ library LibValidatorSet {
     function setData(ValidatorSet storage validators, address validator, bytes calldata data) internal {
         validators.validators[validator].data = data;
     }
+
+    /***********************************************************************
+     * Internal helper functions, should not be called by external functions
+     ***********************************************************************/
 
     /// @notice Validator increases its total collateral by amount.
     function recordDeposit(ValidatorSet storage validators, address validator, uint256 amount) internal {
@@ -204,9 +210,6 @@ library LibValidatorSet {
         self.totalConfirmedCollateral -= amount;
     }
 
-    /***********************************************************************
-     * Internal helper functions, should not be called by external functions
-     ***********************************************************************/
     /// @notice Reshuffles the active and waiting validators when a deposit is confirmed
     function depositReshuffle(ValidatorSet storage self, address maybeActive, uint256 newCollateral) internal {
         if (self.activeValidators.contains(maybeActive)) {
@@ -323,6 +326,7 @@ library LibStaking {
     using LibMinPQ for MinPQ;
 
     event ConfigurantionNumberConfirmed(uint64 number);
+    event CollateralClaimed(address validator, uint256 amount);
 
     /// @notice Checks if the validator has staked before
     function hasStaked(address validator) internal view returns (bool) {
@@ -363,6 +367,13 @@ library LibStaking {
 
         s.changeSet.withdrawRequest(validator, amount);
         s.validatorSet.recordWithdraw(validator, amount);
+    }
+
+    /// @notice Claim the released collateral
+    function claimCollateral(address validator) internal {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        uint256 amount = s.releaseQueue.claim(validator);
+        emit CollateralClaimed(validator, amount);
     }
 
     /// @notice Confirm the changes in bottom up checkpoint submission, only call this in bottom up checkpoint execution.
