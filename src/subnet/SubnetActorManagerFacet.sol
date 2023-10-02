@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {Status} from "../enums/Status.sol";
-import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpointLegacy} from "../structs/Checkpoint.sol";
@@ -53,7 +53,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (!LibStaking.hasStaked(msg.sender)) {
             revert NotStakedBefore();
         }
-
+        
         LibStaking.deposit(msg.sender, msg.value);
     }
 
