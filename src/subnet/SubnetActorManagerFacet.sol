@@ -5,9 +5,9 @@ import {Status} from "../enums/Status.sol";
 import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpointLegacy} from "../structs/Checkpoint.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {SubnetID} from "../structs/Subnet.sol";
+import {SubnetID, Validator} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {EpochVoteSubmissionHelper} from "../lib/EpochVoteSubmissionHelper.sol";
@@ -24,12 +24,12 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for BottomUpCheckpoint;
+    using CheckpointHelper for BottomUpCheckpointLegacy;
     using FilAddress for address;
     using Address for address payable;
     using FvmAddressHelper for FvmAddress;
 
-    event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter);
+    event BottomUpCheckpointSubmitted(BottomUpCheckpointLegacy checkpoint, address submitter);
     event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
 
@@ -171,7 +171,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
     /// @param checkpoint - the batch messages data
-    function submitCheckpoint(BottomUpCheckpoint calldata checkpoint) external {
+    function submitCheckpoint(BottomUpCheckpointLegacy calldata checkpoint) external {
         if (s.status != Status.Active) {
             revert SubnetNotActive();
         }
@@ -190,7 +190,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that commits a checkpoint after reaching majority
     /// @param checkpoint - the batch messages data
-    function _commitCheckpoint(BottomUpCheckpoint calldata checkpoint) internal {
+    function _commitCheckpoint(BottomUpCheckpointLegacy calldata checkpoint) internal {
         /// Ensures the checkpoints are chained. If not, should abort the current checkpoint.
         if (s.prevExecutedCheckpointHash != checkpoint.prevHash) {
             revert InconsistentPrevCheckpoint();
@@ -202,12 +202,20 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         IGateway(s.ipcGatewayAddr).commitChildCheck(checkpoint);
     }
 
-    /// @notice Set the data of a validator
-    function setData(bytes calldata data) external {
+    /// @notice Get the information of a validator
+    function getValidator(address validatorAddress) external view returns (Validator memory validator) {
         if (!LibStaking.hasStaked(msg.sender)) {
             revert NotStakedBefore();
         }
-        LibStaking.setValidatorData(msg.sender, data);
+        validator = s.validatorSet.validators[validatorAddress];
+    }
+
+    /// @notice Set the data of a validator
+    function setMetadata(bytes calldata metadata) external {
+        if (!LibStaking.hasStaked(msg.sender)) {
+            revert NotStakedBefore();
+        }
+        LibStaking.setValidatorData(msg.sender, metadata);
     }
 
     /// @notice method that allows a validator to join the subnet

@@ -53,7 +53,12 @@ check-rust-binding:
 	cargo clippy --manifest-path ./binding/Cargo.toml && \
 	./ops/check-rust-binding.sh
 
+commit-rust-binding:
+	./ops/commit-rust-binding.sh
+
 storage:
+	rm -rf ./cache
+	rm -rf ./cache_hardhat
 	npx hardhat storage-layout --update
 
 clean:
