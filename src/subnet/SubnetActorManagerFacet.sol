@@ -33,7 +33,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
 
-/// @notice method that allows a validator to join the subnet
+    /// @notice method that allows a validator to join the subnet
     /// @param netAddr - the network address of the validator
     function join(string calldata netAddr, FvmAddress calldata workerAddr) external payable notKilled {
         uint256 validatorStake = msg.value;
