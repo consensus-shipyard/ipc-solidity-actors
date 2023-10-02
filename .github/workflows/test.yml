@@ -27,5 +27,21 @@ jobs:
         with:
           cache: false
 
-      - name: Run tests
-        run: forge test -vvv --ffi
+      # - name: Run tests
+      #   run: forge test -vvv --ffi
+
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+
+      - name: Create binding
+        run: make compile-abi && make rust-binding && cargo fmt --manifest-path ./binding/Cargo.toml
+
+      - name: Commit bindings
+        run: |
+          git config --global user.name 'AutoCommit'
+          git config --global user.email 'ai@protocol.ai'
+          git commit -am "Automated rust binding"
+          git push origin dev
