@@ -68,7 +68,7 @@ clean:
 	rm -rf ./typechain
 
 coverage:
-	forge coverage --report lcov
+	forge coverage -C ./src --report lcov
 	genhtml -o coverage_report lcov.info --branch-coverage
 	./tools/check_coverage.sh
 
