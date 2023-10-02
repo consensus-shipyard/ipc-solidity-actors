@@ -12,6 +12,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "type": "t_struct(SubnetActorStorage)10401_storage"
 =======
       "type": "t_struct(SubnetActorStorage)10275_storage"
@@ -31,6 +32,9 @@
 =======
       "type": "t_struct(SubnetActorStorage)11213_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "type": "t_struct(SubnetActorStorage)11253_storage"
+>>>>>>> c7070cd (add join leave)
     }
   ],
   "types": {
@@ -51,6 +55,7 @@
       "label": "bytes32[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -83,10 +88,15 @@
     "t_array(t_struct(ChildCheck)14097_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)14097_storage",
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_array(t_struct(ChildCheck)14137_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)14137_storage",
+>>>>>>> c7070cd (add join leave)
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -119,6 +129,10 @@
     "t_array(t_struct(CrossMsg)14103_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)14103_storage",
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_array(t_struct(CrossMsg)14143_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)14143_storage",
+>>>>>>> c7070cd (add join leave)
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
@@ -162,6 +176,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_enum(Status)5004": {
 =======
     "t_enum(StakingOperation)11875": {
@@ -188,6 +203,9 @@
 =======
     "t_enum(StakingOperation)14235": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_enum(StakingOperation)14275": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "enum StakingOperation",
       "numberOfBytes": "1"
@@ -217,6 +235,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_address,t_struct(FvmAddress)11952_storage)": {
 =======
     "t_mapping(t_address,t_struct(FvmAddress)11826_storage)": {
@@ -232,10 +251,14 @@
 =======
     "t_mapping(t_address,t_struct(AddressStakingReleases)14273_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_address,t_struct(AddressStakingReleases)14313_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct AddressStakingReleases)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(AddressStakingReleases)14115_storage"
@@ -255,10 +278,16 @@
     },
     "t_mapping(t_address,t_struct(FvmAddress)14182_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(AddressStakingReleases)14313_storage"
+    },
+    "t_mapping(t_address,t_struct(FvmAddress)14222_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct FvmAddress)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -283,12 +312,16 @@
 =======
       "value": "t_struct(FvmAddress)14182_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(FvmAddress)14222_storage"
+>>>>>>> c7070cd (add join leave)
     },
-    "t_mapping(t_address,t_struct(Validator)14291_storage)": {
+    "t_mapping(t_address,t_struct(Validator)14331_storage)": {
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -310,6 +343,9 @@
 =======
       "value": "t_struct(Validator)14291_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(Validator)14331_storage"
+>>>>>>> c7070cd (add join leave)
     },
     "t_mapping(t_address,t_uint16)": {
       "encoding": "mapping",
@@ -326,6 +362,7 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -358,10 +395,14 @@
 =======
     "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14050_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14090_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -387,6 +428,9 @@
 =======
       "value": "t_struct(BottomUpCheckpoint)14050_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(BottomUpCheckpoint)14090_storage"
+>>>>>>> c7070cd (add join leave)
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -402,12 +446,12 @@
       "numberOfBytes": "32",
       "value": "t_address"
     },
-    "t_mapping(t_uint16,t_struct(StakingRelease)14263_storage)": {
+    "t_mapping(t_uint16,t_struct(StakingRelease)14303_storage)": {
       "encoding": "mapping",
       "key": "t_uint16",
       "label": "mapping(uint16 => struct StakingRelease)",
       "numberOfBytes": "32",
-      "value": "t_struct(StakingRelease)14263_storage"
+      "value": "t_struct(StakingRelease)14303_storage"
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -423,6 +467,7 @@
       "numberOfBytes": "32",
       "value": "t_mapping(t_bytes32,t_uint256)"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -448,10 +493,14 @@
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14050_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointLegacy)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -491,10 +540,16 @@
     },
     "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14160_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(BottomUpCheckpoint)14090_storage"
+    },
+    "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14200_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteBottomUpSubmission)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -521,10 +576,16 @@
     },
     "t_mapping(t_uint64,t_struct(StakingChange)14243_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(EpochVoteBottomUpSubmission)14200_storage"
+    },
+    "t_mapping(t_uint64,t_struct(StakingChange)14283_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct StakingChange)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -545,6 +606,9 @@
 =======
       "value": "t_struct(StakingChange)14243_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(StakingChange)14283_storage"
+>>>>>>> c7070cd (add join leave)
     },
     "t_string_storage": {
       "encoding": "bytes",
@@ -572,6 +636,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(BottomUpCheckpointLegacy)11820_storage": {
 =======
     "t_struct(BottomUpCheckpoint)11694_storage": {
@@ -586,11 +651,14 @@
 =======
     "t_struct(AddressStakingReleases)14273_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(AddressStakingReleases)14313_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct AddressStakingReleases",
       "members": [
         {
-          "astId": 14265,
+          "astId": 14305,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "length",
           "offset": 0,
@@ -598,7 +666,7 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14267,
+          "astId": 14307,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startIdx",
           "offset": 2,
@@ -606,26 +674,31 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14272,
+          "astId": 14312,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
-          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14263_storage)"
+          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14303_storage)"
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(BottomUpCheckpoint)13898_storage": {
 >>>>>>> ea9739e (update storage)
 =======
     "t_struct(BottomUpCheckpoint)14050_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(BottomUpCheckpoint)14090_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct AddressStakingReleases",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14107,
@@ -686,10 +759,14 @@
 =======
           "astId": 14033,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14073,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -736,6 +813,12 @@
         {
           "astId": 14035,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(SubnetID)14252_storage"
+        },
+        {
+          "astId": 14075,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epoch",
           "offset": 0,
@@ -743,6 +826,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -768,6 +852,9 @@
 =======
           "astId": 14037,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14077,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "fee",
           "offset": 0,
@@ -775,6 +862,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -800,10 +888,14 @@
 =======
           "astId": 14041,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14081,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -850,10 +942,17 @@
         {
           "astId": 14045,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_array(t_struct(CrossMsg)14143_storage)dyn_storage"
+        },
+        {
+          "astId": 14085,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "children",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -900,6 +999,12 @@
         {
           "astId": 14047,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_array(t_struct(ChildCheck)14137_storage)dyn_storage"
+        },
+        {
+          "astId": 14087,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevHash",
           "offset": 0,
@@ -907,6 +1012,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -932,6 +1038,9 @@
 =======
           "astId": 14049,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14089,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "proof",
           "offset": 0,
@@ -941,6 +1050,7 @@
       ],
       "numberOfBytes": "256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -966,10 +1076,14 @@
 =======
     "t_struct(ChildCheck)14097_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(ChildCheck)14137_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -995,10 +1109,14 @@
 =======
           "astId": 14093,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14133,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1045,6 +1163,12 @@
         {
           "astId": 14096,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(SubnetID)14252_storage"
+        },
+        {
+          "astId": 14136,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "checks",
           "offset": 0,
@@ -1054,6 +1178,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1079,10 +1204,14 @@
 =======
     "t_struct(CrossMsg)14103_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(CrossMsg)14143_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1108,10 +1237,14 @@
 =======
           "astId": 14100,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14140,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1158,6 +1291,12 @@
         {
           "astId": 14102,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(StorableMsg)14158_storage"
+        },
+        {
+          "astId": 14142,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "wrapped",
           "offset": 0,
@@ -1167,6 +1306,7 @@
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1192,10 +1332,14 @@
 =======
     "t_struct(EpochVoteBottomUpSubmission)14160_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(EpochVoteBottomUpSubmission)14200_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct EpochVoteBottomUpSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1221,10 +1365,14 @@
 =======
           "astId": 14154,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14194,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "vote",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1271,10 +1419,17 @@
         {
           "astId": 14159,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(EpochVoteSubmission)14182_storage"
+        },
+        {
+          "astId": 14199,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1300,10 +1455,14 @@
 =======
           "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14050_storage)"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(BottomUpCheckpoint)14090_storage)"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1329,10 +1488,14 @@
 =======
     "t_struct(EpochVoteSubmission)14142_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(EpochVoteSubmission)14182_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1358,6 +1521,9 @@
 =======
           "astId": 14125,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14165,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -1365,6 +1531,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1390,6 +1557,9 @@
 =======
           "astId": 14127,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14167,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -1397,6 +1567,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1422,6 +1593,9 @@
 =======
           "astId": 14129,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14169,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -1429,6 +1603,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1454,6 +1629,9 @@
 =======
           "astId": 14135,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14175,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submitters",
           "offset": 0,
@@ -1461,6 +1639,7 @@
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1486,6 +1665,9 @@
 =======
           "astId": 14141,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14181,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "submissionWeights",
           "offset": 0,
@@ -1495,6 +1677,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1520,10 +1703,14 @@
 =======
     "t_struct(FvmAddress)14182_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(FvmAddress)14222_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1549,6 +1736,9 @@
 =======
           "astId": 14179,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14219,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "addrType",
           "offset": 0,
@@ -1556,6 +1746,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1581,6 +1772,9 @@
 =======
           "astId": 14181,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14221,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "payload",
           "offset": 0,
@@ -1590,6 +1784,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1615,10 +1810,14 @@
 =======
     "t_struct(IPCAddress)14319_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(IPCAddress)14359_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1644,10 +1843,14 @@
 =======
           "astId": 14315,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14355,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1694,10 +1897,17 @@
         {
           "astId": 14318,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(SubnetID)14252_storage"
+        },
+        {
+          "astId": 14358,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1723,46 +1933,49 @@
 =======
           "type": "t_struct(FvmAddress)14182_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(FvmAddress)14222_storage"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "128"
     },
-    "t_struct(MaxPQ)12615_storage": {
+    "t_struct(MaxPQ)12655_storage": {
       "encoding": "inplace",
       "label": "struct MaxPQ",
       "members": [
         {
-          "astId": 12614,
+          "astId": 12654,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "inner",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(PQ)13818_storage"
+          "type": "t_struct(PQ)13858_storage"
         }
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(MinPQ)13211_storage": {
+    "t_struct(MinPQ)13251_storage": {
       "encoding": "inplace",
       "label": "struct MinPQ",
       "members": [
         {
-          "astId": 13210,
+          "astId": 13250,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "inner",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(PQ)13818_storage"
+          "type": "t_struct(PQ)13858_storage"
         }
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(PQ)13818_storage": {
+    "t_struct(PQ)13858_storage": {
       "encoding": "inplace",
       "label": "struct PQ",
       "members": [
         {
-          "astId": 13807,
+          "astId": 13847,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "size",
           "offset": 0,
@@ -1770,7 +1983,7 @@
           "type": "t_uint16"
         },
         {
-          "astId": 13812,
+          "astId": 13852,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "addressToPos",
           "offset": 0,
@@ -1778,7 +1991,7 @@
           "type": "t_mapping(t_address,t_uint16)"
         },
         {
-          "astId": 13817,
+          "astId": 13857,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "posToAddress",
           "offset": 0,
@@ -1817,6 +2030,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(StorableMsg)11888_storage": {
 =======
     "t_struct(StakingChange)11883_storage": {
@@ -1829,10 +2043,14 @@
 =======
     "t_struct(StakingChange)14243_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(StakingChange)14283_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct StakingChange",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1846,10 +2064,14 @@
 =======
           "astId": 14238,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14278,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "op",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1875,6 +2097,12 @@
         {
           "astId": 14240,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_enum(StakingOperation)14275"
+        },
+        {
+          "astId": 14280,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -1882,6 +2110,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1895,6 +2124,9 @@
 =======
           "astId": 14242,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14282,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validator",
           "offset": 0,
@@ -1904,6 +2136,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1917,10 +2150,14 @@
 =======
     "t_struct(StakingChangeSet)14256_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(StakingChangeSet)14296_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct StakingChangeSet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1934,6 +2171,9 @@
 =======
           "astId": 14246,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14286,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -1944,11 +2184,15 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11889,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalChanges",
 =======
           "astId": 14091,
+=======
+          "astId": 14289,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startConfigurationNumber",
 >>>>>>> fa018d6 (Adding min priority queue (#209))
@@ -1968,6 +2212,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11895,
 =======
           "astId": 14097,
@@ -1978,10 +2223,14 @@
 =======
           "astId": 14255,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14295,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "changes",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2007,10 +2256,14 @@
 =======
           "type": "t_mapping(t_uint64,t_struct(StakingChange)14243_storage)"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_uint64,t_struct(StakingChange)14283_storage)"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(StakingRelease)14105_storage": {
@@ -2021,10 +2274,14 @@
 =======
     "t_struct(StakingRelease)14263_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(StakingRelease)14303_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct StakingRelease",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2038,6 +2295,9 @@
 =======
           "astId": 14259,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14299,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releaseAt",
           "offset": 0,
@@ -2045,6 +2305,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2058,6 +2319,9 @@
 =======
           "astId": 14262,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14302,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -2067,6 +2331,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2080,10 +2345,14 @@
 =======
     "t_struct(StakingReleaseQueue)14283_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(StakingReleaseQueue)14323_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct StakingReleaseQueue",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2097,6 +2366,9 @@
 =======
           "astId": 14276,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14316,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "lockingDuration",
           "offset": 0,
@@ -2104,6 +2376,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2117,10 +2390,14 @@
 =======
           "astId": 14282,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14322,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2134,10 +2411,14 @@
 =======
           "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14273_storage)"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14313_storage)"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2158,10 +2439,14 @@
 =======
     "t_struct(StorableMsg)14118_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(StorableMsg)14158_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2187,10 +2472,14 @@
 =======
           "astId": 14106,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14146,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2237,10 +2526,17 @@
         {
           "astId": 14109,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(IPCAddress)14359_storage"
+        },
+        {
+          "astId": 14149,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2287,6 +2583,12 @@
         {
           "astId": 14111,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(IPCAddress)14359_storage"
+        },
+        {
+          "astId": 14151,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "value",
           "offset": 0,
@@ -2294,6 +2596,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2319,6 +2622,9 @@
 =======
           "astId": 14113,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14153,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nonce",
           "offset": 0,
@@ -2326,6 +2632,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2351,6 +2658,9 @@
 =======
           "astId": 14115,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14155,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "method",
           "offset": 8,
@@ -2358,6 +2668,7 @@
           "type": "t_bytes4"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2383,6 +2694,9 @@
 =======
           "astId": 14117,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14157,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "params",
           "offset": 0,
@@ -2392,6 +2706,7 @@
       ],
       "numberOfBytes": "352"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2417,10 +2732,14 @@
 =======
     "t_struct(SubnetActorStorage)11213_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(SubnetActorStorage)11253_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2446,10 +2765,14 @@
 =======
           "astId": 11125,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11165,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2496,6 +2819,12 @@
         {
           "astId": 11130,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteBottomUpSubmission)14200_storage)"
+        },
+        {
+          "astId": 11170,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "stake",
           "offset": 0,
@@ -2503,6 +2832,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2528,6 +2858,9 @@
 =======
           "astId": 11135,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11175,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "accumulatedRewards",
           "offset": 0,
@@ -2535,6 +2868,7 @@
           "type": "t_mapping(t_address,t_uint256)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2560,6 +2894,9 @@
 =======
           "astId": 11140,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11180,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorNetAddresses",
           "offset": 0,
@@ -2567,6 +2904,7 @@
           "type": "t_mapping(t_address,t_string_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2592,10 +2930,14 @@
 =======
           "astId": 11146,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11186,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorWorkerAddresses",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2642,10 +2984,17 @@
         {
           "astId": 11152,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_address,t_struct(FvmAddress)14222_storage)"
+        },
+        {
+          "astId": 11192,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "committedCheckpoints",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2692,6 +3041,12 @@
         {
           "astId": 11155,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)"
+        },
+        {
+          "astId": 11195,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "genesis",
           "offset": 0,
@@ -2699,6 +3054,7 @@
           "type": "t_bytes_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2724,6 +3080,9 @@
 =======
           "astId": 11158,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11198,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalStake",
           "offset": 0,
@@ -2731,6 +3090,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2756,6 +3116,9 @@
 =======
           "astId": 11161,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11201,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minActivationCollateral",
           "offset": 0,
@@ -2763,6 +3126,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2788,6 +3152,9 @@
 =======
           "astId": 11164,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11204,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "configurationNumber",
           "offset": 0,
@@ -2795,6 +3162,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2820,6 +3188,9 @@
 =======
           "astId": 11167,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11207,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "topDownCheckPeriod",
           "offset": 8,
@@ -2827,6 +3198,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2852,6 +3224,9 @@
 =======
           "astId": 11170,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11210,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "bottomUpCheckPeriod",
           "offset": 16,
@@ -2859,6 +3234,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2878,6 +3254,9 @@
 =======
           "astId": 11173,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11213,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minValidators",
           "offset": 24,
@@ -2885,6 +3264,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2908,6 +3288,9 @@
 =======
           "astId": 11176,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11216,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "name",
           "offset": 0,
@@ -2915,6 +3298,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2940,6 +3324,9 @@
 =======
           "astId": 11178,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11218,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "currentSubnetHash",
           "offset": 0,
@@ -2947,6 +3334,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2972,6 +3360,9 @@
 =======
           "astId": 11181,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11221,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevExecutedCheckpointHash",
           "offset": 0,
@@ -2979,6 +3370,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3004,6 +3396,9 @@
 =======
           "astId": 11184,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11224,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "ipcGatewayAddr",
           "offset": 0,
@@ -3011,6 +3406,7 @@
           "type": "t_address"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3036,6 +3432,9 @@
 =======
           "astId": 11188,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 11228,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "status",
           "offset": 20,
@@ -3226,7 +3625,7 @@
           "type": "t_enum(Status)4560"
         },
         {
-          "astId": 11192,
+          "astId": 11232,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validators",
           "offset": 0,
@@ -3235,7 +3634,7 @@
           "type": "t_struct(AddressSet)3420_storage"
         },
         {
-          "astId": 11196,
+          "astId": 11236,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "parentId",
           "offset": 0,
@@ -3245,10 +3644,10 @@
 >>>>>>> be6a160 (resolve conflicts)
 =======
           "slot": "16",
-          "type": "t_struct(SubnetID)14212_storage"
+          "type": "t_struct(SubnetID)14252_storage"
         },
         {
-          "astId": 11200,
+          "astId": 11240,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "consensus",
           "offset": 0,
@@ -3256,23 +3655,23 @@
           "type": "t_enum(ConsensusType)4546"
         },
         {
-          "astId": 11204,
+          "astId": 11244,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorSet",
           "offset": 0,
           "slot": "19",
-          "type": "t_struct(ValidatorSet)14312_storage"
+          "type": "t_struct(ValidatorSet)14352_storage"
         },
         {
-          "astId": 11208,
+          "astId": 11248,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "changeSet",
           "offset": 0,
           "slot": "28",
-          "type": "t_struct(StakingChangeSet)14256_storage"
+          "type": "t_struct(StakingChangeSet)14296_storage"
         },
         {
-          "astId": 11212,
+          "astId": 11252,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releaseQueue",
           "offset": 0,
@@ -3282,12 +3681,17 @@
 >>>>>>> ea9739e (update storage)
 =======
           "slot": "30",
+<<<<<<< HEAD
           "type": "t_struct(StakingReleaseQueue)14283_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(StakingReleaseQueue)14323_storage"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "1024"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3313,10 +3717,14 @@
 =======
     "t_struct(SubnetID)14212_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(SubnetID)14252_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3342,6 +3750,9 @@
 =======
           "astId": 14207,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14247,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "root",
           "offset": 0,
@@ -3349,6 +3760,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3374,6 +3786,9 @@
 =======
           "astId": 14211,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14251,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "route",
           "offset": 0,
@@ -3383,12 +3798,12 @@
       ],
       "numberOfBytes": "64"
     },
-    "t_struct(Validator)14291_storage": {
+    "t_struct(Validator)14331_storage": {
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
-          "astId": 14285,
+          "astId": 14325,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "confirmedCollateral",
           "offset": 0,
@@ -3396,7 +3811,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14287,
+          "astId": 14327,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalCollateral",
           "offset": 0,
@@ -3404,7 +3819,7 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14290,
+          "astId": 14330,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "data",
           "offset": 0,
@@ -3414,12 +3829,12 @@
       ],
       "numberOfBytes": "96"
     },
-    "t_struct(ValidatorSet)14312_storage": {
+    "t_struct(ValidatorSet)14352_storage": {
       "encoding": "inplace",
       "label": "struct ValidatorSet",
       "members": [
         {
-          "astId": 14294,
+          "astId": 14334,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "activeLimit",
           "offset": 0,
@@ -3427,7 +3842,7 @@
           "type": "t_uint16"
         },
         {
-          "astId": 14297,
+          "astId": 14337,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalConfirmedCollateral",
           "offset": 0,
@@ -3435,28 +3850,28 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14303,
+          "astId": 14343,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validators",
           "offset": 0,
           "slot": "2",
-          "type": "t_mapping(t_address,t_struct(Validator)14291_storage)"
+          "type": "t_mapping(t_address,t_struct(Validator)14331_storage)"
         },
         {
-          "astId": 14307,
+          "astId": 14347,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "activeValidators",
           "offset": 0,
           "slot": "3",
-          "type": "t_struct(MinPQ)13211_storage"
+          "type": "t_struct(MinPQ)13251_storage"
         },
         {
-          "astId": 14311,
+          "astId": 14351,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "waitingValidators",
           "offset": 0,
           "slot": "6",
-          "type": "t_struct(MaxPQ)12615_storage"
+          "type": "t_struct(MaxPQ)12655_storage"
         }
       ],
       "numberOfBytes": "288"

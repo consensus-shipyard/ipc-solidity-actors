@@ -7,6 +7,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "astId": 10183,
 =======
       "astId": 9608,
@@ -26,10 +27,14 @@
 =======
       "astId": 9617,
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "astId": 9620,
+>>>>>>> c7070cd (add join leave)
       "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
       "label": "s",
       "offset": 0,
       "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -55,6 +60,9 @@
 =======
       "type": "t_struct(GatewayActorStorage)9605_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "type": "t_struct(GatewayActorStorage)9608_storage"
+>>>>>>> c7070cd (add join leave)
     }
   ],
   "types": {
@@ -75,6 +83,7 @@
       "label": "bytes32[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -107,10 +116,15 @@
     "t_array(t_struct(ChildCheck)14097_storage)dyn_storage": {
       "base": "t_struct(ChildCheck)14097_storage",
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_array(t_struct(ChildCheck)14137_storage)dyn_storage": {
+      "base": "t_struct(ChildCheck)14137_storage",
+>>>>>>> c7070cd (add join leave)
       "encoding": "dynamic_array",
       "label": "struct ChildCheck[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -143,10 +157,15 @@
     "t_array(t_struct(CrossMsg)14103_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)14103_storage",
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_array(t_struct(CrossMsg)14143_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)14143_storage",
+>>>>>>> c7070cd (add join leave)
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -179,6 +198,10 @@
     "t_array(t_struct(Validator)14346_storage)dyn_storage": {
       "base": "t_struct(Validator)14346_storage",
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_array(t_struct(Validator)14386_storage)dyn_storage": {
+      "base": "t_struct(Validator)14386_storage",
+>>>>>>> c7070cd (add join leave)
       "encoding": "dynamic_array",
       "label": "struct Validator[]",
       "numberOfBytes": "32"
@@ -256,6 +279,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11873_storage)dyn_storage))": {
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)11747_storage)dyn_storage))": {
@@ -275,10 +299,14 @@
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14103_storage)dyn_storage))": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14143_storage)dyn_storage))": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => mapping(uint256 => struct CrossMsg[]))",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -318,10 +346,16 @@
     },
     "t_mapping(t_bytes32,t_struct(CrossMsg)14103_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14143_storage)dyn_storage)"
+    },
+    "t_mapping(t_bytes32,t_struct(CrossMsg)14143_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct CrossMsg)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -361,10 +395,16 @@
     },
     "t_mapping(t_bytes32,t_struct(Subnet)14232_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(CrossMsg)14143_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(Subnet)14272_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct Subnet)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -404,10 +444,16 @@
     },
     "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)14090_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(Subnet)14272_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)14130_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct TopDownCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -433,6 +479,9 @@
 =======
       "value": "t_struct(TopDownCheckpoint)14090_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(TopDownCheckpoint)14130_storage"
+>>>>>>> c7070cd (add join leave)
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -441,6 +490,7 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -466,10 +516,14 @@
 =======
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14103_storage)dyn_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14143_storage)dyn_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct CrossMsg[])",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -495,6 +549,9 @@
 =======
       "value": "t_array(t_struct(CrossMsg)14103_storage)dyn_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_array(t_struct(CrossMsg)14143_storage)dyn_storage"
+>>>>>>> c7070cd (add join leave)
     },
     "t_mapping(t_uint256,t_mapping(t_address,t_bool))": {
       "encoding": "mapping",
@@ -510,6 +567,7 @@
       "numberOfBytes": "32",
       "value": "t_mapping(t_bytes32,t_uint256)"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -535,10 +593,14 @@
 =======
     "t_mapping(t_uint256,t_struct(ParentFinality)14030_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_uint256,t_struct(ParentFinality)14070_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct ParentFinality)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -564,6 +626,9 @@
 =======
       "value": "t_struct(ParentFinality)14030_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(ParentFinality)14070_storage"
+>>>>>>> c7070cd (add join leave)
     },
     "t_mapping(t_uint64,t_array(t_struct(CrossMsg)11873_storage)dyn_storage)": {
       "encoding": "mapping",
@@ -599,6 +664,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(AddressSet)3420_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
@@ -625,10 +691,14 @@
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14050_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -655,14 +725,18 @@
 =======
       "value": "t_struct(BottomUpCheckpoint)14050_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(BottomUpCheckpoint)14090_storage"
+>>>>>>> c7070cd (add join leave)
     },
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)14067_storage)": {
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)14107_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpointNew)",
       "numberOfBytes": "32",
-      "value": "t_struct(BottomUpCheckpointNew)14067_storage"
+      "value": "t_struct(BottomUpCheckpointNew)14107_storage"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -685,10 +759,14 @@
 =======
     "t_mapping(t_uint64,t_struct(CheckpointInfo)14083_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_mapping(t_uint64,t_struct(CheckpointInfo)14123_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CheckpointInfo)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -728,10 +806,16 @@
     },
     "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)14151_storage)": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(CheckpointInfo)14123_storage"
+    },
+    "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)14191_storage)": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct EpochVoteTopDownSubmission)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -786,10 +870,16 @@
     },
     "t_struct(BottomUpCheckpoint)14050_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+      "value": "t_struct(EpochVoteTopDownSubmission)14191_storage"
+    },
+    "t_struct(BottomUpCheckpoint)14090_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -814,14 +904,17 @@
 =======
           "astId": 14033,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14073,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
-          "type": "t_struct(SubnetID)14212_storage"
+          "type": "t_struct(SubnetID)14252_storage"
         },
         {
-          "astId": 14035,
+          "astId": 14075,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "epoch",
           "offset": 0,
@@ -829,7 +922,7 @@
           "type": "t_uint64"
         },
         {
-          "astId": 14037,
+          "astId": 14077,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "fee",
           "offset": 0,
@@ -837,23 +930,23 @@
           "type": "t_uint256"
         },
         {
-          "astId": 14041,
+          "astId": 14081,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMsgs",
           "offset": 0,
           "slot": "4",
-          "type": "t_array(t_struct(CrossMsg)14103_storage)dyn_storage"
+          "type": "t_array(t_struct(CrossMsg)14143_storage)dyn_storage"
         },
         {
-          "astId": 14045,
+          "astId": 14085,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "children",
           "offset": 0,
           "slot": "5",
-          "type": "t_array(t_struct(ChildCheck)14097_storage)dyn_storage"
+          "type": "t_array(t_struct(ChildCheck)14137_storage)dyn_storage"
         },
         {
-          "astId": 14047,
+          "astId": 14087,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "prevHash",
           "offset": 0,
@@ -861,7 +954,7 @@
           "type": "t_bytes32"
         },
         {
-          "astId": 14049,
+          "astId": 14089,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "proof",
           "offset": 0,
@@ -871,11 +964,12 @@
       ],
       "numberOfBytes": "256"
     },
-    "t_struct(BottomUpCheckpointNew)14067_storage": {
+    "t_struct(BottomUpCheckpointNew)14107_storage": {
       "encoding": "inplace",
       "label": "struct BottomUpCheckpointNew",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -898,10 +992,14 @@
 =======
           "astId": 14054,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14094,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -948,6 +1046,12 @@
         {
           "astId": 14057,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(SubnetID)14252_storage"
+        },
+        {
+          "astId": 14097,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHeight",
           "offset": 0,
@@ -955,6 +1059,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -980,6 +1085,9 @@
 =======
           "astId": 14060,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14100,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -987,6 +1095,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1012,6 +1121,9 @@
 =======
           "astId": 14063,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14103,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -1019,6 +1131,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1044,6 +1157,9 @@
 =======
           "astId": 14066,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14106,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -1053,6 +1169,7 @@
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1141,10 +1258,14 @@
 =======
     "t_struct(CheckpointInfo)14083_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(CheckpointInfo)14123_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct CheckpointInfo",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1170,6 +1291,9 @@
 =======
           "astId": 14070,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14110,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "hash",
           "offset": 0,
@@ -1177,6 +1301,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1202,6 +1327,9 @@
 =======
           "astId": 14073,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14113,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rootHash",
           "offset": 0,
@@ -1209,6 +1337,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1234,6 +1363,9 @@
 =======
           "astId": 14076,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14116,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "threshold",
           "offset": 0,
@@ -1241,6 +1373,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1266,6 +1399,9 @@
 =======
           "astId": 14079,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14119,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentWeight",
           "offset": 0,
@@ -1273,6 +1409,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1298,6 +1435,9 @@
 =======
           "astId": 14082,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14122,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "reached",
           "offset": 0,
@@ -1307,6 +1447,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1332,10 +1473,14 @@
 =======
     "t_struct(ChildCheck)14097_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(ChildCheck)14137_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct ChildCheck",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1361,10 +1506,14 @@
 =======
           "astId": 14093,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14133,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "source",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1411,6 +1560,12 @@
         {
           "astId": 14096,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(SubnetID)14252_storage"
+        },
+        {
+          "astId": 14136,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "checks",
           "offset": 0,
@@ -1420,6 +1575,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1445,10 +1601,14 @@
 =======
     "t_struct(CrossMsg)14103_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(CrossMsg)14143_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1474,10 +1634,14 @@
 =======
           "astId": 14100,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14140,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1524,6 +1688,12 @@
         {
           "astId": 14102,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(StorableMsg)14158_storage"
+        },
+        {
+          "astId": 14142,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "wrapped",
           "offset": 0,
@@ -1533,6 +1703,7 @@
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1558,10 +1729,14 @@
 =======
     "t_struct(EpochVoteSubmission)14142_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(EpochVoteSubmission)14182_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct EpochVoteSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1587,6 +1762,9 @@
 =======
           "astId": 14125,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14165,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -1594,6 +1772,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1619,6 +1798,9 @@
 =======
           "astId": 14127,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14167,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalSubmissionWeight",
           "offset": 0,
@@ -1626,6 +1808,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1651,6 +1834,9 @@
 =======
           "astId": 14129,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14169,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "mostVotedSubmission",
           "offset": 0,
@@ -1658,6 +1844,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1683,6 +1870,9 @@
 =======
           "astId": 14135,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14175,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "submitters",
           "offset": 0,
@@ -1690,6 +1880,7 @@
           "type": "t_mapping(t_uint256,t_mapping(t_address,t_bool))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1715,6 +1906,9 @@
 =======
           "astId": 14141,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14181,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "submissionWeights",
           "offset": 0,
@@ -1724,6 +1918,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1749,10 +1944,14 @@
 =======
     "t_struct(EpochVoteTopDownSubmission)14151_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(EpochVoteTopDownSubmission)14191_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct EpochVoteTopDownSubmission",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1778,10 +1977,14 @@
 =======
           "astId": 14145,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14185,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "vote",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1828,10 +2031,17 @@
         {
           "astId": 14150,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(EpochVoteSubmission)14182_storage"
+        },
+        {
+          "astId": 14190,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "submissions",
           "offset": 0,
           "slot": "5",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1857,10 +2067,14 @@
 =======
           "type": "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)14090_storage)"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(TopDownCheckpoint)14130_storage)"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1886,10 +2100,14 @@
 =======
     "t_struct(FvmAddress)14182_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(FvmAddress)14222_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1915,6 +2133,9 @@
 =======
           "astId": 14179,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14219,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addrType",
           "offset": 0,
@@ -1922,6 +2143,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1947,6 +2169,9 @@
 =======
           "astId": 14181,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14221,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "payload",
           "offset": 0,
@@ -1956,6 +2181,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1981,10 +2207,14 @@
 =======
     "t_struct(GatewayActorStorage)9605_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(GatewayActorStorage)9608_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct GatewayActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2010,10 +2240,14 @@
 =======
           "astId": 9483,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9486,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnets",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2060,10 +2294,17 @@
         {
           "astId": 9492,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(Subnet)14272_storage)"
+        },
+        {
+          "astId": 9495,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2110,10 +2351,17 @@
         {
           "astId": 9498,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14143_storage)dyn_storage))"
+        },
+        {
+          "astId": 9501,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "finalitiesMap",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2160,6 +2408,12 @@
         {
           "astId": 9501,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_uint256,t_struct(ParentFinality)14070_storage)"
+        },
+        {
+          "astId": 9504,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "latestParentHeight",
           "offset": 0,
@@ -2167,6 +2421,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2192,10 +2447,14 @@
 =======
           "astId": 9507,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9510,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "postbox",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2242,6 +2501,12 @@
         {
           "astId": 9514,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14143_storage)"
+        },
+        {
+          "astId": 9517,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validatorSetWeights",
           "offset": 0,
@@ -2249,6 +2514,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_uint256))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2274,10 +2540,14 @@
 =======
           "astId": 9518,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9521,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentMembership",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2324,10 +2594,17 @@
         {
           "astId": 9522,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(Membership)14395_storage"
+        },
+        {
+          "astId": 9525,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "lastMembership",
           "offset": 0,
           "slot": "9",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2395,32 +2672,36 @@
 =======
           "type": "t_struct(Membership)14355_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(Membership)14395_storage"
+>>>>>>> c7070cd (add join leave)
         },
         {
-          "astId": 9527,
+          "astId": 9530,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointsLegacy",
           "offset": 0,
           "slot": "12",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14050_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14090_storage)"
         },
         {
-          "astId": 9533,
+          "astId": 9536,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpoints",
           "offset": 0,
           "slot": "13",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)14067_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpointNew)14107_storage)"
         },
         {
-          "astId": 9539,
+          "astId": 9542,
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointInfo",
           "offset": 0,
           "slot": "14",
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)14083_storage)"
+          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)14123_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2443,6 +2724,9 @@
 =======
           "astId": 9546,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9549,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCollectedSignatures",
           "offset": 0,
@@ -2450,6 +2734,7 @@
           "type": "t_mapping(t_uint64,t_struct(AddressSet)3420_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2475,6 +2760,9 @@
 =======
           "astId": 9555,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9558,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "children",
           "offset": 0,
@@ -2482,6 +2770,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_array(t_uint256)2_storage))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2507,6 +2796,9 @@
 =======
           "astId": 9564,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9567,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "checks",
           "offset": 0,
@@ -2514,6 +2806,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_mapping(t_bytes32,t_bool)))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2546,13 +2839,17 @@
 =======
           "astId": 9570,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9573,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "epochVoteSubmissions",
           "offset": 0,
           "slot": "18",
-          "type": "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)14151_storage)"
+          "type": "t_mapping(t_uint64,t_struct(EpochVoteTopDownSubmission)14191_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2575,6 +2872,9 @@
 =======
           "astId": 9574,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9577,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetKeys",
           "offset": 0,
@@ -2582,6 +2882,7 @@
           "type": "t_array(t_bytes32)dyn_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2614,13 +2915,17 @@
 =======
           "astId": 9578,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9581,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "networkName",
           "offset": 0,
           "slot": "20",
-          "type": "t_struct(SubnetID)14212_storage"
+          "type": "t_struct(SubnetID)14252_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2643,6 +2948,9 @@
 =======
           "astId": 9581,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9584,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "minStake",
           "offset": 0,
@@ -2650,6 +2958,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2675,6 +2984,9 @@
 =======
           "astId": 9584,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9587,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMsgFee",
           "offset": 0,
@@ -2682,6 +2994,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2707,6 +3020,9 @@
 =======
           "astId": 9587,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9590,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "majorityPercentage",
           "offset": 0,
@@ -2714,6 +3030,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2739,6 +3056,9 @@
 =======
           "astId": 9590,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9593,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpNonce",
           "offset": 1,
@@ -2746,6 +3066,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2771,6 +3092,9 @@
 =======
           "astId": 9593,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9596,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedTopDownNonce",
           "offset": 9,
@@ -2778,6 +3102,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2803,6 +3128,9 @@
 =======
           "astId": 9596,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9599,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownCheckPeriod",
           "offset": 17,
@@ -2810,6 +3138,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2835,6 +3164,9 @@
 =======
           "astId": 9599,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9602,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalSubnets",
           "offset": 0,
@@ -2842,6 +3174,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2867,6 +3200,9 @@
 =======
           "astId": 9601,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9604,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckPeriod",
           "offset": 8,
@@ -2874,6 +3210,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2899,6 +3236,9 @@
 =======
           "astId": 9604,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 9607,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "initialized",
           "offset": 16,
@@ -2908,6 +3248,7 @@
       ],
       "numberOfBytes": "928"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2933,10 +3274,14 @@
 =======
     "t_struct(IPCAddress)14319_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(IPCAddress)14359_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2962,10 +3307,14 @@
 =======
           "astId": 14315,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14355,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3012,10 +3361,17 @@
         {
           "astId": 14318,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(SubnetID)14252_storage"
+        },
+        {
+          "astId": 14358,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3041,10 +3397,14 @@
 =======
           "type": "t_struct(FvmAddress)14182_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(FvmAddress)14222_storage"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "128"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3070,10 +3430,14 @@
 =======
     "t_struct(Membership)14355_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(Membership)14395_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct Membership",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3099,10 +3463,14 @@
 =======
           "astId": 14350,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14390,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validators",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3149,6 +3517,12 @@
         {
           "astId": 14352,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_array(t_struct(Validator)14386_storage)dyn_storage"
+        },
+        {
+          "astId": 14392,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "configurationNumber",
           "offset": 0,
@@ -3156,6 +3530,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3181,6 +3556,9 @@
 =======
           "astId": 14354,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14394,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalWeight",
           "offset": 0,
@@ -3190,6 +3568,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3215,10 +3594,14 @@
 =======
     "t_struct(ParentFinality)14030_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(ParentFinality)14070_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct ParentFinality",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3244,6 +3627,9 @@
 =======
           "astId": 14027,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14067,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "height",
           "offset": 0,
@@ -3251,6 +3637,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3276,6 +3663,9 @@
 =======
           "astId": 14029,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14069,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -3285,6 +3675,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3333,10 +3724,14 @@
 =======
     "t_struct(StorableMsg)14118_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(StorableMsg)14158_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3362,10 +3757,14 @@
 =======
           "astId": 14106,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14146,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3412,10 +3811,17 @@
         {
           "astId": 14109,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(IPCAddress)14359_storage"
+        },
+        {
+          "astId": 14149,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3462,6 +3868,12 @@
         {
           "astId": 14111,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(IPCAddress)14359_storage"
+        },
+        {
+          "astId": 14151,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "value",
           "offset": 0,
@@ -3469,6 +3881,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3494,6 +3907,9 @@
 =======
           "astId": 14113,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14153,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -3501,6 +3917,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3526,6 +3943,9 @@
 =======
           "astId": 14115,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14155,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "method",
           "offset": 8,
@@ -3533,6 +3953,7 @@
           "type": "t_bytes4"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3558,6 +3979,9 @@
 =======
           "astId": 14117,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14157,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "params",
           "offset": 0,
@@ -3567,6 +3991,7 @@
       ],
       "numberOfBytes": "352"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3592,10 +4017,14 @@
 =======
     "t_struct(Subnet)14232_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(Subnet)14272_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct Subnet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3621,6 +4050,9 @@
 =======
           "astId": 14214,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14254,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "stake",
           "offset": 0,
@@ -3628,6 +4060,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3653,6 +4086,9 @@
 =======
           "astId": 14216,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14256,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "genesisEpoch",
           "offset": 0,
@@ -3660,6 +4096,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3685,6 +4122,9 @@
 =======
           "astId": 14218,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14258,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "circSupply",
           "offset": 0,
@@ -3692,6 +4132,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3717,6 +4158,9 @@
 =======
           "astId": 14220,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14260,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownNonce",
           "offset": 0,
@@ -3724,6 +4168,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3749,6 +4194,9 @@
 =======
           "astId": 14222,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14262,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedBottomUpNonce",
           "offset": 8,
@@ -3756,6 +4204,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3781,6 +4230,9 @@
 =======
           "astId": 14225,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14265,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "status",
           "offset": 16,
@@ -3814,15 +4266,20 @@
         },
         {
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14076,
 >>>>>>> ea9739e (update storage)
 =======
           "astId": 14228,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14268,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "id",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3869,10 +4326,17 @@
         {
           "astId": 14231,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(SubnetID)14252_storage"
+        },
+        {
+          "astId": 14271,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "prevCheckpoint",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3898,10 +4362,14 @@
 =======
           "type": "t_struct(BottomUpCheckpoint)14050_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(BottomUpCheckpoint)14090_storage"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "448"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3927,10 +4395,14 @@
 =======
     "t_struct(SubnetID)14212_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(SubnetID)14252_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3956,6 +4428,9 @@
 =======
           "astId": 14207,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14247,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "root",
           "offset": 0,
@@ -3963,6 +4438,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3988,6 +4464,9 @@
 =======
           "astId": 14211,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14251,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "route",
           "offset": 0,
@@ -3997,6 +4476,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4022,10 +4502,14 @@
 =======
     "t_struct(TopDownCheckpoint)14090_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(TopDownCheckpoint)14130_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct TopDownCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4051,6 +4535,9 @@
 =======
           "astId": 14085,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14125,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "epoch",
           "offset": 0,
@@ -4058,6 +4545,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4083,10 +4571,14 @@
 =======
           "astId": 14089,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14129,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4112,10 +4604,14 @@
 =======
           "type": "t_array(t_struct(CrossMsg)14103_storage)dyn_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_array(t_struct(CrossMsg)14143_storage)dyn_storage"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4156,10 +4652,14 @@
 =======
     "t_struct(Validator)14346_storage": {
 >>>>>>> 1aa4c46 (make compile)
+=======
+    "t_struct(Validator)14386_storage": {
+>>>>>>> c7070cd (add join leave)
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4185,6 +4685,9 @@
 =======
           "astId": 14342,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14382,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "weight",
           "offset": 0,
@@ -4192,6 +4695,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4217,10 +4721,14 @@
 =======
           "astId": 14345,
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "astId": 14385,
+>>>>>>> c7070cd (add join leave)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addr",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4246,6 +4754,9 @@
 =======
           "type": "t_struct(FvmAddress)14182_storage"
 >>>>>>> 1aa4c46 (make compile)
+=======
+          "type": "t_struct(FvmAddress)14222_storage"
+>>>>>>> c7070cd (add join leave)
         }
       ],
       "numberOfBytes": "96"
