@@ -5,7 +5,7 @@ import {ConsensusType} from "../enums/ConsensusType.sol";
 import {Status} from "../enums/Status.sol";
 import {NotGateway, SubnetAlreadyKilled} from "../errors/IPCErrors.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {BottomUpCheckpoint} from "../structs/checkpoint.sol";
+import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {SubnetID, ValidatorSet, StakingChangeSet, StakingReleaseQueue} from "../structs/Subnet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";

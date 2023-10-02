@@ -175,7 +175,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert WrongCheckpointSource();
         }
 
-        _commitCheckpoint({checkpoint: checkpoint, membershipRootHash: membershipRootHash, membershipWeight: membershipWeight});
+        _commitCheckpoint({
+            checkpoint: checkpoint,
+            membershipRootHash: membershipRootHash,
+            membershipWeight: membershipWeight
+        });
     }
 
     /// @notice method that commits a checkpoint after reaching majority

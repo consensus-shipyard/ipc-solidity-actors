@@ -65,8 +65,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             checkpoint.blockHeight = nextCheckEpoch;
         }
 
-        CrossMsg[] memory messages= s.bottomUpMessages[commit.blockHeight];
-
+        CrossMsg[] memory messages = s.bottomUpMessages[commit.blockHeight];
 
         uint256 totalValue = 0;
         uint256 crossMsgLength = messages.length;

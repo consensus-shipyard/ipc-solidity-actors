@@ -184,9 +184,9 @@ contract SubnetActorGetterFacet {
     /// @return checkpoint - the checkpoint struct
     function bottomUpCheckpointAtEpoch(
         uint64 epoch
-    ) public view returns (bool, BottomUpCheckpoint memory) {
-        BottomUpCheckpoint memory checkpoint = s.committedCheckpoints[epoch];
-        bool exists = !checkpoint.subnetID.isEmpty();
+    ) public view returns (bool exists, BottomUpCheckpoint memory checkpoint) {
+        checkpoint = s.committedCheckpoints[epoch];
+        exists = !checkpoint.subnetID.isEmpty();
         return (exists, checkpoint);
     }
 
