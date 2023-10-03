@@ -40,47 +40,15 @@ library MultisignatureChecker {
     }
 
     /**
-     * @dev Checks if a multi-signature is valid for a given message hash, set of signatories, and set of signatures.
-     * Signatures are validated using `ECDSA.recover`.
-     */
-    function isValidMultiSignature(
-        address[] memory signatories,
-        bytes32 hash,
-        bytes memory signatures
-    ) internal pure returns (bool, Error) {
-        bool valid = true;
-
-        uint256 signaturesNumber = countSignatures(signatures);
-        if (signaturesNumber == 0) {
-            return (!valid, Error.InvalidSignaturesBytes);
-        }
-        if (signaturesNumber != signatories.length) {
-            return (!valid, Error.InvalidArrayLength);
-        }
-
-        uint8 v;
-        bytes32 r;
-        bytes32 s;
-
-        for (uint256 i = 0; i < signaturesNumber; ) {
-            (v, r, s) = parseSignature(signatures, i);
-            (address recovered, ECDSA.RecoverError ecdsaErr, ) = ECDSA.tryRecover({hash: hash, v: v, r: r, s: s});
-            if (ecdsaErr != ECDSA.RecoverError.NoError) {
-                return (!valid, Error.InvalidSignature);
-            }
-            if (recovered != signatories[i]) {
-                return (!valid, Error.InvalidSigner);
-            }
-            unchecked {
-                ++i;
-            }
-        }
-        return (valid, Error.Nil);
-    }
-
-    /**
-     * @dev Checks if a weighted multi-signature is valid for a given message hash, set of signatories, set of weights, and set of signatures.
-     * Signatures are validated using `ECDSA.recover`. The multi-signature fails if the sum of the weights is less than the threshold.
+     * @notice Checks if a weighted multi-signature is valid for a given message hash, set of signatories, set of weights, and set of signatures.
+     * @dev Signatures are validated using `ECDSA.recover`.
+     *      The multi-signature fails if the sum of the signatory weights is less than the threshold.
+     *      Signatories in `signatories` and  signatures in `signatures` must have the same order.
+     * @param signatories The addresses of the signatories.
+     * @param weights The weights of the signatories.
+     * @param threshold The number that must be reach to consider `signatures` valid.
+     * @param hash of the verified data.
+     * @param signatures Packed signatures. Each signature is in `({bytes32 r}{bytes32 s}{uint8 v})` format.
      */
     function isValidWeightedMultiSignature(
         address[] memory signatories,

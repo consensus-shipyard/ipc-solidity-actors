@@ -267,7 +267,13 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         LibStaking.claimCollateral(msg.sender);
     }
 
-    /// @notice Checks whether the checkpoint is valid for the provided signatories, signatures and hash. Reverts otherwise.
+    /**
+     * @notice Checks whether the checkpoint is valid for the provided signatories, signatures and hash. Reverts otherwise.
+     * @dev Signatories in `signatories` and their signatures in `signatures` must be provided in the same order.
+     * @param signatories The addresses of the signatories.
+     * @param hash The hash of the checkpoint.
+     * @param signatures The packed signatures of the checkpoint.
+     */
     function validateCheckpoint(address[] memory signatories, bytes32 hash, bytes memory signatures) external view {
         uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
 
