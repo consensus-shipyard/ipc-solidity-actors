@@ -189,7 +189,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
         bytes32 checkpointHash = keccak256(abi.encode(checkpoint));
 
-        validateCheckpoint({signatories: signatories, checkpointHash: checkpointHash, signatures: signatures});
+        validateCheckpoint({signatories: signatories, hash: checkpointHash, signatures: signatures});
 
         _commitBottomUpCheckpoint({checkpoint: checkpoint});
     }
