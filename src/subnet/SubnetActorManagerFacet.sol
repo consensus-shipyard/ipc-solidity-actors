@@ -2,10 +2,10 @@
 pragma solidity 0.8.19;
 
 import {Status} from "../enums/Status.sol";
-import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint, InvalidSignatureErr} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint, InvalidSignatureErr, InvalidCheckpointMessagesHash, InvalidCheckpointEpoch, HeightAlreadyExecuted} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID, Validator, ValidatorSet} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
@@ -158,47 +158,50 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.validatorWorkerAddresses[validator] = newWorkerAddr;
     }
 
-    /// @notice methods that allows a validator to submit a checkpoint (batch of messages) and vote for it with it's own voting power.
-    /// @param checkpoint - the batch messages data
-    /// @param membershipRootHash - a root hash of the Merkle tree built from the validator public keys and their weight
-    /// @param membershipWeight - the total weight of the membership
+    /// @notice Executes the checkpoint if it is valid.
+    /// @param signatories The addresses of the signatories.
+    /// @param checkpoint The executed bottom-up checkpoint
+    /// @param signatures The collected checkpoint signatures
+    /// @param messages The list of executed cross-messages
     function submitCheckpoint(
+        address[] calldata signatories,
         BottomUpCheckpoint calldata checkpoint,
-        bytes32 membershipRootHash,
-        uint256 membershipWeight
+        bytes calldata signatures,
+        CrossMsg[] calldata messages
     ) external {
+        if (checkpoint.blockHeight <= s.lastBottomUpCheckpointExecutedHeight) {
+            revert HeightAlreadyExecuted();
+        }
+        if (checkpoint.blockHeight % s.bottomUpCheckPeriod != 0) {
+            revert InvalidCheckpointEpoch();
+        }
         if (s.status != Status.Active) {
             revert SubnetNotActive();
         }
-        if (!s.validators.contains(msg.sender)) {
+        if (!s.validatorSet.isActiveValidator(msg.sender)) {
             revert NotValidator();
         }
-        if (checkpoint.subnetID.toHash() != s.currentSubnetHash) {
-            revert WrongCheckpointSource();
+
+        bytes32 msgHash = keccak256(abi.encode(messages));
+        if (msgHash != checkpoint.crossMessagesHash) {
+            revert InvalidCheckpointMessagesHash();
         }
 
-        _commitCheckpoint({
-            checkpoint: checkpoint,
-            membershipRootHash: membershipRootHash,
-            membershipWeight: membershipWeight
-        });
+        bytes32 checkpointHash = keccak256(abi.encode(checkpoint));
+
+        validateCheckpoint({signatories: signatories, checkpointHash: checkpointHash, signatures: signatures});
+
+        _commitBottomUpCheckpoint({checkpoint: checkpoint});
     }
 
-    /// @notice method that commits a checkpoint after reaching majority
+    /// @notice method that commits a checkpoint after its validation and reaching majority
     /// @param checkpoint - the batch messages data
-    function _commitCheckpoint(
-        BottomUpCheckpoint calldata checkpoint,
-        bytes32 membershipRootHash,
-        uint256 membershipWeight
-    ) internal {
+    function _commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint) internal {
         s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
+        // TODO: remove this line and prevExecutedCheckpointHash ?
         s.prevExecutedCheckpointHash = checkpoint.toHash();
 
-        IGateway(s.ipcGatewayAddr).createBottomUpCheckpoint({
-            checkpoint: checkpoint,
-            membershipRootHash: membershipRootHash,
-            membershipWeight: membershipWeight
-        });
+        IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint);
     }
 
     /// @notice Get the information of a validator
@@ -274,7 +277,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
      * @param hash The hash of the checkpoint.
      * @param signatures The packed signatures of the checkpoint.
      */
-    function validateCheckpoint(address[] memory signatories, bytes32 hash, bytes memory signatures) external view {
+    // TODO: should it be public or internal?
+    function validateCheckpoint(address[] memory signatories, bytes32 hash, bytes memory signatures) public view {
         uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
 
         uint256 threshold = (s.validatorSet.totalConfirmedCollateral * s.majorityPercentage) / 100;
