@@ -594,9 +594,9 @@ contract SubnetActorDiamondTest is Test {
         uint64 _checkPeriod,
         uint8 _majorityPercentage
     ) public {
-        SubnetID memory _parentId = DEFAULT_NETWORK_NAME;
+        SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
 
-        saManager = new SubnetActorManagerFacet();
+        saManager = new SubnetManagerTestUtil();
         saGetter = new SubnetActorGetterFacet();
 
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](2);
@@ -631,7 +631,7 @@ contract SubnetActorDiamondTest is Test {
             })
         );
 
-        saManager = SubnetActorManagerFacet(address(saDiamond));
+        saManager = SubnetManagerTestUtil(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
 
         require(
