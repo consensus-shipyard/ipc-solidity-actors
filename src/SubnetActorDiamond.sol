@@ -57,6 +57,9 @@ contract SubnetActorDiamond {
         s.status = Status.Instantiated;
         s.majorityPercentage = params.majorityPercentage;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
+
+        // 100 is the max supported now
+        s.validatorSet.activeLimit = 100;
     }
 
     function _fallback() internal {
