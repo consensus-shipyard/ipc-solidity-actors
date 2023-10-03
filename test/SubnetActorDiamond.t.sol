@@ -176,7 +176,7 @@ contract SubnetActorDiamondTest is Test {
         vm.startPrank(validator);
         vm.deal(validator, collateral);
 
-        saManager.join(metadata);
+        saManager.join{value: collateral}(metadata);
 
         // collateral not confirmed yet
         Validator memory v = saGetter.getValidator(validator);
@@ -190,7 +190,7 @@ contract SubnetActorDiamondTest is Test {
 
         // ======== Step 2. Stake more ======
         vm.deal(validator, 10);
-        saManager.stake();
+        saManager.stake{value: 10}();
 
         collateral += 10;
         v = saGetter.getValidator(validator);
@@ -225,7 +225,6 @@ contract SubnetActorDiamondTest is Test {
 
         // ======== Step 5. Leave ======
         vm.startPrank(validator);
-        vm.deal(validator, 0);
 
         saManager.leave();
 
