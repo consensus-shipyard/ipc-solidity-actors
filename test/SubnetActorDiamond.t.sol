@@ -101,8 +101,8 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function ensureBytesEqual(bytes memory _a, bytes memory _b) internal pure {
-        require(_a.length != _b.length, "bytes len not equal");
-        require(keccak256(_a) != keccak256(_b), "bytes not equal");
+        require(_a.length == _b.length, "bytes len not equal");
+        require(keccak256(_a) == keccak256(_b), "bytes not equal");
     }
 
     function testSubnetActorDiamond_Deployment_Works(
@@ -172,7 +172,7 @@ contract SubnetActorDiamondTest is Test {
 
         bytes memory metadata = new bytes(10);
 
-        // ======== Step 1. Join ======
+        // ======== Step. Join ======
         vm.startPrank(validator);
         vm.deal(validator, collateral);
 
@@ -188,20 +188,7 @@ contract SubnetActorDiamondTest is Test {
         require(nextConfigNum == 1, "next config num not 1");
         require(startConfigNum == 0, "start config num not 0");
 
-        // ======== Step 2. Stake more ======
-        vm.deal(validator, 10);
-        saManager.stake{value: 10}();
-
-        collateral += 10;
-        v = saGetter.getValidator(validator);
-        require(v.totalCollateral == collateral, "total collateral not expected after stake");
-        require(v.confirmedCollateral == 0, "confirmed collateral not 0 after stake");
-
-        (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
-        require(nextConfigNum == 2, "next config num not 2 after stake");
-        require(startConfigNum == 0, "start config num not 0 after stake");
-
-        // ======== Step 3. Confirm join operation ======
+        // ======== Step. Confirm join operation ======
         saManager.confirmChange(0);
 
         v = saGetter.getValidator(validator);
@@ -209,10 +196,25 @@ contract SubnetActorDiamondTest is Test {
         require(v.confirmedCollateral == DEFAULT_MIN_VALIDATOR_STAKE, "confirmed collateral not expected after confrim join");
         
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
-        require(nextConfigNum == 2, "next config num not 2 after confirm join");
+        require(nextConfigNum == 1, "next config num not 1 after confirm join");
         require(startConfigNum == 1, "start config num not 1 after confirm join");
 
-        // ======== Step 4. Confirm stake operation ======
+        // ======== Step. Stake more ======
+        vm.startPrank(validator);
+        vm.deal(validator, 10);
+
+        saManager.stake{value: 10}();
+
+        collateral += 10;
+        v = saGetter.getValidator(validator);
+        require(v.totalCollateral == collateral, "total collateral not expected after stake");
+        require(v.confirmedCollateral == DEFAULT_MIN_VALIDATOR_STAKE, "confirmed collateral not 0 after stake");
+
+        (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
+        require(nextConfigNum == 2, "next config num not 2 after stake");
+        require(startConfigNum == 1, "start config num not 1 after stake");
+
+        // ======== Step. Confirm stake operation ======
         saManager.confirmChange(1);
 
         v = saGetter.getValidator(validator);
@@ -223,7 +225,7 @@ contract SubnetActorDiamondTest is Test {
         require(nextConfigNum == 2, "next config num not 2 after confirm stake");
         require(startConfigNum == 2, "start config num not 2 after confirm stake");
 
-        // ======== Step 5. Leave ======
+        // ======== Step. Leave ======
         vm.startPrank(validator);
 
         saManager.leave();
@@ -236,7 +238,7 @@ contract SubnetActorDiamondTest is Test {
         require(nextConfigNum == 3, "next config num not 3 after confirm leave");
         require(startConfigNum == 2, "start config num not 2 after confirm leave");
 
-        // ======== Step 6. Confirm leave ======
+        // ======== Step. Confirm leave ======
         saManager.confirmChange(2);
 
         v = saGetter.getValidator(validator);

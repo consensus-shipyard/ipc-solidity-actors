@@ -19,6 +19,12 @@ library LibStakingChangeSet {
         uint64 configurationNumber = changes.nextConfigurationNumber;
         changes.nextConfigurationNumber = configurationNumber + 1;
 
+        changes.changes[configurationNumber] = StakingChange({
+            op: StakingOperation.Withdraw,
+            validator: validator,
+            amount: amount
+        });
+
         emit NewStakingRequest({
             op: StakingOperation.Withdraw,
             validator: validator,
@@ -31,6 +37,12 @@ library LibStakingChangeSet {
     function depositRequest(StakingChangeSet storage changes, address validator, uint256 amount) internal {
         uint64 configurationNumber = changes.nextConfigurationNumber;
         changes.nextConfigurationNumber = configurationNumber + 1;
+
+        changes.changes[configurationNumber] = StakingChange({
+            op: StakingOperation.Deposit,
+            validator: validator,
+            amount: amount
+        });
 
         emit NewStakingRequest({
             op: StakingOperation.Deposit,
