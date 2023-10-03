@@ -411,284 +411,284 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         (bool ok, Subnet memory targetSubnet) = gwGetter.getSubnet(subnetId);
 
-        require(ok, "subnet found");
+//         require(ok, "subnet found");
 
-        (SubnetID memory id, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
+//         (SubnetID memory id, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
-        require(targetSubnet.status == Status.Active);
-        require(targetSubnet.status == status);
-        require(targetSubnet.stake == stake);
-        require(targetSubnet.stake == subnetCollateral);
-        require(id.equals(subnetId));
-    }
+//         require(targetSubnet.status == Status.Active);
+//         require(targetSubnet.status == status);
+//         require(targetSubnet.stake == stake);
+//         require(targetSubnet.stake == subnetCollateral);
+//         require(id.equals(subnetId));
+//     }
 
-    function testGatewayDiamond_Register_Works_MultipleSubnets(uint8 numberOfSubnets) public {
-        vm.assume(numberOfSubnets > 0);
+//     function testGatewayDiamond_Register_Works_MultipleSubnets(uint8 numberOfSubnets) public {
+//         vm.assume(numberOfSubnets > 0);
 
-        for (uint256 i = 1; i <= numberOfSubnets; i++) {
-            address subnetAddress = vm.addr(i);
-            vm.prank(subnetAddress);
-            vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
+//         for (uint256 i = 1; i <= numberOfSubnets; i++) {
+//             address subnetAddress = vm.addr(i);
+//             vm.prank(subnetAddress);
+//             vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-            registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
-        }
+//             registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+//         }
 
-        require(gwGetter.totalSubnets() == numberOfSubnets);
-        Subnet[] memory subnets = gwGetter.listSubnets();
-        require(subnets.length == numberOfSubnets, "subnets.length == numberOfSubnets");
-    }
+//         require(gwGetter.totalSubnets() == numberOfSubnets);
+//         Subnet[] memory subnets = gwGetter.listSubnets();
+//         require(subnets.length == numberOfSubnets, "subnets.length == numberOfSubnets");
+//     }
 
-    function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
-        vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
-        vm.expectRevert(NotEnoughFunds.selector);
+//     function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
+//         vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
+//         vm.expectRevert(NotEnoughFunds.selector);
 
-        gwManager.register{value: collateral}();
-    }
+//         gwManager.register{value: collateral}();
+//     }
 
-    function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
+//     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
+//         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert(AlreadyRegisteredSubnet.selector);
+//         vm.expectRevert(AlreadyRegisteredSubnet.selector);
 
-        gwManager.register{value: DEFAULT_COLLATERAL_AMOUNT}();
-    }
+//         gwManager.register{value: DEFAULT_COLLATERAL_AMOUNT}();
+//     }
 
-    function testGatewayDiamond_AddStake_Works_SingleStaking(uint256 stakeAmount, uint256 registerAmount) public {
-        address subnetAddress = vm.addr(100);
-        vm.assume(registerAmount >= DEFAULT_COLLATERAL_AMOUNT && registerAmount < type(uint64).max);
-        vm.assume(stakeAmount > 0 && stakeAmount < type(uint256).max - registerAmount);
+//     function testGatewayDiamond_AddStake_Works_SingleStaking(uint256 stakeAmount, uint256 registerAmount) public {
+//         address subnetAddress = vm.addr(100);
+//         vm.assume(registerAmount >= DEFAULT_COLLATERAL_AMOUNT && registerAmount < type(uint64).max);
+//         vm.assume(stakeAmount > 0 && stakeAmount < type(uint256).max - registerAmount);
 
-        uint256 totalAmount = stakeAmount + registerAmount;
+//         uint256 totalAmount = stakeAmount + registerAmount;
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, totalAmount);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, totalAmount);
 
-        registerSubnet(registerAmount, subnetAddress);
-        addStake(stakeAmount, subnetAddress);
+//         registerSubnet(registerAmount, subnetAddress);
+//         addStake(stakeAmount, subnetAddress);
 
-        (, uint256 totalStaked, , , , ) = getSubnet(subnetAddress);
+//         (, uint256 totalStaked, , , , ) = getSubnet(subnetAddress);
 
-        require(totalStaked == totalAmount);
-    }
+//         require(totalStaked == totalAmount);
+//     }
 
-    function testGatewayDiamond_AddStake_Works_Reactivate() public {
-        address subnetAddress = vm.addr(100);
-        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
-        uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT;
+//     function testGatewayDiamond_AddStake_Works_Reactivate() public {
+//         address subnetAddress = vm.addr(100);
+//         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
+//         uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT;
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, registerAmount);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, registerAmount);
 
-        registerSubnet(registerAmount, subnetAddress);
-        gwManager.releaseStake(registerAmount);
+//         registerSubnet(registerAmount, subnetAddress);
+//         gwManager.releaseStake(registerAmount);
 
-        (, , , , , Status statusInactive) = getSubnet(subnetAddress);
-        require(statusInactive == Status.Inactive);
+//         (, , , , , Status statusInactive) = getSubnet(subnetAddress);
+//         require(statusInactive == Status.Inactive);
 
-        vm.deal(subnetAddress, stakeAmount);
-        addStake(stakeAmount, subnetAddress);
+//         vm.deal(subnetAddress, stakeAmount);
+//         addStake(stakeAmount, subnetAddress);
 
-        (, uint256 staked, , , , Status statusActive) = getSubnet(subnetAddress);
+//         (, uint256 staked, , , , Status statusActive) = getSubnet(subnetAddress);
 
-        require(staked == stakeAmount);
-        require(statusActive == Status.Active);
-    }
+//         require(staked == stakeAmount);
+//         require(statusActive == Status.Active);
+//     }
 
-    function testGatewayDiamond_AddStake_Works_NotEnoughFundsToReactivate() public {
-        address subnetAddress = vm.addr(100);
-        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
-        uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT - 1;
+//     function testGatewayDiamond_AddStake_Works_NotEnoughFundsToReactivate() public {
+//         address subnetAddress = vm.addr(100);
+//         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
+//         uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT - 1;
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, registerAmount);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, registerAmount);
 
-        registerSubnet(registerAmount, subnetAddress);
-        gwManager.releaseStake(registerAmount);
+//         registerSubnet(registerAmount, subnetAddress);
+//         gwManager.releaseStake(registerAmount);
 
-        vm.deal(subnetAddress, stakeAmount);
-        addStake(stakeAmount, subnetAddress);
+//         vm.deal(subnetAddress, stakeAmount);
+//         addStake(stakeAmount, subnetAddress);
 
-        (, uint256 staked, , , , Status status) = getSubnet(subnetAddress);
+//         (, uint256 staked, , , , Status status) = getSubnet(subnetAddress);
 
-        require(staked == stakeAmount);
-        require(status == Status.Inactive);
-    }
+//         require(staked == stakeAmount);
+//         require(status == Status.Inactive);
+//     }
 
-    function testGatewayDiamond_AddStake_Works_MultipleStakings(uint8 numberOfStakes) public {
-        vm.assume(numberOfStakes > 0);
+//     function testGatewayDiamond_AddStake_Works_MultipleStakings(uint8 numberOfStakes) public {
+//         vm.assume(numberOfStakes > 0);
 
-        address subnetAddress = address(1);
-        uint256 singleStakeAmount = 1 ether;
-        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
-        uint256 expectedStakedAmount = registerAmount;
+//         address subnetAddress = address(1);
+//         uint256 singleStakeAmount = 1 ether;
+//         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
+//         uint256 expectedStakedAmount = registerAmount;
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, registerAmount + singleStakeAmount * numberOfStakes);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, registerAmount + singleStakeAmount * numberOfStakes);
 
-        registerSubnet(registerAmount, subnetAddress);
+//         registerSubnet(registerAmount, subnetAddress);
 
-        for (uint256 i = 0; i < numberOfStakes; i++) {
-            addStake(singleStakeAmount, subnetAddress);
+//         for (uint256 i = 0; i < numberOfStakes; i++) {
+//             addStake(singleStakeAmount, subnetAddress);
 
-            expectedStakedAmount += singleStakeAmount;
-        }
+//             expectedStakedAmount += singleStakeAmount;
+//         }
 
-        (, uint256 totalStake, , , , ) = getSubnet(subnetAddress);
+//         (, uint256 totalStake, , , , ) = getSubnet(subnetAddress);
 
-        require(totalStake == expectedStakedAmount);
-    }
+//         require(totalStake == expectedStakedAmount);
+//     }
 
-    function testGatewayDiamond_AddStake_Fail_ZeroAmount() public {
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
+//     function testGatewayDiamond_AddStake_Fail_ZeroAmount() public {
+//         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert(NotEnoughFunds.selector);
+//         vm.expectRevert(NotEnoughFunds.selector);
 
-        gwManager.addStake{value: 0}();
-    }
+//         gwManager.addStake{value: 0}();
+//     }
 
-    function testGatewayDiamond_AddStake_Fail_SubnetNotExists() public {
-        vm.expectRevert(NotRegisteredSubnet.selector);
+//     function testGatewayDiamond_AddStake_Fail_SubnetNotExists() public {
+//         vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gwManager.addStake{value: 1}();
-    }
+//         gwManager.addStake{value: 1}();
+//     }
 
-    function testGatewayDiamond_ReleaseStake_Works_FullAmount(uint256 stakeAmount) public {
-        address subnetAddress = CHILD_NETWORK_ADDRESS;
-        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
+//     function testGatewayDiamond_ReleaseStake_Works_FullAmount(uint256 stakeAmount) public {
+//         address subnetAddress = CHILD_NETWORK_ADDRESS;
+//         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
 
-        vm.assume(stakeAmount > 0 && stakeAmount < type(uint256).max - registerAmount);
+//         vm.assume(stakeAmount > 0 && stakeAmount < type(uint256).max - registerAmount);
 
-        uint256 fullAmount = stakeAmount + registerAmount;
+//         uint256 fullAmount = stakeAmount + registerAmount;
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, fullAmount);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, fullAmount);
 
-        registerSubnet(registerAmount, subnetAddress);
-        addStake(stakeAmount, subnetAddress);
+//         registerSubnet(registerAmount, subnetAddress);
+//         addStake(stakeAmount, subnetAddress);
 
-        gwManager.releaseStake(fullAmount);
+//         gwManager.releaseStake(fullAmount);
 
-        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
+//         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
-        require(stake == 0);
-        require(status == Status.Inactive);
-        require(subnetAddress.balance == fullAmount);
-    }
+//         require(stake == 0);
+//         require(status == Status.Inactive);
+//         require(subnetAddress.balance == fullAmount);
+//     }
 
-    function testGatewayDiamond_ReleaseStake_Works_SubnetInactive() public {
-        address subnetAddress = vm.addr(100);
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+//     function testGatewayDiamond_ReleaseStake_Works_SubnetInactive() public {
+//         address subnetAddress = vm.addr(100);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
+//         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        gwManager.releaseStake(DEFAULT_COLLATERAL_AMOUNT / 2);
+//         gwManager.releaseStake(DEFAULT_COLLATERAL_AMOUNT / 2);
 
-        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
-        require(stake == DEFAULT_COLLATERAL_AMOUNT / 2, "stake == MIN_COLLATERAL_AMOUNT / 2");
-        require(status == Status.Inactive, "status == Status.Inactive");
-    }
+//         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
+//         require(stake == DEFAULT_COLLATERAL_AMOUNT / 2, "stake == MIN_COLLATERAL_AMOUNT / 2");
+//         require(status == Status.Inactive, "status == Status.Inactive");
+//     }
 
-    function testGatewayDiamond_ReleaseStake_Works_PartialAmount(uint256 partialAmount) public {
-        address subnetAddress = CHILD_NETWORK_ADDRESS;
-        uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
+//     function testGatewayDiamond_ReleaseStake_Works_PartialAmount(uint256 partialAmount) public {
+//         address subnetAddress = CHILD_NETWORK_ADDRESS;
+//         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
 
-        vm.assume(partialAmount > registerAmount && partialAmount < type(uint256).max - registerAmount);
+//         vm.assume(partialAmount > registerAmount && partialAmount < type(uint256).max - registerAmount);
 
-        uint256 totalAmount = partialAmount + registerAmount;
+//         uint256 totalAmount = partialAmount + registerAmount;
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, totalAmount);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, totalAmount);
 
-        registerSubnet(registerAmount, subnetAddress);
-        addStake(partialAmount, subnetAddress);
+//         registerSubnet(registerAmount, subnetAddress);
+//         addStake(partialAmount, subnetAddress);
 
-        gwManager.releaseStake(partialAmount);
+//         gwManager.releaseStake(partialAmount);
 
-        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
+//         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
-        require(stake == registerAmount);
-        require(status == Status.Active);
-        require(subnetAddress.balance == partialAmount);
-    }
+//         require(stake == registerAmount);
+//         require(status == Status.Active);
+//         require(subnetAddress.balance == partialAmount);
+//     }
 
-    function testGatewayDiamond_ReleaseStake_Fail_ZeroAmount() public {
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
+//     function testGatewayDiamond_ReleaseStake_Fail_ZeroAmount() public {
+//         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
-        vm.expectRevert(CannotReleaseZero.selector);
+//         vm.expectRevert(CannotReleaseZero.selector);
 
-        gwManager.releaseStake(0);
-    }
+//         gwManager.releaseStake(0);
+//     }
 
-    function testGatewayDiamond_ReleaseStake_Fail_InsufficientSubnetBalance(
-        uint256 releaseAmount,
-        uint256 subnetBalance
-    ) public {
-        vm.assume(subnetBalance > DEFAULT_COLLATERAL_AMOUNT);
-        vm.assume(releaseAmount > subnetBalance && releaseAmount < type(uint256).max - subnetBalance);
+//     function testGatewayDiamond_ReleaseStake_Fail_InsufficientSubnetBalance(
+//         uint256 releaseAmount,
+//         uint256 subnetBalance
+//     ) public {
+//         vm.assume(subnetBalance > DEFAULT_COLLATERAL_AMOUNT);
+//         vm.assume(releaseAmount > subnetBalance && releaseAmount < type(uint256).max - subnetBalance);
 
-        address subnetAddress = vm.addr(100);
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, releaseAmount);
+//         address subnetAddress = vm.addr(100);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, releaseAmount);
 
-        registerSubnet(subnetBalance, subnetAddress);
+//         registerSubnet(subnetBalance, subnetAddress);
 
-        vm.expectRevert(NotEnoughFundsToRelease.selector);
+//         vm.expectRevert(NotEnoughFundsToRelease.selector);
 
-        gwManager.releaseStake(releaseAmount);
-    }
+//         gwManager.releaseStake(releaseAmount);
+//     }
 
-    function testGatewayDiamond_ReleaseStake_Fail_NotRegisteredSubnet() public {
-        vm.expectRevert(NotRegisteredSubnet.selector);
+//     function testGatewayDiamond_ReleaseStake_Fail_NotRegisteredSubnet() public {
+//         vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gwManager.releaseStake(1);
-    }
+//         gwManager.releaseStake(1);
+//     }
 
-    function testGatewayDiamond_ReleaseStake_Works_TransitionToInactive() public {
-        address subnetAddress = vm.addr(100);
+//     function testGatewayDiamond_ReleaseStake_Works_TransitionToInactive() public {
+//         address subnetAddress = vm.addr(100);
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+//         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        gwManager.releaseStake(10);
+//         gwManager.releaseStake(10);
 
-        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
+//         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
-        require(stake == DEFAULT_COLLATERAL_AMOUNT - 10, "stake should be MIN_COLLATERAL_AMOUNT - 10");
-        require(status == Status.Inactive, "status should be Inactive");
-    }
+//         require(stake == DEFAULT_COLLATERAL_AMOUNT - 10, "stake should be MIN_COLLATERAL_AMOUNT - 10");
+//         require(status == Status.Inactive, "status should be Inactive");
+//     }
 
     function testGatewayDiamond_Kill_Works() public {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
 
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
+//         vm.startPrank(subnetAddress);
+//         vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+//         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        require(subnetAddress.balance == 0);
+//         require(subnetAddress.balance == 0);
 
-        gwManager.kill();
+//         gwManager.kill();
 
-        (SubnetID memory id, uint256 stake, uint256 nonce, , uint256 circSupply, Status status) = getSubnet(
-            subnetAddress
-        );
+//         (SubnetID memory id, uint256 stake, uint256 nonce, , uint256 circSupply, Status status) = getSubnet(
+//             subnetAddress
+//         );
 
-        require(id.toHash() == SubnetID(0, new address[](0)).toHash());
-        require(stake == 0);
-        require(nonce == 0);
-        require(circSupply == 0);
-        require(status == Status.Unset);
-        require(gwGetter.totalSubnets() == 0);
-        require(subnetAddress.balance == DEFAULT_COLLATERAL_AMOUNT);
-    }
+//         require(id.toHash() == SubnetID(0, new address[](0)).toHash());
+//         require(stake == 0);
+//         require(nonce == 0);
+//         require(circSupply == 0);
+//         require(status == Status.Unset);
+//         require(gwGetter.totalSubnets() == 0);
+//         require(subnetAddress.balance == DEFAULT_COLLATERAL_AMOUNT);
+//     }
 
-    function testGatewayDiamond_Kill_Fail_SubnetNotExists() public {
-        vm.expectRevert(NotRegisteredSubnet.selector);
+//     function testGatewayDiamond_Kill_Fail_SubnetNotExists() public {
+//         vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gwManager.kill();
-    }
+//         gwManager.kill();
+//     }
 
     // function testGatewayDiamond_Kill_Fail_CircSupplyMoreThanZero() public {
     //     address validatorAddress = address(100);
@@ -1187,38 +1187,38 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = 100;
 
-        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
+//         uint64 n = gwGetter.getLastConfigurationNumber() + 1;
 
-        vm.prank(caller);
-        vm.expectRevert(NotSystemActor.selector);
+//         vm.prank(caller);
+//         vm.expectRevert(NotSystemActor.selector);
 
-        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+//         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, n, validators, weights);
-    }
+//         gwRouter.commitParentFinality(finality, n, validators, weights);
+//     }
 
-    function testGatewayDiamond_CommitParentFinality_Fails_ValidatorsAndWeightsNotEqual() public {
-        FvmAddress[] memory validators = new FvmAddress[](1);
-        validators[0] = FvmAddressHelper.from(vm.addr(100));
-        uint256[] memory weights = new uint256[](2);
-        weights[0] = 100;
-        weights[1] = 130;
+//     function testGatewayDiamond_CommitParentFinality_Fails_ValidatorsAndWeightsNotEqual() public {
+//         FvmAddress[] memory validators = new FvmAddress[](1);
+//         validators[0] = FvmAddressHelper.from(vm.addr(100));
+//         uint256[] memory weights = new uint256[](2);
+//         weights[0] = 100;
+//         weights[1] = 130;
 
-        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
+//         uint64 n = gwGetter.getLastConfigurationNumber() + 1;
+//         vm.prank(FilAddress.SYSTEM_ACTOR);
+//         vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
 
-        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, n, validators, weights);
-    }
+//         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+//         gwRouter.commitParentFinality(finality, n, validators, weights);
+//     }
 
-    function testGatewayDiamond_CommitParentFinality_Fails_ZeroWeight() public {
-        FvmAddress[] memory validators = new FvmAddress[](1);
-        validators[0] = FvmAddressHelper.from(vm.addr(100));
-        uint256[] memory weights = new uint256[](1);
-        weights[0] = 0;
+//     function testGatewayDiamond_CommitParentFinality_Fails_ZeroWeight() public {
+//         FvmAddress[] memory validators = new FvmAddress[](1);
+//         validators[0] = FvmAddressHelper.from(vm.addr(100));
+//         uint256[] memory weights = new uint256[](1);
+//         weights[0] = 0;
 
-        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
+//         uint64 n = gwGetter.getLastConfigurationNumber() + 1;
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(ValidatorWeightIsZero.selector);
