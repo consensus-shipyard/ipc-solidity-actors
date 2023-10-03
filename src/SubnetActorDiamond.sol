@@ -25,7 +25,6 @@ contract SubnetActorDiamond {
         uint256 minActivationCollateral;
         uint64 minValidators;
         uint64 bottomUpCheckPeriod;
-        uint64 topDownCheckPeriod;
         uint8 majorityPercentage;
     }
 
@@ -54,7 +53,6 @@ contract SubnetActorDiamond {
         s.consensus = params.consensus;
         s.minActivationCollateral = params.minActivationCollateral;
         s.minValidators = params.minValidators;
-        s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.status = Status.Instantiated;
         s.majorityPercentage = params.majorityPercentage;

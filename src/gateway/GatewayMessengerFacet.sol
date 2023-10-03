@@ -140,7 +140,10 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         }
 
         if (shouldDistributeRewards) {
-            LibGateway.distributeRewards(toSubnetId.getActor(), s.crossMsgFee);
+            // currently do nothing.
+
+            // silent warning
+            toSubnetId;
         }
     }
 }
