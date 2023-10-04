@@ -165,6 +165,7 @@ contract SignerTest is StdInvariant, Test {
             weights[i] = 10;
         }
 
+        // use invalid keys
         signers[0] = vm.addr(PRIVATE_KEY_BASE + 1);
         signers[1] = vm.addr(PRIVATE_KEY_BASE);
 
@@ -223,6 +224,7 @@ contract SignerTest is StdInvariant, Test {
         }
         weights[0] = 1;
 
+        // use invalid keys
         signers[0] = vm.addr(PRIVATE_KEY_BASE + 1);
         signers[1] = vm.addr(PRIVATE_KEY_BASE);
 
