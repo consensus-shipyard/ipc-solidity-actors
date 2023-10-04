@@ -22,6 +22,10 @@ interface ISubnetActor {
     function reward(uint256 amount) external;
 
     /// Executes the checkpoint if it is valid.
+    /// It triggers the commitment of the checkpoint, 
+    /// the execution of related cross-net messages, 
+    /// and any other side-effects that need to be triggered
+    /// by the checkpoint
     function submitCheckpoint(
         address[] calldata signatories,
         BottomUpCheckpoint calldata checkpoint,
