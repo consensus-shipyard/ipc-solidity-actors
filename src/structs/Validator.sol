@@ -3,7 +3,6 @@ pragma solidity 0.8.19;
 
 import {FvmAddress} from "../structs/FvmAddress.sol";
 
-
 struct Validator {
     uint256 weight;
     FvmAddress addr;

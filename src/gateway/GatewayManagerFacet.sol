@@ -122,8 +122,6 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
 
         // commit top-down message.
         LibGateway.commitTopDownMsg(crossMsg);
-
-        // Comment off first: LibGateway.distributeRewards(subnetId.getActor(), s.crossMsgFee);
     }
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds

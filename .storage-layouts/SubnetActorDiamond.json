@@ -12,6 +12,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "type": "t_struct(SubnetActorStorage)12018_storage"
 =======
       "type": "t_struct(SubnetActorStorage)11441_storage"
@@ -57,6 +58,9 @@
       "type": "t_struct(SubnetActorStorage)11821_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "type": "t_struct(SubnetActorStorage)11786_storage"
+>>>>>>> 54a8fa7 (update storage)
     }
   ],
   "types": {
@@ -81,6 +85,7 @@
       "label": "bytes",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -132,10 +137,14 @@
     "t_enum(ConsensusType)4974": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_enum(ConsensusType)4974": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "enum ConsensusType",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -187,10 +196,14 @@
     "t_enum(StakingOperation)14122": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_enum(StakingOperation)14087": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "enum StakingOperation",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -242,10 +255,14 @@
     "t_enum(Status)4988": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_enum(Status)4988": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -313,10 +330,14 @@
     "t_mapping(t_address,t_struct(AddressStakingReleases)14160_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_mapping(t_address,t_struct(AddressStakingReleases)14125_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct AddressStakingReleases)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -400,10 +421,16 @@
     "t_mapping(t_address,t_struct(Validator)14178_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(AddressStakingReleases)14125_storage"
+    },
+    "t_mapping(t_address,t_struct(Validator)14143_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -455,6 +482,9 @@
       "value": "t_struct(Validator)14178_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(Validator)14143_storage"
+>>>>>>> 54a8fa7 (update storage)
     },
     "t_mapping(t_address,t_uint16)": {
       "encoding": "mapping",
@@ -470,6 +500,7 @@
       "numberOfBytes": "32",
       "value": "t_address"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -521,10 +552,14 @@
     "t_mapping(t_uint16,t_struct(StakingRelease)14150_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_mapping(t_uint16,t_struct(StakingRelease)14115_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint16",
       "label": "mapping(uint16 => struct StakingRelease)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -594,10 +629,16 @@
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14011_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(StakingRelease)14115_storage"
+    },
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13976_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -667,10 +708,16 @@
     "t_mapping(t_uint64,t_struct(StakingChange)14130_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13976_storage"
+    },
+    "t_mapping(t_uint64,t_struct(StakingChange)14095_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct StakingChange)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -780,10 +827,16 @@
     "t_struct(AddressStakingReleases)14160_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(StakingChange)14095_storage"
+    },
+    "t_struct(AddressStakingReleases)14125_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct AddressStakingReleases",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -835,6 +888,9 @@
           "astId": 14152,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14117,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "length",
           "offset": 0,
@@ -842,6 +898,7 @@
           "type": "t_uint16"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -893,6 +950,9 @@
           "astId": 14154,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14119,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startIdx",
           "offset": 2,
@@ -900,6 +960,7 @@
           "type": "t_uint16"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -951,10 +1012,14 @@
           "astId": 14159,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14124,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1006,10 +1071,14 @@
           "type": "t_mapping(t_uint16,t_struct(StakingRelease)14150_storage)"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14115_storage)"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1061,10 +1130,14 @@
     "t_struct(BottomUpCheckpoint)14011_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(BottomUpCheckpoint)13976_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1116,10 +1189,14 @@
           "astId": 13998,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13963,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1196,6 +1273,12 @@
           "astId": 14001,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(SubnetID)14064_storage"
+        },
+        {
+          "astId": 13966,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "blockHeight",
           "offset": 0,
@@ -1203,6 +1286,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1254,6 +1338,9 @@
           "astId": 14004,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13969,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "blockHash",
           "offset": 0,
@@ -1261,6 +1348,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1312,6 +1400,9 @@
           "astId": 14007,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13972,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -1319,6 +1410,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1370,6 +1462,9 @@
           "astId": 14010,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13975,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -1379,6 +1474,7 @@
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1478,10 +1574,14 @@
     "t_struct(MaxPQ)12579_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(MaxPQ)12544_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct MaxPQ",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1533,10 +1633,14 @@
           "astId": 12578,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 12543,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "inner",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1588,10 +1692,14 @@
           "type": "t_struct(PQ)13782_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(PQ)13747_storage"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1643,10 +1751,14 @@
     "t_struct(MinPQ)13175_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(MinPQ)13140_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct MinPQ",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1698,10 +1810,14 @@
           "astId": 13174,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13139,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "inner",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1753,10 +1869,14 @@
           "type": "t_struct(PQ)13782_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(PQ)13747_storage"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1808,10 +1928,14 @@
     "t_struct(PQ)13782_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(PQ)13747_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct PQ",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1863,6 +1987,9 @@
           "astId": 13771,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13736,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "size",
           "offset": 0,
@@ -1870,6 +1997,7 @@
           "type": "t_uint16"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1921,6 +2049,9 @@
           "astId": 13776,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13741,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "addressToPos",
           "offset": 0,
@@ -1928,6 +2059,7 @@
           "type": "t_mapping(t_address,t_uint16)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1979,6 +2111,9 @@
           "astId": 13781,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13746,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "posToAddress",
           "offset": 0,
@@ -1988,6 +2123,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2087,10 +2223,14 @@
     "t_struct(StakingChange)14130_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(StakingChange)14095_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct StakingChange",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2142,10 +2282,14 @@
           "astId": 14125,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14090,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "op",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2222,6 +2366,12 @@
           "astId": 14127,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_enum(StakingOperation)14087"
+        },
+        {
+          "astId": 14092,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -2229,6 +2379,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2280,6 +2431,9 @@
           "astId": 14129,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14094,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validator",
           "offset": 0,
@@ -2289,6 +2443,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2340,10 +2495,14 @@
     "t_struct(StakingChangeSet)14143_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(StakingChangeSet)14108_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct StakingChangeSet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2395,6 +2554,9 @@
           "astId": 14133,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14098,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -2402,6 +2564,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2453,6 +2616,9 @@
           "astId": 14136,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14101,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startConfigurationNumber",
           "offset": 8,
@@ -2460,6 +2626,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2511,10 +2678,14 @@
           "astId": 14142,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14107,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "changes",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2566,10 +2737,14 @@
           "type": "t_mapping(t_uint64,t_struct(StakingChange)14130_storage)"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_uint64,t_struct(StakingChange)14095_storage)"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2621,10 +2796,14 @@
     "t_struct(StakingRelease)14150_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(StakingRelease)14115_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct StakingRelease",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2676,6 +2855,9 @@
           "astId": 14146,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14111,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releaseAt",
           "offset": 0,
@@ -2683,6 +2865,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2734,6 +2917,9 @@
           "astId": 14149,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14114,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -2743,6 +2929,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2794,10 +2981,14 @@
     "t_struct(StakingReleaseQueue)14170_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(StakingReleaseQueue)14135_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct StakingReleaseQueue",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2849,6 +3040,9 @@
           "astId": 14163,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14128,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "lockingDuration",
           "offset": 0,
@@ -2856,6 +3050,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2907,10 +3102,14 @@
           "astId": 14169,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14134,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2962,10 +3161,14 @@
           "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14160_storage)"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14125_storage)"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3017,10 +3220,14 @@
     "t_struct(SubnetActorStorage)11821_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(SubnetActorStorage)11786_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3089,19 +3296,26 @@
           "astId": 11932,
 >>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
 >>>>>>> aeeec22 (Multi-signature ECDSA (#192))
+=======
+          "astId": 11732,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "committedCheckpoints",
           "offset": 0,
           "slot": "0",
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13976_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11393,
 >>>>>>> b69807a (clean up unused fields)
 =======
           "astId": 11445,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11735,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "genesis",
           "offset": 0,
@@ -3111,6 +3325,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11960,
 =======
           "astId": 11396,
@@ -3118,6 +3333,9 @@
 =======
           "astId": 11448,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11738,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalStake",
           "offset": 0,
@@ -3127,6 +3345,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11963,
 =======
           "astId": 11399,
@@ -3134,6 +3353,9 @@
 =======
           "astId": 11451,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11741,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minActivationCollateral",
           "offset": 0,
@@ -3141,6 +3363,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11966,
@@ -3166,6 +3389,9 @@
 =======
           "astId": 11454,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11744,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "bottomUpCheckPeriod",
           "offset": 0,
@@ -3175,6 +3401,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11975,
 =======
           "astId": 11405,
@@ -3182,6 +3409,9 @@
 =======
           "astId": 11457,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11747,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "minValidators",
           "offset": 8,
@@ -3191,6 +3421,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11978,
 =======
           "astId": 11408,
@@ -3198,6 +3429,9 @@
 =======
           "astId": 11460,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11750,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "name",
           "offset": 0,
@@ -3207,6 +3441,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11980,
 =======
           "astId": 11410,
@@ -3214,6 +3449,9 @@
 =======
           "astId": 11462,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11752,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "currentSubnetHash",
           "offset": 0,
@@ -3223,6 +3461,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11983,
 =======
           "astId": 11413,
@@ -3230,6 +3469,9 @@
 =======
           "astId": 11465,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11755,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "prevExecutedCheckpointHash",
           "offset": 0,
@@ -3239,6 +3481,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 11986,
 =======
           "astId": 11416,
@@ -3246,6 +3489,9 @@
 =======
           "astId": 11468,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11758,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "ipcGatewayAddr",
           "offset": 0,
@@ -3253,6 +3499,7 @@
           "type": "t_address"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11989,
@@ -3495,6 +3742,9 @@
         },
         {
           "astId": 11796,
+=======
+          "astId": 11761,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "majorityPercentage",
           "offset": 20,
@@ -3502,10 +3752,11 @@
           "type": "t_uint8"
         },
         {
-          "astId": 11800,
+          "astId": 11765,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "status",
           "offset": 21,
+<<<<<<< HEAD
 <<<<<<< HEAD
           "slot": "12",
           "type": "t_enum(Status)4989"
@@ -3566,19 +3817,21 @@
 =======
 =======
 >>>>>>> 4b17388 (update storage)
+=======
+>>>>>>> 54a8fa7 (update storage)
           "slot": "8",
           "type": "t_enum(Status)4988"
         },
         {
-          "astId": 11804,
+          "astId": 11769,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "parentId",
           "offset": 0,
           "slot": "9",
-          "type": "t_struct(SubnetID)14099_storage"
+          "type": "t_struct(SubnetID)14064_storage"
         },
         {
-          "astId": 11808,
+          "astId": 11773,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "consensus",
           "offset": 0,
@@ -3586,27 +3839,28 @@
           "type": "t_enum(ConsensusType)4974"
         },
         {
-          "astId": 11812,
+          "astId": 11777,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validatorSet",
           "offset": 0,
           "slot": "12",
-          "type": "t_struct(ValidatorSet)14199_storage"
+          "type": "t_struct(ValidatorSet)14164_storage"
         },
         {
-          "astId": 11816,
+          "astId": 11781,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "changeSet",
           "offset": 0,
           "slot": "21",
-          "type": "t_struct(StakingChangeSet)14143_storage"
+          "type": "t_struct(StakingChangeSet)14108_storage"
         },
         {
-          "astId": 11820,
+          "astId": 11785,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releaseQueue",
           "offset": 0,
           "slot": "23",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(StakingReleaseQueue)13790_storage"
@@ -3628,10 +3882,14 @@
           "type": "t_struct(StakingReleaseQueue)14170_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(StakingReleaseQueue)14135_storage"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "800"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3683,10 +3941,14 @@
     "t_struct(SubnetID)14099_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(SubnetID)14064_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3738,6 +4000,9 @@
           "astId": 14094,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14059,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "root",
           "offset": 0,
@@ -3745,6 +4010,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3796,6 +4062,9 @@
           "astId": 14098,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14063,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "route",
           "offset": 0,
@@ -3805,6 +4074,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3856,10 +4126,14 @@
     "t_struct(Validator)14178_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(Validator)14143_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3911,6 +4185,9 @@
           "astId": 14172,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14137,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "confirmedCollateral",
           "offset": 0,
@@ -3918,6 +4195,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3969,6 +4247,9 @@
           "astId": 14174,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14139,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalCollateral",
           "offset": 0,
@@ -3976,6 +4257,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4027,6 +4309,9 @@
           "astId": 14177,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14142,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "metadata",
           "offset": 0,
@@ -4036,6 +4321,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4087,10 +4373,14 @@
     "t_struct(ValidatorSet)14199_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(ValidatorSet)14164_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct ValidatorSet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4142,6 +4432,9 @@
           "astId": 14181,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14146,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "activeLimit",
           "offset": 0,
@@ -4149,6 +4442,7 @@
           "type": "t_uint16"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4200,6 +4494,9 @@
           "astId": 14184,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14149,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalConfirmedCollateral",
           "offset": 0,
@@ -4207,6 +4504,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4258,10 +4556,14 @@
           "astId": 14190,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14155,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validators",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4338,10 +4640,17 @@
           "astId": 14194,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_address,t_struct(Validator)14143_storage)"
+        },
+        {
+          "astId": 14159,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "activeValidators",
           "offset": 0,
           "slot": "3",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4418,10 +4727,17 @@
           "astId": 14198,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(MinPQ)13140_storage"
+        },
+        {
+          "astId": 14163,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "waitingValidators",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4473,6 +4789,9 @@
           "type": "t_struct(MaxPQ)12579_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(MaxPQ)12544_storage"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "288"

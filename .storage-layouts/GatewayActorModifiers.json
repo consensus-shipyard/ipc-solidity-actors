@@ -7,6 +7,7 @@
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "astId": 9967,
 =======
       "astId": 9824,
@@ -52,10 +53,14 @@
       "astId": 9860,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "astId": 9825,
+>>>>>>> 54a8fa7 (update storage)
       "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
       "label": "s",
       "offset": 0,
       "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -107,6 +112,9 @@
       "type": "t_struct(GatewayActorStorage)9848_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "type": "t_struct(GatewayActorStorage)9813_storage"
+>>>>>>> 54a8fa7 (update storage)
     }
   ],
   "types": {
@@ -127,6 +135,7 @@
       "label": "bytes32[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -187,10 +196,15 @@
       "base": "t_struct(CrossMsg)14047_storage",
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_array(t_struct(CrossMsg)14012_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)14012_storage",
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -261,6 +275,10 @@
       "base": "t_struct(Validator)14216_storage",
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+    "t_array(t_struct(Validator)14181_storage)dyn_storage": {
+      "base": "t_struct(Validator)14181_storage",
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "dynamic_array",
       "label": "struct Validator[]",
       "numberOfBytes": "32"
@@ -285,6 +303,7 @@
       "label": "bytes",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -336,6 +355,9 @@
     "t_enum(Status)4988": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_enum(Status)4988": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
@@ -347,6 +369,7 @@
       "numberOfBytes": "32",
       "value": "t_bytes_storage"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -398,10 +421,14 @@
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14047_storage)dyn_storage))": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage))": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => mapping(uint256 => struct CrossMsg[]))",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -471,10 +498,16 @@
     "t_mapping(t_bytes32,t_struct(CrossMsg)14047_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)"
+    },
+    "t_mapping(t_bytes32,t_struct(CrossMsg)14012_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct CrossMsg)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -544,10 +577,16 @@
     "t_mapping(t_bytes32,t_struct(Subnet)14119_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(CrossMsg)14012_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(Subnet)14084_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct Subnet)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -599,6 +638,9 @@
       "value": "t_struct(Subnet)14119_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(Subnet)14084_storage"
+>>>>>>> 54a8fa7 (update storage)
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -607,6 +649,7 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -658,10 +701,14 @@
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14047_storage)dyn_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct CrossMsg[])",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -731,10 +778,16 @@
     "t_mapping(t_uint256,t_struct(ParentFinality)13994_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_array(t_struct(CrossMsg)14012_storage)dyn_storage"
+    },
+    "t_mapping(t_uint256,t_struct(ParentFinality)13959_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct ParentFinality)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -804,10 +857,16 @@
     "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14047_storage)dyn_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(ParentFinality)13959_storage"
+    },
+    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CrossMsg[])",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -859,6 +918,9 @@
       "value": "t_array(t_struct(CrossMsg)14047_storage)dyn_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_array(t_struct(CrossMsg)14012_storage)dyn_storage"
+>>>>>>> 54a8fa7 (update storage)
     },
     "t_mapping(t_uint64,t_mapping(t_address,t_bytes_storage))": {
       "encoding": "mapping",
@@ -881,6 +943,7 @@
       "numberOfBytes": "32",
       "value": "t_struct(AddressSet)3420_storage"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -932,10 +995,14 @@
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14011_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13976_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1005,10 +1072,16 @@
     "t_mapping(t_uint64,t_struct(CheckpointInfo)14027_storage)": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13976_storage"
+    },
+    "t_mapping(t_uint64,t_struct(CheckpointInfo)13992_storage)": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CheckpointInfo)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1060,6 +1133,9 @@
       "value": "t_struct(CheckpointInfo)14027_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+      "value": "t_struct(CheckpointInfo)13992_storage"
+>>>>>>> 54a8fa7 (update storage)
     },
     "t_struct(AddressSet)3420_storage": {
       "encoding": "inplace",
@@ -1076,6 +1152,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1127,10 +1204,14 @@
     "t_struct(BottomUpCheckpoint)14011_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(BottomUpCheckpoint)13976_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1182,10 +1263,14 @@
           "astId": 13998,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13963,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1262,6 +1347,12 @@
           "astId": 14001,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(SubnetID)14064_storage"
+        },
+        {
+          "astId": 13966,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHeight",
           "offset": 0,
@@ -1269,6 +1360,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1320,6 +1412,9 @@
           "astId": 14004,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13969,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -1327,6 +1422,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1378,6 +1474,9 @@
           "astId": 14007,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13972,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -1385,6 +1484,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1436,6 +1536,9 @@
           "astId": 14010,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13975,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -1445,6 +1548,7 @@
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1496,10 +1600,14 @@
     "t_struct(CheckpointInfo)14027_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(CheckpointInfo)13992_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct CheckpointInfo",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1551,6 +1659,9 @@
           "astId": 14014,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13979,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "hash",
           "offset": 0,
@@ -1558,6 +1669,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1609,6 +1721,9 @@
           "astId": 14017,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13982,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rootHash",
           "offset": 0,
@@ -1616,6 +1731,7 @@
           "type": "t_bytes32"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1667,6 +1783,9 @@
           "astId": 14020,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13985,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "threshold",
           "offset": 0,
@@ -1674,6 +1793,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1725,6 +1845,9 @@
           "astId": 14023,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13988,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentWeight",
           "offset": 0,
@@ -1732,6 +1855,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1783,6 +1907,9 @@
           "astId": 14026,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13991,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "reached",
           "offset": 0,
@@ -1792,6 +1919,7 @@
       ],
       "numberOfBytes": "160"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1843,10 +1971,14 @@
     "t_struct(CrossMsg)14047_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(CrossMsg)14012_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1898,10 +2030,14 @@
           "astId": 14044,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14009,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -1978,6 +2114,12 @@
           "astId": 14046,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(StorableMsg)14027_storage"
+        },
+        {
+          "astId": 14011,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "wrapped",
           "offset": 0,
@@ -1987,6 +2129,7 @@
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2038,10 +2181,14 @@
     "t_struct(FvmAddress)14069_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(FvmAddress)14034_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2093,6 +2240,9 @@
           "astId": 14066,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14031,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addrType",
           "offset": 0,
@@ -2100,6 +2250,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2151,6 +2302,9 @@
           "astId": 14068,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14033,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "payload",
           "offset": 0,
@@ -2160,6 +2314,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2211,10 +2366,14 @@
     "t_struct(GatewayActorStorage)9848_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(GatewayActorStorage)9813_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct GatewayActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2266,10 +2425,14 @@
           "astId": 9735,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9700,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnets",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2346,10 +2509,17 @@
           "astId": 9744,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(Subnet)14084_storage)"
+        },
+        {
+          "astId": 9709,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2426,10 +2596,17 @@
           "astId": 9750,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage))"
+        },
+        {
+          "astId": 9715,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "finalitiesMap",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2506,6 +2683,12 @@
           "astId": 9753,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13959_storage)"
+        },
+        {
+          "astId": 9718,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "latestParentHeight",
           "offset": 0,
@@ -2513,6 +2696,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2564,10 +2748,14 @@
           "astId": 9759,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9724,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "postbox",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2644,6 +2832,12 @@
           "astId": 9766,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14012_storage)"
+        },
+        {
+          "astId": 9731,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validatorSetWeights",
           "offset": 0,
@@ -2651,6 +2845,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_uint256))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2702,10 +2897,14 @@
           "astId": 9770,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9735,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentMembership",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2788,10 +2987,17 @@
           "astId": 9774,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(Membership)14190_storage"
+        },
+        {
+          "astId": 9739,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "lastMembership",
           "offset": 0,
           "slot": "9",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2874,10 +3080,17 @@
           "astId": 9780,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(Membership)14190_storage"
+        },
+        {
+          "astId": 9745,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpoints",
           "offset": 0,
           "slot": "12",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -2954,10 +3167,17 @@
           "astId": 9786,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13976_storage)"
+        },
+        {
+          "astId": 9751,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointInfo",
           "offset": 0,
           "slot": "13",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3034,10 +3254,17 @@
           "astId": 9793,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13992_storage)"
+        },
+        {
+          "astId": 9758,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpMessages",
           "offset": 0,
           "slot": "14",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3114,6 +3341,12 @@
           "astId": 9796,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)"
+        },
+        {
+          "astId": 9761,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointRetentionHeight",
           "offset": 0,
@@ -3121,6 +3354,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3172,6 +3406,9 @@
           "astId": 9800,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9765,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "incompleteCheckpoints",
           "offset": 0,
@@ -3179,6 +3416,7 @@
           "type": "t_struct(UintSet)3577_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3230,6 +3468,9 @@
           "astId": 9806,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9771,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpSignatureSenders",
           "offset": 0,
@@ -3237,6 +3478,7 @@
           "type": "t_mapping(t_uint64,t_struct(AddressSet)3420_storage)"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3288,6 +3530,9 @@
           "astId": 9813,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9778,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpSignatures",
           "offset": 0,
@@ -3295,6 +3540,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_address,t_bytes_storage))"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3346,6 +3592,9 @@
           "astId": 9817,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9782,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetKeys",
           "offset": 0,
@@ -3353,6 +3602,7 @@
           "type": "t_array(t_bytes32)dyn_storage"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3404,10 +3654,14 @@
           "astId": 9821,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9786,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "networkName",
           "offset": 0,
           "slot": "21",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3484,6 +3738,12 @@
           "astId": 9824,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(SubnetID)14064_storage"
+        },
+        {
+          "astId": 9789,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "minStake",
           "offset": 0,
@@ -3491,6 +3751,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3542,6 +3803,9 @@
           "astId": 9827,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9792,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMsgFee",
           "offset": 0,
@@ -3549,6 +3813,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3600,6 +3865,9 @@
           "astId": 9830,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9795,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "majorityPercentage",
           "offset": 0,
@@ -3607,6 +3875,7 @@
           "type": "t_uint8"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3658,6 +3927,9 @@
           "astId": 9833,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9798,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpNonce",
           "offset": 1,
@@ -3665,6 +3937,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3716,6 +3989,9 @@
           "astId": 9836,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9801,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedTopDownNonce",
           "offset": 9,
@@ -3723,6 +3999,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3774,6 +4051,9 @@
           "astId": 9839,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9804,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownCheckPeriod",
           "offset": 17,
@@ -3781,6 +4061,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3832,6 +4113,9 @@
           "astId": 9842,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9807,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalSubnets",
           "offset": 0,
@@ -3839,6 +4123,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3890,6 +4175,9 @@
           "astId": 9844,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9809,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckPeriod",
           "offset": 8,
@@ -3897,6 +4185,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -3948,6 +4237,9 @@
           "astId": 9847,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 9812,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "initialized",
           "offset": 16,
@@ -3957,6 +4249,7 @@
       ],
       "numberOfBytes": "864"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4008,10 +4301,14 @@
     "t_struct(IPCAddress)14206_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(IPCAddress)14171_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4063,10 +4360,14 @@
           "astId": 14202,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14167,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4143,10 +4444,17 @@
           "astId": 14205,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(SubnetID)14064_storage"
+        },
+        {
+          "astId": 14170,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4198,10 +4506,14 @@
           "type": "t_struct(FvmAddress)14069_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(FvmAddress)14034_storage"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "128"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4262,10 +4574,14 @@
     "t_struct(Membership)14225_storage": {
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+    "t_struct(Membership)14190_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct Membership",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4326,10 +4642,14 @@
           "astId": 14220,
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+          "astId": 14185,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validators",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4418,6 +4738,12 @@
           "astId": 14222,
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+          "type": "t_array(t_struct(Validator)14181_storage)dyn_storage"
+        },
+        {
+          "astId": 14187,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "configurationNumber",
           "offset": 0,
@@ -4425,6 +4751,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4485,6 +4812,9 @@
           "astId": 14224,
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+          "astId": 14189,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalWeight",
           "offset": 0,
@@ -4494,6 +4824,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4545,10 +4876,14 @@
     "t_struct(ParentFinality)13994_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(ParentFinality)13959_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct ParentFinality",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4600,6 +4935,9 @@
           "astId": 13991,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13956,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "height",
           "offset": 0,
@@ -4607,6 +4945,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4658,6 +4997,9 @@
           "astId": 13993,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 13958,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -4690,6 +5032,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4741,10 +5084,14 @@
     "t_struct(StorableMsg)14062_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(StorableMsg)14027_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4796,10 +5143,14 @@
           "astId": 14050,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14015,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4876,10 +5227,17 @@
           "astId": 14053,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(IPCAddress)14171_storage"
+        },
+        {
+          "astId": 14018,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -4956,6 +5314,12 @@
           "astId": 14055,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(IPCAddress)14171_storage"
+        },
+        {
+          "astId": 14020,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "value",
           "offset": 0,
@@ -4963,6 +5327,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5014,6 +5379,9 @@
           "astId": 14057,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14022,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -5021,6 +5389,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5072,6 +5441,9 @@
           "astId": 14059,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14024,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "method",
           "offset": 8,
@@ -5079,6 +5451,7 @@
           "type": "t_bytes4"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5130,6 +5503,9 @@
           "astId": 14061,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14026,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "params",
           "offset": 0,
@@ -5139,6 +5515,7 @@
       ],
       "numberOfBytes": "352"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5190,10 +5567,14 @@
     "t_struct(Subnet)14119_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(Subnet)14084_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct Subnet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5245,6 +5626,9 @@
           "astId": 14101,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14066,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "stake",
           "offset": 0,
@@ -5252,6 +5636,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5303,6 +5688,9 @@
           "astId": 14103,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14068,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "genesisEpoch",
           "offset": 0,
@@ -5310,6 +5698,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5361,6 +5750,9 @@
           "astId": 14105,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14070,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "circSupply",
           "offset": 0,
@@ -5368,6 +5760,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5419,6 +5812,9 @@
           "astId": 14107,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14072,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownNonce",
           "offset": 0,
@@ -5426,6 +5822,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5477,6 +5874,9 @@
           "astId": 14109,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14074,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedBottomUpNonce",
           "offset": 8,
@@ -5484,6 +5884,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5535,10 +5936,14 @@
           "astId": 14112,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14077,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "status",
           "offset": 16,
           "slot": "3",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5615,10 +6020,17 @@
           "astId": 14115,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_enum(Status)4988"
+        },
+        {
+          "astId": 14080,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "id",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5695,10 +6107,17 @@
           "astId": 14118,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(SubnetID)14064_storage"
+        },
+        {
+          "astId": 14083,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "prevCheckpoint",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5750,10 +6169,14 @@
           "type": "t_struct(BottomUpCheckpoint)14011_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(BottomUpCheckpoint)13976_storage"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5805,10 +6228,14 @@
     "t_struct(SubnetID)14099_storage": {
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+    "t_struct(SubnetID)14064_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5860,6 +6287,9 @@
           "astId": 14094,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14059,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "root",
           "offset": 0,
@@ -5867,6 +6297,7 @@
           "type": "t_uint64"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -5918,6 +6349,9 @@
           "astId": 14098,
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "astId": 14063,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "route",
           "offset": 0,
@@ -5942,6 +6376,7 @@
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6002,10 +6437,14 @@
     "t_struct(Validator)14216_storage": {
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+    "t_struct(Validator)14181_storage": {
+>>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6066,6 +6505,9 @@
           "astId": 14212,
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+          "astId": 14177,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "weight",
           "offset": 0,
@@ -6073,6 +6515,7 @@
           "type": "t_uint256"
         },
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6133,10 +6576,14 @@
           "astId": 14215,
 >>>>>>> 510308a (remove more struct)
 >>>>>>> f1cb452 (remove more struct)
+=======
+          "astId": 14180,
+>>>>>>> 54a8fa7 (update storage)
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addr",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
@@ -6188,6 +6635,9 @@
           "type": "t_struct(FvmAddress)14069_storage"
 >>>>>>> 4b17388 (update storage)
 >>>>>>> ffe1bb3 (update storage)
+=======
+          "type": "t_struct(FvmAddress)14034_storage"
+>>>>>>> 54a8fa7 (update storage)
         }
       ],
       "numberOfBytes": "96"

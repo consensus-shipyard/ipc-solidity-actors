@@ -58,7 +58,7 @@ contract SubnetActorDiamond {
         s.majorityPercentage = params.majorityPercentage;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
 
-        // 100 is the max supported now
+        //  We hardcode the current limit for active validators to 100 per Tendermint consensus
         s.validatorSet.activeLimit = 100;
     }
 
