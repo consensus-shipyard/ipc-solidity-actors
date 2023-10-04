@@ -111,7 +111,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice Valdiator claims their released collateral
-    function claim() external nonReentrant notKilled {
+    function claim() external nonReentrant {
         LibStaking.claimCollateral(msg.sender);
     }
 
