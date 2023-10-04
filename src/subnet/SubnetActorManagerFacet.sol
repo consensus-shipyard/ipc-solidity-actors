@@ -172,6 +172,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         address[] calldata signatories,
         bytes[] calldata signatures
     ) external {
+        // validations
         if (checkpoint.blockHeight <= s.lastBottomUpCheckpointHeight) {
             revert HeightAlreadyExecuted();
         }
@@ -181,16 +182,17 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (s.status != Status.Active) {
             revert SubnetNotActive();
         }
-
-        bytes32 msgHash = keccak256(abi.encode(messages));
-        if (msgHash != checkpoint.crossMessagesHash) {
+        if (keccak256(abi.encode(messages)) != checkpoint.crossMessagesHash) {
             revert InvalidCheckpointMessagesHash();
         }
-
         bytes32 checkpointHash = keccak256(abi.encode(checkpoint));
-
         validateActiveQuorumSignatures({signatories: signatories, hash: checkpointHash, signatures: signatures});
+
+        // effects
         s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
+        s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
+
+        // interations
         IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint);
     }
 
@@ -274,6 +276,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         bytes32 hash,
         bytes[] memory signatures
     ) public view {
+        // This call reverts if at least one of the signatories (validator) is not in the active validator set.
         uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
 
         uint256 threshold = (s.validatorSet.totalConfirmedCollateral * s.majorityPercentage) / 100;
