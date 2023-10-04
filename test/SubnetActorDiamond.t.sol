@@ -193,8 +193,11 @@ contract SubnetActorDiamondTest is Test {
 
         v = saGetter.getValidator(validator);
         require(v.totalCollateral == collateral, "total collateral not expected after confirm join");
-        require(v.confirmedCollateral == DEFAULT_MIN_VALIDATOR_STAKE, "confirmed collateral not expected after confrim join");
-        
+        require(
+            v.confirmedCollateral == DEFAULT_MIN_VALIDATOR_STAKE,
+            "confirmed collateral not expected after confrim join"
+        );
+
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
         require(nextConfigNum == 1, "next config num not 1 after confirm join");
         require(startConfigNum == 1, "start config num not 1 after confirm join");
