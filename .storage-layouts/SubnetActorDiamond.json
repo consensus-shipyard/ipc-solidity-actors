@@ -8,6 +8,7 @@
       "slot": "0",
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "type": "t_struct(SubnetActorStorage)12018_storage"
 =======
       "type": "t_struct(SubnetActorStorage)11441_storage"
@@ -15,6 +16,12 @@
 =======
       "type": "t_struct(SubnetActorStorage)11493_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "type": "t_struct(SubnetActorStorage)11493_storage"
+=======
+      "type": "t_struct(SubnetActorStorage)12018_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
     }
   ],
   "types": {
@@ -41,6 +48,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_enum(ConsensusType)4975": {
 =======
     "t_enum(ConsensusType)4944": {
@@ -48,10 +56,17 @@
 =======
     "t_enum(ConsensusType)4952": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_enum(ConsensusType)4952": {
+=======
+    "t_enum(ConsensusType)4975": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "enum ConsensusType",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_enum(StakingOperation)14319": {
@@ -61,10 +76,17 @@
 =======
     "t_enum(StakingOperation)13794": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_enum(StakingOperation)13794": {
+=======
+    "t_enum(StakingOperation)14319": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "enum StakingOperation",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_enum(Status)4989": {
@@ -74,10 +96,17 @@
 =======
     "t_enum(Status)4966": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_enum(Status)4966": {
+=======
+    "t_enum(Status)4989": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_mapping(t_address,t_string_storage)": {
@@ -94,10 +123,24 @@
 =======
     "t_mapping(t_address,t_struct(AddressStakingReleases)13832_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_mapping(t_address,t_struct(AddressStakingReleases)13832_storage)": {
+=======
+    "t_mapping(t_address,t_string_storage)": {
+      "encoding": "mapping",
+      "key": "t_address",
+      "label": "mapping(address => string)",
+      "numberOfBytes": "32",
+      "value": "t_string_storage"
+    },
+    "t_mapping(t_address,t_struct(AddressStakingReleases)14357_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct AddressStakingReleases)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(AddressStakingReleases)14357_storage"
@@ -120,10 +163,28 @@
     },
     "t_mapping(t_address,t_struct(Validator)13850_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(AddressStakingReleases)13832_storage"
+    },
+    "t_mapping(t_address,t_struct(Validator)13850_storage)": {
+=======
+      "value": "t_struct(AddressStakingReleases)14357_storage"
+    },
+    "t_mapping(t_address,t_struct(FvmAddress)14266_storage)": {
+      "encoding": "mapping",
+      "key": "t_address",
+      "label": "mapping(address => struct FvmAddress)",
+      "numberOfBytes": "32",
+      "value": "t_struct(FvmAddress)14266_storage"
+    },
+    "t_mapping(t_address,t_struct(Validator)14375_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_address",
       "label": "mapping(address => struct Validator)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(Validator)14375_storage"
@@ -133,6 +194,12 @@
 =======
       "value": "t_struct(Validator)13850_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(Validator)13850_storage"
+=======
+      "value": "t_struct(Validator)14375_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
     },
     "t_mapping(t_address,t_uint16)": {
       "encoding": "mapping",
@@ -150,6 +217,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint16,t_struct(StakingRelease)14347_storage)": {
 =======
     "t_mapping(t_uint16,t_struct(StakingRelease)13770_storage)": {
@@ -157,10 +225,17 @@
 =======
     "t_mapping(t_uint16,t_struct(StakingRelease)13822_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_mapping(t_uint16,t_struct(StakingRelease)13822_storage)": {
+=======
+    "t_mapping(t_uint16,t_struct(StakingRelease)14347_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint16",
       "label": "mapping(uint16 => struct StakingRelease)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(StakingRelease)14347_storage"
@@ -176,10 +251,21 @@
     },
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(StakingRelease)13822_storage"
+    },
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)": {
+=======
+      "value": "t_struct(StakingRelease)14347_storage"
+    },
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(BottomUpCheckpoint)14208_storage"
@@ -195,10 +281,21 @@
     },
     "t_mapping(t_uint64,t_struct(StakingChange)13802_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13683_storage"
+    },
+    "t_mapping(t_uint64,t_struct(StakingChange)13802_storage)": {
+=======
+      "value": "t_struct(BottomUpCheckpoint)14208_storage"
+    },
+    "t_mapping(t_uint64,t_struct(StakingChange)14327_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct StakingChange)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(StakingChange)14327_storage"
@@ -234,10 +331,41 @@
     },
     "t_struct(AddressStakingReleases)13832_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(StakingChange)13802_storage"
+    },
+    "t_struct(AddressStakingReleases)13832_storage": {
+=======
+      "value": "t_struct(StakingChange)14327_storage"
+    },
+    "t_string_storage": {
+      "encoding": "bytes",
+      "label": "string",
+      "numberOfBytes": "32"
+    },
+    "t_struct(AddressSet)3420_storage": {
+      "encoding": "inplace",
+      "label": "struct EnumerableSet.AddressSet",
+      "members": [
+        {
+          "astId": 3419,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "_inner",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_struct(Set)3105_storage"
+        }
+      ],
+      "numberOfBytes": "64"
+    },
+    "t_struct(AddressStakingReleases)14357_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct AddressStakingReleases",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14349,
@@ -247,6 +375,12 @@
 =======
           "astId": 13824,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13824,
+=======
+          "astId": 14349,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "length",
           "offset": 0,
@@ -256,6 +390,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14351,
 =======
           "astId": 13774,
@@ -263,6 +398,12 @@
 =======
           "astId": 13826,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13826,
+=======
+          "astId": 14351,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startIdx",
           "offset": 2,
@@ -272,6 +413,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14356,
 =======
           "astId": 13779,
@@ -279,10 +421,17 @@
 =======
           "astId": 13831,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13831,
+=======
+          "astId": 14356,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint16,t_struct(StakingRelease)14347_storage)"
@@ -292,10 +441,17 @@
 =======
           "type": "t_mapping(t_uint16,t_struct(StakingRelease)13822_storage)"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_mapping(t_uint16,t_struct(StakingRelease)13822_storage)"
+=======
+          "type": "t_mapping(t_uint16,t_struct(StakingRelease)14347_storage)"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(BottomUpCheckpoint)14208_storage": {
@@ -305,10 +461,17 @@
 =======
     "t_struct(BottomUpCheckpoint)13683_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(BottomUpCheckpoint)13683_storage": {
+=======
+    "t_struct(BottomUpCheckpoint)14208_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14195,
@@ -318,10 +481,17 @@
 =======
           "astId": 13670,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13670,
+=======
+          "astId": 14195,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)14296_storage"
@@ -335,11 +505,22 @@
           "astId": 13621,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(SubnetID)13771_storage"
         },
         {
           "astId": 13673,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(SubnetID)14296_storage"
+        },
+        {
+          "astId": 14198,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "blockHeight",
           "offset": 0,
@@ -349,6 +530,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14201,
 =======
           "astId": 13624,
@@ -356,6 +538,12 @@
 =======
           "astId": 13676,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13676,
+=======
+          "astId": 14201,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "blockHash",
           "offset": 0,
@@ -365,6 +553,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14204,
 =======
           "astId": 13627,
@@ -372,6 +561,12 @@
 =======
           "astId": 13679,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13679,
+=======
+          "astId": 14204,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -381,6 +576,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14207,
 =======
           "astId": 13630,
@@ -388,6 +584,12 @@
 =======
           "astId": 13682,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13682,
+=======
+          "astId": 14207,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -397,6 +599,7 @@
       ],
       "numberOfBytes": "192"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(FvmAddress)14266_storage": {
@@ -429,10 +632,40 @@
 =======
     "t_struct(MaxPQ)12251_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(MaxPQ)12251_storage": {
+=======
+    "t_struct(FvmAddress)14266_storage": {
+      "encoding": "inplace",
+      "label": "struct FvmAddress",
+      "members": [
+        {
+          "astId": 14263,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "addrType",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_uint8"
+        },
+        {
+          "astId": 14265,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "payload",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_bytes_storage"
+        }
+      ],
+      "numberOfBytes": "64"
+    },
+    "t_struct(MaxPQ)12776_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct MaxPQ",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 12775,
@@ -442,10 +675,17 @@
 =======
           "astId": 12250,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 12250,
+=======
+          "astId": 12775,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "inner",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(PQ)13979_storage"
@@ -455,10 +695,17 @@
 =======
           "type": "t_struct(PQ)13454_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_struct(PQ)13454_storage"
+=======
+          "type": "t_struct(PQ)13979_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(MinPQ)13372_storage": {
@@ -468,10 +715,17 @@
 =======
     "t_struct(MinPQ)12847_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(MinPQ)12847_storage": {
+=======
+    "t_struct(MinPQ)13372_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct MinPQ",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 13371,
@@ -481,10 +735,17 @@
 =======
           "astId": 12846,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 12846,
+=======
+          "astId": 13371,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "inner",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(PQ)13979_storage"
@@ -494,10 +755,17 @@
 =======
           "type": "t_struct(PQ)13454_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_struct(PQ)13454_storage"
+=======
+          "type": "t_struct(PQ)13979_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(PQ)13979_storage": {
@@ -507,10 +775,17 @@
 =======
     "t_struct(PQ)13454_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(PQ)13454_storage": {
+=======
+    "t_struct(PQ)13979_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct PQ",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 13968,
@@ -520,6 +795,12 @@
 =======
           "astId": 13443,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13443,
+=======
+          "astId": 13968,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "size",
           "offset": 0,
@@ -529,6 +810,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 13973,
 =======
           "astId": 13396,
@@ -536,6 +818,12 @@
 =======
           "astId": 13448,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13448,
+=======
+          "astId": 13973,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "addressToPos",
           "offset": 0,
@@ -545,6 +833,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 13978,
 =======
           "astId": 13401,
@@ -552,6 +841,12 @@
 =======
           "astId": 13453,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13453,
+=======
+          "astId": 13978,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "posToAddress",
           "offset": 0,
@@ -561,6 +856,7 @@
       ],
       "numberOfBytes": "96"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(Set)3105_storage": {
@@ -593,10 +889,40 @@
 =======
     "t_struct(StakingChange)13802_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(StakingChange)13802_storage": {
+=======
+    "t_struct(Set)3105_storage": {
+      "encoding": "inplace",
+      "label": "struct EnumerableSet.Set",
+      "members": [
+        {
+          "astId": 3100,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "_values",
+          "offset": 0,
+          "slot": "0",
+          "type": "t_array(t_bytes32)dyn_storage"
+        },
+        {
+          "astId": 3104,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "_indexes",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_mapping(t_bytes32,t_uint256)"
+        }
+      ],
+      "numberOfBytes": "64"
+    },
+    "t_struct(StakingChange)14327_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct StakingChange",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14322,
@@ -606,10 +932,17 @@
 =======
           "astId": 13797,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13797,
+=======
+          "astId": 14322,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "op",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_enum(StakingOperation)14319"
@@ -623,11 +956,22 @@
           "astId": 13747,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_enum(StakingOperation)13794"
         },
         {
           "astId": 13799,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_enum(StakingOperation)14319"
+        },
+        {
+          "astId": 14324,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -637,6 +981,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14326,
 =======
           "astId": 13749,
@@ -644,6 +989,12 @@
 =======
           "astId": 13801,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13801,
+=======
+          "astId": 14326,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validator",
           "offset": 0,
@@ -655,6 +1006,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(StakingChangeSet)14340_storage": {
 =======
     "t_struct(StakingChangeSet)13763_storage": {
@@ -662,10 +1014,17 @@
 =======
     "t_struct(StakingChangeSet)13815_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(StakingChangeSet)13815_storage": {
+=======
+    "t_struct(StakingChangeSet)14340_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct StakingChangeSet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14330,
@@ -675,6 +1034,12 @@
 =======
           "astId": 13805,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13805,
+=======
+          "astId": 14330,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -684,6 +1049,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14333,
 =======
           "astId": 13756,
@@ -691,6 +1057,12 @@
 =======
           "astId": 13808,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13808,
+=======
+          "astId": 14333,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "startConfigurationNumber",
           "offset": 8,
@@ -700,6 +1072,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14339,
 =======
           "astId": 13762,
@@ -707,10 +1080,17 @@
 =======
           "astId": 13814,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13814,
+=======
+          "astId": 14339,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "changes",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint64,t_struct(StakingChange)14327_storage)"
@@ -720,10 +1100,17 @@
 =======
           "type": "t_mapping(t_uint64,t_struct(StakingChange)13802_storage)"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_mapping(t_uint64,t_struct(StakingChange)13802_storage)"
+=======
+          "type": "t_mapping(t_uint64,t_struct(StakingChange)14327_storage)"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(StakingRelease)14347_storage": {
@@ -733,10 +1120,17 @@
 =======
     "t_struct(StakingRelease)13822_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(StakingRelease)13822_storage": {
+=======
+    "t_struct(StakingRelease)14347_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct StakingRelease",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14343,
@@ -746,6 +1140,12 @@
 =======
           "astId": 13818,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13818,
+=======
+          "astId": 14343,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releaseAt",
           "offset": 0,
@@ -755,6 +1155,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14346,
 =======
           "astId": 13769,
@@ -762,6 +1163,12 @@
 =======
           "astId": 13821,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13821,
+=======
+          "astId": 14346,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "amount",
           "offset": 0,
@@ -773,6 +1180,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(StakingReleaseQueue)14367_storage": {
 =======
     "t_struct(StakingReleaseQueue)13790_storage": {
@@ -780,10 +1188,17 @@
 =======
     "t_struct(StakingReleaseQueue)13842_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(StakingReleaseQueue)13842_storage": {
+=======
+    "t_struct(StakingReleaseQueue)14367_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct StakingReleaseQueue",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14360,
@@ -793,6 +1208,12 @@
 =======
           "astId": 13835,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13835,
+=======
+          "astId": 14360,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "lockingDuration",
           "offset": 0,
@@ -802,6 +1223,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14366,
 =======
           "astId": 13789,
@@ -809,10 +1231,17 @@
 =======
           "astId": 13841,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13841,
+=======
+          "astId": 14366,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "releases",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14357_storage)"
@@ -822,10 +1251,17 @@
 =======
           "type": "t_mapping(t_address,t_struct(AddressStakingReleases)13832_storage)"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)13832_storage)"
+=======
+          "type": "t_mapping(t_address,t_struct(AddressStakingReleases)14357_storage)"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "64"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(SubnetActorStorage)12018_storage": {
@@ -835,10 +1271,17 @@
 =======
     "t_struct(SubnetActorStorage)11493_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(SubnetActorStorage)11493_storage": {
+=======
+    "t_struct(SubnetActorStorage)12018_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct SubnetActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 11932,
@@ -887,6 +1330,12 @@
 =======
           "astId": 11442,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 11442,
+=======
+          "astId": 11932,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "committedCheckpoints",
           "offset": 0,
@@ -1159,8 +1608,9 @@
           "type": "t_struct(StakingChangeSet)13815_storage"
         },
         {
-          "astId": 11492,
+          "astId": 11937,
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+<<<<<<< HEAD
           "label": "releaseQueue",
           "offset": 0,
           "slot": "23",
@@ -1169,11 +1619,197 @@
 >>>>>>> b69807a (clean up unused fields)
 =======
           "type": "t_struct(StakingReleaseQueue)13842_storage"
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "label": "accumulatedRewards",
+          "offset": 0,
+          "slot": "1",
+          "type": "t_mapping(t_address,t_uint256)"
+        },
+        {
+          "astId": 11942,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "validatorNetAddresses",
+          "offset": 0,
+          "slot": "2",
+          "type": "t_mapping(t_address,t_string_storage)"
+        },
+        {
+          "astId": 11948,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "validatorWorkerAddresses",
+          "offset": 0,
+          "slot": "3",
+          "type": "t_mapping(t_address,t_struct(FvmAddress)14266_storage)"
+        },
+        {
+          "astId": 11954,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "committedCheckpoints",
+          "offset": 0,
+          "slot": "4",
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)"
+        },
+        {
+          "astId": 11957,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "genesis",
+          "offset": 0,
+          "slot": "5",
+          "type": "t_bytes_storage"
+        },
+        {
+          "astId": 11960,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "totalStake",
+          "offset": 0,
+          "slot": "6",
+          "type": "t_uint256"
+        },
+        {
+          "astId": 11963,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "minActivationCollateral",
+          "offset": 0,
+          "slot": "7",
+          "type": "t_uint256"
+        },
+        {
+          "astId": 11966,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "configurationNumber",
+          "offset": 0,
+          "slot": "8",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 11969,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "topDownCheckPeriod",
+          "offset": 8,
+          "slot": "8",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 11972,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "bottomUpCheckPeriod",
+          "offset": 16,
+          "slot": "8",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 11975,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "minValidators",
+          "offset": 24,
+          "slot": "8",
+          "type": "t_uint64"
+        },
+        {
+          "astId": 11978,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "name",
+          "offset": 0,
+          "slot": "9",
+          "type": "t_bytes32"
+        },
+        {
+          "astId": 11980,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "currentSubnetHash",
+          "offset": 0,
+          "slot": "10",
+          "type": "t_bytes32"
+        },
+        {
+          "astId": 11983,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "prevExecutedCheckpointHash",
+          "offset": 0,
+          "slot": "11",
+          "type": "t_bytes32"
+        },
+        {
+          "astId": 11986,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "ipcGatewayAddr",
+          "offset": 0,
+          "slot": "12",
+          "type": "t_address"
+        },
+        {
+          "astId": 11989,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "majorityPercentage",
+          "offset": 20,
+          "slot": "12",
+          "type": "t_uint8"
+        },
+        {
+          "astId": 11993,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "status",
+          "offset": 21,
+          "slot": "12",
+          "type": "t_enum(Status)4989"
+        },
+        {
+          "astId": 11997,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "validators",
+          "offset": 0,
+          "slot": "13",
+          "type": "t_struct(AddressSet)3420_storage"
+        },
+        {
+          "astId": 12001,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "parentId",
+          "offset": 0,
+          "slot": "15",
+          "type": "t_struct(SubnetID)14296_storage"
+        },
+        {
+          "astId": 12005,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "consensus",
+          "offset": 0,
+          "slot": "17",
+          "type": "t_enum(ConsensusType)4975"
+        },
+        {
+          "astId": 12009,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "validatorSet",
+          "offset": 0,
+          "slot": "18",
+          "type": "t_struct(ValidatorSet)14396_storage"
+        },
+        {
+          "astId": 12013,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "changeSet",
+          "offset": 0,
+          "slot": "27",
+          "type": "t_struct(StakingChangeSet)14340_storage"
+        },
+        {
+          "astId": 12017,
+          "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+          "label": "releaseQueue",
+          "offset": 0,
+          "slot": "29",
+          "type": "t_struct(StakingReleaseQueue)14367_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "800"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(SubnetID)14296_storage": {
@@ -1183,10 +1819,17 @@
 =======
     "t_struct(SubnetID)13771_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(SubnetID)13771_storage": {
+=======
+    "t_struct(SubnetID)14296_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14291,
@@ -1196,6 +1839,12 @@
 =======
           "astId": 13766,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13766,
+=======
+          "astId": 14291,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "root",
           "offset": 0,
@@ -1205,6 +1854,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14295,
 =======
           "astId": 13718,
@@ -1212,6 +1862,12 @@
 =======
           "astId": 13770,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13770,
+=======
+          "astId": 14295,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "route",
           "offset": 0,
@@ -1223,6 +1879,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(Validator)14375_storage": {
 =======
     "t_struct(Validator)13798_storage": {
@@ -1230,10 +1887,17 @@
 =======
     "t_struct(Validator)13850_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(Validator)13850_storage": {
+=======
+    "t_struct(Validator)14375_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14369,
@@ -1243,6 +1907,12 @@
 =======
           "astId": 13844,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13844,
+=======
+          "astId": 14369,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "confirmedCollateral",
           "offset": 0,
@@ -1252,6 +1922,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14371,
 =======
           "astId": 13794,
@@ -1259,6 +1930,12 @@
 =======
           "astId": 13846,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13846,
+=======
+          "astId": 14371,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalCollateral",
           "offset": 0,
@@ -1268,6 +1945,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14374,
 =======
           "astId": 13797,
@@ -1275,6 +1953,12 @@
 =======
           "astId": 13849,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13849,
+=======
+          "astId": 14374,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "metadata",
           "offset": 0,
@@ -1286,6 +1970,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(ValidatorSet)14396_storage": {
 =======
     "t_struct(ValidatorSet)13819_storage": {
@@ -1293,10 +1978,17 @@
 =======
     "t_struct(ValidatorSet)13871_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(ValidatorSet)13871_storage": {
+=======
+    "t_struct(ValidatorSet)14396_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct ValidatorSet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14378,
@@ -1306,6 +1998,12 @@
 =======
           "astId": 13853,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13853,
+=======
+          "astId": 14378,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "activeLimit",
           "offset": 0,
@@ -1315,6 +2013,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14381,
 =======
           "astId": 13804,
@@ -1322,6 +2021,12 @@
 =======
           "astId": 13856,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13856,
+=======
+          "astId": 14381,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "totalConfirmedCollateral",
           "offset": 0,
@@ -1331,6 +2036,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14387,
 =======
           "astId": 13810,
@@ -1338,10 +2044,17 @@
 =======
           "astId": 13862,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13862,
+=======
+          "astId": 14387,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "validators",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_address,t_struct(Validator)14375_storage)"
@@ -1355,15 +2068,27 @@
           "astId": 13814,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_address,t_struct(Validator)13850_storage)"
         },
         {
           "astId": 13866,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_address,t_struct(Validator)14375_storage)"
+        },
+        {
+          "astId": 14391,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "activeValidators",
           "offset": 0,
           "slot": "3",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(MinPQ)13372_storage"
@@ -1377,15 +2102,27 @@
           "astId": 13818,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(MinPQ)12847_storage"
         },
         {
           "astId": 13870,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(MinPQ)13372_storage"
+        },
+        {
+          "astId": 14395,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
           "label": "waitingValidators",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(MaxPQ)12776_storage"
@@ -1395,6 +2132,12 @@
 =======
           "type": "t_struct(MaxPQ)12251_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_struct(MaxPQ)12251_storage"
+=======
+          "type": "t_struct(MaxPQ)12776_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "288"

@@ -3,6 +3,7 @@
     {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
       "astId": 9967,
 =======
       "astId": 9824,
@@ -10,10 +11,17 @@
 =======
       "astId": 9832,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "astId": 9832,
+=======
+      "astId": 9967,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
       "label": "s",
       "offset": 0,
       "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "type": "t_struct(GatewayActorStorage)9955_storage"
@@ -23,6 +31,12 @@
 =======
       "type": "t_struct(GatewayActorStorage)9820_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "type": "t_struct(GatewayActorStorage)9820_storage"
+=======
+      "type": "t_struct(GatewayActorStorage)9955_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
     }
   ],
   "types": {
@@ -45,6 +59,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_array(t_struct(CrossMsg)14244_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)14244_storage",
 =======
@@ -55,10 +70,19 @@
     "t_array(t_struct(CrossMsg)13719_storage)dyn_storage": {
       "base": "t_struct(CrossMsg)13719_storage",
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_array(t_struct(CrossMsg)13719_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)13719_storage",
+=======
+    "t_array(t_struct(CrossMsg)14244_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)14244_storage",
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_array(t_struct(Validator)14430_storage)dyn_storage": {
@@ -71,6 +95,14 @@
     "t_array(t_struct(Validator)13905_storage)dyn_storage": {
       "base": "t_struct(Validator)13905_storage",
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_array(t_struct(Validator)13905_storage)dyn_storage": {
+      "base": "t_struct(Validator)13905_storage",
+=======
+    "t_array(t_struct(Validator)14430_storage)dyn_storage": {
+      "base": "t_struct(Validator)14430_storage",
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "dynamic_array",
       "label": "struct Validator[]",
       "numberOfBytes": "32"
@@ -97,6 +129,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_enum(Status)4989": {
 =======
     "t_enum(Status)4958": {
@@ -104,6 +137,12 @@
 =======
     "t_enum(Status)4966": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_enum(Status)4966": {
+=======
+    "t_enum(Status)4989": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
@@ -117,6 +156,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))": {
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage))": {
@@ -124,10 +164,17 @@
 =======
     "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))": {
+=======
+    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => mapping(uint256 => struct CrossMsg[]))",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
@@ -143,10 +190,21 @@
     },
     "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)"
+    },
+    "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)": {
+=======
+      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
+    },
+    "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct CrossMsg)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(CrossMsg)14244_storage"
@@ -162,10 +220,21 @@
     },
     "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(CrossMsg)13719_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)": {
+=======
+      "value": "t_struct(CrossMsg)14244_storage"
+    },
+    "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct Subnet)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(Subnet)14316_storage"
@@ -175,6 +244,12 @@
 =======
       "value": "t_struct(Subnet)13791_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(Subnet)13791_storage"
+=======
+      "value": "t_struct(Subnet)14316_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -185,6 +260,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
 =======
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)": {
@@ -192,10 +268,17 @@
 =======
     "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
+=======
+    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct CrossMsg[])",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
@@ -211,10 +294,21 @@
     },
     "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
+    },
+    "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)": {
+=======
+      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
+    },
+    "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct ParentFinality)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(ParentFinality)14191_storage"
@@ -230,10 +324,21 @@
     },
     "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(ParentFinality)13666_storage"
+    },
+    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
+=======
+      "value": "t_struct(ParentFinality)14191_storage"
+    },
+    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CrossMsg[])",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
@@ -243,6 +348,12 @@
 =======
       "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
+=======
+      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
     },
     "t_mapping(t_uint64,t_mapping(t_address,t_bytes_storage))": {
       "encoding": "mapping",
@@ -267,6 +378,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)": {
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13631_storage)": {
@@ -274,10 +386,17 @@
 =======
     "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)": {
+=======
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(BottomUpCheckpoint)14208_storage"
@@ -293,10 +412,21 @@
     },
     "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(BottomUpCheckpoint)13683_storage"
+    },
+    "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)": {
+=======
+      "value": "t_struct(BottomUpCheckpoint)14208_storage"
+    },
+    "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CheckpointInfo)",
       "numberOfBytes": "32",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
       "value": "t_struct(CheckpointInfo)14224_storage"
@@ -306,6 +436,12 @@
 =======
       "value": "t_struct(CheckpointInfo)13699_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+      "value": "t_struct(CheckpointInfo)13699_storage"
+=======
+      "value": "t_struct(CheckpointInfo)14224_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
     },
     "t_struct(AddressSet)3420_storage": {
       "encoding": "inplace",
@@ -324,6 +460,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(BottomUpCheckpoint)14208_storage": {
 =======
     "t_struct(BottomUpCheckpoint)13631_storage": {
@@ -331,10 +468,17 @@
 =======
     "t_struct(BottomUpCheckpoint)13683_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(BottomUpCheckpoint)13683_storage": {
+=======
+    "t_struct(BottomUpCheckpoint)14208_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14195,
@@ -344,10 +488,17 @@
 =======
           "astId": 13670,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13670,
+=======
+          "astId": 14195,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)14296_storage"
@@ -361,11 +512,22 @@
           "astId": 13621,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(SubnetID)13771_storage"
         },
         {
           "astId": 13673,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(SubnetID)14296_storage"
+        },
+        {
+          "astId": 14198,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHeight",
           "offset": 0,
@@ -375,6 +537,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14201,
 =======
           "astId": 13624,
@@ -382,6 +545,12 @@
 =======
           "astId": 13676,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13676,
+=======
+          "astId": 14201,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -391,6 +560,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14204,
 =======
           "astId": 13627,
@@ -398,6 +568,12 @@
 =======
           "astId": 13679,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13679,
+=======
+          "astId": 14204,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -407,6 +583,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14207,
 =======
           "astId": 13630,
@@ -414,6 +591,12 @@
 =======
           "astId": 13682,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13682,
+=======
+          "astId": 14207,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -425,6 +608,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(CheckpointInfo)14224_storage": {
 =======
     "t_struct(CheckpointInfo)13647_storage": {
@@ -432,10 +616,17 @@
 =======
     "t_struct(CheckpointInfo)13699_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(CheckpointInfo)13699_storage": {
+=======
+    "t_struct(CheckpointInfo)14224_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct CheckpointInfo",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14211,
@@ -445,6 +636,12 @@
 =======
           "astId": 13686,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13686,
+=======
+          "astId": 14211,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "hash",
           "offset": 0,
@@ -454,6 +651,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14214,
 =======
           "astId": 13637,
@@ -461,6 +659,12 @@
 =======
           "astId": 13689,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13689,
+=======
+          "astId": 14214,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rootHash",
           "offset": 0,
@@ -470,6 +674,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14217,
 =======
           "astId": 13640,
@@ -477,6 +682,12 @@
 =======
           "astId": 13692,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13692,
+=======
+          "astId": 14217,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "threshold",
           "offset": 0,
@@ -486,6 +697,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14220,
 =======
           "astId": 13643,
@@ -493,6 +705,12 @@
 =======
           "astId": 13695,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13695,
+=======
+          "astId": 14220,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentWeight",
           "offset": 0,
@@ -502,6 +720,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14223,
 =======
           "astId": 13646,
@@ -509,6 +728,12 @@
 =======
           "astId": 13698,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13698,
+=======
+          "astId": 14223,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "reached",
           "offset": 0,
@@ -520,6 +745,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(CrossMsg)14244_storage": {
 =======
     "t_struct(CrossMsg)13667_storage": {
@@ -527,10 +753,17 @@
 =======
     "t_struct(CrossMsg)13719_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(CrossMsg)13719_storage": {
+=======
+    "t_struct(CrossMsg)14244_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14241,
@@ -540,10 +773,17 @@
 =======
           "astId": 13716,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13716,
+=======
+          "astId": 14241,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "message",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(StorableMsg)14259_storage"
@@ -557,11 +797,22 @@
           "astId": 13666,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(StorableMsg)13734_storage"
         },
         {
           "astId": 13718,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(StorableMsg)14259_storage"
+        },
+        {
+          "astId": 14243,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "wrapped",
           "offset": 0,
@@ -573,6 +824,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(FvmAddress)14266_storage": {
 =======
     "t_struct(FvmAddress)13689_storage": {
@@ -580,10 +832,17 @@
 =======
     "t_struct(FvmAddress)13741_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(FvmAddress)13741_storage": {
+=======
+    "t_struct(FvmAddress)14266_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14263,
@@ -593,6 +852,12 @@
 =======
           "astId": 13738,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13738,
+=======
+          "astId": 14263,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addrType",
           "offset": 0,
@@ -602,6 +867,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14265,
 =======
           "astId": 13688,
@@ -609,6 +875,12 @@
 =======
           "astId": 13740,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13740,
+=======
+          "astId": 14265,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "payload",
           "offset": 0,
@@ -620,6 +892,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(GatewayActorStorage)9955_storage": {
 =======
     "t_struct(GatewayActorStorage)9812_storage": {
@@ -627,10 +900,17 @@
 =======
     "t_struct(GatewayActorStorage)9820_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(GatewayActorStorage)9820_storage": {
+=======
+    "t_struct(GatewayActorStorage)9955_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct GatewayActorStorage",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 9842,
@@ -640,10 +920,17 @@
 =======
           "astId": 9707,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9707,
+=======
+          "astId": 9842,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnets",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)"
@@ -657,15 +944,27 @@
           "astId": 9708,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)"
         },
         {
           "astId": 9716,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)"
+        },
+        {
+          "astId": 9851,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))"
@@ -679,15 +978,27 @@
           "astId": 9714,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))"
         },
         {
           "astId": 9722,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))"
+        },
+        {
+          "astId": 9857,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "finalitiesMap",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)"
@@ -701,11 +1012,22 @@
           "astId": 9717,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)"
         },
         {
           "astId": 9725,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)"
+        },
+        {
+          "astId": 9860,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "latestParentHeight",
           "offset": 0,
@@ -715,6 +1037,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9866,
 =======
           "astId": 9723,
@@ -722,10 +1045,17 @@
 =======
           "astId": 9731,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9731,
+=======
+          "astId": 9866,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "postbox",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)"
@@ -739,11 +1069,22 @@
           "astId": 9730,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)"
         },
         {
           "astId": 9738,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)"
+        },
+        {
+          "astId": 9873,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validatorSetWeights",
           "offset": 0,
@@ -753,6 +1094,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9877,
 =======
           "astId": 9734,
@@ -760,10 +1102,17 @@
 =======
           "astId": 9742,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9742,
+=======
+          "astId": 9877,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "currentMembership",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(Membership)14439_storage"
@@ -777,15 +1126,27 @@
           "astId": 9738,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(Membership)13914_storage"
         },
         {
           "astId": 9746,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(Membership)14439_storage"
+        },
+        {
+          "astId": 9881,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "lastMembership",
           "offset": 0,
           "slot": "9",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(Membership)14439_storage"
@@ -799,15 +1160,27 @@
           "astId": 9744,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(Membership)13914_storage"
         },
         {
           "astId": 9752,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(Membership)14439_storage"
+        },
+        {
+          "astId": 9887,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpoints",
           "offset": 0,
           "slot": "12",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)"
@@ -821,15 +1194,27 @@
           "astId": 9750,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)"
         },
         {
           "astId": 9758,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)"
+        },
+        {
+          "astId": 9893,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointInfo",
           "offset": 0,
           "slot": "13",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)"
@@ -843,15 +1228,27 @@
           "astId": 9757,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)"
         },
         {
           "astId": 9765,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)"
+        },
+        {
+          "astId": 9900,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpMessages",
           "offset": 0,
           "slot": "14",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
@@ -865,11 +1262,22 @@
           "astId": 9760,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)"
         },
         {
           "astId": 9768,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
+        },
+        {
+          "astId": 9903,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckpointRetentionHeight",
           "offset": 0,
@@ -879,6 +1287,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9907,
 =======
           "astId": 9764,
@@ -886,6 +1295,12 @@
 =======
           "astId": 9772,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9772,
+=======
+          "astId": 9907,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "incompleteCheckpoints",
           "offset": 0,
@@ -895,6 +1310,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9913,
 =======
           "astId": 9770,
@@ -902,6 +1318,12 @@
 =======
           "astId": 9778,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9778,
+=======
+          "astId": 9913,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpSignatureSenders",
           "offset": 0,
@@ -911,6 +1333,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9920,
 =======
           "astId": 9777,
@@ -918,6 +1341,12 @@
 =======
           "astId": 9785,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9785,
+=======
+          "astId": 9920,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpSignatures",
           "offset": 0,
@@ -927,6 +1356,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9924,
 =======
           "astId": 9781,
@@ -934,6 +1364,12 @@
 =======
           "astId": 9789,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9789,
+=======
+          "astId": 9924,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetKeys",
           "offset": 0,
@@ -943,6 +1379,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9928,
 =======
           "astId": 9785,
@@ -950,10 +1387,17 @@
 =======
           "astId": 9793,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9793,
+=======
+          "astId": 9928,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "networkName",
           "offset": 0,
           "slot": "21",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)14296_storage"
@@ -967,11 +1411,22 @@
           "astId": 9788,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(SubnetID)13771_storage"
         },
         {
           "astId": 9796,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(SubnetID)14296_storage"
+        },
+        {
+          "astId": 9931,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "minStake",
           "offset": 0,
@@ -981,6 +1436,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9934,
 =======
           "astId": 9791,
@@ -988,6 +1444,12 @@
 =======
           "astId": 9799,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9799,
+=======
+          "astId": 9934,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "crossMsgFee",
           "offset": 0,
@@ -997,6 +1459,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9937,
 =======
           "astId": 9794,
@@ -1004,6 +1467,12 @@
 =======
           "astId": 9802,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9802,
+=======
+          "astId": 9937,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "majorityPercentage",
           "offset": 0,
@@ -1013,6 +1482,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9940,
 =======
           "astId": 9797,
@@ -1020,6 +1490,12 @@
 =======
           "astId": 9805,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9805,
+=======
+          "astId": 9940,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpNonce",
           "offset": 1,
@@ -1029,6 +1505,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9943,
 =======
           "astId": 9800,
@@ -1036,6 +1513,12 @@
 =======
           "astId": 9808,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9808,
+=======
+          "astId": 9943,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedTopDownNonce",
           "offset": 9,
@@ -1045,6 +1528,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9946,
 =======
           "astId": 9803,
@@ -1052,6 +1536,12 @@
 =======
           "astId": 9811,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9811,
+=======
+          "astId": 9946,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownCheckPeriod",
           "offset": 17,
@@ -1061,6 +1551,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9949,
 =======
           "astId": 9806,
@@ -1068,6 +1559,12 @@
 =======
           "astId": 9814,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9814,
+=======
+          "astId": 9949,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalSubnets",
           "offset": 0,
@@ -1077,6 +1574,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9951,
 =======
           "astId": 9808,
@@ -1084,6 +1582,12 @@
 =======
           "astId": 9816,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9816,
+=======
+          "astId": 9951,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "bottomUpCheckPeriod",
           "offset": 8,
@@ -1093,6 +1597,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 9954,
 =======
           "astId": 9811,
@@ -1100,6 +1605,12 @@
 =======
           "astId": 9819,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 9819,
+=======
+          "astId": 9954,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "initialized",
           "offset": 16,
@@ -1111,6 +1622,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(IPCAddress)14403_storage": {
 =======
     "t_struct(IPCAddress)13826_storage": {
@@ -1118,10 +1630,17 @@
 =======
     "t_struct(IPCAddress)13878_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(IPCAddress)13878_storage": {
+=======
+    "t_struct(IPCAddress)14403_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14399,
@@ -1131,10 +1650,17 @@
 =======
           "astId": 13874,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13874,
+=======
+          "astId": 14399,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)14296_storage"
@@ -1148,15 +1674,27 @@
           "astId": 13825,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(SubnetID)13771_storage"
         },
         {
           "astId": 13877,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(SubnetID)14296_storage"
+        },
+        {
+          "astId": 14402,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(FvmAddress)14266_storage"
@@ -1166,10 +1704,17 @@
 =======
           "type": "t_struct(FvmAddress)13741_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_struct(FvmAddress)13741_storage"
+=======
+          "type": "t_struct(FvmAddress)14266_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "128"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(Membership)14439_storage": {
@@ -1179,10 +1724,17 @@
 =======
     "t_struct(Membership)13914_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(Membership)13914_storage": {
+=======
+    "t_struct(Membership)14439_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct Membership",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14434,
@@ -1192,10 +1744,17 @@
 =======
           "astId": 13909,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13909,
+=======
+          "astId": 14434,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "validators",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_array(t_struct(Validator)14430_storage)dyn_storage"
@@ -1209,11 +1768,22 @@
           "astId": 13859,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_array(t_struct(Validator)13905_storage)dyn_storage"
         },
         {
           "astId": 13911,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_array(t_struct(Validator)14430_storage)dyn_storage"
+        },
+        {
+          "astId": 14436,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "configurationNumber",
           "offset": 0,
@@ -1223,6 +1793,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14438,
 =======
           "astId": 13861,
@@ -1230,6 +1801,12 @@
 =======
           "astId": 13913,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13913,
+=======
+          "astId": 14438,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "totalWeight",
           "offset": 0,
@@ -1241,6 +1818,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(ParentFinality)14191_storage": {
 =======
     "t_struct(ParentFinality)13614_storage": {
@@ -1248,10 +1826,17 @@
 =======
     "t_struct(ParentFinality)13666_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(ParentFinality)13666_storage": {
+=======
+    "t_struct(ParentFinality)14191_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct ParentFinality",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14188,
@@ -1261,6 +1846,12 @@
 =======
           "astId": 13663,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13663,
+=======
+          "astId": 14188,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "height",
           "offset": 0,
@@ -1270,6 +1861,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14190,
 =======
           "astId": 13613,
@@ -1277,6 +1869,12 @@
 =======
           "astId": 13665,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13665,
+=======
+          "astId": 14190,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "blockHash",
           "offset": 0,
@@ -1311,6 +1909,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(StorableMsg)14259_storage": {
 =======
     "t_struct(StorableMsg)13682_storage": {
@@ -1318,10 +1917,17 @@
 =======
     "t_struct(StorableMsg)13734_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(StorableMsg)13734_storage": {
+=======
+    "t_struct(StorableMsg)14259_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14247,
@@ -1331,10 +1937,17 @@
 =======
           "astId": 13722,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13722,
+=======
+          "astId": 14247,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "from",
           "offset": 0,
           "slot": "0",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(IPCAddress)14403_storage"
@@ -1348,15 +1961,27 @@
           "astId": 13673,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(IPCAddress)13878_storage"
         },
         {
           "astId": 13725,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(IPCAddress)14403_storage"
+        },
+        {
+          "astId": 14250,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "to",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(IPCAddress)14403_storage"
@@ -1370,11 +1995,22 @@
           "astId": 13675,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(IPCAddress)13878_storage"
         },
         {
           "astId": 13727,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(IPCAddress)14403_storage"
+        },
+        {
+          "astId": 14252,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "value",
           "offset": 0,
@@ -1384,6 +2020,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14254,
 =======
           "astId": 13677,
@@ -1391,6 +2028,12 @@
 =======
           "astId": 13729,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13729,
+=======
+          "astId": 14254,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "nonce",
           "offset": 0,
@@ -1400,6 +2043,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14256,
 =======
           "astId": 13679,
@@ -1407,6 +2051,12 @@
 =======
           "astId": 13731,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13731,
+=======
+          "astId": 14256,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "method",
           "offset": 8,
@@ -1416,6 +2066,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14258,
 =======
           "astId": 13681,
@@ -1423,6 +2074,12 @@
 =======
           "astId": 13733,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13733,
+=======
+          "astId": 14258,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "params",
           "offset": 0,
@@ -1434,6 +2091,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(Subnet)14316_storage": {
 =======
     "t_struct(Subnet)13739_storage": {
@@ -1441,10 +2099,17 @@
 =======
     "t_struct(Subnet)13791_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(Subnet)13791_storage": {
+=======
+    "t_struct(Subnet)14316_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct Subnet",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14298,
@@ -1454,6 +2119,12 @@
 =======
           "astId": 13773,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13773,
+=======
+          "astId": 14298,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "stake",
           "offset": 0,
@@ -1463,6 +2134,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14300,
 =======
           "astId": 13723,
@@ -1470,6 +2142,12 @@
 =======
           "astId": 13775,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13775,
+=======
+          "astId": 14300,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "genesisEpoch",
           "offset": 0,
@@ -1479,6 +2157,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14302,
 =======
           "astId": 13725,
@@ -1486,6 +2165,12 @@
 =======
           "astId": 13777,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13777,
+=======
+          "astId": 14302,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "circSupply",
           "offset": 0,
@@ -1495,6 +2180,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14304,
 =======
           "astId": 13727,
@@ -1502,6 +2188,12 @@
 =======
           "astId": 13779,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13779,
+=======
+          "astId": 14304,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "topDownNonce",
           "offset": 0,
@@ -1511,6 +2203,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14306,
 =======
           "astId": 13729,
@@ -1518,6 +2211,12 @@
 =======
           "astId": 13781,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13781,
+=======
+          "astId": 14306,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "appliedBottomUpNonce",
           "offset": 8,
@@ -1527,6 +2226,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14309,
 =======
           "astId": 13732,
@@ -1534,10 +2234,17 @@
 =======
           "astId": 13784,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13784,
+=======
+          "astId": 14309,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "status",
           "offset": 16,
           "slot": "3",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_enum(Status)4989"
@@ -1551,15 +2258,27 @@
           "astId": 13735,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_enum(Status)4966"
         },
         {
           "astId": 13787,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_enum(Status)4989"
+        },
+        {
+          "astId": 14312,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "id",
           "offset": 0,
           "slot": "4",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(SubnetID)14296_storage"
@@ -1573,15 +2292,27 @@
           "astId": 13738,
 >>>>>>> b69807a (clean up unused fields)
 =======
+=======
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "type": "t_struct(SubnetID)13771_storage"
         },
         {
           "astId": 13790,
+<<<<<<< HEAD
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+=======
+          "type": "t_struct(SubnetID)14296_storage"
+        },
+        {
+          "astId": 14315,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "prevCheckpoint",
           "offset": 0,
           "slot": "6",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(BottomUpCheckpoint)14208_storage"
@@ -1591,10 +2322,17 @@
 =======
           "type": "t_struct(BottomUpCheckpoint)13683_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_struct(BottomUpCheckpoint)13683_storage"
+=======
+          "type": "t_struct(BottomUpCheckpoint)14208_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "384"
     },
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
     "t_struct(SubnetID)14296_storage": {
@@ -1604,10 +2342,17 @@
 =======
     "t_struct(SubnetID)13771_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(SubnetID)13771_storage": {
+=======
+    "t_struct(SubnetID)14296_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14291,
@@ -1617,6 +2362,12 @@
 =======
           "astId": 13766,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13766,
+=======
+          "astId": 14291,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "root",
           "offset": 0,
@@ -1626,6 +2377,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14295,
 =======
           "astId": 13718,
@@ -1633,6 +2385,12 @@
 =======
           "astId": 13770,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13770,
+=======
+          "astId": 14295,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "route",
           "offset": 0,
@@ -1659,6 +2417,7 @@
     },
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
     "t_struct(Validator)14430_storage": {
 =======
     "t_struct(Validator)13853_storage": {
@@ -1666,10 +2425,17 @@
 =======
     "t_struct(Validator)13905_storage": {
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+    "t_struct(Validator)13905_storage": {
+=======
+    "t_struct(Validator)14430_storage": {
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "astId": 14426,
@@ -1679,6 +2445,12 @@
 =======
           "astId": 13901,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13901,
+=======
+          "astId": 14426,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "weight",
           "offset": 0,
@@ -1688,6 +2460,7 @@
         {
 <<<<<<< HEAD
 <<<<<<< HEAD
+<<<<<<< HEAD
           "astId": 14429,
 =======
           "astId": 13852,
@@ -1695,10 +2468,17 @@
 =======
           "astId": 13904,
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "astId": 13904,
+=======
+          "astId": 14429,
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
           "contract": "src/lib/LibGatewayActorStorage.sol:GatewayActorModifiers",
           "label": "addr",
           "offset": 0,
           "slot": "1",
+<<<<<<< HEAD
 <<<<<<< HEAD
 <<<<<<< HEAD
           "type": "t_struct(FvmAddress)14266_storage"
@@ -1708,6 +2488,12 @@
 =======
           "type": "t_struct(FvmAddress)13741_storage"
 >>>>>>> 729eb79 (enable gateway tests)
+=======
+          "type": "t_struct(FvmAddress)13741_storage"
+=======
+          "type": "t_struct(FvmAddress)14266_storage"
+>>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
+>>>>>>> aeeec22 (Multi-signature ECDSA (#192))
         }
       ],
       "numberOfBytes": "96"
