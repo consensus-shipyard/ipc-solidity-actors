@@ -6,61 +6,7 @@
       "label": "s",
       "offset": 0,
       "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "type": "t_struct(GatewayActorStorage)9955_storage"
-=======
-      "type": "t_struct(GatewayActorStorage)9812_storage"
->>>>>>> b69807a (clean up unused fields)
-=======
-      "type": "t_struct(GatewayActorStorage)9820_storage"
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "type": "t_struct(GatewayActorStorage)9820_storage"
-=======
-      "type": "t_struct(GatewayActorStorage)9955_storage"
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "type": "t_struct(GatewayActorStorage)9955_storage"
-=======
-      "type": "t_struct(GatewayActorStorage)9812_storage"
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "type": "t_struct(GatewayActorStorage)9820_storage"
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "type": "t_struct(GatewayActorStorage)9848_storage"
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "type": "t_struct(GatewayActorStorage)9813_storage"
->>>>>>> 54a8fa7 (update storage)
+      "type": "t_struct(GatewayActorStorage)9811_storage"
     }
   ],
   "types": {
@@ -81,150 +27,14 @@
       "label": "bytes32[]",
       "numberOfBytes": "32"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_array(t_struct(CrossMsg)14244_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)14244_storage",
-=======
-    "t_array(t_struct(CrossMsg)13667_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13667_storage",
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_array(t_struct(CrossMsg)13719_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13719_storage",
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_array(t_struct(CrossMsg)13719_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13719_storage",
-=======
-    "t_array(t_struct(CrossMsg)14244_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)14244_storage",
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_array(t_struct(CrossMsg)14244_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)14244_storage",
-=======
-    "t_array(t_struct(CrossMsg)13667_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13667_storage",
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_array(t_struct(CrossMsg)13719_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)13719_storage",
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_array(t_struct(CrossMsg)14047_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)14047_storage",
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_array(t_struct(CrossMsg)14012_storage)dyn_storage": {
-      "base": "t_struct(CrossMsg)14012_storage",
->>>>>>> 54a8fa7 (update storage)
+    "t_array(t_struct(CrossMsg)14010_storage)dyn_storage": {
+      "base": "t_struct(CrossMsg)14010_storage",
       "encoding": "dynamic_array",
       "label": "struct CrossMsg[]",
       "numberOfBytes": "32"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_array(t_struct(Validator)14430_storage)dyn_storage": {
-      "base": "t_struct(Validator)14430_storage",
-=======
-    "t_array(t_struct(Validator)13853_storage)dyn_storage": {
-      "base": "t_struct(Validator)13853_storage",
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_array(t_struct(Validator)13905_storage)dyn_storage": {
-      "base": "t_struct(Validator)13905_storage",
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-    "t_array(t_struct(Validator)13905_storage)dyn_storage": {
-      "base": "t_struct(Validator)13905_storage",
-=======
-    "t_array(t_struct(Validator)14430_storage)dyn_storage": {
-      "base": "t_struct(Validator)14430_storage",
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_array(t_struct(Validator)14430_storage)dyn_storage": {
-      "base": "t_struct(Validator)14430_storage",
-=======
-    "t_array(t_struct(Validator)13853_storage)dyn_storage": {
-      "base": "t_struct(Validator)13853_storage",
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_array(t_struct(Validator)13905_storage)dyn_storage": {
-      "base": "t_struct(Validator)13905_storage",
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_array(t_struct(Validator)14233_storage)dyn_storage": {
-      "base": "t_struct(Validator)14233_storage",
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-    "t_array(t_struct(Validator)14216_storage)dyn_storage": {
-      "base": "t_struct(Validator)14216_storage",
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-    "t_array(t_struct(Validator)14181_storage)dyn_storage": {
-      "base": "t_struct(Validator)14181_storage",
->>>>>>> 54a8fa7 (update storage)
+    "t_array(t_struct(Validator)14179_storage)dyn_storage": {
+      "base": "t_struct(Validator)14179_storage",
       "encoding": "dynamic_array",
       "label": "struct Validator[]",
       "numberOfBytes": "32"
@@ -249,61 +59,7 @@
       "label": "bytes",
       "numberOfBytes": "32"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_enum(Status)4989": {
-=======
-    "t_enum(Status)4958": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_enum(Status)4966": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_enum(Status)4966": {
-=======
-    "t_enum(Status)4989": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_enum(Status)4989": {
-=======
-    "t_enum(Status)4958": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_enum(Status)4966": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
     "t_enum(Status)4988": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_enum(Status)4988": {
->>>>>>> 54a8fa7 (update storage)
       "encoding": "inplace",
       "label": "enum Status",
       "numberOfBytes": "1"
@@ -315,278 +71,26 @@
       "numberOfBytes": "32",
       "value": "t_bytes_storage"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))": {
-=======
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage))": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))": {
-=======
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))": {
-=======
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage))": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14047_storage)dyn_storage))": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage))": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14010_storage)dyn_storage))": {
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => mapping(uint256 => struct CrossMsg[]))",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
+      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14010_storage)dyn_storage)"
     },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)": {
-=======
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)13667_storage)": {
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)": {
-=======
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)": {
-=======
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)13667_storage)": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14047_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)14047_storage)": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)"
-    },
-    "t_mapping(t_bytes32,t_struct(CrossMsg)14012_storage)": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_bytes32,t_struct(CrossMsg)14010_storage)": {
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct CrossMsg)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(CrossMsg)14244_storage"
+      "value": "t_struct(CrossMsg)14010_storage"
     },
-    "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)": {
-=======
-      "value": "t_struct(CrossMsg)13667_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)13739_storage)": {
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_struct(CrossMsg)13719_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_struct(CrossMsg)13719_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)": {
-=======
-      "value": "t_struct(CrossMsg)14244_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_struct(CrossMsg)14244_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)": {
-=======
-      "value": "t_struct(CrossMsg)13667_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)13739_storage)": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_struct(CrossMsg)13719_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_struct(CrossMsg)14047_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)14119_storage)": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_struct(CrossMsg)14012_storage"
-    },
-    "t_mapping(t_bytes32,t_struct(Subnet)14084_storage)": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_bytes32,t_struct(Subnet)14082_storage)": {
       "encoding": "mapping",
       "key": "t_bytes32",
       "label": "mapping(bytes32 => struct Subnet)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(Subnet)14316_storage"
-=======
-      "value": "t_struct(Subnet)13739_storage"
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_struct(Subnet)13791_storage"
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_struct(Subnet)13791_storage"
-=======
-      "value": "t_struct(Subnet)14316_storage"
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_struct(Subnet)14316_storage"
-=======
-      "value": "t_struct(Subnet)13739_storage"
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_struct(Subnet)13791_storage"
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_struct(Subnet)14119_storage"
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_struct(Subnet)14084_storage"
->>>>>>> 54a8fa7 (update storage)
+      "value": "t_struct(Subnet)14082_storage"
     },
     "t_mapping(t_bytes32,t_uint256)": {
       "encoding": "mapping",
@@ -595,278 +99,26 @@
       "numberOfBytes": "32",
       "value": "t_uint256"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
-=======
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
-=======
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
-=======
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14047_storage)dyn_storage)": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_uint256,t_array(t_struct(CrossMsg)14010_storage)dyn_storage)": {
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct CrossMsg[])",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
+      "value": "t_array(t_struct(CrossMsg)14010_storage)dyn_storage"
     },
-    "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)": {
-=======
-      "value": "t_array(t_struct(CrossMsg)13667_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)13614_storage)": {
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)": {
-=======
-      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)": {
-=======
-      "value": "t_array(t_struct(CrossMsg)13667_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)13614_storage)": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_array(t_struct(CrossMsg)14047_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)13994_storage)": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_array(t_struct(CrossMsg)14012_storage)dyn_storage"
-    },
-    "t_mapping(t_uint256,t_struct(ParentFinality)13959_storage)": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_uint256,t_struct(ParentFinality)13957_storage)": {
       "encoding": "mapping",
       "key": "t_uint256",
       "label": "mapping(uint256 => struct ParentFinality)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(ParentFinality)14191_storage"
+      "value": "t_struct(ParentFinality)13957_storage"
     },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
-=======
-      "value": "t_struct(ParentFinality)13614_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)": {
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_struct(ParentFinality)13666_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_struct(ParentFinality)13666_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
-=======
-      "value": "t_struct(ParentFinality)14191_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_struct(ParentFinality)14191_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)": {
-=======
-      "value": "t_struct(ParentFinality)13614_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_struct(ParentFinality)13666_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_struct(ParentFinality)13994_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14047_storage)dyn_storage)": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_struct(ParentFinality)13959_storage"
-    },
-    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14010_storage)dyn_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CrossMsg[])",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
-=======
-      "value": "t_array(t_struct(CrossMsg)13667_storage)dyn_storage"
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
-=======
-      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_array(t_struct(CrossMsg)14244_storage)dyn_storage"
-=======
-      "value": "t_array(t_struct(CrossMsg)13667_storage)dyn_storage"
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_array(t_struct(CrossMsg)13719_storage)dyn_storage"
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_array(t_struct(CrossMsg)14047_storage)dyn_storage"
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_array(t_struct(CrossMsg)14012_storage)dyn_storage"
->>>>>>> 54a8fa7 (update storage)
+      "value": "t_array(t_struct(CrossMsg)14010_storage)dyn_storage"
     },
     "t_mapping(t_uint64,t_mapping(t_address,t_bytes_storage))": {
       "encoding": "mapping",
@@ -889,199 +141,19 @@
       "numberOfBytes": "32",
       "value": "t_struct(AddressSet)3420_storage"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)": {
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13631_storage)": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)": {
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)": {
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13631_storage)": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14011_storage)": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13976_storage)": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13974_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct BottomUpCheckpoint)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(BottomUpCheckpoint)14208_storage"
+      "value": "t_struct(BottomUpCheckpoint)13974_storage"
     },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)": {
-=======
-      "value": "t_struct(BottomUpCheckpoint)13631_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)13647_storage)": {
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_struct(BottomUpCheckpoint)13683_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_struct(BottomUpCheckpoint)13683_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)": {
-=======
-      "value": "t_struct(BottomUpCheckpoint)14208_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_struct(BottomUpCheckpoint)14208_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)": {
-=======
-      "value": "t_struct(BottomUpCheckpoint)13631_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)13647_storage)": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_struct(BottomUpCheckpoint)13683_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_struct(BottomUpCheckpoint)14011_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)14027_storage)": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_struct(BottomUpCheckpoint)13976_storage"
-    },
-    "t_mapping(t_uint64,t_struct(CheckpointInfo)13992_storage)": {
->>>>>>> 54a8fa7 (update storage)
+    "t_mapping(t_uint64,t_struct(CheckpointInfo)13990_storage)": {
       "encoding": "mapping",
       "key": "t_uint64",
       "label": "mapping(uint64 => struct CheckpointInfo)",
       "numberOfBytes": "32",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-      "value": "t_struct(CheckpointInfo)14224_storage"
-=======
-      "value": "t_struct(CheckpointInfo)13647_storage"
->>>>>>> b69807a (clean up unused fields)
-=======
-      "value": "t_struct(CheckpointInfo)13699_storage"
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-      "value": "t_struct(CheckpointInfo)13699_storage"
-=======
-      "value": "t_struct(CheckpointInfo)14224_storage"
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-      "value": "t_struct(CheckpointInfo)14224_storage"
-=======
-      "value": "t_struct(CheckpointInfo)13647_storage"
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-      "value": "t_struct(CheckpointInfo)13699_storage"
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-      "value": "t_struct(CheckpointInfo)14027_storage"
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-      "value": "t_struct(CheckpointInfo)13992_storage"
->>>>>>> 54a8fa7 (update storage)
+      "value": "t_struct(CheckpointInfo)13990_storage"
     },
     "t_struct(AddressSet)3420_storage": {
       "encoding": "inplace",
@@ -1098,207 +170,20 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(BottomUpCheckpoint)14208_storage": {
-=======
-    "t_struct(BottomUpCheckpoint)13631_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(BottomUpCheckpoint)13683_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(BottomUpCheckpoint)13683_storage": {
-=======
-    "t_struct(BottomUpCheckpoint)14208_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(BottomUpCheckpoint)14208_storage": {
-=======
-    "t_struct(BottomUpCheckpoint)13631_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(BottomUpCheckpoint)13683_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(BottomUpCheckpoint)14011_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(BottomUpCheckpoint)13976_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(BottomUpCheckpoint)13974_storage": {
       "encoding": "inplace",
       "label": "struct BottomUpCheckpoint",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14195,
-=======
-          "astId": 13618,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13670,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13670,
-=======
-          "astId": 14195,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14195,
-=======
-          "astId": 13618,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13670,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 13998,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13963,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13961,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnetID",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)14296_storage"
+          "type": "t_struct(SubnetID)14062_storage"
         },
         {
-          "astId": 14198,
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 13621,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 13673,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(SubnetID)14296_storage"
-        },
-        {
-          "astId": 14198,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 13621,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 13673,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(SubnetID)14099_storage"
-        },
-        {
-          "astId": 14001,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(SubnetID)14064_storage"
-        },
-        {
-          "astId": 13966,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13964,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "blockHeight",
           "offset": 0,
@@ -1306,61 +191,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14201,
-=======
-          "astId": 13624,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13676,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13676,
-=======
-          "astId": 14201,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14201,
-=======
-          "astId": 13624,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13676,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14004,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13969,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13967,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "blockHash",
           "offset": 0,
@@ -1368,61 +199,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14204,
-=======
-          "astId": 13627,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13679,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13679,
-=======
-          "astId": 14204,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14204,
-=======
-          "astId": 13627,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13679,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14007,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13972,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13970,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "nextConfigurationNumber",
           "offset": 0,
@@ -1430,61 +207,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14207,
-=======
-          "astId": 13630,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13682,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13682,
-=======
-          "astId": 14207,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14207,
-=======
-          "astId": 13630,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13682,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14010,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13975,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13973,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "crossMessagesHash",
           "offset": 0,
@@ -1494,120 +217,12 @@
       ],
       "numberOfBytes": "192"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(CheckpointInfo)14224_storage": {
-=======
-    "t_struct(CheckpointInfo)13647_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(CheckpointInfo)13699_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(CheckpointInfo)13699_storage": {
-=======
-    "t_struct(CheckpointInfo)14224_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(CheckpointInfo)14224_storage": {
-=======
-    "t_struct(CheckpointInfo)13647_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(CheckpointInfo)13699_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(CheckpointInfo)14027_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(CheckpointInfo)13992_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(CheckpointInfo)13990_storage": {
       "encoding": "inplace",
       "label": "struct CheckpointInfo",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14211,
-=======
-          "astId": 13634,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13686,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13686,
-=======
-          "astId": 14211,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14211,
-=======
-          "astId": 13634,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13686,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14014,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13979,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13977,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "hash",
           "offset": 0,
@@ -1615,61 +230,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14214,
-=======
-          "astId": 13637,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13689,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13689,
-=======
-          "astId": 14214,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14214,
-=======
-          "astId": 13637,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13689,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14017,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13982,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13980,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "rootHash",
           "offset": 0,
@@ -1677,61 +238,7 @@
           "type": "t_bytes32"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14217,
-=======
-          "astId": 13640,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13692,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13692,
-=======
-          "astId": 14217,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14217,
-=======
-          "astId": 13640,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13692,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14020,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13985,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13983,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "threshold",
           "offset": 0,
@@ -1739,61 +246,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14220,
-=======
-          "astId": 13643,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13695,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13695,
-=======
-          "astId": 14220,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14220,
-=======
-          "astId": 13643,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13695,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14023,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13988,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13986,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "currentWeight",
           "offset": 0,
@@ -1801,61 +254,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14223,
-=======
-          "astId": 13646,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13698,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13698,
-=======
-          "astId": 14223,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14223,
-=======
-          "astId": 13646,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13698,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14026,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13991,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13989,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "reached",
           "offset": 0,
@@ -1865,207 +264,20 @@
       ],
       "numberOfBytes": "160"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(CrossMsg)14244_storage": {
-=======
-    "t_struct(CrossMsg)13667_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(CrossMsg)13719_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(CrossMsg)13719_storage": {
-=======
-    "t_struct(CrossMsg)14244_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(CrossMsg)14244_storage": {
-=======
-    "t_struct(CrossMsg)13667_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(CrossMsg)13719_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(CrossMsg)14047_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(CrossMsg)14012_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(CrossMsg)14010_storage": {
       "encoding": "inplace",
       "label": "struct CrossMsg",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14241,
-=======
-          "astId": 13664,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13716,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13716,
-=======
-          "astId": 14241,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14241,
-=======
-          "astId": 13664,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13716,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14044,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14009,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14007,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "message",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(StorableMsg)14259_storage"
+          "type": "t_struct(StorableMsg)14025_storage"
         },
         {
-          "astId": 14243,
-=======
-          "type": "t_struct(StorableMsg)13682_storage"
-        },
-        {
-          "astId": 13666,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(StorableMsg)13734_storage"
-        },
-        {
-          "astId": 13718,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(StorableMsg)14259_storage"
-        },
-        {
-          "astId": 14243,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(StorableMsg)13682_storage"
-        },
-        {
-          "astId": 13666,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(StorableMsg)13734_storage"
-        },
-        {
-          "astId": 13718,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(StorableMsg)14062_storage"
-        },
-        {
-          "astId": 14046,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(StorableMsg)14027_storage"
-        },
-        {
-          "astId": 14011,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14009,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "wrapped",
           "offset": 0,
@@ -2075,120 +287,12 @@
       ],
       "numberOfBytes": "384"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(FvmAddress)14266_storage": {
-=======
-    "t_struct(FvmAddress)13689_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(FvmAddress)13741_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(FvmAddress)13741_storage": {
-=======
-    "t_struct(FvmAddress)14266_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(FvmAddress)14266_storage": {
-=======
-    "t_struct(FvmAddress)13689_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(FvmAddress)13741_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(FvmAddress)14069_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(FvmAddress)14034_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(FvmAddress)14032_storage": {
       "encoding": "inplace",
       "label": "struct FvmAddress",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14263,
-=======
-          "astId": 13686,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13738,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13738,
-=======
-          "astId": 14263,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14263,
-=======
-          "astId": 13686,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13738,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14066,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14031,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14029,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "addrType",
           "offset": 0,
@@ -2196,61 +300,7 @@
           "type": "t_uint8"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14265,
-=======
-          "astId": 13688,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13740,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13740,
-=======
-          "astId": 14265,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14265,
-=======
-          "astId": 13688,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13740,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14068,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14033,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14031,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "payload",
           "offset": 0,
@@ -2260,381 +310,36 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(GatewayActorStorage)9955_storage": {
-=======
-    "t_struct(GatewayActorStorage)9812_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(GatewayActorStorage)9820_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(GatewayActorStorage)9820_storage": {
-=======
-    "t_struct(GatewayActorStorage)9955_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(GatewayActorStorage)9955_storage": {
-=======
-    "t_struct(GatewayActorStorage)9812_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(GatewayActorStorage)9820_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(GatewayActorStorage)9848_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(GatewayActorStorage)9813_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(GatewayActorStorage)9811_storage": {
       "encoding": "inplace",
       "label": "struct GatewayActorStorage",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9842,
-=======
-          "astId": 9699,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9707,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9707,
-=======
-          "astId": 9842,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9842,
-=======
-          "astId": 9699,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9707,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9735,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9700,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9698,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnets",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)"
+          "type": "t_mapping(t_bytes32,t_struct(Subnet)14082_storage)"
         },
         {
-          "astId": 9851,
-=======
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)13739_storage)"
-        },
-        {
-          "astId": 9708,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)"
-        },
-        {
-          "astId": 9716,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)14316_storage)"
-        },
-        {
-          "astId": 9851,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)13739_storage)"
-        },
-        {
-          "astId": 9708,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)13791_storage)"
-        },
-        {
-          "astId": 9716,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)14119_storage)"
-        },
-        {
-          "astId": 9744,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_mapping(t_bytes32,t_struct(Subnet)14084_storage)"
-        },
-        {
-          "astId": 9709,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9707,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "topDownMsgs",
           "offset": 0,
           "slot": "1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))"
+          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14010_storage)dyn_storage))"
         },
         {
-          "astId": 9857,
-=======
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage))"
-        },
-        {
-          "astId": 9714,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))"
-        },
-        {
-          "astId": 9722,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14244_storage)dyn_storage))"
-        },
-        {
-          "astId": 9857,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13667_storage)dyn_storage))"
-        },
-        {
-          "astId": 9714,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)13719_storage)dyn_storage))"
-        },
-        {
-          "astId": 9722,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14047_storage)dyn_storage))"
-        },
-        {
-          "astId": 9750,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_mapping(t_bytes32,t_mapping(t_uint256,t_array(t_struct(CrossMsg)14012_storage)dyn_storage))"
-        },
-        {
-          "astId": 9715,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9713,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "finalitiesMap",
           "offset": 0,
           "slot": "2",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)"
+          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13957_storage)"
         },
         {
-          "astId": 9860,
-=======
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13614_storage)"
-        },
-        {
-          "astId": 9717,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)"
-        },
-        {
-          "astId": 9725,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)14191_storage)"
-        },
-        {
-          "astId": 9860,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13614_storage)"
-        },
-        {
-          "astId": 9717,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13666_storage)"
-        },
-        {
-          "astId": 9725,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13994_storage)"
-        },
-        {
-          "astId": 9753,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_mapping(t_uint256,t_struct(ParentFinality)13959_storage)"
-        },
-        {
-          "astId": 9718,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9716,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "latestParentHeight",
           "offset": 0,
@@ -2642,148 +347,15 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9866,
-=======
-          "astId": 9723,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9731,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9731,
-=======
-          "astId": 9866,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9866,
-=======
-          "astId": 9723,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9731,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9759,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9724,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9722,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "postbox",
           "offset": 0,
           "slot": "4",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)"
+          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14010_storage)"
         },
         {
-          "astId": 9873,
-=======
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)13667_storage)"
-        },
-        {
-          "astId": 9730,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)"
-        },
-        {
-          "astId": 9738,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14244_storage)"
-        },
-        {
-          "astId": 9873,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)13667_storage)"
-        },
-        {
-          "astId": 9730,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)13719_storage)"
-        },
-        {
-          "astId": 9738,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14047_storage)"
-        },
-        {
-          "astId": 9766,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_mapping(t_bytes32,t_struct(CrossMsg)14012_storage)"
-        },
-        {
-          "astId": 9731,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9729,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "validatorSetWeights",
           "offset": 0,
@@ -2791,508 +363,47 @@
           "type": "t_mapping(t_uint64,t_mapping(t_bytes32,t_uint256))"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9877,
-=======
-          "astId": 9734,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9742,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9742,
-=======
-          "astId": 9877,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9877,
-=======
-          "astId": 9734,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9742,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9770,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9735,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9733,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "currentMembership",
           "offset": 0,
           "slot": "6",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(Membership)14439_storage"
+          "type": "t_struct(Membership)14188_storage"
         },
         {
-          "astId": 9881,
-=======
-          "type": "t_struct(Membership)13862_storage"
-        },
-        {
-          "astId": 9738,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-          "type": "t_struct(Membership)13914_storage"
-        },
-        {
-          "astId": 9746,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(Membership)14439_storage"
-        },
-        {
-          "astId": 9881,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(Membership)13862_storage"
-        },
-        {
-          "astId": 9738,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(Membership)13914_storage"
-        },
-        {
-          "astId": 9746,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(Membership)14242_storage"
-=======
-          "type": "t_struct(Membership)14225_storage"
->>>>>>> 510308a (remove more struct)
-        },
-        {
-          "astId": 9774,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(Membership)14190_storage"
-        },
-        {
-          "astId": 9739,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9737,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "lastMembership",
           "offset": 0,
           "slot": "9",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(Membership)14439_storage"
+          "type": "t_struct(Membership)14188_storage"
         },
         {
-          "astId": 9887,
-=======
-          "type": "t_struct(Membership)13862_storage"
-        },
-        {
-          "astId": 9744,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-          "type": "t_struct(Membership)13914_storage"
-        },
-        {
-          "astId": 9752,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(Membership)14439_storage"
-        },
-        {
-          "astId": 9887,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(Membership)13862_storage"
-        },
-        {
-          "astId": 9744,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(Membership)13914_storage"
-        },
-        {
-          "astId": 9752,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(Membership)14242_storage"
-=======
-          "type": "t_struct(Membership)14225_storage"
->>>>>>> 510308a (remove more struct)
-        },
-        {
-          "astId": 9780,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(Membership)14190_storage"
-        },
-        {
-          "astId": 9745,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9743,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckpoints",
           "offset": 0,
           "slot": "12",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)"
+          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13974_storage)"
         },
         {
-          "astId": 9893,
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13631_storage)"
-        },
-        {
-          "astId": 9750,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)"
-        },
-        {
-          "astId": 9758,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14208_storage)"
-        },
-        {
-          "astId": 9893,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13631_storage)"
-        },
-        {
-          "astId": 9750,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13683_storage)"
-        },
-        {
-          "astId": 9758,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)14011_storage)"
-        },
-        {
-          "astId": 9786,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)13976_storage)"
-        },
-        {
-          "astId": 9751,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9749,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckpointInfo",
           "offset": 0,
           "slot": "13",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)"
+          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13990_storage)"
         },
         {
-          "astId": 9900,
-=======
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13647_storage)"
-        },
-        {
-          "astId": 9757,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)"
-        },
-        {
-          "astId": 9765,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)14224_storage)"
-        },
-        {
-          "astId": 9900,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13647_storage)"
-        },
-        {
-          "astId": 9757,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13699_storage)"
-        },
-        {
-          "astId": 9765,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)14027_storage)"
-        },
-        {
-          "astId": 9793,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)13992_storage)"
-        },
-        {
-          "astId": 9758,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9756,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpMessages",
           "offset": 0,
           "slot": "14",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
+          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14010_storage)dyn_storage)"
         },
         {
-          "astId": 9903,
-=======
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)"
-        },
-        {
-          "astId": 9760,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)"
-        },
-        {
-          "astId": 9768,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14244_storage)dyn_storage)"
-        },
-        {
-          "astId": 9903,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13667_storage)dyn_storage)"
-        },
-        {
-          "astId": 9760,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)13719_storage)dyn_storage)"
-        },
-        {
-          "astId": 9768,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14047_storage)dyn_storage)"
-        },
-        {
-          "astId": 9796,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)14012_storage)dyn_storage)"
-        },
-        {
-          "astId": 9761,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9759,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckpointRetentionHeight",
           "offset": 0,
@@ -3300,61 +411,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9907,
-=======
-          "astId": 9764,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9772,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9772,
-=======
-          "astId": 9907,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9907,
-=======
-          "astId": 9764,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9772,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9800,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9765,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9763,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "incompleteCheckpoints",
           "offset": 0,
@@ -3362,61 +419,7 @@
           "type": "t_struct(UintSet)3577_storage"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9913,
-=======
-          "astId": 9770,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9778,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9778,
-=======
-          "astId": 9913,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9913,
-=======
-          "astId": 9770,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9778,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9806,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9771,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9769,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpSignatureSenders",
           "offset": 0,
@@ -3424,61 +427,7 @@
           "type": "t_mapping(t_uint64,t_struct(AddressSet)3420_storage)"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9920,
-=======
-          "astId": 9777,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9785,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9785,
-=======
-          "astId": 9920,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9920,
-=======
-          "astId": 9777,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9785,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9813,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9778,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9776,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpSignatures",
           "offset": 0,
@@ -3486,61 +435,7 @@
           "type": "t_mapping(t_uint64,t_mapping(t_address,t_bytes_storage))"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9924,
-=======
-          "astId": 9781,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9789,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9789,
-=======
-          "astId": 9924,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9924,
-=======
-          "astId": 9781,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9789,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9817,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9782,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9780,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnetKeys",
           "offset": 0,
@@ -3548,148 +443,15 @@
           "type": "t_array(t_bytes32)dyn_storage"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9928,
-=======
-          "astId": 9785,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9793,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9793,
-=======
-          "astId": 9928,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9928,
-=======
-          "astId": 9785,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9793,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9821,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9786,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9784,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "networkName",
           "offset": 0,
           "slot": "21",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)14296_storage"
+          "type": "t_struct(SubnetID)14062_storage"
         },
         {
-          "astId": 9931,
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 9788,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 9796,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(SubnetID)14296_storage"
-        },
-        {
-          "astId": 9931,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 9788,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 9796,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(SubnetID)14099_storage"
-        },
-        {
-          "astId": 9824,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(SubnetID)14064_storage"
-        },
-        {
-          "astId": 9789,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9787,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "minStake",
           "offset": 0,
@@ -3697,61 +459,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9934,
-=======
-          "astId": 9791,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9799,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9799,
-=======
-          "astId": 9934,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9934,
-=======
-          "astId": 9791,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9799,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9827,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9792,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9790,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "crossMsgFee",
           "offset": 0,
@@ -3759,61 +467,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9937,
-=======
-          "astId": 9794,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9802,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9802,
-=======
-          "astId": 9937,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9937,
-=======
-          "astId": 9794,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9802,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9830,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9795,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9793,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "majorityPercentage",
           "offset": 0,
@@ -3821,61 +475,7 @@
           "type": "t_uint8"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9940,
-=======
-          "astId": 9797,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9805,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9805,
-=======
-          "astId": 9940,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9940,
-=======
-          "astId": 9797,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9805,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9833,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9798,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9796,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpNonce",
           "offset": 1,
@@ -3883,61 +483,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9943,
-=======
-          "astId": 9800,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9808,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9808,
-=======
-          "astId": 9943,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9943,
-=======
-          "astId": 9800,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9808,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9836,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9801,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9799,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "appliedTopDownNonce",
           "offset": 9,
@@ -3945,61 +491,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9946,
-=======
-          "astId": 9803,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9811,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9811,
-=======
-          "astId": 9946,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9946,
-=======
-          "astId": 9803,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9811,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9839,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9804,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9802,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "topDownCheckPeriod",
           "offset": 17,
@@ -4007,61 +499,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9949,
-=======
-          "astId": 9806,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9814,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9814,
-=======
-          "astId": 9949,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9949,
-=======
-          "astId": 9806,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9814,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9842,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9807,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9805,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "totalSubnets",
           "offset": 0,
@@ -4069,61 +507,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9951,
-=======
-          "astId": 9808,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9816,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9816,
-=======
-          "astId": 9951,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9951,
-=======
-          "astId": 9808,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9816,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9844,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9809,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9807,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "bottomUpCheckPeriod",
           "offset": 8,
@@ -4131,61 +515,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 9954,
-=======
-          "astId": 9811,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 9819,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 9819,
-=======
-          "astId": 9954,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 9954,
-=======
-          "astId": 9811,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 9819,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 9847,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 9812,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 9810,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "initialized",
           "offset": 16,
@@ -4195,501 +525,43 @@
       ],
       "numberOfBytes": "864"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(IPCAddress)14403_storage": {
-=======
-    "t_struct(IPCAddress)13826_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(IPCAddress)13878_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(IPCAddress)13878_storage": {
-=======
-    "t_struct(IPCAddress)14403_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(IPCAddress)14403_storage": {
-=======
-    "t_struct(IPCAddress)13826_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(IPCAddress)13878_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(IPCAddress)14206_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(IPCAddress)14171_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(IPCAddress)14169_storage": {
       "encoding": "inplace",
       "label": "struct IPCAddress",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14399,
-=======
-          "astId": 13822,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13874,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13874,
-=======
-          "astId": 14399,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14399,
-=======
-          "astId": 13822,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13874,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14202,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14167,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14165,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "subnetId",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)14296_storage"
+          "type": "t_struct(SubnetID)14062_storage"
         },
         {
-          "astId": 14402,
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 13825,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 13877,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(SubnetID)14296_storage"
-        },
-        {
-          "astId": 14402,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 13825,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 13877,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(SubnetID)14099_storage"
-        },
-        {
-          "astId": 14205,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(SubnetID)14064_storage"
-        },
-        {
-          "astId": 14170,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14168,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "rawAddress",
           "offset": 0,
           "slot": "2",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(FvmAddress)14266_storage"
-=======
-          "type": "t_struct(FvmAddress)13689_storage"
->>>>>>> b69807a (clean up unused fields)
-=======
-          "type": "t_struct(FvmAddress)13741_storage"
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(FvmAddress)13741_storage"
-=======
-          "type": "t_struct(FvmAddress)14266_storage"
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(FvmAddress)14266_storage"
-=======
-          "type": "t_struct(FvmAddress)13689_storage"
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(FvmAddress)13741_storage"
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(FvmAddress)14069_storage"
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(FvmAddress)14034_storage"
->>>>>>> 54a8fa7 (update storage)
+          "type": "t_struct(FvmAddress)14032_storage"
         }
       ],
       "numberOfBytes": "128"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(Membership)14439_storage": {
-=======
-    "t_struct(Membership)13862_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(Membership)13914_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-    "t_struct(Membership)13914_storage": {
-=======
-    "t_struct(Membership)14439_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(Membership)14439_storage": {
-=======
-    "t_struct(Membership)13862_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(Membership)13914_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(Membership)14242_storage": {
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-    "t_struct(Membership)14225_storage": {
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-    "t_struct(Membership)14190_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(Membership)14188_storage": {
       "encoding": "inplace",
       "label": "struct Membership",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14434,
-=======
-          "astId": 13857,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13909,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-          "astId": 13909,
-=======
-          "astId": 14434,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14434,
-=======
-          "astId": 13857,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13909,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14237,
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-          "astId": 14220,
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-          "astId": 14185,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14183,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "validators",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_array(t_struct(Validator)14430_storage)dyn_storage"
+          "type": "t_array(t_struct(Validator)14179_storage)dyn_storage"
         },
         {
-          "astId": 14436,
-=======
-          "type": "t_array(t_struct(Validator)13853_storage)dyn_storage"
-        },
-        {
-          "astId": 13859,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-          "type": "t_array(t_struct(Validator)13905_storage)dyn_storage"
-        },
-        {
-          "astId": 13911,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_array(t_struct(Validator)14430_storage)dyn_storage"
-        },
-        {
-          "astId": 14436,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_array(t_struct(Validator)13853_storage)dyn_storage"
-        },
-        {
-          "astId": 13859,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_array(t_struct(Validator)13905_storage)dyn_storage"
-        },
-        {
-          "astId": 13911,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_array(t_struct(Validator)14233_storage)dyn_storage"
-        },
-        {
-          "astId": 14239,
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-          "type": "t_array(t_struct(Validator)14216_storage)dyn_storage"
-        },
-        {
-          "astId": 14222,
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-          "type": "t_array(t_struct(Validator)14181_storage)dyn_storage"
-        },
-        {
-          "astId": 14187,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14185,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "configurationNumber",
           "offset": 0,
@@ -4697,70 +569,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14438,
-=======
-          "astId": 13861,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13913,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-          "astId": 13913,
-=======
-          "astId": 14438,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14438,
-=======
-          "astId": 13861,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13913,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14241,
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-          "astId": 14224,
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-          "astId": 14189,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14187,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "totalWeight",
           "offset": 0,
@@ -4770,120 +579,12 @@
       ],
       "numberOfBytes": "96"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(ParentFinality)14191_storage": {
-=======
-    "t_struct(ParentFinality)13614_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(ParentFinality)13666_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(ParentFinality)13666_storage": {
-=======
-    "t_struct(ParentFinality)14191_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(ParentFinality)14191_storage": {
-=======
-    "t_struct(ParentFinality)13614_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(ParentFinality)13666_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(ParentFinality)13994_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(ParentFinality)13959_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(ParentFinality)13957_storage": {
       "encoding": "inplace",
       "label": "struct ParentFinality",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14188,
-=======
-          "astId": 13611,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13663,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13663,
-=======
-          "astId": 14188,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14188,
-=======
-          "astId": 13611,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13663,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 13991,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13956,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13954,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "height",
           "offset": 0,
@@ -4891,61 +592,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14190,
-=======
-          "astId": 13613,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13665,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13665,
-=======
-          "astId": 14190,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14190,
-=======
-          "astId": 13613,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13665,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 13993,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 13958,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 13956,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "blockHash",
           "offset": 0,
@@ -4978,294 +625,28 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(StorableMsg)14259_storage": {
-=======
-    "t_struct(StorableMsg)13682_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(StorableMsg)13734_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(StorableMsg)13734_storage": {
-=======
-    "t_struct(StorableMsg)14259_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(StorableMsg)14259_storage": {
-=======
-    "t_struct(StorableMsg)13682_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(StorableMsg)13734_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(StorableMsg)14062_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(StorableMsg)14027_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(StorableMsg)14025_storage": {
       "encoding": "inplace",
       "label": "struct StorableMsg",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14247,
-=======
-          "astId": 13670,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13722,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13722,
-=======
-          "astId": 14247,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14247,
-=======
-          "astId": 13670,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13722,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14050,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14015,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14013,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "from",
           "offset": 0,
           "slot": "0",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(IPCAddress)14403_storage"
+          "type": "t_struct(IPCAddress)14169_storage"
         },
         {
-          "astId": 14250,
-=======
-          "type": "t_struct(IPCAddress)13826_storage"
-        },
-        {
-          "astId": 13673,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(IPCAddress)13878_storage"
-        },
-        {
-          "astId": 13725,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(IPCAddress)14403_storage"
-        },
-        {
-          "astId": 14250,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(IPCAddress)13826_storage"
-        },
-        {
-          "astId": 13673,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(IPCAddress)13878_storage"
-        },
-        {
-          "astId": 13725,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(IPCAddress)14206_storage"
-        },
-        {
-          "astId": 14053,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(IPCAddress)14171_storage"
-        },
-        {
-          "astId": 14018,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14016,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "to",
           "offset": 0,
           "slot": "4",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(IPCAddress)14403_storage"
+          "type": "t_struct(IPCAddress)14169_storage"
         },
         {
-          "astId": 14252,
-=======
-          "type": "t_struct(IPCAddress)13826_storage"
-        },
-        {
-          "astId": 13675,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(IPCAddress)13878_storage"
-        },
-        {
-          "astId": 13727,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(IPCAddress)14403_storage"
-        },
-        {
-          "astId": 14252,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(IPCAddress)13826_storage"
-        },
-        {
-          "astId": 13675,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(IPCAddress)13878_storage"
-        },
-        {
-          "astId": 13727,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(IPCAddress)14206_storage"
-        },
-        {
-          "astId": 14055,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(IPCAddress)14171_storage"
-        },
-        {
-          "astId": 14020,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14018,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "value",
           "offset": 0,
@@ -5273,61 +654,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14254,
-=======
-          "astId": 13677,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13729,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13729,
-=======
-          "astId": 14254,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14254,
-=======
-          "astId": 13677,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13729,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14057,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14022,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14020,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "nonce",
           "offset": 0,
@@ -5335,61 +662,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14256,
-=======
-          "astId": 13679,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13731,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13731,
-=======
-          "astId": 14256,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14256,
-=======
-          "astId": 13679,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13731,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14059,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14024,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14022,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "method",
           "offset": 8,
@@ -5397,61 +670,7 @@
           "type": "t_bytes4"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14258,
-=======
-          "astId": 13681,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13733,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13733,
-=======
-          "astId": 14258,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14258,
-=======
-          "astId": 13681,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13733,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14061,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14026,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14024,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "params",
           "offset": 0,
@@ -5461,120 +680,12 @@
       ],
       "numberOfBytes": "352"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(Subnet)14316_storage": {
-=======
-    "t_struct(Subnet)13739_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(Subnet)13791_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(Subnet)13791_storage": {
-=======
-    "t_struct(Subnet)14316_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(Subnet)14316_storage": {
-=======
-    "t_struct(Subnet)13739_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(Subnet)13791_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(Subnet)14119_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(Subnet)14084_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(Subnet)14082_storage": {
       "encoding": "inplace",
       "label": "struct Subnet",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14298,
-=======
-          "astId": 13721,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13773,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13773,
-=======
-          "astId": 14298,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14298,
-=======
-          "astId": 13721,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13773,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14101,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14066,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14064,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "stake",
           "offset": 0,
@@ -5582,61 +693,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14300,
-=======
-          "astId": 13723,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13775,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13775,
-=======
-          "astId": 14300,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14300,
-=======
-          "astId": 13723,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13775,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14103,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14068,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14066,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "genesisEpoch",
           "offset": 0,
@@ -5644,61 +701,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14302,
-=======
-          "astId": 13725,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13777,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13777,
-=======
-          "astId": 14302,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14302,
-=======
-          "astId": 13725,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13777,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14105,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14070,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14068,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "circSupply",
           "offset": 0,
@@ -5706,61 +709,7 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14304,
-=======
-          "astId": 13727,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13779,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13779,
-=======
-          "astId": 14304,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14304,
-=======
-          "astId": 13727,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13779,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14107,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14072,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14070,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "topDownNonce",
           "offset": 0,
@@ -5768,61 +717,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14306,
-=======
-          "astId": 13729,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13781,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13781,
-=======
-          "astId": 14306,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14306,
-=======
-          "astId": 13729,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13781,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14109,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14074,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14072,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "appliedBottomUpNonce",
           "offset": 8,
@@ -5830,412 +725,38 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14309,
-=======
-          "astId": 13732,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13784,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13784,
-=======
-          "astId": 14309,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14309,
-=======
-          "astId": 13732,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13784,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14112,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14077,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14075,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "status",
           "offset": 16,
           "slot": "3",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_enum(Status)4989"
-        },
-        {
-          "astId": 14312,
-=======
-          "type": "t_enum(Status)4958"
-        },
-        {
-          "astId": 13735,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_enum(Status)4966"
-        },
-        {
-          "astId": 13787,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_enum(Status)4989"
-        },
-        {
-          "astId": 14312,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_enum(Status)4958"
-        },
-        {
-          "astId": 13735,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_enum(Status)4966"
-        },
-        {
-          "astId": 13787,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
           "type": "t_enum(Status)4988"
         },
         {
-          "astId": 14115,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_enum(Status)4988"
-        },
-        {
-          "astId": 14080,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14078,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "id",
           "offset": 0,
           "slot": "4",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(SubnetID)14296_storage"
+          "type": "t_struct(SubnetID)14062_storage"
         },
         {
-          "astId": 14315,
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 13738,
->>>>>>> b69807a (clean up unused fields)
-=======
-=======
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 13790,
-<<<<<<< HEAD
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
-=======
->>>>>>> ab1ef87 (clean up unused fields)
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(SubnetID)14296_storage"
-        },
-        {
-          "astId": 14315,
-<<<<<<< HEAD
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13719_storage"
-        },
-        {
-          "astId": 13738,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(SubnetID)13771_storage"
-        },
-        {
-          "astId": 13790,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(SubnetID)14099_storage"
-        },
-        {
-          "astId": 14118,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(SubnetID)14064_storage"
-        },
-        {
-          "astId": 14083,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14081,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "prevCheckpoint",
           "offset": 0,
           "slot": "6",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(BottomUpCheckpoint)14208_storage"
-=======
-          "type": "t_struct(BottomUpCheckpoint)13631_storage"
->>>>>>> b69807a (clean up unused fields)
-=======
-          "type": "t_struct(BottomUpCheckpoint)13683_storage"
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(BottomUpCheckpoint)13683_storage"
-=======
-          "type": "t_struct(BottomUpCheckpoint)14208_storage"
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(BottomUpCheckpoint)14208_storage"
-=======
-          "type": "t_struct(BottomUpCheckpoint)13631_storage"
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(BottomUpCheckpoint)13683_storage"
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(BottomUpCheckpoint)14011_storage"
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(BottomUpCheckpoint)13976_storage"
->>>>>>> 54a8fa7 (update storage)
+          "type": "t_struct(BottomUpCheckpoint)13974_storage"
         }
       ],
       "numberOfBytes": "384"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(SubnetID)14296_storage": {
-=======
-    "t_struct(SubnetID)13719_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(SubnetID)13771_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-    "t_struct(SubnetID)13771_storage": {
-=======
-    "t_struct(SubnetID)14296_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(SubnetID)14296_storage": {
-=======
-    "t_struct(SubnetID)13719_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(SubnetID)13771_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(SubnetID)14099_storage": {
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-    "t_struct(SubnetID)14064_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(SubnetID)14062_storage": {
       "encoding": "inplace",
       "label": "struct SubnetID",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14291,
-=======
-          "astId": 13714,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13766,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13766,
-=======
-          "astId": 14291,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14291,
-=======
-          "astId": 13714,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13766,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14094,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14059,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14057,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "root",
           "offset": 0,
@@ -6243,61 +764,7 @@
           "type": "t_uint64"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14295,
-=======
-          "astId": 13718,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13770,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "astId": 13770,
-=======
-          "astId": 14295,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14295,
-=======
-          "astId": 13718,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13770,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14098,
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "astId": 14063,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14061,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "route",
           "offset": 0,
@@ -6322,138 +789,12 @@
       ],
       "numberOfBytes": "64"
     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "t_struct(Validator)14430_storage": {
-=======
-    "t_struct(Validator)13853_storage": {
->>>>>>> b69807a (clean up unused fields)
-=======
-    "t_struct(Validator)13905_storage": {
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-    "t_struct(Validator)13905_storage": {
-=======
-    "t_struct(Validator)14430_storage": {
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-    "t_struct(Validator)14430_storage": {
-=======
-    "t_struct(Validator)13853_storage": {
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-    "t_struct(Validator)13905_storage": {
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-    "t_struct(Validator)14233_storage": {
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-    "t_struct(Validator)14216_storage": {
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-    "t_struct(Validator)14181_storage": {
->>>>>>> 54a8fa7 (update storage)
+    "t_struct(Validator)14179_storage": {
       "encoding": "inplace",
       "label": "struct Validator",
       "members": [
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14426,
-=======
-          "astId": 13849,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13901,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-          "astId": 13901,
-=======
-          "astId": 14426,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14426,
-=======
-          "astId": 13849,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13901,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14229,
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-          "astId": 14212,
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-          "astId": 14177,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14175,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "weight",
           "offset": 0,
@@ -6461,129 +802,12 @@
           "type": "t_uint256"
         },
         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "astId": 14429,
-=======
-          "astId": 13852,
->>>>>>> b69807a (clean up unused fields)
-=======
-          "astId": 13904,
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-=======
->>>>>>> f1cb452 (remove more struct)
-          "astId": 13904,
-=======
-          "astId": 14429,
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "astId": 14429,
-=======
-          "astId": 13852,
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "astId": 13904,
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "astId": 14232,
->>>>>>> 4b17388 (update storage)
-<<<<<<< HEAD
->>>>>>> ffe1bb3 (update storage)
-=======
-=======
-          "astId": 14215,
->>>>>>> 510308a (remove more struct)
->>>>>>> f1cb452 (remove more struct)
-=======
-          "astId": 14180,
->>>>>>> 54a8fa7 (update storage)
+          "astId": 14178,
           "contract": "src/GatewayDiamond.sol:GatewayDiamond",
           "label": "addr",
           "offset": 0,
           "slot": "1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "type": "t_struct(FvmAddress)14266_storage"
-=======
-          "type": "t_struct(FvmAddress)13689_storage"
->>>>>>> b69807a (clean up unused fields)
-=======
-          "type": "t_struct(FvmAddress)13741_storage"
->>>>>>> 729eb79 (enable gateway tests)
-=======
-=======
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
->>>>>>> ffe1bb3 (update storage)
-          "type": "t_struct(FvmAddress)13741_storage"
-=======
-          "type": "t_struct(FvmAddress)14266_storage"
->>>>>>> ab7fa31 (Multi-signature ECDSA (#192))
-<<<<<<< HEAD
->>>>>>> aeeec22 (Multi-signature ECDSA (#192))
-=======
-=======
-=======
->>>>>>> 147a1d2 (enable gateway tests)
-          "type": "t_struct(FvmAddress)14266_storage"
-=======
-          "type": "t_struct(FvmAddress)13689_storage"
->>>>>>> b69807a (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> ab1ef87 (clean up unused fields)
-<<<<<<< HEAD
->>>>>>> 7c27ab4 (clean up unused fields)
-=======
-=======
-=======
-          "type": "t_struct(FvmAddress)13741_storage"
->>>>>>> 729eb79 (enable gateway tests)
->>>>>>> 147a1d2 (enable gateway tests)
-<<<<<<< HEAD
->>>>>>> 1e9b5f5 (enable gateway tests)
-=======
-=======
-          "type": "t_struct(FvmAddress)14069_storage"
->>>>>>> 4b17388 (update storage)
->>>>>>> ffe1bb3 (update storage)
-=======
-          "type": "t_struct(FvmAddress)14034_storage"
->>>>>>> 54a8fa7 (update storage)
+          "type": "t_struct(FvmAddress)14032_storage"
         }
       ],
       "numberOfBytes": "96"
