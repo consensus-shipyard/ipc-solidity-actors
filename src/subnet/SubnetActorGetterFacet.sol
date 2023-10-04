@@ -41,10 +41,6 @@ contract SubnetActorGetterFacet {
         return s.totalStake;
     }
 
-    function prevExecutedCheckpointHash() external view returns (bytes32) {
-        return s.prevExecutedCheckpointHash;
-    }
-
     function accumulatedRewards(address a) external view returns (uint256) {
         return s.accumulatedRewards[a];
     }

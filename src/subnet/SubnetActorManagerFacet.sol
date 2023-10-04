@@ -158,16 +158,19 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.validatorWorkerAddresses[validator] = newWorkerAddr;
     }
 
-    /// @notice Executes the checkpoint if it is valid.
-    /// @param signatories The addresses of the signatories.
-    /// @param checkpoint The executed bottom-up checkpoint
-    /// @param signatures The collected checkpoint signatures
-    /// @param messages The list of executed cross-messages
+    /** @notice Executes the checkpoint if it is valid.
+     *  @dev It triggers the commitment of the checkpoint, the execution of related cross-net messages,
+     *       and any other side-effects that need to be triggered by the checkpoint such as relayer reward book keeping.
+     * @param checkpoint The executed bottom-up checkpoint
+     * @param messages The list of executed cross-messages
+     * @param signatories The addresses of the signatories
+     * @param signatures The collected checkpoint signatures
+     */
     function submitCheckpoint(
-        address[] calldata signatories,
         BottomUpCheckpoint calldata checkpoint,
-        bytes calldata signatures,
-        CrossMsg[] calldata messages
+        CrossMsg[] calldata messages,
+        address[] calldata signatories,
+        bytes calldata signatures
     ) external {
         if (checkpoint.blockHeight <= s.lastBottomUpCheckpointExecutedHeight) {
             revert HeightAlreadyExecuted();
@@ -189,7 +192,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
         bytes32 checkpointHash = keccak256(abi.encode(checkpoint));
 
-        validateCheckpoint({signatories: signatories, hash: checkpointHash, signatures: signatures});
+        validateActiveQuorumSignatures({signatories: signatories, hash: checkpointHash, signatures: signatures});
 
         _commitBottomUpCheckpoint({checkpoint: checkpoint});
     }
@@ -198,8 +201,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @param checkpoint - the batch messages data
     function _commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint) internal {
         s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
-        // TODO: remove this line and prevExecutedCheckpointHash ?
-        s.prevExecutedCheckpointHash = checkpoint.toHash();
 
         IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint);
     }
@@ -271,14 +272,19 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /**
-     * @notice Checks whether the checkpoint is valid for the provided signatories, signatures and hash. Reverts otherwise.
+     * @notice Checks whether the signatures are valid for the provided signatories and hash within the current validator set.
+     *         Reverts otherwise.
      * @dev Signatories in `signatories` and their signatures in `signatures` must be provided in the same order.
+     *       Having it public allows external users to perform sanity-check verification if needed.
      * @param signatories The addresses of the signatories.
      * @param hash The hash of the checkpoint.
      * @param signatures The packed signatures of the checkpoint.
      */
-    // TODO: should it be public or internal?
-    function validateCheckpoint(address[] memory signatories, bytes32 hash, bytes memory signatures) public view {
+    function validateActiveQuorumSignatures(
+        address[] memory signatories,
+        bytes32 hash,
+        bytes memory signatures
+    ) public view {
         uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
 
         uint256 threshold = (s.validatorSet.totalConfirmedCollateral * s.majorityPercentage) / 100;

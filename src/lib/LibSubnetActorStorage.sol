@@ -38,8 +38,6 @@ struct SubnetActorStorage {
     bytes32 name;
     // @notice Hash of the current subnet id
     bytes32 currentSubnetHash;
-    /// @notice contains the last executed checkpoint hash
-    bytes32 prevExecutedCheckpointHash;
     /// @notice Address of the IPC gateway for the subnet
     address ipcGatewayAddr;
     /// @notice majority percentage value (must be greater than or equal to 51)

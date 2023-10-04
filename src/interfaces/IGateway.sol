@@ -25,7 +25,7 @@ interface IGateway {
     /// hierarchy.
     function kill() external;
 
-    /// CommitChildCheck propagates the commitment of a checkpoint from a child subnet,
+    /// commitBottomUpCheckpoint propagates the commitment of a checkpoint from a child subnet,
     /// process the cross-messages directed to the subnet.
     function commitBottomUpCheckpoint(BottomUpCheckpoint calldata bottomUpCheckpoint) external;
 
