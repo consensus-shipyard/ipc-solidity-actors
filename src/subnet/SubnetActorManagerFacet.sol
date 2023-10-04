@@ -181,9 +181,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (s.status != Status.Active) {
             revert SubnetNotActive();
         }
-        if (!s.validatorSet.isActiveValidator(msg.sender)) {
-            revert NotValidator();
-        }
 
         bytes32 msgHash = keccak256(abi.encode(messages));
         if (msgHash != checkpoint.crossMessagesHash) {
@@ -193,15 +190,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         bytes32 checkpointHash = keccak256(abi.encode(checkpoint));
 
         validateActiveQuorumSignatures({signatories: signatories, hash: checkpointHash, signatures: signatures});
-
-        _commitBottomUpCheckpoint({checkpoint: checkpoint});
-    }
-
-    /// @notice method that commits a checkpoint after its validation and reaching majority
-    /// @param checkpoint - the batch messages data
-    function _commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint) internal {
         s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
-
         IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint);
     }
 

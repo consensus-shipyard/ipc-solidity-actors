@@ -171,7 +171,7 @@ contract MultisignatureCheckerTest is StdInvariant, Test {
             signatures
         );
         require(valid == false, "valid == false");
-        require(err == MultisignatureChecker.Error.InvalidSigner, "err == InvalidSigner");
+        require(err == MultisignatureChecker.Error.InvalidSignatory, "err == InvalidSigner");
     }
 
     function testMultiSignatureChecker_Weighted_LessThanThreshold() public pure {
