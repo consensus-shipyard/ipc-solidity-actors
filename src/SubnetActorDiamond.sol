@@ -8,7 +8,6 @@ import {GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod, InvalidCollate
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {SubnetID} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
-import {Status} from "./enums/Status.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
@@ -51,7 +50,6 @@ contract SubnetActorDiamond {
         s.minActivationCollateral = params.minActivationCollateral;
         s.minValidators = params.minValidators;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
-        s.status = Status.Instantiated;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
 
         // 100 is the max supported now

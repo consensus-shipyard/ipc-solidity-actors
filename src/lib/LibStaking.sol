@@ -339,6 +339,9 @@ library LibStaking {
 
     event ConfigurantionNumberConfirmed(uint64 number);
     event CollateralClaimed(address validator, uint256 amount);
+    // TODO: Include the list of initial validators as part of the event
+    // so Fendermint can directly pick it up when bootstrapping the infra?
+    event SubnetBootstrapped();
 
     /// @notice Checks if the validator is an active validator
     function isActiveValidator(address validator) internal view returns (bool) {
@@ -432,5 +435,27 @@ library LibStaking {
         changeSet.startConfigurationNumber = configurationNumber + 1;
 
         emit ConfigurantionNumberConfirmed(configurationNumber);
+    }
+
+    /// @notice Joins new validators when the subnet is not yet activated.
+    function initialJoin(address validator, uint256 amount) internal {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+
+        // check if the validator is already in the active validators?
+
+        // confirm validators deposit immediately
+        s.validatorSet.confirmDeposit(validator, amount);
+        s.validatorSet.recordDeposit(validator, amount);
+
+        if (
+            s.validatorSet.totalConfirmedCollateral >= s.minActivationCollateral &&
+            s.validatorSet.activeValidators.getSize() >= s.minValidators
+        ) {
+            // register subnet in the gateway
+            IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
+
+            s.bootstrapped = true;
+            emit SubnetBootstrapped();
+        }
     }
 }

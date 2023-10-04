@@ -1,7 +1,6 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {Status} from "../enums/Status.sol";
 import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
@@ -36,9 +35,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         bytes32 membershipRootHash,
         uint256 membershipWeight
     ) external {
-        if (s.status != Status.Active) {
-            revert SubnetNotActive();
-        }
         if (!LibStaking.isActiveValidator(msg.sender)) {
             revert NotValidator();
         }
@@ -70,8 +66,16 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert CollateralIsZero();
         }
 
+        // if the subnet has not been bootstrapped, join directly
+        // without delays, and collect collateral to register
+        // in the gateway
+        if (!s.bootstrapped) {
+            LibStaking.initialJoin(msg.sender, msg.value);
+        } else {
+
         LibStaking.setValidatorMetadata(msg.sender, metadata);
         LibStaking.deposit(msg.sender, msg.value);
+        }
     }
 
     /// @notice method that allows a validator to increase their stake
@@ -103,9 +107,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotAllValidatorsHaveLeft();
         }
 
-        s.status = Status.Killed;
-
         IGateway(s.ipcGatewayAddr).kill();
+        s.killed = true;
     }
 
     /// @notice Valdiator claims their released collateral
