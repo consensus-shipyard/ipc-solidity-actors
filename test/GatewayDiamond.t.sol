@@ -659,31 +659,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(status == Status.Inactive, "status should be Inactive");
     }
 
-    function testGatewayDiamond_ReleaseRewards_Fails_CannotReleaseZero() public {
-        vm.expectRevert(CannotReleaseZero.selector);
-
-        gwManager.releaseRewards(0);
-    }
-
-    function testGatewayDiamond_ReleaseRewards_Fails_NotRegisteredSubnet() public {
-        vm.expectRevert(NotRegisteredSubnet.selector);
-        vm.deal(address(gatewayDiamond), 1);
-        gwManager.releaseRewards(1);
-    }
-
-    function testGatewayDiamond_ReleaseRewards_Works() public {
-        address subnetAddress = CHILD_NETWORK_ADDRESS;
-
-        vm.startPrank(subnetAddress);
-        vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
-
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
-        vm.stopPrank();
-        vm.prank(subnetAddress);
-        vm.deal(address(gatewayDiamond), 1);
-        gwManager.releaseRewards(1);
-    }
-
     function testGatewayDiamond_Kill_Works() public {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
 
