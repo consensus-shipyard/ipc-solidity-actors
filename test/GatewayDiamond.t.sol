@@ -765,12 +765,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         _join(validatorAddress);
 
         vm.startPrank(funderAddress);
-        vm.expectCall(
-            address(saManager),
-            0,
-            abi.encodeWithSelector(saManager.reward.selector, gwGetter.crossMsgFee()),
-            5
-        );
 
         for (uint256 i = 0; i < numberOfFunds; i++) {
             vm.deal(funderAddress, fundAmount + 1);
@@ -1120,12 +1114,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.deal(caller, 1 ether);
         vm.expectCall(caller, 1 ether - gwGetter.crossMsgFee(), new bytes(0), 1);
-        vm.expectCall(
-            address(this),
-            0,
-            abi.encodeWithSelector(ISubnetActor.reward.selector, gwGetter.crossMsgFee()),
-            1
-        );
 
         vm.prank(caller);
         gwMessenger.propagate{value: 1 ether}(postboxId);
@@ -1745,8 +1733,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             uint256 expectedCircSupply = circSupplyBefore + fundAmountWithSubtractedFee;
 
             require(gwGetter.crossMsgFee() > 0, "crossMsgFee is 0");
-
-            // vm.expectCall(address(sa), gwGetter.crossMsgFee(), abi.encodeWithSelector(sa.reward.selector), 1);
 
             gwManager.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
 
