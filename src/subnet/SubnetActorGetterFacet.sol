@@ -23,7 +23,7 @@ contract SubnetActorGetterFacet {
     using CheckpointHelper for BottomUpCheckpoint;
     using Address for address payable;
 
-    // slither-disable-next-line uninitialized-state-variables
+    // slither-disable-next-line uninitialized-state
     SubnetActorStorage internal s;
 
     /// @notice get the parent subnet id
