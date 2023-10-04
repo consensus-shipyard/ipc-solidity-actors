@@ -28,6 +28,6 @@ interface ISubnetActor {
         BottomUpCheckpoint calldata checkpoint,
         CrossMsg[] calldata messages,
         address[] calldata signatories,
-        bytes calldata signatures
+        bytes[] calldata signatures
     ) external;
 }

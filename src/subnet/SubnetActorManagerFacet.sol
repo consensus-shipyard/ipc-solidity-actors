@@ -170,7 +170,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         BottomUpCheckpoint calldata checkpoint,
         CrossMsg[] calldata messages,
         address[] calldata signatories,
-        bytes calldata signatures
+        bytes[] calldata signatures
     ) external {
         if (checkpoint.blockHeight <= s.lastBottomUpCheckpointExecutedHeight) {
             revert HeightAlreadyExecuted();
@@ -283,7 +283,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     function validateActiveQuorumSignatures(
         address[] memory signatories,
         bytes32 hash,
-        bytes memory signatures
+        bytes[] memory signatures
     ) public view {
         uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
 
