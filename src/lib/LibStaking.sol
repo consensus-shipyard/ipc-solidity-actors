@@ -367,11 +367,16 @@ library LibStaking {
         return s.validatorSet.activeValidators.contains(validator);
     }
 
+    /// @notice Checks if the validator is a waiting validator
+    function isWaitingValidator(address validator) internal view returns (bool) {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        return s.validatorSet.waitingValidators.contains(validator);
+    }
+
     /// @notice Checks if the validator has staked before
     function hasStaked(address validator) internal view returns (bool) {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        return
-            s.validatorSet.waitingValidators.contains(validator) || s.validatorSet.activeValidators.contains(validator);
+        return s.validatorSet.validators[validator].totalCollateral > 0;
     }
 
     /// @notice Gets the total number of validators, including active and waiting
