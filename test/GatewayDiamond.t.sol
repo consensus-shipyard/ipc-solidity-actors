@@ -17,7 +17,7 @@ import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
 import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
-import {ValidatorSet, ValidatorInfo, Membership, Validator} from "../src/structs/Validator.sol";
+import {Membership, Validator} from "../src/structs/Validator.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
