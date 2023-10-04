@@ -172,7 +172,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         address[] calldata signatories,
         bytes[] calldata signatures
     ) external {
-        if (checkpoint.blockHeight <= s.lastBottomUpCheckpointExecutedHeight) {
+        if (checkpoint.blockHeight <= s.lastBottomUpCheckpointHeight) {
             revert HeightAlreadyExecuted();
         }
         if (checkpoint.blockHeight % s.bottomUpCheckPeriod != 0) {

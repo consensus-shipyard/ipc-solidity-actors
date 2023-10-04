@@ -21,7 +21,7 @@ struct SubnetActorStorage {
     mapping(address => FvmAddress) validatorWorkerAddresses;
     /// @notice contains all committed bottom-up checkpoint at specific epoch
     mapping(uint64 => BottomUpCheckpoint) committedCheckpoints;
-    uint64 lastBottomUpCheckpointExecutedHeight;
+    uint64 lastBottomUpCheckpointHeight;
     /// @notice Total collateral currently deposited in the GW from the subnet
     uint256 totalStake;
     /// @notice Minimal activation collateral
