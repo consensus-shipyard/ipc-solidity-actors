@@ -15,6 +15,7 @@ import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import {LibStaking} from "../lib/LibStaking.sol";
 
 contract SubnetActorGetterFacet {
     using EnumerableSet for EnumerableSet.AddressSet;
@@ -75,6 +76,16 @@ contract SubnetActorGetterFacet {
     /// @notice Get the information of a validator
     function getValidator(address validatorAddress) external view returns (Validator memory validator) {
         validator = s.validatorSet.validators[validatorAddress];
+    }
+
+    /// @notice Checks if the validator address is an active validator
+    function isActiveValidator(address validator) external view returns (bool) {
+        return LibStaking.isActiveValidator(validator);
+    }
+
+    /// @notice Checks if the validator is a waiting validator
+    function isWaitingValidator(address validator) internal view returns (bool) {
+        return LibStaking.isWaitingValidator(validator);
     }
 
     /// @notice returns the committed bottom-up checkpoint at specific epoch
