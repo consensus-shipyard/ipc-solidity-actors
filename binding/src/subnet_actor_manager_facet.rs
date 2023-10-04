@@ -425,6 +425,42 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("validateCheckpoint"),
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("validateCheckpoint"),
+                        inputs: ::std::vec![
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("signatories"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                    ::std::boxed::Box::new(
+                                        ::ethers::core::abi::ethabi::ParamType::Address,
+                                    ),
+                                ),
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("address[]"),
+                                ),
+                            },
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("hash"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize,),
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("bytes32"),
+                                ),
+                            },
+                            ::ethers::core::abi::ethabi::Param {
+                                name: ::std::borrow::ToOwned::to_owned("signatures"),
+                                kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                internal_type: ::core::option::Option::Some(
+                                    ::std::borrow::ToOwned::to_owned("bytes"),
+                                ),
+                            },
+                        ],
+                        outputs: ::std::vec![],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("withdraw"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -623,6 +659,19 @@ pub mod subnet_actor_manager_facet {
                             ],
                         },
                     ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidSignatureErr"),
+                    ::std::vec![::ethers::core::abi::ethabi::AbiError {
+                        name: ::std::borrow::ToOwned::to_owned("InvalidSignatureErr",),
+                        inputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("uint8"),
+                            ),
+                        },],
+                    },],
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("NoCollateralToWithdraw"),
@@ -1027,6 +1076,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "FailedInnerCall", abi = "FailedInnerCall()")]
     pub struct FailedInnerCall;
+<<<<<<< HEAD
     ///Custom Error type `HeightAlreadyExecuted` with signature `HeightAlreadyExecuted()` and selector `0xa7dd6a78`
     #[derive(
         Clone,
@@ -1069,6 +1119,8 @@ pub mod subnet_actor_manager_facet {
         abi = "InvalidCheckpointMessagesHash()"
     )]
     pub struct InvalidCheckpointMessagesHash;
+=======
+>>>>>>> dev
     ///Custom Error type `InvalidSignatureErr` with signature `InvalidSignatureErr(uint8)` and selector `0x282ef1c1`
     #[derive(
         Clone,
@@ -1251,9 +1303,12 @@ pub mod subnet_actor_manager_facet {
         CollateralIsZero(CollateralIsZero),
         EmptyAddress(EmptyAddress),
         FailedInnerCall(FailedInnerCall),
+<<<<<<< HEAD
         HeightAlreadyExecuted(HeightAlreadyExecuted),
         InvalidCheckpointEpoch(InvalidCheckpointEpoch),
         InvalidCheckpointMessagesHash(InvalidCheckpointMessagesHash),
+=======
+>>>>>>> dev
         InvalidSignatureErr(InvalidSignatureErr),
         NoCollateralToWithdraw(NoCollateralToWithdraw),
         NoRewardToWithdraw(NoRewardToWithdraw),
@@ -1297,6 +1352,7 @@ pub mod subnet_actor_manager_facet {
                 return Ok(Self::FailedInnerCall(decoded));
             }
             if let Ok(decoded) =
+<<<<<<< HEAD
                 <HeightAlreadyExecuted as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::HeightAlreadyExecuted(decoded));
@@ -1312,6 +1368,8 @@ pub mod subnet_actor_manager_facet {
                 return Ok(Self::InvalidCheckpointMessagesHash(decoded));
             }
             if let Ok(decoded) =
+=======
+>>>>>>> dev
                 <InvalidSignatureErr as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::InvalidSignatureErr(decoded));
@@ -1378,6 +1436,7 @@ pub mod subnet_actor_manager_facet {
                 Self::CollateralIsZero(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::EmptyAddress(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::FailedInnerCall(element) => ::ethers::core::abi::AbiEncode::encode(element),
+<<<<<<< HEAD
                 Self::HeightAlreadyExecuted(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1387,6 +1446,8 @@ pub mod subnet_actor_manager_facet {
                 Self::InvalidCheckpointMessagesHash(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+=======
+>>>>>>> dev
                 Self::InvalidSignatureErr(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1429,7 +1490,17 @@ pub mod subnet_actor_manager_facet {
                     true
                 }
                 _ if selector
+<<<<<<< HEAD
                     == <CollateralIsZero as ::ethers::contract::EthError>::selector() => {
+=======
+                    == <InvalidSignatureErr as ::ethers::contract::EthError>::selector() =>
+                {
+                    true
+                }
+                _ if selector
+                    == <NoCollateralToWithdraw as ::ethers::contract::EthError>::selector() =>
+                {
+>>>>>>> dev
                     true
                 }
                 _ if selector
@@ -1509,11 +1580,14 @@ pub mod subnet_actor_manager_facet {
                 Self::CollateralIsZero(element) => ::core::fmt::Display::fmt(element, f),
                 Self::EmptyAddress(element) => ::core::fmt::Display::fmt(element, f),
                 Self::FailedInnerCall(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::HeightAlreadyExecuted(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCheckpointEpoch(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCheckpointMessagesHash(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+=======
+>>>>>>> dev
                 Self::InvalidSignatureErr(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NoCollateralToWithdraw(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NoRewardToWithdraw(element) => ::core::fmt::Display::fmt(element, f),
@@ -1556,6 +1630,7 @@ pub mod subnet_actor_manager_facet {
             Self::FailedInnerCall(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<HeightAlreadyExecuted> for SubnetActorManagerFacetErrors {
         fn from(value: HeightAlreadyExecuted) -> Self {
             Self::HeightAlreadyExecuted(value)
@@ -1571,6 +1646,8 @@ pub mod subnet_actor_manager_facet {
             Self::InvalidCheckpointMessagesHash(value)
         }
     }
+=======
+>>>>>>> dev
     impl ::core::convert::From<InvalidSignatureErr> for SubnetActorManagerFacetErrors {
         fn from(value: InvalidSignatureErr) -> Self {
             Self::InvalidSignatureErr(value)
@@ -1956,6 +2033,26 @@ pub mod subnet_actor_manager_facet {
         pub checkpoint: BottomUpCheckpoint,
         pub signatures: ::ethers::core::types::Bytes,
         pub messages: ::std::vec::Vec<CrossMsg>,
+    }
+    ///Container type for all input parameters for the `validateCheckpoint` function with signature `validateCheckpoint(address[],bytes32,bytes)` and selector `0x46ab0f48`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(
+        name = "validateCheckpoint",
+        abi = "validateCheckpoint(address[],bytes32,bytes)"
+    )]
+    pub struct ValidateCheckpointCall {
+        pub signatories: ::std::vec::Vec<::ethers::core::types::Address>,
+        pub hash: [u8; 32],
+        pub signatures: ::ethers::core::types::Bytes,
     }
     ///Container type for all input parameters for the `validateCheckpoint` function with signature `validateCheckpoint(address[],bytes32,bytes)` and selector `0x46ab0f48`
     #[derive(
