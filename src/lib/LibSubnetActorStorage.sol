@@ -30,6 +30,8 @@ struct SubnetActorStorage {
     bytes32 prevExecutedCheckpointHash;
     /// @notice Address of the IPC gateway for the subnet
     address ipcGatewayAddr;
+    /// @notice majority percentage value (must be greater than or equal to 51)
+    uint8 majorityPercentage;
     /// @notice ID of the parent subnet
     SubnetID parentId;
     /// immutable params

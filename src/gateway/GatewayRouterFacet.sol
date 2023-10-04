@@ -83,7 +83,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
         _applyMessages(commit.subnetID, messages);
 
-        // TODO: distribute reward
+        // TODO: distribute rewards to validators for their service executing a checkpoint
     }
 
     /// @notice commit the ipc parent finality into storage
