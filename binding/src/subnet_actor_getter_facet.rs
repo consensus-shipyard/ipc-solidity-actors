@@ -283,6 +283,7 @@ pub mod subnet_actor_getter_facet {
                     },],
                 ),
                 (
+<<<<<<< HEAD
                     ::std::borrow::ToOwned::to_owned("prevExecutedCheckpointHash"),
                     ::std::vec![::ethers::core::abi::ethabi::Function {
                         name: ::std::borrow::ToOwned::to_owned("prevExecutedCheckpointHash",),
@@ -292,6 +293,23 @@ pub mod subnet_actor_getter_facet {
                             kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize,),
                             internal_type: ::core::option::Option::Some(
                                 ::std::borrow::ToOwned::to_owned("bytes32"),
+=======
+                    ::std::borrow::ToOwned::to_owned("stake"),
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("stake"),
+                        inputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::borrow::ToOwned::to_owned("a"),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("address"),
+                            ),
+                        },],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Uint(256usize,),
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("uint256"),
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
                             ),
                         },],
                         constant: ::core::option::Option::None,
@@ -467,12 +485,22 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([6, 253, 222, 3], ())
                 .expect("method not found (this should never happen)")
         }
+<<<<<<< HEAD
         ///Calls the contract's `prevExecutedCheckpointHash` (0x5f832dbf) function
         pub fn prev_executed_checkpoint_hash(
             &self,
         ) -> ::ethers::contract::builders::ContractCall<M, [u8; 32]> {
             self.0
                 .method_hash([95, 131, 45, 191], ())
+=======
+        ///Calls the contract's `stake` (0x26476204) function
+        pub fn stake(
+            &self,
+            a: ::ethers::core::types::Address,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([38, 71, 98, 4], a)
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `status` (0x200d2ed2) function
@@ -667,7 +695,11 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "name", abi = "name()")]
     pub struct NameCall;
+<<<<<<< HEAD
     ///Container type for all input parameters for the `prevExecutedCheckpointHash` function with signature `prevExecutedCheckpointHash()` and selector `0x5f832dbf`
+=======
+    ///Container type for all input parameters for the `stake` function with signature `stake(address)` and selector `0x26476204`
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -678,11 +710,18 @@ pub mod subnet_actor_getter_facet {
         Eq,
         Hash,
     )]
+<<<<<<< HEAD
     #[ethcall(
         name = "prevExecutedCheckpointHash",
         abi = "prevExecutedCheckpointHash()"
     )]
     pub struct PrevExecutedCheckpointHashCall;
+=======
+    #[ethcall(name = "stake", abi = "stake(address)")]
+    pub struct StakeCall {
+        pub a: ::ethers::core::types::Address,
+    }
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
     ///Container type for all input parameters for the `status` function with signature `status()` and selector `0x200d2ed2`
     #[derive(
         Clone,
@@ -724,7 +763,11 @@ pub mod subnet_actor_getter_facet {
         MinActivationCollateral(MinActivationCollateralCall),
         MinValidators(MinValidatorsCall),
         Name(NameCall),
+<<<<<<< HEAD
         PrevExecutedCheckpointHash(PrevExecutedCheckpointHashCall),
+=======
+        Stake(StakeCall),
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
         Status(StatusCall),
         TotalStake(TotalStakeCall),
     }
@@ -785,10 +828,15 @@ pub mod subnet_actor_getter_facet {
             if let Ok(decoded) = <NameCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Name(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <PrevExecutedCheckpointHashCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::PrevExecutedCheckpointHash(decoded));
+=======
+            if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Stake(decoded));
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
             }
             if let Ok(decoded) = <StatusCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Status(decoded));
@@ -824,9 +872,13 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::MinValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Name(element) => ::ethers::core::abi::AbiEncode::encode(element),
+<<<<<<< HEAD
                 Self::PrevExecutedCheckpointHash(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+=======
+                Self::Stake(element) => ::ethers::core::abi::AbiEncode::encode(element),
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
                 Self::Status(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::TotalStake(element) => ::ethers::core::abi::AbiEncode::encode(element),
             }
@@ -849,7 +901,11 @@ pub mod subnet_actor_getter_facet {
                 Self::MinActivationCollateral(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MinValidators(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Name(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::PrevExecutedCheckpointHash(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
                 Self::Status(element) => ::core::fmt::Display::fmt(element, f),
                 Self::TotalStake(element) => ::core::fmt::Display::fmt(element, f),
             }
@@ -915,9 +971,15 @@ pub mod subnet_actor_getter_facet {
             Self::Name(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<PrevExecutedCheckpointHashCall> for SubnetActorGetterFacetCalls {
         fn from(value: PrevExecutedCheckpointHashCall) -> Self {
             Self::PrevExecutedCheckpointHash(value)
+=======
+    impl ::core::convert::From<StakeCall> for SubnetActorGetterFacetCalls {
+        fn from(value: StakeCall) -> Self {
+            Self::Stake(value)
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
         }
     }
     impl ::core::convert::From<StatusCall> for SubnetActorGetterFacetCalls {
@@ -1079,7 +1141,11 @@ pub mod subnet_actor_getter_facet {
         Hash,
     )]
     pub struct NameReturn(pub [u8; 32]);
+<<<<<<< HEAD
     ///Container type for all return fields from the `prevExecutedCheckpointHash` function with signature `prevExecutedCheckpointHash()` and selector `0x5f832dbf`
+=======
+    ///Container type for all return fields from the `stake` function with signature `stake(address)` and selector `0x26476204`
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -1090,7 +1156,11 @@ pub mod subnet_actor_getter_facet {
         Eq,
         Hash,
     )]
+<<<<<<< HEAD
     pub struct PrevExecutedCheckpointHashReturn(pub [u8; 32]);
+=======
+    pub struct StakeReturn(pub ::ethers::core::types::U256);
+>>>>>>> 270c825a3f38f5e11495eb8603e9f9df14581708
     ///Container type for all return fields from the `status` function with signature `status()` and selector `0x200d2ed2`
     #[derive(
         Clone,
