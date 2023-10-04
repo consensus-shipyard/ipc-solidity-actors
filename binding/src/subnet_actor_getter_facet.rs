@@ -347,22 +347,6 @@ pub mod subnet_actor_getter_facet {
                     },],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("prevExecutedCheckpointHash"),
-                    ::std::vec![::ethers::core::abi::ethabi::Function {
-                        name: ::std::borrow::ToOwned::to_owned("prevExecutedCheckpointHash",),
-                        inputs: ::std::vec![],
-                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
-                            name: ::std::string::String::new(),
-                            kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize,),
-                            internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("bytes32"),
-                            ),
-                        },],
-                        constant: ::core::option::Option::None,
-                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                    },],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("stake"),
                     ::std::vec![::ethers::core::abi::ethabi::Function {
                         name: ::std::borrow::ToOwned::to_owned("stake"),
@@ -680,14 +664,6 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([6, 253, 222, 3], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `prevExecutedCheckpointHash` (0x5f832dbf) function
-        pub fn prev_executed_checkpoint_hash(
-            &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, [u8; 32]> {
-            self.0
-                .method_hash([95, 131, 45, 191], ())
-                .expect("method not found (this should never happen)")
-        }
         ///Calls the contract's `stake` (0x26476204) function
         pub fn stake(
             &self,
@@ -960,22 +936,6 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "name", abi = "name()")]
     pub struct NameCall;
-    ///Container type for all input parameters for the `prevExecutedCheckpointHash` function with signature `prevExecutedCheckpointHash()` and selector `0x5f832dbf`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[ethcall(
-        name = "prevExecutedCheckpointHash",
-        abi = "prevExecutedCheckpointHash()"
-    )]
-    pub struct PrevExecutedCheckpointHashCall;
     ///Container type for all input parameters for the `stake` function with signature `stake(address)` and selector `0x26476204`
     #[derive(
         Clone,
@@ -1105,7 +1065,6 @@ pub mod subnet_actor_getter_facet {
         MinActivationCollateral(MinActivationCollateralCall),
         MinValidators(MinValidatorsCall),
         Name(NameCall),
-        PrevExecutedCheckpointHash(PrevExecutedCheckpointHashCall),
         Stake(StakeCall),
         Status(StatusCall),
         TopDownCheckPeriod(TopDownCheckPeriodCall),
@@ -1182,11 +1141,6 @@ pub mod subnet_actor_getter_facet {
             if let Ok(decoded) = <NameCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Name(decoded));
             }
-            if let Ok(decoded) =
-                <PrevExecutedCheckpointHashCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::PrevExecutedCheckpointHash(decoded));
-            }
             if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Stake(decoded));
             }
@@ -1253,9 +1207,6 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::MinValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Name(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::PrevExecutedCheckpointHash(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
                 Self::Stake(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Status(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::TopDownCheckPeriod(element) => {
@@ -1290,7 +1241,6 @@ pub mod subnet_actor_getter_facet {
                 Self::MinActivationCollateral(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MinValidators(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Name(element) => ::core::fmt::Display::fmt(element, f),
-                Self::PrevExecutedCheckpointHash(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Status(element) => ::core::fmt::Display::fmt(element, f),
                 Self::TopDownCheckPeriod(element) => ::core::fmt::Display::fmt(element, f),
@@ -1370,11 +1320,6 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<NameCall> for SubnetActorGetterFacetCalls {
         fn from(value: NameCall) -> Self {
             Self::Name(value)
-        }
-    }
-    impl ::core::convert::From<PrevExecutedCheckpointHashCall> for SubnetActorGetterFacetCalls {
-        fn from(value: PrevExecutedCheckpointHashCall) -> Self {
-            Self::PrevExecutedCheckpointHash(value)
         }
     }
     impl ::core::convert::From<StakeCall> for SubnetActorGetterFacetCalls {
@@ -1591,18 +1536,6 @@ pub mod subnet_actor_getter_facet {
         Hash,
     )]
     pub struct NameReturn(pub [u8; 32]);
-    ///Container type for all return fields from the `prevExecutedCheckpointHash` function with signature `prevExecutedCheckpointHash()` and selector `0x5f832dbf`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    pub struct PrevExecutedCheckpointHashReturn(pub [u8; 32]);
     ///Container type for all return fields from the `stake` function with signature `stake(address)` and selector `0x26476204`
     #[derive(
         Clone,
