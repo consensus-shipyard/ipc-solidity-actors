@@ -72,9 +72,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (!s.bootstrapped) {
             LibStaking.initialJoin(msg.sender, msg.value);
         } else {
-
-        LibStaking.setValidatorMetadata(msg.sender, metadata);
-        LibStaking.deposit(msg.sender, msg.value);
+            LibStaking.setValidatorMetadata(msg.sender, metadata);
+            LibStaking.deposit(msg.sender, msg.value);
         }
     }
 

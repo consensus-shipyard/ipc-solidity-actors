@@ -92,7 +92,7 @@ contract SubnetActorDiamondTest is Test {
         _assertDeploySubnetActor(
             DEFAULT_NETWORK_NAME,
             gatewayAddress,
-            ConsensusType.Mir,
+            ConsensusType.Fendermint,
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
@@ -121,7 +121,7 @@ contract SubnetActorDiamondTest is Test {
         _assertDeploySubnetActor(
             _networkName,
             _ipcGatewayAddr,
-            ConsensusType.Mir,
+            ConsensusType.Fendermint,
             _minActivationCollateral,
             _minValidators,
             _checkPeriod,
@@ -144,7 +144,7 @@ contract SubnetActorDiamondTest is Test {
                 parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
                 name: DEFAULT_NETWORK_NAME,
                 ipcGatewayAddr: address(0),
-                consensus: ConsensusType.Mir,
+                consensus: ConsensusType.Fendermint,
                 minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
                 minValidators: DEFAULT_MIN_VALIDATORS,
                 bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
