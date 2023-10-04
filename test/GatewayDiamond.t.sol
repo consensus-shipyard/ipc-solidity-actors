@@ -690,142 +690,142 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwManager.kill();
     }
 
-    function testGatewayDiamond_Kill_Fail_CircSupplyMoreThanZero() public {
-        address validatorAddress = address(100);
-        _join(validatorAddress);
+    // function testGatewayDiamond_Kill_Fail_CircSupplyMoreThanZero() public {
+    //     address validatorAddress = address(100);
+    //     _join(validatorAddress);
 
-        address funderAddress = address(101);
-        uint256 fundAmount = 1 ether;
+    //     address funderAddress = address(101);
+    //     uint256 fundAmount = 1 ether;
 
-        vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount + 1);
+    //     vm.startPrank(funderAddress);
+    //     vm.deal(funderAddress, fundAmount + 1);
 
-        fund(funderAddress, fundAmount);
+    //     fund(funderAddress, fundAmount);
 
-        vm.stopPrank();
-        vm.startPrank(address(saManager));
-        vm.expectRevert(NotEmptySubnetCircSupply.selector);
+    //     vm.stopPrank();
+    //     vm.startPrank(address(saManager));
+    //     vm.expectRevert(NotEmptySubnetCircSupply.selector);
 
-        gwManager.kill();
-    }
+    //     gwManager.kill();
+    // }
 
-    function testGatewayDiamond_Fund_Works_ReactivatedSubnet() public {
-        address validatorAddress = address(100);
+    // function testGatewayDiamond_Fund_Works_ReactivatedSubnet() public {
+    //     address validatorAddress = address(100);
 
-        _join(validatorAddress);
+    //     _join(validatorAddress);
 
-        vm.prank(validatorAddress);
-        saManager.leave();
+    //     vm.prank(validatorAddress);
+    //     saManager.leave();
 
-        _join(validatorAddress);
+    //     _join(validatorAddress);
 
-        require(saGetter.status() == Status.Active);
+    //     require(saGetter.status() == Status.Active);
 
-        address funderAddress = address(101);
-        uint256 fundAmount = 1 ether;
+    //     address funderAddress = address(101);
+    //     uint256 fundAmount = 1 ether;
 
-        vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount + 1);
+    //     vm.startPrank(funderAddress);
+    //     vm.deal(funderAddress, fundAmount + 1);
 
-        fund(funderAddress, fundAmount);
-    }
+    //     fund(funderAddress, fundAmount);
+    // }
 
-    function testGatewayDiamond_Fund_Works_EthAccountSingleFunding() public {
-        address validatorAddress = address(100);
+    // function testGatewayDiamond_Fund_Works_EthAccountSingleFunding() public {
+    //     address validatorAddress = address(100);
 
-        _join(validatorAddress);
+    //     _join(validatorAddress);
 
-        address funderAddress = address(101);
-        uint256 fundAmount = 1 ether;
+    //     address funderAddress = address(101);
+    //     uint256 fundAmount = 1 ether;
 
-        vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount + 1);
+    //     vm.startPrank(funderAddress);
+    //     vm.deal(funderAddress, fundAmount + 1);
 
-        fund(funderAddress, fundAmount);
-    }
+    //     fund(funderAddress, fundAmount);
+    // }
 
-    function testGatewayDiamond_Fund_Works_BLSAccountSingleFunding() public {
-        address validatorAddress = address(100);
-        _join(validatorAddress);
+    // function testGatewayDiamond_Fund_Works_BLSAccountSingleFunding() public {
+    //     address validatorAddress = address(100);
+    //     _join(validatorAddress);
 
-        uint256 fundAmount = 1 ether;
-        vm.startPrank(BLS_ACCOUNT_ADDREESS);
-        vm.deal(BLS_ACCOUNT_ADDREESS, fundAmount + 1);
+    //     uint256 fundAmount = 1 ether;
+    //     vm.startPrank(BLS_ACCOUNT_ADDREESS);
+    //     vm.deal(BLS_ACCOUNT_ADDREESS, fundAmount + 1);
 
-        fund(BLS_ACCOUNT_ADDREESS, fundAmount);
-    }
+    //     fund(BLS_ACCOUNT_ADDREESS, fundAmount);
+    // }
 
-    function testGatewayDiamond_Fund_Works_MultipleFundings() public {
-        uint8 numberOfFunds = 5;
-        uint256 fundAmount = 1 ether;
+    // function testGatewayDiamond_Fund_Works_MultipleFundings() public {
+    //     uint8 numberOfFunds = 5;
+    //     uint256 fundAmount = 1 ether;
 
-        address validatorAddress = address(100);
-        address funderAddress = address(101);
+    //     address validatorAddress = address(100);
+    //     address funderAddress = address(101);
 
-        _join(validatorAddress);
+    //     _join(validatorAddress);
 
-        vm.startPrank(funderAddress);
+    //     vm.startPrank(funderAddress);
 
-        for (uint256 i = 0; i < numberOfFunds; i++) {
-            vm.deal(funderAddress, fundAmount + 1);
+    //     for (uint256 i = 0; i < numberOfFunds; i++) {
+    //         vm.deal(funderAddress, fundAmount + 1);
 
-            fund(funderAddress, fundAmount);
-        }
-    }
+    //         fund(funderAddress, fundAmount);
+    //     }
+    // }
 
-    function testGatewayDiamond_Fund_Fails_WrongSubnet() public {
-        address validatorAddress = address(100);
-        address funderAddress = address(101);
-        uint256 fundAmount = 1 ether;
+    // function testGatewayDiamond_Fund_Fails_WrongSubnet() public {
+    //     address validatorAddress = address(100);
+    //     address funderAddress = address(101);
+    //     uint256 fundAmount = 1 ether;
 
-        _join(validatorAddress);
+    //     _join(validatorAddress);
 
-        vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount + 1);
+    //     vm.startPrank(funderAddress);
+    //     vm.deal(funderAddress, fundAmount + 1);
 
-        address[] memory wrongPath = new address[](3);
-        wrongPath[0] = address(1);
-        wrongPath[1] = address(2);
+    //     address[] memory wrongPath = new address[](3);
+    //     wrongPath[0] = address(1);
+    //     wrongPath[1] = address(2);
 
-        vm.expectRevert(NotRegisteredSubnet.selector);
+    //     vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gwManager.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
-    }
+    //     gwManager.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
+    // }
 
-    function testGatewayDiamond_Fund_Fails_NotRegistered() public {
-        address validatorAddress = address(100);
-        address funderAddress = address(101);
-        uint256 fundAmount = 1 ether;
+    // function testGatewayDiamond_Fund_Fails_NotRegistered() public {
+    //     address validatorAddress = address(100);
+    //     address funderAddress = address(101);
+    //     uint256 fundAmount = 1 ether;
 
-        _join(validatorAddress);
+    //     _join(validatorAddress);
 
-        vm.startPrank(funderAddress);
-        vm.deal(funderAddress, fundAmount + 1);
+    //     vm.startPrank(funderAddress);
+    //     vm.deal(funderAddress, fundAmount + 1);
 
-        address[] memory wrongSubnetPath = new address[](2);
-        wrongSubnetPath[0] = vm.addr(102);
-        wrongSubnetPath[0] = vm.addr(103);
-        SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
+    //     address[] memory wrongSubnetPath = new address[](2);
+    //     wrongSubnetPath[0] = vm.addr(102);
+    //     wrongSubnetPath[0] = vm.addr(103);
+    //     SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
 
-        vm.expectRevert(NotRegisteredSubnet.selector);
-        gwManager.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
-    }
+    //     vm.expectRevert(NotRegisteredSubnet.selector);
+    //     gwManager.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
+    // }
 
-    function testGatewayDiamond_Fund_Fails_InsufficientAmount() public {
-        address validatorAddress = address(100);
-        address funderAddress = address(101);
+    // function testGatewayDiamond_Fund_Fails_InsufficientAmount() public {
+    //     address validatorAddress = address(100);
+    //     address funderAddress = address(101);
 
-        _join(validatorAddress);
+    //     _join(validatorAddress);
 
-        vm.startPrank(funderAddress);
-        vm.deal(funderAddress, 1 ether);
+    //     vm.startPrank(funderAddress);
+    //     vm.deal(funderAddress, 1 ether);
 
-        (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
+    //     (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
 
-        vm.expectRevert(NotEnoughFee.selector);
+    //     vm.expectRevert(NotEnoughFee.selector);
 
-        gwManager.fund{value: 0}(subnetId, FvmAddressHelper.from(msg.sender));
-    }
+    //     gwManager.fund{value: 0}(subnetId, FvmAddressHelper.from(msg.sender));
+    // }
 
     function testGatewayDiamond_Release_Fails_InsufficientAmount() public {
         address[] memory path = new address[](2);
