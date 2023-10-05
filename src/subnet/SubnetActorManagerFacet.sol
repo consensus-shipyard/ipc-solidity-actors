@@ -44,7 +44,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         bytes[] calldata signatures
     ) external {
         // validations
-        if (checkpoint.blockHeight <= s.lastBottomUpCheckpointHeight) {
+        if (checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + 1) {
             revert HeightAlreadyExecuted();
         }
         if (checkpoint.blockHeight % s.bottomUpCheckPeriod != 0) {
@@ -63,7 +63,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
         s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
 
-        // interations
+        // interactions
         IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint);
     }
 
