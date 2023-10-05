@@ -507,7 +507,7 @@ library LibValidatorTracking {
         }
     }
 
-    function storeChanges(
+    function batchStoreChange(
         ParentValidatorsTracker storage self,
         StakingChangeRequest[] calldata changeRequests
     ) internal {
