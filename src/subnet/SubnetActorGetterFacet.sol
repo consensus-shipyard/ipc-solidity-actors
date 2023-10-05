@@ -2,7 +2,6 @@
 pragma solidity 0.8.19;
 
 import {ConsensusType} from "../enums/ConsensusType.sol";
-import {Status} from "../enums/Status.sol";
 import {NotEnoughValidatorsInSubnet} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
@@ -31,11 +30,6 @@ contract SubnetActorGetterFacet {
         return s.parentId;
     }
 
-    /// @notice get the current status
-    function status() external view returns (Status) {
-        return s.status;
-    }
-
     /// @notice get the total stake
     function totalStake() external view returns (uint256) {
         return s.totalStake;
@@ -59,6 +53,14 @@ contract SubnetActorGetterFacet {
 
     function consensus() external view returns (ConsensusType) {
         return s.consensus;
+    }
+
+    function bootstrapped() external view returns (bool) {
+        return s.bootstrapped;
+    }
+
+    function killed() external view returns (bool) {
+        return s.killed;
     }
 
     function minActivationCollateral() external view returns (uint256) {
