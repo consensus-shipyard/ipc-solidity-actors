@@ -376,18 +376,6 @@ library LibStaking {
         return s.validatorSet.waitingValidators.contains(validator);
     }
 
-    /// @notice Checks if the validator is an active validator
-    function isActiveValidator(address validator) internal view returns (bool) {
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        return s.validatorSet.activeValidators.contains(validator);
-    }
-
-    /// @notice Checks if the validator is a waiting validator
-    function isWaitingValidator(address validator) internal view returns (bool) {
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        return s.validatorSet.waitingValidators.contains(validator);
-    }
-
     /// @notice Checks if the validator has staked before
     function hasStaked(address validator) internal view returns (bool) {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
@@ -474,11 +462,9 @@ library LibStaking {
     function initialJoin(address validator, uint256 amount) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
 
-        // check if the validator is already in the active validators?
-
         // confirm validators deposit immediately
-        s.validatorSet.confirmDeposit(validator, amount);
         s.validatorSet.recordDeposit(validator, amount);
+        s.validatorSet.confirmDeposit(validator, amount);
 
         if (
             s.validatorSet.totalConfirmedCollateral >= s.minActivationCollateral &&

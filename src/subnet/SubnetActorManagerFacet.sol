@@ -71,10 +71,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         // if the subnet has not been bootstrapped, join directly
         // without delays, and collect collateral to register
         // in the gateway
+        LibStaking.setValidatorMetadata(msg.sender, metadata);
         if (!s.bootstrapped) {
             LibStaking.initialJoin(msg.sender, msg.value);
         } else {
-            LibStaking.setValidatorMetadata(msg.sender, metadata);
             LibStaking.deposit(msg.sender, msg.value);
         }
     }
@@ -108,8 +108,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotAllValidatorsHaveLeft();
         }
 
-        IGateway(s.ipcGatewayAddr).kill();
         s.killed = true;
+        IGateway(s.ipcGatewayAddr).kill();
     }
 
     /// @notice Valdiator claims their released collateral
