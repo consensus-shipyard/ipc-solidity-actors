@@ -44,10 +44,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         bytes[] calldata signatures
     ) external {
         // validations
-        if (checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + 1) {
-            revert HeightAlreadyExecuted();
-        }
-        if (checkpoint.blockHeight % s.bottomUpCheckPeriod != 0) {
+        if (checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod) {
             revert InvalidCheckpointEpoch();
         }
         if (s.status != Status.Active) {

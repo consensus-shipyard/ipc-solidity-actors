@@ -266,6 +266,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (checkpoint.blockHeight < s.bottomUpCheckpointRetentionHeight) {
             revert CheckpointAlreadyProcessed();
         }
+        if (checkpoint.blockHeight % s.bottomUpCheckPeriod != 0) {
+            revert InvalidCheckpointEpoch();
+        }
         if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
             revert CheckpointAlreadyExists();
         }
