@@ -1185,15 +1185,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = 100;
 
-        uint64 n = gwGetter.getLastConfigurationNumber() + 1;
-
         vm.prank(caller);
         vm.expectRevert(NotSystemActor.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
         gwRouter.commitParentFinality(finality);
-        gwRouter.updateMembership(n, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Fails_ValidatorsAndWeightsNotEqual() public {
@@ -1209,6 +1206,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
         gwRouter.commitParentFinality(finality);
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.updateMembership(n, validators, weights);
     }
 
@@ -1225,6 +1224,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
         gwRouter.commitParentFinality(finality);
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.updateMembership(n, validators, weights);
     }
 
@@ -1688,12 +1689,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         weights[2] = 100;
 
         uint64 n = gwGetter.getLastConfigurationNumber() + 1;
-
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
+        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.commitParentFinality(finality);
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.updateMembership(n, validators, weights);
     }
 
