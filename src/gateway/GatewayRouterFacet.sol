@@ -101,6 +101,16 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         s.validatorsTracker.storeChanges(changeRequests);
     }
 
+    /// @notice THIS METHOD IS DEPRECATED. It will be replaced with validator changes. Keep now to ensure tests runs.
+    /// @notice Update the membership. 
+    function updateMembership(
+        uint64 n,
+        FvmAddress[] calldata validators,
+        uint256[] calldata weights
+    ) external systemActorOnly {
+        LibGateway.newMembership({n: n, validators: validators, weights: weights});
+        
+    }
     /// @notice apply cross messages
     function applyCrossMessages(CrossMsg[] calldata crossMsgs) external systemActorOnly {
         _applyMessages(SubnetID(0, new address[](0)), crossMsgs);

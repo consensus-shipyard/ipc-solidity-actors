@@ -1192,7 +1192,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, n, validators, weights);
+        gwRouter.commitParentFinality(finality);
+        gwRouter.updateMembership(n, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Fails_ValidatorsAndWeightsNotEqual() public {
@@ -1207,7 +1208,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.expectRevert(ValidatorsAndWeightsLengthMismatch.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, n, validators, weights);
+        gwRouter.commitParentFinality(finality);
+        gwRouter.updateMembership(n, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Fails_ZeroWeight() public {
@@ -1222,7 +1224,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.expectRevert(ValidatorWeightIsZero.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
-        gwRouter.commitParentFinality(finality, n, validators, weights);
+        gwRouter.commitParentFinality(finality);
+        gwRouter.updateMembership(n, validators, weights);
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_MultipleValidators() public {
@@ -1237,7 +1240,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, gwGetter.getLastConfigurationNumber() + 1, validators, weights);
+        gwRouter.commitParentFinality(finality);
+        gwRouter.updateMembership(gwGetter.getLastConfigurationNumber() + 1, validators, weights);
         gwManager.updateMembership();
 
         require(gwGetter.getCurrentTotalWeight() == 250);
@@ -1265,7 +1269,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, gwGetter.getLastConfigurationNumber() + 1, validators, weights);
+        gwRouter.commitParentFinality(finality);
+        gwRouter.updateMembership(gwGetter.getLastConfigurationNumber() + 1, validators, weights);
         gwManager.updateMembership();
 
         ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
@@ -1688,7 +1693,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwRouter.commitParentFinality(finality, n, validators, weights);
+        gwRouter.commitParentFinality(finality);
+        gwRouter.updateMembership(n, validators, weights);
     }
 
     function setupThreeValidatorsForCheckpoint()
@@ -1731,7 +1737,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint64 n = gwGetter.getLastConfigurationNumber() + 1;
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.commitParentFinality(finality, n, validators, weights);
+        gwRouter.commitParentFinality(finality);
+        gwRouter.updateMembership(n, validators, weights);
         vm.stopPrank();
     }
 

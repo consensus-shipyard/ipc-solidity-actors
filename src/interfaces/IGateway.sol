@@ -59,9 +59,7 @@ interface IGateway {
 
     /// @notice commit the ipc parent finality into storage
     function commitParentFinality(
-        ParentFinality calldata finality,
-        FvmAddress[] calldata validators,
-        uint256[] calldata weights
+        ParentFinality calldata finality
     ) external;
 
     /// @notice creates a new bottom-up checkpoint
