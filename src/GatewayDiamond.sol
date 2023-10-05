@@ -56,9 +56,12 @@ contract GatewayDiamond {
         // set initial validators and update membership
         FvmAddress[] memory validators = new FvmAddress[](params.genesisValidators.length);
         uint256[] memory weights = new uint256[](params.genesisValidators.length);
-        for (uint256 i = 0; i < params.genesisValidators.length; ++i) {
+        for (uint256 i = 0; i < params.genesisValidators.length;) {
             validators[i] = params.genesisValidators[i].addr;
             weights[i] = params.genesisValidators[i].weight;
+            unchecked {
+                ++i;
+            }
         }
 
         LibGateway.newMembership({n: 0, validators: validators, weights: weights});
