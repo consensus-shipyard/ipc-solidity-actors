@@ -1369,7 +1369,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: 1,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages")
@@ -1389,7 +1389,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         // failed to create a checkpoint with the same height
         checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: 1,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
             nextConfigurationNumber: 2,
             crossMessagesHash: keccak256("newmessages")
@@ -1397,6 +1397,20 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(CheckpointAlreadyExists.selector);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
+
+        // failed to create a checkpoint with the height not multiple to checkpoint period
+        checkpoint = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: gwGetter.bottomUpCheckPeriod() + gwGetter.bottomUpCheckPeriod() / 2,
+            blockHash: keccak256("block"),
+            nextConfigurationNumber: 2,
+            crossMessagesHash: keccak256("newmessages")
+        });
+
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(InvalidCheckpointEpoch.selector);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
     }
@@ -1408,7 +1422,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         BottomUpCheckpoint memory checkpoint1 = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: 1,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block1"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages1")
@@ -1416,7 +1430,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         BottomUpCheckpoint memory checkpoint2 = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: 2,
+            blockHeight: 2 * gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block2"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages2")
@@ -1431,17 +1445,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
 
         require(heights.length == 2, "heights.length == 2");
-        require(heights[0] == 1, "heights[0] == 1");
-        require(heights[1] == 2, "heights[1] == 2");
+        require(heights[0] == gwGetter.bottomUpCheckPeriod(), "heights[0] == period");
+        require(heights[1] == 2 * gwGetter.bottomUpCheckPeriod(), "heights[1] == 2*period");
 
-        CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
+        CheckpointInfo memory info = gwGetter.getCheckpointInfo(gwGetter.bottomUpCheckPeriod());
         require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
         require(
             info.threshold == gwGetter.getQuorumThreshold(weights[0] + weights[1] + weights[2]),
             "checkpoint 1 correct threshold"
         );
 
-        info = gwGetter.getCheckpointInfo(2);
+        info = gwGetter.getCheckpointInfo(2 * gwGetter.bottomUpCheckPeriod());
         require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
         require(
             info.threshold == gwGetter.getQuorumThreshold(weights[0] + weights[1] + weights[2]),
@@ -1450,13 +1464,13 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         BottomUpCheckpoint[] memory incomplete = gwGetter.getIncompleteCheckpoints();
         require(incomplete.length == 2, "incomplete.length == 2");
-        require(incomplete[0].blockHeight == 1, "incomplete[0].blockHeight");
+        require(incomplete[0].blockHeight == gwGetter.bottomUpCheckPeriod(), "incomplete[0].blockHeight");
         require(incomplete[0].blockHash == keccak256("block1"), "incomplete[0].blockHash");
-        require(incomplete[1].blockHeight == 2, "incomplete[1].blockHeight");
+        require(incomplete[1].blockHeight == 2 * gwGetter.bottomUpCheckPeriod(), "incomplete[1].blockHeight");
         require(incomplete[1].blockHash == keccak256("block2"), "incomplete[1].blockHash");
     }
 
-    function testGatewayDiamond_addCheckpointSignature() public {
+    function testGatewayDiamond_addCheckpointSignature_newCheckpoint() public {
         (
             uint256[] memory privKeys,
             address[] memory addrs,
@@ -1468,7 +1482,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: 1,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages")
@@ -1491,11 +1505,14 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             signature = abi.encodePacked(r, s, v);
 
             vm.startPrank(vm.addr(privKeys[i]));
-            gwRouter.addCheckpointSignature(1, membershipProofs[i], weights[i], signature);
+            gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[i], weights[i], signature);
             vm.stopPrank();
         }
 
-        require(gwGetter.getCheckpointCurrentWeight(1) == totalWeight(weights), "checkpoint weight was updated");
+        require(
+            gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == totalWeight(weights),
+            "checkpoint weight was updated"
+        );
     }
 
     function testGatewayDiamond_addCheckpointSignature_quorum() public {
@@ -1510,7 +1527,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: 1,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages")
@@ -1533,7 +1550,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             signature = abi.encodePacked(r, s, v);
 
             vm.startPrank(vm.addr(privKeys[i]));
-            gwRouter.addCheckpointSignature(1, membershipProofs[i], weights[i], signature);
+            gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[i], weights[i], signature);
             vm.stopPrank();
         }
 
@@ -1547,14 +1564,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         signature = abi.encodePacked(r, s, v);
 
         vm.startPrank(vm.addr(privKeys[2]));
-        gwRouter.addCheckpointSignature(1, membershipProofs[2], weights[2], signature);
+        gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[2], weights[2], signature);
         vm.stopPrank();
 
-        info = gwGetter.getCheckpointInfo(1);
+        info = gwGetter.getCheckpointInfo(checkpoint.blockHeight);
         require(info.reached, "reached");
         require(gwGetter.getIncompleteCheckpointHeights().length == 0, "size is 0");
 
-        require(gwGetter.getCheckpointCurrentWeight(1) == totalWeight(weights), "checkpoint weight was updated");
+        require(
+            gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == totalWeight(weights),
+            "checkpoint weight was updated"
+        );
     }
 
     function testGatewayDiamond_addCheckpointSignature_notAuthorized() public {
@@ -1569,7 +1589,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: 1,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
             nextConfigurationNumber: 1,
             crossMessagesHash: keccak256("messages")
@@ -1610,7 +1630,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         for (uint64 i = 1; i <= n; i++) {
             checkpoint = BottomUpCheckpoint({
                 subnetID: gwGetter.getNetworkName(),
-                blockHeight: i,
+                blockHeight: i * gwGetter.bottomUpCheckPeriod(),
                 blockHash: keccak256("block"),
                 nextConfigurationNumber: 1,
                 crossMessagesHash: keccak256("messages")
