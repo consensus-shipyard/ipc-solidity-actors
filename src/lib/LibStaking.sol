@@ -401,10 +401,31 @@ library LibStaking {
     }
 
     /// @notice Deposit the collateral
+    /// @notice If the subnet has not been bootstrapped, join without delays
     function deposit(address validator, uint256 amount) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
 
-        s.changeSet.depositRequest(validator, amount);
+        if (!s.bootstrapped) {
+            // if the subnet has not been bootstrapped, join directly
+            // without delays, and collect collateral to register
+            // in the gateway
+            // confirm validators deposit immediately
+            s.validatorSet.confirmDeposit(validator, amount);
+
+            // register subnet in the gateway and bootstrap if requirement fulfilled
+            if (
+                s.validatorSet.totalConfirmedCollateral >= s.minActivationCollateral &&
+                s.validatorSet.activeValidators.getSize() >= s.minValidators
+            ) {
+                IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
+
+                s.bootstrapped = true;
+                emit SubnetBootstrapped();
+            }
+        } else {
+            s.changeSet.depositRequest(validator, amount);
+        }
+
         s.validatorSet.recordDeposit(validator, amount);
     }
 
@@ -456,25 +477,5 @@ library LibStaking {
         changeSet.startConfigurationNumber = configurationNumber + 1;
 
         emit ConfigurantionNumberConfirmed(configurationNumber);
-    }
-
-    /// @notice Joins new validators when the subnet is not yet activated.
-    function initialJoin(address validator, uint256 amount) internal {
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-
-        // confirm validators deposit immediately
-        s.validatorSet.recordDeposit(validator, amount);
-        s.validatorSet.confirmDeposit(validator, amount);
-
-        if (
-            s.validatorSet.totalConfirmedCollateral >= s.minActivationCollateral &&
-            s.validatorSet.activeValidators.getSize() >= s.minValidators
-        ) {
-            // register subnet in the gateway
-            IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
-
-            s.bootstrapped = true;
-            emit SubnetBootstrapped();
-        }
     }
 }

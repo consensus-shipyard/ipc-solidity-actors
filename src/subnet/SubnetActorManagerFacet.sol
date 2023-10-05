@@ -68,15 +68,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert CollateralIsZero();
         }
 
-        // if the subnet has not been bootstrapped, join directly
-        // without delays, and collect collateral to register
-        // in the gateway
         LibStaking.setValidatorMetadata(msg.sender, metadata);
-        if (!s.bootstrapped) {
-            LibStaking.initialJoin(msg.sender, msg.value);
-        } else {
-            LibStaking.deposit(msg.sender, msg.value);
-        }
+        LibStaking.deposit(msg.sender, msg.value);
     }
 
     /// @notice method that allows a validator to increase their stake
