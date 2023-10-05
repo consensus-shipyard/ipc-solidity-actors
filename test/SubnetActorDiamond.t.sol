@@ -187,6 +187,7 @@ contract SubnetActorDiamondTest is Test {
         require(v.confirmedCollateral == collateral, "confirmed collateral not 0");
         ensureBytesEqual(v.metadata, metadata);
         require(saGetter.bootstrapped(), "subnet not bootstrapped");
+        require(saGetter.genesisValidators().length == 1, "genesis validators not 1");
 
         (uint64 nextConfigNum, uint64 startConfigNum) = saGetter.getConfigurationNumbers();
         require(nextConfigNum == 0, "next config num not 1");
@@ -247,6 +248,7 @@ contract SubnetActorDiamondTest is Test {
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
         require(nextConfigNum == 2, "next config num not 2 after confirm stake");
         require(startConfigNum == 2, "start config num not 2 after confirm stake");
+        require(saGetter.genesisValidators().length == 1, "genesis validators still 1");
 
         // ======== Step. Leave ======
         vm.startPrank(validator1);

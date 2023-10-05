@@ -5,7 +5,7 @@ import {IGateway} from "../interfaces/IGateway.sol";
 import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage.sol";
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
-import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases} from "../structs/Subnet.sol";
+import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet, GenesisValidator, AddressStakingReleases} from "../structs/Subnet.sol";
 import {WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator} from "../errors/IPCErrors.sol";
 
 /// The util library for `StakingChangeSet`
@@ -362,7 +362,7 @@ library LibStaking {
     event CollateralClaimed(address validator, uint256 amount);
     // TODO: Include the list of initial validators as part of the event
     // so Fendermint can directly pick it up when bootstrapping the infra?
-    event SubnetBootstrapped();
+    event SubnetBootstrapped(GenesisValidator[]);
 
     /// @notice Checks if the validator is an active validator
     function isActiveValidator(address validator) internal view returns (bool) {
@@ -410,7 +410,29 @@ library LibStaking {
             // without delays, and collect collateral to register
             // in the gateway
             // confirm validators deposit immediately
+            s.validatorSet.recordDeposit(validator, amount);
             s.validatorSet.confirmDeposit(validator, amount);
+
+            // add to initial validators avoiding duplicates
+            bool alreadyValidator = false;
+            for (uint256 i = 0; i < s.genesisValidators.length; ) {
+                if (s.genesisValidators[i].addr == validator) {
+                    alreadyValidator = true;
+                    break;
+                }
+                unchecked {
+                    i++;
+                }
+            }
+            if (!alreadyValidator) {
+                uint256 collateral = s.validatorSet.validators[validator].confirmedCollateral;
+                GenesisValidator memory val = GenesisValidator(
+                    validator,
+                    collateral,
+                    s.validatorSet.validators[validator].metadata
+                );
+                s.genesisValidators.push(val);
+            }
 
             // register subnet in the gateway and bootstrap if requirement fulfilled
             if (
@@ -420,13 +442,12 @@ library LibStaking {
                 IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
 
                 s.bootstrapped = true;
-                emit SubnetBootstrapped();
+                emit SubnetBootstrapped(s.genesisValidators);
             }
         } else {
             s.changeSet.depositRequest(validator, amount);
+            s.validatorSet.recordDeposit(validator, amount);
         }
-
-        s.validatorSet.recordDeposit(validator, amount);
     }
 
     /// @notice Withdraw the collateral

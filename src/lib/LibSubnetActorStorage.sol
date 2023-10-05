@@ -5,13 +5,15 @@ import {ConsensusType} from "../enums/ConsensusType.sol";
 import {NotGateway, SubnetAlreadyKilled} from "../errors/IPCErrors.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
-import {SubnetID, ValidatorSet, StakingChangeSet, StakingReleaseQueue} from "../structs/Subnet.sol";
+import {SubnetID, ValidatorSet, StakingChangeSet, StakingReleaseQueue, GenesisValidator} from "../structs/Subnet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 struct SubnetActorStorage {
     /// @notice contains all committed bottom-up checkpoint at specific epoch
     mapping(uint64 => BottomUpCheckpoint) committedCheckpoints;
+    // @notice initial set of validators joining in genesis
+    GenesisValidator[] genesisValidators;
     /// @notice genesis block
     bytes genesis;
     /// @notice Total collateral currently deposited in the GW from the subnet
