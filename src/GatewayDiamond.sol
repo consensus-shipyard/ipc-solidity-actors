@@ -65,6 +65,7 @@ contract GatewayDiamond {
         }
 
         LibGateway.newMembership({n: 0, validators: validators, weights: weights});
+        // slither-disable-next-line unused-return
         LibGateway.updateMembership();
     }
 
