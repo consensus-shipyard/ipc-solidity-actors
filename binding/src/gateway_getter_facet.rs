@@ -869,24 +869,6 @@ pub mod gateway_getter_facet {
                                                     ),
                                                 ],
                                             ),
-                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                ::std::vec![
-                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                        ::std::vec![
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                ::std::boxed::Box::new(
-                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                ),
-                                                            ),
-                                                        ],
-                                                    ),
-                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
-                                                ],
-                                            ),
                                         ],
                                     ),
                                     internal_type: ::core::option::Option::Some(
@@ -1080,24 +1062,6 @@ pub mod gateway_getter_facet {
                                                             ),
                                                         ],
                                                     ),
-                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                        ::std::vec![
-                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                ::std::vec![
-                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                        ::std::boxed::Box::new(
-                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                        ),
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
-                                                        ],
-                                                    ),
                                                 ],
                                             ),
                                         ),
@@ -1273,24 +1237,6 @@ pub mod gateway_getter_facet {
                                                             ::ethers::core::abi::ethabi::ParamType::Address,
                                                         ),
                                                     ),
-                                                ],
-                                            ),
-                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                ::std::vec![
-                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                        ::std::vec![
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                ::std::boxed::Box::new(
-                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                ),
-                                                            ),
-                                                        ],
-                                                    ),
-                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                                 ],
                                             ),
                                         ],
@@ -3178,7 +3124,7 @@ pub mod gateway_getter_facet {
         pub method: [u8; 4],
         pub params: ::ethers::core::types::Bytes,
     }
-    ///`Subnet(uint256,uint256,uint256,uint64,uint64,uint8,(uint64,address[]),((uint64,address[]),uint64,bytes32,uint64,bytes32))`
+    ///`Subnet(uint256,uint256,uint256,uint64,uint64,uint8,(uint64,address[]))`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -3197,7 +3143,6 @@ pub mod gateway_getter_facet {
         pub applied_bottom_up_nonce: u64,
         pub status: u8,
         pub id: SubnetID,
-        pub prev_checkpoint: BottomUpCheckpoint,
     }
     ///`SubnetID(uint64,address[])`
     #[derive(
