@@ -60,7 +60,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
 
         // interactions
-        IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint);
+        IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
     }
 
     /// @notice Set the data of a validator
@@ -115,9 +115,46 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         IGateway(s.ipcGatewayAddr).kill();
     }
 
-    /// @notice Valdiator claims their released collateral
+    /// @notice Validator claims their released collateral
     function claim() external nonReentrant {
         LibStaking.claimCollateral(msg.sender);
+    }
+
+    /// @notice method that distributes the rewards for the subnet to validators.
+    function rewardValidators(uint256 amount) external onlyGateway {
+        address[] memory validators = s.validatorSet.listActiveValidators();
+
+        uint256 validatorsLength = validators.length;
+        if (validatorsLength == 0) {
+            revert NoValidatorsInSubnet();
+        }
+        if (amount < validatorsLength) {
+            revert NotEnoughBalanceForRewards();
+        }
+
+        uint256 rewardAmount = amount / validatorsLength;
+
+        for (uint256 i = 0; i < validatorsLength; ) {
+            s.accumulatedRewards[validators[i]] += rewardAmount;
+            unchecked {
+                ++i;
+            }
+        }
+    }
+
+    /// @notice method that allows a validator to withdraw it's accumulated rewards using pull-based transfer
+    function withdrawReward() external {
+        uint256 amount = s.accumulatedRewards[msg.sender];
+
+        if (amount == 0) {
+            revert NoRewardToWithdraw();
+        }
+
+        s.accumulatedRewards[msg.sender] = 0;
+
+        IGateway(s.ipcGatewayAddr).releaseRewardsForValidators(amount);
+
+        payable(msg.sender).sendValue(amount);
     }
 
     /**

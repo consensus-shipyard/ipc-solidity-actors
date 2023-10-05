@@ -21,7 +21,7 @@ interface ISubnetActor {
     /// Unregister the subnet from the hierarchy, making it no longer discoverable.
     function kill() external;
 
-    /// Valdiator claims their released collateral
+    /// Validator claims their released collateral
     function claim() external;
 
     /// Executes the checkpoint if it is valid.
@@ -33,4 +33,7 @@ interface ISubnetActor {
         address[] calldata signatories,
         bytes[] calldata signatures
     ) external;
+
+    /// Tracks the accumulated rewards for each validator.
+    function rewardValidators(uint256 amount) external;
 }

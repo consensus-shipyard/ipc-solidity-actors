@@ -170,6 +170,18 @@ library LibValidatorSet {
         collateral = validators.validators[validator].confirmedCollateral;
     }
 
+    function listActiveValidators(ValidatorSet storage validators) internal view returns (address[] memory addresses) {
+        uint16 size = validators.activeValidators.getSize();
+        addresses = new address[](size);
+        for (uint16 i = 1; i <= size; ) {
+            addresses[i - 1] = validators.activeValidators.getAddress(i);
+            unchecked {
+                i++;
+            }
+        }
+        return addresses;
+    }
+
     /// @notice Get the confirmed collaterals of the validators.
     /// The function reverts if at least one validator is not in the active validator set.
     function getConfirmedCollaterals(

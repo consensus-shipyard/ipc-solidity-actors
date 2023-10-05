@@ -12,7 +12,7 @@ import {Membership} from "../structs/Validator.sol";
 import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory, FailedAddSignature} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
-import {NotValidator, SubnetNotActive, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
+import {NotValidator, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
@@ -38,32 +38,25 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     event QuorumReached(uint64 height, bytes32 checkpoint, uint256 quorumWeight);
     event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
 
-    // TODO: Reimplement the function.
-    /// @dev This function must be reimplemented according to the current checkpoint protocol.
-    /// @notice submit a checkpoint in the gateway. Called from a subnet once the checkpoint is voted for and reaches majority
-    function commitChildCheck(BottomUpCheckpoint calldata commit) external {
-        if (commit.subnetID.getActor().normalize() != msg.sender) {
+    /// @notice submit a verified checkpoint in the gateway to trigger side-effects and apply cross-messages.
+    /// Called from a subnet actor if the checkpoint is cryptographically valid.
+    function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint, CrossMsg[] calldata messages) external {
+        // checkpoint is used to implement access control
+        if (checkpoint.subnetID.getActor().normalize() != msg.sender) {
             revert InvalidCheckpointSource();
         }
-
-        // slither-disable-next-line unused-return
-        (, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
+        (bool subnetExists, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
+        if (!subnetExists) {
+            revert SubnetNotFound();
+        }
+        if (checkpoint.subnetID.equals(subnet.id)) {
+            revert InvalidSubnet();
+        }
         if (subnet.status != Status.Active) {
             revert SubnetNotActive();
         }
 
-        // get checkpoint for the current template being populated
-        (bool checkpointExists, uint64 nextCheckEpoch, BottomUpCheckpoint storage checkpoint) = LibGateway
-            .getCurrentBottomUpCheckpoint();
-
-        // create a checkpoint template if it doesn't exists
-        if (!checkpointExists) {
-            checkpoint.subnetID = s.networkName;
-            checkpoint.blockHeight = nextCheckEpoch;
-        }
-
-        CrossMsg[] memory messages = s.bottomUpMessages[commit.blockHeight];
-
+        // process messages
         uint256 totalValue = 0;
         uint256 crossMsgLength = messages.length;
         for (uint256 i = 0; i < crossMsgLength; ) {
@@ -73,17 +66,22 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             }
         }
 
+        // CODE-REVIEW
+        // before we do this here totalValue += commit.fee + checkpoint.fee
+        // where and how are we going to use fees?
+
         if (subnet.circSupply < totalValue) {
             revert NotEnoughSubnetCircSupply();
         }
 
         subnet.circSupply -= totalValue;
 
-        subnet.prevCheckpoint = commit;
+        _applyMessages(checkpoint.subnetID, messages);
 
-        _applyMessages(commit.subnetID, messages);
-
-        // TODO: distribute rewards to validators for their service executing a checkpoint
+        // CODE-REVIEW
+        // we still do not have fee in the actors.
+        uint256 fee = 0;
+        LibGateway.distributeRewards(msg.sender, fee);
     }
 
     /// @notice commit the ipc parent finality into storage

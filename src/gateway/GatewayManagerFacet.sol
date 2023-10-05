@@ -89,6 +89,20 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         payable(subnet.id.getActor()).sendValue(amount);
     }
 
+    /// @notice release rewards for validators
+    function releaseRewards(uint256 amount) external nonReentrant {
+        if (amount == 0) {
+            revert CannotReleaseZero();
+        }
+
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
+
+        payable(subnet.id.getActor()).sendValue(amount);
+    }
+
     /// @notice kill an existing subnet. It's balance must be empty
     function kill() external {
         (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);

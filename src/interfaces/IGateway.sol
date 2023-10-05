@@ -18,13 +18,19 @@ interface IGateway {
     /// Release stake recovers some collateral of the subnet
     function releaseStake(uint256 amount) external;
 
+    // Release rewards to the validators
+    function releaseRewardsForValidators(uint256 amount) external;
+
     // Kill propagates the kill signal from a subnet actor to unregister it from th
     /// hierarchy.
     function kill() external;
 
-    /// commitBottomUpCheckpoint propagates the commitment of a checkpoint from a child subnet,
-    /// process the cross-messages directed to the subnet.
-    function commitBottomUpCheckpoint(BottomUpCheckpoint calldata bottomUpCheckpoint) external;
+    /// commitBottomUpCheckpoint propagates the commitment of a checkpoint from a child subnet and
+    /// processes the cross-messages directed to the subnets.
+    function commitBottomUpCheckpoint(
+        BottomUpCheckpoint calldata bottomUpCheckpoint,
+        CrossMsg[] calldata messages
+    ) external;
 
     /// Fund injects new funds from an account of the parent chain to a subnet.
     ///
