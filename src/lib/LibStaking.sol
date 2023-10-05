@@ -5,8 +5,8 @@ import {IGateway} from "../interfaces/IGateway.sol";
 import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage.sol";
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
-import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases} from "../structs/Subnet.sol";
-import {WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator} from "../errors/IPCErrors.sol";
+import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker} from "../structs/Subnet.sol";
+import {WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
 
 /// The util library for `StakingChangeSet`
 library LibStakingChangeSet {
@@ -16,12 +16,10 @@ library LibStakingChangeSet {
     /// @notice of the validator.
     /// Each insert will increment the configuration number by 1, update will not.
     function withdrawRequest(StakingChangeSet storage changes, address validator, uint256 amount) internal {
-        uint64 configurationNumber = changes.nextConfigurationNumber;
-        changes.nextConfigurationNumber = configurationNumber + 1;
-
-        changes.changes[configurationNumber] = StakingChange({
-            op: StakingOperation.Withdraw,
+        uint64 configurationNumber = recordChange({
+            changes: changes,
             validator: validator,
+            op: StakingOperation.Withdraw,
             amount: amount
         });
 
@@ -35,12 +33,10 @@ library LibStakingChangeSet {
 
     /// @notice Perform upsert operation to the deposit changes
     function depositRequest(StakingChangeSet storage changes, address validator, uint256 amount) internal {
-        uint64 configurationNumber = changes.nextConfigurationNumber;
-        changes.nextConfigurationNumber = configurationNumber + 1;
-
-        changes.changes[configurationNumber] = StakingChange({
-            op: StakingOperation.Deposit,
+        uint64 configurationNumber = recordChange({
+            changes: changes,
             validator: validator,
+            op: StakingOperation.Deposit,
             amount: amount
         });
 
@@ -50,6 +46,19 @@ library LibStakingChangeSet {
             amount: amount,
             configurationNumber: configurationNumber
         });
+    }
+
+    /// @notice Perform upsert operation to the deposit changes
+    function recordChange(
+        StakingChangeSet storage changes,
+        address validator,
+        StakingOperation op,
+        uint256 amount
+    ) internal returns (uint64 configurationNumber) {
+        configurationNumber = changes.nextConfigurationNumber;
+
+        changes.changes[configurationNumber] = StakingChange({op: op, validator: validator, amount: amount});
+        changes.nextConfigurationNumber = configurationNumber + 1;
     }
 
     /// @notice Get the change at configuration number
@@ -477,5 +486,40 @@ library LibStaking {
         changeSet.startConfigurationNumber = configurationNumber + 1;
 
         emit ConfigurantionNumberConfirmed(configurationNumber);
+    }
+}
+
+/// The library for tracking waiting and active validators, should be used in gateway to track the
+/// validator change set and apply them directly.
+library LibValidatorTracking {
+    using LibValidatorSet for ValidatorSet;
+    using LibStakingChangeSet for StakingChangeSet;
+
+    function storeChange(ParentValidatorsTracker storage self, StakingChangeRequest calldata changeRequest) internal {
+        uint64 configurationNumber = self.changes.recordChange({
+            validator: changeRequest.change.validator,
+            op: changeRequest.change.op,
+            amount: changeRequest.change.amount
+        });
+
+        if (configurationNumber != changeRequest.configurationNumber) {
+            revert InvalidConfigurationNumber();
+        }
+    }
+
+    function storeChanges(
+        ParentValidatorsTracker storage self,
+        StakingChangeRequest[] calldata changeRequests
+    ) internal {
+        if (changeRequests.length == 0) {
+            return;
+        }
+
+        for (uint256 i = 0; i < changeRequests.length; ) {
+            storeChange(self, changeRequests[i]);
+            unchecked {
+                i++;
+            }
+        }
     }
 }

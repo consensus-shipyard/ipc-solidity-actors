@@ -39,6 +39,12 @@ struct StakingChange {
     address validator;
 }
 
+/// The change associated with its corresponding configuration number
+struct StakingChangeRequest {
+    StakingChange change;
+    uint64 configurationNumber;
+}
+
 /// The collection of staking changes
 struct StakingChangeSet {
     /// @notice The next configuration number to assign to new changes.
@@ -107,6 +113,12 @@ struct ValidatorSet {
     MinPQ activeValidators;
     /// @notice The waiting validators trakced using max priority queue.
     MaxPQ waitingValidators;
+}
+
+/// Tracks the parent validator changes and apply them in the child
+struct ParentValidatorsTracker {
+    ValidatorSet validators;
+    StakingChangeSet changes;
 }
 
 struct IPCAddress {
