@@ -8,6 +8,7 @@ import {GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod, InvalidCollate
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {SubnetID} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
+import {LibStaking} from "./lib/LibStaking.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
@@ -56,8 +57,13 @@ contract SubnetActorDiamond {
         s.majorityPercentage = params.majorityPercentage;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
 
-        //  We hardcode the current limit for active validators to 100 per Tendermint consensus
+        // We hardcode the current limit for active validators to 100 per Tendermint consensus
         s.validatorSet.activeLimit = 100;
+        // Start the next configuration number from 1, 0 is reserved for no change.
+        s.changeSet.nextConfigurationNumber = LibStaking.INITIAL_CONFIGURATION_NUMBER;
+        // The startConfiguration number is also 1 to match with nextConfigurationNumber, indicating we have
+        // empty validator change logs
+        s.changeSet.startConfigurationNumber = LibStaking.INITIAL_CONFIGURATION_NUMBER;
     }
 
     function _fallback() internal {

@@ -23,10 +23,13 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     using CheckpointHelper for BottomUpCheckpoint;
     using LibValidatorSet for ValidatorSet;
     using Address for address payable;
-
+    
     event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter);
     event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
+    // TODO: Include the list of initial validators as part of the event
+    // so Fendermint can directly pick it up when bootstrapping the infra?
+    event SubnetBootstrapped();
 
     /** @notice Executes the checkpoint if it is valid.
      *  @dev It triggers the commitment of the checkpoint, the execution of related cross-net messages,
@@ -68,6 +71,12 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (!LibStaking.hasStaked(msg.sender)) {
             revert NotStakedBefore();
         }
+
+        if (!s.bootstrapped) {
+            LibStaking.setMetadataWithConfirm(msg.sender, metadata);
+            return;
+        }
+
         LibStaking.setValidatorMetadata(msg.sender, metadata);
     }
 
@@ -78,8 +87,27 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert CollateralIsZero();
         }
 
-        LibStaking.setValidatorMetadata(msg.sender, metadata);
-        LibStaking.deposit(msg.sender, msg.value);
+        if (!s.bootstrapped) {
+            // if the subnet has not been bootstrapped, join directly
+            // without delays, and collect collateral to register
+            // in the gateway
+
+            // confirm validators deposit immediately
+            LibStaking.depositWithConfirm(msg.sender, msg.value);
+
+            if (
+                LibStaking.getTotalConfirmedCollateral() >= s.minActivationCollateral &&
+                LibStaking.totalActiveValidators() >= s.minValidators
+            ) {
+                IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
+
+                s.bootstrapped = true;
+                emit SubnetBootstrapped();
+            }
+        } else {
+            LibStaking.setValidatorMetadata(msg.sender, metadata);
+            LibStaking.deposit(msg.sender, msg.value);
+        }
     }
 
     /// @notice method that allows a validator to increase their stake
@@ -92,6 +120,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotStakedBefore();
         }
 
+        if (!s.bootstrapped) {
+            LibStaking.depositWithConfirm(msg.sender, msg.value);
+            return;
+        }
+
         LibStaking.deposit(msg.sender, msg.value);
     }
 
@@ -102,6 +135,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotValidator();
         }
 
+        if (!s.bootstrapped) {
+            LibStaking.withdrawWithConfirm(msg.sender, amount);
+            return;
+        }
         LibStaking.withdraw(msg.sender, amount);
     }
 

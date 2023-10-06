@@ -192,6 +192,16 @@ library LibValidatorSet {
     event ActiveValidatorLeft(address validator);
     event WaitingValidatorLeft(address validator);
 
+    /// @notice Get the total confirmed collateral of the validators.
+    function getTotalConfirmedCollateral(ValidatorSet storage validators) internal view returns (uint256 collateral) {
+        collateral = validators.totalConfirmedCollateral;
+    }
+
+    /// @notice Get the total active validators.
+    function totalActiveValidators(ValidatorSet storage validators) internal view returns (uint16 total) {
+        total = validators.activeValidators.getSize();
+    }
+
     /// @notice Get the confirmed collateral of the validator.
     function getConfirmedCollateral(
         ValidatorSet storage validators,
@@ -388,11 +398,12 @@ library LibStaking {
     using LibMaxPQ for MaxPQ;
     using LibMinPQ for MinPQ;
 
+    uint64 public constant INITIAL_CONFIGURATION_NUMBER = 1;
+
     event ConfigurantionNumberConfirmed(uint64 number);
     event CollateralClaimed(address validator, uint256 amount);
-    // TODO: Include the list of initial validators as part of the event
-    // so Fendermint can directly pick it up when bootstrapping the infra?
-    event SubnetBootstrapped();
+
+    // =============== Getters =============
 
     /// @notice Checks if the validator is an active validator
     function isActiveValidator(address validator) internal view returns (bool) {
@@ -412,10 +423,20 @@ library LibStaking {
         return s.validatorSet.validators[validator].totalCollateral > 0;
     }
 
+    function totalActiveValidators() internal view returns (uint16) {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        return s.validatorSet.totalActiveValidators();
+    }
+
     /// @notice Gets the total number of validators, including active and waiting
     function totalValidators() internal view returns (uint16) {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         return s.validatorSet.waitingValidators.getSize() + s.validatorSet.activeValidators.getSize();
+    }
+
+    function getTotalConfirmedCollateral() internal view returns (uint256) {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        return s.validatorSet.getTotalConfirmedCollateral();
     }
 
     /// @notice Gets the total collateral the validators has staked.
@@ -424,43 +445,57 @@ library LibStaking {
         return s.validatorSet.validators[validator].totalCollateral;
     }
 
+    // =============== Operations directly confirm =============
+
+    /// @notice Set the validator metadata directly without queueing the request
+    function setMetadataWithConfirm(address validator, bytes calldata metadata) internal {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        s.validatorSet.setMetadata(validator, metadata);
+    }
+
+    /// @notice Confirm the deposit directly without going through the confirmation process
+    function depositWithConfirm(address validator, uint256 amount) internal {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+
+        // record deposit that updates the total collateral
+        s.validatorSet.recordDeposit(validator, amount);
+        // confirm deposit that updates the confirmed collateral
+        s.validatorSet.confirmDeposit(validator, amount);
+
+        // add stake directly to gateway
+        IGateway(s.ipcGatewayAddr).addStake{value: msg.value}();
+
+        IGateway(s.ipcGatewayAddr).releaseStake(amount);
+        payable(validator).transfer(amount);
+    }
+
+    /// @notice Confirm the withdraw directly without going through the confirmation process
+    function withdrawWithConfirm(address validator, uint256 amount) internal {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+
+        // record deposit that updates the total collateral
+        s.validatorSet.recordWithdraw(validator, amount);
+        // confirm deposit that updates the confirmed collateral
+        s.validatorSet.confirmWithdraw(validator, amount);
+
+        // release stake from gateway and transfer to user
+        IGateway(s.ipcGatewayAddr).releaseStake(amount);
+        payable(validator).transfer(amount);
+    }
+
+    // ================= Operations that are queued ==============
+
     /// @notice Set the validator metadata
     function setValidatorMetadata(address validator, bytes calldata metadata) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-
-        if (!s.bootstrapped) {
-            s.validatorSet.validators[validator].metadata = metadata;
-        } else {
-            s.changeSet.metadataRequest(validator, metadata);
-        }
+        s.changeSet.metadataRequest(validator, metadata);
     }
 
     /// @notice Deposit the collateral
-    /// @notice If the subnet has not been bootstrapped, join without delays
     function deposit(address validator, uint256 amount) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
 
-        if (!s.bootstrapped) {
-            // if the subnet has not been bootstrapped, join directly
-            // without delays, and collect collateral to register
-            // in the gateway
-            // confirm validators deposit immediately
-            s.validatorSet.confirmDeposit(validator, amount);
-
-            // register subnet in the gateway and bootstrap if requirement fulfilled
-            if (
-                s.validatorSet.totalConfirmedCollateral >= s.minActivationCollateral &&
-                s.validatorSet.activeValidators.getSize() >= s.minValidators
-            ) {
-                IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
-
-                s.bootstrapped = true;
-                emit SubnetBootstrapped();
-            }
-        } else {
-            s.changeSet.depositRequest(validator, amount);
-        }
-
+        s.changeSet.depositRequest(validator, amount);
         s.validatorSet.recordDeposit(validator, amount);
     }
 
@@ -471,6 +506,8 @@ library LibStaking {
         s.changeSet.withdrawRequest(validator, amount);
         s.validatorSet.recordWithdraw(validator, amount);
     }
+
+    // =============== Other functions ================
 
     /// @notice Claim the released collateral
     function claimCollateral(address validator) internal {
