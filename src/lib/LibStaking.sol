@@ -464,9 +464,6 @@ library LibStaking {
 
         // add stake directly to gateway
         IGateway(s.ipcGatewayAddr).addStake{value: msg.value}();
-
-        IGateway(s.ipcGatewayAddr).releaseStake(amount);
-        payable(validator).transfer(amount);
     }
 
     /// @notice Confirm the withdraw directly without going through the confirmation process
