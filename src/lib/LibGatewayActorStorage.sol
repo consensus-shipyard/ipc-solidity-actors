@@ -74,7 +74,7 @@ struct GatewayActorStorage {
     uint64 bottomUpCheckPeriod;
     /// @notice whether the contract is initialized
     bool initialized;
-    /// Validator tracking changes from parent in child subnet
+    /// Tracking validator changes from parent in child subnet
     ParentValidatorsTracker validatorsTracker;
 }
 
