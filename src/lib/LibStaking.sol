@@ -170,6 +170,7 @@ library LibValidatorSet {
         collateral = validators.validators[validator].confirmedCollateral;
     }
 
+    // TODO: use the similar function defined in another parallel PR
     function listActiveValidators(ValidatorSet storage validators) internal view returns (address[] memory addresses) {
         uint16 size = validators.activeValidators.getSize();
         addresses = new address[](size);
