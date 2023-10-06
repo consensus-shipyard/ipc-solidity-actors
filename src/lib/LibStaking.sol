@@ -427,7 +427,12 @@ library LibStaking {
     /// @notice Set the validator metadata
     function setValidatorMetadata(address validator, bytes calldata metadata) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        s.changeSet.metadataRequest(validator, metadata);
+
+        if (!s.bootstrapped) {
+            s.validatorSet.validators[validator].metadata = metadata;
+        } else {
+            s.changeSet.metadataRequest(validator, metadata);
+        }
     }
 
     /// @notice Deposit the collateral
