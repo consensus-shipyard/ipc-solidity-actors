@@ -85,14 +85,10 @@ contract DefaultGatewayMock is IGateway {
     }
 
     function commitParentFinality(
-        ParentFinality calldata finality,
-        FvmAddress[] calldata validators,
-        uint256[] calldata weights
+        ParentFinality calldata finality
     ) external {
         // silent warning
         finality;
-        validators;
-        weights;
         // make method perform txn
         dummy = 1;
     }
