@@ -541,6 +541,17 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("InvalidCheckpointEpoch"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "InvalidCheckpointEpoch",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("InvalidCheckpointSource"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -1028,6 +1039,19 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "InvalidActorAddress", abi = "InvalidActorAddress()")]
     pub struct InvalidActorAddress;
+    ///Custom Error type `InvalidCheckpointEpoch` with signature `InvalidCheckpointEpoch()` and selector `0xfae4eadb`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(name = "InvalidCheckpointEpoch", abi = "InvalidCheckpointEpoch()")]
+    pub struct InvalidCheckpointEpoch;
     ///Custom Error type `InvalidCheckpointSource` with signature `InvalidCheckpointSource()` and selector `0xfe72264e`
     #[derive(
         Clone,
@@ -1286,6 +1310,7 @@ pub mod gateway_router_facet {
         FailedAddSignatory(FailedAddSignatory),
         FailedRemoveIncompleteCheckpoint(FailedRemoveIncompleteCheckpoint),
         InvalidActorAddress(InvalidActorAddress),
+        InvalidCheckpointEpoch(InvalidCheckpointEpoch),
         InvalidCheckpointSource(InvalidCheckpointSource),
         InvalidConfigurationNumber(InvalidConfigurationNumber),
         InvalidCrossMsgDstSubnet(InvalidCrossMsgDstSubnet),
@@ -1362,6 +1387,11 @@ pub mod gateway_router_facet {
                 <InvalidActorAddress as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::InvalidActorAddress(decoded));
+            }
+            if let Ok(decoded) =
+                <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::InvalidCheckpointEpoch(decoded));
             }
             if let Ok(decoded) =
                 <InvalidCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -1476,6 +1506,9 @@ pub mod gateway_router_facet {
                 Self::InvalidActorAddress(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::InvalidCheckpointEpoch(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::InvalidCheckpointSource(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1560,6 +1593,10 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <InvalidActorAddress as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <InvalidCheckpointEpoch as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1656,6 +1693,7 @@ pub mod gateway_router_facet {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::InvalidActorAddress(element) => ::core::fmt::Display::fmt(element, f),
+                Self::InvalidCheckpointEpoch(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCheckpointSource(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidConfigurationNumber(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCrossMsgDstSubnet(element) => ::core::fmt::Display::fmt(element, f),
@@ -1730,6 +1768,11 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<InvalidActorAddress> for GatewayRouterFacetErrors {
         fn from(value: InvalidActorAddress) -> Self {
             Self::InvalidActorAddress(value)
+        }
+    }
+    impl ::core::convert::From<InvalidCheckpointEpoch> for GatewayRouterFacetErrors {
+        fn from(value: InvalidCheckpointEpoch) -> Self {
+            Self::InvalidCheckpointEpoch(value)
         }
     }
     impl ::core::convert::From<InvalidCheckpointSource> for GatewayRouterFacetErrors {
