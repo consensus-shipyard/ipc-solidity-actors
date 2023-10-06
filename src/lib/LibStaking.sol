@@ -489,8 +489,8 @@ library LibStaking {
     }
 }
 
-/// The library for tracking waiting and active validators, should be used in gateway to track the
-/// validator change set and apply them directly.
+/// The library for tracking validator changes coming from the parent.
+/// Should be used in the child gateway to store changes until they can be applied.
 library LibValidatorTracking {
     using LibValidatorSet for ValidatorSet;
     using LibStakingChangeSet for StakingChangeSet;
