@@ -529,21 +529,19 @@ library LibStaking {
 
             if (change.op == StakingOperation.SetMetadata) {
                 s.validatorSet.validators[validator].metadata = change.payload;
-                continue;
-            }
-
-            uint256 amount = abi.decode(change.payload, (uint256));
-
-            if (change.op == StakingOperation.Withdraw) {
-                s.validatorSet.confirmWithdraw(validator, amount);
-                s.releaseQueue.addNewRelease(validator, amount);
             } else {
-                s.validatorSet.confirmDeposit(validator, amount);
-                IGateway(s.ipcGatewayAddr).addStake{value: amount}();
+                uint256 amount = abi.decode(change.payload, (uint256));
+
+                if (change.op == StakingOperation.Withdraw) {
+                    s.validatorSet.confirmWithdraw(validator, amount);
+                    s.releaseQueue.addNewRelease(validator, amount);
+                } else {
+                    s.validatorSet.confirmDeposit(validator, amount);
+                    IGateway(s.ipcGatewayAddr).addStake{value: amount}();
+                }
             }
 
             changeSet.purgeChange(i);
-
             unchecked {
                 i++;
             }

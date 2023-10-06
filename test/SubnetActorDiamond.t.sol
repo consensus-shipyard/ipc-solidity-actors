@@ -223,8 +223,14 @@ contract SubnetActorDiamondTest is Test {
         );
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
-        require(nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 2, "next config num not 3 after confirm join");
-        require(startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 2, "start config num not 3 after confirm join");
+        require(
+            nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 2,
+            "next config num not 3 after confirm join"
+        );
+        require(
+            startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 2,
+            "start config num not 3 after confirm join"
+        );
 
         // ======== Step. Stake more ======
         vm.startPrank(validator1);
@@ -249,8 +255,14 @@ contract SubnetActorDiamondTest is Test {
         require(v.confirmedCollateral == collateral, "confirmed collateral not expected after confrim stake");
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
-        require(nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 3, "next config num not 4 after confirm stake");
-        require(startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 3, "start config num not 4 after confirm stake");
+        require(
+            nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 3,
+            "next config num not 4 after confirm stake"
+        );
+        require(
+            startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 3,
+            "start config num not 4 after confirm stake"
+        );
 
         // ======== Step. Leave ======
         vm.startPrank(validator1);
@@ -262,8 +274,14 @@ contract SubnetActorDiamondTest is Test {
         require(v.confirmedCollateral == collateral, "confirmed collateral not 0 after confrim leave");
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
-        require(nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 4, "next config num not 5 after confirm leave");
-        require(startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 3, "start config num not 4 after confirm leave");
+        require(
+            nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 4,
+            "next config num not 5 after confirm leave"
+        );
+        require(
+            startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 3,
+            "start config num not 4 after confirm leave"
+        );
 
         // ======== Step. Confirm leave ======
         saManager.confirmChange(LibStaking.INITIAL_CONFIGURATION_NUMBER + 3);
@@ -273,8 +291,14 @@ contract SubnetActorDiamondTest is Test {
         require(v.confirmedCollateral == 0, "confirmed collateral not 0 after confrim leave");
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
-        require(nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 4, "next config num not 5 after confirm leave");
-        require(startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 4, "start config num not 5 after confirm leave");
+        require(
+            nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 4,
+            "next config num not 5 after confirm leave"
+        );
+        require(
+            startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 4,
+            "start config num not 5 after confirm leave"
+        );
     }
 
     // function testSubnetActorDiamond_MultipleJoins_Works_GetValidators() public {
