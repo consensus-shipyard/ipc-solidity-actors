@@ -46,7 +46,7 @@ struct StakingChangeRequest {
 }
 
 /// The collection of staking changes
-struct StakingChangeSet {
+struct StakingChangeLog {
     /// @notice The next configuration number to assign to new changes.
     uint64 nextConfigurationNumber;
     /// @notice The starting configuration number stored.
@@ -118,7 +118,7 @@ struct ValidatorSet {
 /// Tracks the parent validator changes and apply them in the child
 struct ParentValidatorsTracker {
     ValidatorSet validators;
-    StakingChangeSet changes;
+    StakingChangeLog changes;
 }
 
 struct IPCAddress {

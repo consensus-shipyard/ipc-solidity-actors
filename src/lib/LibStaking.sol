@@ -5,17 +5,17 @@ import {IGateway} from "../interfaces/IGateway.sol";
 import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage.sol";
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
-import {StakingReleaseQueue, StakingChangeSet, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker} from "../structs/Subnet.sol";
+import {StakingReleaseQueue, StakingChangeLog, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker} from "../structs/Subnet.sol";
 import {WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
 
-/// The util library for `StakingChangeSet`
-library LibStakingChangeSet {
+/// The util library for `StakingChangeLog`
+library LibStakingChangeLog {
     event NewStakingRequest(StakingOperation op, address validator, uint256 amount, uint64 configurationNumber);
 
     /// @notice Perform upsert operation to the withdraw changes, return total value to withdraw
     /// @notice of the validator.
     /// Each insert will increment the configuration number by 1, update will not.
-    function withdrawRequest(StakingChangeSet storage changes, address validator, uint256 amount) internal {
+    function withdrawRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
         uint64 configurationNumber = recordChange({
             changes: changes,
             validator: validator,
@@ -32,7 +32,7 @@ library LibStakingChangeSet {
     }
 
     /// @notice Perform upsert operation to the deposit changes
-    function depositRequest(StakingChangeSet storage changes, address validator, uint256 amount) internal {
+    function depositRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
         uint64 configurationNumber = recordChange({
             changes: changes,
             validator: validator,
@@ -50,7 +50,7 @@ library LibStakingChangeSet {
 
     /// @notice Perform upsert operation to the deposit changes
     function recordChange(
-        StakingChangeSet storage changes,
+        StakingChangeLog storage changes,
         address validator,
         StakingOperation op,
         uint256 amount
@@ -63,13 +63,13 @@ library LibStakingChangeSet {
 
     /// @notice Get the change at configuration number
     function getChange(
-        StakingChangeSet storage changes,
+        StakingChangeLog storage changes,
         uint64 configurationNumber
     ) internal view returns (StakingChange storage) {
         return changes.changes[configurationNumber];
     }
 
-    function purgeChange(StakingChangeSet storage changes, uint64 configurationNumber) internal {
+    function purgeChange(StakingChangeLog storage changes, uint64 configurationNumber) internal {
         delete changes.changes[configurationNumber];
     }
 }
@@ -362,7 +362,7 @@ library LibValidatorSet {
 
 library LibStaking {
     using LibStakingReleaseQueue for StakingReleaseQueue;
-    using LibStakingChangeSet for StakingChangeSet;
+    using LibStakingChangeLog for StakingChangeLog;
     using LibValidatorSet for ValidatorSet;
     using LibMaxPQ for MaxPQ;
     using LibMinPQ for MinPQ;
@@ -456,7 +456,7 @@ library LibStaking {
     /// @notice Confirm the changes in bottom up checkpoint submission, only call this in bottom up checkpoint execution.
     function confirmChange(uint64 configurationNumber) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        StakingChangeSet storage changeSet = s.changeSet;
+        StakingChangeLog storage changeSet = s.changeSet;
 
         if (configurationNumber >= changeSet.nextConfigurationNumber) {
             revert CannotConfirmFutureChanges();
@@ -493,7 +493,7 @@ library LibStaking {
 /// Should be used in the child gateway to store changes until they can be applied.
 library LibValidatorTracking {
     using LibValidatorSet for ValidatorSet;
-    using LibStakingChangeSet for StakingChangeSet;
+    using LibStakingChangeLog for StakingChangeLog;
 
     function storeChange(ParentValidatorsTracker storage self, StakingChangeRequest calldata changeRequest) internal {
         uint64 configurationNumber = self.changes.recordChange({
