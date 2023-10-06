@@ -94,6 +94,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
             // confirm validators deposit immediately
             LibStaking.depositWithConfirm(msg.sender, msg.value);
+            LibStaking.setMetadataWithConfirm(msg.sender, metadata);
 
             if (
                 LibStaking.getTotalConfirmedCollateral() >= s.minActivationCollateral &&
