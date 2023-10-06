@@ -10,40 +10,61 @@ import {WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, N
 
 /// The util library for `StakingChangeLog`
 library LibStakingChangeLog {
-    event NewStakingRequest(StakingOperation op, address validator, uint256 amount, uint64 configurationNumber);
+    event NewStakingChangeRequest(StakingOperation op, address validator, bytes payload, uint64 configurationNumber);
+
+    /// @notice Validator request to update its metadata
+    function metadataRequest(StakingChangeLog storage changes, address validator, bytes calldata metadata) internal {
+        uint64 configurationNumber = recordChange({
+            changes: changes,
+            validator: validator,
+            op: StakingOperation.Withdraw,
+            payload: metadata
+        });
+
+        emit NewStakingChangeRequest({
+            op: StakingOperation.SetMetadata,
+            validator: validator,
+            payload: metadata,
+            configurationNumber: configurationNumber
+        });
+    }
 
     /// @notice Perform upsert operation to the withdraw changes, return total value to withdraw
     /// @notice of the validator.
     /// Each insert will increment the configuration number by 1, update will not.
     function withdrawRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
+        bytes memory payload = abi.encodePacked(amount);
+
         uint64 configurationNumber = recordChange({
             changes: changes,
             validator: validator,
             op: StakingOperation.Withdraw,
-            amount: amount
+            payload: payload
         });
 
-        emit NewStakingRequest({
+        emit NewStakingChangeRequest({
             op: StakingOperation.Withdraw,
             validator: validator,
-            amount: amount,
+            payload: payload,
             configurationNumber: configurationNumber
         });
     }
 
     /// @notice Perform upsert operation to the deposit changes
     function depositRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
+        bytes memory payload = abi.encodePacked(amount);
+
         uint64 configurationNumber = recordChange({
             changes: changes,
             validator: validator,
             op: StakingOperation.Deposit,
-            amount: amount
+            payload: payload
         });
 
-        emit NewStakingRequest({
+        emit NewStakingChangeRequest({
             op: StakingOperation.Deposit,
             validator: validator,
-            amount: amount,
+            payload: payload,
             configurationNumber: configurationNumber
         });
     }
@@ -53,11 +74,11 @@ library LibStakingChangeLog {
         StakingChangeLog storage changes,
         address validator,
         StakingOperation op,
-        uint256 amount
+        bytes memory payload
     ) internal returns (uint64 configurationNumber) {
         configurationNumber = changes.nextConfigurationNumber;
 
-        changes.changes[configurationNumber] = StakingChange({op: op, validator: validator, amount: amount});
+        changes.changes[configurationNumber] = StakingChange({op: op, validator: validator, payload: payload});
         changes.nextConfigurationNumber = configurationNumber + 1;
     }
 
@@ -404,9 +425,9 @@ library LibStaking {
     }
 
     /// @notice Set the validator metadata
-    function setValidatorMetadata(address validator, bytes calldata data) internal {
+    function setValidatorMetadata(address validator, bytes calldata metadata) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        s.validatorSet.setMetadata(validator, data);
+        s.changeSet.metadataRequest(validator, metadata);
     }
 
     /// @notice Deposit the collateral
@@ -466,7 +487,13 @@ library LibStaking {
         for (uint64 i = start; i <= configurationNumber; ) {
             StakingChange storage change = changeSet.getChange(i);
             address validator = change.validator;
-            uint256 amount = change.amount;
+
+            if (change.op == StakingOperation.SetMetadata) {
+                s.validatorSet.validators[validator].metadata = change.payload;
+                continue;
+            }
+
+            uint256 amount = abi.decode(change.payload, (uint256));
 
             if (change.op == StakingOperation.Withdraw) {
                 s.validatorSet.confirmWithdraw(validator, amount);
@@ -499,7 +526,7 @@ library LibValidatorTracking {
         uint64 configurationNumber = self.changes.recordChange({
             validator: changeRequest.change.validator,
             op: changeRequest.change.op,
-            amount: changeRequest.change.amount
+            payload: changeRequest.change.payload
         });
 
         if (configurationNumber != changeRequest.configurationNumber) {
