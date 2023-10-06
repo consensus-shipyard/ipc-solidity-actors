@@ -17,7 +17,7 @@ library LibStakingChangeLog {
         uint64 configurationNumber = recordChange({
             changes: changes,
             validator: validator,
-            op: StakingOperation.Withdraw,
+            op: StakingOperation.SetMetadata,
             payload: metadata
         });
 
