@@ -33,7 +33,7 @@ library LibStakingChangeLog {
     /// @notice of the validator.
     /// Each insert will increment the configuration number by 1, update will not.
     function withdrawRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
-        bytes memory payload = abi.encodePacked(amount);
+        bytes memory payload = abi.encode(amount);
 
         uint64 configurationNumber = recordChange({
             changes: changes,
@@ -52,7 +52,7 @@ library LibStakingChangeLog {
 
     /// @notice Perform upsert operation to the deposit changes
     function depositRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
-        bytes memory payload = abi.encodePacked(amount);
+        bytes memory payload = abi.encode(amount);
 
         uint64 configurationNumber = recordChange({
             changes: changes,
