@@ -24,14 +24,7 @@ contract DefaultGatewayMock is IGateway {
         dummy = 1;
     }
 
-    function releaseStake(uint256 amount) external {
-        // silent warning
-        amount;
-        // make method perform txn
-        dummy = 1;
-    }
-
-    function releaseRewards(uint256 amount) external {
+    function releaseAmount(uint256 amount) external {
         // silent warning
         amount;
         // make method perform txn
@@ -103,11 +96,6 @@ contract DefaultGatewayMock is IGateway {
         membershipRootHash;
         membershipWeight;
         // make method perform txn
-        dummy = 1;
-    }
-
-    function releaseRewardsForValidators(uint256 amount) external {
-        amount;
         dummy = 1;
     }
 }

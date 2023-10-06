@@ -120,6 +120,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         LibStaking.claimCollateral(msg.sender);
     }
 
+    /// @notice Validator claims their released reward
+    function claimReward() external {
+        LibStaking.claimReward(msg.sender);
+    }
+
     /// @notice method that distributes the rewards for the subnet to validators.
     function rewardValidators(uint256 amount) external onlyGateway {
         address[] memory validators = s.validatorSet.listActiveValidators();
@@ -140,21 +145,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
                 ++i;
             }
         }
-    }
-
-    /// @notice method that allows a validator to withdraw it's accumulated rewards using pull-based transfer
-    function withdrawReward() external {
-        uint256 amount = s.accumulatedRewards[msg.sender];
-
-        if (amount == 0) {
-            revert NoRewardToWithdraw();
-        }
-
-        s.accumulatedRewards[msg.sender] = 0;
-
-        IGateway(s.ipcGatewayAddr).releaseRewardsForValidators(amount);
-
-        payable(msg.sender).sendValue(amount);
     }
 
     /**

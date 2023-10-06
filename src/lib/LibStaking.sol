@@ -6,7 +6,8 @@ import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
 import {StakingReleaseQueue, StakingChangeLog, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker} from "../structs/Subnet.sol";
-import {WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
+import {NoRewardToWithdraw, WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
+import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 /// The util library for `StakingChangeLog`
 library LibStakingChangeLog {
@@ -151,7 +152,7 @@ library LibStakingReleaseQueue {
         }
 
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        IGateway(s.ipcGatewayAddr).releaseStake(amount);
+        IGateway(s.ipcGatewayAddr).releaseAmount(amount);
         payable(validator).transfer(amount);
 
         return amount;
@@ -379,6 +380,7 @@ library LibStaking {
     using LibValidatorSet for ValidatorSet;
     using LibMaxPQ for MaxPQ;
     using LibMinPQ for MinPQ;
+    using Address for address payable;
 
     event ConfigurantionNumberConfirmed(uint64 number);
     event CollateralClaimed(address validator, uint256 amount);
@@ -464,6 +466,22 @@ library LibStaking {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         uint256 amount = s.releaseQueue.claim(validator);
         emit CollateralClaimed(validator, amount);
+    }
+
+    /// @notice method that allows a validator to withdraw it's accumulated rewards using pull-based transfer
+    function claimReward(address validator) external {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        uint256 amount = s.accumulatedRewards[validator];
+
+        if (amount == 0) {
+            revert NoRewardToWithdraw();
+        }
+
+        s.accumulatedRewards[validator] = 0;
+
+        IGateway(s.ipcGatewayAddr).releaseAmount(amount);
+
+        payable(validator).sendValue(amount);
     }
 
     /// @notice Confirm the changes in bottom up checkpoint submission, only call this in bottom up checkpoint execution.
