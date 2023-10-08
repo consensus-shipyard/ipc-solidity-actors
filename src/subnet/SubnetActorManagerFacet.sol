@@ -82,7 +82,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that allows a validator to join the subnet
     /// @param metadata The offchain data that should be associated with the validator
-    function join(bytes calldata metadata) external payable notKilled {
+    function join(bytes calldata metadata) external payable nonReentrant notKilled {
         if (msg.value == 0) {
             revert CollateralIsZero();
         }
