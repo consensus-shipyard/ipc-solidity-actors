@@ -79,6 +79,7 @@ library LibStakingChangeLog {
         configurationNumber = changes.nextConfigurationNumber;
 
         changes.changes[configurationNumber] = StakingChange({op: op, validator: validator, payload: payload});
+
         changes.nextConfigurationNumber = configurationNumber + 1;
     }
 
@@ -564,6 +565,7 @@ library LibValidatorTracking {
             validator: changeRequest.change.validator,
             op: changeRequest.change.op,
             payload: changeRequest.change.payload
+
         });
 
         if (configurationNumber != changeRequest.configurationNumber) {
