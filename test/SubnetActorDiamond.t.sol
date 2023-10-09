@@ -171,7 +171,7 @@ contract SubnetActorDiamondTest is Test {
         vm.prank(validator);
         vm.expectRevert(NotOwnerOfPublicKey.selector);
 
-        saManager.join(new bytes(20));
+        saManager.join{value: 10}(new bytes(20));
     }
 
     function testSubnetActorDiamond_Join_Fail_ZeroColalteral() public {
