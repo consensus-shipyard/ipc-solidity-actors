@@ -181,7 +181,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         }
     }
 
-    function publicKeyToAddress(bytes memory publicKey) internal pure returns(address) {
+    function publicKeyToAddress(bytes memory publicKey) internal pure returns (address) {
         bytes32 hashed = keccak256(publicKey);
         return address(uint160(bytes20(hashed)));
     }

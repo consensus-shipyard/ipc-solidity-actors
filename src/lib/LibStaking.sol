@@ -565,7 +565,6 @@ library LibValidatorTracking {
             validator: changeRequest.change.validator,
             op: changeRequest.change.op,
             payload: changeRequest.change.payload
-
         });
 
         if (configurationNumber != changeRequest.configurationNumber) {

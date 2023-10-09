@@ -106,7 +106,7 @@ contract SubnetActorDiamondTest is Test {
         require(keccak256(_a) == keccak256(_b), "bytes not equal");
     }
 
-    function deriveValidatorAddress(uint8 seq) internal pure returns(address addr, bytes memory data) {
+    function deriveValidatorAddress(uint8 seq) internal pure returns (address addr, bytes memory data) {
         data = new bytes(64);
         data[0] = bytes1(seq);
 
@@ -157,7 +157,8 @@ contract SubnetActorDiamondTest is Test {
                 minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
                 minValidators: DEFAULT_MIN_VALIDATORS,
                 bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+                activeValidatorsLimit: 100
             }),
             address(saDupGetterFaucet),
             address(saDupMangerFaucet)
@@ -695,7 +696,8 @@ contract SubnetActorDiamondTest is Test {
                 minActivationCollateral: _minActivationCollateral,
                 minValidators: _minValidators,
                 bottomUpCheckPeriod: _checkPeriod,
-                majorityPercentage: _majorityPercentage
+                majorityPercentage: _majorityPercentage,
+                activeValidatorsLimit: 100
             })
         );
 
