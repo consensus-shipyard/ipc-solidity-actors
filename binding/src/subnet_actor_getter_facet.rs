@@ -1149,7 +1149,7 @@ pub mod subnet_actor_getter_facet {
     )]
     pub struct GenesisValidator {
         pub addr: ::ethers::core::types::Address,
-        pub collaterall: ::ethers::core::types::U256,
+        pub collateral: ::ethers::core::types::U256,
         pub metadata: ::ethers::core::types::Bytes,
     }
     ///`SubnetID(uint64,address[])`
