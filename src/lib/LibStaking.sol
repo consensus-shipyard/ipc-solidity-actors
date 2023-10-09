@@ -467,7 +467,7 @@ library LibStaking {
             // add to initial validators avoiding duplicates if it
             // is a genesis validator.
             bool alreadyValidator = false;
-            uint256 length = s.genesisValidators.length; 
+            uint256 length = s.genesisValidators.length;
             for (uint256 i = 0; i < length; ) {
                 if (s.genesisValidators[i].addr == validator) {
                     alreadyValidator = true;

@@ -29,7 +29,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event SubnetBootstrapped(GenesisValidator[]);
 
-
     /** @notice Executes the checkpoint if it is valid.
      *  @dev It triggers the commitment of the checkpoint, the execution of related cross-net messages,
      *       and any other side-effects that need to be triggered by the checkpoint such as relayer reward book keeping.

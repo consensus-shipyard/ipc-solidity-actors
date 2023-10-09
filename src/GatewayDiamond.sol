@@ -57,7 +57,7 @@ contract GatewayDiamond {
         uint256 length = params.genesisValidators.length;
         FvmAddress[] memory validators = new FvmAddress[](length);
         uint256[] memory weights = new uint256[](length);
-        for (uint256 i = 0; i < length;) {
+        for (uint256 i = 0; i < length; ) {
             validators[i] = params.genesisValidators[i].addr;
             weights[i] = params.genesisValidators[i].weight;
             unchecked {
