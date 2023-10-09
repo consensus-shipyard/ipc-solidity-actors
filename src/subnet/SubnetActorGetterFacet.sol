@@ -6,7 +6,7 @@ import {NotEnoughValidatorsInSubnet} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID} from "../structs/Subnet.sol";
-import {SubnetID, Validator} from "../structs/Subnet.sol";
+import {SubnetID, GenesisValidator, Validator} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {SubnetActorStorage} from "../lib/LibSubnetActorStorage.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
@@ -30,11 +30,6 @@ contract SubnetActorGetterFacet {
         return s.parentId;
     }
 
-    /// @notice get the total stake
-    function totalStake() external view returns (uint256) {
-        return s.totalStake;
-    }
-
     function ipcGatewayAddr() external view returns (address) {
         return s.ipcGatewayAddr;
     }
@@ -45,6 +40,10 @@ contract SubnetActorGetterFacet {
 
     function getConfigurationNumbers() external view returns (uint64, uint64) {
         return (s.changeSet.nextConfigurationNumber, s.changeSet.startConfigurationNumber);
+    }
+
+    function genesisValidators() external view returns (GenesisValidator[] memory) {
+        return s.genesisValidators;
     }
 
     function bottomUpCheckPeriod() external view returns (uint64) {

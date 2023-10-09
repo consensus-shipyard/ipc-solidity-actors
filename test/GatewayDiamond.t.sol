@@ -163,7 +163,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesisValidators: new Validator[](0)
         });
 
         gwRouter = new GatewayRouterFacet();
@@ -239,7 +240,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             minActivationCollateral: DEFAULT_COLLATERAL_AMOUNT,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            activeValidatorsLimit: 100
         });
 
         saManager = new SubnetManagerTestUtil();
@@ -312,7 +314,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesisValidators: new Validator[](0)
         });
 
         dep = createDiamond(constructorParams);
@@ -350,7 +353,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: 100
+            majorityPercentage: 100,
+            genesisValidators: new Validator[](0)
         });
 
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](3);
@@ -836,7 +840,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesisValidators: new Validator[](0)
         });
         gatewayDiamond = createDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
@@ -866,7 +871,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesisValidators: new Validator[](0)
         });
         gatewayDiamond = createDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
@@ -894,7 +900,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesisValidators: new Validator[](0)
         });
         gatewayDiamond = createDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
@@ -925,7 +932,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesisValidators: new Validator[](0)
         });
         gatewayDiamond = createDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
@@ -1798,15 +1806,15 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         }
     }
 
-    function _join(address validatorAddress) internal {
-        vm.prank(validatorAddress);
-        vm.deal(validatorAddress, DEFAULT_COLLATERAL_AMOUNT + 1);
+    // function _join(address validatorAddress) internal {
+    //     vm.prank(validatorAddress);
+    //     vm.deal(validatorAddress, DEFAULT_COLLATERAL_AMOUNT + 1);
 
-        saManager.join{value: DEFAULT_COLLATERAL_AMOUNT}(new bytes(20));
+    //     saManager.join{value: DEFAULT_COLLATERAL_AMOUNT}(new bytes(20));
 
-        (uint64 nextConfigNum, ) = saGetter.getConfigurationNumbers();
-        saManager.confirmChange(nextConfigNum - 1);
-    }
+    //     (uint64 nextConfigNum, ) = saGetter.getConfigurationNumbers();
+    //     saManager.confirmChange(nextConfigNum - 1);
+    // }
 
     function release(uint256 releaseAmount) internal {
         uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;

@@ -28,13 +28,14 @@ struct Subnet {
 // ======== Subnet Staking =======
 enum StakingOperation {
     Deposit,
-    Withdraw
+    Withdraw,
+    SetMetadata
 }
 
 /// The change request to validator staking
 struct StakingChange {
     StakingOperation op;
-    uint256 amount;
+    bytes payload;
     address validator;
 }
 
@@ -87,6 +88,15 @@ struct Validator {
     /// The metadata associated with the validator, i.e. offchain network address.
     /// This information is not important to the protocol, offchain should know how
     /// to parse or decode the bytes.
+    bytes metadata;
+}
+
+/// Struct that holds all the information required for a genesis vallidator,
+/// including its address and genesis collateral and metadata.
+/// This can be used by Fendermint to bootstrap a new child subnet.
+struct GenesisValidator {
+    address addr;
+    uint256 collateral;
     bytes metadata;
 }
 
