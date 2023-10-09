@@ -479,11 +479,11 @@ library LibStaking {
             }
             if (!alreadyValidator) {
                 uint256 collateral = s.validatorSet.validators[validator].confirmedCollateral;
-                GenesisValidator memory val = GenesisValidator(
-                    validator,
-                    collateral,
-                    s.validatorSet.validators[validator].metadata
-                );
+                GenesisValidator memory val = GenesisValidator({
+                    addr: validator,
+                    collateral: collateral,
+                    metadata: s.validatorSet.validators[validator].metadata
+                });
                 s.genesisValidators.push(val);
             }
         }
