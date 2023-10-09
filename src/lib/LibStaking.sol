@@ -424,13 +424,14 @@ library LibStaking {
 
             // add to initial validators avoiding duplicates
             bool alreadyValidator = false;
-            for (uint256 i = 0; i < s.genesisValidators.length; ) {
+            uint256 length = s.genesisValidators.length; 
+            for (uint256 i = 0; i < length; ) {
                 if (s.genesisValidators[i].addr == validator) {
                     alreadyValidator = true;
                     break;
                 }
                 unchecked {
-                    i++;
+                    ++i;
                 }
             }
             if (!alreadyValidator) {
