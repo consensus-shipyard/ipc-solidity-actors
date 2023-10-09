@@ -96,7 +96,7 @@ struct Validator {
 /// This can be used by Fendermint to bootstrap a new child subnet.
 struct GenesisValidator {
     address addr;
-    uint256 genesisCollaterall;
+    uint256 collaterall;
     bytes metadata;
 }
 
