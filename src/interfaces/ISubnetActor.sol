@@ -38,5 +38,5 @@ interface ISubnetActor {
     ) external;
 
     /// Tracks the accumulated rewards for each validator.
-    function rewardValidators(uint256 amount) external;
+    function rewardRelayers(address[] memory relayers, uint256 amount) external;
 }

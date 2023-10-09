@@ -156,22 +156,19 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         LibStaking.claimReward(msg.sender);
     }
 
-    /// @notice method that distributes the rewards for the subnet to validators.
-    function rewardValidators(uint256 amount) external onlyGateway {
-        address[] memory validators = s.validatorSet.listActiveValidators();
-        uint256 totalCollateral = s.validatorSet.totalConfirmedCollateral;
-
-        uint256 validatorsLength = validators.length;
-        if (validatorsLength == 0) {
+    /// @notice method that distributes the rewards for the subnet to relayers.
+    function rewardRelayers(address[] memory relayers, uint256 reward) external onlyGateway {
+        uint256 relayersLength = relayers.length;
+        if (relayersLength == 0) {
             revert NoValidatorsInSubnet();
         }
-        if (amount < validatorsLength) {
+        if (reward < relayersLength) {
             revert NotEnoughBalanceForRewards();
         }
+        uint256 rewardAmount = reward / relayersLength;
 
-        for (uint256 i = 0; i < validatorsLength; ) {
-            uint256 rewardAmount = (amount * LibStaking.totalValidatorCollateral(validators[i])) / totalCollateral;
-            s.accumulatedRewards[validators[i]] += rewardAmount;
+        for (uint256 i = 0; i < relayersLength; ) {
+            s.accumulatedRewards[relayers[i]] += rewardAmount;
             unchecked {
                 ++i;
             }

@@ -1,6 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
+import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {EMPTY_HASH, METHOD_SEND} from "../constants/Constants.sol";
 import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, CheckpointInfo} from "../structs/Checkpoint.sol";
@@ -26,6 +27,7 @@ import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {StakingChangeRequest, ParentValidatorsTracker} from "../structs/Subnet.sol";
 import {LibValidatorTracking} from "../lib/LibStaking.sol";
+import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
@@ -45,6 +47,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// Called from a subnet actor if the checkpoint is cryptographically valid.
     function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint, CrossMsg[] calldata messages) external {
         // basic checks
+        // TODO: store checkpoint reward in the contract
+        uint256 checkpointReward = 10 gwei;
 
         // checkpoint is used to implement access control
         if (checkpoint.subnetID.getActor().normalize() != msg.sender) {
@@ -82,11 +86,22 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             }
 
             subnet.circSupply -= totalValue;
+
             // slither-disable-next-line unused-return
             s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
-            s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
 
+            // execute cross-messages
             _applyMessages(checkpoint.subnetID, messages);
+
+            // reward relayers for committing the previous checkpoint
+            rewardRelayers({
+                actor: msg.sender,
+                relayers: s.lastBottomUpExecutedCheckpointHeight,
+                reward: checkpointReward
+            });
+
+            // seal the checkpoint for the height `lastBottomUpExecutedCheckpointHeight`
+            s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
         } else if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight) {
             // If the submission for the last executed height, then this is a repeated submission from a relayer.
             // We should validate the checkpoint, and not the relayer, but not execute again
@@ -102,15 +117,16 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice reward the relayers for processing checkpoint at height `h`.
     /// @dev the relayer is added to the list of all relayers for this checkpoint and rewarded at the time the next checkpoint arrives,
     /// so that we can distribute a fixed reward pot among them, rather than reward them at the time of submission.
-    function rewardRelayers(uint64 h, uint256 reward) external {
-        address[] memory relayers = s.rewardedRelayers[h].values();
-        uint256 n = relayers.length;
-        for (uint256 i = 0; i < n; ) {
-            LibGateway.distributeRewards(relayers[i], reward);
-            unchecked {
-                ++i;
-            }
+    function rewardRelayers(address actor, uint64 h, uint256 reward) internal {
+        if (reward == 0) {
+            return;
         }
+        address[] memory relayers = s.rewardedRelayers[h].values();
+        if (relayers.length == 0) {
+            return;
+        }
+        // slither-disable-next-line unused-return
+        Address.functionCall(actor.normalize(), abi.encodeCall(ISubnetActor.rewardRelayers, (relayers, reward)));
     }
 
     /// @notice commit the ipc parent finality into storage

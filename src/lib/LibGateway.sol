@@ -265,15 +265,4 @@ library LibGateway {
     function getNextEpoch(uint256 blockNumber, uint64 checkPeriod) internal pure returns (uint64) {
         return ((uint64(blockNumber) / checkPeriod) + 1) * checkPeriod;
     }
-
-    /// @notice distribute rewards to validators in child subnet
-    /// @param to - the address of the target subnet contract
-    /// @param amount - the amount of rewards to distribute
-    function distributeRewards(address to, uint256 amount) internal {
-        if (amount == 0) {
-            return;
-        }
-        // slither-disable-next-line unused-return
-        Address.functionCall(to.normalize(), abi.encodeCall(ISubnetActor.rewardValidators, amount));
-    }
 }
