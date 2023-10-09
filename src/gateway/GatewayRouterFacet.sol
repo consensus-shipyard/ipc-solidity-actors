@@ -96,7 +96,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             // reward relayers for committing the previous checkpoint
             rewardRelayers({
                 actor: msg.sender,
-                relayers: s.lastBottomUpExecutedCheckpointHeight,
+                height: s.lastBottomUpExecutedCheckpointHeight,
                 reward: checkpointReward
             });
 
@@ -117,11 +117,11 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice reward the relayers for processing checkpoint at height `h`.
     /// @dev the relayer is added to the list of all relayers for this checkpoint and rewarded at the time the next checkpoint arrives,
     /// so that we can distribute a fixed reward pot among them, rather than reward them at the time of submission.
-    function rewardRelayers(address actor, uint64 h, uint256 reward) internal {
+    function rewardRelayers(address actor, uint64 height, uint256 reward) internal {
         if (reward == 0) {
             return;
         }
-        address[] memory relayers = s.rewardedRelayers[h].values();
+        address[] memory relayers = s.rewardedRelayers[height].values();
         if (relayers.length == 0) {
             return;
         }
