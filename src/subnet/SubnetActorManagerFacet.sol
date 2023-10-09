@@ -89,10 +89,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
             uint256 totalCollateral = LibStaking.getTotalConfirmedCollateral();
 
-            if (
-                totalCollateral >= s.minActivationCollateral &&
-                LibStaking.totalActiveValidators() >= s.minValidators
-            ) {
+            if (totalCollateral >= s.minActivationCollateral && LibStaking.totalActiveValidators() >= s.minValidators) {
                 s.bootstrapped = true;
                 emit SubnetBootstrapped();
 
