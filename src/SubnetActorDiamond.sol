@@ -60,7 +60,7 @@ contract SubnetActorDiamond {
 
         // We hardcode the current limit for active validators to 100 per Tendermint consensus
         s.validatorSet.activeLimit = params.activeValidatorsLimit;
-        // Start the next configuration number from 1, 0 is reserved for no change.
+        // Start the next configuration number from 1, 0 is reserved for no change and the genesis membership
         s.changeSet.nextConfigurationNumber = LibStaking.INITIAL_CONFIGURATION_NUMBER;
         // The startConfiguration number is also 1 to match with nextConfigurationNumber, indicating we have
         // empty validator change logs
