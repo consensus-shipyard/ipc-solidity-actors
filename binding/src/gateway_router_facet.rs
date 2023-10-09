@@ -370,7 +370,7 @@ pub mod gateway_router_facet {
                                     ),
                                 },
                                 ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("fee"),
+                                    name: ::std::borrow::ToOwned::to_owned("reward"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::Uint(
                                         256usize,
                                     ),
@@ -1019,10 +1019,10 @@ pub mod gateway_router_facet {
         pub fn reward_relayers(
             &self,
             h: u64,
-            fee: ::ethers::core::types::U256,
+            reward: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([153, 151, 178, 52], (h, fee))
+                .method_hash([153, 151, 178, 52], (h, reward))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `storeValidatorChanges` (0xe49a547d) function
@@ -2385,7 +2385,7 @@ pub mod gateway_router_facet {
     #[ethcall(name = "rewardRelayers", abi = "rewardRelayers(uint64,uint256)")]
     pub struct RewardRelayersCall {
         pub h: u64,
-        pub fee: ::ethers::core::types::U256,
+        pub reward: ::ethers::core::types::U256,
     }
     ///Container type for all input parameters for the `storeValidatorChanges` function with signature `storeValidatorChanges(((uint8,bytes,address),uint64)[])` and selector `0xe49a547d`
     #[derive(
