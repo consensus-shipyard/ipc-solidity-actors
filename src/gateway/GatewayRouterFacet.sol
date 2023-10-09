@@ -86,11 +86,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
 
             _applyMessages(checkpoint.subnetID, messages);
-
         } else if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight) {
             // If the submission for the last executed height, then this is a repeated submission from a relayer.
             // We should validate the checkpoint, and not the relayer, but not execute again
-            
+
             // The relayer is added to the list of all relayers for this checkpoint to be rewarded later.
             // slither-disable-next-line unused-return
             s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);

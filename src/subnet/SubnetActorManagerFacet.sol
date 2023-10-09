@@ -46,7 +46,12 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (!LibStaking.isActiveValidator(msg.sender)) {
             revert NotValidator();
         }
-        if (checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod) {
+        // the accepted checkpoint height is equal to the last bottom-up checkpoint height or
+        // the next one
+        if (
+            checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod ||
+            checkpoint.blockHeight != s.lastBottomUpCheckpointHeight
+        ) {
             revert InvalidCheckpointEpoch();
         }
         if (keccak256(abi.encode(messages)) != checkpoint.crossMessagesHash) {
