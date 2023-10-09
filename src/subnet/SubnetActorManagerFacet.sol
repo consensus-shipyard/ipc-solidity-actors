@@ -128,6 +128,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @notice method that distributes the rewards for the subnet to validators.
     function rewardValidators(uint256 amount) external onlyGateway {
         address[] memory validators = s.validatorSet.listActiveValidators();
+        uint256 totalCollateral = s.validatorSet.totalConfirmedCollateral;
 
         uint256 validatorsLength = validators.length;
         if (validatorsLength == 0) {
@@ -137,9 +138,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotEnoughBalanceForRewards();
         }
 
-        uint256 rewardAmount = amount / validatorsLength;
-
         for (uint256 i = 0; i < validatorsLength; ) {
+            uint256 rewardAmount = (amount * LibStaking.totalValidatorCollateral(validators[i])) / totalCollateral;
             s.accumulatedRewards[validators[i]] += rewardAmount;
             unchecked {
                 ++i;

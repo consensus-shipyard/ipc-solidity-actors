@@ -44,6 +44,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice submit a verified checkpoint in the gateway to trigger side-effects and apply cross-messages.
     /// Called from a subnet actor if the checkpoint is cryptographically valid.
     function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint, CrossMsg[] calldata messages) external {
+        // basic checks
+
         // checkpoint is used to implement access control
         if (checkpoint.subnetID.getActor().normalize() != msg.sender) {
             revert InvalidCheckpointSource();
@@ -52,44 +54,49 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (!subnetExists) {
             revert SubnetNotFound();
         }
-        if (checkpoint.subnetID.equals(subnet.id)) {
+        if (!checkpoint.subnetID.equals(subnet.id)) {
             revert InvalidSubnet();
         }
         if (subnet.status != Status.Active) {
             revert SubnetNotActive();
         }
 
-        // If this is the first time the checkpoint is submitted, execute the messages, or put them in the execution queue.
-        // Otherwise, mark the checkpoint as executed, so further relayers can be rewarded but don't cause double execution.
         if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight + s.bottomUpCheckPeriod) {
-            // process messages
+            // If the submission for the next expected height then this is a new checkpoint which must be executed,
+            // the relayer must be stored, last executed subnet updated.
+
             uint256 totalValue = 0;
             uint256 crossMsgLength = messages.length;
             for (uint256 i = 0; i < crossMsgLength; ) {
+                // CODE-REVIEW
+                // before we used to do `totalValue += commit.fee + checkpoint.fee` here
+                // where and how are we going to use fees?
                 totalValue += messages[i].message.value;
                 unchecked {
                     ++i;
                 }
             }
 
-            // CODE-REVIEW
-            // before we do this here totalValue += commit.fee + checkpoint.fee
-            // where and how are we going to use fees?
-
             if (subnet.circSupply < totalValue) {
                 revert NotEnoughSubnetCircSupply();
             }
 
             subnet.circSupply -= totalValue;
+            s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
             s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
 
             _applyMessages(checkpoint.subnetID, messages);
-        }
 
-        // The relayer is added to the list of all relayers for this checkpoint
-        // to be rewarded later.
-        // slither-disable-next-line unused-return
-        s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+        } else if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight) {
+            // If the submission for the last executed height, then this is a repeated submission from a relayer.
+            // We should validate the checkpoint, and not the relayer, but not execute again
+            
+            // The relayer is added to the list of all relayers for this checkpoint to be rewarded later.
+            // slither-disable-next-line unused-return
+            s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+        } else {
+            revert CheckpointAlreadyProcessed();
+        }
     }
 
     /// @notice reward the relayers for processing checkpoint at height `h`.
