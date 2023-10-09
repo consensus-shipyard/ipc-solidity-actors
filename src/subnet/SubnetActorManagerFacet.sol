@@ -91,10 +91,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
                 LibStaking.getTotalConfirmedCollateral() >= s.minActivationCollateral &&
                 LibStaking.totalActiveValidators() >= s.minValidators
             ) {
-                IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
-
                 s.bootstrapped = true;
                 emit SubnetBootstrapped();
+
+                IGateway(s.ipcGatewayAddr).register{value: s.totalStake}();
             }
         } else {
             LibStaking.setValidatorMetadata(msg.sender, publicKey);

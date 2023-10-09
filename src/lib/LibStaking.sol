@@ -462,9 +462,6 @@ library LibStaking {
         s.validatorSet.recordDeposit(validator, amount);
         // confirm deposit that updates the confirmed collateral
         s.validatorSet.confirmDeposit(validator, amount);
-
-        // add stake directly to gateway
-        IGateway(s.ipcGatewayAddr).addStake{value: msg.value}();
     }
 
     /// @notice Confirm the withdraw directly without going through the confirmation process
