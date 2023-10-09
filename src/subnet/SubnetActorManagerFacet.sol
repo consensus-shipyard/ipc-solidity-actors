@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {CollateralIsZero, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint, InvalidSignatureErr, HeightAlreadyExecuted, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, NotOwnerOfPublicKey, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint, InvalidSignatureErr, HeightAlreadyExecuted, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
@@ -66,25 +66,16 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint);
     }
 
-    /// @notice Set the data of a validator
-    function setMetadata(bytes calldata metadata) external {
-        if (!LibStaking.hasStaked(msg.sender)) {
-            revert NotStakedBefore();
-        }
-
-        if (!s.bootstrapped) {
-            LibStaking.setMetadataWithConfirm(msg.sender, metadata);
-            return;
-        }
-
-        LibStaking.setValidatorMetadata(msg.sender, metadata);
-    }
-
     /// @notice method that allows a validator to join the subnet
-    /// @param metadata The offchain data that should be associated with the validator
-    function join(bytes calldata metadata) external payable nonReentrant notKilled {
+    /// @param publicKey The offchain public key that should be associated with the validator
+    function join(bytes calldata publicKey) external payable nonReentrant notKilled {
         if (msg.value == 0) {
             revert CollateralIsZero();
+        }
+
+        address convertedAddress = publicKeyToAddress(publicKey);
+        if (convertedAddress != msg.sender) {
+            revert NotOwnerOfPublicKey();
         }
 
         if (!s.bootstrapped) {
@@ -93,7 +84,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             // in the gateway
 
             // confirm validators deposit immediately
-            LibStaking.setMetadataWithConfirm(msg.sender, metadata);
+            LibStaking.setMetadataWithConfirm(msg.sender, publicKey);
             LibStaking.depositWithConfirm(msg.sender, msg.value);
 
             if (
@@ -106,7 +97,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
                 emit SubnetBootstrapped();
             }
         } else {
-            LibStaking.setValidatorMetadata(msg.sender, metadata);
+            LibStaking.setValidatorMetadata(msg.sender, publicKey);
             LibStaking.deposit(msg.sender, msg.value);
         }
     }
@@ -188,5 +179,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (!valid) {
             revert InvalidSignatureErr(uint8(err));
         }
+    }
+
+    function publicKeyToAddress(bytes memory publicKey) internal pure returns(address) {
+        bytes32 hashed = keccak256(publicKey);
+        return address(uint160(bytes20(hashed)));
     }
 }

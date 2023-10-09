@@ -7,7 +7,11 @@ pub use gateway_router_facet::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
+<<<<<<< HEAD
     non_camel_case_types
+=======
+    non_camel_case_types,
+>>>>>>> f7ef052 (add address check)
 )]
 pub mod gateway_router_facet {
     #[allow(deprecated)]
@@ -753,8 +757,14 @@ pub mod gateway_router_facet {
         }
     }
     ///The parsed JSON ABI of the contract.
+<<<<<<< HEAD
     pub static GATEWAYROUTERFACET_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
+=======
+    pub static GATEWAYROUTERFACET_ABI: ::ethers::contract::Lazy<
+        ::ethers::core::abi::Abi,
+    > = ::ethers::contract::Lazy::new(__abi);
+>>>>>>> f7ef052 (add address check)
     pub struct GatewayRouterFacet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GatewayRouterFacet<M> {
         fn clone(&self) -> Self {
@@ -786,11 +796,21 @@ pub mod gateway_router_facet {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
+<<<<<<< HEAD
             Self(::ethers::contract::Contract::new(
                 address.into(),
                 GATEWAYROUTERFACET_ABI.clone(),
                 client,
             ))
+=======
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    GATEWAYROUTERFACET_ABI.clone(),
+                    client,
+                ),
+            )
+>>>>>>> f7ef052 (add address check)
         }
         ///Calls the contract's `addCheckpointSignature` (0x2a04f220) function
         pub fn add_checkpoint_signature(
@@ -880,20 +900,37 @@ pub mod gateway_router_facet {
         ///Gets the contract's `QuorumReached` event
         pub fn quorum_reached_filter(
             &self,
+<<<<<<< HEAD
         ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, QuorumReachedFilter>
         {
+=======
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            QuorumReachedFilter,
+        > {
+>>>>>>> f7ef052 (add address check)
             self.0.event()
         }
         ///Gets the contract's `QuorumWeightUpdated` event
         pub fn quorum_weight_updated_filter(
             &self,
+<<<<<<< HEAD
         ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, QuorumWeightUpdatedFilter>
         {
+=======
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            QuorumWeightUpdatedFilter,
+        > {
+>>>>>>> f7ef052 (add address check)
             self.0.event()
         }
         /// Returns an `Event` builder for all the events of this contract.
         pub fn events(
             &self,
+<<<<<<< HEAD
         ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, GatewayRouterFacetEvents>
         {
             self.0
@@ -903,6 +940,18 @@ pub mod gateway_router_facet {
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
         for GatewayRouterFacet<M>
     {
+=======
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            GatewayRouterFacetEvents,
+        > {
+            self.0.event_with_filter(::core::default::Default::default())
+        }
+    }
+    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
+    for GatewayRouterFacet<M> {
+>>>>>>> f7ef052 (add address check)
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -916,7 +965,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "CheckpointAlreadyExists", abi = "CheckpointAlreadyExists()")]
     pub struct CheckpointAlreadyExists;
@@ -929,7 +982,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "CheckpointAlreadyProcessed",
@@ -945,7 +1002,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "CheckpointInfoAlreadyExists",
@@ -961,7 +1022,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "CheckpointMembershipNotCreated",
@@ -977,7 +1042,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "CheckpointNotCreated", abi = "CheckpointNotCreated()")]
     pub struct CheckpointNotCreated;
@@ -990,7 +1059,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "FailedAddIncompleteCheckpoint",
@@ -1006,7 +1079,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "FailedAddSignatory", abi = "FailedAddSignatory()")]
     pub struct FailedAddSignatory;
@@ -1019,7 +1096,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "FailedRemoveIncompleteCheckpoint",
@@ -1035,7 +1116,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidActorAddress", abi = "InvalidActorAddress()")]
     pub struct InvalidActorAddress;
@@ -1048,7 +1133,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidCheckpointEpoch", abi = "InvalidCheckpointEpoch()")]
     pub struct InvalidCheckpointEpoch;
@@ -1061,7 +1150,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidCheckpointSource", abi = "InvalidCheckpointSource()")]
     pub struct InvalidCheckpointSource;
@@ -1074,7 +1167,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "InvalidConfigurationNumber",
@@ -1090,7 +1187,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidCrossMsgDstSubnet", abi = "InvalidCrossMsgDstSubnet()")]
     pub struct InvalidCrossMsgDstSubnet;
@@ -1103,7 +1204,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidCrossMsgNonce", abi = "InvalidCrossMsgNonce()")]
     pub struct InvalidCrossMsgNonce;
@@ -1116,7 +1221,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidRetentionHeight", abi = "InvalidRetentionHeight()")]
     pub struct InvalidRetentionHeight;
@@ -1129,7 +1238,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidSignature", abi = "InvalidSignature()")]
     pub struct InvalidSignature;
@@ -1142,7 +1255,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "NotAuthorized", abi = "NotAuthorized(address)")]
     pub struct NotAuthorized(pub ::ethers::core::types::Address);
@@ -1155,7 +1272,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "NotEnoughBalance", abi = "NotEnoughBalance()")]
     pub struct NotEnoughBalance;
@@ -1168,12 +1289,18 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
     )]
     #[etherror(
         name = "NotEnoughSubnetCircSupply",
         abi = "NotEnoughSubnetCircSupply()"
     )]
+=======
+        Hash
+    )]
+    #[etherror(name = "NotEnoughSubnetCircSupply", abi = "NotEnoughSubnetCircSupply()")]
+>>>>>>> f7ef052 (add address check)
     pub struct NotEnoughSubnetCircSupply;
     ///Custom Error type `NotRegisteredSubnet` with signature `NotRegisteredSubnet()` and selector `0xe991abd0`
     #[derive(
@@ -1184,7 +1311,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "NotRegisteredSubnet", abi = "NotRegisteredSubnet()")]
     pub struct NotRegisteredSubnet;
@@ -1197,7 +1328,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "NotSystemActor", abi = "NotSystemActor()")]
     pub struct NotSystemActor;
@@ -1210,7 +1345,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "OldConfigurationNumber", abi = "OldConfigurationNumber()")]
     pub struct OldConfigurationNumber;
@@ -1223,7 +1362,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "ParentFinalityAlreadyCommitted",
@@ -1239,7 +1382,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "SignatureReplay", abi = "SignatureReplay()")]
     pub struct SignatureReplay;
@@ -1252,7 +1399,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "SubnetNotActive", abi = "SubnetNotActive()")]
     pub struct SubnetNotActive;
@@ -1265,7 +1416,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "ValidatorWeightIsZero", abi = "ValidatorWeightIsZero()")]
     pub struct ValidatorWeightIsZero;
@@ -1278,7 +1433,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "ValidatorsAndWeightsLengthMismatch",
@@ -1294,7 +1453,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "ZeroMembershipWeight", abi = "ZeroMembershipWeight()")]
     pub struct ZeroMembershipWeight;
@@ -1338,6 +1501,7 @@ pub mod gateway_router_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -1471,6 +1635,151 @@ pub mod gateway_router_facet {
             if let Ok(decoded) =
                 <ZeroMembershipWeight as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::RevertString(decoded));
+            }
+            if let Ok(decoded) = <CheckpointAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CheckpointAlreadyExists(decoded));
+            }
+            if let Ok(decoded) = <CheckpointAlreadyProcessed as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CheckpointAlreadyProcessed(decoded));
+            }
+            if let Ok(decoded) = <CheckpointInfoAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CheckpointInfoAlreadyExists(decoded));
+            }
+            if let Ok(decoded) = <CheckpointMembershipNotCreated as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CheckpointMembershipNotCreated(decoded));
+            }
+            if let Ok(decoded) = <CheckpointNotCreated as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CheckpointNotCreated(decoded));
+            }
+            if let Ok(decoded) = <FailedAddIncompleteCheckpoint as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::FailedAddIncompleteCheckpoint(decoded));
+            }
+            if let Ok(decoded) = <FailedAddSignatory as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::FailedAddSignatory(decoded));
+            }
+            if let Ok(decoded) = <FailedRemoveIncompleteCheckpoint as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::FailedRemoveIncompleteCheckpoint(decoded));
+            }
+            if let Ok(decoded) = <InvalidActorAddress as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidActorAddress(decoded));
+            }
+            if let Ok(decoded) = <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidCheckpointEpoch(decoded));
+            }
+            if let Ok(decoded) = <InvalidCheckpointSource as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidCheckpointSource(decoded));
+            }
+            if let Ok(decoded) = <InvalidConfigurationNumber as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidConfigurationNumber(decoded));
+            }
+            if let Ok(decoded) = <InvalidCrossMsgDstSubnet as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidCrossMsgDstSubnet(decoded));
+            }
+            if let Ok(decoded) = <InvalidCrossMsgNonce as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidCrossMsgNonce(decoded));
+            }
+            if let Ok(decoded) = <InvalidRetentionHeight as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidRetentionHeight(decoded));
+            }
+            if let Ok(decoded) = <InvalidSignature as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidSignature(decoded));
+            }
+            if let Ok(decoded) = <NotAuthorized as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NotAuthorized(decoded));
+            }
+            if let Ok(decoded) = <NotEnoughBalance as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NotEnoughBalance(decoded));
+            }
+            if let Ok(decoded) = <NotEnoughSubnetCircSupply as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NotEnoughSubnetCircSupply(decoded));
+            }
+            if let Ok(decoded) = <NotRegisteredSubnet as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NotRegisteredSubnet(decoded));
+            }
+            if let Ok(decoded) = <NotSystemActor as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NotSystemActor(decoded));
+            }
+            if let Ok(decoded) = <OldConfigurationNumber as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::OldConfigurationNumber(decoded));
+            }
+            if let Ok(decoded) = <ParentFinalityAlreadyCommitted as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::ParentFinalityAlreadyCommitted(decoded));
+            }
+            if let Ok(decoded) = <SignatureReplay as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::SignatureReplay(decoded));
+            }
+            if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::SubnetNotActive(decoded));
+            }
+            if let Ok(decoded) = <ValidatorWeightIsZero as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::ValidatorWeightIsZero(decoded));
+            }
+            if let Ok(decoded) = <ValidatorsAndWeightsLengthMismatch as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::ValidatorsAndWeightsLengthMismatch(decoded));
+            }
+            if let Ok(decoded) = <ZeroMembershipWeight as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::ZeroMembershipWeight(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -1524,24 +1833,51 @@ pub mod gateway_router_facet {
                 Self::InvalidRetentionHeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::InvalidSignature(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::NotAuthorized(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::NotEnoughBalance(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::InvalidSignature(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::NotAuthorized(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::NotEnoughBalance(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::NotEnoughSubnetCircSupply(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NotRegisteredSubnet(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::NotSystemActor(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::NotSystemActor(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::OldConfigurationNumber(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::SignatureReplay(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SubnetNotActive(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::SignatureReplay(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::SubnetNotActive(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::ValidatorWeightIsZero(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1678,6 +2014,7 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetErrors {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+<<<<<<< HEAD
                 Self::CheckpointAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointAlreadyProcessed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointInfoAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
@@ -1706,16 +2043,88 @@ pub mod gateway_router_facet {
                 Self::NotRegisteredSubnet(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotSystemActor(element) => ::core::fmt::Display::fmt(element, f),
                 Self::OldConfigurationNumber(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::CheckpointAlreadyExists(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CheckpointAlreadyProcessed(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CheckpointInfoAlreadyExists(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CheckpointMembershipNotCreated(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CheckpointNotCreated(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::FailedAddIncompleteCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::FailedAddSignatory(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::FailedRemoveIncompleteCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidActorAddress(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCheckpointEpoch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCheckpointSource(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidConfigurationNumber(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCrossMsgDstSubnet(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidCrossMsgNonce(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidRetentionHeight(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidSignature(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotAuthorized(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotEnoughBalance(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotEnoughSubnetCircSupply(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NotRegisteredSubnet(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NotSystemActor(element) => ::core::fmt::Display::fmt(element, f),
+                Self::OldConfigurationNumber(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::SignatureReplay(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubnetNotActive(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::ValidatorWeightIsZero(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ValidatorsAndWeightsLengthMismatch(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::ZeroMembershipWeight(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::ValidatorWeightIsZero(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ValidatorsAndWeightsLengthMismatch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ZeroMembershipWeight(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::RevertString(s) => ::core::fmt::Display::fmt(s, f),
             }
         }
@@ -1735,12 +2144,22 @@ pub mod gateway_router_facet {
             Self::CheckpointAlreadyProcessed(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<CheckpointInfoAlreadyExists> for GatewayRouterFacetErrors {
+=======
+    impl ::core::convert::From<CheckpointInfoAlreadyExists>
+    for GatewayRouterFacetErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: CheckpointInfoAlreadyExists) -> Self {
             Self::CheckpointInfoAlreadyExists(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<CheckpointMembershipNotCreated> for GatewayRouterFacetErrors {
+=======
+    impl ::core::convert::From<CheckpointMembershipNotCreated>
+    for GatewayRouterFacetErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: CheckpointMembershipNotCreated) -> Self {
             Self::CheckpointMembershipNotCreated(value)
         }
@@ -1750,7 +2169,12 @@ pub mod gateway_router_facet {
             Self::CheckpointNotCreated(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<FailedAddIncompleteCheckpoint> for GatewayRouterFacetErrors {
+=======
+    impl ::core::convert::From<FailedAddIncompleteCheckpoint>
+    for GatewayRouterFacetErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: FailedAddIncompleteCheckpoint) -> Self {
             Self::FailedAddIncompleteCheckpoint(value)
         }
@@ -1760,7 +2184,12 @@ pub mod gateway_router_facet {
             Self::FailedAddSignatory(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<FailedRemoveIncompleteCheckpoint> for GatewayRouterFacetErrors {
+=======
+    impl ::core::convert::From<FailedRemoveIncompleteCheckpoint>
+    for GatewayRouterFacetErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: FailedRemoveIncompleteCheckpoint) -> Self {
             Self::FailedRemoveIncompleteCheckpoint(value)
         }
@@ -1835,7 +2264,12 @@ pub mod gateway_router_facet {
             Self::OldConfigurationNumber(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<ParentFinalityAlreadyCommitted> for GatewayRouterFacetErrors {
+=======
+    impl ::core::convert::From<ParentFinalityAlreadyCommitted>
+    for GatewayRouterFacetErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: ParentFinalityAlreadyCommitted) -> Self {
             Self::ParentFinalityAlreadyCommitted(value)
         }
@@ -1855,7 +2289,12 @@ pub mod gateway_router_facet {
             Self::ValidatorWeightIsZero(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<ValidatorsAndWeightsLengthMismatch> for GatewayRouterFacetErrors {
+=======
+    impl ::core::convert::From<ValidatorsAndWeightsLengthMismatch>
+    for GatewayRouterFacetErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: ValidatorsAndWeightsLengthMismatch) -> Self {
             Self::ValidatorsAndWeightsLengthMismatch(value)
         }
@@ -1873,7 +2312,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethevent(name = "QuorumReached", abi = "QuorumReached(uint64,bytes32,uint256)")]
     pub struct QuorumReachedFilter {
@@ -1889,7 +2332,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethevent(
         name = "QuorumWeightUpdated",
@@ -1922,8 +2369,17 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetEvents {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+<<<<<<< HEAD
                 Self::QuorumReachedFilter(element) => ::core::fmt::Display::fmt(element, f),
                 Self::QuorumWeightUpdatedFilter(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::QuorumReachedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::QuorumWeightUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
             }
         }
     }
@@ -1946,7 +2402,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "addCheckpointSignature",
@@ -1967,7 +2427,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "applyCrossMessages",
@@ -1985,7 +2449,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "commitChildCheck",
@@ -2003,7 +2471,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "commitParentFinality",
@@ -2021,7 +2493,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "createBottomUpCheckpoint",
@@ -2041,7 +2517,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "pruneBottomUpCheckpoints",
@@ -2059,7 +2539,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "storeValidatorChanges",
@@ -2077,7 +2561,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "updateMembership",
@@ -2105,6 +2593,7 @@ pub mod gateway_router_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <AddCheckpointSignatureCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -2143,6 +2632,46 @@ pub mod gateway_router_facet {
             if let Ok(decoded) =
                 <UpdateMembershipCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <AddCheckpointSignatureCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::AddCheckpointSignature(decoded));
+            }
+            if let Ok(decoded) = <ApplyCrossMessagesCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::ApplyCrossMessages(decoded));
+            }
+            if let Ok(decoded) = <CommitChildCheckCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CommitChildCheck(decoded));
+            }
+            if let Ok(decoded) = <CommitParentFinalityCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CommitParentFinality(decoded));
+            }
+            if let Ok(decoded) = <CreateBottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CreateBottomUpCheckpoint(decoded));
+            }
+            if let Ok(decoded) = <PruneBottomUpCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::PruneBottomUpCheckpoints(decoded));
+            }
+            if let Ok(decoded) = <StoreValidatorChangesCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::StoreValidatorChanges(decoded));
+            }
+            if let Ok(decoded) = <UpdateMembershipCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::UpdateMembership(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -2157,7 +2686,13 @@ pub mod gateway_router_facet {
                 Self::ApplyCrossMessages(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::CommitChildCheck(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::CommitChildCheck(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::CommitParentFinality(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2170,13 +2705,20 @@ pub mod gateway_router_facet {
                 Self::StoreValidatorChanges(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::UpdateMembership(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::UpdateMembership(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
             }
         }
     }
     impl ::core::fmt::Display for GatewayRouterFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+<<<<<<< HEAD
                 Self::AddCheckpointSignature(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ApplyCrossMessages(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CommitChildCheck(element) => ::core::fmt::Display::fmt(element, f),
@@ -2184,6 +2726,27 @@ pub mod gateway_router_facet {
                 Self::CreateBottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PruneBottomUpCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
                 Self::StoreValidatorChanges(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::AddCheckpointSignature(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ApplyCrossMessages(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CommitChildCheck(element) => ::core::fmt::Display::fmt(element, f),
+                Self::CommitParentFinality(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CreateBottomUpCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::PruneBottomUpCheckpoints(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::StoreValidatorChanges(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::UpdateMembership(element) => ::core::fmt::Display::fmt(element, f),
             }
         }
@@ -2208,12 +2771,22 @@ pub mod gateway_router_facet {
             Self::CommitParentFinality(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<CreateBottomUpCheckpointCall> for GatewayRouterFacetCalls {
+=======
+    impl ::core::convert::From<CreateBottomUpCheckpointCall>
+    for GatewayRouterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: CreateBottomUpCheckpointCall) -> Self {
             Self::CreateBottomUpCheckpoint(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<PruneBottomUpCheckpointsCall> for GatewayRouterFacetCalls {
+=======
+    impl ::core::convert::From<PruneBottomUpCheckpointsCall>
+    for GatewayRouterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: PruneBottomUpCheckpointsCall) -> Self {
             Self::PruneBottomUpCheckpoints(value)
         }
@@ -2237,7 +2810,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct BottomUpCheckpoint {
         pub subnet_id: SubnetID,
@@ -2255,7 +2832,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct CrossMsg {
         pub message: StorableMsg,
@@ -2270,7 +2851,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct FvmAddress {
         pub addr_type: u8,
@@ -2285,7 +2870,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct Ipcaddress {
         pub subnet_id: SubnetID,
@@ -2300,7 +2889,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct ParentFinality {
         pub height: ::ethers::core::types::U256,
@@ -2315,7 +2908,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct StakingChange {
         pub op: u8,
@@ -2331,7 +2928,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct StakingChangeRequest {
         pub change: StakingChange,
@@ -2346,7 +2947,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct StorableMsg {
         pub from: Ipcaddress,
@@ -2365,7 +2970,11 @@ pub mod gateway_router_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct SubnetID {
         pub root: u64,

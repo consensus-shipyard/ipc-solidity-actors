@@ -39,6 +39,7 @@ pub mod gateway_manager_facet {
                                             ::ethers::core::abi::ethabi::ParamType::Address,
                                         ),
                                     ),
+<<<<<<< HEAD
                                 ],),
                                 internal_type: ::core::option::Option::Some(
                                     ::std::borrow::ToOwned::to_owned("struct SubnetID"),
@@ -59,6 +60,30 @@ pub mod gateway_manager_facet {
                         constant: ::core::option::Option::None,
                         state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
                     },],
+=======
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct SubnetID"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("to"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct FvmAddress"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
+                        },
+                    ],
+>>>>>>> f7ef052 (add address check)
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("kill"),
@@ -125,6 +150,7 @@ pub mod gateway_manager_facet {
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("release"),
+<<<<<<< HEAD
                     ::std::vec![::ethers::core::abi::ethabi::Function {
                         name: ::std::borrow::ToOwned::to_owned("release"),
                         inputs: ::std::vec![::ethers::core::abi::ethabi::Param {
@@ -141,6 +167,30 @@ pub mod gateway_manager_facet {
                         constant: ::core::option::Option::None,
                         state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
                     },],
+=======
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("release"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("to"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct FvmAddress"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::Payable,
+                        },
+                    ],
+>>>>>>> f7ef052 (add address check)
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("releaseStake"),
@@ -211,10 +261,19 @@ pub mod gateway_manager_facet {
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("CannotReleaseZero"),
+<<<<<<< HEAD
                     ::std::vec![::ethers::core::abi::ethabi::AbiError {
                         name: ::std::borrow::ToOwned::to_owned("CannotReleaseZero"),
                         inputs: ::std::vec![],
                     },],
+=======
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("CannotReleaseZero"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+>>>>>>> f7ef052 (add address check)
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InsufficientFunds"),
@@ -647,9 +706,15 @@ pub mod gateway_manager_facet {
             {
                 return Ok(Self::RevertString(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <AlreadyRegisteredSubnet as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <AlreadyRegisteredSubnet as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::AlreadyRegisteredSubnet(decoded));
             }
             if let Ok(decoded) = <CallFailed as ::ethers::core::abi::AbiDecode>::decode(data) {
@@ -659,8 +724,14 @@ pub mod gateway_manager_facet {
             {
                 return Ok(Self::CannotReleaseZero(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <InsufficientFunds as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <InsufficientFunds as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::InsufficientFunds(decoded));
             }
             if let Ok(decoded) =
@@ -719,9 +790,21 @@ pub mod gateway_manager_facet {
                 Self::AlreadyRegisteredSubnet(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::CallFailed(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::CannotReleaseZero(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::InsufficientFunds(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::CallFailed(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::CannotReleaseZero(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::InsufficientFunds(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::InvalidActorAddress(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -818,7 +901,13 @@ pub mod gateway_manager_facet {
     impl ::core::fmt::Display for GatewayManagerFacetErrors {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+<<<<<<< HEAD
                 Self::AlreadyRegisteredSubnet(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::AlreadyRegisteredSubnet(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::CallFailed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CannotReleaseZero(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InsufficientFunds(element) => ::core::fmt::Display::fmt(element, f),
@@ -1060,7 +1149,13 @@ pub mod gateway_manager_facet {
             if let Ok(decoded) = <FundCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Fund(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <KillCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+=======
+            if let Ok(decoded) = <KillCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::Kill(decoded));
             }
             if let Ok(decoded) = <NewMembershipCall as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -1073,8 +1168,14 @@ pub mod gateway_manager_facet {
             if let Ok(decoded) = <ReleaseCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Release(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <ReleaseStakeCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <ReleaseStakeCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::ReleaseStake(decoded));
             }
             if let Ok(decoded) =
@@ -1094,8 +1195,17 @@ pub mod gateway_manager_facet {
                 Self::NewMembership(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Register(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Release(element) => ::ethers::core::abi::AbiEncode::encode(element),
+<<<<<<< HEAD
                 Self::ReleaseStake(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::UpdateMembership(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::ReleaseStake(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::UpdateMembership(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
             }
         }
     }

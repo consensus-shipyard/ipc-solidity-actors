@@ -106,6 +106,13 @@ contract SubnetActorDiamondTest is Test {
         require(keccak256(_a) == keccak256(_b), "bytes not equal");
     }
 
+    function deriveValidatorAddress(uint8 seq) internal pure returns(address addr, bytes memory data) {
+        data = new bytes(64);
+        data[0] = bytes1(seq);
+
+        addr = address(uint160(bytes20(keccak256(data))));
+    }
+
     function testSubnetActorDiamond_Deployment_Works(
         bytes32 _networkName,
         address _ipcGatewayAddr,
@@ -157,36 +164,45 @@ contract SubnetActorDiamondTest is Test {
         );
     }
 
-    function testSubnetActorDiamond_Join_Fail_ZeroColalteral() public {
+    function testSubnetActorDiamond_Join_Fail_NotOwnerOfPublicKey() public {
         address validator = vm.addr(100);
+
+        vm.deal(validator, 1 gwei);
+        vm.prank(validator);
+        vm.expectRevert(NotOwnerOfPublicKey.selector);
+
+        saManager.join(new bytes(20));
+    }
+
+    function testSubnetActorDiamond_Join_Fail_ZeroColalteral() public {
+        (address validator, bytes memory publicKey) = deriveValidatorAddress(100);
 
         vm.deal(validator, 1 gwei);
         vm.prank(validator);
         vm.expectRevert(CollateralIsZero.selector);
 
-        saManager.join(new bytes(20));
+        saManager.join(publicKey);
     }
 
     /// @notice Testing the basic join, stake, leave lifecycle of validators
     function testSubnetActorDiamond_BasicLifeCycle() public {
-        address validator1 = vm.addr(1234);
-        address validator2 = vm.addr(1235);
-        uint256 collateral = DEFAULT_MIN_VALIDATOR_STAKE;
+        (address validator1, bytes memory publicKey1) = deriveValidatorAddress(100);
+        (address validator2, bytes memory publicKey2) = deriveValidatorAddress(101);
 
-        bytes memory metadata = new bytes(10);
+        uint256 collateral = DEFAULT_MIN_VALIDATOR_STAKE;
 
         // ======== Step. Join ======
         // initial validator joins
         vm.startPrank(validator1);
         vm.deal(validator1, collateral);
 
-        saManager.join{value: collateral}(metadata);
+        saManager.join{value: collateral}(publicKey1);
 
         // collateral confirmed immediately and network boostrapped
         Validator memory v = saGetter.getValidator(validator1);
         require(v.totalCollateral == collateral, "total collateral not expected");
         require(v.confirmedCollateral == collateral, "confirmed collateral not 0");
-        ensureBytesEqual(v.metadata, metadata);
+        ensureBytesEqual(v.metadata, publicKey1);
         require(saGetter.bootstrapped(), "subnet not bootstrapped");
 
         (uint64 nextConfigNum, uint64 startConfigNum) = saGetter.getConfigurationNumbers();
@@ -198,7 +214,7 @@ contract SubnetActorDiamondTest is Test {
         vm.deal(validator2, collateral);
 
         // subnet bootstrapped and should go through queue
-        saManager.join{value: collateral}(metadata);
+        saManager.join{value: collateral}(publicKey2);
 
         // collateral not confirmed yet
         v = saGetter.getValidator(validator2);

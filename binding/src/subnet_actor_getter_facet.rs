@@ -7,7 +7,11 @@ pub use subnet_actor_getter_facet::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
+<<<<<<< HEAD
     non_camel_case_types
+=======
+    non_camel_case_types,
+>>>>>>> f7ef052 (add address check)
 )]
 pub mod subnet_actor_getter_facet {
     #[allow(deprecated)]
@@ -17,6 +21,7 @@ pub mod subnet_actor_getter_facet {
             functions: ::core::convert::From::from([
                 (
                     ::std::borrow::ToOwned::to_owned("bootstrapped"),
+<<<<<<< HEAD
                     ::std::vec![::ethers::core::abi::ethabi::Function {
                         name: ::std::borrow::ToOwned::to_owned("bootstrapped"),
                         inputs: ::std::vec![],
@@ -329,6 +334,410 @@ pub mod subnet_actor_getter_facet {
                         constant: ::core::option::Option::None,
                         state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
                     },],
+=======
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("bootstrapped"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bool"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("bottomUpCheckPeriod"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "bottomUpCheckPeriod",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("bottomUpCheckpointAtEpoch"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "bottomUpCheckpointAtEpoch",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("epoch"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("exists"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bool"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("checkpoint"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                        ::std::boxed::Box::new(
+                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned(
+                                            "struct BottomUpCheckpoint",
+                                        ),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("bottomUpCheckpointHashAtEpoch"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "bottomUpCheckpointHashAtEpoch",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("epoch"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bool"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
+                                        32usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes32"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("consensus"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("consensus"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("enum ConsensusType"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getConfigurationNumbers"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getConfigurationNumbers",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getParent"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("getParent"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                ::std::boxed::Box::new(
+                                                    ::ethers::core::abi::ethabi::ParamType::Address,
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct SubnetID"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getValidator"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("getValidator"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("validatorAddress"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct Validator"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("ipcGatewayAddr"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("ipcGatewayAddr"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("isActiveValidator"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("isActiveValidator"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bool"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("killed"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("killed"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bool"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("minActivationCollateral"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "minActivationCollateral",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("minValidators"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("minValidators"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("name"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("name"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
+                                        32usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes32"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("totalStake"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("totalStake"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+>>>>>>> f7ef052 (add address check)
                 ),
             ]),
             events: ::std::collections::BTreeMap::new(),
@@ -338,8 +747,14 @@ pub mod subnet_actor_getter_facet {
         }
     }
     ///The parsed JSON ABI of the contract.
+<<<<<<< HEAD
     pub static SUBNETACTORGETTERFACET_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
+=======
+    pub static SUBNETACTORGETTERFACET_ABI: ::ethers::contract::Lazy<
+        ::ethers::core::abi::Abi,
+    > = ::ethers::contract::Lazy::new(__abi);
+>>>>>>> f7ef052 (add address check)
     pub struct SubnetActorGetterFacet<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for SubnetActorGetterFacet<M> {
         fn clone(&self) -> Self {
@@ -371,6 +786,7 @@ pub mod subnet_actor_getter_facet {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
+<<<<<<< HEAD
             Self(::ethers::contract::Contract::new(
                 address.into(),
                 SUBNETACTORGETTERFACET_ABI.clone(),
@@ -379,12 +795,32 @@ pub mod subnet_actor_getter_facet {
         }
         ///Calls the contract's `bootstrapped` (0x35142c8c) function
         pub fn bootstrapped(&self) -> ::ethers::contract::builders::ContractCall<M, bool> {
+=======
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    SUBNETACTORGETTERFACET_ABI.clone(),
+                    client,
+                ),
+            )
+        }
+        ///Calls the contract's `bootstrapped` (0x35142c8c) function
+        pub fn bootstrapped(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, bool> {
+>>>>>>> f7ef052 (add address check)
             self.0
                 .method_hash([53, 20, 44, 140], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `bottomUpCheckPeriod` (0x06c46853) function
+<<<<<<< HEAD
         pub fn bottom_up_check_period(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
+=======
+        pub fn bottom_up_check_period(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
+>>>>>>> f7ef052 (add address check)
             self.0
                 .method_hash([6, 196, 104, 83], ())
                 .expect("method not found (this should never happen)")
@@ -422,7 +858,13 @@ pub mod subnet_actor_getter_facet {
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `getParent` (0x80f76021) function
+<<<<<<< HEAD
         pub fn get_parent(&self) -> ::ethers::contract::builders::ContractCall<M, SubnetID> {
+=======
+        pub fn get_parent(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, SubnetID> {
+>>>>>>> f7ef052 (add address check)
             self.0
                 .method_hash([128, 247, 96, 33], ())
                 .expect("method not found (this should never happen)")
@@ -439,7 +881,14 @@ pub mod subnet_actor_getter_facet {
         ///Calls the contract's `ipcGatewayAddr` (0xcfca2824) function
         pub fn ipc_gateway_addr(
             &self,
+<<<<<<< HEAD
         ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::Address> {
+=======
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::ethers::core::types::Address,
+        > {
+>>>>>>> f7ef052 (add address check)
             self.0
                 .method_hash([207, 202, 40, 36], ())
                 .expect("method not found (this should never happen)")
@@ -468,7 +917,13 @@ pub mod subnet_actor_getter_facet {
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `minValidators` (0xc5ab2241) function
+<<<<<<< HEAD
         pub fn min_validators(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
+=======
+        pub fn min_validators(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
+>>>>>>> f7ef052 (add address check)
             self.0
                 .method_hash([197, 171, 34, 65], ())
                 .expect("method not found (this should never happen)")
@@ -489,8 +944,12 @@ pub mod subnet_actor_getter_facet {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
+<<<<<<< HEAD
         for SubnetActorGetterFacet<M>
     {
+=======
+    for SubnetActorGetterFacet<M> {
+>>>>>>> f7ef052 (add address check)
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -504,7 +963,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "bootstrapped", abi = "bootstrapped()")]
     pub struct BootstrappedCall;
@@ -517,7 +980,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "bottomUpCheckPeriod", abi = "bottomUpCheckPeriod()")]
     pub struct BottomUpCheckPeriodCall;
@@ -530,7 +997,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "bottomUpCheckpointAtEpoch",
@@ -548,7 +1019,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(
         name = "bottomUpCheckpointHashAtEpoch",
@@ -566,7 +1041,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "consensus", abi = "consensus()")]
     pub struct ConsensusCall;
@@ -579,7 +1058,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "getConfigurationNumbers", abi = "getConfigurationNumbers()")]
     pub struct GetConfigurationNumbersCall;
@@ -592,7 +1075,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "getParent", abi = "getParent()")]
     pub struct GetParentCall;
@@ -605,7 +1092,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "getValidator", abi = "getValidator(address)")]
     pub struct GetValidatorCall {
@@ -620,7 +1111,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "ipcGatewayAddr", abi = "ipcGatewayAddr()")]
     pub struct IpcGatewayAddrCall;
@@ -633,7 +1128,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "isActiveValidator", abi = "isActiveValidator(address)")]
     pub struct IsActiveValidatorCall {
@@ -648,7 +1147,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "killed", abi = "killed()")]
     pub struct KilledCall;
@@ -661,7 +1164,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "minActivationCollateral", abi = "minActivationCollateral()")]
     pub struct MinActivationCollateralCall;
@@ -674,7 +1181,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "minValidators", abi = "minValidators()")]
     pub struct MinValidatorsCall;
@@ -687,7 +1198,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "name", abi = "name()")]
     pub struct NameCall;
@@ -700,7 +1215,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "totalStake", abi = "totalStake()")]
     pub struct TotalStakeCall;
@@ -728,6 +1247,7 @@ pub mod subnet_actor_getter_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
+<<<<<<< HEAD
             if let Ok(decoded) = <BootstrappedCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::Bootstrapped(decoded));
@@ -788,6 +1308,81 @@ pub mod subnet_actor_getter_facet {
                 return Ok(Self::Name(decoded));
             }
             if let Ok(decoded) = <TotalStakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+=======
+            if let Ok(decoded) = <BootstrappedCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::Bootstrapped(decoded));
+            }
+            if let Ok(decoded) = <BottomUpCheckPeriodCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BottomUpCheckPeriod(decoded));
+            }
+            if let Ok(decoded) = <BottomUpCheckpointAtEpochCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BottomUpCheckpointAtEpoch(decoded));
+            }
+            if let Ok(decoded) = <BottomUpCheckpointHashAtEpochCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BottomUpCheckpointHashAtEpoch(decoded));
+            }
+            if let Ok(decoded) = <ConsensusCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::Consensus(decoded));
+            }
+            if let Ok(decoded) = <GetConfigurationNumbersCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetConfigurationNumbers(decoded));
+            }
+            if let Ok(decoded) = <GetParentCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetParent(decoded));
+            }
+            if let Ok(decoded) = <GetValidatorCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetValidator(decoded));
+            }
+            if let Ok(decoded) = <IpcGatewayAddrCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::IpcGatewayAddr(decoded));
+            }
+            if let Ok(decoded) = <IsActiveValidatorCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::IsActiveValidator(decoded));
+            }
+            if let Ok(decoded) = <KilledCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::Killed(decoded));
+            }
+            if let Ok(decoded) = <MinActivationCollateralCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::MinActivationCollateral(decoded));
+            }
+            if let Ok(decoded) = <MinValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::MinValidators(decoded));
+            }
+            if let Ok(decoded) = <NameCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::Name(decoded));
+            }
+            if let Ok(decoded) = <TotalStakeCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::TotalStake(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -796,7 +1391,13 @@ pub mod subnet_actor_getter_facet {
     impl ::ethers::core::abi::AbiEncode for SubnetActorGetterFacetCalls {
         fn encode(self) -> Vec<u8> {
             match self {
+<<<<<<< HEAD
                 Self::Bootstrapped(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::Bootstrapped(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::BottomUpCheckPeriod(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -806,6 +1407,7 @@ pub mod subnet_actor_getter_facet {
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::Consensus(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetConfigurationNumbers(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
@@ -814,13 +1416,43 @@ pub mod subnet_actor_getter_facet {
                 Self::GetValidator(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::IpcGatewayAddr(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::IsActiveValidator(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::Consensus(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetConfigurationNumbers(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetParent(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetValidator(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::IpcGatewayAddr(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::IsActiveValidator(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::Killed(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::MinActivationCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::MinValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Name(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::TotalStake(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::MinValidators(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::Name(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::TotalStake(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
             }
         }
     }
@@ -828,19 +1460,40 @@ pub mod subnet_actor_getter_facet {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
                 Self::Bootstrapped(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::BottomUpCheckPeriod(element) => ::core::fmt::Display::fmt(element, f),
                 Self::BottomUpCheckpointAtEpoch(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::BottomUpCheckPeriod(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BottomUpCheckpointAtEpoch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::Consensus(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::GetConfigurationNumbers(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::GetConfigurationNumbers(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::GetParent(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::IpcGatewayAddr(element) => ::core::fmt::Display::fmt(element, f),
                 Self::IsActiveValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Killed(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::MinActivationCollateral(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::MinActivationCollateral(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::MinValidators(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Name(element) => ::core::fmt::Display::fmt(element, f),
                 Self::TotalStake(element) => ::core::fmt::Display::fmt(element, f),
@@ -857,12 +1510,22 @@ pub mod subnet_actor_getter_facet {
             Self::BottomUpCheckPeriod(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<BottomUpCheckpointAtEpochCall> for SubnetActorGetterFacetCalls {
+=======
+    impl ::core::convert::From<BottomUpCheckpointAtEpochCall>
+    for SubnetActorGetterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: BottomUpCheckpointAtEpochCall) -> Self {
             Self::BottomUpCheckpointAtEpoch(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<BottomUpCheckpointHashAtEpochCall> for SubnetActorGetterFacetCalls {
+=======
+    impl ::core::convert::From<BottomUpCheckpointHashAtEpochCall>
+    for SubnetActorGetterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: BottomUpCheckpointHashAtEpochCall) -> Self {
             Self::BottomUpCheckpointHashAtEpoch(value)
         }
@@ -872,7 +1535,12 @@ pub mod subnet_actor_getter_facet {
             Self::Consensus(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<GetConfigurationNumbersCall> for SubnetActorGetterFacetCalls {
+=======
+    impl ::core::convert::From<GetConfigurationNumbersCall>
+    for SubnetActorGetterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: GetConfigurationNumbersCall) -> Self {
             Self::GetConfigurationNumbers(value)
         }
@@ -902,7 +1570,12 @@ pub mod subnet_actor_getter_facet {
             Self::Killed(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<MinActivationCollateralCall> for SubnetActorGetterFacetCalls {
+=======
+    impl ::core::convert::From<MinActivationCollateralCall>
+    for SubnetActorGetterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: MinActivationCollateralCall) -> Self {
             Self::MinActivationCollateral(value)
         }
@@ -931,7 +1604,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct BootstrappedReturn(pub bool);
     ///Container type for all return fields from the `bottomUpCheckPeriod` function with signature `bottomUpCheckPeriod()` and selector `0x06c46853`
@@ -943,7 +1620,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct BottomUpCheckPeriodReturn(pub u64);
     ///Container type for all return fields from the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint64)` and selector `0x6cb2ecee`
@@ -955,7 +1636,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct BottomUpCheckpointAtEpochReturn {
         pub exists: bool,
@@ -970,7 +1655,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct BottomUpCheckpointHashAtEpochReturn(pub bool, pub [u8; 32]);
     ///Container type for all return fields from the `consensus` function with signature `consensus()` and selector `0x8ef3f761`
@@ -982,7 +1671,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct ConsensusReturn(pub u8);
     ///Container type for all return fields from the `getConfigurationNumbers` function with signature `getConfigurationNumbers()` and selector `0x38a210b3`
@@ -994,7 +1687,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct GetConfigurationNumbersReturn(pub u64, pub u64);
     ///Container type for all return fields from the `getParent` function with signature `getParent()` and selector `0x80f76021`
@@ -1006,7 +1703,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct GetParentReturn(pub SubnetID);
     ///Container type for all return fields from the `getValidator` function with signature `getValidator(address)` and selector `0x1904bb2e`
@@ -1018,7 +1719,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct GetValidatorReturn {
         pub validator: Validator,
@@ -1032,7 +1737,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct IpcGatewayAddrReturn(pub ::ethers::core::types::Address);
     ///Container type for all return fields from the `isActiveValidator` function with signature `isActiveValidator(address)` and selector `0x40550a1c`
@@ -1044,7 +1753,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct IsActiveValidatorReturn(pub bool);
     ///Container type for all return fields from the `killed` function with signature `killed()` and selector `0x1f3a0e41`
@@ -1056,7 +1769,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct KilledReturn(pub bool);
     ///Container type for all return fields from the `minActivationCollateral` function with signature `minActivationCollateral()` and selector `0x9e33bd02`
@@ -1068,7 +1785,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct MinActivationCollateralReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `minValidators` function with signature `minValidators()` and selector `0xc5ab2241`
@@ -1080,7 +1801,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct MinValidatorsReturn(pub u64);
     ///Container type for all return fields from the `name` function with signature `name()` and selector `0x06fdde03`
@@ -1092,7 +1817,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct NameReturn(pub [u8; 32]);
     ///Container type for all return fields from the `totalStake` function with signature `totalStake()` and selector `0x8b0e9f3f`
@@ -1104,7 +1833,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct TotalStakeReturn(pub ::ethers::core::types::U256);
     ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
@@ -1116,7 +1849,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct BottomUpCheckpoint {
         pub subnet_id: SubnetID,
@@ -1134,7 +1871,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct SubnetID {
         pub root: u64,
@@ -1149,7 +1890,11 @@ pub mod subnet_actor_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct Validator {
         pub confirmed_collateral: ::ethers::core::types::U256,

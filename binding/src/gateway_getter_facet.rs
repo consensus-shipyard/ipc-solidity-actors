@@ -1509,8 +1509,15 @@ pub mod gateway_getter_facet {
         ///Calls the contract's `getIncompleteCheckpoints` (0x97042766) function
         pub fn get_incomplete_checkpoints(
             &self,
+<<<<<<< HEAD
         ) -> ::ethers::contract::builders::ContractCall<M, ::std::vec::Vec<BottomUpCheckpoint>>
         {
+=======
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::std::vec::Vec<BottomUpCheckpoint>,
+        > {
+>>>>>>> f7ef052 (add address check)
             self.0
                 .method_hash([151, 4, 39, 102], ())
                 .expect("method not found (this should never happen)")
@@ -1727,7 +1734,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "bottomUpMessages", abi = "bottomUpMessages(uint64)")]
     pub struct BottomUpMessagesCall {
@@ -1786,12 +1797,18 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
     )]
     #[ethcall(
         name = "getBottomUpRetentionHeight",
         abi = "getBottomUpRetentionHeight()"
     )]
+=======
+        Hash
+    )]
+    #[ethcall(name = "getBottomUpRetentionHeight", abi = "getBottomUpRetentionHeight()")]
+>>>>>>> f7ef052 (add address check)
     pub struct GetBottomUpRetentionHeightCall;
     ///Container type for all input parameters for the `getCheckpointCurrentWeight` function with signature `getCheckpointCurrentWeight(uint64)` and selector `0xf7ceaf76`
     #[derive(
@@ -1893,7 +1910,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "getIncompleteCheckpoints", abi = "getIncompleteCheckpoints()")]
     pub struct GetIncompleteCheckpointsCall;
@@ -1989,7 +2010,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "getQuorumThreshold", abi = "getQuorumThreshold(uint256)")]
     pub struct GetQuorumThresholdCall {
@@ -2004,7 +2029,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[ethcall(name = "getSignatureBundle", abi = "getSignatureBundle(uint64)")]
     pub struct GetSignatureBundleCall {
@@ -2210,10 +2239,22 @@ pub mod gateway_getter_facet {
             {
                 return Ok(Self::BottomUpCheckPeriod(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <BottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::BottomUpCheckpoint(decoded));
+=======
+            if let Ok(decoded) = <BottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BottomUpCheckpoint(decoded));
+            }
+            if let Ok(decoded) = <BottomUpMessagesCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BottomUpMessages(decoded));
+>>>>>>> f7ef052 (add address check)
             }
             if let Ok(decoded) =
                 <BottomUpMessagesCall as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -2227,6 +2268,7 @@ pub mod gateway_getter_facet {
             if let Ok(decoded) = <CrossMsgFeeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::CrossMsgFee(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <GetAppliedTopDownNonceCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -2240,6 +2282,21 @@ pub mod gateway_getter_facet {
             if let Ok(decoded) =
                 <GetCheckpointCurrentWeightCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <GetAppliedTopDownNonceCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetAppliedTopDownNonce(decoded));
+            }
+            if let Ok(decoded) = <GetBottomUpRetentionHeightCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetBottomUpRetentionHeight(decoded));
+            }
+            if let Ok(decoded) = <GetCheckpointCurrentWeightCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::GetCheckpointCurrentWeight(decoded));
             }
             if let Ok(decoded) =
@@ -2262,10 +2319,22 @@ pub mod gateway_getter_facet {
             {
                 return Ok(Self::GetCurrentTotalWeight(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <GetIncompleteCheckpointHeightsCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::GetIncompleteCheckpointHeights(decoded));
+=======
+            if let Ok(decoded) = <GetIncompleteCheckpointHeightsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetIncompleteCheckpointHeights(decoded));
+            }
+            if let Ok(decoded) = <GetIncompleteCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetIncompleteCheckpoints(decoded));
+>>>>>>> f7ef052 (add address check)
             }
             if let Ok(decoded) =
                 <GetIncompleteCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -2302,6 +2371,7 @@ pub mod gateway_getter_facet {
             {
                 return Ok(Self::GetParentFinality(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <GetQuorumThresholdCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -2313,6 +2383,21 @@ pub mod gateway_getter_facet {
                 return Ok(Self::GetSignatureBundle(decoded));
             }
             if let Ok(decoded) = <GetSubnetCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+=======
+            if let Ok(decoded) = <GetQuorumThresholdCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetQuorumThreshold(decoded));
+            }
+            if let Ok(decoded) = <GetSignatureBundleCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetSignatureBundle(decoded));
+            }
+            if let Ok(decoded) = <GetSubnetCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::GetSubnet(decoded));
             }
             if let Ok(decoded) =
@@ -2325,7 +2410,13 @@ pub mod gateway_getter_facet {
             {
                 return Ok(Self::GetTopDownMsgs(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <ListSubnetsCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+=======
+            if let Ok(decoded) = <ListSubnetsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::ListSubnets(decoded));
             }
             if let Ok(decoded) =
@@ -2364,12 +2455,30 @@ pub mod gateway_getter_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::BottomUpCheckpoint(element) => {
+<<<<<<< HEAD
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::BottomUpMessages(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::BottomUpNonce(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::CrossMsgFee(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetAppliedTopDownNonce(element) => {
+=======
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::BottomUpMessages(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::BottomUpNonce(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::CrossMsgFee(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetAppliedTopDownNonce(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetBottomUpRetentionHeight(element) => {
+>>>>>>> f7ef052 (add address check)
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::GetBottomUpRetentionHeight(element) => {
@@ -2409,15 +2518,37 @@ pub mod gateway_getter_facet {
                 Self::GetQuorumThreshold(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::GetSignatureBundle(element) => {
+=======
+                Self::GetParentFinality(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetQuorumThreshold(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetSignatureBundle(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetSubnet(element) => {
+>>>>>>> f7ef052 (add address check)
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::GetSubnet(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetSubnetTopDownMsgsLength(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::GetTopDownMsgs(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ListSubnets(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::GetTopDownMsgs(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::ListSubnets(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::MajorityPercentage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2434,6 +2565,7 @@ pub mod gateway_getter_facet {
     impl ::core::fmt::Display for GatewayGetterFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+<<<<<<< HEAD
                 Self::AppliedTopDownNonce(element) => ::core::fmt::Display::fmt(element, f),
                 Self::BottomUpCheckPeriod(element) => ::core::fmt::Display::fmt(element, f),
                 Self::BottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
@@ -2443,13 +2575,52 @@ pub mod gateway_getter_facet {
                 Self::GetAppliedTopDownNonce(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetBottomUpRetentionHeight(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetCheckpointCurrentWeight(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::AppliedTopDownNonce(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BottomUpCheckPeriod(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BottomUpCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BottomUpMessages(element) => ::core::fmt::Display::fmt(element, f),
+                Self::BottomUpNonce(element) => ::core::fmt::Display::fmt(element, f),
+                Self::CrossMsgFee(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetAppliedTopDownNonce(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetBottomUpRetentionHeight(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetCheckpointCurrentWeight(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::GetCheckpointInfo(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetCurrentConfigurationNumber(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+<<<<<<< HEAD
                 Self::GetCurrentMembership(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetCurrentTotalWeight(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetIncompleteCheckpointHeights(element) => {
+=======
+                Self::GetCurrentMembership(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetCurrentTotalWeight(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetIncompleteCheckpointHeights(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetIncompleteCheckpoints(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetLastConfigurationNumber(element) => {
+>>>>>>> f7ef052 (add address check)
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::GetIncompleteCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
@@ -2459,8 +2630,17 @@ pub mod gateway_getter_facet {
                 Self::GetLatestParentFinality(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetNetworkName(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetParentFinality(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::GetQuorumThreshold(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetSignatureBundle(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::GetQuorumThreshold(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetSignatureBundle(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::GetSubnet(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetSubnetTopDownMsgsLength(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetTopDownMsgs(element) => ::core::fmt::Display::fmt(element, f),
@@ -2509,12 +2689,22 @@ pub mod gateway_getter_facet {
             Self::GetAppliedTopDownNonce(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<GetBottomUpRetentionHeightCall> for GatewayGetterFacetCalls {
+=======
+    impl ::core::convert::From<GetBottomUpRetentionHeightCall>
+    for GatewayGetterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: GetBottomUpRetentionHeightCall) -> Self {
             Self::GetBottomUpRetentionHeight(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<GetCheckpointCurrentWeightCall> for GatewayGetterFacetCalls {
+=======
+    impl ::core::convert::From<GetCheckpointCurrentWeightCall>
+    for GatewayGetterFacetCalls {
+>>>>>>> f7ef052 (add address check)
         fn from(value: GetCheckpointCurrentWeightCall) -> Self {
             Self::GetCheckpointCurrentWeight(value)
         }
@@ -2539,9 +2729,22 @@ pub mod gateway_getter_facet {
             Self::GetCurrentTotalWeight(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<GetIncompleteCheckpointHeightsCall> for GatewayGetterFacetCalls {
         fn from(value: GetIncompleteCheckpointHeightsCall) -> Self {
             Self::GetIncompleteCheckpointHeights(value)
+=======
+    impl ::core::convert::From<GetIncompleteCheckpointHeightsCall>
+    for GatewayGetterFacetCalls {
+        fn from(value: GetIncompleteCheckpointHeightsCall) -> Self {
+            Self::GetIncompleteCheckpointHeights(value)
+        }
+    }
+    impl ::core::convert::From<GetIncompleteCheckpointsCall>
+    for GatewayGetterFacetCalls {
+        fn from(value: GetIncompleteCheckpointsCall) -> Self {
+            Self::GetIncompleteCheckpoints(value)
+>>>>>>> f7ef052 (add address check)
         }
     }
     impl ::core::convert::From<GetIncompleteCheckpointsCall> for GatewayGetterFacetCalls {
@@ -2684,7 +2887,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct BottomUpMessagesReturn(pub ::std::vec::Vec<CrossMsg>);
     ///Container type for all return fields from the `bottomUpNonce` function with signature `bottomUpNonce()` and selector `0x41b6a2e8`
@@ -2732,7 +2939,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct GetBottomUpRetentionHeightReturn(pub u64);
     ///Container type for all return fields from the `getCheckpointCurrentWeight` function with signature `getCheckpointCurrentWeight(uint64)` and selector `0xf7ceaf76`
@@ -2818,7 +3029,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct GetIncompleteCheckpointsReturn(pub ::std::vec::Vec<BottomUpCheckpoint>);
     ///Container type for all return fields from the `getLastConfigurationNumber` function with signature `getLastConfigurationNumber()` and selector `0xb1ba49b0`
@@ -2902,7 +3117,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct GetQuorumThresholdReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `getSignatureBundle` function with signature `getSignatureBundle(uint64)` and selector `0xad8c4f74`
@@ -2914,7 +3133,11 @@ pub mod gateway_getter_facet {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     pub struct GetSignatureBundleReturn {
         pub ch: BottomUpCheckpoint,

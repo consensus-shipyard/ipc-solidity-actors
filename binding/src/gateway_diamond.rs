@@ -7,7 +7,11 @@ pub use gateway_diamond::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
+<<<<<<< HEAD
     non_camel_case_types
+=======
+    non_camel_case_types,
+>>>>>>> f7ef052 (add address check)
 )]
 pub mod gateway_diamond {
     #[allow(deprecated)]
@@ -18,6 +22,7 @@ pub mod gateway_diamond {
                     ::ethers::core::abi::ethabi::Param {
                         name: ::std::borrow::ToOwned::to_owned("_diamondCut"),
                         kind: ::ethers::core::abi::ethabi::ParamType::Array(
+<<<<<<< HEAD
                             ::std::boxed::Box::new(::ethers::core::abi::ethabi::ParamType::Tuple(
                                 ::std::vec![
                                     ::ethers::core::abi::ethabi::ParamType::Address,
@@ -34,10 +39,31 @@ pub mod gateway_diamond {
                         ),
                         internal_type: ::core::option::Option::Some(
                             ::std::borrow::ToOwned::to_owned("struct IDiamond.FacetCut[]",),
+=======
+                            ::std::boxed::Box::new(
+                                ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                    ::std::vec![
+                                        ::ethers::core::abi::ethabi::ParamType::Address,
+                                        ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                        ::ethers::core::abi::ethabi::ParamType::Array(
+                                            ::std::boxed::Box::new(
+                                                ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                            ),
+                                        ),
+                                    ],
+                                ),
+                            ),
+                        ),
+                        internal_type: ::core::option::Option::Some(
+                            ::std::borrow::ToOwned::to_owned(
+                                "struct IDiamond.FacetCut[]",
+                            ),
+>>>>>>> f7ef052 (add address check)
                         ),
                     },
                     ::ethers::core::abi::ethabi::Param {
                         name: ::std::borrow::ToOwned::to_owned("params"),
+<<<<<<< HEAD
                         kind: ::ethers::core::abi::ethabi::ParamType::Tuple(::std::vec![
                             ::ethers::core::abi::ethabi::ParamType::Tuple(::std::vec![
                                 ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
@@ -53,6 +79,27 @@ pub mod gateway_diamond {
                             ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                             ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
                         ],),
+=======
+                        kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                            ::std::vec![
+                                ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                    ::std::vec![
+                                        ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                        ::ethers::core::abi::ethabi::ParamType::Array(
+                                            ::std::boxed::Box::new(
+                                                ::ethers::core::abi::ethabi::ParamType::Address,
+                                            ),
+                                        ),
+                                    ],
+                                ),
+                                ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                            ],
+                        ),
+>>>>>>> f7ef052 (add address check)
                         internal_type: ::core::option::Option::Some(
                             ::std::borrow::ToOwned::to_owned(
                                 "struct GatewayDiamond.ConstructorParams",
@@ -65,6 +112,7 @@ pub mod gateway_diamond {
             events: ::std::collections::BTreeMap::new(),
             errors: ::core::convert::From::from([
                 (
+<<<<<<< HEAD
                     ::std::borrow::ToOwned::to_owned("CannotAddFunctionToDiamondThatAlreadyExists"),
                     ::std::vec![::ethers::core::abi::ethabi::AbiError {
                         name: ::std::borrow::ToOwned::to_owned(
@@ -201,6 +249,198 @@ pub mod gateway_diamond {
                             ),
                         },],
                     },],
+=======
+                    ::std::borrow::ToOwned::to_owned(
+                        "CannotAddFunctionToDiamondThatAlreadyExists",
+                    ),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "CannotAddFunctionToDiamondThatAlreadyExists",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_selector"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
+                                        4usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes4"),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("CannotAddSelectorsToZeroAddress"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "CannotAddSelectorsToZeroAddress",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_selectors"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes4[]"),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("FunctionNotFound"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("FunctionNotFound"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_functionSelector"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
+                                        4usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes4"),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("IncorrectFacetCutAction"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "IncorrectFacetCutAction",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_action"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned(
+                                            "enum IDiamond.FacetCutAction",
+                                        ),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InitializationFunctionReverted"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "InitializationFunctionReverted",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned(
+                                        "_initializationContractAddress",
+                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_calldata"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes"),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("InvalidCollateral"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidMajorityPercentage"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "InvalidMajorityPercentage",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidSubmissionPeriod"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "InvalidSubmissionPeriod",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NoBytecodeAtAddress"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "NoBytecodeAtAddress",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_contractAddress"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_message"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("string"),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned(
+                        "NoSelectorsProvidedForFacetForCut",
+                    ),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "NoSelectorsProvidedForFacetForCut",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("_facetAddress"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                            ],
+                        },
+                    ],
+>>>>>>> f7ef052 (add address check)
                 ),
             ]),
             receive: true,
@@ -208,6 +448,7 @@ pub mod gateway_diamond {
         }
     }
     ///The parsed JSON ABI of the contract.
+<<<<<<< HEAD
     pub static GATEWAYDIAMOND_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
@@ -220,6 +461,23 @@ pub mod gateway_diamond {
     /// The deployed bytecode of the contract.
     pub static GATEWAYDIAMOND_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
+=======
+    pub static GATEWAYDIAMOND_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> = ::ethers::contract::Lazy::new(
+        __abi,
+    );
+    #[rustfmt::skip]
+    const __BYTECODE: &[u8] = b"`\x80`@R4\x80\x15a\0\x10W`\0\x80\xFD[P`@Qa\r\xEB8\x03\x80a\r\xEB\x839\x81\x01`@\x81\x90Ra\0/\x91a\x08\xB6V[\x80``\x01Q`\0\x03a\0TW`@Qch\xF7\xA6u`\xE1\x1B\x81R`\x04\x01`@Q\x80\x91\x03\x90\xFD[\x80` \x01Q`\x01`\x01`@\x1B\x03\x16`\0\x03a\0\x82W`@Qc1/\x8E\x05`\xE0\x1B\x81R`\x04\x01`@Q\x80\x91\x03\x90\xFD[`3\x81`\xA0\x01Q`\xFF\x16\x10\x80a\0\x9FWP`d\x81`\xA0\x01Q`\xFF\x16\x11[\x15a\0\xBDW`@Qcu\xC3\xB4'`\xE0\x1B\x81R`\x04\x01`@Q\x80\x91\x03\x90\xFD[\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD5\x80T`\x01`\x01`\xA0\x1B\x03\x19\x163\x17\x90U`@\x80Q`\0\x80\x82R` \x82\x01\x90\x92Ra\x01\t\x91\x84\x91a\x01\xDBV[\x80Q\x80Q`\x15\x80T`\x01`\x01`@\x1B\x03\x19\x16`\x01`\x01`@\x1B\x03\x90\x92\x16\x91\x90\x91\x17\x81U` \x80\x83\x01Q\x80Qa\x01B\x92`\x16\x92\x01\x90a\x05\xF0V[PPP``\x81\x01Q`\x17U` \x81\x01Q`\x1A\x80T`\x01`\x01`@\x1B\x03\x92\x83\x16h\x01\0\0\0\0\0\0\0\0\x02`\x01`@\x1B`\x01`\x80\x1B\x03\x19\x90\x91\x16\x17\x90U`@\x82\x01Q`\x19\x80T`\x80\x85\x01Q`\x18U`\xA0\x90\x94\x01Q`\xFF\x16`\xFF\x19\x92\x90\x93\x16`\x01`\x88\x1B\x02\x91\x90\x91\x16`\xFF`\x01`\x88\x1B\x03`\x01`\xC8\x1B\x03\x19\x90\x93\x16\x92\x90\x92\x17\x17\x90UP`\x0F\x80T`\x01`\x01`@\x1B\x03\x19\x16`\x01\x17\x90Ua\x0C\xB5V[\x82Q`\0[\x81\x81\x10\x15a\x02\xE2W`\0\x85\x82\x81Q\x81\x10a\x01\xFCWa\x01\xFCa\nRV[` \x02` \x01\x01Q`@\x01Q\x90P`\0\x86\x83\x81Q\x81\x10a\x02\x1EWa\x02\x1Ea\nRV[` \x02` \x01\x01Q`\0\x01Q\x90P\x81Q`\0\x03a\x02^W`@Qc\xE7g\xF9\x1F`\xE0\x1B\x81R`\x01`\x01`\xA0\x1B\x03\x82\x16`\x04\x82\x01R`$\x01[`@Q\x80\x91\x03\x90\xFD[`\0\x87\x84\x81Q\x81\x10a\x02rWa\x02ra\nRV[` \x02` \x01\x01Q` \x01Q\x90P`\0`\x02\x81\x11\x15a\x02\x93Wa\x02\x93a\nhV[\x81`\x02\x81\x11\x15a\x02\xA5Wa\x02\xA5a\nhV[\x03a\x02\xB9Wa\x02\xB4\x82\x84a\x03.V[a\x02\xD4V[\x80`@Qc?\xF4\xD2\x0F`\xE1\x1B\x81R`\x04\x01a\x02U\x91\x90a\n\xA0V[\x83`\x01\x01\x93PPPPa\x01\xE0V[P\x7F\x8F\xAAp\x87\x86q\xCC\xD2\x12\xD2\x07q\xB7\x95\xC5\n\xF8\xFD?\xF6\xCF'\xF4\xBD\xE5~]M\xE0\xAE\xB6s\x84\x84\x84`@Qa\x03\x16\x93\x92\x91\x90a\x0B\x04V[`@Q\x80\x91\x03\x90\xA1a\x03(\x83\x83a\x04\xFDV[PPPPV[`\x01`\x01`\xA0\x1B\x03\x82\x16a\x03WW\x80`@Qc\x02\xB8\xDA\x07`\xE2\x1B\x81R`\x04\x01a\x02U\x91\x90a\x0B\xF0V[\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD3T`@\x80Q``\x81\x01\x90\x91R`!\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2\x92\x91a\x03\xC0\x91\x86\x91\x90a\r\xCA` \x83\x019a\x05\xC3V[\x82Q`\0[\x81\x81\x10\x15a\x04\xF5W`\0\x85\x82\x81Q\x81\x10a\x03\xE1Wa\x03\xE1a\nRV[` \x90\x81\x02\x91\x90\x91\x01\x81\x01Q`\x01`\x01`\xE0\x1B\x03\x19\x81\x16`\0\x90\x81R\x91\x87\x90R`@\x90\x91 T\x90\x91P`\x01`\x01`\xA0\x1B\x03\x16\x80\x15a\x04>W`@Qc\xEB\xBF]\x07`\xE0\x1B\x81R`\x01`\x01`\xE0\x1B\x03\x19\x83\x16`\x04\x82\x01R`$\x01a\x02UV[`@\x80Q\x80\x82\x01\x82R`\x01`\x01`\xA0\x1B\x03\x80\x8B\x16\x82Ra\xFF\xFF\x80\x89\x16` \x80\x85\x01\x91\x82R`\x01`\x01`\xE0\x1B\x03\x19\x88\x16`\0\x90\x81R\x8C\x82R\x95\x86 \x94Q\x85T\x92Q\x90\x93\x16`\x01`\xA0\x1B\x02`\x01`\x01`\xB0\x1B\x03\x19\x90\x92\x16\x92\x90\x93\x16\x91\x90\x91\x17\x17\x90\x91U`\x01\x80\x89\x01\x80T\x91\x82\x01\x81U\x83R\x91 `\x08\x82\x04\x01\x80T`\xE0\x85\x90\x1C`\x04`\x07\x90\x94\x16\x93\x90\x93\x02a\x01\0\n\x92\x83\x02c\xFF\xFF\xFF\xFF\x90\x93\x02\x19\x16\x91\x90\x91\x17\x90Ua\x04\xE6\x85a\x0C>V[\x94P\x82`\x01\x01\x92PPPa\x03\xC5V[PPPPPPV[`\x01`\x01`\xA0\x1B\x03\x82\x16a\x05\x0FWPPV[a\x051\x82`@Q\x80``\x01`@R\x80`%\x81R` \x01a\r\xA5`%\x919a\x05\xC3V[`\0\x80\x83`\x01`\x01`\xA0\x1B\x03\x16\x83`@Qa\x05L\x91\x90a\x0CmV[`\0`@Q\x80\x83\x03\x81\x85Z\xF4\x91PP=\x80`\0\x81\x14a\x05\x87W`@Q\x91P`\x1F\x19`?=\x01\x16\x82\x01`@R=\x82R=`\0` \x84\x01>a\x05\x8CV[``\x91P[P\x91P\x91P\x81a\x03(W\x80Q\x15a\x05\xA6W\x80Q\x80\x82` \x01\xFD[\x83\x83`@Qc\x19!\x05\xD7`\xE0\x1B\x81R`\x04\x01a\x02U\x92\x91\x90a\x0C\x89V[\x81;`\0\x81\x90\x03a\x05\xEBW\x82\x82`@Qc\x91\x984\xB9`\xE0\x1B\x81R`\x04\x01a\x02U\x92\x91\x90a\x0C\x89V[PPPV[\x82\x80T\x82\x82U\x90`\0R` `\0 \x90\x81\x01\x92\x82\x15a\x06EW\x91` \x02\x82\x01[\x82\x81\x11\x15a\x06EW\x82Q\x82T`\x01`\x01`\xA0\x1B\x03\x19\x16`\x01`\x01`\xA0\x1B\x03\x90\x91\x16\x17\x82U` \x90\x92\x01\x91`\x01\x90\x91\x01\x90a\x06\x10V[Pa\x06Q\x92\x91Pa\x06UV[P\x90V[[\x80\x82\x11\x15a\x06QW`\0\x81U`\x01\x01a\x06VV[cNH{q`\xE0\x1B`\0R`A`\x04R`$`\0\xFD[`@Q`\xC0\x81\x01`\x01`\x01`@\x1B\x03\x81\x11\x82\x82\x10\x17\x15a\x06\xA2Wa\x06\xA2a\x06jV[`@R\x90V[`@\x80Q\x90\x81\x01`\x01`\x01`@\x1B\x03\x81\x11\x82\x82\x10\x17\x15a\x06\xA2Wa\x06\xA2a\x06jV[`@Q``\x81\x01`\x01`\x01`@\x1B\x03\x81\x11\x82\x82\x10\x17\x15a\x06\xA2Wa\x06\xA2a\x06jV[`@Q`\x1F\x82\x01`\x1F\x19\x16\x81\x01`\x01`\x01`@\x1B\x03\x81\x11\x82\x82\x10\x17\x15a\x07\x14Wa\x07\x14a\x06jV[`@R\x91\x90PV[`\0`\x01`\x01`@\x1B\x03\x82\x11\x15a\x075Wa\x075a\x06jV[P`\x05\x1B` \x01\x90V[\x80Q`\x01`\x01`\xA0\x1B\x03\x81\x16\x81\x14a\x07VW`\0\x80\xFD[\x91\x90PV[\x80Q`\x01`\x01`@\x1B\x03\x81\x16\x81\x14a\x07VW`\0\x80\xFD[\x80Q`\xFF\x81\x16\x81\x14a\x07VW`\0\x80\xFD[`\0`\xC0\x82\x84\x03\x12\x15a\x07\x95W`\0\x80\xFD[a\x07\x9Da\x06\x80V[\x82Q\x90\x91P`\x01`\x01`@\x1B\x03\x80\x82\x11\x15a\x07\xB7W`\0\x80\xFD[\x90\x83\x01\x90`@\x82\x86\x03\x12\x15a\x07\xCBW`\0\x80\xFD[a\x07\xD3a\x06\xA8V[a\x07\xDC\x83a\x07[V[\x81R` \x80\x84\x01Q\x83\x81\x11\x15a\x07\xF1W`\0\x80\xFD[\x80\x85\x01\x94PP\x86`\x1F\x85\x01\x12a\x08\x06W`\0\x80\xFD[\x83Q\x92Pa\x08\x1Ba\x08\x16\x84a\x07\x1CV[a\x06\xECV[\x83\x81R`\x05\x93\x90\x93\x1B\x84\x01\x81\x01\x92\x81\x81\x01\x90\x88\x85\x11\x15a\x08:W`\0\x80\xFD[\x94\x82\x01\x94[\x84\x86\x10\x15a\x08_Wa\x08P\x86a\x07?V[\x82R\x94\x82\x01\x94\x90\x82\x01\x90a\x08?V[\x83\x83\x01RP\x81\x85Ra\x08r\x86\x82\x01a\x07[V[\x81\x86\x01RPPPPa\x08\x86`@\x83\x01a\x07[V[`@\x82\x01R``\x82\x01Q``\x82\x01R`\x80\x82\x01Q`\x80\x82\x01Ra\x08\xAB`\xA0\x83\x01a\x07rV[`\xA0\x82\x01R\x92\x91PPV[`\0\x80`@\x83\x85\x03\x12\x15a\x08\xC9W`\0\x80\xFD[\x82Q`\x01`\x01`@\x1B\x03\x80\x82\x11\x15a\x08\xE0W`\0\x80\xFD[\x81\x85\x01\x91P\x85`\x1F\x83\x01\x12a\x08\xF4W`\0\x80\xFD[\x81Q` a\t\x04a\x08\x16\x83a\x07\x1CV[\x82\x81R`\x05\x92\x90\x92\x1B\x84\x01\x81\x01\x91\x81\x81\x01\x90\x89\x84\x11\x15a\t#W`\0\x80\xFD[\x82\x86\x01[\x84\x81\x10\x15a\n!W\x80Q\x86\x81\x11\x15a\t>W`\0\x80\xFD[\x87\x01``\x81\x8D\x03`\x1F\x19\x01\x12\x15a\tTW`\0\x80\xFD[a\t\\a\x06\xCAV[a\tg\x86\x83\x01a\x07?V[\x81R`@\x82\x01Q`\x03\x81\x10a\t{W`\0\x80\xFD[\x81\x87\x01R``\x82\x01Q\x88\x81\x11\x15a\t\x91W`\0\x80\xFD[\x80\x83\x01\x92PP\x8C`?\x83\x01\x12a\t\xA6W`\0\x80\xFD[\x85\x82\x01Qa\t\xB6a\x08\x16\x82a\x07\x1CV[\x81\x81R`\x05\x91\x90\x91\x1B\x83\x01`@\x01\x90\x87\x81\x01\x90\x8F\x83\x11\x15a\t\xD6W`\0\x80\xFD[`@\x85\x01\x94P[\x82\x85\x10\x15a\n\x0CW\x84Q`\x01`\x01`\xE0\x1B\x03\x19\x81\x16\x81\x14a\t\xFDW`\0\x80\xFD[\x82R\x93\x88\x01\x93\x90\x88\x01\x90a\t\xDDV[`@\x84\x01RPP\x84RP\x91\x83\x01\x91\x83\x01a\t'V[P\x91\x88\x01Q\x91\x96P\x90\x93PPP\x80\x82\x11\x15a\n;W`\0\x80\xFD[Pa\nH\x85\x82\x86\x01a\x07\x83V[\x91PP\x92P\x92\x90PV[cNH{q`\xE0\x1B`\0R`2`\x04R`$`\0\xFD[cNH{q`\xE0\x1B`\0R`!`\x04R`$`\0\xFD[`\x03\x81\x10a\n\x9CWcNH{q`\xE0\x1B`\0R`!`\x04R`$`\0\xFD[\x90RV[` \x81\x01a\n\xAE\x82\x84a\n~V[\x92\x91PPV[`\0[\x83\x81\x10\x15a\n\xCFW\x81\x81\x01Q\x83\x82\x01R` \x01a\n\xB7V[PP`\0\x91\x01RV[`\0\x81Q\x80\x84Ra\n\xF0\x81` \x86\x01` \x86\x01a\n\xB4V[`\x1F\x01`\x1F\x19\x16\x92\x90\x92\x01` \x01\x92\x91PPV[`\0``\x80\x83\x01\x81\x84R\x80\x87Q\x80\x83R`\x80\x92P\x82\x86\x01\x91P\x82\x81`\x05\x1B\x87\x01\x01` \x80\x8B\x01`\0\x80[\x85\x81\x10\x15a\x0B\xBFW\x8A\x85\x03`\x7F\x19\x01\x87R\x82Q\x80Q`\x01`\x01`\xA0\x1B\x03\x16\x86R\x84\x81\x01Q\x8A\x87\x01\x90a\x0Bb\x87\x89\x01\x82a\n~V[P`@\x91\x82\x01Q\x91\x87\x01\x8B\x90R\x81Q\x90\x81\x90R\x90\x85\x01\x90\x83\x90\x8A\x88\x01\x90[\x80\x83\x10\x15a\x0B\xAAW\x83Q`\x01`\x01`\xE0\x1B\x03\x19\x16\x82R\x92\x87\x01\x92`\x01\x92\x90\x92\x01\x91\x90\x87\x01\x90a\x0B\x80V[P\x98\x86\x01\x98\x96PPP\x91\x83\x01\x91`\x01\x01a\x0B.V[PPP`\x01`\x01`\xA0\x1B\x03\x8A\x16\x90\x88\x01R\x86\x81\x03`@\x88\x01Ra\x0B\xE2\x81\x89a\n\xD8V[\x9A\x99PPPPPPPPPPV[` \x80\x82R\x82Q\x82\x82\x01\x81\x90R`\0\x91\x90\x84\x82\x01\x90`@\x85\x01\x90\x84[\x81\x81\x10\x15a\x0C2W\x83Q`\x01`\x01`\xE0\x1B\x03\x19\x16\x83R\x92\x84\x01\x92\x91\x84\x01\x91`\x01\x01a\x0C\x0CV[P\x90\x96\x95PPPPPPV[`\0a\xFF\xFF\x80\x83\x16\x81\x81\x03a\x0CcWcNH{q`\xE0\x1B`\0R`\x11`\x04R`$`\0\xFD[`\x01\x01\x93\x92PPPV[`\0\x82Qa\x0C\x7F\x81\x84` \x87\x01a\n\xB4V[\x91\x90\x91\x01\x92\x91PPV[`\x01`\x01`\xA0\x1B\x03\x83\x16\x81R`@` \x82\x01\x81\x90R`\0\x90a\x0C\xAD\x90\x83\x01\x84a\n\xD8V[\x94\x93PPPPV[`\xE2\x80a\x0C\xC3`\09`\0\xF3\xFE`\x80`@R6`\x10W`\x0E`\x13V[\0[`\x0E[`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x81R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` \x81\x90R`@\x90\x91 T\x81\x90`\x01`\x01`\xA0\x1B\x03\x16\x80`\x89W`@Qc\n\x82\xDDs`\xE3\x1B\x81R`\x01`\x01`\xE0\x1B\x03\x19`\x005\x16`\x04\x82\x01R`$\x01`@Q\x80\x91\x03\x90\xFD[6`\0\x807`\0\x806`\0\x84Z\xF4=`\0\x80>\x80\x80\x15`\xA7W=`\0\xF3[=`\0\xFD\xFE\xA2dipfsX\"\x12 \x11\x88A\x96\x02r\xEF U\x12\xCB\x82\xF9hj\x83\x19w\xA8\xA6\xA2\xFBj\x15\xA2{7\x06}2\x94\0dsolcC\0\x08\x13\x003diamondCut: _init address has no codediamondCut: Add facet has no code";
+    /// The bytecode of the contract.
+    pub static GATEWAYDIAMOND_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __BYTECODE,
+    );
+    #[rustfmt::skip]
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6`\x10W`\x0E`\x13V[\0[`\x0E[`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x81R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` \x81\x90R`@\x90\x91 T\x81\x90`\x01`\x01`\xA0\x1B\x03\x16\x80`\x89W`@Qc\n\x82\xDDs`\xE3\x1B\x81R`\x01`\x01`\xE0\x1B\x03\x19`\x005\x16`\x04\x82\x01R`$\x01`@Q\x80\x91\x03\x90\xFD[6`\0\x807`\0\x806`\0\x84Z\xF4=`\0\x80>\x80\x80\x15`\xA7W=`\0\xF3[=`\0\xFD\xFE\xA2dipfsX\"\x12 \x11\x88A\x96\x02r\xEF U\x12\xCB\x82\xF9hj\x83\x19w\xA8\xA6\xA2\xFBj\x15\xA2{7\x06}2\x94\0dsolcC\0\x08\x13\x003";
+    /// The deployed bytecode of the contract.
+    pub static GATEWAYDIAMOND_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __DEPLOYED_BYTECODE,
+    );
+>>>>>>> f7ef052 (add address check)
     pub struct GatewayDiamond<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for GatewayDiamond<M> {
         fn clone(&self) -> Self {
@@ -251,11 +509,21 @@ pub mod gateway_diamond {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
+<<<<<<< HEAD
             Self(::ethers::contract::Contract::new(
                 address.into(),
                 GATEWAYDIAMOND_ABI.clone(),
                 client,
             ))
+=======
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    GATEWAYDIAMOND_ABI.clone(),
+                    client,
+                ),
+            )
+>>>>>>> f7ef052 (add address check)
         }
         /// Constructs the general purpose `Deployer` instance based on the provided constructor arguments and sends it.
         /// Returns a new instance of a deployer that returns an instance of this contract after sending the transaction
@@ -298,8 +566,12 @@ pub mod gateway_diamond {
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
+<<<<<<< HEAD
         for GatewayDiamond<M>
     {
+=======
+    for GatewayDiamond<M> {
+>>>>>>> f7ef052 (add address check)
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -313,7 +585,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "CannotAddFunctionToDiamondThatAlreadyExists",
@@ -331,7 +607,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "CannotAddSelectorsToZeroAddress",
@@ -349,7 +629,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "FunctionNotFound", abi = "FunctionNotFound(bytes4)")]
     pub struct FunctionNotFound {
@@ -364,12 +648,18 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
     )]
     #[etherror(
         name = "IncorrectFacetCutAction",
         abi = "IncorrectFacetCutAction(uint8)"
     )]
+=======
+        Hash
+    )]
+    #[etherror(name = "IncorrectFacetCutAction", abi = "IncorrectFacetCutAction(uint8)")]
+>>>>>>> f7ef052 (add address check)
     pub struct IncorrectFacetCutAction {
         pub action: u8,
     }
@@ -382,7 +672,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "InitializationFunctionReverted",
@@ -401,7 +695,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidCollateral", abi = "InvalidCollateral()")]
     pub struct InvalidCollateral;
@@ -414,12 +712,18 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
     )]
     #[etherror(
         name = "InvalidMajorityPercentage",
         abi = "InvalidMajorityPercentage()"
     )]
+=======
+        Hash
+    )]
+    #[etherror(name = "InvalidMajorityPercentage", abi = "InvalidMajorityPercentage()")]
+>>>>>>> f7ef052 (add address check)
     pub struct InvalidMajorityPercentage;
     ///Custom Error type `InvalidSubmissionPeriod` with signature `InvalidSubmissionPeriod()` and selector `0x312f8e05`
     #[derive(
@@ -430,7 +734,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(name = "InvalidSubmissionPeriod", abi = "InvalidSubmissionPeriod()")]
     pub struct InvalidSubmissionPeriod;
@@ -443,7 +751,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "NoBytecodeAtAddress",
@@ -462,7 +774,11 @@ pub mod gateway_diamond {
         Debug,
         PartialEq,
         Eq,
+<<<<<<< HEAD
         Hash,
+=======
+        Hash
+>>>>>>> f7ef052 (add address check)
     )]
     #[etherror(
         name = "NoSelectorsProvidedForFacetForCut",
@@ -474,7 +790,13 @@ pub mod gateway_diamond {
     ///Container type for all of the contract's custom errors
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayDiamondErrors {
+<<<<<<< HEAD
         CannotAddFunctionToDiamondThatAlreadyExists(CannotAddFunctionToDiamondThatAlreadyExists),
+=======
+        CannotAddFunctionToDiamondThatAlreadyExists(
+            CannotAddFunctionToDiamondThatAlreadyExists,
+        ),
+>>>>>>> f7ef052 (add address check)
         CannotAddSelectorsToZeroAddress(CannotAddSelectorsToZeroAddress),
         FunctionNotFound(FunctionNotFound),
         IncorrectFacetCutAction(IncorrectFacetCutAction),
@@ -493,9 +815,15 @@ pub mod gateway_diamond {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::RevertString(decoded));
             }
             if let Ok(decoded) = <CannotAddFunctionToDiamondThatAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(
@@ -503,6 +831,7 @@ pub mod gateway_diamond {
             ) {
                 return Ok(Self::CannotAddFunctionToDiamondThatAlreadyExists(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) =
                 <CannotAddSelectorsToZeroAddress as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -544,6 +873,51 @@ pub mod gateway_diamond {
             if let Ok(decoded) =
                 <NoSelectorsProvidedForFacetForCut as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <CannotAddSelectorsToZeroAddress as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CannotAddSelectorsToZeroAddress(decoded));
+            }
+            if let Ok(decoded) = <FunctionNotFound as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::FunctionNotFound(decoded));
+            }
+            if let Ok(decoded) = <IncorrectFacetCutAction as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::IncorrectFacetCutAction(decoded));
+            }
+            if let Ok(decoded) = <InitializationFunctionReverted as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InitializationFunctionReverted(decoded));
+            }
+            if let Ok(decoded) = <InvalidCollateral as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidCollateral(decoded));
+            }
+            if let Ok(decoded) = <InvalidMajorityPercentage as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidMajorityPercentage(decoded));
+            }
+            if let Ok(decoded) = <InvalidSubmissionPeriod as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidSubmissionPeriod(decoded));
+            }
+            if let Ok(decoded) = <NoBytecodeAtAddress as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NoBytecodeAtAddress(decoded));
+            }
+            if let Ok(decoded) = <NoSelectorsProvidedForFacetForCut as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::NoSelectorsProvidedForFacetForCut(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
@@ -558,14 +932,26 @@ pub mod gateway_diamond {
                 Self::CannotAddSelectorsToZeroAddress(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::FunctionNotFound(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::FunctionNotFound(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::IncorrectFacetCutAction(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InitializationFunctionReverted(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+<<<<<<< HEAD
                 Self::InvalidCollateral(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::InvalidCollateral(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::InvalidMajorityPercentage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -640,14 +1026,32 @@ pub mod gateway_diamond {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::FunctionNotFound(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::IncorrectFacetCutAction(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::IncorrectFacetCutAction(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::InitializationFunctionReverted(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::InvalidCollateral(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::InvalidMajorityPercentage(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidSubmissionPeriod(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NoBytecodeAtAddress(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::InvalidMajorityPercentage(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::InvalidSubmissionPeriod(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NoBytecodeAtAddress(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::NoSelectorsProvidedForFacetForCut(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -660,12 +1064,22 @@ pub mod gateway_diamond {
             Self::RevertString(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<CannotAddFunctionToDiamondThatAlreadyExists> for GatewayDiamondErrors {
+=======
+    impl ::core::convert::From<CannotAddFunctionToDiamondThatAlreadyExists>
+    for GatewayDiamondErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: CannotAddFunctionToDiamondThatAlreadyExists) -> Self {
             Self::CannotAddFunctionToDiamondThatAlreadyExists(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<CannotAddSelectorsToZeroAddress> for GatewayDiamondErrors {
+=======
+    impl ::core::convert::From<CannotAddSelectorsToZeroAddress>
+    for GatewayDiamondErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: CannotAddSelectorsToZeroAddress) -> Self {
             Self::CannotAddSelectorsToZeroAddress(value)
         }
@@ -705,7 +1119,12 @@ pub mod gateway_diamond {
             Self::NoBytecodeAtAddress(value)
         }
     }
+<<<<<<< HEAD
     impl ::core::convert::From<NoSelectorsProvidedForFacetForCut> for GatewayDiamondErrors {
+=======
+    impl ::core::convert::From<NoSelectorsProvidedForFacetForCut>
+    for GatewayDiamondErrors {
+>>>>>>> f7ef052 (add address check)
         fn from(value: NoSelectorsProvidedForFacetForCut) -> Self {
             Self::NoSelectorsProvidedForFacetForCut(value)
         }

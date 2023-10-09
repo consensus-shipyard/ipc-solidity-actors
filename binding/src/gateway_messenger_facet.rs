@@ -95,10 +95,21 @@ pub mod gateway_messenger_facet {
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("CannotSendCrossMsgToItself"),
+<<<<<<< HEAD
                     ::std::vec![::ethers::core::abi::ethabi::AbiError {
                         name: ::std::borrow::ToOwned::to_owned("CannotSendCrossMsgToItself",),
                         inputs: ::std::vec![],
                     },],
+=======
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "CannotSendCrossMsgToItself",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+>>>>>>> f7ef052 (add address check)
                 ),
                 (
                     ::std::borrow::ToOwned::to_owned("InsufficientFunds"),
@@ -348,7 +359,13 @@ pub mod gateway_messenger_facet {
             {
                 return Ok(Self::RevertString(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <CallFailed as ::ethers::core::abi::AbiDecode>::decode(data) {
+=======
+            if let Ok(decoded) = <CallFailed as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::CallFailed(decoded));
             }
             if let Ok(decoded) =
@@ -356,8 +373,14 @@ pub mod gateway_messenger_facet {
             {
                 return Ok(Self::CannotSendCrossMsgToItself(decoded));
             }
+<<<<<<< HEAD
             if let Ok(decoded) = <InsufficientFunds as ::ethers::core::abi::AbiDecode>::decode(data)
             {
+=======
+            if let Ok(decoded) = <InsufficientFunds as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+>>>>>>> f7ef052 (add address check)
                 return Ok(Self::InsufficientFunds(decoded));
             }
             if let Ok(decoded) =
@@ -389,11 +412,23 @@ pub mod gateway_messenger_facet {
     impl ::ethers::core::abi::AbiEncode for GatewayMessengerFacetErrors {
         fn encode(self) -> ::std::vec::Vec<u8> {
             match self {
+<<<<<<< HEAD
                 Self::CallFailed(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::CannotSendCrossMsgToItself(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InsufficientFunds(element) => ::ethers::core::abi::AbiEncode::encode(element),
+=======
+                Self::CallFailed(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::CannotSendCrossMsgToItself(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::InsufficientFunds(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::InvalidCrossMsgDstSubnet(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -417,6 +452,7 @@ pub mod gateway_messenger_facet {
                 [0x08, 0xc3, 0x79, 0xa0] => true,
                 _ if selector == <CallFailed as ::ethers::contract::EthError>::selector() => true,
                 _ if selector
+<<<<<<< HEAD
                     == <CannotSendCrossMsgToItself as ::ethers::contract::EthError>::selector() =>
                 {
                     true
@@ -439,6 +475,15 @@ pub mod gateway_messenger_facet {
                 _ if selector
                     == <InvalidCrossMsgValue as ::ethers::contract::EthError>::selector() =>
                 {
+=======
+                    == <CallFailed as ::ethers::contract::EthError>::selector() => true,
+                _ if selector
+                    == <CannotSendCrossMsgToItself as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <InsufficientFunds as ::ethers::contract::EthError>::selector() => {
+>>>>>>> f7ef052 (add address check)
                     true
                 }
                 _ if selector == <NotEnoughFee as ::ethers::contract::EthError>::selector() => true,
@@ -455,7 +500,13 @@ pub mod gateway_messenger_facet {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
                 Self::CallFailed(element) => ::core::fmt::Display::fmt(element, f),
+<<<<<<< HEAD
                 Self::CannotSendCrossMsgToItself(element) => ::core::fmt::Display::fmt(element, f),
+=======
+                Self::CannotSendCrossMsgToItself(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+>>>>>>> f7ef052 (add address check)
                 Self::InsufficientFunds(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCrossMsgDstSubnet(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCrossMsgFromSubnet(element) => ::core::fmt::Display::fmt(element, f),
