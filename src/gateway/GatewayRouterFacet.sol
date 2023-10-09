@@ -82,6 +82,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             }
 
             subnet.circSupply -= totalValue;
+            // slither-disable-next-line unused-return
             s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
             s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
 
