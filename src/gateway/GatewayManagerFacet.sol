@@ -67,7 +67,8 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
 
     /// @notice release amount for an existing subnet
     /// @dev it can be used to release the stake or reward of the validator
-    function releaseAmount(uint256 amount) external nonReentrant {
+    /// @notice release collateral for an existing subnet
+    function releaseStake(uint256 amount) external nonReentrant {
         if (amount == 0) {
             revert CannotReleaseZero();
         }
@@ -85,6 +86,19 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
 
         if (subnet.stake < s.minStake) {
             subnet.status = Status.Inactive;
+        }
+
+        payable(subnet.id.getActor()).sendValue(amount);
+    }
+
+    function releaseRewards(uint256 amount) external nonReentrant {
+        if (amount == 0) {
+            revert CannotReleaseZero();
+        }
+
+        (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
+        if (!registered) {
+            revert NotRegisteredSubnet();
         }
 
         payable(subnet.id.getActor()).sendValue(amount);

@@ -15,8 +15,11 @@ interface IGateway {
     /// @notice AddStake adds stake to the collateral of a subnet.
     function addStake() external payable;
 
-    /// @notice Releases amount in the subnet
-    function releaseAmount(uint256 amount) external;
+    /// @notice Release stake recovers some collateral of the subnet
+    function releaseStake(uint256 amount) external;
+
+    /// @notice // Release reward to the subnet actor
+    function releaseReward(uint256 amount) external;
 
     /// @notice Kill propagates the kill signal from a subnet actor to unregister it from th
     /// hierarchy.

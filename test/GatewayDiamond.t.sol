@@ -482,7 +482,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, registerAmount);
 
         registerSubnet(registerAmount, subnetAddress);
-        gwManager.releaseAmount(registerAmount);
+        gwManager.releaseStake(registerAmount);
 
         (, , , , , Status statusInactive) = getSubnet(subnetAddress);
         require(statusInactive == Status.Inactive);
@@ -505,7 +505,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, registerAmount);
 
         registerSubnet(registerAmount, subnetAddress);
-        gwManager.releaseAmount(registerAmount);
+        gwManager.releaseStake(registerAmount);
 
         vm.deal(subnetAddress, stakeAmount);
         addStake(stakeAmount, subnetAddress);
@@ -568,7 +568,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         registerSubnet(registerAmount, subnetAddress);
         addStake(stakeAmount, subnetAddress);
 
-        gwManager.releaseAmount(fullAmount);
+        gwManager.releaseStake(fullAmount);
 
         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
@@ -583,7 +583,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        gwManager.releaseAmount(DEFAULT_COLLATERAL_AMOUNT / 2);
+        gwManager.releaseStake(DEFAULT_COLLATERAL_AMOUNT / 2);
 
         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
         require(stake == DEFAULT_COLLATERAL_AMOUNT / 2, "stake == MIN_COLLATERAL_AMOUNT / 2");
@@ -604,7 +604,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         registerSubnet(registerAmount, subnetAddress);
         addStake(partialAmount, subnetAddress);
 
-        gwManager.releaseAmount(partialAmount);
+        gwManager.releaseStake(partialAmount);
 
         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
@@ -618,7 +618,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(CannotReleaseZero.selector);
 
-        gwManager.releaseAmount(0);
+        gwManager.releaseStake(0);
     }
 
     function testGatewayDiamond_ReleaseStake_Fail_InsufficientSubnetBalance(
@@ -636,13 +636,13 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         vm.expectRevert(NotEnoughFundsToRelease.selector);
 
-        gwManager.releaseAmount(releaseAmount);
+        gwManager.releaseStake(releaseAmount);
     }
 
     function testGatewayDiamond_ReleaseStake_Fail_NotRegisteredSubnet() public {
         vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gwManager.releaseAmount(1);
+        gwManager.releaseStake(1);
     }
 
     function testGatewayDiamond_ReleaseStake_Works_TransitionToInactive() public {
@@ -653,7 +653,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        gwManager.releaseAmount(10);
+        gwManager.releaseStake(10);
 
         (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
