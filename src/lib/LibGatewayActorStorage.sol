@@ -74,6 +74,10 @@ struct GatewayActorStorage {
     uint64 bottomUpCheckPeriod;
     /// Tracking validator changes from parent in child subnet
     ParentValidatorsTracker validatorsTracker;
+    /// @notice The height of the last executed bottom-up checkpoint.
+    uint64 lastBottomUpExecutedCheckpointHeight;
+    /// @notice The addresses of the relayers that must be rewarded for their service
+    mapping(uint64 => EnumerableSet.AddressSet) rewardedRelayers;
 }
 
 library LibGatewayActorStorage {

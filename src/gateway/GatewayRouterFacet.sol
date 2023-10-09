@@ -59,32 +59,51 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert SubnetNotActive();
         }
 
-        // process messages
-        uint256 totalValue = 0;
-        uint256 crossMsgLength = messages.length;
-        for (uint256 i = 0; i < crossMsgLength; ) {
-            totalValue += messages[i].message.value;
+        // If this is the first time the checkpoint is submitted, execute the messages, or put them in the execution queue.
+        // Otherwise, mark the checkpoint as executed, so further relayers can be rewarded but don't cause double execution.
+        if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight + s.bottomUpCheckPeriod) {
+            // process messages
+            uint256 totalValue = 0;
+            uint256 crossMsgLength = messages.length;
+            for (uint256 i = 0; i < crossMsgLength; ) {
+                totalValue += messages[i].message.value;
+                unchecked {
+                    ++i;
+                }
+            }
+
+            // CODE-REVIEW
+            // before we do this here totalValue += commit.fee + checkpoint.fee
+            // where and how are we going to use fees?
+
+            if (subnet.circSupply < totalValue) {
+                revert NotEnoughSubnetCircSupply();
+            }
+
+            subnet.circSupply -= totalValue;
+            s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
+
+            _applyMessages(checkpoint.subnetID, messages);
+        }
+
+        // The relayer is added to the list of all relayers for this checkpoint
+        // to be rewarded later.
+        // slither-disable-next-line unused-return
+        s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+    }
+
+    /// @notice reward the relayers for processing checkpoint at height `h`.
+    /// @dev the relayer is added to the list of all relayers for this checkpoint and rewarded at the time the next checkpoint arrives,
+    /// so that we can distribute a fixed reward pot among them, rather than reward them at the time of submission.
+    function rewardRelayers(uint64 h, uint256 fee) external {
+        address[] memory relayers = s.rewardedRelayers[h].values();
+        uint256 n = relayers.length;
+        for (uint256 i = 0; i < n; ) {
+            LibGateway.distributeRewards(relayers[i], fee);
             unchecked {
                 ++i;
             }
         }
-
-        // CODE-REVIEW
-        // before we do this here totalValue += commit.fee + checkpoint.fee
-        // where and how are we going to use fees?
-
-        if (subnet.circSupply < totalValue) {
-            revert NotEnoughSubnetCircSupply();
-        }
-
-        subnet.circSupply -= totalValue;
-
-        _applyMessages(checkpoint.subnetID, messages);
-
-        // CODE-REVIEW
-        // we still do not have fee in the actors.
-        uint256 fee = 0;
-        LibGateway.distributeRewards(msg.sender, fee);
     }
 
     /// @notice commit the ipc parent finality into storage
