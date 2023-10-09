@@ -102,11 +102,11 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice reward the relayers for processing checkpoint at height `h`.
     /// @dev the relayer is added to the list of all relayers for this checkpoint and rewarded at the time the next checkpoint arrives,
     /// so that we can distribute a fixed reward pot among them, rather than reward them at the time of submission.
-    function rewardRelayers(uint64 h, uint256 fee) external {
+    function rewardRelayers(uint64 h, uint256 reward) external {
         address[] memory relayers = s.rewardedRelayers[h].values();
         uint256 n = relayers.length;
         for (uint256 i = 0; i < n; ) {
-            LibGateway.distributeRewards(relayers[i], fee);
+            LibGateway.distributeRewards(relayers[i], reward);
             unchecked {
                 ++i;
             }
