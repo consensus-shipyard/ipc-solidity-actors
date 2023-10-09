@@ -5,7 +5,7 @@ import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
-import {Membership, Validator} from "../structs/Validator.sol";
+import {Membership, Validator} from "../structs/Subnet.sol";
 import {OldConfigurationNumber, NotRegisteredSubnet, InvalidActorAddress, ValidatorWeightIsZero, ValidatorsAndWeightsLengthMismatch, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
@@ -138,20 +138,6 @@ library LibGateway {
         bytes32 h2 = keccak256(abi.encode(mb2.validators));
 
         return h1 == h2;
-    }
-
-    /// @notice update the membership of the child subnet and returns it
-    function updateMembership() internal returns (Membership memory) {
-        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-
-        if (membershipEqual(s.currentMembership, s.lastMembership)) {
-            return s.currentMembership;
-        }
-
-        s.currentMembership = s.lastMembership;
-        Membership memory mb = s.currentMembership;
-        emit MembershipUpdated({n: mb.configurationNumber, validators: mb.validators, totalWeight: mb.totalWeight});
-        return mb;
     }
 
     /// @notice commit topdown messages for their execution in the subnet. Adds the message to the subnet struct for future execution

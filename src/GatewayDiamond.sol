@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
 import {FvmAddress} from "./structs/FvmAddress.sol";
-import {Validator} from "./structs/Validator.sol";
+import {Validator} from "./structs/Subnet.sol";
 import {InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibGateway} from "./lib/LibGateway.sol";

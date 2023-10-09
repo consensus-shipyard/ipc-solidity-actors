@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {Membership} from "../structs/Validator.sol";
+import {Membership} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {GatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";

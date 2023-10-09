@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint, CrossMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet, ParentValidatorsTracker} from "../structs/Subnet.sol";
-import {Membership} from "../structs/Validator.sol";
+import {Membership} from "../structs/Subnet.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";

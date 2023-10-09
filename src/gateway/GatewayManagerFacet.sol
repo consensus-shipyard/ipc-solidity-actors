@@ -6,7 +6,7 @@ import {CrossMsg} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {Membership} from "../structs/Validator.sol";
+import {Membership} from "../structs/Subnet.sol";
 import {AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";

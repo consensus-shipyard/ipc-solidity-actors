@@ -8,7 +8,7 @@ import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {Membership} from "../structs/Validator.sol";
+import {Membership} from "../structs/Subnet.sol";
 import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, IncompleteCheckpointExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory, FailedAddSignature} from "../errors/IPCErrors.sol";
 import {MessagesNotSorted, NotEnoughBalance, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
@@ -133,8 +133,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
         // If the cross-message destination is the current network.
         if (crossMsg.message.to.subnetId.equals(s.networkName)) {
-            // forwarder will always be empty subnet when we reach here from submitTopDownCheckpoint
-            // so we check against it to not reach here in coverage
 
             if (applyType == IPCMsgType.BottomUp) {
                 if (!forwarder.isEmpty()) {

@@ -14,10 +14,9 @@ import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
-import {CrossMsg, BottomUpCheckpoint, TopDownCheckpoint, StorableMsg, ChildCheck, ParentFinality} from "../src/structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
-import {SubnetID, Subnet, IPCAddress} from "../src/structs/Subnet.sol";
-import {Membership, Validator} from "../src/structs/Validator.sol";
+import {SubnetID, Subnet, IPCAddress, Membership, Validator} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
@@ -1349,7 +1348,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(gwGetter.getCurrentConfigurationNumber() != newConfigurationNumber, "current n correct");
         require(lastMb.configurationNumber == newConfigurationNumber, "lastMb.n correct");
         require(lastMb.validators.length == 2, "lastMb.validators.length correct");
-        require(lastMb.totalWeight == 300, "lastMb.totalWeight correct");
 
         // new configuration
         validators = new FvmAddress[](3);
@@ -1366,14 +1364,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         lastMb = gwGetter.getLastMembership();
         require(lastMb.configurationNumber == newConfigurationNumber, "nlast.configurationNumber correct");
         require(lastMb.validators.length == 3, "lastMb.validators.length correct");
-        require(lastMb.totalWeight == 600, "lastMb.totalWeight correct");
 
         // update
         curMb = gwManager.updateMembership();
         require(gwGetter.getCurrentConfigurationNumber() == newConfigurationNumber, "current n correct");
         require(curMb.configurationNumber == newConfigurationNumber, "curMb.configurationNumber correct");
         require(curMb.validators.length == 3, "curMb.validators.length correct");
-        require(curMb.totalWeight == 600, "curMb.totalWeight correct");
     }
 
     function testGatewayDiamond_createBottomUpCheckpoint() public {
