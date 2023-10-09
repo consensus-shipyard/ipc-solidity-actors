@@ -89,7 +89,7 @@ contract SubnetRegistryTest is Test {
             minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGEm
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             activeValidatorsLimit: 100
         });
         registry.newSubnetActor(params);
