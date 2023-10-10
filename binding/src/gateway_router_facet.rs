@@ -509,42 +509,6 @@ pub mod gateway_router_facet {
             ]),
             errors: ::core::convert::From::from([
                 (
-                    ::std::borrow::ToOwned::to_owned("AddressEmptyCode"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("AddressEmptyCode"),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("target"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                            ],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("AddressInsufficientBalance"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "AddressInsufficientBalance",
-                            ),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("account"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                            ],
-                        },
-                    ],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("CheckpointAlreadyExists"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -615,15 +579,6 @@ pub mod gateway_router_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("FailedAddSignatory"),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("FailedInnerCall"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("FailedInnerCall"),
                             inputs: ::std::vec![],
                         },
                     ],
@@ -1036,39 +991,6 @@ pub mod gateway_router_facet {
             Self::new(contract.address(), contract.client())
         }
     }
-    ///Custom Error type `AddressEmptyCode` with signature `AddressEmptyCode(address)` and selector `0x9996b315`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "AddressEmptyCode", abi = "AddressEmptyCode(address)")]
-    pub struct AddressEmptyCode {
-        pub target: ::ethers::core::types::Address,
-    }
-    ///Custom Error type `AddressInsufficientBalance` with signature `AddressInsufficientBalance(address)` and selector `0xcd786059`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(
-        name = "AddressInsufficientBalance",
-        abi = "AddressInsufficientBalance(address)"
-    )]
-    pub struct AddressInsufficientBalance {
-        pub account: ::ethers::core::types::Address,
-    }
     ///Custom Error type `CheckpointAlreadyExists` with signature `CheckpointAlreadyExists()` and selector `0xb8a1eae1`
     #[derive(
         Clone,
@@ -1172,19 +1094,6 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "FailedAddSignatory", abi = "FailedAddSignatory()")]
     pub struct FailedAddSignatory;
-    ///Custom Error type `FailedInnerCall` with signature `FailedInnerCall()` and selector `0x1425ea42`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "FailedInnerCall", abi = "FailedInnerCall()")]
-    pub struct FailedInnerCall;
     ///Custom Error type `FailedRemoveIncompleteCheckpoint` with signature `FailedRemoveIncompleteCheckpoint()` and selector `0x7e5145ed`
     #[derive(
         Clone,
@@ -1502,8 +1411,6 @@ pub mod gateway_router_facet {
     ///Container type for all of the contract's custom errors
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayRouterFacetErrors {
-        AddressEmptyCode(AddressEmptyCode),
-        AddressInsufficientBalance(AddressInsufficientBalance),
         CheckpointAlreadyExists(CheckpointAlreadyExists),
         CheckpointAlreadyProcessed(CheckpointAlreadyProcessed),
         CheckpointInfoAlreadyExists(CheckpointInfoAlreadyExists),
@@ -1511,7 +1418,6 @@ pub mod gateway_router_facet {
         CheckpointNotCreated(CheckpointNotCreated),
         FailedAddIncompleteCheckpoint(FailedAddIncompleteCheckpoint),
         FailedAddSignatory(FailedAddSignatory),
-        FailedInnerCall(FailedInnerCall),
         FailedRemoveIncompleteCheckpoint(FailedRemoveIncompleteCheckpoint),
         InvalidActorAddress(InvalidActorAddress),
         InvalidCheckpointEpoch(InvalidCheckpointEpoch),
@@ -1549,15 +1455,6 @@ pub mod gateway_router_facet {
             {
                 return Ok(Self::RevertString(decoded));
             }
-            if let Ok(decoded) = <AddressEmptyCode as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::AddressEmptyCode(decoded));
-            }
-            if let Ok(decoded) =
-                <AddressInsufficientBalance as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::AddressInsufficientBalance(decoded));
-            }
             if let Ok(decoded) =
                 <CheckpointAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -1592,9 +1489,6 @@ pub mod gateway_router_facet {
                 <FailedAddSignatory as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::FailedAddSignatory(decoded));
-            }
-            if let Ok(decoded) = <FailedInnerCall as ::ethers::core::abi::AbiDecode>::decode(data) {
-                return Ok(Self::FailedInnerCall(decoded));
             }
             if let Ok(decoded) =
                 <FailedRemoveIncompleteCheckpoint as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -1703,10 +1597,6 @@ pub mod gateway_router_facet {
     impl ::ethers::core::abi::AbiEncode for GatewayRouterFacetErrors {
         fn encode(self) -> ::std::vec::Vec<u8> {
             match self {
-                Self::AddressEmptyCode(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::AddressInsufficientBalance(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
                 Self::CheckpointAlreadyExists(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1728,7 +1618,6 @@ pub mod gateway_router_facet {
                 Self::FailedAddSignatory(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::FailedInnerCall(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::FailedRemoveIncompleteCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1791,14 +1680,6 @@ pub mod gateway_router_facet {
             match selector {
                 [0x08, 0xc3, 0x79, 0xa0] => true,
                 _ if selector
-                    == <AddressEmptyCode as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <AddressInsufficientBalance as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
                     == <CheckpointAlreadyExists as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1824,10 +1705,6 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <FailedAddSignatory as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <FailedInnerCall as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1929,8 +1806,6 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetErrors {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::AddressEmptyCode(element) => ::core::fmt::Display::fmt(element, f),
-                Self::AddressInsufficientBalance(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointAlreadyProcessed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointInfoAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
@@ -1942,7 +1817,6 @@ pub mod gateway_router_facet {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::FailedAddSignatory(element) => ::core::fmt::Display::fmt(element, f),
-                Self::FailedInnerCall(element) => ::core::fmt::Display::fmt(element, f),
                 Self::FailedRemoveIncompleteCheckpoint(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1981,16 +1855,6 @@ pub mod gateway_router_facet {
             Self::RevertString(value)
         }
     }
-    impl ::core::convert::From<AddressEmptyCode> for GatewayRouterFacetErrors {
-        fn from(value: AddressEmptyCode) -> Self {
-            Self::AddressEmptyCode(value)
-        }
-    }
-    impl ::core::convert::From<AddressInsufficientBalance> for GatewayRouterFacetErrors {
-        fn from(value: AddressInsufficientBalance) -> Self {
-            Self::AddressInsufficientBalance(value)
-        }
-    }
     impl ::core::convert::From<CheckpointAlreadyExists> for GatewayRouterFacetErrors {
         fn from(value: CheckpointAlreadyExists) -> Self {
             Self::CheckpointAlreadyExists(value)
@@ -2024,11 +1888,6 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<FailedAddSignatory> for GatewayRouterFacetErrors {
         fn from(value: FailedAddSignatory) -> Self {
             Self::FailedAddSignatory(value)
-        }
-    }
-    impl ::core::convert::From<FailedInnerCall> for GatewayRouterFacetErrors {
-        fn from(value: FailedInnerCall) -> Self {
-            Self::FailedInnerCall(value)
         }
     }
     impl ::core::convert::From<FailedRemoveIncompleteCheckpoint> for GatewayRouterFacetErrors {
