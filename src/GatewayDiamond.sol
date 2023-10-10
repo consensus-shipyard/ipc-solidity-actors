@@ -21,7 +21,6 @@ contract GatewayDiamond {
     struct ConstructorParams {
         SubnetID networkName;
         uint64 bottomUpCheckPeriod;
-        uint64 topDownCheckPeriod;
         uint256 minCollateral;
         uint256 msgFee;
         uint8 majorityPercentage;
@@ -32,7 +31,6 @@ contract GatewayDiamond {
         if (params.minCollateral == 0) {
             revert InvalidCollateral();
         }
-        // topDownCheckPeriod can be equal 0, since validators can propose anything they want.
         // The bottomUpCheckPeriod should be non-zero for now.
         if (params.bottomUpCheckPeriod == 0) {
             revert InvalidSubmissionPeriod();

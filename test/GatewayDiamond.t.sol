@@ -159,7 +159,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond.ConstructorParams memory gwConstructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
@@ -282,7 +281,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         require(gwGetter.crossMsgFee() == CROSS_MSG_FEE, "crossMsgFee");
         require(gwGetter.bottomUpCheckPeriod() == DEFAULT_CHECKPOINT_PERIOD, "bottomUpCheckPeriod");
-        require(gwGetter.topDownCheckPeriod() == DEFAULT_CHECKPOINT_PERIOD, "topDownCheckPeriod");
         require(
             gwGetter.getNetworkName().equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})),
             "getNetworkName"
@@ -310,7 +308,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: checkpointPeriod,
-            topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
@@ -327,7 +324,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(networkName.isRoot(), "networkName.isRoot()");
         require(depGetter.minStake() == DEFAULT_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
         require(depGetter.bottomUpCheckPeriod() == checkpointPeriod, "gw.bottomUpCheckPeriod() == checkpointPeriod");
-        require(depGetter.topDownCheckPeriod() == checkpointPeriod, "gw.topDownCheckPeriod() == checkpointPeriod");
         require(
             depGetter.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE,
             "gw.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE"
@@ -349,7 +345,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: checkpointPeriod,
-            topDownCheckPeriod: checkpointPeriod,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: 100,
@@ -393,7 +388,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(networkName.isRoot() == false, "networkName.isRoot()");
         require(depGetter.minStake() == DEFAULT_COLLATERAL_AMOUNT, "gw.minStake() == MIN_COLLATERAL_AMOUNT");
         require(depGetter.bottomUpCheckPeriod() == checkpointPeriod, "gw.bottomUpCheckPeriod() == checkpointPeriod");
-        require(depGetter.topDownCheckPeriod() == checkpointPeriod, "gw.topDownCheckPeriod() == checkpointPeriod");
         require(depGetter.majorityPercentage() == 100, "gw.majorityPercentage() == 100");
     }
 
@@ -836,7 +830,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
@@ -867,7 +860,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
@@ -896,7 +888,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
@@ -928,7 +919,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            topDownCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,

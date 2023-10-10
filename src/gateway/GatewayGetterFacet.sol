@@ -39,10 +39,6 @@ contract GatewayGetterFacet {
         return s.bottomUpCheckPeriod;
     }
 
-    function topDownCheckPeriod() external view returns (uint64) {
-        return s.topDownCheckPeriod;
-    }
-
     function getNetworkName() external view returns (SubnetID memory) {
         return s.networkName;
     }

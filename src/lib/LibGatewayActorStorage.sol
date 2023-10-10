@@ -66,8 +66,6 @@ struct GatewayActorStorage {
     /// @notice AppliedNonces keep track of the next nonce of the message to be applied.
     /// This prevents potential replay attacks.
     uint64 appliedTopDownNonce;
-    /// @notice top-down period in number of epochs for the subnet
-    uint64 topDownCheckPeriod;
     /// @notice Number of active subnets spawned from this one
     uint64 totalSubnets;
     // @notice bottom-up period in number of epochs for the subnet
