@@ -239,7 +239,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100
+            activeValidatorsLimit: 100,
+            powerScale: 12
         });
 
         saManager = new SubnetManagerTestUtil();

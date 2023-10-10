@@ -105,4 +105,8 @@ contract SubnetActorGetterFacet {
         (bool exists, BottomUpCheckpoint memory checkpoint) = bottomUpCheckpointAtEpoch(epoch);
         return (exists, checkpoint.toHash());
     }
+
+    function powerScale() external view returns (uint8) {
+        return s.powerScale;
+    }
 }

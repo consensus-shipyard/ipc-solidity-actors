@@ -45,6 +45,9 @@ struct SubnetActorStorage {
     StakingChangeLog changeSet;
     /// @notice The staking release queue that only allow transfer of collateral after certain locking period.
     StakingReleaseQueue releaseQueue;
+    /// @notice Power scale determining the accuracy of the power scale (in number of decimals from whole FIL)
+    /// (e.g. miliFil = 3; microFIL = 6, attoFil = 12, etc.)
+    uint8 powerScale;
 }
 
 library LibSubnetActorStorage {
