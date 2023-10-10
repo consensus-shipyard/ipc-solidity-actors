@@ -560,6 +560,7 @@ library LibStaking {
         }
 
         s.relayerRewards[relayer] = 0;
+        IGateway(s.ipcGatewayAddr).releaseRewardForRelayer(amount);
 
         payable(relayer).sendValue(amount);
     }

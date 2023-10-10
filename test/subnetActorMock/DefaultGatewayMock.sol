@@ -31,6 +31,13 @@ contract DefaultGatewayMock is IGateway {
         dummy = 1;
     }
 
+    function releaseRewardForRelayer(uint256 amount) external {
+        // silent warning
+        amount;
+        // make method perform txn
+        dummy = 1;
+    }
+
     function kill() external {
         // silent warning
         msg.sender;
