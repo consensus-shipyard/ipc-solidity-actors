@@ -143,9 +143,9 @@ pub mod gateway_manager_facet {
                     },],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("releaseRewards"),
+                    ::std::borrow::ToOwned::to_owned("releaseRewardForRelayer"),
                     ::std::vec![::ethers::core::abi::ethabi::Function {
-                        name: ::std::borrow::ToOwned::to_owned("releaseRewards"),
+                        name: ::std::borrow::ToOwned::to_owned("releaseRewardForRelayer",),
                         inputs: ::std::vec![::ethers::core::abi::ethabi::Param {
                             name: ::std::borrow::ToOwned::to_owned("amount"),
                             kind: ::ethers::core::abi::ethabi::ParamType::Uint(256usize,),
@@ -408,13 +408,13 @@ pub mod gateway_manager_facet {
                 .method_hash([107, 44, 30, 239], (to,))
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `releaseRewards` (0xf8703bb8) function
-        pub fn release_rewards(
+        ///Calls the contract's `releaseRewardForRelayer` (0xd8e25572) function
+        pub fn release_reward_for_relayer(
             &self,
             amount: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([248, 112, 59, 184], amount)
+                .method_hash([216, 226, 85, 114], amount)
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `releaseStake` (0x45f54485) function
@@ -1034,7 +1034,7 @@ pub mod gateway_manager_facet {
     pub struct ReleaseCall {
         pub to: FvmAddress,
     }
-    ///Container type for all input parameters for the `releaseRewards` function with signature `releaseRewards(uint256)` and selector `0xf8703bb8`
+    ///Container type for all input parameters for the `releaseRewardForRelayer` function with signature `releaseRewardForRelayer(uint256)` and selector `0xd8e25572`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1045,8 +1045,11 @@ pub mod gateway_manager_facet {
         Eq,
         Hash,
     )]
-    #[ethcall(name = "releaseRewards", abi = "releaseRewards(uint256)")]
-    pub struct ReleaseRewardsCall {
+    #[ethcall(
+        name = "releaseRewardForRelayer",
+        abi = "releaseRewardForRelayer(uint256)"
+    )]
+    pub struct ReleaseRewardForRelayerCall {
         pub amount: ::ethers::core::types::U256,
     }
     ///Container type for all input parameters for the `releaseStake` function with signature `releaseStake(uint256)` and selector `0x45f54485`
@@ -1086,7 +1089,7 @@ pub mod gateway_manager_facet {
         NewMembership(NewMembershipCall),
         Register(RegisterCall),
         Release(ReleaseCall),
-        ReleaseRewards(ReleaseRewardsCall),
+        ReleaseRewardForRelayer(ReleaseRewardForRelayerCall),
         ReleaseStake(ReleaseStakeCall),
         UpdateMembership(UpdateMembershipCall),
     }
@@ -1115,9 +1118,9 @@ pub mod gateway_manager_facet {
                 return Ok(Self::Release(decoded));
             }
             if let Ok(decoded) =
-                <ReleaseRewardsCall as ::ethers::core::abi::AbiDecode>::decode(data)
+                <ReleaseRewardForRelayerCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
-                return Ok(Self::ReleaseRewards(decoded));
+                return Ok(Self::ReleaseRewardForRelayer(decoded));
             }
             if let Ok(decoded) = <ReleaseStakeCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -1140,7 +1143,9 @@ pub mod gateway_manager_facet {
                 Self::NewMembership(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Register(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Release(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::ReleaseRewards(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::ReleaseRewardForRelayer(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::ReleaseStake(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::UpdateMembership(element) => ::ethers::core::abi::AbiEncode::encode(element),
             }
@@ -1155,7 +1160,7 @@ pub mod gateway_manager_facet {
                 Self::NewMembership(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Register(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Release(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ReleaseRewards(element) => ::core::fmt::Display::fmt(element, f),
+                Self::ReleaseRewardForRelayer(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ReleaseStake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::UpdateMembership(element) => ::core::fmt::Display::fmt(element, f),
             }
@@ -1191,9 +1196,9 @@ pub mod gateway_manager_facet {
             Self::Release(value)
         }
     }
-    impl ::core::convert::From<ReleaseRewardsCall> for GatewayManagerFacetCalls {
-        fn from(value: ReleaseRewardsCall) -> Self {
-            Self::ReleaseRewards(value)
+    impl ::core::convert::From<ReleaseRewardForRelayerCall> for GatewayManagerFacetCalls {
+        fn from(value: ReleaseRewardForRelayerCall) -> Self {
+            Self::ReleaseRewardForRelayer(value)
         }
     }
     impl ::core::convert::From<ReleaseStakeCall> for GatewayManagerFacetCalls {
