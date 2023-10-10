@@ -95,8 +95,9 @@ library LibGateway {
         // memory arrays can't be copied directly from memory into storage,
         // we need to explicitly increase the size of the array in storage.
         for (uint256 i = 0; i < inputLength; ) {
-            s.currentMembership.validators[i] = membership.validators[i];
-            if (inputLength >= storLength) {
+            if (i < storLength) {
+                s.currentMembership.validators[i] = membership.validators[i];
+            } else {
                 s.currentMembership.validators.push(membership.validators[i]);
             }
             unchecked {
