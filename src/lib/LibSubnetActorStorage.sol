@@ -45,10 +45,12 @@ struct SubnetActorStorage {
     StakingChangeLog changeSet;
     /// @notice The staking release queue that only allow transfer of collateral after certain locking period.
     StakingReleaseQueue releaseQueue;
-    /// @notice validator address to accumulated rewards
-    mapping(address => uint256) accumulatedRewards;
+    /// @notice relayers rewards
+    mapping(address => uint256) relayerRewards;
     /// @notice The addresses of the relayers sent the checkpoint at height `h`.
     mapping(uint64 => EnumerableSet.AddressSet) rewardedRelayers;
+    /// @notice the reward which a relayer gets
+    uint256 relayerReward;
 }
 
 library LibSubnetActorStorage {

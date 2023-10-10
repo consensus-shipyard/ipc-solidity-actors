@@ -18,8 +18,8 @@ interface IGateway {
     /// @notice Release stake recovers some collateral of the subnet
     function releaseStake(uint256 amount) external;
 
-    /// @notice Release reward to the subnet actor
-    function releaseReward(uint256 amount) external;
+    /// @notice Release reward for a relayer to the subnet actor.
+    function releaseRewardForRelayer(uint256 amount) external;
 
     /// @notice Kill propagates the kill signal from a subnet actor to unregister it from th
     /// hierarchy.

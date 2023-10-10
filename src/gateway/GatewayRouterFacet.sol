@@ -47,9 +47,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @dev this method is called by the corresponding subnet actor.
     /// Called from a subnet actor if the checkpoint is cryptographically valid.
     function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint, CrossMsg[] calldata messages) external {
-        // TODO: store checkpoint reward in the contract and implement the proper reward mechanism later
-        uint256 checkpointReward = 10 gwei;
-
         // checkpoint is used to implement access control
         if (checkpoint.subnetID.getActor() != msg.sender) {
             revert InvalidCheckpointSource();
@@ -64,43 +61,33 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (subnet.status != Status.Active) {
             revert SubnetNotActive();
         }
-
-        if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight + s.bottomUpCheckPeriod) {
-            uint256 totalValue = 0;
-            uint256 crossMsgLength = messages.length;
-            for (uint256 i = 0; i < crossMsgLength; ) {
-                // CODE-REVIEW
-                // before we used to do `totalValue += commit.fee + checkpoint.fee` here
-                // where and how are we going to use fees?
-                totalValue += messages[i].message.value;
-                unchecked {
-                    ++i;
-                }
-            }
-
-            if (subnet.circSupply < totalValue) {
-                revert NotEnoughSubnetCircSupply();
-            }
-
-            subnet.circSupply -= totalValue;
-
-            // execute cross-messages
-            _applyMessages(checkpoint.subnetID, messages);
-
-            // reward relayers in the subnet for committing the previous checkpoint
-            // slither-disable-next-line unused-return
-            Address.functionCall(
-                msg.sender,
-                abi.encodeCall(ISubnetActor.rewardRelayers, (s.lastBottomUpExecutedCheckpointHeight, checkpointReward))
-            );
-
-            // seal the checkpoint for the height `lastBottomUpExecutedCheckpointHeight`
-            s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
-        } else if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight) {
-            return;
-        } else {
+        if (checkpoint.blockHeight != s.lastBottomUpExecutedCheckpointHeight + s.bottomUpCheckPeriod) {
             revert CheckpointAlreadyProcessed();
         }
+
+        uint256 totalValue = 0;
+        uint256 crossMsgLength = messages.length;
+        for (uint256 i = 0; i < crossMsgLength; ) {
+            // CODE-REVIEW
+            // before we used to do `totalValue += commit.fee + checkpoint.fee` here
+            // where and how are we going to use fees?
+            totalValue += messages[i].message.value;
+            unchecked {
+                ++i;
+            }
+        }
+
+        if (subnet.circSupply < totalValue) {
+            revert NotEnoughSubnetCircSupply();
+        }
+
+        subnet.circSupply -= totalValue;
+
+        // execute cross-messages
+        _applyMessages(checkpoint.subnetID, messages);
+
+        // seal the checkpoint for the height `lastBottomUpExecutedCheckpointHeight`
+        s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
     }
 
     /// @notice commit the ipc parent finality into storage

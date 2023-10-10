@@ -550,20 +550,18 @@ library LibStaking {
         emit CollateralClaimed(validator, amount);
     }
 
-    /// @notice method that allows a validator to withdraw it's accumulated rewards using pull-based transfer
-    function claimReward(address validator) external {
+    /// @notice method that allows a relayer to withdraw it's accumulated rewards using pull-based transfer
+    function claimRewardForRelayer(address relayer) external {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        uint256 amount = s.accumulatedRewards[validator];
+        uint256 amount = s.relayerRewards[relayer];
 
         if (amount == 0) {
             revert NoRewardToWithdraw();
         }
 
-        s.accumulatedRewards[validator] = 0;
+        s.relayerRewards[relayer] = 0;
 
-        IGateway(s.ipcGatewayAddr).releaseReward(amount);
-
-        payable(validator).sendValue(amount);
+        payable(relayer).sendValue(amount);
     }
 
     /// @notice Confirm the changes in bottom up checkpoint submission, only call this in bottom up checkpoint execution.

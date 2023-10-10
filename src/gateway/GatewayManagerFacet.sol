@@ -91,7 +91,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         payable(subnet.id.getActor()).sendValue(amount);
     }
 
-    function releaseRewards(uint256 amount) external nonReentrant {
+    function releaseRewardForRelayer(uint256 amount) external nonReentrant {
         if (amount == 0) {
             revert CannotReleaseZero();
         }

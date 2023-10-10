@@ -24,6 +24,9 @@ interface ISubnetActor {
     /// Validator claims released collateral
     function claim() external;
 
+    /// Relayer claims a reward
+    function claimRewardForRelayer() external;
+
     /// Executes the checkpoint if it is valid.
     /// It triggers the commitment of the checkpoint, the execution of related cross-net messages,
     /// and any other side-effects that need to be triggered by the checkpoint such as relayer reward book keeping.
@@ -33,7 +36,4 @@ interface ISubnetActor {
         address[] calldata signatories,
         bytes[] calldata signatures
     ) external;
-
-    /// Reward relayers submitted the checkpoint at height `h` with the total `reward` distributed equally among them.
-    function rewardRelayers(uint64 h, uint256 reward) external;
 }
