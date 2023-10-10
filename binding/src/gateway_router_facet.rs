@@ -357,35 +357,6 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("rewardRelayers"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("rewardRelayers"),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("h"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
-                                    ),
-                                },
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("reward"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
-                                    ),
-                                },
-                            ],
-                            outputs: ::std::vec![],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
-                        },
-                    ],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("storeValidatorChanges"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -1013,16 +984,6 @@ pub mod gateway_router_facet {
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([174, 0, 194, 152], new_retention_height)
-                .expect("method not found (this should never happen)")
-        }
-        ///Calls the contract's `rewardRelayers` (0x9997b234) function
-        pub fn reward_relayers(
-            &self,
-            h: u64,
-            reward: ::ethers::core::types::U256,
-        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
-            self.0
-                .method_hash([153, 151, 178, 52], (h, reward))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `storeValidatorChanges` (0xe49a547d) function
@@ -2371,22 +2332,6 @@ pub mod gateway_router_facet {
     pub struct PruneBottomUpCheckpointsCall {
         pub new_retention_height: u64,
     }
-    ///Container type for all input parameters for the `rewardRelayers` function with signature `rewardRelayers(uint64,uint256)` and selector `0x9997b234`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[ethcall(name = "rewardRelayers", abi = "rewardRelayers(uint64,uint256)")]
-    pub struct RewardRelayersCall {
-        pub h: u64,
-        pub reward: ::ethers::core::types::U256,
-    }
     ///Container type for all input parameters for the `storeValidatorChanges` function with signature `storeValidatorChanges(((uint8,bytes,address),uint64)[])` and selector `0xe49a547d`
     #[derive(
         Clone,
@@ -2434,7 +2379,6 @@ pub mod gateway_router_facet {
         CommitParentFinality(CommitParentFinalityCall),
         CreateBottomUpCheckpoint(CreateBottomUpCheckpointCall),
         PruneBottomUpCheckpoints(PruneBottomUpCheckpointsCall),
-        RewardRelayers(RewardRelayersCall),
         StoreValidatorChanges(StoreValidatorChangesCall),
         UpdateMembership(UpdateMembershipCall),
     }
@@ -2474,11 +2418,6 @@ pub mod gateway_router_facet {
                 return Ok(Self::PruneBottomUpCheckpoints(decoded));
             }
             if let Ok(decoded) =
-                <RewardRelayersCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::RewardRelayers(decoded));
-            }
-            if let Ok(decoded) =
                 <StoreValidatorChangesCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::StoreValidatorChanges(decoded));
@@ -2512,7 +2451,6 @@ pub mod gateway_router_facet {
                 Self::PruneBottomUpCheckpoints(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::RewardRelayers(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::StoreValidatorChanges(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2529,7 +2467,6 @@ pub mod gateway_router_facet {
                 Self::CommitParentFinality(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CreateBottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PruneBottomUpCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
-                Self::RewardRelayers(element) => ::core::fmt::Display::fmt(element, f),
                 Self::StoreValidatorChanges(element) => ::core::fmt::Display::fmt(element, f),
                 Self::UpdateMembership(element) => ::core::fmt::Display::fmt(element, f),
             }
@@ -2563,11 +2500,6 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<PruneBottomUpCheckpointsCall> for GatewayRouterFacetCalls {
         fn from(value: PruneBottomUpCheckpointsCall) -> Self {
             Self::PruneBottomUpCheckpoints(value)
-        }
-    }
-    impl ::core::convert::From<RewardRelayersCall> for GatewayRouterFacetCalls {
-        fn from(value: RewardRelayersCall) -> Self {
-            Self::RewardRelayers(value)
         }
     }
     impl ::core::convert::From<StoreValidatorChangesCall> for GatewayRouterFacetCalls {

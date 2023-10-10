@@ -84,13 +84,24 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("rewardValidators"),
+                    ::std::borrow::ToOwned::to_owned("rewardRelayers"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("rewardValidators"),
+                            name: ::std::borrow::ToOwned::to_owned("rewardRelayers"),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("amount"),
+                                    name: ::std::borrow::ToOwned::to_owned("relayers"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address[]"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("reward"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::Uint(
                                         256usize,
                                     ),
@@ -675,13 +686,14 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([214, 109, 158, 25], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `rewardValidators` (0xa26fbc64) function
-        pub fn reward_validators(
+        ///Calls the contract's `rewardRelayers` (0xbab528c6) function
+        pub fn reward_relayers(
             &self,
-            amount: ::ethers::core::types::U256,
+            relayers: ::std::vec::Vec<::ethers::core::types::Address>,
+            reward: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([162, 111, 188, 100], amount)
+                .method_hash([186, 181, 40, 198], (relayers, reward))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `stake` (0x3a4b66f1) function
@@ -1584,7 +1596,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethcall(name = "leave", abi = "leave()")]
     pub struct LeaveCall;
-    ///Container type for all input parameters for the `rewardValidators` function with signature `rewardValidators(uint256)` and selector `0xa26fbc64`
+    ///Container type for all input parameters for the `rewardRelayers` function with signature `rewardRelayers(address[],uint256)` and selector `0xbab528c6`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1595,9 +1607,10 @@ pub mod subnet_actor_manager_facet {
         Eq,
         Hash,
     )]
-    #[ethcall(name = "rewardValidators", abi = "rewardValidators(uint256)")]
-    pub struct RewardValidatorsCall {
-        pub amount: ::ethers::core::types::U256,
+    #[ethcall(name = "rewardRelayers", abi = "rewardRelayers(address[],uint256)")]
+    pub struct RewardRelayersCall {
+        pub relayers: ::std::vec::Vec<::ethers::core::types::Address>,
+        pub reward: ::ethers::core::types::U256,
     }
     ///Container type for all input parameters for the `stake` function with signature `stake()` and selector `0x3a4b66f1`
     #[derive(
@@ -1661,7 +1674,7 @@ pub mod subnet_actor_manager_facet {
         Join(JoinCall),
         Kill(KillCall),
         Leave(LeaveCall),
-        RewardValidators(RewardValidatorsCall),
+        RewardRelayers(RewardRelayersCall),
         Stake(StakeCall),
         SubmitCheckpoint(SubmitCheckpointCall),
         ValidateActiveQuorumSignatures(ValidateActiveQuorumSignaturesCall),
@@ -1687,9 +1700,9 @@ pub mod subnet_actor_manager_facet {
                 return Ok(Self::Leave(decoded));
             }
             if let Ok(decoded) =
-                <RewardValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(data)
+                <RewardRelayersCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
-                return Ok(Self::RewardValidators(decoded));
+                return Ok(Self::RewardRelayers(decoded));
             }
             if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Stake(decoded));
@@ -1715,7 +1728,7 @@ pub mod subnet_actor_manager_facet {
                 Self::Join(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Kill(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Leave(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::RewardValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::RewardRelayers(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Stake(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SubmitCheckpoint(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ValidateActiveQuorumSignatures(element) => {
@@ -1732,7 +1745,7 @@ pub mod subnet_actor_manager_facet {
                 Self::Join(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Kill(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Leave(element) => ::core::fmt::Display::fmt(element, f),
-                Self::RewardValidators(element) => ::core::fmt::Display::fmt(element, f),
+                Self::RewardRelayers(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubmitCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ValidateActiveQuorumSignatures(element) => {
@@ -1766,9 +1779,9 @@ pub mod subnet_actor_manager_facet {
             Self::Leave(value)
         }
     }
-    impl ::core::convert::From<RewardValidatorsCall> for SubnetActorManagerFacetCalls {
-        fn from(value: RewardValidatorsCall) -> Self {
-            Self::RewardValidators(value)
+    impl ::core::convert::From<RewardRelayersCall> for SubnetActorManagerFacetCalls {
+        fn from(value: RewardRelayersCall) -> Self {
+            Self::RewardRelayers(value)
         }
     }
     impl ::core::convert::From<StakeCall> for SubnetActorManagerFacetCalls {
