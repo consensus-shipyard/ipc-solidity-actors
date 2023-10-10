@@ -46,12 +46,11 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @notice submit a verified checkpoint in the gateway to trigger side-effects and apply cross-messages.
     /// Called from a subnet actor if the checkpoint is cryptographically valid.
     function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint, CrossMsg[] calldata messages) external {
-        // basic checks
-        // TODO: store checkpoint reward in the contract
+        // TODO: store checkpoint reward in the contract and implement the proper reward mechanism later
         uint256 checkpointReward = 10 gwei;
 
         // checkpoint is used to implement access control
-        if (checkpoint.subnetID.getActor().normalize() != msg.sender) {
+        if (checkpoint.subnetID.getActor() != msg.sender) {
             revert InvalidCheckpointSource();
         }
         (bool subnetExists, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
@@ -114,7 +113,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
     }
 
-    /// @notice reward the relayers for processing checkpoint at height `h`.
+    /// @notice reward the relayers for processing checkpoint at height `height`.
     /// @dev the relayer is added to the list of all relayers for this checkpoint and rewarded at the time the next checkpoint arrives,
     /// so that we can distribute a fixed reward pot among them, rather than reward them at the time of submission.
     function rewardRelayers(address actor, uint64 height, uint256 reward) internal {
@@ -126,7 +125,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             return;
         }
         // slither-disable-next-line unused-return
-        Address.functionCall(actor.normalize(), abi.encodeCall(ISubnetActor.rewardRelayers, (relayers, reward)));
+        Address.functionCall(actor, abi.encodeCall(ISubnetActor.rewardRelayers, (relayers, reward)));
     }
 
     /// @notice commit the ipc parent finality into storage

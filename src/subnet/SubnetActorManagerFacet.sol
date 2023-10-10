@@ -151,11 +151,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         LibStaking.claimCollateral(msg.sender);
     }
 
-    /// @notice Validator claims their released reward
-    function claimReward() external {
-        LibStaking.claimReward(msg.sender);
-    }
-
     /// @notice method that distributes the rewards for the subnet to relayers.
     function rewardRelayers(address[] memory relayers, uint256 reward) external onlyGateway {
         uint256 relayersLength = relayers.length;
