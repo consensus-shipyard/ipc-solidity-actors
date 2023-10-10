@@ -18,7 +18,6 @@ library LibMinPQ {
         return self.inner.size;
     }
 
-    // TODO: use the similar function defined in another parallel PR
     function getAddress(MinPQ storage self, uint16 i) internal view returns (address) {
         return self.inner.posToAddress[i];
     }
