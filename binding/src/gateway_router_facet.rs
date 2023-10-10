@@ -729,7 +729,6 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
-<<<<<<< HEAD
                     ::std::borrow::ToOwned::to_owned("SubnetNotFound"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -739,32 +738,6 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("ValidatorWeightIsZero"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "ValidatorWeightIsZero",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned(
-                        "ValidatorsAndWeightsLengthMismatch",
-                    ),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "ValidatorsAndWeightsLengthMismatch",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-=======
->>>>>>> dev
                     ::std::borrow::ToOwned::to_owned("ZeroMembershipWeight"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -1274,7 +1247,6 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "SubnetNotActive", abi = "SubnetNotActive()")]
     pub struct SubnetNotActive;
-<<<<<<< HEAD
     ///Custom Error type `SubnetNotFound` with signature `SubnetNotFound()` and selector `0x00476ad8`
     #[derive(
         Clone,
@@ -1288,37 +1260,6 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "SubnetNotFound", abi = "SubnetNotFound()")]
     pub struct SubnetNotFound;
-    ///Custom Error type `ValidatorWeightIsZero` with signature `ValidatorWeightIsZero()` and selector `0x389b457d`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "ValidatorWeightIsZero", abi = "ValidatorWeightIsZero()")]
-    pub struct ValidatorWeightIsZero;
-    ///Custom Error type `ValidatorsAndWeightsLengthMismatch` with signature `ValidatorsAndWeightsLengthMismatch()` and selector `0x465f0a7d`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(
-        name = "ValidatorsAndWeightsLengthMismatch",
-        abi = "ValidatorsAndWeightsLengthMismatch()"
-    )]
-    pub struct ValidatorsAndWeightsLengthMismatch;
-=======
->>>>>>> dev
     ///Custom Error type `ZeroMembershipWeight` with signature `ZeroMembershipWeight()` and selector `0x4e8ac6e5`
     #[derive(
         Clone,
@@ -1360,12 +1301,7 @@ pub mod gateway_router_facet {
         ParentFinalityAlreadyCommitted(ParentFinalityAlreadyCommitted),
         SignatureReplay(SignatureReplay),
         SubnetNotActive(SubnetNotActive),
-<<<<<<< HEAD
         SubnetNotFound(SubnetNotFound),
-        ValidatorWeightIsZero(ValidatorWeightIsZero),
-        ValidatorsAndWeightsLengthMismatch(ValidatorsAndWeightsLengthMismatch),
-=======
->>>>>>> dev
         ZeroMembershipWeight(ZeroMembershipWeight),
         /// The standard solidity revert string, with selector
         /// Error(string) -- 0x08c379a0
@@ -1569,16 +1505,7 @@ pub mod gateway_router_facet {
                 }
                 Self::SignatureReplay(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SubnetNotActive(element) => ::ethers::core::abi::AbiEncode::encode(element),
-<<<<<<< HEAD
                 Self::SubnetNotFound(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::ValidatorWeightIsZero(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::ValidatorsAndWeightsLengthMismatch(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-=======
->>>>>>> dev
                 Self::ZeroMembershipWeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1691,21 +1618,10 @@ pub mod gateway_router_facet {
                     true
                 }
                 _ if selector
-<<<<<<< HEAD
                     == <SubnetNotFound as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
-                    == <ValidatorWeightIsZero as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <ValidatorsAndWeightsLengthMismatch as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-=======
->>>>>>> dev
                     == <ZeroMembershipWeight as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1749,14 +1665,7 @@ pub mod gateway_router_facet {
                 }
                 Self::SignatureReplay(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubnetNotActive(element) => ::core::fmt::Display::fmt(element, f),
-<<<<<<< HEAD
                 Self::SubnetNotFound(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ValidatorWeightIsZero(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ValidatorsAndWeightsLengthMismatch(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-=======
->>>>>>> dev
                 Self::ZeroMembershipWeight(element) => ::core::fmt::Display::fmt(element, f),
                 Self::RevertString(s) => ::core::fmt::Display::fmt(s, f),
             }
@@ -1892,24 +1801,11 @@ pub mod gateway_router_facet {
             Self::SubnetNotActive(value)
         }
     }
-<<<<<<< HEAD
     impl ::core::convert::From<SubnetNotFound> for GatewayRouterFacetErrors {
         fn from(value: SubnetNotFound) -> Self {
             Self::SubnetNotFound(value)
         }
     }
-    impl ::core::convert::From<ValidatorWeightIsZero> for GatewayRouterFacetErrors {
-        fn from(value: ValidatorWeightIsZero) -> Self {
-            Self::ValidatorWeightIsZero(value)
-        }
-    }
-    impl ::core::convert::From<ValidatorsAndWeightsLengthMismatch> for GatewayRouterFacetErrors {
-        fn from(value: ValidatorsAndWeightsLengthMismatch) -> Self {
-            Self::ValidatorsAndWeightsLengthMismatch(value)
-        }
-    }
-=======
->>>>>>> dev
     impl ::core::convert::From<ZeroMembershipWeight> for GatewayRouterFacetErrors {
         fn from(value: ZeroMembershipWeight) -> Self {
             Self::ZeroMembershipWeight(value)

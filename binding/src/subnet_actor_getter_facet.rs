@@ -1135,25 +1135,6 @@ pub mod subnet_actor_getter_facet {
         pub next_configuration_number: u64,
         pub cross_messages_hash: [u8; 32],
     }
-<<<<<<< HEAD
-    ///`GenesisValidator(address,uint256,bytes)`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    pub struct GenesisValidator {
-        pub addr: ::ethers::core::types::Address,
-        pub collateral: ::ethers::core::types::U256,
-        pub metadata: ::ethers::core::types::Bytes,
-    }
-=======
->>>>>>> dev
     ///`SubnetID(uint64,address[])`
     #[derive(
         Clone,
