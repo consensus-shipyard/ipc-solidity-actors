@@ -72,18 +72,21 @@ library LibGateway {
 
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
 
-        // if (membership.configurationNumber == s.lastMembership.configurationNumber) {
-        //     return;
-        // }
-        // // We reject messages with configuration numbers from the past and revert the call.
-        // if (membership.configurationNumber < s.lastMembership.configurationNumber) {
-        //     revert OldConfigurationNumber();
-        // }
+        // perform checks after the genesis membership
+        if (s.currentMembership.configurationNumber != 0) {
+            if (membership.configurationNumber == s.lastMembership.configurationNumber) {
+                return;
+            }
+            // We reject messages with configuration numbers from the past and revert the call.
+            if (membership.configurationNumber < s.lastMembership.configurationNumber) {
+                revert OldConfigurationNumber();
+            }
 
-        // // Check if the memmbersip is equal and return if it is the case
-        // if (membershipEqual(membership, s.currentMembership)){
-        //     return;
-        // }
+            // Check if the memmbersip is equal and return if it is the case
+            if (membershipEqual(membership, s.currentMembership)){
+                return;
+            }
+        }
 
         s.lastMembership = s.currentMembership;
 
