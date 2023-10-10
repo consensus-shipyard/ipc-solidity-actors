@@ -47,6 +47,8 @@ struct SubnetActorStorage {
     StakingReleaseQueue releaseQueue;
     /// @notice validator address to accumulated rewards
     mapping(address => uint256) accumulatedRewards;
+    /// @notice The addresses of the relayers sent the checkpoint at height `h`.
+    mapping(uint64 => EnumerableSet.AddressSet) rewardedRelayers;
 }
 
 library LibSubnetActorStorage {

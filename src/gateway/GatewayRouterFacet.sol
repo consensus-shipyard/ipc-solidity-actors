@@ -44,6 +44,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
 
     /// @notice submit a verified checkpoint in the gateway to trigger side-effects and apply cross-messages.
+    /// @dev this method is called by the corresponding subnet actor.
     /// Called from a subnet actor if the checkpoint is cryptographically valid.
     function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint, CrossMsg[] calldata messages) external {
         // TODO: store checkpoint reward in the contract and implement the proper reward mechanism later
@@ -65,9 +66,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight + s.bottomUpCheckPeriod) {
-            // If the submission for the next expected height then this is a new checkpoint which must be executed,
-            // the relayer must be stored, last executed subnet updated.
-
             uint256 totalValue = 0;
             uint256 crossMsgLength = messages.length;
             for (uint256 i = 0; i < crossMsgLength; ) {
@@ -86,46 +84,23 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
             subnet.circSupply -= totalValue;
 
-            // slither-disable-next-line unused-return
-            s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
-
             // execute cross-messages
             _applyMessages(checkpoint.subnetID, messages);
 
-            // reward relayers for committing the previous checkpoint
-            rewardRelayers({
-                actor: msg.sender,
-                height: s.lastBottomUpExecutedCheckpointHeight,
-                reward: checkpointReward
-            });
+            // reward relayers in the subnet for committing the previous checkpoint
+            // slither-disable-next-line unused-return
+            Address.functionCall(
+                msg.sender,
+                abi.encodeCall(ISubnetActor.rewardRelayers, (s.lastBottomUpExecutedCheckpointHeight, checkpointReward))
+            );
 
             // seal the checkpoint for the height `lastBottomUpExecutedCheckpointHeight`
             s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
         } else if (checkpoint.blockHeight == s.lastBottomUpExecutedCheckpointHeight) {
-            // If the submission for the last executed height, then this is a repeated submission from a relayer.
-            // We should validate the checkpoint, and not the relayer, but not execute again
-
-            // The relayer is added to the list of all relayers for this checkpoint to be rewarded later.
-            // slither-disable-next-line unused-return
-            s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+            return;
         } else {
             revert CheckpointAlreadyProcessed();
         }
-    }
-
-    /// @notice reward the relayers for processing checkpoint at height `height`.
-    /// @dev the relayer is added to the list of all relayers for this checkpoint and rewarded at the time the next checkpoint arrives,
-    /// so that we can distribute a fixed reward pot among them, rather than reward them at the time of submission.
-    function rewardRelayers(address actor, uint64 height, uint256 reward) internal {
-        if (reward == 0) {
-            return;
-        }
-        address[] memory relayers = s.rewardedRelayers[height].values();
-        if (relayers.length == 0) {
-            return;
-        }
-        // slither-disable-next-line unused-return
-        Address.functionCall(actor, abi.encodeCall(ISubnetActor.rewardRelayers, (relayers, reward)));
     }
 
     /// @notice commit the ipc parent finality into storage

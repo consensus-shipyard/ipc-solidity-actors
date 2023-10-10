@@ -76,8 +76,6 @@ struct GatewayActorStorage {
     ParentValidatorsTracker validatorsTracker;
     /// @notice The height of the last received bottom-up checkpoint.
     uint64 lastBottomUpExecutedCheckpointHeight;
-    /// @notice The addresses of the relayers sent the checkpoint at height `h`.
-    mapping(uint64 => EnumerableSet.AddressSet) rewardedRelayers;
 }
 
 library LibGatewayActorStorage {

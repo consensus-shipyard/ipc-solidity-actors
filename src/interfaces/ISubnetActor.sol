@@ -34,6 +34,6 @@ interface ISubnetActor {
         bytes[] calldata signatures
     ) external;
 
-    /// Reward relayers with the total reward distributed equally among them.
-    function rewardRelayers(address[] memory relayers, uint256 reward) external;
+    /// Reward relayers submitted the checkpoint at height `h` with the total `reward` distributed equally among them.
+    function rewardRelayers(uint64 h, uint256 reward) external;
 }

@@ -43,11 +43,12 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         address[] calldata signatories,
         bytes[] calldata signatures
     ) external {
-        // validations
+        // 1. Validate the checkpoint.
+
         if (!LibStaking.isActiveValidator(msg.sender)) {
             revert NotValidator();
         }
-        // the accepted checkpoint height is equal to the last bottom-up checkpoint height or
+        // the checkpoint height must be equal to the last bottom-up checkpoint height or
         // the next one
         if (
             checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod ||
@@ -59,14 +60,33 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert InvalidCheckpointMessagesHash();
         }
         bytes32 checkpointHash = keccak256(abi.encode(checkpoint));
+        // validate signatures and quorum threshold, revert if validation fails
         validateActiveQuorumSignatures({signatories: signatories, hash: checkpointHash, signatures: signatures});
 
-        // effects
-        s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
-        s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
+        // 2. Process the checkpoint.
 
-        // interactions
-        IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
+        if (checkpoint.blockHeight == s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod) {
+            // If the checkpoint height is the next expected height then this is a new checkpoint which must be executed
+            // in the Gateway Actor, the checkpoint and the relayer must be stored, last bottom-up checkpoint updated.
+
+            s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
+
+            // slither-disable-next-line unused-return
+            s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+
+            s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
+
+            IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
+        } else if (checkpoint.blockHeight == s.lastBottomUpCheckpointHeight) {
+            // If the checkpoint height is equal to the last checkpoint height, then this is a repeated submission.
+            // We should store the relayer, but not to execute checkpoint again.
+
+            // The relayer is added to the list of all relayers for this checkpoint to be rewarded later.
+            // slither-disable-next-line unused-return
+            s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+        } else {
+            return;
+        }
     }
 
     /// @notice method that allows a validator to join the subnet
@@ -151,11 +171,15 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         LibStaking.claimCollateral(msg.sender);
     }
 
-    /// @notice method that distributes the rewards for the subnet to relayers.
-    function rewardRelayers(address[] memory relayers, uint256 reward) external onlyGateway {
+    /// @notice reward the relayers for processing checkpoint at height `height`.
+    function rewardRelayers(uint64 height, uint256 reward) external onlyGateway {
+        if (reward == 0) {
+            return;
+        }
+        address[] memory relayers = s.rewardedRelayers[height].values();
         uint256 relayersLength = relayers.length;
         if (relayersLength == 0) {
-            revert NoValidatorsInSubnet();
+            return;
         }
         if (reward < relayersLength) {
             revert NotEnoughBalanceForRewards();
