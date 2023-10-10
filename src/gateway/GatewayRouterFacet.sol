@@ -6,7 +6,7 @@ import {EMPTY_HASH, METHOD_SEND} from "../constants/Constants.sol";
 import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {SubnetID, Subnet} from "../structs/Subnet.sol";
+import {SubnetID, Subnet, Validator, ValidatorInfo, ValidatorSet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Subnet.sol";
 import {InconsistentPrevCheckpoint, NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
@@ -25,7 +25,7 @@ import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
 import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {StakingChangeRequest, ParentValidatorsTracker} from "../structs/Subnet.sol";
-import {LibValidatorTracking} from "../lib/LibStaking.sol";
+import {LibValidatorTracking, LibValidatorSet} from "../lib/LibStaking.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
@@ -37,6 +37,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using EnumerableSet for EnumerableSet.UintSet;
     using EnumerableSet for EnumerableSet.AddressSet;
     using LibValidatorTracking for ParentValidatorsTracker;
+    using LibValidatorSet for ValidatorSet;
 
     event QuorumReached(uint64 height, bytes32 checkpoint, uint256 quorumWeight);
     event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
@@ -99,6 +100,35 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param changeRequests - the validator changes
     function storeValidatorChanges(StakingChangeRequest[] calldata changeRequests) external systemActorOnly {
         s.validatorsTracker.batchStoreChange(changeRequests);
+    }
+
+    /// @notice Apply all changes committed through the committment of parent finality
+    function applyFinalityChanges() external systemActorOnly returns (uint64) {
+        // get the latest configuration number for the change set
+        uint64 configurationNumber = s.validatorsTracker.changes.nextConfigurationNumber - 1;
+        // confirm the change
+        s.validatorsTracker.confirmChange(configurationNumber);
+
+        // get the active validators
+        address[] memory validators = s.validatorsTracker.validators.listActiveValidators();
+        uint256 vLength = validators.length;
+        Validator[] memory vs = new Validator[](vLength);
+        for (uint256 i = 0; i < vLength; ) {
+            address addr = validators[i];
+            ValidatorInfo storage info = s.validatorsTracker.validators.validators[addr];
+            vs[i] = Validator({
+                weight: info.confirmedCollateral,
+                addr: addr,
+                metadata: info.metadata
+            });
+            unchecked {
+                ++i;
+            }
+        }
+
+        // update membership with the applied changes
+        LibGateway.updateMembership(Membership({configurationNumber: configurationNumber, validators: vs}));
+        return configurationNumber;
     }
 
     /// @notice apply cross messages

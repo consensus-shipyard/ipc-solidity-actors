@@ -3,6 +3,7 @@ pragma solidity 0.8.19;
 
 import {IGateway} from "../interfaces/IGateway.sol";
 import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage.sol";
+import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
 import {StakingReleaseQueue, StakingChangeLog, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker, Validator} from "../structs/Subnet.sol";
@@ -209,6 +210,18 @@ library LibValidatorSet {
         address validator
     ) internal view returns (uint256 collateral) {
         collateral = validators.validators[validator].confirmedCollateral;
+    }
+
+    function listActiveValidators(ValidatorSet storage validators) internal view returns (address[] memory addresses) {
+        uint16 size = validators.activeValidators.getSize();
+        addresses = new address[](size);
+        for (uint16 i = 1; i <= size; ) {
+            addresses[i - 1] = validators.activeValidators.getAddress(i);
+            unchecked {
+                i++;
+            }
+        }
+        return addresses;
     }
 
     /// @notice Get the confirmed collaterals of the validators.
@@ -608,5 +621,40 @@ library LibValidatorTracking {
                 i++;
             }
         }
+    }
+
+    /// @notice Confirm the changes in for a finality commitment
+    function confirmChange(
+        ParentValidatorsTracker storage self,
+        uint64 configurationNumber
+    ) internal {
+        if (configurationNumber >= self.changes.nextConfigurationNumber) {
+            revert CannotConfirmFutureChanges();
+        }
+
+        uint64 start = self.changes.startConfigurationNumber;
+        for (uint64 i = start; i <= configurationNumber; ) {
+            StakingChange storage change = self.changes.getChange(i);
+            address validator = change.validator;
+
+            if (change.op == StakingOperation.SetMetadata) {
+                self.validators.validators[validator].metadata = change.payload;
+            } else {
+                uint256 amount = abi.decode(change.payload, (uint256));
+
+                if (change.op == StakingOperation.Withdraw) {
+                    self.validators.confirmWithdraw(validator, amount);
+                } else {
+                    self.validators.confirmDeposit(validator, amount);
+                }
+            }
+
+            self.changes.purgeChange(i);
+            unchecked {
+                i++;
+            }
+        }
+
+        self.changes.startConfigurationNumber = configurationNumber + 1;
     }
 }
