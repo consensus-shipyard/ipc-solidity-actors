@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
 import {FvmAddress} from "./structs/FvmAddress.sol";
-import {Validator} from "./structs/Subnet.sol";
+import {Validator, Membership} from "./structs/Subnet.sol";
 import {InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibGateway} from "./lib/LibGateway.sol";
@@ -48,26 +48,13 @@ contract GatewayDiamond {
         s.networkName = params.networkName;
         s.minStake = params.minCollateral;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
-        s.topDownCheckPeriod = params.topDownCheckPeriod;
         s.crossMsgFee = params.msgFee;
         s.majorityPercentage = params.majorityPercentage;
         s.bottomUpCheckpointRetentionHeight = 1;
 
         // set initial validators and update membership
-        uint256 length = params.genesisValidators.length;
-        FvmAddress[] memory validators = new FvmAddress[](length);
-        uint256[] memory weights = new uint256[](length);
-        for (uint256 i = 0; i < length; ) {
-            validators[i] = params.genesisValidators[i].addr;
-            weights[i] = params.genesisValidators[i].weight;
-            unchecked {
-                ++i;
-            }
-        }
-
-        LibGateway.newMembership({n: 0, validators: validators, weights: weights});
-        // slither-disable-next-line unused-return
-        LibGateway.updateMembership();
+        Membership memory initial = Membership({configurationNumber: 0, validators: params.genesisValidators});
+        LibGateway.updateMembership(initial);
     }
 
     function _fallback() internal {

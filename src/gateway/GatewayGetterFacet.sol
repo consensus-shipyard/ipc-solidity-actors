@@ -143,11 +143,6 @@ contract GatewayGetterFacet {
         return s.lastMembership.configurationNumber;
     }
 
-    /// @notice get the last total weight for the membership received from the parent
-    function getLastTotalWeight() public view returns (uint256) {
-        return s.lastMembership.totalWeight;
-    }
-
     /// @notice get the current membership
     function getCurrentMembership() external view returns (Membership memory) {
         return s.currentMembership;
@@ -156,11 +151,6 @@ contract GatewayGetterFacet {
     /// @notice get the current configuration number
     function getCurrentConfigurationNumber() external view returns (uint64) {
         return s.currentMembership.configurationNumber;
-    }
-
-    /// @notice get the current membership validators total weight
-    function getCurrentTotalWeight() public view returns (uint256) {
-        return s.currentMembership.totalWeight;
     }
 
     /// @notice get the checkpoint information corresponding to the block height

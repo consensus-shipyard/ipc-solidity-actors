@@ -101,16 +101,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         s.validatorsTracker.batchStoreChange(changeRequests);
     }
 
-    /// @notice THIS METHOD IS DEPRECATED. It will be replaced with validator changes. Keep now to ensure tests runs.
-    /// @notice Update the membership.
-    function updateMembership(
-        uint64 n,
-        FvmAddress[] calldata validators,
-        uint256[] calldata weights
-    ) external systemActorOnly {
-        LibGateway.newMembership({n: n, validators: validators, weights: weights});
-    }
-
     /// @notice apply cross messages
     function applyCrossMessages(CrossMsg[] calldata crossMsgs) external systemActorOnly {
         _applyMessages(SubnetID(0, new address[](0)), crossMsgs);
@@ -133,7 +123,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
         // If the cross-message destination is the current network.
         if (crossMsg.message.to.subnetId.equals(s.networkName)) {
-
             if (applyType == IPCMsgType.BottomUp) {
                 if (!forwarder.isEmpty()) {
                     (bool registered, Subnet storage subnet) = LibGateway.getSubnet(forwarder);
