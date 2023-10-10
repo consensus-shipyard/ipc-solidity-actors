@@ -9,14 +9,11 @@ import {InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage} f
 import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibGateway} from "./lib/LibGateway.sol";
 import {SubnetID} from "./structs/Subnet.sol";
-import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
 contract GatewayDiamond {
     GatewayActorStorage internal s;
-
-    using SubnetIDHelper for SubnetID;
 
     struct ConstructorParams {
         SubnetID networkName;
