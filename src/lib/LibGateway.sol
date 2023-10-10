@@ -83,7 +83,7 @@ library LibGateway {
             }
 
             // Check if the memmbersip is equal and return if it is the case
-            if (membershipEqual(membership, s.currentMembership)){
+            if (membershipEqual(membership, s.currentMembership)) {
                 return;
             }
         }
