@@ -964,7 +964,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                     value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
-                    params: new bytes(0)
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
                 }),
                 wrapped: false
             })
@@ -989,7 +990,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                     value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
-                    params: new bytes(0)
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -1014,7 +1016,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                     value: 5,
                     nonce: 0,
                     method: METHOD_SEND,
-                    params: new bytes(0)
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -1042,7 +1045,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                     value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
-                    params: new bytes(0)
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -1067,7 +1071,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                     value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
-                    params: new bytes(0)
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -1092,7 +1097,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                     value: 0,
                     nonce: 0,
                     method: METHOD_SEND,
-                    params: new bytes(0)
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -1159,7 +1165,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                 value: CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
-                params: new bytes(0)
+                params: new bytes(0),
+                fee: CROSS_MSG_FEE
             }),
             wrapped: false
         });
@@ -1289,7 +1296,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                     value: 0,
                     nonce: i,
                     method: this.callback.selector,
-                    params: EMPTY_BYTES
+                    params: EMPTY_BYTES,
+                    fee: CROSS_MSG_FEE
                 }),
                 wrapped: false
             });

@@ -132,7 +132,8 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
             subnet: subnetId,
             signer: msg.sender,
             to: to,
-            value: msg.value - s.crossMsgFee
+            value: msg.value - s.crossMsgFee,
+            fee: s.crossMsgFee
         });
 
         // commit top-down message.
@@ -145,7 +146,8 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
             subnet: s.networkName,
             signer: msg.sender,
             to: to,
-            value: msg.value - s.crossMsgFee
+            value: msg.value - s.crossMsgFee,
+            fee: s.crossMsgFee
         });
 
         LibGateway.commitBottomUpMsg(crossMsg);

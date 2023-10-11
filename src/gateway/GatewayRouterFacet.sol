@@ -66,28 +66,37 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         uint256 totalValue = 0;
+        uint256 totalFee = 0;
         uint256 crossMsgLength = messages.length;
         for (uint256 i = 0; i < crossMsgLength; ) {
-            // CODE-REVIEW
-            // before we used to do `totalValue += commit.fee + checkpoint.fee` here
-            // where and how are we going to use fees?
             totalValue += messages[i].message.value;
+            totalFee += messages[i].message.fee;
             unchecked {
                 ++i;
             }
         }
 
-        if (subnet.circSupply < totalValue) {
+        uint256 totalCost = totalFee + totalValue;
+
+        if (subnet.circSupply < totalCost) {
             revert NotEnoughSubnetCircSupply();
         }
 
-        subnet.circSupply -= totalValue;
+        subnet.circSupply -= totalCost;
+        // seal the checkpoint for the height `lastBottomUpExecutedCheckpointHeight`
+        uint64 previousCheckpointHeight = s.lastBottomUpExecutedCheckpointHeight;
+        s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
 
         // execute cross-messages
         _applyMessages(checkpoint.subnetID, messages);
 
-        // seal the checkpoint for the height `lastBottomUpExecutedCheckpointHeight`
-        s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;
+        // reward relayers in the subnet for committing the previous checkpoint
+        // slither-disable-next-line unused-return
+        Address.functionCallWithValue({
+            target: msg.sender,
+            data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (previousCheckpointHeight, totalFee)),
+            value: totalFee
+        });
     }
 
     /// @notice commit the ipc parent finality into storage
