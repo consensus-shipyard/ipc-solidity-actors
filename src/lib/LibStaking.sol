@@ -624,15 +624,13 @@ library LibValidatorTracking {
     }
 
     /// @notice Confirm the changes in for a finality commitment
-    function confirmChange(
-        ParentValidatorsTracker storage self,
-        uint64 configurationNumber
-    ) internal {
+    function confirmChange(ParentValidatorsTracker storage self, uint64 configurationNumber) internal {
         if (configurationNumber >= self.changes.nextConfigurationNumber) {
             revert CannotConfirmFutureChanges();
         }
 
         uint64 start = self.changes.startConfigurationNumber;
+
         for (uint64 i = start; i <= configurationNumber; ) {
             StakingChange storage change = self.changes.getChange(i);
             address validator = change.validator;
@@ -654,7 +652,6 @@ library LibValidatorTracking {
                 i++;
             }
         }
-
         self.changes.startConfigurationNumber = configurationNumber + 1;
     }
 }

@@ -106,6 +106,11 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     function applyFinalityChanges() external systemActorOnly returns (uint64) {
         // get the latest configuration number for the change set
         uint64 configurationNumber = s.validatorsTracker.changes.nextConfigurationNumber - 1;
+        // return immedidately if there are no changes to confirm
+        if (s.validatorsTracker.changes.nextConfigurationNumber == s.validatorsTracker.changes.startConfigurationNumber) {
+            // 0 flags that there are no changes
+            return 0;
+        }
         // confirm the change
         s.validatorsTracker.confirmChange(configurationNumber);
 
@@ -116,11 +121,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         for (uint256 i = 0; i < vLength; ) {
             address addr = validators[i];
             ValidatorInfo storage info = s.validatorsTracker.validators.validators[addr];
-            vs[i] = Validator({
-                weight: info.confirmedCollateral,
-                addr: addr,
-                metadata: info.metadata
-            });
+            vs[i] = Validator({weight: info.confirmedCollateral, addr: addr, metadata: info.metadata});
             unchecked {
                 ++i;
             }
