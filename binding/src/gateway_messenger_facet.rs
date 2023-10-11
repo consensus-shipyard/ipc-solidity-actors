@@ -71,6 +71,7 @@ pub mod gateway_messenger_facet {
                                     ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                     ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
                                     ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                 ],),
                                 ::ethers::core::abi::ethabi::ParamType::Bool,
                             ],),
@@ -196,13 +197,13 @@ pub mod gateway_messenger_facet {
                 .method_hash([37, 191, 13, 182], msg_cid)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `sendCrossMessage` (0x2f757dd1) function
+        ///Calls the contract's `sendCrossMessage` (0xc13175ef) function
         pub fn send_cross_message(
             &self,
             cross_msg: CrossMsg,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([47, 117, 125, 209], (cross_msg,))
+                .method_hash([193, 49, 117, 239], (cross_msg,))
                 .expect("method not found (this should never happen)")
         }
     }
@@ -526,7 +527,7 @@ pub mod gateway_messenger_facet {
     pub struct PropagateCall {
         pub msg_cid: [u8; 32],
     }
-    ///Container type for all input parameters for the `sendCrossMessage` function with signature `sendCrossMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool))` and selector `0x2f757dd1`
+    ///Container type for all input parameters for the `sendCrossMessage` function with signature `sendCrossMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))` and selector `0xc13175ef`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -539,7 +540,7 @@ pub mod gateway_messenger_facet {
     )]
     #[ethcall(
         name = "sendCrossMessage",
-        abi = "sendCrossMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool))"
+        abi = "sendCrossMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
     )]
     pub struct SendCrossMessageCall {
         pub cross_msg: CrossMsg,
@@ -592,7 +593,7 @@ pub mod gateway_messenger_facet {
             Self::SendCrossMessage(value)
         }
     }
-    ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)`
+    ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -637,7 +638,7 @@ pub mod gateway_messenger_facet {
         pub subnet_id: SubnetID,
         pub raw_address: FvmAddress,
     }
-    ///`StorableMsg(((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes)`
+    ///`StorableMsg(((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256)`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -655,6 +656,7 @@ pub mod gateway_messenger_facet {
         pub nonce: u64,
         pub method: [u8; 4],
         pub params: ::ethers::core::types::Bytes,
+        pub fee: ::ethers::core::types::U256,
     }
     ///`SubnetID(uint64,address[])`
     #[derive(
