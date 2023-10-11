@@ -107,9 +107,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     function applyFinalityChanges() external systemActorOnly returns (uint64) {
         // get the latest configuration number for the change set
         uint64 configurationNumber = s.validatorsTracker.changes.nextConfigurationNumber - 1;
-        // return immedidately if there are no changes to confirm
+        // return immedidately if there are no changes to confirm by looking at next configNumber
         if (
-            s.validatorsTracker.changes.nextConfigurationNumber == s.validatorsTracker.changes.startConfigurationNumber
+            // nextConfiguration == startConfiguration (i.e. no changes)
+            (configurationNumber + 1) == s.validatorsTracker.changes.startConfigurationNumber
         ) {
             // 0 flags that there are no changes
             return 0;

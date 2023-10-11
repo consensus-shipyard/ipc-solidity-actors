@@ -25,7 +25,7 @@ contract SubnetRegistryTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     bytes private constant GENESIS = EMPTY_BYTES;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
-    uint8 private constant DEFAULT_POWER_SCALE = 12;
+    uint8 private constant DEFAULT_POWER_SCALE = 18;
     uint64 private constant ROOTNET_CHAINID = 123;
 
     SubnetRegistry registry;

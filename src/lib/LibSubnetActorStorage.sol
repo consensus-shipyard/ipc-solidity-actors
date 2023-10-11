@@ -46,7 +46,7 @@ struct SubnetActorStorage {
     /// @notice The staking release queue that only allow transfer of collateral after certain locking period.
     StakingReleaseQueue releaseQueue;
     /// @notice Power scale determining the accuracy of the power scale (in number of decimals from whole FIL)
-    /// (e.g. miliFil = 3; microFIL = 6, attoFil = 12, etc.)
+    /// (e.g. Fil = 0, miliFil = 3; microFIL = 6, attoFil = 18, etc.)
     uint8 powerScale;
     /// @notice relayers rewards
     mapping(address => uint256) relayerRewards;

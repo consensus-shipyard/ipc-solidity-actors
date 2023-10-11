@@ -45,7 +45,7 @@ contract SubnetActorDiamond {
         if (params.majorityPercentage < 51 || params.majorityPercentage > 100) {
             revert InvalidMajorityPercentage();
         }
-        if (params.powerScale > 12) {
+        if (params.powerScale > 18) {
             revert InvalidPowerScale();
         }
 
