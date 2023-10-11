@@ -74,8 +74,7 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100,
-            relayerReward: DEFAULT_RELAYER_REWARD
+            activeValidatorsLimit: 100
         });
         vm.expectRevert(WrongGateway.selector);
         registry.newSubnetActor(params);
@@ -92,8 +91,7 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100,
-            relayerReward: DEFAULT_RELAYER_REWARD
+            activeValidatorsLimit: 100
         });
         registry.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -111,8 +109,7 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100,
-            relayerReward: DEFAULT_RELAYER_REWARD
+            activeValidatorsLimit: 100
         });
         registry.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -127,8 +124,7 @@ contract SubnetRegistryTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            DEFAULT_MAJORITY_PERCENTAGE,
-            DEFAULT_RELAYER_REWARD
+            DEFAULT_MAJORITY_PERCENTAGE
         );
     }
 
@@ -139,8 +135,7 @@ contract SubnetRegistryTest is Test {
         uint256 _minActivationCollateral,
         uint64 _minValidators,
         uint64 _checkPeriod,
-        uint8 _majorityPercentage,
-        uint256 _relayerReward
+        uint8 _majorityPercentage
     ) public {
         vm.startPrank(DEFAULT_SENDER);
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
@@ -152,8 +147,7 @@ contract SubnetRegistryTest is Test {
             minValidators: _minValidators,
             bottomUpCheckPeriod: _checkPeriod,
             majorityPercentage: _majorityPercentage,
-            activeValidatorsLimit: 100,
-            relayerReward: _relayerReward
+            activeValidatorsLimit: 100
         });
         registry.newSubnetActor(params);
         require(registry.latestSubnetDeployed(DEFAULT_SENDER) != address(0));

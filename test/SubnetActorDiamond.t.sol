@@ -98,8 +98,7 @@ contract SubnetActorDiamondTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            DEFAULT_MAJORITY_PERCENTAGE,
-            DEFAULT_RELAYER_REWARD
+            DEFAULT_MAJORITY_PERCENTAGE
         );
     }
 
@@ -121,8 +120,7 @@ contract SubnetActorDiamondTest is Test {
         uint256 _minActivationCollateral,
         uint64 _minValidators,
         uint64 _checkPeriod,
-        uint8 _majorityPercentage,
-        uint256 _relayerReward
+        uint8 _majorityPercentage
     ) public {
         vm.assume(_minActivationCollateral > DEFAULT_MIN_VALIDATOR_STAKE);
         vm.assume(_checkPeriod > DEFAULT_CHECKPOINT_PERIOD);
@@ -137,8 +135,7 @@ contract SubnetActorDiamondTest is Test {
             _minActivationCollateral,
             _minValidators,
             _checkPeriod,
-            _majorityPercentage,
-            _relayerReward
+            _majorityPercentage
         );
 
         SubnetID memory parent = saGetter.getParent();
@@ -162,8 +159,7 @@ contract SubnetActorDiamondTest is Test {
                 minValidators: DEFAULT_MIN_VALIDATORS,
                 bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
                 majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-                activeValidatorsLimit: 100,
-                relayerReward: DEFAULT_RELAYER_REWARD
+                activeValidatorsLimit: 100
             }),
             address(saDupGetterFaucet),
             address(saDupMangerFaucet)
@@ -668,8 +664,7 @@ contract SubnetActorDiamondTest is Test {
         uint256 _minActivationCollateral,
         uint64 _minValidators,
         uint64 _checkPeriod,
-        uint8 _majorityPercentage,
-        uint256 _relayerReward
+        uint8 _majorityPercentage
     ) public {
         SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
 
@@ -705,8 +700,7 @@ contract SubnetActorDiamondTest is Test {
                 minValidators: _minValidators,
                 bottomUpCheckPeriod: _checkPeriod,
                 majorityPercentage: _majorityPercentage,
-                activeValidatorsLimit: 100,
-                relayerReward: _relayerReward
+                activeValidatorsLimit: 100
             })
         );
 

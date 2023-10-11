@@ -240,8 +240,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100,
-            relayerReward: DEFAULT_RELAYER_REWARD
+            activeValidatorsLimit: 100
         });
 
         saManager = new SubnetManagerTestUtil();
@@ -1000,7 +999,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         );
     }
 
-    function testGatewayDiamond_SendCrossMessage_Fails_DifferentMessageValue() public {
+    function testGatewayDiamond_SendCrossMessage_Fails_Failes_InvalidCrossMsgValue() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
@@ -1081,14 +1080,42 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         );
     }
 
-    function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughGas() public {
+    function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughFee() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
+
         vm.expectRevert(NotEnoughFee.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE - 1}(
+        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE}(
+            CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
+                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(0))}),
+                    value: 0,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0),
+                    fee: 0
+                }),
+                wrapped: true
+            })
+        );
+    }
+
+    function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughFunds() public {
+        address caller = vm.addr(100);
+        vm.startPrank(caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
+
+        vm.expectRevert(NotEnoughFunds.selector);
+        gwMessenger.sendCrossMessage{value: 0}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({

@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {NotEnoughFee, NotSystemActor} from "../errors/IPCErrors.sol";
+import {NotEnoughFee, NotSystemActor, NotEnoughFunds} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint, CrossMsg, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
 import {SubnetID, Subnet, ParentValidatorsTracker} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Subnet.sol";
@@ -91,9 +91,12 @@ contract GatewayActorModifiers {
     using FilAddress for address payable;
     using AccountHelper for address;
 
-    function _hasFee() private view {
-        if (msg.value < s.minCrossMsgFee) {
+    function validateFee(uint256 fee) internal view {
+        if (fee < s.minCrossMsgFee) {
             revert NotEnoughFee();
+        }
+        if (msg.value < fee) {
+            revert NotEnoughFunds();
         }
     }
 
@@ -108,8 +111,8 @@ contract GatewayActorModifiers {
         _;
     }
 
-    modifier hasFee() {
-        _hasFee();
+    modifier validFee(uint256 fee) {
+        validateFee(fee);
         _;
     }
 }
