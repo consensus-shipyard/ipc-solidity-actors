@@ -25,6 +25,7 @@ contract SubnetRegistryTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     bytes private constant GENESIS = EMPTY_BYTES;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
+    int8 private constant DEFAULT_POWER_SCALE = 18;
     uint64 private constant ROOTNET_CHAINID = 123;
 
     SubnetRegistry registry;
@@ -74,7 +75,8 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100
+            activeValidatorsLimit: 100,
+            powerScale: DEFAULT_POWER_SCALE
         });
         vm.expectRevert(WrongGateway.selector);
         registry.newSubnetActor(params);
@@ -91,7 +93,8 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100
+            activeValidatorsLimit: 100,
+            powerScale: DEFAULT_POWER_SCALE
         });
         registry.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -109,7 +112,8 @@ contract SubnetRegistryTest is Test {
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100
+            activeValidatorsLimit: 100,
+            powerScale: DEFAULT_POWER_SCALE
         });
         registry.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -124,7 +128,8 @@ contract SubnetRegistryTest is Test {
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
-            DEFAULT_MAJORITY_PERCENTAGE
+            DEFAULT_MAJORITY_PERCENTAGE,
+            DEFAULT_POWER_SCALE
         );
     }
 
@@ -135,7 +140,8 @@ contract SubnetRegistryTest is Test {
         uint256 _minActivationCollateral,
         uint64 _minValidators,
         uint64 _checkPeriod,
-        uint8 _majorityPercentage
+        uint8 _majorityPercentage,
+        int8 _powerScale
     ) public {
         vm.startPrank(DEFAULT_SENDER);
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
@@ -147,7 +153,8 @@ contract SubnetRegistryTest is Test {
             minValidators: _minValidators,
             bottomUpCheckPeriod: _checkPeriod,
             majorityPercentage: _majorityPercentage,
-            activeValidatorsLimit: 100
+            activeValidatorsLimit: 100,
+            powerScale: _powerScale
         });
         registry.newSubnetActor(params);
         require(registry.latestSubnetDeployed(DEFAULT_SENDER) != address(0));
