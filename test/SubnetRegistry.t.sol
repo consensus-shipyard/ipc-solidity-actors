@@ -25,7 +25,7 @@ contract SubnetRegistryTest is Test {
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     bytes private constant GENESIS = EMPTY_BYTES;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
-    uint8 private constant DEFAULT_POWER_SCALE = 18;
+    int8 private constant DEFAULT_POWER_SCALE = 18;
     uint64 private constant ROOTNET_CHAINID = 123;
 
     SubnetRegistry registry;
@@ -145,7 +145,7 @@ contract SubnetRegistryTest is Test {
         uint64 _minValidators,
         uint64 _checkPeriod,
         uint8 _majorityPercentage,
-        uint8 _powerScale,
+        int8 _powerScale,
         uint256 _relayerReward
     ) public {
         vm.startPrank(DEFAULT_SENDER);

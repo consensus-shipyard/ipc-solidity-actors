@@ -47,7 +47,8 @@ struct SubnetActorStorage {
     StakingReleaseQueue releaseQueue;
     /// @notice Power scale determining the accuracy of the power scale (in number of decimals from whole FIL)
     /// (e.g. Fil = 0, miliFil = 3; microFIL = 6, attoFil = 18, etc.)
-    uint8 powerScale;
+    /// We allow negative values to also allow 10 FIL = 1 unit of power for power_scale = -1.
+    int8 powerScale;
     /// @notice relayers rewards
     mapping(address => uint256) relayerRewards;
     /// @notice The addresses of the relayers sent the checkpoint at height `h`.

@@ -106,7 +106,7 @@ contract SubnetActorGetterFacet {
         return (exists, checkpoint.toHash());
     }
 
-    function powerScale() external view returns (uint8) {
+    function powerScale() external view returns (int8) {
         return s.powerScale;
     }
 }

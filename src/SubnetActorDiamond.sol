@@ -27,7 +27,7 @@ contract SubnetActorDiamond {
         uint64 bottomUpCheckPeriod;
         uint8 majorityPercentage;
         uint16 activeValidatorsLimit;
-        uint8 powerScale;
+        int8 powerScale;
         uint256 relayerReward;
     }
 
