@@ -61,6 +61,8 @@ error InvalidRetentionHeight();
 error SignatureReplay();
 error SubnetAlreadyKilled();
 error SubnetNotActive();
+error SubnetNotFound();
+error InvalidSubnet();
 error ValidatorAlreadyVoted();
 error ValidatorWeightIsZero();
 error ValidatorsAndWeightsLengthMismatch();

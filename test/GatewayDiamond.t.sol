@@ -53,6 +53,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     string private constant DEFAULT_NET_ADDR = "netAddr";
     bytes private constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
+    uint256 constant DEFAULT_RELAYER_REWARD = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
     address constant CHILD_NETWORK_ADDRESS_2 = address(11);
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
@@ -241,7 +242,8 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             activeValidatorsLimit: 100,
-            powerScale: 12
+            powerScale: 12,
+            relayerReward: DEFAULT_RELAYER_REWARD
         });
 
         saManager = new SubnetManagerTestUtil();
@@ -1252,7 +1254,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         // no changes
         configNumber = gwRouter.applyFinalityChanges();
-        console.log(configNumber);
         require(configNumber == 0, "wrong config number after applying finality");
         require(gwGetter.getCurrentMembership().validators.length == 1, "current membership should be 1");
         require(gwGetter.getLastMembership().validators.length == 2, "last membership should be 2");

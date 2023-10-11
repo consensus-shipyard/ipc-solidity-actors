@@ -48,6 +48,12 @@ struct SubnetActorStorage {
     /// @notice Power scale determining the accuracy of the power scale (in number of decimals from whole FIL)
     /// (e.g. miliFil = 3; microFIL = 6, attoFil = 12, etc.)
     uint8 powerScale;
+    /// @notice relayers rewards
+    mapping(address => uint256) relayerRewards;
+    /// @notice The addresses of the relayers sent the checkpoint at height `h`.
+    mapping(uint64 => EnumerableSet.AddressSet) rewardedRelayers;
+    /// @notice the reward which a relayer gets
+    uint256 relayerReward;
 }
 
 library LibSubnetActorStorage {

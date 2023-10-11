@@ -7,7 +7,8 @@ import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActo
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
 import {StakingReleaseQueue, StakingChangeLog, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker, Validator} from "../structs/Subnet.sol";
-import {WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
+import {NoRewardToWithdraw, WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
+import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 /// The util library for `StakingChangeLog`
 library LibStakingChangeLog {
@@ -411,6 +412,7 @@ library LibStaking {
     using LibValidatorSet for ValidatorSet;
     using LibMaxPQ for MaxPQ;
     using LibMinPQ for MinPQ;
+    using Address for address payable;
 
     uint64 public constant INITIAL_CONFIGURATION_NUMBER = 1;
 
@@ -547,6 +549,21 @@ library LibStaking {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         uint256 amount = s.releaseQueue.claim(validator);
         emit CollateralClaimed(validator, amount);
+    }
+
+    /// @notice method that allows a relayer to withdraw it's accumulated rewards using pull-based transfer
+    function claimRewardForRelayer(address relayer) external {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        uint256 amount = s.relayerRewards[relayer];
+
+        if (amount == 0) {
+            revert NoRewardToWithdraw();
+        }
+
+        s.relayerRewards[relayer] = 0;
+        IGateway(s.ipcGatewayAddr).releaseRewardForRelayer(amount);
+
+        payable(relayer).sendValue(amount);
     }
 
     /// @notice Confirm the changes in bottom up checkpoint submission, only call this in bottom up checkpoint execution.

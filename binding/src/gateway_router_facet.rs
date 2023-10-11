@@ -141,35 +141,15 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("applyFinalityChanges"),
+                    ::std::borrow::ToOwned::to_owned("commitBottomUpCheckpoint"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "applyFinalityChanges",
+                                "commitBottomUpCheckpoint",
                             ),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("commitChildCheck"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("commitChildCheck"),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("commit"),
+                                    name: ::std::borrow::ToOwned::to_owned("checkpoint"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
                                         ::std::vec![
                                             ::ethers::core::abi::ethabi::ParamType::Tuple(
@@ -192,6 +172,69 @@ pub mod gateway_router_facet {
                                         ::std::borrow::ToOwned::to_owned(
                                             "struct BottomUpCheckpoint",
                                         ),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("messages"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                ::std::boxed::Box::new(
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                ),
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                        ],
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                ::std::boxed::Box::new(
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                ),
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                        ],
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                        ],
+                                                    ),
+                                                    ::ethers::core::abi::ethabi::ParamType::Bool,
+                                                ],
+                                            ),
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct CrossMsg[]"),
                                     ),
                                 },
                             ],
@@ -419,28 +462,6 @@ pub mod gateway_router_facet {
             ]),
             errors: ::core::convert::From::from([
                 (
-                    ::std::borrow::ToOwned::to_owned("AddressShouldBeValidator"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "AddressShouldBeValidator",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("CannotConfirmFutureChanges"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "CannotConfirmFutureChanges",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("CheckpointAlreadyExists"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -613,6 +634,15 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("InvalidSubnet"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("InvalidSubnet"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("NotAuthorized"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -670,37 +700,6 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("OldConfigurationNumber"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "OldConfigurationNumber",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("PQDoesNotContainAddress"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "PQDoesNotContainAddress",
-                            ),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("PQEmpty"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::AbiError {
-                            name: ::std::borrow::ToOwned::to_owned("PQEmpty"),
-                            inputs: ::std::vec![],
-                        },
-                    ],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("ParentFinalityAlreadyCommitted"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -725,6 +724,15 @@ pub mod gateway_router_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("SubnetNotActive"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("SubnetNotFound"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("SubnetNotFound"),
                             inputs: ::std::vec![],
                         },
                     ],
@@ -809,19 +817,14 @@ pub mod gateway_router_facet {
                 .method_hash([61, 222, 54, 236], cross_msgs)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `applyFinalityChanges` (0x0df14461) function
-        pub fn apply_finality_changes(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
-            self.0
-                .method_hash([13, 241, 68, 97], ())
-                .expect("method not found (this should never happen)")
-        }
-        ///Calls the contract's `commitChildCheck` (0x9398dec8) function
-        pub fn commit_child_check(
+        ///Calls the contract's `commitBottomUpCheckpoint` (0x7dc87e93) function
+        pub fn commit_bottom_up_checkpoint(
             &self,
-            commit: BottomUpCheckpoint,
+            checkpoint: BottomUpCheckpoint,
+            messages: ::std::vec::Vec<CrossMsg>,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([147, 152, 222, 200], (commit,))
+                .method_hash([125, 200, 126, 147], (checkpoint, messages))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `commitParentFinality` (0x11196974) function
@@ -895,35 +898,6 @@ pub mod gateway_router_facet {
             Self::new(contract.address(), contract.client())
         }
     }
-    ///Custom Error type `AddressShouldBeValidator` with signature `AddressShouldBeValidator()` and selector `0x2a55ca53`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "AddressShouldBeValidator", abi = "AddressShouldBeValidator()")]
-    pub struct AddressShouldBeValidator;
-    ///Custom Error type `CannotConfirmFutureChanges` with signature `CannotConfirmFutureChanges()` and selector `0x0815540a`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(
-        name = "CannotConfirmFutureChanges",
-        abi = "CannotConfirmFutureChanges()"
-    )]
-    pub struct CannotConfirmFutureChanges;
     ///Custom Error type `CheckpointAlreadyExists` with signature `CheckpointAlreadyExists()` and selector `0xb8a1eae1`
     #[derive(
         Clone,
@@ -1150,6 +1124,19 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "InvalidSignature", abi = "InvalidSignature()")]
     pub struct InvalidSignature;
+    ///Custom Error type `InvalidSubnet` with signature `InvalidSubnet()` and selector `0x076bb706`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(name = "InvalidSubnet", abi = "InvalidSubnet()")]
+    pub struct InvalidSubnet;
     ///Custom Error type `NotAuthorized` with signature `NotAuthorized(address)` and selector `0x4a0bfec1`
     #[derive(
         Clone,
@@ -1218,45 +1205,6 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "NotSystemActor", abi = "NotSystemActor()")]
     pub struct NotSystemActor;
-    ///Custom Error type `OldConfigurationNumber` with signature `OldConfigurationNumber()` and selector `0x6e8d7c4a`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "OldConfigurationNumber", abi = "OldConfigurationNumber()")]
-    pub struct OldConfigurationNumber;
-    ///Custom Error type `PQDoesNotContainAddress` with signature `PQDoesNotContainAddress()` and selector `0xf2755e37`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "PQDoesNotContainAddress", abi = "PQDoesNotContainAddress()")]
-    pub struct PQDoesNotContainAddress;
-    ///Custom Error type `PQEmpty` with signature `PQEmpty()` and selector `0x40d9b011`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthError,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[etherror(name = "PQEmpty", abi = "PQEmpty()")]
-    pub struct PQEmpty;
     ///Custom Error type `ParentFinalityAlreadyCommitted` with signature `ParentFinalityAlreadyCommitted()` and selector `0x2a75b082`
     #[derive(
         Clone,
@@ -1299,6 +1247,19 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "SubnetNotActive", abi = "SubnetNotActive()")]
     pub struct SubnetNotActive;
+    ///Custom Error type `SubnetNotFound` with signature `SubnetNotFound()` and selector `0x00476ad8`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(name = "SubnetNotFound", abi = "SubnetNotFound()")]
+    pub struct SubnetNotFound;
     ///Custom Error type `ZeroMembershipWeight` with signature `ZeroMembershipWeight()` and selector `0x4e8ac6e5`
     #[derive(
         Clone,
@@ -1315,8 +1276,6 @@ pub mod gateway_router_facet {
     ///Container type for all of the contract's custom errors
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayRouterFacetErrors {
-        AddressShouldBeValidator(AddressShouldBeValidator),
-        CannotConfirmFutureChanges(CannotConfirmFutureChanges),
         CheckpointAlreadyExists(CheckpointAlreadyExists),
         CheckpointAlreadyProcessed(CheckpointAlreadyProcessed),
         CheckpointInfoAlreadyExists(CheckpointInfoAlreadyExists),
@@ -1333,17 +1292,16 @@ pub mod gateway_router_facet {
         InvalidCrossMsgNonce(InvalidCrossMsgNonce),
         InvalidRetentionHeight(InvalidRetentionHeight),
         InvalidSignature(InvalidSignature),
+        InvalidSubnet(InvalidSubnet),
         NotAuthorized(NotAuthorized),
         NotEnoughBalance(NotEnoughBalance),
         NotEnoughSubnetCircSupply(NotEnoughSubnetCircSupply),
         NotRegisteredSubnet(NotRegisteredSubnet),
         NotSystemActor(NotSystemActor),
-        OldConfigurationNumber(OldConfigurationNumber),
-        PQDoesNotContainAddress(PQDoesNotContainAddress),
-        PQEmpty(PQEmpty),
         ParentFinalityAlreadyCommitted(ParentFinalityAlreadyCommitted),
         SignatureReplay(SignatureReplay),
         SubnetNotActive(SubnetNotActive),
+        SubnetNotFound(SubnetNotFound),
         ZeroMembershipWeight(ZeroMembershipWeight),
         /// The standard solidity revert string, with selector
         /// Error(string) -- 0x08c379a0
@@ -1358,16 +1316,6 @@ pub mod gateway_router_facet {
                 <::std::string::String as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::RevertString(decoded));
-            }
-            if let Ok(decoded) =
-                <AddressShouldBeValidator as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::AddressShouldBeValidator(decoded));
-            }
-            if let Ok(decoded) =
-                <CannotConfirmFutureChanges as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::CannotConfirmFutureChanges(decoded));
             }
             if let Ok(decoded) =
                 <CheckpointAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -1448,6 +1396,9 @@ pub mod gateway_router_facet {
             {
                 return Ok(Self::InvalidSignature(decoded));
             }
+            if let Ok(decoded) = <InvalidSubnet as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::InvalidSubnet(decoded));
+            }
             if let Ok(decoded) = <NotAuthorized as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::NotAuthorized(decoded));
             }
@@ -1469,19 +1420,6 @@ pub mod gateway_router_facet {
                 return Ok(Self::NotSystemActor(decoded));
             }
             if let Ok(decoded) =
-                <OldConfigurationNumber as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::OldConfigurationNumber(decoded));
-            }
-            if let Ok(decoded) =
-                <PQDoesNotContainAddress as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::PQDoesNotContainAddress(decoded));
-            }
-            if let Ok(decoded) = <PQEmpty as ::ethers::core::abi::AbiDecode>::decode(data) {
-                return Ok(Self::PQEmpty(decoded));
-            }
-            if let Ok(decoded) =
                 <ParentFinalityAlreadyCommitted as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::ParentFinalityAlreadyCommitted(decoded));
@@ -1491,6 +1429,9 @@ pub mod gateway_router_facet {
             }
             if let Ok(decoded) = <SubnetNotActive as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::SubnetNotActive(decoded));
+            }
+            if let Ok(decoded) = <SubnetNotFound as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::SubnetNotFound(decoded));
             }
             if let Ok(decoded) =
                 <ZeroMembershipWeight as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -1503,12 +1444,6 @@ pub mod gateway_router_facet {
     impl ::ethers::core::abi::AbiEncode for GatewayRouterFacetErrors {
         fn encode(self) -> ::std::vec::Vec<u8> {
             match self {
-                Self::AddressShouldBeValidator(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::CannotConfirmFutureChanges(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
                 Self::CheckpointAlreadyExists(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1555,6 +1490,7 @@ pub mod gateway_router_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InvalidSignature(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::InvalidSubnet(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::NotAuthorized(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::NotEnoughBalance(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::NotEnoughSubnetCircSupply(element) => {
@@ -1564,18 +1500,12 @@ pub mod gateway_router_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NotSystemActor(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::OldConfigurationNumber(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::PQDoesNotContainAddress(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::PQEmpty(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::SignatureReplay(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SubnetNotActive(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::SubnetNotFound(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ZeroMembershipWeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1587,14 +1517,6 @@ pub mod gateway_router_facet {
         fn valid_selector(selector: [u8; 4]) -> bool {
             match selector {
                 [0x08, 0xc3, 0x79, 0xa0] => true,
-                _ if selector
-                    == <AddressShouldBeValidator as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <CannotConfirmFutureChanges as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
                 _ if selector
                     == <CheckpointAlreadyExists as ::ethers::contract::EthError>::selector() => {
                     true
@@ -1660,6 +1582,10 @@ pub mod gateway_router_facet {
                     true
                 }
                 _ if selector
+                    == <InvalidSubnet as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
                     == <NotAuthorized as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1680,16 +1606,6 @@ pub mod gateway_router_facet {
                     true
                 }
                 _ if selector
-                    == <OldConfigurationNumber as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <PQDoesNotContainAddress as ::ethers::contract::EthError>::selector() => {
-                    true
-                }
-                _ if selector
-                    == <PQEmpty as ::ethers::contract::EthError>::selector() => true,
-                _ if selector
                     == <ParentFinalityAlreadyCommitted as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1699,6 +1615,10 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <SubnetNotActive as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <SubnetNotFound as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1712,8 +1632,6 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetErrors {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::AddressShouldBeValidator(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CannotConfirmFutureChanges(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointAlreadyProcessed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CheckpointInfoAlreadyExists(element) => ::core::fmt::Display::fmt(element, f),
@@ -1736,19 +1654,18 @@ pub mod gateway_router_facet {
                 Self::InvalidCrossMsgNonce(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidRetentionHeight(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidSignature(element) => ::core::fmt::Display::fmt(element, f),
+                Self::InvalidSubnet(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotAuthorized(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotEnoughBalance(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotEnoughSubnetCircSupply(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotRegisteredSubnet(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotSystemActor(element) => ::core::fmt::Display::fmt(element, f),
-                Self::OldConfigurationNumber(element) => ::core::fmt::Display::fmt(element, f),
-                Self::PQDoesNotContainAddress(element) => ::core::fmt::Display::fmt(element, f),
-                Self::PQEmpty(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ParentFinalityAlreadyCommitted(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::SignatureReplay(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubnetNotActive(element) => ::core::fmt::Display::fmt(element, f),
+                Self::SubnetNotFound(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ZeroMembershipWeight(element) => ::core::fmt::Display::fmt(element, f),
                 Self::RevertString(s) => ::core::fmt::Display::fmt(s, f),
             }
@@ -1757,16 +1674,6 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<::std::string::String> for GatewayRouterFacetErrors {
         fn from(value: String) -> Self {
             Self::RevertString(value)
-        }
-    }
-    impl ::core::convert::From<AddressShouldBeValidator> for GatewayRouterFacetErrors {
-        fn from(value: AddressShouldBeValidator) -> Self {
-            Self::AddressShouldBeValidator(value)
-        }
-    }
-    impl ::core::convert::From<CannotConfirmFutureChanges> for GatewayRouterFacetErrors {
-        fn from(value: CannotConfirmFutureChanges) -> Self {
-            Self::CannotConfirmFutureChanges(value)
         }
     }
     impl ::core::convert::From<CheckpointAlreadyExists> for GatewayRouterFacetErrors {
@@ -1849,6 +1756,11 @@ pub mod gateway_router_facet {
             Self::InvalidSignature(value)
         }
     }
+    impl ::core::convert::From<InvalidSubnet> for GatewayRouterFacetErrors {
+        fn from(value: InvalidSubnet) -> Self {
+            Self::InvalidSubnet(value)
+        }
+    }
     impl ::core::convert::From<NotAuthorized> for GatewayRouterFacetErrors {
         fn from(value: NotAuthorized) -> Self {
             Self::NotAuthorized(value)
@@ -1874,21 +1786,6 @@ pub mod gateway_router_facet {
             Self::NotSystemActor(value)
         }
     }
-    impl ::core::convert::From<OldConfigurationNumber> for GatewayRouterFacetErrors {
-        fn from(value: OldConfigurationNumber) -> Self {
-            Self::OldConfigurationNumber(value)
-        }
-    }
-    impl ::core::convert::From<PQDoesNotContainAddress> for GatewayRouterFacetErrors {
-        fn from(value: PQDoesNotContainAddress) -> Self {
-            Self::PQDoesNotContainAddress(value)
-        }
-    }
-    impl ::core::convert::From<PQEmpty> for GatewayRouterFacetErrors {
-        fn from(value: PQEmpty) -> Self {
-            Self::PQEmpty(value)
-        }
-    }
     impl ::core::convert::From<ParentFinalityAlreadyCommitted> for GatewayRouterFacetErrors {
         fn from(value: ParentFinalityAlreadyCommitted) -> Self {
             Self::ParentFinalityAlreadyCommitted(value)
@@ -1902,6 +1799,11 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<SubnetNotActive> for GatewayRouterFacetErrors {
         fn from(value: SubnetNotActive) -> Self {
             Self::SubnetNotActive(value)
+        }
+    }
+    impl ::core::convert::From<SubnetNotFound> for GatewayRouterFacetErrors {
+        fn from(value: SubnetNotFound) -> Self {
+            Self::SubnetNotFound(value)
         }
     }
     impl ::core::convert::From<ZeroMembershipWeight> for GatewayRouterFacetErrors {
@@ -2020,20 +1922,7 @@ pub mod gateway_router_facet {
     pub struct ApplyCrossMessagesCall {
         pub cross_msgs: ::std::vec::Vec<CrossMsg>,
     }
-    ///Container type for all input parameters for the `applyFinalityChanges` function with signature `applyFinalityChanges()` and selector `0x0df14461`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[ethcall(name = "applyFinalityChanges", abi = "applyFinalityChanges()")]
-    pub struct ApplyFinalityChangesCall;
-    ///Container type for all input parameters for the `commitChildCheck` function with signature `commitChildCheck(((uint64,address[]),uint64,bytes32,uint64,bytes32))` and selector `0x9398dec8`
+    ///Container type for all input parameters for the `commitBottomUpCheckpoint` function with signature `commitBottomUpCheckpoint(((uint64,address[]),uint64,bytes32,uint64,bytes32),((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[])` and selector `0x7dc87e93`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -2045,11 +1934,12 @@ pub mod gateway_router_facet {
         Hash,
     )]
     #[ethcall(
-        name = "commitChildCheck",
-        abi = "commitChildCheck(((uint64,address[]),uint64,bytes32,uint64,bytes32))"
+        name = "commitBottomUpCheckpoint",
+        abi = "commitBottomUpCheckpoint(((uint64,address[]),uint64,bytes32,uint64,bytes32),((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes),bool)[])"
     )]
-    pub struct CommitChildCheckCall {
-        pub commit: BottomUpCheckpoint,
+    pub struct CommitBottomUpCheckpointCall {
+        pub checkpoint: BottomUpCheckpoint,
+        pub messages: ::std::vec::Vec<CrossMsg>,
     }
     ///Container type for all input parameters for the `commitParentFinality` function with signature `commitParentFinality((uint256,bytes32))` and selector `0x11196974`
     #[derive(
@@ -2130,8 +2020,7 @@ pub mod gateway_router_facet {
     pub enum GatewayRouterFacetCalls {
         AddCheckpointSignature(AddCheckpointSignatureCall),
         ApplyCrossMessages(ApplyCrossMessagesCall),
-        ApplyFinalityChanges(ApplyFinalityChangesCall),
-        CommitChildCheck(CommitChildCheckCall),
+        CommitBottomUpCheckpoint(CommitBottomUpCheckpointCall),
         CommitParentFinality(CommitParentFinalityCall),
         CreateBottomUpCheckpoint(CreateBottomUpCheckpointCall),
         PruneBottomUpCheckpoints(PruneBottomUpCheckpointsCall),
@@ -2153,14 +2042,9 @@ pub mod gateway_router_facet {
                 return Ok(Self::ApplyCrossMessages(decoded));
             }
             if let Ok(decoded) =
-                <ApplyFinalityChangesCall as ::ethers::core::abi::AbiDecode>::decode(data)
+                <CommitBottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
-                return Ok(Self::ApplyFinalityChanges(decoded));
-            }
-            if let Ok(decoded) =
-                <CommitChildCheckCall as ::ethers::core::abi::AbiDecode>::decode(data)
-            {
-                return Ok(Self::CommitChildCheck(decoded));
+                return Ok(Self::CommitBottomUpCheckpoint(decoded));
             }
             if let Ok(decoded) =
                 <CommitParentFinalityCall as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -2194,10 +2078,9 @@ pub mod gateway_router_facet {
                 Self::ApplyCrossMessages(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::ApplyFinalityChanges(element) => {
+                Self::CommitBottomUpCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::CommitChildCheck(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::CommitParentFinality(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2218,8 +2101,7 @@ pub mod gateway_router_facet {
             match self {
                 Self::AddCheckpointSignature(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ApplyCrossMessages(element) => ::core::fmt::Display::fmt(element, f),
-                Self::ApplyFinalityChanges(element) => ::core::fmt::Display::fmt(element, f),
-                Self::CommitChildCheck(element) => ::core::fmt::Display::fmt(element, f),
+                Self::CommitBottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CommitParentFinality(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CreateBottomUpCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PruneBottomUpCheckpoints(element) => ::core::fmt::Display::fmt(element, f),
@@ -2237,14 +2119,9 @@ pub mod gateway_router_facet {
             Self::ApplyCrossMessages(value)
         }
     }
-    impl ::core::convert::From<ApplyFinalityChangesCall> for GatewayRouterFacetCalls {
-        fn from(value: ApplyFinalityChangesCall) -> Self {
-            Self::ApplyFinalityChanges(value)
-        }
-    }
-    impl ::core::convert::From<CommitChildCheckCall> for GatewayRouterFacetCalls {
-        fn from(value: CommitChildCheckCall) -> Self {
-            Self::CommitChildCheck(value)
+    impl ::core::convert::From<CommitBottomUpCheckpointCall> for GatewayRouterFacetCalls {
+        fn from(value: CommitBottomUpCheckpointCall) -> Self {
+            Self::CommitBottomUpCheckpoint(value)
         }
     }
     impl ::core::convert::From<CommitParentFinalityCall> for GatewayRouterFacetCalls {
@@ -2267,18 +2144,6 @@ pub mod gateway_router_facet {
             Self::StoreValidatorChanges(value)
         }
     }
-    ///Container type for all return fields from the `applyFinalityChanges` function with signature `applyFinalityChanges()` and selector `0x0df14461`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    pub struct ApplyFinalityChangesReturn(pub u64);
     ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
     #[derive(
         Clone,
