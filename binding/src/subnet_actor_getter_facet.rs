@@ -345,9 +345,9 @@ pub mod subnet_actor_getter_facet {
                         inputs: ::std::vec![],
                         outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
                             name: ::std::string::String::new(),
-                            kind: ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Int(8usize),
                             internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("uint8"),
+                                ::std::borrow::ToOwned::to_owned("int8"),
                             ),
                         },],
                         constant: ::core::option::Option::None,
@@ -512,7 +512,7 @@ pub mod subnet_actor_getter_facet {
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `powerScale` (0xad81e4d6) function
-        pub fn power_scale(&self) -> ::ethers::contract::builders::ContractCall<M, u8> {
+        pub fn power_scale(&self) -> ::ethers::contract::builders::ContractCall<M, i8> {
             self.0
                 .method_hash([173, 129, 228, 214], ())
                 .expect("method not found (this should never happen)")
@@ -1174,7 +1174,7 @@ pub mod subnet_actor_getter_facet {
         Eq,
         Hash,
     )]
-    pub struct PowerScaleReturn(pub u8);
+    pub struct PowerScaleReturn(pub i8);
     ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
     #[derive(
         Clone,
