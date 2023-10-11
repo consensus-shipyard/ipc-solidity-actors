@@ -108,7 +108,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         // get the latest configuration number for the change set
         uint64 configurationNumber = s.validatorsTracker.changes.nextConfigurationNumber - 1;
         // return immedidately if there are no changes to confirm
-        if (s.validatorsTracker.changes.nextConfigurationNumber == s.validatorsTracker.changes.startConfigurationNumber) {
+        if (
+            s.validatorsTracker.changes.nextConfigurationNumber == s.validatorsTracker.changes.startConfigurationNumber
+        ) {
             // 0 flags that there are no changes
             return 0;
         }

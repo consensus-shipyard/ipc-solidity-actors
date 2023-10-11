@@ -870,7 +870,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            genesisValidators: new Validator[](0), 
+            genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
         gatewayDiamond = createDiamond(constructorParams);
@@ -1208,20 +1208,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         StakingChangeRequest[] memory changes = new StakingChangeRequest[](2);
 
         changes[0] = StakingChangeRequest({
-            configurationNumber: 0, 
-            change: StakingChange({
-                validator: val1, 
-                op: StakingOperation.Deposit,
-                payload: abi.encode(amount)
-            })
-        });        
+            configurationNumber: 0,
+            change: StakingChange({validator: val1, op: StakingOperation.Deposit, payload: abi.encode(amount)})
+        });
         changes[1] = StakingChangeRequest({
-            configurationNumber: 1, 
-            change: StakingChange({
-                validator: val2, 
-                op: StakingOperation.Deposit,
-                payload: abi.encode(amount)
-            })
+            configurationNumber: 1,
+            change: StakingChange({validator: val2, op: StakingOperation.Deposit, payload: abi.encode(amount)})
         });
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -1237,13 +1229,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         changes = new StakingChangeRequest[](1);
 
         changes[0] = StakingChangeRequest({
-            configurationNumber: 2, 
-            change: StakingChange({
-                validator: val1, 
-                op: StakingOperation.Withdraw,
-                payload: abi.encode(amount)
-            })
-        });        
+            configurationNumber: 2,
+            change: StakingChange({validator: val1, op: StakingOperation.Withdraw, payload: abi.encode(amount)})
+        });
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
         gwRouter.storeValidatorChanges(changes);
