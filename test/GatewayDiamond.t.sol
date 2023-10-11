@@ -848,11 +848,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.deal(callerAddress, 1 ether);
         vm.expectRevert(NotEnoughFee.selector);
 
-        gwManager.release{value: 0 ether}(FvmAddressHelper.from(msg.sender));
+        gwManager.release{value: 0 ether}(FvmAddressHelper.from(msg.sender), 0);
     }
 
     function testGatewayDiamond_Release_Works_BLSAccount(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
+        vm.assume(crossMsgFee >= CROSS_MSG_FEE);
+        vm.assume(releaseAmount < type(uint256).max);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
 
         address[] memory path = new address[](2);
@@ -876,11 +877,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.warp(0);
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
-        release(releaseAmount);
+        release(releaseAmount, crossMsgFee);
     }
 
     function testGatewayDiamond_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max);
+        vm.assume(crossMsgFee >= CROSS_MSG_FEE);
+        vm.assume(releaseAmount < type(uint256).max);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
 
         address[] memory path = new address[](2);
@@ -906,12 +908,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.warp(0);
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, releaseAmount + 1);
-
-        release(releaseAmount);
+        release(releaseAmount, crossMsgFee);
     }
 
     function testGatewayDiamond_Release_Works_NonEmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(releaseAmount > 0 && releaseAmount < type(uint256).max / 2);
+        vm.assume(crossMsgFee >= CROSS_MSG_FEE);
+        vm.assume(releaseAmount < type(uint256).max / 2);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
 
         address[] memory path = new address[](2);
@@ -938,9 +940,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.startPrank(callerAddress);
         vm.deal(callerAddress, 2 * releaseAmount + 1);
 
-        release(releaseAmount);
+        release(releaseAmount, crossMsgFee);
 
-        release(releaseAmount);
+        release(releaseAmount, crossMsgFee);
     }
 
     function testGatewayDiamond_SendCrossMessage_Fails_NoDestination() public {
@@ -1793,9 +1795,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     //     saManager.confirmChange(nextConfigNum - 1);
     // }
 
-    function release(uint256 releaseAmount) internal {
+    function release(uint256 releaseAmount, uint256 fee) internal {
         uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
-        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender));
+        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender), fee);
         require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
     }
 

@@ -43,7 +43,7 @@ contract GatewayDiamond {
         s.networkName = params.networkName;
         s.minStake = params.minCollateral;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
-        s.crossMsgFee = params.msgFee;
+        s.minCrossMsgFee = params.msgFee;
         s.majorityPercentage = params.majorityPercentage;
         s.bottomUpCheckpointRetentionHeight = 1;
 

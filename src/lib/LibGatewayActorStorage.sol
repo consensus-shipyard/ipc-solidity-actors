@@ -57,8 +57,8 @@ struct GatewayActorStorage {
     SubnetID networkName;
     /// @notice Minimum stake required to create a new subnet
     uint256 minStake;
-    /// @notice fee amount charged per cross message
-    uint256 crossMsgFee;
+    /// @notice minimum fee amount charged per cross message
+    uint256 minCrossMsgFee;
     /// @notice majority percentage value (must be greater than or equal to 51)
     uint8 majorityPercentage;
     /// @notice nonce for bottom-up messages
@@ -92,7 +92,7 @@ contract GatewayActorModifiers {
     using AccountHelper for address;
 
     function _hasFee() private view {
-        if (msg.value < s.crossMsgFee) {
+        if (msg.value < s.minCrossMsgFee) {
             revert NotEnoughFee();
         }
     }

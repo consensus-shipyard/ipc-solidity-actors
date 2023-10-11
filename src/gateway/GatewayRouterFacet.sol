@@ -76,13 +76,13 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             }
         }
 
-        uint256 totalCost = totalFee + totalValue;
+        uint256 totalAmount = totalFee + totalValue;
 
-        if (subnet.circSupply < totalCost) {
+        if (subnet.circSupply < totalAmount) {
             revert NotEnoughSubnetCircSupply();
         }
 
-        subnet.circSupply -= totalCost;
+        subnet.circSupply -= totalAmount;
         // seal the checkpoint for the height `lastBottomUpExecutedCheckpointHeight`
         uint64 previousCheckpointHeight = s.lastBottomUpExecutedCheckpointHeight;
         s.lastBottomUpExecutedCheckpointHeight = checkpoint.blockHeight;

@@ -7,7 +7,7 @@ import {Status} from "../enums/Status.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Subnet.sol";
-import {AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
+import {AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet, NotEnoughFee} from "../errors/IPCErrors.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -132,8 +132,8 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
             subnet: subnetId,
             signer: msg.sender,
             to: to,
-            value: msg.value - s.crossMsgFee,
-            fee: s.crossMsgFee
+            value: msg.value,
+            fee: 0
         });
 
         // commit top-down message.
@@ -141,13 +141,19 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     }
 
     /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
-    function release(FvmAddress calldata to) external payable hasFee {
+    function release(FvmAddress calldata to, uint256 fee) external payable hasFee {
+        if (fee < s.minCrossMsgFee) {
+            revert NotEnoughFee();
+        }
+        if (msg.value < fee) {
+            revert NotEnoughFunds();
+        }
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg({
             subnet: s.networkName,
             signer: msg.sender,
             to: to,
-            value: msg.value - s.crossMsgFee,
-            fee: s.crossMsgFee
+            value: msg.value - fee,
+            fee: fee
         });
 
         LibGateway.commitBottomUpMsg(crossMsg);
