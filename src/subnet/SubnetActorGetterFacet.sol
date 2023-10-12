@@ -2,18 +2,14 @@
 pragma solidity 0.8.19;
 
 import {ConsensusType} from "../enums/ConsensusType.sol";
-import {NotEnoughValidatorsInSubnet} from "../errors/IPCErrors.sol";
 import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
-import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID} from "../structs/Subnet.sol";
 import {SubnetID, ValidatorInfo, Validator} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {SubnetActorStorage} from "../lib/LibSubnetActorStorage.sol";
-import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {LibStaking} from "../lib/LibStaking.sol";
 
 contract SubnetActorGetterFacet {
@@ -81,7 +77,7 @@ contract SubnetActorGetterFacet {
     }
 
     /// @notice Checks if the validator is a waiting validator
-    function isWaitingValidator(address validator) internal view returns (bool) {
+    function isWaitingValidator(address validator) external view returns (bool) {
         return LibStaking.isWaitingValidator(validator);
     }
 
@@ -110,6 +106,7 @@ contract SubnetActorGetterFacet {
         return s.powerScale;
     }
 
+    /// @notice returns the bootstrap nodes addresses
     function getBootstrapNodes() external view returns (string[] memory) {
         uint256 n = s.bootstrapOwners.length();
         string[] memory nodes = new string[](n);

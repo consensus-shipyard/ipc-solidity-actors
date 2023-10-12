@@ -1,11 +1,10 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {CollateralIsZero, NotOwnerOfPublicKey, EmptyAddress, MessagesNotSorted, NotEnoughBalanceForRewards, NoValidatorsInSubnet, NotValidator, NotAllValidatorsHaveLeft, SubnetNotActive, WrongCheckpointSource, NoRewardToWithdraw, NotStakedBefore, InconsistentPrevCheckpoint, InvalidSignatureErr, HeightAlreadyExecuted, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalanceForRewards, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
-import {FvmAddress} from "../structs/FvmAddress.sol";
 import {SubnetID, Validator, ValidatorSet} from "../structs/Subnet.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
@@ -153,6 +152,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert NotValidator();
         }
 
+        // slither-disable-next-line unused-return
         s.bootstrapOwners.remove(msg.sender);
         delete s.bootstrapNodes[msg.sender];
 
