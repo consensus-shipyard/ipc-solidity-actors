@@ -16,6 +16,26 @@ pub mod subnet_actor_manager_facet {
             constructor: ::core::option::Option::None,
             functions: ::core::convert::From::from([
                 (
+                    ::std::borrow::ToOwned::to_owned("addBootstrapNode"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("addBootstrapNode"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("netAddress"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("string"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("claim"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -436,6 +456,15 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("EmptyAddress"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("EmptyAddress"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("InvalidCheckpointEpoch"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -643,6 +672,15 @@ pub mod subnet_actor_manager_facet {
                 client,
             ))
         }
+        ///Calls the contract's `addBootstrapNode` (0x10fd4261) function
+        pub fn add_bootstrap_node(
+            &self,
+            net_address: ::std::string::String,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([16, 253, 66, 97], net_address)
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `claim` (0x4e71d92d) function
         pub fn claim(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
@@ -802,6 +840,19 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "CollateralIsZero", abi = "CollateralIsZero()")]
     pub struct CollateralIsZero;
+    ///Custom Error type `EmptyAddress` with signature `EmptyAddress()` and selector `0x7138356f`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(name = "EmptyAddress", abi = "EmptyAddress()")]
+    pub struct EmptyAddress;
     ///Custom Error type `InvalidCheckpointEpoch` with signature `InvalidCheckpointEpoch()` and selector `0xfae4eadb`
     #[derive(
         Clone,
@@ -1011,6 +1062,7 @@ pub mod subnet_actor_manager_facet {
     pub enum SubnetActorManagerFacetErrors {
         AddressShouldBeValidator(AddressShouldBeValidator),
         CollateralIsZero(CollateralIsZero),
+        EmptyAddress(EmptyAddress),
         InvalidCheckpointEpoch(InvalidCheckpointEpoch),
         InvalidCheckpointMessagesHash(InvalidCheckpointMessagesHash),
         InvalidSignatureErr(InvalidSignatureErr),
@@ -1048,6 +1100,9 @@ pub mod subnet_actor_manager_facet {
             if let Ok(decoded) = <CollateralIsZero as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::CollateralIsZero(decoded));
+            }
+            if let Ok(decoded) = <EmptyAddress as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::EmptyAddress(decoded));
             }
             if let Ok(decoded) =
                 <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -1124,6 +1179,7 @@ pub mod subnet_actor_manager_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::CollateralIsZero(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::EmptyAddress(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::InvalidCheckpointEpoch(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1175,6 +1231,8 @@ pub mod subnet_actor_manager_facet {
                     == <CollateralIsZero as ::ethers::contract::EthError>::selector() => {
                     true
                 }
+                _ if selector
+                    == <EmptyAddress as ::ethers::contract::EthError>::selector() => true,
                 _ if selector
                     == <InvalidCheckpointEpoch as ::ethers::contract::EthError>::selector() => {
                     true
@@ -1238,6 +1296,7 @@ pub mod subnet_actor_manager_facet {
             match self {
                 Self::AddressShouldBeValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CollateralIsZero(element) => ::core::fmt::Display::fmt(element, f),
+                Self::EmptyAddress(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCheckpointEpoch(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCheckpointMessagesHash(element) => {
                     ::core::fmt::Display::fmt(element, f)
@@ -1272,6 +1331,11 @@ pub mod subnet_actor_manager_facet {
     impl ::core::convert::From<CollateralIsZero> for SubnetActorManagerFacetErrors {
         fn from(value: CollateralIsZero) -> Self {
             Self::CollateralIsZero(value)
+        }
+    }
+    impl ::core::convert::From<EmptyAddress> for SubnetActorManagerFacetErrors {
+        fn from(value: EmptyAddress) -> Self {
+            Self::EmptyAddress(value)
         }
     }
     impl ::core::convert::From<InvalidCheckpointEpoch> for SubnetActorManagerFacetErrors {
@@ -1489,6 +1553,21 @@ pub mod subnet_actor_manager_facet {
             Self::SubnetBootstrappedFilter(value)
         }
     }
+    ///Container type for all input parameters for the `addBootstrapNode` function with signature `addBootstrapNode(string)` and selector `0x10fd4261`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "addBootstrapNode", abi = "addBootstrapNode(string)")]
+    pub struct AddBootstrapNodeCall {
+        pub net_address: ::std::string::String,
+    }
     ///Container type for all input parameters for the `claim` function with signature `claim()` and selector `0x4e71d92d`
     #[derive(
         Clone,
@@ -1632,6 +1711,7 @@ pub mod subnet_actor_manager_facet {
     ///Container type for all of the contract's call
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum SubnetActorManagerFacetCalls {
+        AddBootstrapNode(AddBootstrapNodeCall),
         Claim(ClaimCall),
         ClaimRewardForRelayer(ClaimRewardForRelayerCall),
         DistributeRewardToRelayers(DistributeRewardToRelayersCall),
@@ -1647,6 +1727,11 @@ pub mod subnet_actor_manager_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
+            if let Ok(decoded) =
+                <AddBootstrapNodeCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::AddBootstrapNode(decoded));
+            }
             if let Ok(decoded) = <ClaimCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Claim(decoded));
             }
@@ -1688,6 +1773,7 @@ pub mod subnet_actor_manager_facet {
     impl ::ethers::core::abi::AbiEncode for SubnetActorManagerFacetCalls {
         fn encode(self) -> Vec<u8> {
             match self {
+                Self::AddBootstrapNode(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Claim(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ClaimRewardForRelayer(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
@@ -1709,6 +1795,7 @@ pub mod subnet_actor_manager_facet {
     impl ::core::fmt::Display for SubnetActorManagerFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+                Self::AddBootstrapNode(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Claim(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ClaimRewardForRelayer(element) => ::core::fmt::Display::fmt(element, f),
                 Self::DistributeRewardToRelayers(element) => ::core::fmt::Display::fmt(element, f),
@@ -1721,6 +1808,11 @@ pub mod subnet_actor_manager_facet {
                     ::core::fmt::Display::fmt(element, f)
                 }
             }
+        }
+    }
+    impl ::core::convert::From<AddBootstrapNodeCall> for SubnetActorManagerFacetCalls {
+        fn from(value: AddBootstrapNodeCall) -> Self {
+            Self::AddBootstrapNode(value)
         }
     }
     impl ::core::convert::From<ClaimCall> for SubnetActorManagerFacetCalls {

@@ -163,6 +163,26 @@ pub mod subnet_actor_getter_facet {
                     },],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("getBootstrapNodes"),
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("getBootstrapNodes"),
+                        inputs: ::std::vec![],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                ::std::boxed::Box::new(
+                                    ::ethers::core::abi::ethabi::ParamType::String,
+                                ),
+                            ),
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("string[]"),
+                            ),
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("getConfigurationNumbers"),
                     ::std::vec![::ethers::core::abi::ethabi::Function {
                         name: ::std::borrow::ToOwned::to_owned("getConfigurationNumbers",),
@@ -445,6 +465,15 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([217, 46, 143, 18], ())
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `getBootstrapNodes` (0x9754b29e) function
+        pub fn get_bootstrap_nodes(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::std::vec::Vec<::std::string::String>>
+        {
+            self.0
+                .method_hash([151, 84, 178, 158], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `getConfigurationNumbers` (0x38a210b3) function
         pub fn get_configuration_numbers(
             &self,
@@ -613,6 +642,19 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "genesisValidators", abi = "genesisValidators()")]
     pub struct GenesisValidatorsCall;
+    ///Container type for all input parameters for the `getBootstrapNodes` function with signature `getBootstrapNodes()` and selector `0x9754b29e`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "getBootstrapNodes", abi = "getBootstrapNodes()")]
+    pub struct GetBootstrapNodesCall;
     ///Container type for all input parameters for the `getConfigurationNumbers` function with signature `getConfigurationNumbers()` and selector `0x38a210b3`
     #[derive(
         Clone,
@@ -756,6 +798,7 @@ pub mod subnet_actor_getter_facet {
         BottomUpCheckpointHashAtEpoch(BottomUpCheckpointHashAtEpochCall),
         Consensus(ConsensusCall),
         GenesisValidators(GenesisValidatorsCall),
+        GetBootstrapNodes(GetBootstrapNodesCall),
         GetConfigurationNumbers(GetConfigurationNumbersCall),
         GetParent(GetParentCall),
         GetValidator(GetValidatorCall),
@@ -798,6 +841,11 @@ pub mod subnet_actor_getter_facet {
                 <GenesisValidatorsCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::GenesisValidators(decoded));
+            }
+            if let Ok(decoded) =
+                <GetBootstrapNodesCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::GetBootstrapNodes(decoded));
             }
             if let Ok(decoded) =
                 <GetConfigurationNumbersCall as ::ethers::core::abi::AbiDecode>::decode(data)
@@ -857,6 +905,7 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::Consensus(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GenesisValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::GetBootstrapNodes(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::GetConfigurationNumbers(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -885,6 +934,7 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::Consensus(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GenesisValidators(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetBootstrapNodes(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetConfigurationNumbers(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetParent(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetValidator(element) => ::core::fmt::Display::fmt(element, f),
@@ -926,6 +976,11 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<GenesisValidatorsCall> for SubnetActorGetterFacetCalls {
         fn from(value: GenesisValidatorsCall) -> Self {
             Self::GenesisValidators(value)
+        }
+    }
+    impl ::core::convert::From<GetBootstrapNodesCall> for SubnetActorGetterFacetCalls {
+        fn from(value: GetBootstrapNodesCall) -> Self {
+            Self::GetBootstrapNodes(value)
         }
     }
     impl ::core::convert::From<GetConfigurationNumbersCall> for SubnetActorGetterFacetCalls {
@@ -1053,6 +1108,18 @@ pub mod subnet_actor_getter_facet {
         Hash,
     )]
     pub struct GenesisValidatorsReturn(pub ::std::vec::Vec<Validator>);
+    ///Container type for all return fields from the `getBootstrapNodes` function with signature `getBootstrapNodes()` and selector `0x9754b29e`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    pub struct GetBootstrapNodesReturn(pub ::std::vec::Vec<::std::string::String>);
     ///Container type for all return fields from the `getConfigurationNumbers` function with signature `getConfigurationNumbers()` and selector `0x38a210b3`
     #[derive(
         Clone,
