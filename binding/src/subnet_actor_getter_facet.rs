@@ -295,6 +295,28 @@ pub mod subnet_actor_getter_facet {
                     },],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("isWaitingValidator"),
+                    ::std::vec![::ethers::core::abi::ethabi::Function {
+                        name: ::std::borrow::ToOwned::to_owned("isWaitingValidator"),
+                        inputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::borrow::ToOwned::to_owned("validator"),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("address"),
+                            ),
+                        },],
+                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
+                            name: ::std::string::String::new(),
+                            kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                            internal_type: ::core::option::Option::Some(
+                                ::std::borrow::ToOwned::to_owned("bool"),
+                            ),
+                        },],
+                        constant: ::core::option::Option::None,
+                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                    },],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("killed"),
                     ::std::vec![::ethers::core::abi::ethabi::Function {
                         name: ::std::borrow::ToOwned::to_owned("killed"),
@@ -514,6 +536,15 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([64, 85, 10, 28], validator)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `isWaitingValidator` (0xd081be03) function
+        pub fn is_waiting_validator(
+            &self,
+            validator: ::ethers::core::types::Address,
+        ) -> ::ethers::contract::builders::ContractCall<M, bool> {
+            self.0
+                .method_hash([208, 129, 190, 3], validator)
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `killed` (0x1f3a0e41) function
         pub fn killed(&self) -> ::ethers::contract::builders::ContractCall<M, bool> {
             self.0
@@ -724,6 +755,21 @@ pub mod subnet_actor_getter_facet {
     pub struct IsActiveValidatorCall {
         pub validator: ::ethers::core::types::Address,
     }
+    ///Container type for all input parameters for the `isWaitingValidator` function with signature `isWaitingValidator(address)` and selector `0xd081be03`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "isWaitingValidator", abi = "isWaitingValidator(address)")]
+    pub struct IsWaitingValidatorCall {
+        pub validator: ::ethers::core::types::Address,
+    }
     ///Container type for all input parameters for the `killed` function with signature `killed()` and selector `0x1f3a0e41`
     #[derive(
         Clone,
@@ -804,6 +850,7 @@ pub mod subnet_actor_getter_facet {
         GetValidator(GetValidatorCall),
         IpcGatewayAddr(IpcGatewayAddrCall),
         IsActiveValidator(IsActiveValidatorCall),
+        IsWaitingValidator(IsWaitingValidatorCall),
         Killed(KilledCall),
         MinActivationCollateral(MinActivationCollateralCall),
         MinValidators(MinValidatorsCall),
@@ -869,6 +916,11 @@ pub mod subnet_actor_getter_facet {
             {
                 return Ok(Self::IsActiveValidator(decoded));
             }
+            if let Ok(decoded) =
+                <IsWaitingValidatorCall as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::IsWaitingValidator(decoded));
+            }
             if let Ok(decoded) = <KilledCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::Killed(decoded));
             }
@@ -913,6 +965,9 @@ pub mod subnet_actor_getter_facet {
                 Self::GetValidator(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::IpcGatewayAddr(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::IsActiveValidator(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::IsWaitingValidator(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::Killed(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::MinActivationCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
@@ -940,6 +995,7 @@ pub mod subnet_actor_getter_facet {
                 Self::GetValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::IpcGatewayAddr(element) => ::core::fmt::Display::fmt(element, f),
                 Self::IsActiveValidator(element) => ::core::fmt::Display::fmt(element, f),
+                Self::IsWaitingValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Killed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MinActivationCollateral(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MinValidators(element) => ::core::fmt::Display::fmt(element, f),
@@ -1006,6 +1062,11 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<IsActiveValidatorCall> for SubnetActorGetterFacetCalls {
         fn from(value: IsActiveValidatorCall) -> Self {
             Self::IsActiveValidator(value)
+        }
+    }
+    impl ::core::convert::From<IsWaitingValidatorCall> for SubnetActorGetterFacetCalls {
+        fn from(value: IsWaitingValidatorCall) -> Self {
+            Self::IsWaitingValidator(value)
         }
     }
     impl ::core::convert::From<KilledCall> for SubnetActorGetterFacetCalls {
@@ -1182,6 +1243,18 @@ pub mod subnet_actor_getter_facet {
         Hash,
     )]
     pub struct IsActiveValidatorReturn(pub bool);
+    ///Container type for all return fields from the `isWaitingValidator` function with signature `isWaitingValidator(address)` and selector `0xd081be03`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    pub struct IsWaitingValidatorReturn(pub bool);
     ///Container type for all return fields from the `killed` function with signature `killed()` and selector `0x1f3a0e41`
     #[derive(
         Clone,
