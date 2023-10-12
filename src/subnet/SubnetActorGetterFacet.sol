@@ -109,4 +109,20 @@ contract SubnetActorGetterFacet {
     function powerScale() external view returns (int8) {
         return s.powerScale;
     }
+
+    function getBootstrapNodes() external view returns (string[] memory) {
+        uint256 n = s.bootstrapOwners.length();
+        string[] memory nodes = new string[](n);
+        if (n == 0) {
+            return nodes;
+        }
+        address[] memory owners = s.bootstrapOwners.values();
+        for (uint256 i = 0; i < n; ) {
+            nodes[i] = s.bootstrapNodes[owners[i]];
+            unchecked {
+                ++i;
+            }
+        }
+        return nodes;
+    }
 }

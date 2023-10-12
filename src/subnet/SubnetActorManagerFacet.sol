@@ -143,10 +143,15 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that allows a validator to leave the subnet
     function leave() external notKilled {
+        // remove bootstrap nodes added by this validator
+
         uint256 amount = LibStaking.totalValidatorCollateral(msg.sender);
         if (amount == 0) {
             revert NotValidator();
         }
+
+        s.bootstrapOwners.remove(msg.sender);
+        delete s.bootstrapNodes[msg.sender];
 
         if (!s.bootstrapped) {
             LibStaking.withdrawWithConfirm(msg.sender, amount);
@@ -173,6 +178,19 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @notice Relayer claims its reward
     function claimRewardForRelayer() external nonReentrant {
         LibStaking.claimRewardForRelayer(msg.sender);
+    }
+
+    /// @notice add a bootstrap node
+    function addBootstrapNode(string memory netAddress) external {
+        if (!s.validatorSet.isActiveValidator(msg.sender)) {
+            revert NotValidator();
+        }
+        if (bytes(netAddress).length == 0) {
+            revert EmptyAddress();
+        }
+        s.bootstrapNodes[msg.sender] = netAddress;
+        // slither-disable-next-line unused-return
+        s.bootstrapOwners.add(msg.sender);
     }
 
     /// @notice reward the relayers for processing checkpoint at height `height`.
