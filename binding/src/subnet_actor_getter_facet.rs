@@ -365,22 +365,6 @@ pub mod subnet_actor_getter_facet {
                     },],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("name"),
-                    ::std::vec![::ethers::core::abi::ethabi::Function {
-                        name: ::std::borrow::ToOwned::to_owned("name"),
-                        inputs: ::std::vec![],
-                        outputs: ::std::vec![::ethers::core::abi::ethabi::Param {
-                            name: ::std::string::String::new(),
-                            kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize,),
-                            internal_type: ::core::option::Option::Some(
-                                ::std::borrow::ToOwned::to_owned("bytes32"),
-                            ),
-                        },],
-                        constant: ::core::option::Option::None,
-                        state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                    },],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("powerScale"),
                     ::std::vec![::ethers::core::abi::ethabi::Function {
                         name: ::std::borrow::ToOwned::to_owned("powerScale"),
@@ -563,12 +547,6 @@ pub mod subnet_actor_getter_facet {
         pub fn min_validators(&self) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([197, 171, 34, 65], ())
-                .expect("method not found (this should never happen)")
-        }
-        ///Calls the contract's `name` (0x06fdde03) function
-        pub fn name(&self) -> ::ethers::contract::builders::ContractCall<M, [u8; 32]> {
-            self.0
-                .method_hash([6, 253, 222, 3], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `powerScale` (0xad81e4d6) function
@@ -809,19 +787,6 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "minValidators", abi = "minValidators()")]
     pub struct MinValidatorsCall;
-    ///Container type for all input parameters for the `name` function with signature `name()` and selector `0x06fdde03`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    #[ethcall(name = "name", abi = "name()")]
-    pub struct NameCall;
     ///Container type for all input parameters for the `powerScale` function with signature `powerScale()` and selector `0xad81e4d6`
     #[derive(
         Clone,
@@ -854,7 +819,6 @@ pub mod subnet_actor_getter_facet {
         Killed(KilledCall),
         MinActivationCollateral(MinActivationCollateralCall),
         MinValidators(MinValidatorsCall),
-        Name(NameCall),
         PowerScale(PowerScaleCall),
     }
     impl ::ethers::core::abi::AbiDecode for SubnetActorGetterFacetCalls {
@@ -933,9 +897,6 @@ pub mod subnet_actor_getter_facet {
             {
                 return Ok(Self::MinValidators(decoded));
             }
-            if let Ok(decoded) = <NameCall as ::ethers::core::abi::AbiDecode>::decode(data) {
-                return Ok(Self::Name(decoded));
-            }
             if let Ok(decoded) = <PowerScaleCall as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::PowerScale(decoded));
             }
@@ -973,7 +934,6 @@ pub mod subnet_actor_getter_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::MinValidators(element) => ::ethers::core::abi::AbiEncode::encode(element),
-                Self::Name(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::PowerScale(element) => ::ethers::core::abi::AbiEncode::encode(element),
             }
         }
@@ -999,7 +959,6 @@ pub mod subnet_actor_getter_facet {
                 Self::Killed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MinActivationCollateral(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MinValidators(element) => ::core::fmt::Display::fmt(element, f),
-                Self::Name(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PowerScale(element) => ::core::fmt::Display::fmt(element, f),
             }
         }
@@ -1082,11 +1041,6 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<MinValidatorsCall> for SubnetActorGetterFacetCalls {
         fn from(value: MinValidatorsCall) -> Self {
             Self::MinValidators(value)
-        }
-    }
-    impl ::core::convert::From<NameCall> for SubnetActorGetterFacetCalls {
-        fn from(value: NameCall) -> Self {
-            Self::Name(value)
         }
     }
     impl ::core::convert::From<PowerScaleCall> for SubnetActorGetterFacetCalls {
@@ -1291,18 +1245,6 @@ pub mod subnet_actor_getter_facet {
         Hash,
     )]
     pub struct MinValidatorsReturn(pub u64);
-    ///Container type for all return fields from the `name` function with signature `name()` and selector `0x06fdde03`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash,
-    )]
-    pub struct NameReturn(pub [u8; 32]);
     ///Container type for all return fields from the `powerScale` function with signature `powerScale()` and selector `0xad81e4d6`
     #[derive(
         Clone,
