@@ -46,6 +46,10 @@ contract SubnetActorGetterFacet {
         return s.bottomUpCheckPeriod;
     }
 
+    function lastBottomUpCheckpointHeight() external view returns (uint64) {
+        return s.lastBottomUpCheckpointHeight;
+    }
+
     function consensus() external view returns (ConsensusType) {
         return s.consensus;
     }
