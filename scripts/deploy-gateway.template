@@ -132,7 +132,7 @@ export async function deploy(libs: { [key in string]: string }) {
         bottomUpCheckPeriod: 10,
         minCollateral: 1000,
         msgFee: ethers.utils.parseUnits("10", "gwei"),
-        majorityPercentage: 66
+        majorityPercentage: 66,
         genesisValidators: [],
         activeValidatorsLimit: 100,
     }
