@@ -24,10 +24,7 @@ export async function deploy() {
         "SubnetIDHelper": subnetIDHelperAddress
         },
         txArgs);
-    const { address: checkpointHelperAddress } = await deployContractWithDeployer(deployer, "CheckpointHelper", {
-        "SubnetIDHelper": subnetIDHelperAddress
-        },
-        txArgs);
+    const { address: checkpointHelperAddress } = await deployContractWithDeployer(deployer, "CheckpointHelper", {}, txArgs);
 
     return {
         "AccountHelper": accountHelperAddress,
