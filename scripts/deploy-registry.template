@@ -30,7 +30,7 @@ async function main() {
       deployer,
       "SubnetActorManagerFacet",
       {
-        "CheckpointHelper": LIBMAP["CheckpointHelper"]
+        "LibStaking": LIBMAP["LibStaking"]
       },
       txArgs
     );
