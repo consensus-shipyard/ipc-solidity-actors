@@ -137,7 +137,6 @@ export async function deploy(libs: { [key in string]: string }) {
     }
 
     const diamondLibs: Libraries = {
-        "SubnetIDHelper": libs["SubnetIDHelper"]
     }
 
     // deploy Diamond
