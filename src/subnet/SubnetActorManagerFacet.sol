@@ -259,7 +259,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         }
     }
 
-
     /**
      * @notice Hash a 65 byte public key and return the corresponding address.
      */
