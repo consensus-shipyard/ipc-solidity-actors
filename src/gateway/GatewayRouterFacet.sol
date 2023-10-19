@@ -102,6 +102,25 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// This is useful to understand if the finalities are consistent or if there have been reorgs.
     /// If there are no previous committed fainality, it will be default to zero values, i.e. zero height and block hash.
     /// @param finality - the parent finality
+    /// @param changeRequests - the validator changes
+    /// @param crossMsgs - The top down cross network messages
+    function commitParentFinalityBundle(
+        ParentFinality calldata finality,
+        StakingChangeRequest[] calldata changeRequests,
+        CrossMsg[] calldata crossMsgs
+    ) external systemActorOnly returns (bool hasCommittedBefore, ParentFinality memory previousFinality) {
+        previousFinality = LibGateway.commitParentFinality(finality);
+        s.validatorsTracker.batchStoreChange(changeRequests);
+        _applyMessages(SubnetID(0, new address[](0)), crossMsgs);
+        
+        hasCommittedBefore = previousFinality.height != 0;
+    }
+
+    /// @notice commit the ipc parent finality into storage and returns the previous committed finality
+    /// This is useful to understand if the finalities are consistent or if there have been reorgs.
+    /// If there are no previous committed fainality, it will be default to zero values, i.e. zero height and block hash.
+    /// @param finality - the parent finality
+    /// DEPRECATED
     function commitParentFinality(
         ParentFinality calldata finality
     ) external systemActorOnly returns (bool hasCommittedBefore, ParentFinality memory previousFinality) {
@@ -111,6 +130,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
     /// @notice Store the validator change requests from parent.
     /// @param changeRequests - the validator changes
+    /// DEPRECATED
     function storeValidatorChanges(StakingChangeRequest[] calldata changeRequests) external systemActorOnly {
         s.validatorsTracker.batchStoreChange(changeRequests);
     }
