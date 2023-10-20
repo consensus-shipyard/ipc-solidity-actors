@@ -573,6 +573,8 @@ library LibStaking {
 
         if (configurationNumber >= changeSet.nextConfigurationNumber) {
             revert CannotConfirmFutureChanges();
+        } else if (configurationNumber < changeSet.startConfigurationNumber) {
+            return;
         }
 
         uint64 start = changeSet.startConfigurationNumber;
@@ -645,6 +647,8 @@ library LibValidatorTracking {
     function confirmChange(ParentValidatorsTracker storage self, uint64 configurationNumber) internal {
         if (configurationNumber >= self.changes.nextConfigurationNumber) {
             revert CannotConfirmFutureChanges();
+        } else if (configurationNumber < self.changes.startConfigurationNumber) {
+            return;
         }
 
         uint64 start = self.changes.startConfigurationNumber;
