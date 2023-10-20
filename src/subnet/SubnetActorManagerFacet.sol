@@ -201,7 +201,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.bootstrapOwners.add(msg.sender);
     }
 
-    /// @notice reward the relayers for processing checkpoint at height `height`.
+    /// @notice reward the relayers for of the previous checkpoint after processing the one at height `height`.
     /// @dev The reward includes the fixed relayer reward and accumulated cross-message fees received from the gateway.
     /// @param height height of the checkpoint the relayers are rewarded for
     /// @param reward The sum of cross-message fees in the checkpoint
@@ -209,13 +209,18 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (reward == 0) {
             return;
         }
-        address[] memory relayers = s.rewardedRelayers[height].values();
+        uint64 previousHeight = height - s.bottomUpCheckPeriod;
+        address[] memory relayers = s.rewardedRelayers[previousHeight].values();
         uint256 relayersLength = relayers.length;
         if (relayersLength == 0) {
             return;
         }
         if (reward < relayersLength) {
-            revert NotEnoughBalanceForRewards();
+            // Reverting here would mean a single message with 1 atto reward
+            // relayed by 2 validators would mean the checkpoint cannot be
+            // submitted.
+            // revert NotEnoughBalanceForRewards();
+            return;
         }
         uint256 relayerReward = reward / relayersLength;
 
