@@ -154,7 +154,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
         uint256 amount = LibStaking.totalValidatorCollateral(msg.sender);
         if (amount == 0) {
-            revert NotValidator();
+            revert NotValidator(msg.sender);
         }
 
         // slither-disable-next-line unused-return
@@ -191,7 +191,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @notice add a bootstrap node
     function addBootstrapNode(string memory netAddress) external {
         if (!s.validatorSet.isActiveValidator(msg.sender)) {
-            revert NotValidator();
+            revert NotValidator(msg.sender);
         }
         if (bytes(netAddress).length == 0) {
             revert EmptyAddress();

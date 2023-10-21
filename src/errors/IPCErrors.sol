@@ -54,7 +54,7 @@ error NotOwnerOfPublicKey();
 error NotRegisteredSubnet();
 error NotStakedBefore();
 error NotSystemActor();
-error NotValidator();
+error NotValidator(address);
 error OldConfigurationNumber();
 error PQDoesNotContainAddress();
 error PQEmpty();

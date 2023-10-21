@@ -236,7 +236,7 @@ library LibValidatorSet {
 
         for (uint256 i = 0; i < size; ) {
             if (!isActiveValidator(validators, addresses[i])) {
-                revert NotValidator();
+                revert NotValidator(addresses[i]);
             }
             activeCollaterals[i] = validators.validators[addresses[i]].confirmedCollateral;
             unchecked {
