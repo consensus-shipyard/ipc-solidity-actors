@@ -174,8 +174,6 @@ library LibStakingReleaseQueue {
             delete self.releases[validator];
         }
 
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        IGateway(s.ipcGatewayAddr).releaseStake(amount);
         payable(validator).transfer(amount);
 
         return amount;
@@ -591,6 +589,7 @@ library LibStaking {
                 if (change.op == StakingOperation.Withdraw) {
                     s.validatorSet.confirmWithdraw(validator, amount);
                     s.releaseQueue.addNewRelease(validator, amount);
+                    IGateway(s.ipcGatewayAddr).releaseStake(amount);
                 } else {
                     s.validatorSet.confirmDeposit(validator, amount);
                     IGateway(s.ipcGatewayAddr).addStake{value: amount}();
