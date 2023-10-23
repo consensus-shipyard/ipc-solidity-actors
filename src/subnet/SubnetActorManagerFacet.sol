@@ -68,10 +68,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
             s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
 
+            // Execute messages.
+            IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
+
             // confirming the changes in membership in the child
             LibStaking.confirmChange(checkpoint.nextConfigurationNumber);
-
-            IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
         } else if (checkpoint.blockHeight == s.lastBottomUpCheckpointHeight) {
             // If the checkpoint height is equal to the last checkpoint height, then this is a repeated submission.
             // We should store the relayer, but not to execute checkpoint again.
