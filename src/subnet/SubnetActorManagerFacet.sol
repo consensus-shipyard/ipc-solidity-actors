@@ -249,8 +249,9 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     ) public view {
         // This call reverts if at least one of the signatories (validator) is not in the active validator set.
         uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
+        uint256 activeCollateral = s.validatorSet.getActiveCollateral();
 
-        uint256 threshold = (s.validatorSet.totalConfirmedCollateral * s.majorityPercentage) / 100;
+        uint256 threshold = (activeCollateral * s.majorityPercentage) / 100;
 
         (bool valid, MultisignatureChecker.Error err) = MultisignatureChecker.isValidWeightedMultiSignature({
             signatories: signatories,
