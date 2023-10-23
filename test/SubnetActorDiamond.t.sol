@@ -202,7 +202,7 @@ contract SubnetActorDiamondTest is Test {
 
         // not-validator adds a node
         vm.prank(vm.addr(200));
-        vm.expectRevert(NotValidator.selector);
+        vm.expectRevert(abi.encodeWithSelector(NotValidator.selector, vm.addr(200)));
         saManager.addBootstrapNode("3.4.5.6");
 
         string[] memory nodes = saGetter.getBootstrapNodes();
