@@ -237,8 +237,10 @@ contract SubnetActorDiamondTest is Test {
         ValidatorInfo memory v = saGetter.getValidator(validator1);
         require(v.totalCollateral == collateral, "total collateral not expected");
         require(v.confirmedCollateral == collateral, "confirmed collateral not 0");
+        require(saGetter.isActiveValidator(validator1), "not active validator");
         ensureBytesEqual(v.metadata, publicKey1);
         require(saGetter.bootstrapped(), "subnet not bootstrapped");
+        require(!saGetter.killed(), "subnet not killed");
         require(saGetter.genesisValidators().length == 1, "genesis validators not 1");
 
         (uint64 nextConfigNum, uint64 startConfigNum) = saGetter.getConfigurationNumbers();
@@ -256,6 +258,8 @@ contract SubnetActorDiamondTest is Test {
         v = saGetter.getValidator(validator2);
         require(v.totalCollateral == collateral, "total collateral not expected");
         require(v.confirmedCollateral == 0, "confirmed collateral not 0");
+        require(!saGetter.isActiveValidator(validator2), "active validator");
+        require(saGetter.isWaitingValidator(validator2), "not waiting validator");
         ensureBytesEqual(v.metadata, new bytes(0));
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
@@ -273,6 +277,7 @@ contract SubnetActorDiamondTest is Test {
             v.confirmedCollateral == DEFAULT_MIN_VALIDATOR_STAKE,
             "confirmed collateral not expected after confrim join"
         );
+        require(saGetter.isActiveValidator(validator2), "not active validator");
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
         require(
@@ -352,6 +357,7 @@ contract SubnetActorDiamondTest is Test {
             startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 4,
             "start config num not 5 after confirm leave"
         );
+        require(!saGetter.isActiveValidator(validator1), "active validator");
     }
 
     // function testSubnetActorDiamond_MultipleJoins_Works_GetValidators() public {
@@ -746,7 +752,13 @@ contract SubnetActorDiamondTest is Test {
             "saGetter.minActivationCollateral() == _minActivationCollateral"
         );
         require(saGetter.minValidators() == _minValidators, "saGetter.minValidators() == _minValidators");
-        require(saGetter.consensus() == _consensus);
+        require(saGetter.consensus() == _consensus, "consensus");
+        require(saGetter.getParent().equals(_parentId), "parent");
+        require(saGetter.activeValidatorsLimit() == 100, "activeValidatorsLimit");
+        require(saGetter.powerScale() == 12, "powerscale");
+        require(saGetter.minCrossMsgFee() == CROSS_MSG_FEE, "cross-msg fee");
+        require(saGetter.bottomUpCheckPeriod() == _checkPeriod, "bottom-up period");
+        require(saGetter.majorityPercentage() == _majorityPercentage, "majority percentage");
         require(
             saGetter.getParent().toHash() == _parentId.toHash(),
             "parent.toHash() == SubnetID({root: ROOTNET_CHAINID, route: path}).toHash()"

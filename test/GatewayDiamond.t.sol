@@ -1351,9 +1351,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
-            blockHash: keccak256("block"),
+            blockHash: keccak256("block1"),
             nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            crossMessagesHash: keccak256("messages1")
         });
 
         // failed to create a checkpoint with zero membership weight
@@ -1366,6 +1366,11 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
+
+        BottomUpCheckpoint memory recv = gwGetter.bottomUpCheckpoint(gwGetter.bottomUpCheckPeriod());
+        require(recv.nextConfigurationNumber == 1, "nextConfigurationNumber incorrect");
+        require(recv.blockHash == keccak256("block1"), "block hash incorrect");
+        require(recv.crossMessagesHash == keccak256("messages1"), "received cross messages incorrect");
 
         // failed to create a checkpoint with the same height
         checkpoint = BottomUpCheckpoint({
@@ -1381,11 +1386,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
+
         // failed to create a checkpoint with the height not multiple to checkpoint period
         checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod() + gwGetter.bottomUpCheckPeriod() / 2,
-            blockHash: keccak256("block"),
+            blockHash: keccak256("block2"),
             nextConfigurationNumber: 2,
             crossMessagesHash: keccak256("newmessages")
         });
