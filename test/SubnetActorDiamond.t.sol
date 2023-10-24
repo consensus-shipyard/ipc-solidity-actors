@@ -233,6 +233,45 @@ contract SubnetActorDiamondTest is Test {
         require(nodes.length == 0, "no nodes");
     }
 
+    function testSubnetActorDiamond_Kill() public {
+        (address validator, bytes memory publicKey) = deriveValidatorAddress(100);
+
+        vm.deal(validator, 10 gwei);
+        vm.prank(validator);
+        saManager.join{value: 10}(publicKey);
+
+        // non-empty subnet can't be killed
+        vm.expectRevert(NotAllValidatorsHaveLeft.selector);
+        saManager.kill();
+
+        // leave the subnet and kill it
+        vm.prank(validator);
+        saManager.leave();
+
+        // anyone can kill a subnet
+        vm.prank(vm.addr(101));
+        saManager.kill();
+    }
+
+    function testSubnetActorDiamond_Stake() public {
+        (address validator, bytes memory publicKey) = deriveValidatorAddress(100);
+        vm.deal(validator, 10 gwei);
+
+        vm.prank(validator);
+        vm.expectRevert(CollateralIsZero.selector);
+        saManager.stake();
+
+        vm.prank(validator);
+        vm.expectRevert(NotStakedBefore.selector);
+        saManager.stake{value: 10}();
+
+        vm.prank(validator);
+        saManager.join{value: 3}(publicKey);
+
+        ValidatorInfo memory info = saGetter.getValidator(validator);
+        require(info.totalCollateral == 3);
+    }
+
     /// @notice Testing the basic join, stake, leave lifecycle of validators
     function testSubnetActorDiamond_BasicLifeCycle() public {
         (address validator1, bytes memory publicKey1) = deriveValidatorAddress(100);
@@ -396,7 +435,6 @@ contract SubnetActorDiamondTest is Test {
 
     function testSubnetActorDiamond_validateActiveQuorumSignatures_InvalidSignature() public {
         (uint256[] memory keys, address[] memory validators,) = TestUtils.getThreeValidators(vm);
-
         bytes[] memory pubKeys = new bytes[](3);
         bytes[] memory signatures = new bytes[](3);
 
@@ -414,6 +452,91 @@ contract SubnetActorDiamondTest is Test {
 
         vm.expectRevert();
         saManager.validateActiveQuorumSignatures(validators, hash0, signatures);
+    }
+
+    function testSubnetActorDiamond_submitCheckpoint() public {
+        (uint256[] memory keys, address[] memory validators,) = TestUtils.getThreeValidators(vm);
+        bytes[] memory pubKeys = new bytes[](3);
+        bytes[] memory signatures = new bytes[](3);
+
+        for (uint256 i = 0; i < 3; i++) {
+            vm.deal(validators[i], 10 gwei);
+            pubKeys[i] = TestUtils.deriveValidatorPubKeyBytes(keys[i]);
+            vm.prank(validators[i]);
+            saManager.join{value: 10}(pubKeys[i]);
+        }
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+            from: IPCAddress({
+            subnetId: saGetter.getParent(),
+            rawAddress: FvmAddressHelper.from(address(this))
+        }),
+            to: IPCAddress({
+            subnetId: saGetter.getParent(),
+            rawAddress: FvmAddressHelper.from(address(this))
+        }),
+            value: CROSS_MSG_FEE + 1,
+            nonce: 0,
+            method: METHOD_SEND,
+            params: new bytes(0),
+            fee: CROSS_MSG_FEE
+        }),
+            wrapped: false
+        });
+        CrossMsg[] memory msgs = new CrossMsg[](1);
+        msgs[0] = crossMsg;
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: saGetter.getParent(),
+            blockHeight: saGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 0,
+            crossMessagesHash: keccak256(abi.encode(msgs))
+        });
+
+        BottomUpCheckpoint memory checkpointWithIncorrectHeight = BottomUpCheckpoint({
+            subnetID: saGetter.getParent(),
+            blockHeight: 1,
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 0,
+            crossMessagesHash: keccak256(abi.encode(msgs))
+        });
+
+        BottomUpCheckpoint memory checkpointWithIncorrectHash = BottomUpCheckpoint({
+            subnetID: saGetter.getParent(),
+            blockHeight: saGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 0,
+            crossMessagesHash: keccak256(abi.encode("1"))
+        });
+
+        bytes32 hash = keccak256(abi.encode(checkpoint));
+
+        for (uint256 i = 0; i < 3; i++) {
+            (uint8 v, bytes32 r, bytes32 s) = vm.sign(keys[i], hash);
+            signatures[i] = abi.encodePacked(r, s, v);
+        }
+
+        vm.prank(validators[0]);
+        vm.expectRevert(InvalidCheckpointEpoch.selector);
+        saManager.submitCheckpoint(checkpointWithIncorrectHeight, msgs, validators, signatures);
+
+        vm.prank(validators[0]);
+        vm.expectRevert(InvalidCheckpointMessagesHash.selector);
+        saManager.submitCheckpoint(checkpointWithIncorrectHash, msgs, validators, signatures);
+
+        vm.prank(validators[0]);
+        vm.expectCall(gatewayAddress, abi.encodeCall(IGateway.commitBottomUpCheckpoint, (checkpoint, msgs)), 1);
+        saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
+
+        require(saGetter.hasSubmittedInLastBottomUpCheckpointHeight(validators[0]), "validator rewarded");
+        require(saGetter.lastBottomUpCheckpointHeight() == saGetter.bottomUpCheckPeriod(), " checkpoint height correct");
+
+        vm.prank(validators[1]);
+        saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
+        require(saGetter.hasSubmittedInLastBottomUpCheckpointHeight(validators[1]), "validator rewarded");
+        require(saGetter.lastBottomUpCheckpointHeight() == saGetter.bottomUpCheckPeriod(), " checkpoint height correct");
     }
 
     // function testSubnetActorDiamond_MultipleJoins_Works_GetValidators() public {
