@@ -220,7 +220,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             // Reverting here would mean a single message with 1 atto reward
             // relayed by 2 validators would mean the checkpoint cannot be
             // submitted.
-            // revert NotEnoughBalanceForRewards();
             return;
         }
         uint256 relayerReward = reward / relayersLength;
