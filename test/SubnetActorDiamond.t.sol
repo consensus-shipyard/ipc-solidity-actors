@@ -357,7 +357,7 @@ contract SubnetActorDiamondTest is Test {
         (address validator, bytes memory publicKey) = deriveValidatorAddress(100);
 
         vm.prank(validator);
-        vm.expectRevert(NotValidator.selector);
+        vm.expectRevert(abi.encodeWithSelector(NotValidator.selector, validator));
         saManager.unstake(10);
 
         vm.deal(validator, 10 gwei);
