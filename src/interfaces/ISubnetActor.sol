@@ -15,10 +15,10 @@ interface ISubnetActor {
     /// Called by peers looking to leave a subnet.
     function leave() external;
 
-    /// Method that allows a validator to increase its stake
+    /// Method that allows a validator to increase their stake
     function stake() external payable;
 
-    /// Method that allows a validator to unstake its collateral from a subnet
+    /// Method that allows a validator to unstake their collateral from a subnet
     function unstake(uint256 amount) external;
 
     /// Unregister the subnet from the hierarchy, making it no longer discoverable.

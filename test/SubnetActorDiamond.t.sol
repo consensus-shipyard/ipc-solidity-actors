@@ -356,6 +356,10 @@ contract SubnetActorDiamondTest is Test {
     function testSubnetActorDiamond_Unstake() public {
         (address validator, bytes memory publicKey) = deriveValidatorAddress(100);
 
+        vm.prank(validator);
+        vm.expectRevert(NotValidator.selector);
+        saManager.unstake(10);
+
         vm.deal(validator, 10 gwei);
         vm.prank(validator);
         saManager.join{value: 10}(publicKey);

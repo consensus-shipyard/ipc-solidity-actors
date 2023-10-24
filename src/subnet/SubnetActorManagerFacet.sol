@@ -149,9 +149,17 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice method that allows a validator to unstake a part of its collateral from a subnet
+    /// @dev `leave` must be used to unstake the entire stake.
     function unstake(uint256 amount) external notKilled {
+        if (LibStaking.totalValidatorCollateral(msg.sender) == 0) {
+            revert NotValidator();
+        }
         if (LibStaking.totalValidatorCollateral(msg.sender) <= amount) {
             revert NotEnoughCollateral();
+        }
+        if (!s.bootstrapped) {
+            LibStaking.withdrawWithConfirm(msg.sender, amount);
+            return;
         }
 
         LibStaking.withdraw(msg.sender, amount);
