@@ -2,6 +2,7 @@
 pragma solidity 0.8.19;
 
 import {Test} from "forge-std/Test.sol";
+import {TestUtils} from "./TestUtils.sol";
 import {console} from "forge-std/console.sol";
 import "../src/errors/IPCErrors.sol";
 import {TestUtils} from "./TestUtils.sol";
@@ -106,6 +107,19 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function deriveValidatorAddress(uint8 seq) internal pure returns (address addr, bytes memory data) {
+        data = new bytes(65);
+        data[1] = bytes1(seq);
+
+        // use data[1:] for the hash
+        bytes memory dataSubset = new bytes(data.length - 1);
+        for (uint i = 1; i < data.length; i++) {
+            dataSubset[i - 1] = data[i];
+        }
+
+        addr = address(uint160(uint256(keccak256(dataSubset))));
+    }
+
+    function derivePubKey(uint8 seq) internal pure returns (address addr, bytes memory data) {
         data = new bytes(65);
         data[1] = bytes1(seq);
 
@@ -358,6 +372,48 @@ contract SubnetActorDiamondTest is Test {
             "start config num not 5 after confirm leave"
         );
         require(!saGetter.isActiveValidator(validator1), "active validator");
+    }
+
+    function testSubnetActorDiamond_validateActiveQuorumSignatures() public {
+        (uint256[] memory keys, address[] memory validators,) = TestUtils.getThreeValidators(vm);
+
+        bytes[] memory pubKeys = new bytes[](3);
+        bytes[] memory signatures = new bytes[](3);
+
+        bytes32 hash = keccak256(abi.encodePacked("test"));
+
+        for (uint256 i = 0; i < 3; i++) {
+            (uint8 v, bytes32 r, bytes32 s) = vm.sign(keys[i], hash);
+            signatures[i] = abi.encodePacked(r, s, v);
+            pubKeys[i] = TestUtils.deriveValidatorPubKeyBytes(keys[i]);
+            vm.deal(validators[i], 10 gwei);
+            vm.prank(validators[i]);
+            saManager.join{value: 10}(pubKeys[i]);
+        }
+
+        saManager.validateActiveQuorumSignatures(validators, hash, signatures);
+    }
+
+    function testSubnetActorDiamond_validateActiveQuorumSignatures_InvalidSignature() public {
+        (uint256[] memory keys, address[] memory validators,) = TestUtils.getThreeValidators(vm);
+
+        bytes[] memory pubKeys = new bytes[](3);
+        bytes[] memory signatures = new bytes[](3);
+
+        bytes32 hash = keccak256(abi.encodePacked("test"));
+        bytes32 hash0 = keccak256(abi.encodePacked("test1"));
+
+        for (uint256 i = 0; i < 3; i++) {
+            (uint8 v, bytes32 r, bytes32 s) = vm.sign(keys[i], hash);
+            signatures[i] = abi.encodePacked(r, s, v);
+            pubKeys[i] = TestUtils.deriveValidatorPubKeyBytes(keys[i]);
+            vm.deal(validators[i], 10 gwei);
+            vm.prank(validators[i]);
+            saManager.join{value: 10}(pubKeys[i]);
+        }
+
+        vm.expectRevert();
+        saManager.validateActiveQuorumSignatures(validators, hash0, signatures);
     }
 
     // function testSubnetActorDiamond_MultipleJoins_Works_GetValidators() public {
