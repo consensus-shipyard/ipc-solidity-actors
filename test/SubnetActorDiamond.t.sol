@@ -325,7 +325,7 @@ contract SubnetActorDiamondTest is Test {
         require(saGetter.isActiveValidator(validator1), "not active validator 1");
         require(!saGetter.isWaitingValidator(validator1), "waiting validator 1");
         require(!saGetter.isActiveValidator(validator2), "active validator2");
-        require(!saGetter.isWaitingValidator(validator2), "not waiting validator2-3");
+        require(!saGetter.isWaitingValidator(validator2), "not waiting validator2");
         ensureBytesEqual(v.metadata, new bytes(0));
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
@@ -348,7 +348,7 @@ contract SubnetActorDiamondTest is Test {
         require(!saGetter.isWaitingValidator(validator1), "waiting validator1");
         require(saGetter.isActiveValidator(validator2), "not active validator2");
         require(!saGetter.isWaitingValidator(validator2), "not waiting validator2");
-
+g
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
         require(
             nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER + 2,
