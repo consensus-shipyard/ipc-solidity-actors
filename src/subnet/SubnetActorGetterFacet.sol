@@ -144,4 +144,8 @@ contract SubnetActorGetterFacet {
     function crossMsgsHash(CrossMsg[] calldata messages) external pure returns (bytes32) {
         return keccak256(abi.encode(messages));
     }
+
+    function getRelayerReward(address relayer) external view returns (uint256) {
+        return s.relayerRewards[relayer];
+    }
 }

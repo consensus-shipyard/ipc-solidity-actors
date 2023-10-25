@@ -1386,7 +1386,6 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
-
         // failed to create a checkpoint with the height not multiple to checkpoint period
         checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
@@ -1458,11 +1457,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_addCheckpointSignature_newCheckpoint() public {
-        (
-            uint256[] memory privKeys,
-            address[] memory addrs,
-            uint256[] memory weights
-        ) = TestUtils.getThreeValidators(vm);
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(
+            vm
+        );
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
@@ -1503,11 +1500,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_addCheckpointSignature_quorum() public {
-        (
-            uint256[] memory privKeys,
-            address[] memory addrs,
-            uint256[] memory weights
-        ) = TestUtils.getThreeValidators(vm);
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(
+            vm
+        );
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
@@ -1565,11 +1560,9 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_addCheckpointSignature_notAuthorized() public {
-        (
-            uint256[] memory privKeys,
-            address[] memory addrs,
-            uint256[] memory weights
-        ) = TestUtils.getThreeValidators(vm);
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(
+            vm
+        );
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);

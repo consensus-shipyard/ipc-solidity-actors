@@ -8,7 +8,6 @@ import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
 import "elliptic-curve-solidity/contracts/EllipticCurve.sol";
 
 contract MultisignatureCheckerTest is StdInvariant, Test {
-
     /// @dev `derivePubKey` is going to be used only in tests. This test is not complete, and covers only usage of
     /// foundry tools.
     function testPublicKeyDerivation(uint256 key) public pure {
