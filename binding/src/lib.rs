@@ -23,3 +23,16 @@ pub mod subnet_actor_manager_facet;
 pub mod subnet_registry;
 #[allow(clippy::all)]
 pub mod lib_staking;
+#[allow(clippy::all)]
+pub mod lib_staking_change_log;
+
+// The list of contracts need to convert FvmAddress to fvm_shared::Address
+fvm_address_conversion!(gateway_manager_facet);
+fvm_address_conversion!(gateway_getter_facet);
+fvm_address_conversion!(gateway_router_facet);
+fvm_address_conversion!(gateway_messenger_facet);
+fvm_address_conversion!(subnet_actor_manager_facet);
+
+// The list of contracts that need to convert common types between each other
+common_type_conversion!(gateway_getter_facet, subnet_actor_manager_facet);
+common_type_conversion!(subnet_actor_getter_facet, gateway_router_facet);
