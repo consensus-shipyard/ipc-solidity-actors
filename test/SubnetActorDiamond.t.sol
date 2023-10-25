@@ -295,15 +295,15 @@ contract SubnetActorDiamondTest is Test {
         // collateral confirmed immediately and network boostrapped
         ValidatorInfo memory v = saGetter.getValidator(validator1);
         require(v.totalCollateral == collateral, "total collateral not expected");
-        require(v.confirmedCollateral == collateral, "confirmed collateral not 0");
+        require(v.confirmedCollateral == collateral, "confirmed collateral not equal to collateral");
         require(saGetter.isActiveValidator(validator1), "not active validator 1");
         require(!saGetter.isWaitingValidator(validator1), "waiting validator 1");
         require(!saGetter.isActiveValidator(validator2), "active validator2");
         require(!saGetter.isWaitingValidator(validator2), "waiting validator2");
         ensureBytesEqual(v.metadata, publicKey1);
         require(saGetter.bootstrapped(), "subnet not bootstrapped");
-        require(!saGetter.killed(), "subnet not killed");
-        require(saGetter.genesisValidators().length == 1, "genesis validators not 1");
+        require(!saGetter.killed(), "subnet killed");
+        require(saGetter.genesisValidators().length == 1, "not one validator in genesis");
 
         (uint64 nextConfigNum, uint64 startConfigNum) = saGetter.getConfigurationNumbers();
         require(nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER, "next config num not 1");
@@ -321,11 +321,11 @@ contract SubnetActorDiamondTest is Test {
         // collateral not confirmed yet
         v = saGetter.getValidator(validator2);
         require(v.totalCollateral == collateral, "total collateral not expected");
-        require(v.confirmedCollateral == 0, "confirmed collateral not 0");
+        require(v.confirmedCollateral == 0, "confirmed collateral not equal to collateral");
         require(saGetter.isActiveValidator(validator1), "not active validator 1");
         require(!saGetter.isWaitingValidator(validator1), "waiting validator 1");
         require(!saGetter.isActiveValidator(validator2), "active validator2");
-        require(!saGetter.isWaitingValidator(validator2), "not waiting validator2");
+        require(!saGetter.isWaitingValidator(validator2), "waiting validator2");
         ensureBytesEqual(v.metadata, new bytes(0));
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
@@ -347,7 +347,7 @@ contract SubnetActorDiamondTest is Test {
         require(saGetter.isActiveValidator(validator1), "not active validator1");
         require(!saGetter.isWaitingValidator(validator1), "waiting validator1");
         require(saGetter.isActiveValidator(validator2), "not active validator2");
-        require(!saGetter.isWaitingValidator(validator2), "not waiting validator2");
+        require(!saGetter.isWaitingValidator(validator2), "waiting validator2");
 
         (nextConfigNum, startConfigNum) = saGetter.getConfigurationNumbers();
         require(
