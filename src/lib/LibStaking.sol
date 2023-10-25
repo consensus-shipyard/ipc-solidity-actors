@@ -6,97 +6,10 @@ import {LibSubnetActorStorage, SubnetActorStorage} from "./LibSubnetActorStorage
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
+import {LibStakingChangeLog} from "./LibStakingChangeLog.sol";
 import {StakingReleaseQueue, StakingChangeLog, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker, Validator} from "../structs/Subnet.sol";
 import {NoRewardToWithdraw, WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
-
-/// The util library for `StakingChangeLog`
-library LibStakingChangeLog {
-    event NewStakingChangeRequest(StakingOperation op, address validator, bytes payload, uint64 configurationNumber);
-
-    /// @notice Validator request to update its metadata
-    function metadataRequest(StakingChangeLog storage changes, address validator, bytes calldata metadata) internal {
-        uint64 configurationNumber = recordChange({
-            changes: changes,
-            validator: validator,
-            op: StakingOperation.SetMetadata,
-            payload: metadata
-        });
-
-        emit NewStakingChangeRequest({
-            op: StakingOperation.SetMetadata,
-            validator: validator,
-            payload: metadata,
-            configurationNumber: configurationNumber
-        });
-    }
-
-    /// @notice Perform upsert operation to the withdraw changes, return total value to withdraw
-    /// @notice of the validator.
-    /// Each insert will increment the configuration number by 1, update will not.
-    function withdrawRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
-        bytes memory payload = abi.encode(amount);
-
-        uint64 configurationNumber = recordChange({
-            changes: changes,
-            validator: validator,
-            op: StakingOperation.Withdraw,
-            payload: payload
-        });
-
-        emit NewStakingChangeRequest({
-            op: StakingOperation.Withdraw,
-            validator: validator,
-            payload: payload,
-            configurationNumber: configurationNumber
-        });
-    }
-
-    /// @notice Perform upsert operation to the deposit changes
-    function depositRequest(StakingChangeLog storage changes, address validator, uint256 amount) internal {
-        bytes memory payload = abi.encode(amount);
-
-        uint64 configurationNumber = recordChange({
-            changes: changes,
-            validator: validator,
-            op: StakingOperation.Deposit,
-            payload: payload
-        });
-
-        emit NewStakingChangeRequest({
-            op: StakingOperation.Deposit,
-            validator: validator,
-            payload: payload,
-            configurationNumber: configurationNumber
-        });
-    }
-
-    /// @notice Perform upsert operation to the deposit changes
-    function recordChange(
-        StakingChangeLog storage changes,
-        address validator,
-        StakingOperation op,
-        bytes memory payload
-    ) internal returns (uint64 configurationNumber) {
-        configurationNumber = changes.nextConfigurationNumber;
-
-        changes.changes[configurationNumber] = StakingChange({op: op, validator: validator, payload: payload});
-
-        changes.nextConfigurationNumber = configurationNumber + 1;
-    }
-
-    /// @notice Get the change at configuration number
-    function getChange(
-        StakingChangeLog storage changes,
-        uint64 configurationNumber
-    ) internal view returns (StakingChange storage) {
-        return changes.changes[configurationNumber];
-    }
-
-    function purgeChange(StakingChangeLog storage changes, uint64 configurationNumber) internal {
-        delete changes.changes[configurationNumber];
-    }
-}
 
 library LibAddressStakingReleases {
     /// @notice Add new release to the storage. Caller makes sure the release.releasedAt is ordered
@@ -174,8 +87,6 @@ library LibStakingReleaseQueue {
             delete self.releases[validator];
         }
 
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        IGateway(s.ipcGatewayAddr).releaseStake(amount);
         payable(validator).transfer(amount);
 
         return amount;
@@ -225,6 +136,18 @@ library LibValidatorSet {
         return addresses;
     }
 
+    /// @notice Get the total collateral of *active* validators.
+    function getActiveCollateral(ValidatorSet storage validators) internal view returns (uint256 collateral) {
+        uint16 size = validators.activeValidators.getSize();
+        for (uint16 i = 1; i <= size; ) {
+            address validator = validators.activeValidators.getAddress(i);
+            collateral += getConfirmedCollateral(validators, validator);
+            unchecked {
+                ++i;
+            }
+        }
+    }
+
     /// @notice Get the confirmed collaterals of the validators.
     /// The function reverts if at least one validator is not in the active validator set.
     function getConfirmedCollaterals(
@@ -236,7 +159,7 @@ library LibValidatorSet {
 
         for (uint256 i = 0; i < size; ) {
             if (!isActiveValidator(validators, addresses[i])) {
-                revert NotValidator();
+                revert NotValidator(addresses[i]);
             }
             activeCollaterals[i] = validators.validators[addresses[i]].confirmedCollateral;
             unchecked {
@@ -286,8 +209,9 @@ library LibValidatorSet {
 
     function confirmWithdraw(ValidatorSet storage self, address validator, uint256 amount) internal {
         uint256 newCollateral = self.validators[validator].confirmedCollateral - amount;
+        uint256 totalCollateral = self.validators[validator].totalCollateral;
 
-        if (newCollateral == 0) {
+        if (newCollateral == 0 && totalCollateral == 0) {
             delete self.validators[validator];
         } else {
             self.validators[validator].confirmedCollateral = newCollateral;
@@ -573,6 +497,8 @@ library LibStaking {
 
         if (configurationNumber >= changeSet.nextConfigurationNumber) {
             revert CannotConfirmFutureChanges();
+        } else if (configurationNumber < changeSet.startConfigurationNumber) {
+            return;
         }
 
         uint64 start = changeSet.startConfigurationNumber;
@@ -588,6 +514,7 @@ library LibStaking {
                 if (change.op == StakingOperation.Withdraw) {
                     s.validatorSet.confirmWithdraw(validator, amount);
                     s.releaseQueue.addNewRelease(validator, amount);
+                    IGateway(s.ipcGatewayAddr).releaseStake(amount);
                 } else {
                     s.validatorSet.confirmDeposit(validator, amount);
                     IGateway(s.ipcGatewayAddr).addStake{value: amount}();
@@ -645,6 +572,8 @@ library LibValidatorTracking {
     function confirmChange(ParentValidatorsTracker storage self, uint64 configurationNumber) internal {
         if (configurationNumber >= self.changes.nextConfigurationNumber) {
             revert CannotConfirmFutureChanges();
+        } else if (configurationNumber < self.changes.startConfigurationNumber) {
+            return;
         }
 
         uint64 start = self.changes.startConfigurationNumber;

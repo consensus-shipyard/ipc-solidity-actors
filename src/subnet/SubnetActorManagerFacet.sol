@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {CollateralIsZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalanceForRewards, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength} from "../errors/IPCErrors.sol";
+import {CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
@@ -68,10 +68,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
             s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
 
+            // Execute messages.
+            IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
+
             // confirming the changes in membership in the child
             LibStaking.confirmChange(checkpoint.nextConfigurationNumber);
-
-            IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
         } else if (checkpoint.blockHeight == s.lastBottomUpCheckpointHeight) {
             // If the checkpoint height is equal to the last checkpoint height, then this is a repeated submission.
             // We should store the relayer, but not to execute checkpoint again.
@@ -130,7 +131,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         }
     }
 
-    /// @notice method that allows a validator to increase their stake
+    /// @notice method that allows a validator to increase its stake
     function stake() external payable notKilled {
         if (msg.value == 0) {
             revert CollateralIsZero();
@@ -148,13 +149,36 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         LibStaking.deposit(msg.sender, msg.value);
     }
 
+    /// @notice method that allows a validator to unstake a part of its collateral from a subnet
+    /// @dev `leave` must be used to unstake the entire stake.
+    function unstake(uint256 amount) external notKilled {
+        if (amount == 0) {
+            revert CannotReleaseZero();
+        }
+
+        uint256 collateral = LibStaking.totalValidatorCollateral(msg.sender);
+
+        if (collateral == 0) {
+            revert NotValidator(msg.sender);
+        }
+        if (collateral <= amount) {
+            revert NotEnoughCollateral();
+        }
+        if (!s.bootstrapped) {
+            LibStaking.withdrawWithConfirm(msg.sender, amount);
+            return;
+        }
+
+        LibStaking.withdraw(msg.sender, amount);
+    }
+
     /// @notice method that allows a validator to leave the subnet
     function leave() external notKilled {
         // remove bootstrap nodes added by this validator
 
         uint256 amount = LibStaking.totalValidatorCollateral(msg.sender);
         if (amount == 0) {
-            revert NotValidator();
+            revert NotValidator(msg.sender);
         }
 
         // slither-disable-next-line unused-return
@@ -191,7 +215,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @notice add a bootstrap node
     function addBootstrapNode(string memory netAddress) external {
         if (!s.validatorSet.isActiveValidator(msg.sender)) {
-            revert NotValidator();
+            revert NotValidator(msg.sender);
         }
         if (bytes(netAddress).length == 0) {
             revert EmptyAddress();
@@ -201,7 +225,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.bootstrapOwners.add(msg.sender);
     }
 
-    /// @notice reward the relayers for processing checkpoint at height `height`.
+    /// @notice reward the relayers for of the previous checkpoint after processing the one at height `height`.
     /// @dev The reward includes the fixed relayer reward and accumulated cross-message fees received from the gateway.
     /// @param height height of the checkpoint the relayers are rewarded for
     /// @param reward The sum of cross-message fees in the checkpoint
@@ -209,13 +233,17 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (reward == 0) {
             return;
         }
-        address[] memory relayers = s.rewardedRelayers[height].values();
+        uint64 previousHeight = height - s.bottomUpCheckPeriod;
+        address[] memory relayers = s.rewardedRelayers[previousHeight].values();
         uint256 relayersLength = relayers.length;
         if (relayersLength == 0) {
             return;
         }
         if (reward < relayersLength) {
-            revert NotEnoughBalanceForRewards();
+            // Reverting here would mean a single message with 1 atto reward
+            // relayed by 2 validators would mean the checkpoint cannot be
+            // submitted.
+            return;
         }
         uint256 relayerReward = reward / relayersLength;
 
@@ -243,8 +271,9 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     ) public view {
         // This call reverts if at least one of the signatories (validator) is not in the active validator set.
         uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
+        uint256 activeCollateral = s.validatorSet.getActiveCollateral();
 
-        uint256 threshold = (s.validatorSet.totalConfirmedCollateral * s.majorityPercentage) / 100;
+        uint256 threshold = (activeCollateral * s.majorityPercentage) / 100;
 
         (bool valid, MultisignatureChecker.Error err) = MultisignatureChecker.isValidWeightedMultiSignature({
             signatories: signatories,

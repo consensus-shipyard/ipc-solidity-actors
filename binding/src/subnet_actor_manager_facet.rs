@@ -274,6 +274,28 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("unstake"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("unstake"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("amount"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("validateActiveQuorumSignatures"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -458,6 +480,15 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("CannotReleaseZero"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("CannotReleaseZero"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("CollateralIsZero"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -550,11 +581,11 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("NotEnoughBalanceForRewards"),
+                    ::std::borrow::ToOwned::to_owned("NotEnoughCollateral"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "NotEnoughBalanceForRewards",
+                                "NotEnoughCollateral",
                             ),
                             inputs: ::std::vec![],
                         },
@@ -594,7 +625,15 @@ pub mod subnet_actor_manager_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("NotValidator"),
-                            inputs: ::std::vec![],
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address"),
+                                    ),
+                                },
+                            ],
                         },
                     ],
                 ),
@@ -769,6 +808,15 @@ pub mod subnet_actor_manager_facet {
                 )
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `unstake` (0x2e17de78) function
+        pub fn unstake(
+            &self,
+            amount: ::ethers::core::types::U256,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([46, 23, 222, 120], amount)
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `validateActiveQuorumSignatures` (0xcc2dc2b9) function
         pub fn validate_active_quorum_signatures(
             &self,
@@ -865,6 +913,19 @@ pub mod subnet_actor_manager_facet {
         abi = "CannotConfirmFutureChanges()"
     )]
     pub struct CannotConfirmFutureChanges;
+    ///Custom Error type `CannotReleaseZero` with signature `CannotReleaseZero()` and selector `0xc79cad7b`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[etherror(name = "CannotReleaseZero", abi = "CannotReleaseZero()")]
+    pub struct CannotReleaseZero;
     ///Custom Error type `CollateralIsZero` with signature `CollateralIsZero()` and selector `0xb4f18b02`
     #[derive(
         Clone,
@@ -972,7 +1033,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "NotAllValidatorsHaveLeft", abi = "NotAllValidatorsHaveLeft()")]
     pub struct NotAllValidatorsHaveLeft;
-    ///Custom Error type `NotEnoughBalanceForRewards` with signature `NotEnoughBalanceForRewards()` and selector `0x60e9957e`
+    ///Custom Error type `NotEnoughCollateral` with signature `NotEnoughCollateral()` and selector `0x34477cc0`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -983,11 +1044,8 @@ pub mod subnet_actor_manager_facet {
         Eq,
         Hash,
     )]
-    #[etherror(
-        name = "NotEnoughBalanceForRewards",
-        abi = "NotEnoughBalanceForRewards()"
-    )]
-    pub struct NotEnoughBalanceForRewards;
+    #[etherror(name = "NotEnoughCollateral", abi = "NotEnoughCollateral()")]
+    pub struct NotEnoughCollateral;
     ///Custom Error type `NotGateway` with signature `NotGateway()` and selector `0xe7e601db`
     #[derive(
         Clone,
@@ -1027,7 +1085,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "NotStakedBefore", abi = "NotStakedBefore()")]
     pub struct NotStakedBefore;
-    ///Custom Error type `NotValidator` with signature `NotValidator()` and selector `0x2ec5b449`
+    ///Custom Error type `NotValidator` with signature `NotValidator(address)` and selector `0xed3db8ac`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1038,8 +1096,8 @@ pub mod subnet_actor_manager_facet {
         Eq,
         Hash,
     )]
-    #[etherror(name = "NotValidator", abi = "NotValidator()")]
-    pub struct NotValidator;
+    #[etherror(name = "NotValidator", abi = "NotValidator(address)")]
+    pub struct NotValidator(pub ::ethers::core::types::Address);
     ///Custom Error type `PQDoesNotContainAddress` with signature `PQDoesNotContainAddress()` and selector `0xf2755e37`
     #[derive(
         Clone,
@@ -1113,6 +1171,7 @@ pub mod subnet_actor_manager_facet {
     pub enum SubnetActorManagerFacetErrors {
         AddressShouldBeValidator(AddressShouldBeValidator),
         CannotConfirmFutureChanges(CannotConfirmFutureChanges),
+        CannotReleaseZero(CannotReleaseZero),
         CollateralIsZero(CollateralIsZero),
         EmptyAddress(EmptyAddress),
         InvalidCheckpointEpoch(InvalidCheckpointEpoch),
@@ -1121,7 +1180,7 @@ pub mod subnet_actor_manager_facet {
         InvalidSignatureErr(InvalidSignatureErr),
         NoCollateralToWithdraw(NoCollateralToWithdraw),
         NotAllValidatorsHaveLeft(NotAllValidatorsHaveLeft),
-        NotEnoughBalanceForRewards(NotEnoughBalanceForRewards),
+        NotEnoughCollateral(NotEnoughCollateral),
         NotGateway(NotGateway),
         NotOwnerOfPublicKey(NotOwnerOfPublicKey),
         NotStakedBefore(NotStakedBefore),
@@ -1154,6 +1213,10 @@ pub mod subnet_actor_manager_facet {
                 <CannotConfirmFutureChanges as ::ethers::core::abi::AbiDecode>::decode(data)
             {
                 return Ok(Self::CannotConfirmFutureChanges(decoded));
+            }
+            if let Ok(decoded) = <CannotReleaseZero as ::ethers::core::abi::AbiDecode>::decode(data)
+            {
+                return Ok(Self::CannotReleaseZero(decoded));
             }
             if let Ok(decoded) = <CollateralIsZero as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -1193,9 +1256,9 @@ pub mod subnet_actor_manager_facet {
                 return Ok(Self::NotAllValidatorsHaveLeft(decoded));
             }
             if let Ok(decoded) =
-                <NotEnoughBalanceForRewards as ::ethers::core::abi::AbiDecode>::decode(data)
+                <NotEnoughCollateral as ::ethers::core::abi::AbiDecode>::decode(data)
             {
-                return Ok(Self::NotEnoughBalanceForRewards(decoded));
+                return Ok(Self::NotEnoughCollateral(decoded));
             }
             if let Ok(decoded) = <NotGateway as ::ethers::core::abi::AbiDecode>::decode(data) {
                 return Ok(Self::NotGateway(decoded));
@@ -1244,6 +1307,7 @@ pub mod subnet_actor_manager_facet {
                 Self::CannotConfirmFutureChanges(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::CannotReleaseZero(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::CollateralIsZero(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::EmptyAddress(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::InvalidCheckpointEpoch(element) => {
@@ -1264,7 +1328,7 @@ pub mod subnet_actor_manager_facet {
                 Self::NotAllValidatorsHaveLeft(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::NotEnoughBalanceForRewards(element) => {
+                Self::NotEnoughCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NotGateway(element) => ::ethers::core::abi::AbiEncode::encode(element),
@@ -1301,6 +1365,10 @@ pub mod subnet_actor_manager_facet {
                     true
                 }
                 _ if selector
+                    == <CannotReleaseZero as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
                     == <CollateralIsZero as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1331,7 +1399,7 @@ pub mod subnet_actor_manager_facet {
                     true
                 }
                 _ if selector
-                    == <NotEnoughBalanceForRewards as ::ethers::contract::EthError>::selector() => {
+                    == <NotEnoughCollateral as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1373,6 +1441,7 @@ pub mod subnet_actor_manager_facet {
             match self {
                 Self::AddressShouldBeValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CannotConfirmFutureChanges(element) => ::core::fmt::Display::fmt(element, f),
+                Self::CannotReleaseZero(element) => ::core::fmt::Display::fmt(element, f),
                 Self::CollateralIsZero(element) => ::core::fmt::Display::fmt(element, f),
                 Self::EmptyAddress(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidCheckpointEpoch(element) => ::core::fmt::Display::fmt(element, f),
@@ -1383,7 +1452,7 @@ pub mod subnet_actor_manager_facet {
                 Self::InvalidSignatureErr(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NoCollateralToWithdraw(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotAllValidatorsHaveLeft(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NotEnoughBalanceForRewards(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotEnoughCollateral(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotGateway(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotOwnerOfPublicKey(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotStakedBefore(element) => ::core::fmt::Display::fmt(element, f),
@@ -1410,6 +1479,11 @@ pub mod subnet_actor_manager_facet {
     impl ::core::convert::From<CannotConfirmFutureChanges> for SubnetActorManagerFacetErrors {
         fn from(value: CannotConfirmFutureChanges) -> Self {
             Self::CannotConfirmFutureChanges(value)
+        }
+    }
+    impl ::core::convert::From<CannotReleaseZero> for SubnetActorManagerFacetErrors {
+        fn from(value: CannotReleaseZero) -> Self {
+            Self::CannotReleaseZero(value)
         }
     }
     impl ::core::convert::From<CollateralIsZero> for SubnetActorManagerFacetErrors {
@@ -1452,9 +1526,9 @@ pub mod subnet_actor_manager_facet {
             Self::NotAllValidatorsHaveLeft(value)
         }
     }
-    impl ::core::convert::From<NotEnoughBalanceForRewards> for SubnetActorManagerFacetErrors {
-        fn from(value: NotEnoughBalanceForRewards) -> Self {
-            Self::NotEnoughBalanceForRewards(value)
+    impl ::core::convert::From<NotEnoughCollateral> for SubnetActorManagerFacetErrors {
+        fn from(value: NotEnoughCollateral) -> Self {
+            Self::NotEnoughCollateral(value)
         }
     }
     impl ::core::convert::From<NotGateway> for SubnetActorManagerFacetErrors {
@@ -1777,6 +1851,21 @@ pub mod subnet_actor_manager_facet {
         pub signatories: ::std::vec::Vec<::ethers::core::types::Address>,
         pub signatures: ::std::vec::Vec<::ethers::core::types::Bytes>,
     }
+    ///Container type for all input parameters for the `unstake` function with signature `unstake(uint256)` and selector `0x2e17de78`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash,
+    )]
+    #[ethcall(name = "unstake", abi = "unstake(uint256)")]
+    pub struct UnstakeCall {
+        pub amount: ::ethers::core::types::U256,
+    }
     ///Container type for all input parameters for the `validateActiveQuorumSignatures` function with signature `validateActiveQuorumSignatures(address[],bytes32,bytes[])` and selector `0xcc2dc2b9`
     #[derive(
         Clone,
@@ -1809,6 +1898,7 @@ pub mod subnet_actor_manager_facet {
         Leave(LeaveCall),
         Stake(StakeCall),
         SubmitCheckpoint(SubmitCheckpointCall),
+        Unstake(UnstakeCall),
         ValidateActiveQuorumSignatures(ValidateActiveQuorumSignaturesCall),
     }
     impl ::ethers::core::abi::AbiDecode for SubnetActorManagerFacetCalls {
@@ -1851,6 +1941,9 @@ pub mod subnet_actor_manager_facet {
             {
                 return Ok(Self::SubmitCheckpoint(decoded));
             }
+            if let Ok(decoded) = <UnstakeCall as ::ethers::core::abi::AbiDecode>::decode(data) {
+                return Ok(Self::Unstake(decoded));
+            }
             if let Ok(decoded) =
                 <ValidateActiveQuorumSignaturesCall as ::ethers::core::abi::AbiDecode>::decode(data)
             {
@@ -1875,6 +1968,7 @@ pub mod subnet_actor_manager_facet {
                 Self::Leave(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::Stake(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SubmitCheckpoint(element) => ::ethers::core::abi::AbiEncode::encode(element),
+                Self::Unstake(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::ValidateActiveQuorumSignatures(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1893,6 +1987,7 @@ pub mod subnet_actor_manager_facet {
                 Self::Leave(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubmitCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
+                Self::Unstake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::ValidateActiveQuorumSignatures(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1942,6 +2037,11 @@ pub mod subnet_actor_manager_facet {
     impl ::core::convert::From<SubmitCheckpointCall> for SubnetActorManagerFacetCalls {
         fn from(value: SubmitCheckpointCall) -> Self {
             Self::SubmitCheckpoint(value)
+        }
+    }
+    impl ::core::convert::From<UnstakeCall> for SubnetActorManagerFacetCalls {
+        fn from(value: UnstakeCall) -> Self {
+            Self::Unstake(value)
         }
     }
     impl ::core::convert::From<ValidateActiveQuorumSignaturesCall> for SubnetActorManagerFacetCalls {
