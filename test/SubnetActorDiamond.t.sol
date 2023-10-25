@@ -643,7 +643,14 @@ contract SubnetActorDiamondTest is Test {
         saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
         vm.startPrank(gatewayAddress);
         saManager.distributeRewardToRelayers(2 * saGetter.bottomUpCheckPeriod(), 10);
-        require(saGetter.getRelayerReward(validators[0]) == 10, "there is no reward for block 1");
+        uint256 validator1Reward = saGetter.getRelayerReward(validators[0]);
+        require(validator1Reward == 10, "there is no reward for block 1");
+
+        uint256 b1 = validators[0].balance;
+        vm.startPrank(validators[0]);
+        saManager.claimRewardForRelayer();
+        uint256 b2 = validators[0].balance;
+        require(b2-b1 == validator1Reward, "reward received");
     }
 
     function testSubnetActorDiamond_Unstake() public {
