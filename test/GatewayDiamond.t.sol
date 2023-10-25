@@ -24,7 +24,7 @@ import {CheckpointHelper} from "../src/lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
 import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {GatewayDiamond} from "../src/GatewayDiamond.sol";
+import {GatewayDiamond, FunctionNotFound} from "../src/GatewayDiamond.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
 import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
@@ -327,7 +327,11 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_DiamondCut() public {
-        // vm.expectRevert();
+        // add method getNum to gateway diamond and assert it can be correctly called
+        // replace method getNum and assert it was correctly updated
+        // delete method getNum and assert it no longer is callable
+        // assert that diamondCut cannot be called by non-owner
+
         NumberContractFacetSeven ncFacetA = new NumberContractFacetSeven();
         NumberContractFacetEight ncFacetB = new NumberContractFacetEight();
 
@@ -342,6 +346,11 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                 functionSelectors: ncGetterSelectors
             })
         );
+        //test that other user cannot call diamondcut to add function
+        vm.prank(0x1234567890123456789012345678901234567890);
+        vm.expectRevert(LibDiamond.NotOwner.selector);
+        gwDiamondCutter.diamondCut(gwDiamondCut, address(0), new bytes(0));
+
         gwDiamondCutter.diamondCut(gwDiamondCut, address(0), new bytes(0));
 
         NumberContractFacetSeven gwNumberContract = NumberContractFacetSeven(address(gatewayDiamond));
@@ -355,14 +364,35 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
                 functionSelectors: ncGetterSelectors
             })
         );
+
+        //test that other user cannot call diamondcut to replace function
+        vm.prank(0x1234567890123456789012345678901234567890);
+        vm.expectRevert(LibDiamond.NotOwner.selector);
+        gwDiamondCutter.diamondCut(gwDiamondCut, address(0), new bytes(0));
+
         gwDiamondCutter.diamondCut(gwDiamondCut, address(0), new bytes(0));
 
         assert(gwNumberContract.getNum() == 8);
 
-        //test that other user cannot call diamondCut
+        //remove facet for getNum
+        gwDiamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: 0x0000000000000000000000000000000000000000,
+                action: IDiamond.FacetCutAction.Remove,
+                functionSelectors: ncGetterSelectors
+            })
+        );
+
+        //test that other user cannot call diamondcut to remove function
         vm.prank(0x1234567890123456789012345678901234567890);
         vm.expectRevert(LibDiamond.NotOwner.selector);
         gwDiamondCutter.diamondCut(gwDiamondCut, address(0), new bytes(0));
+
+        gwDiamondCutter.diamondCut(gwDiamondCut, address(0), new bytes(0));
+
+        //assert that calling getNum fails
+        vm.expectRevert(abi.encodePacked(FunctionNotFound.selector, ncGetterSelectors));
+        gwNumberContract.getNum();
     }
 
     function testGatewayDiamond_Deployment_Works_Root(uint64 checkpointPeriod) public {
