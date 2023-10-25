@@ -434,6 +434,14 @@ contract SubnetActorDiamondTest is Test {
         );
         require(!saGetter.isActiveValidator(validator1), "active validator 1");
         require(saGetter.isActiveValidator(validator2), "not active validator 2");
+
+
+        // ======== Step. Claim collateral ======
+        uint256 b1 = validator1.balance;
+        vm.startPrank(validator1);
+        saManager.claim();
+        uint256 b2 = validator1.balance;
+        require(b2-b1 == 10, "collateral received");
     }
 
     function testSubnetActorDiamond_validateActiveQuorumSignatures() public {
