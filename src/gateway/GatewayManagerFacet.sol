@@ -85,7 +85,6 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         if (subnet.stake < s.minStake) {
             subnet.status = Status.Inactive;
         }
-
         payable(subnet.id.getActor()).sendValue(amount);
     }
 

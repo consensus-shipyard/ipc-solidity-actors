@@ -61,4 +61,35 @@ library TestUtils {
         weights[1] = 101;
         weights[2] = 102;
     }
+
+    function deriveValidatorAddress(uint8 seq) internal pure returns (address addr, bytes memory data) {
+        data = new bytes(65);
+        data[1] = bytes1(seq);
+
+        // use data[1:] for the hash
+        bytes memory dataSubset = new bytes(data.length - 1);
+        for (uint i = 1; i < data.length; i++) {
+            dataSubset[i - 1] = data[i];
+        }
+
+        addr = address(uint160(uint256(keccak256(dataSubset))));
+    }
+
+    function derivePubKey(uint8 seq) internal pure returns (address addr, bytes memory data) {
+        data = new bytes(65);
+        data[1] = bytes1(seq);
+
+        // use data[1:] for the hash
+        bytes memory dataSubset = new bytes(data.length - 1);
+        for (uint i = 1; i < data.length; i++) {
+            dataSubset[i - 1] = data[i];
+        }
+
+        addr = address(uint160(uint256(keccak256(dataSubset))));
+    }
+
+    function ensureBytesEqual(bytes memory _a, bytes memory _b) internal pure {
+        require(_a.length == _b.length, "bytes len not equal");
+        require(keccak256(_a) == keccak256(_b), "bytes not equal");
+    }
 }
