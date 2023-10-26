@@ -68,8 +68,8 @@ clean:
 	rm -rf ./typechain
 
 coverage:
-	forge coverage --ffi -C ./src --report lcov
-	genhtml -o coverage_report lcov.info --branch-coverage
+	forge coverage --ffi --report lcov -C ./src
+	genhtml -o coverage_report lcov.info --branch-coverage -ignore-errors category
 	./tools/check_coverage.sh
 
 prepare: fmt lint test slither
