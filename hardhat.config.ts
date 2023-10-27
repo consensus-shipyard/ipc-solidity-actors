@@ -118,8 +118,7 @@ task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args
 
 task('upgrade-gw-diamond', 'Builds and deploys Subnet Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
   const { upgradeDiamond } = await lazyImport('./scripts/upgrade-gw-diamond');
-  const x = await upgradeDiamond();
-  console.log(x);
+  await upgradeDiamond();
   //await saveDeployments(network, subnetActorDiamond);
 });
 
