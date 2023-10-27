@@ -116,6 +116,15 @@ task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args
   await hre.run('deploy-sa-diamond-and-facets');
 });
 
+task('upgrade-gw-diamond', 'Builds and deploys Subnet Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
+  const { upgradeDiamond } = await lazyImport('./scripts/upgrade-gw-diamond');
+  const x = await upgradeDiamond();
+  console.log(x);
+  //await saveDeployments(network, subnetActorDiamond);
+});
+
+
+
 /** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
   defaultNetwork: "calibrationnet",

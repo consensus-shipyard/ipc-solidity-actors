@@ -1,6 +1,6 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers';
 import { Contract } from 'ethers';
-import { ethers } from 'hardhat';
+import { Contract, ethers } from 'hardhat';
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000';
 
@@ -22,4 +22,52 @@ export async function getTransactionFees() {
       maxPriorityFeePerGas: feeData.maxPriorityFeePerGas,
       type: 2
   };
+}
+
+interface Facet {
+  facetAddress: string;
+  functionSelectors: string[];
+}
+
+export async function getFacets(diamondAddress: string): Promise<Facet[]> {
+  // Ensure you have the ABI for the diamond loupe functions
+  const diamondLoupeABI = [
+    {
+      "inputs": [],
+      "name": "facets",
+      "outputs": [
+        {
+          "components": [
+            {
+              "internaltype": "address",
+              "name": "facetaddress",
+              "type": "address"
+            },
+            {
+              "internaltype": "bytes4[]",
+              "name": "functionselectors",
+              "type": "bytes4[]"
+            }
+          ],
+          "name": "facets_",
+          "type": "tuple[]"
+        }
+      ],
+      "statemutability": "view",
+            "constant": true,
+      "type": "function"
+    }
+  ];
+
+  const provider = ethers.provider;
+  const diamond = new Contract(diamondAddress, diamondLoupeABI, provider);
+  const facetsData = await diamond.facets();
+
+  // Convert facetsData to the Facet[] type.
+  const facets: Facet[] = facetsData.map(facetData => ({
+    facetAddress: facetData[0],
+    functionSelectors: facetData[1].map(selectorBytes => selectorBytes.toHexString())
+  }));
+
+  return facets;
 }
