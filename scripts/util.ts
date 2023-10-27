@@ -28,8 +28,9 @@ interface Facet {
   facetAddress: string;
   functionSelectors: string[];
 }
+type FacetMap = { [key: string]: string[] };
 
-export async function getFacets(diamondAddress: string): Promise<Facet[]> {
+export async function getFacets(diamondAddress: string): Promise<FacetMap> {
   // Ensure you have the ABI for the diamond loupe functions
   const diamondLoupeABI = [
     {
@@ -66,8 +67,13 @@ export async function getFacets(diamondAddress: string): Promise<Facet[]> {
   // Convert facetsData to the Facet[] type.
   const facets: Facet[] = facetsData.map(facetData => ({
     facetAddress: facetData[0],
-    functionSelectors: facetData[1].map(selectorBytes => selectorBytes.toHexString())
+    functionSelectors: facetData[1]
   }));
 
-  return facets;
+  const facetMap = facets.reduce((acc, facet) => {
+      acc[facet.facetAddress] = facet.functionSelectors;
+      return acc;
+    }, {});
+
+  return facetMap;
 }
