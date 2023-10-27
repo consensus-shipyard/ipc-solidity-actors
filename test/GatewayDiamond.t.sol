@@ -1257,6 +1257,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         uint64 configNumber = gwRouter.applyFinalityChanges();
         require(configNumber == 2, "wrong config number after applying finality");
         require(gwGetter.getCurrentMembership().validators.length == 2, "current membership should be 2");
+        require(gwGetter.getCurrentConfigurationNumber() == 2);
+        require(gwGetter.getLastConfigurationNumber() == 0);
+        require(gwGetter.getCurrentConfigurationNumber() == gwGetter.getCurrentMembership().configurationNumber);
+        require(gwGetter.getLastConfigurationNumber() == gwGetter.getLastMembership().configurationNumber);
 
         vm.stopPrank();
 
@@ -1267,17 +1271,24 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             configurationNumber: 3,
             change: StakingChange({validator: val1, op: StakingOperation.Withdraw, payload: abi.encode(amount)})
         });
+
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
         gwRouter.storeValidatorChanges(changes);
         configNumber = gwRouter.applyFinalityChanges();
         require(configNumber == 3, "wrong config number after applying finality");
+        require(gwGetter.getLastConfigurationNumber() == 2);
+        require(gwGetter.getCurrentConfigurationNumber() == 3);
         require(gwGetter.getCurrentMembership().validators.length == 1, "current membership should be 1");
         require(gwGetter.getLastMembership().validators.length == 2, "last membership should be 2");
+        require(gwGetter.getCurrentConfigurationNumber() == gwGetter.getCurrentMembership().configurationNumber);
+        require(gwGetter.getLastConfigurationNumber() == gwGetter.getLastMembership().configurationNumber);
 
         // no changes
         configNumber = gwRouter.applyFinalityChanges();
         require(configNumber == 0, "wrong config number after applying finality");
+        require(gwGetter.getLastConfigurationNumber() == 2);
+        require(gwGetter.getCurrentConfigurationNumber() == 3);
         require(gwGetter.getCurrentMembership().validators.length == 1, "current membership should be 1");
         require(gwGetter.getLastMembership().validators.length == 2, "last membership should be 2");
 
@@ -1497,6 +1508,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == totalWeight(weights),
             "checkpoint weight was updated"
         );
+
+        (
+            BottomUpCheckpoint memory ch,
+            CheckpointInfo memory info,
+            address[] memory signatories,
+            bytes[] memory signatures
+        ) = gwGetter.getSignatureBundle(gwGetter.bottomUpCheckPeriod());
+        require(ch.blockHash == keccak256("block"));
+        require(info.hash == keccak256(abi.encode(checkpoint)));
+        require(signatories.length == 3);
+        require(signatures.length == 3);
     }
 
     function testGatewayDiamond_addCheckpointSignature_quorum() public {
@@ -1588,9 +1610,10 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         (v, r, s) = vm.sign(privKeys[0], keccak256(abi.encode(checkpoint)));
         signature = abi.encodePacked(r, s, v);
 
-        vm.startPrank(vm.addr(privKeys[0]));
-        vm.expectRevert();
-        gwRouter.addCheckpointSignature(1, membershipProofs[0], weights[1], signature);
+        uint64 h = gwGetter.bottomUpCheckPeriod();
+        vm.startPrank(vm.addr(privKeys[1]));
+        vm.expectRevert(abi.encodeWithSelector(NotAuthorized.selector, vm.addr(privKeys[0])));
+        gwRouter.addCheckpointSignature(h, membershipProofs[2], weights[2], signature);
         vm.stopPrank();
     }
 
@@ -1621,19 +1644,19 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.stopPrank();
 
         index = gwGetter.getBottomUpRetentionHeight();
-        require(index == 1, "retention height is 1");
+        require(index == 1, "retention height is not 1");
 
         uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
-        require(heights.length == n, "heights.len == n");
+        require(heights.length == n, "heights.len != n");
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.pruneBottomUpCheckpoints(4);
         vm.stopPrank();
 
         index = gwGetter.getBottomUpRetentionHeight();
-        require(index == 4, "height updated");
+        require(index == 4, "height was not updated");
         heights = gwGetter.getIncompleteCheckpointHeights();
-        require(heights.length == n, "index the same");
+        require(heights.length == n, "index is not the same");
     }
 
     function totalWeight(uint256[] memory weights) internal pure returns (uint256 sum) {

@@ -521,7 +521,7 @@ contract SubnetActorDiamondTest is Test {
             saManager.join{value: 10}(pubKeys[i]);
         }
 
-        vm.expectRevert();
+        vm.expectRevert(abi.encodeWithSelector(InvalidSignatureErr.selector, 4));
         saManager.validateActiveQuorumSignatures(validators, hash0, signatures);
     }
 
