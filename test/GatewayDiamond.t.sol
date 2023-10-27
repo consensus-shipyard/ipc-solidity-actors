@@ -1506,6 +1506,44 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.stopPrank();
     }
 
+    function testGatewayDiamond_commitBottomUpCheckpoint_InvalidCheckpointSource() public {
+        CrossMsg[] memory msgs = new CrossMsg[](0);
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256(abi.encode(msgs))
+        });
+
+        vm.expectRevert(InvalidCheckpointSource.selector);
+        gwRouter.commitBottomUpCheckpoint(checkpoint, msgs);
+    }
+
+    function testGatewayDiamond_commitBottomUpCheckpoint_Works_NoMessages() public {
+        address caller = address(saDiamond);
+        vm.startPrank(caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        vm.stopPrank();
+
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
+
+        CrossMsg[] memory msgs = new CrossMsg[](0);
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: subnetId,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256(abi.encode(msgs))
+        });
+
+        vm.prank(caller);
+        gwRouter.commitBottomUpCheckpoint(checkpoint, msgs);
+    }
+
     function testGatewayDiamond_listIncompleteCheckpoints() public {
         (, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(vm);
 
