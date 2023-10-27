@@ -882,6 +882,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
         release(releaseAmount, crossMsgFee);
+        require(gwGetter.bottomUpMessages(gwGetter.bottomUpCheckPeriod()).length==1, "no message");
     }
 
     function testGatewayDiamond_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -1312,6 +1313,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
 
         require(committedFinality.height == finality.height, "height not equal");
         require(committedFinality.blockHash == finality.blockHash, "blockHash not equal");
+        require(gwGetter.getLatestParentFinality().height == block.number, "finality height not equal");
 
         vm.stopPrank();
     }
@@ -1382,6 +1384,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         require(recv.nextConfigurationNumber == 1, "nextConfigurationNumber incorrect");
         require(recv.blockHash == keccak256("block1"), "block hash incorrect");
         require(recv.crossMessagesHash == keccak256("messages1"), "received cross messages incorrect");
+        require(gwGetter.bottomUpMessages(gwGetter.bottomUpCheckPeriod()).length == 0, "there are messages");
 
         // failed to create a checkpoint with the same height
         checkpoint = BottomUpCheckpoint({
