@@ -27,7 +27,6 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {StakingChangeRequest, ParentValidatorsTracker} from "../structs/Subnet.sol";
 import {LibValidatorTracking, LibValidatorSet} from "../lib/LibStaking.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
-import "hardhat/console.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
