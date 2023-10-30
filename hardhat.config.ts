@@ -118,7 +118,7 @@ task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args
 
 task('upgrade-gw-diamond', 'Builds and deploys Subnet Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
   const { upgradeDiamond } = await lazyImport('./scripts/upgrade-gw-diamond');
-  await upgradeDiamond();
+  await upgradeDiamond("0x5B509997C12098c908A5B160D4D25b645AB53343","DiamondCutFacet",{});
   //await saveDeployments(network, subnetActorDiamond);
 });
 
