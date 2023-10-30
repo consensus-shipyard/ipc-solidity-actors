@@ -41,6 +41,7 @@ error NoRewardToWithdraw();
 error NoValidatorsInSubnet();
 error NotAllValidatorsHaveLeft();
 error NotAuthorized(address);
+error NotAuthorizedSender(address);
 error NotEmptySubnetCircSupply();
 error NotEnoughBalance();
 error NotEnoughBalanceForRewards();

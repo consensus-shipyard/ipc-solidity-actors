@@ -1690,6 +1690,45 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.stopPrank();
     }
 
+    function testGatewayDiamond_addCheckpointSignature_notAuthorizedSender() public {
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(
+            vm
+        );
+
+        (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
+            .createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages")
+        });
+
+        // create a checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
+
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
+        bytes memory signature;
+
+        // validator 0 signs the checkpoint
+        (v, r, s) = vm.sign(privKeys[0], keccak256(abi.encode(checkpoint)));
+        signature = abi.encodePacked(r, s, v);
+
+        // validator 1 sends the checkpoint
+        uint64 h = gwGetter.bottomUpCheckPeriod();
+        vm.startPrank(vm.addr(privKeys[1]));
+        // validator 1 should not be able to send a signature of validator 0
+        vm.expectRevert(abi.encodeWithSelector(NotAuthorizedSender.selector, vm.addr(privKeys[1])));
+        gwRouter.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
+        vm.stopPrank();
+    }
+
     function testGatewayDiamond_garbage_collect_bottomUpCheckpoints() public {
         (, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(vm);
 
