@@ -13,8 +13,38 @@ const FacetNames = [
     'DiamondCutFacet'
 ]
 
+// given a facet address and a gateway diamond, 
+// upgrade the diamond to use the new facet
+async function upgradeSubnetActorDiamond (gatewayAddress: string, replacementFacetName: string, facetLibs: { [key in string]: string }) {
+  
+  if (!gatewayAddress) throw new Error(`Gateway is missing`);
+  if (!facetLibs || Object.keys(facetLibs).length === 0) throw new Error(`Libraries are missing`);
 
-async function upgradeSubnetActorDiamond (gatewayDiamondAddress: string, libs: { [key in string]: string }) {
+  await hre.run('compile');
+  const [deployer] = await ethers.getSigners();
+  const txArgs = await getTransactionFees();
+
+  let replacementFacet = await deployContractWithDeployer(
+    deployer,
+    replacementFacetName,
+    facetLibs, txArgs
+);
+await replacementFacet.deployed();
+
+  const gateway = await ethers.getContractAt("Gateway", gatewayAddress, deployer);
+  const facetCuts = [{
+    facetAddress: replacementFacet.address,
+    action: FacetCutAction.Replace,
+    functionSelectors: getSelectors(replacementFacet)
+  }]
+  const diamondCutter = await ethers.getContractAt("DiamondCutFacet", gatewayAddress, deployer);
+
+  // 0x0 (contract address) and "" (call data) can be used to send call data to contract
+  diamondCutter.diamondCut(facetCuts, "0x0000000000000000000000000000000000000000", "");
+
+}
+
+async function scratch_upgradeSubnetActorDiamond (gatewayDiamondAddress: string, libs: { [key in string]: string }) {
    const facets = await getFacets("0x5B509997C12098c908A5B160D4D25b645AB53343")
    console.log(facets)
    const provider = ethers.provider;
