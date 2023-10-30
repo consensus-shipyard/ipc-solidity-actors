@@ -40,7 +40,7 @@ import {MerkleTreeHelper} from "./MerkleTreeHelper.sol";
 
 import {SubnetManagerTestUtil} from "./subnetActorMock/SubnetManagerTestUtil.sol";
 
-contract GatewayDiamondDeploymentTest is StdInvariant, Test {
+contract GatewayActorDiamondTest is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
     using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
