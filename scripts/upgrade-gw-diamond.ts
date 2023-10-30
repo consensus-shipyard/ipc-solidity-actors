@@ -24,8 +24,9 @@ async function _upgradeSubnetActorDiamond(
     facetLibs: { [key in string]: string },
 ) {
     if (!gatewayAddress) throw new Error(`Gateway is missing`)
-    if (!facetLibs || Object.keys(facetLibs).length === 0)
-        throw new Error(`Libraries are missing`)
+
+    //if (!facetLibs || Object.keys(facetLibs).length === 0)
+        //throw new Error(`Libraries are missing`)
 
     await hre.run('compile')
     const [deployer] = await ethers.getSigners()
@@ -40,7 +41,7 @@ async function _upgradeSubnetActorDiamond(
     await replacementFacet.deployed()
 
     const gateway = await ethers.getContractAt(
-        'Gateway',
+        'GatewayDiamond',
         gatewayAddress,
         deployer,
     )
