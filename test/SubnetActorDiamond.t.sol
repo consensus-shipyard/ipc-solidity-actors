@@ -499,7 +499,7 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function testSubnetActorDiamond_validateActiveQuorumSignatures() public {
-        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getThreeValidators(vm);
+        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getFourValidators(vm);
 
         bytes[] memory pubKeys = new bytes[](3);
         bytes[] memory signatures = new bytes[](3);
@@ -519,7 +519,7 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function testSubnetActorDiamond_validateActiveQuorumSignatures_InvalidSignature() public {
-        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getThreeValidators(vm);
+        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getFourValidators(vm);
         bytes[] memory pubKeys = new bytes[](3);
         bytes[] memory signatures = new bytes[](3);
 
@@ -540,7 +540,7 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function testSubnetActorDiamond_submitCheckpoint() public {
-        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getThreeValidators(vm);
+        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getFourValidators(vm);
         bytes[] memory pubKeys = new bytes[](3);
         bytes[] memory signatures = new bytes[](3);
 
@@ -635,7 +635,7 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function testSubnetActorDiamond_submitCheckpointWithReward() public {
-        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getThreeValidators(vm);
+        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getFourValidators(vm);
         bytes[] memory pubKeys = new bytes[](3);
         bytes[] memory signatures = new bytes[](3);
 

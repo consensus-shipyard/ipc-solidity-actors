@@ -1448,9 +1448,17 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_createBottomUpCheckpoint() public {
-        (, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(vm);
+        (, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpoint memory old = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 0,
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages1")
+        });
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
@@ -1464,6 +1472,12 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(ZeroMembershipWeight.selector);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 0);
+        vm.stopPrank();
+
+        // failed create a processed checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(CheckpointAlreadyProcessed.selector);
+        gwRouter.createBottomUpCheckpoint(old, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // create a checkpoint
@@ -1544,8 +1558,64 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         gwRouter.commitBottomUpCheckpoint(checkpoint, msgs);
     }
 
+    function testGatewayDiamond_commitBottomUpCheckpoint_Works_WithMessages() public {
+        address caller = address(saDiamond);
+        vm.startPrank(caller);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        vm.stopPrank();
+
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
+        (bool exist, Subnet memory subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(exist, "subnet does not exist");
+        require(subnetInfo.circSupply == 0, "unexpected initial circulation supply");
+
+        gwManager.fund{value: DEFAULT_COLLATERAL_AMOUNT}(subnetId, FvmAddressHelper.from(address(caller)));
+        (, subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT, "unexpected circulation supply after funding");
+
+        CrossMsg[] memory msgs = new CrossMsg[](10);
+        for (uint64 i = 0; i < 10; i++) {
+            msgs[i] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({
+                        subnetId: gwGetter.getNetworkName(),
+                        rawAddress: FvmAddressHelper.from(address(this))
+                    }),
+                    to: IPCAddress({
+                        subnetId: gwGetter.getNetworkName(),
+                        rawAddress: FvmAddressHelper.from(address(this))
+                    }),
+                    value: 0,
+                    nonce: i,
+                    method: this.callback.selector,
+                    params: EMPTY_BYTES,
+                    fee: CROSS_MSG_FEE
+                }),
+                wrapped: false
+            });
+        }
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: subnetId,
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block1"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256(abi.encode(msgs))
+        });
+
+        vm.prank(caller);
+        gwRouter.commitBottomUpCheckpoint(checkpoint, msgs);
+
+        (, subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(
+            subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT - 10 * CROSS_MSG_FEE,
+            "unexpected circulation supply"
+        );
+    }
+
     function testGatewayDiamond_listIncompleteCheckpoints() public {
-        (, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(vm);
+        (, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
 
@@ -1600,9 +1670,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_addCheckpointSignature_newCheckpoint() public {
-        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(
-            vm
-        );
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
@@ -1654,9 +1722,7 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_addCheckpointSignature_quorum() public {
-        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(
-            vm
-        );
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
@@ -1711,12 +1777,16 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
             gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == totalWeight(weights),
             "checkpoint weight was not updated"
         );
+        (v, r, s) = vm.sign(privKeys[3], keccak256(abi.encode(checkpoint)));
+        signature = abi.encodePacked(r, s, v);
+
+        vm.startPrank(vm.addr(privKeys[3]));
+        gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[3], weights[3], signature);
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_addCheckpointSignature_notAuthorized() public {
-        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(
-            vm
-        );
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
 
         (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
             .createMerkleProofsForValidators(addrs, weights);
@@ -1749,8 +1819,92 @@ contract GatewayDiamondDeploymentTest is StdInvariant, Test {
         vm.stopPrank();
     }
 
+    function testGatewayDiamond_addCheckpointSignature_invalidSignature_replayedSignature() public {
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
+
+        (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
+            .createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages")
+        });
+
+        // create a checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
+
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
+        bytes memory signature;
+
+        (v, r, s) = vm.sign(privKeys[0], keccak256(abi.encode(checkpoint)));
+        signature = abi.encodePacked(r, s, v);
+
+        uint64 h = gwGetter.bottomUpCheckPeriod();
+        vm.startPrank(vm.addr(privKeys[0]));
+
+        // send incorrect signature
+        vm.expectRevert(InvalidSignature.selector);
+        gwRouter.addCheckpointSignature(h, membershipProofs[0], weights[0], new bytes(0));
+
+        // send correct signature
+        gwRouter.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
+
+        // replay the previous signature
+        vm.expectRevert(SignatureReplay.selector);
+        gwRouter.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
+
+        vm.stopPrank();
+    }
+
+    function testGatewayDiamond_addCheckpointSignature_incorrectCheckpoint() public {
+        (uint256[] memory privKeys, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
+
+        (bytes32 membershipRoot, bytes32[][] memory membershipProofs) = MerkleTreeHelper
+            .createMerkleProofsForValidators(addrs, weights);
+
+        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: gwGetter.bottomUpCheckPeriod(),
+            blockHash: keccak256("block"),
+            nextConfigurationNumber: 1,
+            crossMessagesHash: keccak256("messages")
+        });
+
+        // create a checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
+
+        uint8 v;
+        bytes32 r;
+        bytes32 s;
+        bytes memory signature;
+
+        (v, r, s) = vm.sign(privKeys[0], keccak256(abi.encode(checkpoint)));
+        signature = abi.encodePacked(r, s, v);
+
+        vm.startPrank(vm.addr(privKeys[0]));
+
+        // send correct signature for incorrect height
+        vm.expectRevert(CheckpointAlreadyProcessed.selector);
+        gwRouter.addCheckpointSignature(0, membershipProofs[0], weights[0], signature);
+
+        // send correct signature for incorrect height
+        vm.expectRevert(CheckpointNotCreated.selector);
+        gwRouter.addCheckpointSignature(100, membershipProofs[0], weights[0], signature);
+
+        vm.stopPrank();
+    }
+
     function testGatewayDiamond_garbage_collect_bottomUpCheckpoints() public {
-        (, address[] memory addrs, uint256[] memory weights) = TestUtils.getThreeValidators(vm);
+        (, address[] memory addrs, uint256[] memory weights) = TestUtils.getFourValidators(vm);
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
 
