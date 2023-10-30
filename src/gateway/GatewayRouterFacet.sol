@@ -12,7 +12,7 @@ import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Subnet.sol";
 import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
-import {NotEnoughBalance, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
+import {NotEnoughBalance, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
@@ -231,9 +231,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         CheckpointInfo storage checkpointInfo = s.bottomUpCheckpointInfo[height];
-        if (checkpointInfo.threshold == 0) {
-            revert CheckpointMembershipNotCreated();
-        }
 
         bytes32 checkpointHash = checkpointInfo.hash;
 
@@ -307,9 +304,6 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
             revert CheckpointAlreadyExists();
         }
-        if (s.bottomUpCheckpointInfo[checkpoint.blockHeight].threshold > 0) {
-            revert CheckpointInfoAlreadyExists();
-        }
 
         if (membershipWeight == 0) {
             revert ZeroMembershipWeight();
@@ -318,11 +312,11 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 threshold = LibGateway.weightNeeded(membershipWeight, s.majorityPercentage);
 
         // process the checkpoint
-        s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
         bool ok = s.incompleteCheckpoints.add(checkpoint.blockHeight);
         if (!ok) {
             revert FailedAddIncompleteCheckpoint();
         }
+        s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
         s.bottomUpCheckpointInfo[checkpoint.blockHeight] = CheckpointInfo({
             hash: checkpoint.toHash(),
             rootHash: membershipRootHash,
