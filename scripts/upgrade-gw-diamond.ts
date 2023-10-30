@@ -18,7 +18,7 @@ const FacetNames = [
 
 // given a facet address and a gateway diamond,
 // upgrade the diamond to use the new facet
-async function upgradeSubnetActorDiamond(
+async function _upgradeSubnetActorDiamond(
     gatewayAddress: string,
     replacementFacetName: string,
     facetLibs: { [key in string]: string },
@@ -65,30 +65,15 @@ async function upgradeSubnetActorDiamond(
     )
 }
 
-async function scratch_upgradeSubnetActorDiamond(
-    gatewayDiamondAddress: string,
-    libs: { [key in string]: string },
+async function upgradeSubnetActorDiamond(
+    deployments
 ) {
-    const facets = await getFacets('0x5B509997C12098c908A5B160D4D25b645AB53343')
+    const gatewayDiamondAddress = deployments.Gateway
+    const [deployer] = await ethers.getSigners();
+
+    const facets = await getFacets(gatewayDiamondAddress)
     console.log(facets)
     const provider = ethers.provider
-
-    for (let facetIndex in FacetNames) {
-        const facetName = FacetNames[facetIndex]
-        console.log(facetName)
-        const fs = require('fs')
-        const path = require('path')
-        const facetJsonPath = path.join(
-            __dirname,
-            '..',
-            'out',
-            `${facetName}.sol`,
-            `${facetName}.json`,
-        )
-        const facetJson = fs.readFileSync(facetJsonPath, 'utf8')
-        const facetBytecode = JSON.parse(facetJson).deployedBytecode.object
-        console.log(facetName, facetBytecode)
-    }
 
     for (let contractAddress in facets) {
         try {
@@ -96,7 +81,7 @@ async function scratch_upgradeSubnetActorDiamond(
             const bytecode = await provider.getCode(contractAddress)
 
             // Log the bytecode to the console
-            console.log(`Bytecode for ${contractAddress}:`, bytecode)
+            console.log(`Bytecode for ${contractAddress}:\n`, bytecode)
         } catch (error) {
             // Print any errors to stderr
             console.error(
@@ -105,6 +90,29 @@ async function scratch_upgradeSubnetActorDiamond(
             )
         }
     }
+
+
+    for (let facetIndex in deployments.Facets) {
+        const facet = deployments.Facets[facetIndex]
+        const facetName = facet.Name
+        const libs = facet.libs
+        const contractFactory = await ethers.getContractFactory(facetName, { signer: deployer, libraries: libs, });
+        console.log(facetName)
+        console.log(contractFactory.bytecode)
+        // const fs = require('fs')
+        // const path = require('path')
+        // const facetJsonPath = path.join(
+        //     __dirname,
+        //     '..',
+        //     'out',
+        //     `${facetName}.sol`,
+        //     `${facetName}.json`,
+        // )
+        // const facetJson = fs.readFileSync(facetJsonPath, 'utf8')
+        // const facetBytecode = JSON.parse(facetJson).deployedBytecode.object
+        // console.log(facetName, facetBytecode)
+    }
+
 }
 
 // We recommend this pattern to be able to use async/await everywhere
