@@ -40,8 +40,6 @@ export async function deploy(libs: { [key in string]: string }) {
     [libraryName: string]: string;
   };
 
-  // ----
-
   const getterFacetLibs: Libraries = {
     SubnetIDHelper: libs["SubnetIDHelper"],
   };
