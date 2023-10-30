@@ -10,7 +10,7 @@ import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet, Validator, ValidatorInfo, ValidatorSet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Subnet.sol";
-import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
+import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint, ZeroThreshold} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
 import {NotEnoughBalance, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, CheckpointMembershipNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -316,6 +316,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         uint256 threshold = LibGateway.weightNeeded(membershipWeight, s.majorityPercentage);
+        if (threshold == 0) {
+            revert ZeroThreshold();
+        }
 
         // process the checkpoint
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
