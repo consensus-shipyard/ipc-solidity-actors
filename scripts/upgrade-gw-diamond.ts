@@ -94,7 +94,7 @@ async function upgradeGatewayActorFacet(
             functionSelectors: filterSelectors(getSelectors(replacementFacet)),
         },
     ]
-    console.log(facetCuts)
+    console.log('facet cuts', facetCuts)
 
     const diamondCutter = await ethers.getContractAt(
         'DiamondCutFacet',
@@ -105,8 +105,8 @@ async function upgradeGatewayActorFacet(
     // 0x0 (contract address) and "" (call data) can be used to send call data to contract
     const tx = await diamondCutter.diamondCut(
         facetCuts,
-        '0x0000000000000000000000000000000000000000',
-        '',
+        ethers.constants.AddressZero,
+        ethers.utils.formatBytes32String(''),
     )
     console.log(tx)
     return tx
