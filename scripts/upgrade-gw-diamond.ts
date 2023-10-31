@@ -77,7 +77,6 @@ async function upgradeGatewayActorFacet(
     console.log('facetLibs', JSON.stringify(facetLibs))
     const [deployer] = await ethers.getSigners()
     const txArgs = await getTransactionFees()
-    /*
     let replacementFacet = await deployContractWithDeployer(
         deployer,
         replacementFacetName,
@@ -86,7 +85,6 @@ async function upgradeGatewayActorFacet(
     )
     await replacementFacet.deployed()
 
-    console.log('done deployed')
     const facetCuts = [
         {
             facetAddress: replacementFacet.address,
@@ -94,21 +92,11 @@ async function upgradeGatewayActorFacet(
             functionSelectors: filterSelectors(getSelectors(replacementFacet)),
         },
     ]
-    console.log('facet cuts', facetCuts)
-*/
-    const facetCuts = [
-        {
-            facetAddress: '0x8E0FD83C1404Af0D13Ea5e06675B3ce73e15dF88',
-            action: 1,
-            functionSelectors: ['0x25bf0db6', '0xc13175ef'],
-        },
-    ]
     const diamondCutter = await ethers.getContractAt(
         'DiamondCutFacet',
         gatewayAddress,
         deployer,
     )
-    console.log('diamondCutter', diamondCutter)
     // 0x0 (contract address) and "" (call data) can be used to send call data to contract
     const tx = await diamondCutter.diamondCut(
         facetCuts,
@@ -117,9 +105,7 @@ async function upgradeGatewayActorFacet(
         txArgs,
     )
     await tx.wait()
-
-    console.log(tx)
-    return tx
+    return tx.hash
 }
 
 async function generateBytecode(facet) {
