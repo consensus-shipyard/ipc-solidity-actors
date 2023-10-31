@@ -478,10 +478,12 @@ contract SubnetActorDiamondRealTest is Test {
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
         collateral = DEFAULT_MIN_VALIDATOR_STAKE;
 
-        require(gatewayAddress.balance == collateral + 2*fundAmount, "gw balance is incorrect after validator1 joining");
+        require(
+            gatewayAddress.balance == collateral + 2 * fundAmount,
+            "gw balance is incorrect after validator1 joining"
+        );
 
-
-        require(saGetter.genesisCircSupply() == 2*fundAmount, "genesis circ supply not correct");
+        require(saGetter.genesisCircSupply() == 2 * fundAmount, "genesis circ supply not correct");
         (address[] memory genesisAddrs, ) = saGetter.genesisBalances();
         require(genesisAddrs.length == 2, "not two genesis addresses");
 
@@ -499,7 +501,6 @@ contract SubnetActorDiamondRealTest is Test {
         (uint64 nextConfigNum, uint64 startConfigNum) = saGetter.getConfigurationNumbers();
         require(nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER, "next config num not 1");
         require(startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER, "start config num not 1");
-
 
         vm.startPrank(preFunder);
         vm.expectRevert(SubnetAlreadyBootstrapped.selector);
