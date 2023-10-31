@@ -88,11 +88,11 @@ async function upgradeGatewayActorFacet(
 
     console.log('done deployed')
     const facetCuts = [
-        filterSelectors({
+        {
             facetAddress: replacementFacet.address,
             action: FacetCutAction.Replace,
-            functionSelectors: getSelectors(replacementFacet),
-        }),
+            functionSelectors: filterSelectors(getSelectors(replacementFacet)),
+        },
     ]
     console.log(facetCuts)
 
