@@ -84,7 +84,9 @@ export async function getFacets(diamondAddress: string): Promise<FacetMap> {
 
 async function startGanache() {
     return new Promise((resolve, reject) => {
-        const server = ganache.server()
+        const server = ganache.server({
+            gasPrice: '0x0', // Set gas price to 0
+        })
         server.listen(8545, (err) => {
             if (err) reject(err)
             else resolve(server)
