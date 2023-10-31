@@ -49,6 +49,18 @@ function getBytecode(fileName) {
     }
 }
 
+/**
+ * Filters the functionSelectors array to only return strings that start with '0x'.
+ *
+ * @param {Object} input - The object containing the functionSelectors array.
+ * @returns {Array} - An array of strings from functionSelectors that start with '0x'.
+ */
+function filterSelectors(input) {
+    return input.functionSelectors.filter((item) => {
+        return typeof item === 'string' && item.startsWith('0x')
+    })
+}
+
 // given a facet address and a gateway diamond,
 // upgrade the diamond to use the new facet
 async function upgradeGatewayActorFacet(
@@ -76,11 +88,11 @@ async function upgradeGatewayActorFacet(
 
     console.log('done deployed')
     const facetCuts = [
-        {
+        filterSelectors({
             facetAddress: replacementFacet.address,
             action: FacetCutAction.Replace,
             functionSelectors: getSelectors(replacementFacet),
-        },
+        }),
     ]
     console.log(facetCuts)
 
