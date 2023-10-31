@@ -1,10 +1,9 @@
 import hre, { ethers } from 'hardhat'
-import { DiamondLoupeFacet__factory } from '../typechain/factories/DiamondLoupeFacet__factory'
-import { GatewayMessengerFacet__factory } from '../typechain/factories/GatewayMessengerFacet__factory'
 import {
     getFacets,
     deployContractWithDeployer,
     getTransactionFees,
+    getRuntimeBytecode,
 } from './util'
 import solc from 'solc'
 import { findLinkReferences } from 'solc'
@@ -123,23 +122,7 @@ async function generateBytecode(facet) {
 
     // Link the bytecode with the libraries
     const bytecode = linker.linkBytecode(bytecodeNeedsLink, libs2)
-    const provider = new ethers.providers.JsonRpcProvider(
-        'http://127.0.0.1:8545',
-    )
-
-    // Create a wallet
-    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider)
-
-    // Create a contract factory with a dummy ABI
-    const contractFactory = new ethers.ContractFactory([], bytecode, wallet)
-
-    // Deploy the contract
-    const contract = await contractFactory.deploy()
-    await contract.deployed()
-
-    // Get the latest bytecode of the contract
-    const bytecodeLatest = await provider.getCode(contract.address)
-    return bytecodeLatest
+    return await getRuntimeBytecode(bytecode)
 }
 
 // Function to upgrade the Subnet Actor Diamond
