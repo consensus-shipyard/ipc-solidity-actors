@@ -77,7 +77,7 @@ async function upgradeGatewayActorFacet(
     console.log('facetLibs', JSON.stringify(facetLibs))
     const [deployer] = await ethers.getSigners()
     const txArgs = await getTransactionFees()
-
+    /*
     let replacementFacet = await deployContractWithDeployer(
         deployer,
         replacementFacetName,
@@ -95,7 +95,14 @@ async function upgradeGatewayActorFacet(
         },
     ]
     console.log('facet cuts', facetCuts)
-
+*/
+    const facetCuts = [
+        {
+            facetAddress: '0x8E0FD83C1404Af0D13Ea5e06675B3ce73e15dF88',
+            action: 1,
+            functionSelectors: ['0x25bf0db6', '0xc13175ef'],
+        },
+    ]
     const diamondCutter = await ethers.getContractAt(
         'DiamondCutFacet',
         gatewayAddress,
@@ -107,7 +114,10 @@ async function upgradeGatewayActorFacet(
         facetCuts,
         ethers.constants.AddressZero,
         ethers.utils.formatBytes32String(''),
+        txArgs,
     )
+    await tx.wait()
+
     console.log(tx)
     return tx
 }
