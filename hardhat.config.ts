@@ -121,7 +121,6 @@ task('upgrade-gw-diamond', 'Builds and deploys Subnet Actor diamond', async (arg
   await hre.run('compile');
   const network = hre.network.name;
   const deployments = await getDeployments(network);
-  console.log(deployments)
   const { upgradeDiamond } = await lazyImport('./scripts/upgrade-gw-diamond');
   await upgradeDiamond(deployments)
 });
