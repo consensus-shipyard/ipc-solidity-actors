@@ -49,15 +49,6 @@ function getBytecode(fileName) {
     }
 }
 
-const FacetNames = [
-    // 'GatewayGetterFacet',
-    'GatewayManagerFacet',
-    'GatewayRouterFacet',
-    'GatewayMessengerFacet',
-    'DiamondLoupeFacet',
-    'DiamondCutFacet',
-]
-
 // given a facet address and a gateway diamond,
 // upgrade the diamond to use the new facet
 async function upgradeGatewayActorFacet(
@@ -72,7 +63,6 @@ async function upgradeGatewayActorFacet(
     if (!gatewayAddress) throw new Error(`Gateway is missing`)
 
     console.log('facetLibs', JSON.stringify(facetLibs))
-    await hre.run('compile')
     const [deployer] = await ethers.getSigners()
     const txArgs = await getTransactionFees()
 
@@ -84,11 +74,7 @@ async function upgradeGatewayActorFacet(
     )
     await replacementFacet.deployed()
 
-    const gateway = await ethers.getContractAt(
-        'GatewayDiamond',
-        gatewayAddress,
-        deployer,
-    )
+    console.log('done deployed')
     const facetCuts = [
         {
             facetAddress: replacementFacet.address,
@@ -96,18 +82,21 @@ async function upgradeGatewayActorFacet(
             functionSelectors: getSelectors(replacementFacet),
         },
     ]
+    console.log(facetCuts)
+
     const diamondCutter = await ethers.getContractAt(
         'DiamondCutFacet',
         gatewayAddress,
         deployer,
     )
-
+    console.log('diamondCutter', diamondCutter)
     // 0x0 (contract address) and "" (call data) can be used to send call data to contract
     const tx = await diamondCutter.diamondCut(
         facetCuts,
         '0x0000000000000000000000000000000000000000',
         '',
     )
+    console.log(tx)
     return tx
 }
 
@@ -163,7 +152,6 @@ async function upgradeGatewayActorDiamond(deployments) {
             const bytecode = await provider.getCode(contractAddress)
             deployedBytecode[bytecode] = contractAddress
             // Log the bytecode to the console
-            console.log(`Bytecode for ${contractAddress}:\n`, bytecode)
         } catch (error) {
             // Print any errors to stderr
             console.error(
@@ -179,7 +167,9 @@ async function upgradeGatewayActorDiamond(deployments) {
         const facetBytecode = await generateBytecode(facet)
         if (!deployedBytecode.hasOwnProperty(facetBytecode)) {
             console.info(
-                `Facet bytecode not found in deployed bytecode: ${facet}`,
+                `Facet bytecode not found in deployed bytecode: ${JSON.stringify(
+                    facet,
+                )}`,
             )
             const newFacetTX = await upgradeGatewayActorFacet(
                 gatewayDiamondAddress,
