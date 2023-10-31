@@ -60,7 +60,7 @@ const FacetNames = [
 
 // given a facet address and a gateway diamond,
 // upgrade the diamond to use the new facet
-async function _upgradeSubnetActorDiamond(
+async function upgradeGatewayActorFacet(
     gatewayAddress: string,
     replacementFacetName: string,
     facetLibs: { [key in string]: string },
@@ -101,11 +101,12 @@ async function _upgradeSubnetActorDiamond(
     )
 
     // 0x0 (contract address) and "" (call data) can be used to send call data to contract
-    diamondCutter.diamondCut(
+    const tx = await diamondCutter.diamondCut(
         facetCuts,
         '0x0000000000000000000000000000000000000000',
         '',
     )
+    return tx
 }
 
 async function generateBytecode(facet) {
@@ -143,7 +144,7 @@ async function generateBytecode(facet) {
 }
 
 // Function to upgrade the Subnet Actor Diamond
-async function upgradeSubnetActorDiamond(deployments) {
+async function upgradeGatewayActorDiamond(deployments) {
     // Get the Gateway Diamond address from the deployments
     const gatewayDiamondAddress = deployments.Gateway
 
@@ -178,19 +179,16 @@ async function upgradeSubnetActorDiamond(deployments) {
             console.info(
                 `Facet bytecode not found in deployed bytecode: ${facet}`,
             )
+            const newFacetTX = await upgradeGatewayActorFacet(
+                gatewayDiamondAddress,
+                facet.name,
+                facet.libs,
+            )
+            console.info(
+                `New replacement facet ${facet.name} deployed at tx: ${newFacetTX.tx}`,
+            )
         }
     }
 }
-
-// We recommend this pattern to be able to use async/await everywhere
-// and properly handle errors.
-if (require.main === module) {
-    upgradeSubnetActorDiamond()
-        .then(() => process.exit(0))
-        .catch((error) => {
-            console.error(error)
-            process.exit(1)
-        })
-}
-
-exports.upgradeDiamond = upgradeSubnetActorDiamond
+exports.upgradeDiamond = upgradeGatewayActorDiamond
+exports.upgradeFacet = upgradeGatewayActorFacet
