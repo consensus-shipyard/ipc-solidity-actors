@@ -537,7 +537,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
         vm.expectRevert(NotEnoughFunds.selector);
 
-        gwManager.register{value: collateral}();
+        gwManager.register{value: collateral}(0);
     }
 
     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
@@ -545,7 +545,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         vm.expectRevert(AlreadyRegisteredSubnet.selector);
 
-        gwManager.register{value: DEFAULT_COLLATERAL_AMOUNT}();
+        gwManager.register{value: DEFAULT_COLLATERAL_AMOUNT}(0);
     }
 
     function testGatewayDiamond_AddStake_Works_SingleStaking(uint256 stakeAmount, uint256 registerAmount) public {
@@ -2088,7 +2088,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwManager = GatewayManagerFacet(address(gw));
         gwGetter = GatewayGetterFacet(address(gw));
 
-        gwManager.register{value: collateral}();
+        gwManager.register{value: collateral}(0);
 
         (SubnetID memory id, uint256 stake, uint256 topDownNonce, , uint256 circSupply, Status status) = getSubnetGW(
             subnetAddress,
