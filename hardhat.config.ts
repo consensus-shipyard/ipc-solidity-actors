@@ -59,7 +59,8 @@ task('deploy-gateway', 'Builds and deploys the Gateway contract on the selected 
   const { deploy } = await lazyImport('./scripts/deploy-gateway');
   const gatewayDeployment = await deploy(deployments.libs);
 
-  console.log(gatewayDeployment);
+  console.log(JSON.stringify(gatewayDeployment, null, 2));
+
 
   await saveDeployments(network, gatewayDeployment);
 });
@@ -117,6 +118,7 @@ task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args
 });
 
 task('upgrade-gw-diamond', 'Builds and deploys Subnet Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
+  await hre.run('compile');
   const network = hre.network.name;
   const deployments = await getDeployments(network);
   console.log(deployments)
