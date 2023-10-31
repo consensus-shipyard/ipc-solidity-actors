@@ -65,11 +65,13 @@ async function upgradeGatewayActorFacet(
     replacementFacetName: string,
     facetLibs: { [key in string]: string },
 ) {
+    console.info(
+        `Upgrading Gateway Actor Facet. Gateway Address: ${gatewayAddress}, Replacement Facet Name: ${replacementFacetName}`,
+    )
+
     if (!gatewayAddress) throw new Error(`Gateway is missing`)
 
-    //if (!facetLibs || Object.keys(facetLibs).length === 0)
-    //throw new Error(`Libraries are missing`)
-
+    console.log('facetLibs', JSON.stringify(facetLibs))
     await hre.run('compile')
     const [deployer] = await ethers.getSigners()
     const txArgs = await getTransactionFees()
