@@ -50,13 +50,13 @@ function getBytecode(fileName) {
 }
 
 /**
- * Filters the functionSelectors array to only return strings that start with '0x'.
+ * Filters the input array to only return strings that start with '0x'.
  *
  * @param {Object} input - The object containing the functionSelectors array.
  * @returns {Array} - An array of strings from functionSelectors that start with '0x'.
  */
 function filterSelectors(input) {
-    return input.functionSelectors.filter((item) => {
+    return input.filter((item) => {
         return typeof item === 'string' && item.startsWith('0x')
     })
 }
