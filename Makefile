@@ -7,6 +7,9 @@ OUTPUT ?= ./out
 deploy-ipc:
 	./ops/deploy.sh $(NETWORK)
 
+upgrade-gw-diamond:
+	./ops/upgrade-gw-diamond.sh $(NETWORK)
+
 compile-abi:
 	./ops/compile-abi.sh $(OUTPUT)
 
