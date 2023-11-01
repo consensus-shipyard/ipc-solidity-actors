@@ -18,6 +18,9 @@ interface ISubnetActor {
     /// Method that allows a validator to increase their stake
     function stake() external payable;
 
+    /// Method that allows to pre-fund an address in the subnet before it bootstraps.
+    function preFund() external payable;
+
     /// Method that allows a validator to unstake their collateral from a subnet
     function unstake(uint256 amount) external;
 
@@ -42,5 +45,5 @@ interface ISubnetActor {
 
     /// reward the relayers for processing checkpoint at height `height`.
     /// The reword includes the fixed reward for a relayer defined in the contract and `amount` of fees from the cross-messages.
-    function distributeRewardToRelayers(uint64 height, uint256 amount) external;
+    function distributeRewardToRelayers(uint64 height, uint256 amount) external payable;
 }
