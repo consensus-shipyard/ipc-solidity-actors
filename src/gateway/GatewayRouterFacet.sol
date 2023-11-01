@@ -225,12 +225,12 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (height < s.bottomUpCheckpointRetentionHeight) {
             revert CheckpointAlreadyProcessed();
         }
-        BottomUpCheckpoint memory checkpoint = s.bottomUpCheckpoints[height];
-        if (checkpoint.blockHeight == 0) {
+
+        (bool exists, BottomUpCheckpoint storage checkpoint, CheckpointInfo storage checkpointInfo) = LibGateway
+            .getBottomUpCheckpointWithInfo(height);
+        if (!exists) {
             revert CheckpointNotCreated();
         }
-
-        CheckpointInfo storage checkpointInfo = s.bottomUpCheckpointInfo[height];
 
         bytes32 checkpointHash = checkpointInfo.hash;
 
@@ -301,7 +301,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (checkpoint.blockHeight % s.bottomUpCheckPeriod != 0) {
             revert InvalidCheckpointEpoch();
         }
-        if (s.bottomUpCheckpoints[checkpoint.blockHeight].blockHeight > 0) {
+        if (LibGateway.bottomUpCheckpointExists(checkpoint.blockHeight)) {
             revert CheckpointAlreadyExists();
         }
 
@@ -316,14 +316,15 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (!ok) {
             revert FailedAddIncompleteCheckpoint();
         }
-        s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
-        s.bottomUpCheckpointInfo[checkpoint.blockHeight] = CheckpointInfo({
+        
+        CheckpointInfo memory info = CheckpointInfo({
             hash: checkpoint.toHash(),
             rootHash: membershipRootHash,
             threshold: threshold,
             currentWeight: 0,
             reached: false
         });
+        LibGateway.storeBottomUpCheckpointWithInfo(checkpoint, info);
     }
 
     /// @notice Set a new checkpoint retention height and garbage collect all checkpoints in range [`retentionHeight`, `newRetentionHeight`)
