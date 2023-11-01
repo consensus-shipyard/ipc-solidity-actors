@@ -90,7 +90,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice method to add some initial balance into a subnet that hasn't yet bootstrapped.
-    /// This balance is added to user addresses in genesis, and becomes part of the genesis
+    /// @dev This balance is added to user addresses in genesis, and becomes part of the genesis
     /// circulating supply.
     function preFund() external payable {
         if (msg.value == 0) {
