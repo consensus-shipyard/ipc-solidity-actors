@@ -106,7 +106,7 @@ Replacement Facet Name: ${replacementFacetName}
         txArgs,
     )
     await tx.wait()
-    return tx.hash
+    return { replacementFacetName: replacementFacet.address }
 }
 
 async function generateBytecode(facet) {
@@ -137,6 +137,9 @@ async function upgradeGatewayActorDiamond(deployments) {
     const provider = ethers.provider
 
     const deployedBytecode = {}
+
+    //return this object to update the caller on what facets where updated
+    const updatedFacets = {}
 
     // Loop through each contract address in the facets
     for (let contractAddress in facets) {
@@ -172,20 +175,21 @@ ${formattedLibs}
 Address: ${facet.address}
 `)
 
-            const newFacetTX = await upgradeGatewayActorFacet(
+            const newFacet = await upgradeGatewayActorFacet(
                 gatewayDiamondAddress,
                 facet.name,
                 facet.libs,
             )
+            for (let key in newFacet) updatedFacets[key] = newFacet[key]
 
             console.info(`
 Deployment Status:
 -------------------------
 New replacement facet (${facet.name}) deployed.
-Transaction Hash: ${newFacetTX}
 `)
         }
     }
+    return updatedFacets
 }
 exports.upgradeDiamond = upgradeGatewayActorDiamond
 exports.upgradeFacet = upgradeGatewayActorFacet
