@@ -67,13 +67,15 @@ async function upgradeGatewayActorFacet(
     replacementFacetName: string,
     facetLibs: { [key in string]: string },
 ) {
-    console.info(
-        `Upgrading Gateway Actor Facet. Gateway Address: ${gatewayAddress}, Replacement Facet Name: ${replacementFacetName}`,
-    )
+    console.info(`
+Gateway Actor Facet Upgrade:
+-----------------------------------
+Gateway Address: ${gatewayAddress}
+Replacement Facet Name: ${replacementFacetName}
+`)
 
     if (!gatewayAddress) throw new Error(`Gateway is missing`)
 
-    console.log('facetLibs', JSON.stringify(facetLibs))
     const [deployer] = await ethers.getSigners()
     const txArgs = await getTransactionFees()
     let replacementFacet = await deployContractWithDeployer(
@@ -157,19 +159,31 @@ async function upgradeGatewayActorDiamond(deployments) {
         const facet = deployments.Facets[facetIndex]
         const facetBytecode = await generateBytecode(facet)
         if (!deployedBytecode.hasOwnProperty(facetBytecode)) {
-            console.info(
-                `Facet bytecode not found in deployed bytecode: ${JSON.stringify(
-                    facet,
-                )}`,
-            )
+            let formattedLibs = Object.entries(facet.libs)
+                .map(([key, value]) => `  - ${key}: ${value}`)
+                .join('\n')
+
+            console.info(`
+Facet Bytecode Not Found:
+---------------------------------
+Facet Name: ${facet.name}
+Libraries:
+${formattedLibs}
+Address: ${facet.address}
+`)
+
             const newFacetTX = await upgradeGatewayActorFacet(
                 gatewayDiamondAddress,
                 facet.name,
                 facet.libs,
             )
-            console.info(
-                `New replacement facet ${facet.name} deployed at tx: ${newFacetTX.tx}`,
-            )
+
+            console.info(`
+Deployment Status:
+-------------------------
+New replacement facet (${facet.name}) deployed.
+Transaction Hash: ${newFacetTX}
+`)
         }
     }
 }
