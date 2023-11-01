@@ -117,11 +117,19 @@ task('deploy-sa-diamond', 'Builds and deploys Subnet Actor diamond', async (args
   await hre.run('deploy-sa-diamond-and-facets');
 });
 
-task('upgrade-gw-diamond', 'Builds and deploys Subnet Actor diamond', async (args, hre: HardhatRuntimeEnvironment) => {
+task('upgrade-gw-diamond', 'Upgrades IPC Gateway Actor Diamond Facets on an EVM-compatible subnet using hardhat', async (args, hre: HardhatRuntimeEnvironment) => {
   await hre.run('compile');
   const network = hre.network.name;
   const deployments = await getDeployments(network);
   const { upgradeDiamond } = await lazyImport('./scripts/upgrade-gw-diamond');
+  await upgradeDiamond(deployments)
+});
+
+task('upgrade-sa-diamond', 'Upgrades IPC Subnet Actor Diamond Facets on an EVM-compatible subnet using hardhat', async (args, hre: HardhatRuntimeEnvironment) => {
+  await hre.run('compile');
+  const network = hre.network.name;
+  const deployments = await getDeployments(network);
+  const { upgradeDiamond } = await lazyImport('./scripts/upgrade-sa-diamond');
   await upgradeDiamond(deployments)
 });
 

@@ -12,12 +12,16 @@ const lazyImport = async (module: any) => {
 
 
 // Function to upgrade the Subnet Actor Diamond
-async function upgradeGatewayActorDiamond(deployments) {
-    // Get the Gateway Diamond address from the deployments
-    const gatewayDiamondAddress = deployments.Gateway
+async function upgradeSubnetActorDiamond(deployments) {
 
-    // Get the facets of the Gateway Diamond
-    const facets = await getFacets(gatewayDiamondAddress)
+    // TODO XXX We need to get the subnet actor contract address from deployments 
+    // currently only the gateway is stored there
+
+    // Get the Gateway Diamond address from the deployments
+    const diamondAddress = deployments.Gateway
+
+    // Get the facets of the Diamond
+    const facets = await getFacets(diamondAddress)
     const provider = ethers.provider
 
     //return this object to update the caller on what facets where updated
@@ -44,7 +48,7 @@ Address: ${facet.address}
 `)
 
             const newFacet = await upgradeFacet(
-                gatewayDiamondAddress,
+                diamondAddress,
                 facet.name,
                 facet.libs,
             )
@@ -59,4 +63,4 @@ New replacement facet (${facet.name}) deployed.
     }
     return updatedFacets
 }
-exports.upgradeDiamond = upgradeGatewayActorDiamond
+exports.upgradeDiamond = upgradeSubnetActorDiamond

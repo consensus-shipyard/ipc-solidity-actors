@@ -10,6 +10,9 @@ deploy-ipc:
 upgrade-gw-diamond:
 	./ops/upgrade-gw-diamond.sh $(NETWORK)
 
+upgrade-sa-diamond:
+	./ops/upgrade-sa-diamond.sh $(NETWORK)
+
 compile-abi:
 	./ops/compile-abi.sh $(OUTPUT)
 
