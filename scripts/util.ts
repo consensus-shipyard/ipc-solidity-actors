@@ -4,6 +4,7 @@ import { Contract, ethers } from 'hardhat'
 import ganache from 'ganache-core'
 import * as linker from 'solc/linker'
 const { getSelectors, FacetCutAction } = require('./js/diamond.js')
+const fs = require('fs')
 
 export const ZERO_ADDRESS = '0x0000000000000000000000000000000000000000'
 
@@ -176,12 +177,12 @@ function getBytecodeFromFacetTypeChainFilename(fileName) {
 
 // Loop through each contract address in the facets
 // query web3 api to get deployed bytecode
-export function getOnChainBytecodeFromFacets(facets) {
+export async function getOnChainBytecodeFromFacets(facets) {
     const deployedBytecode = {}
     for (let contractAddress in facets) {
         try {
             // Fetch the bytecode of the contract
-            const bytecode = await provider.getCode(contractAddress)
+            const bytecode = await ethers.provider.getCode(contractAddress)
             deployedBytecode[bytecode] = contractAddress
             // Log the bytecode to the console
         } catch (error) {

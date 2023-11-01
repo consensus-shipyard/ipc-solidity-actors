@@ -10,7 +10,6 @@ const lazyImport = async (module: any) => {
     return await import(module)
 }
 
-const fs = require('fs')
 
 // Function to upgrade the Subnet Actor Diamond
 async function upgradeGatewayActorDiamond(deployments) {
@@ -24,7 +23,7 @@ async function upgradeGatewayActorDiamond(deployments) {
     //return this object to update the caller on what facets where updated
     const updatedFacets = {}
 
-    const onChainFacetBytecodes = getOnChainBytecodeFromFacets(facets)
+    const onChainFacetBytecodes = await getOnChainBytecodeFromFacets(facets)
 
     // Loop through each facet in the deployments
     for (let facetIndex in deployments.Facets) {
