@@ -612,7 +612,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_AddStake_Works_MultipleStakings(uint8 numberOfStakes) public {
         vm.assume(numberOfStakes > 0);
 
-        address subnetAddress = address(1);
+        address subnetAddress = vm.addr(100);
         uint256 singleStakeAmount = 1 ether;
         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
         uint256 expectedStakedAmount = registerAmount;
