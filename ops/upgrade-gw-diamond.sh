@@ -8,6 +8,8 @@ then
     exit 1
 fi
 
+NETWORK=$1
+
 if [ "$NETWORK" = "auto" ]; then
   echo "[*] Automatically getting chainID for network"
   source ops/chain-id.sh
