@@ -474,6 +474,10 @@ contract SubnetActorDiamondRealTest is Test {
         require(saGetter.genesisCircSupply() == fundAmount, "genesis circ supply not correct");
         (address[] memory genesisAddrs, ) = saGetter.genesisBalances();
         require(genesisAddrs.length == 1, "not one genesis addresses");
+        // cannot release more than the initial balance of the address
+        vm.expectRevert(NotEnoughBalance.selector);
+        saManager.preRelease(2*fundAmount);
+        // release all
         saManager.preRelease(fundAmount);
         (genesisAddrs, ) = saGetter.genesisBalances();
         require(saGetter.genesisCircSupply() == 0, "genesis circ supply not correct");

@@ -121,7 +121,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert SubnetAlreadyBootstrapped();
         }
 
-        if (s.genesisBalance[msg.sender] == 0) {
+        if (s.genesisBalance[msg.sender] < amount) {
             revert NotEnoughBalance();
         }
 
@@ -130,8 +130,9 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
         if (s.genesisBalance[msg.sender] == 0) {
             rmAddressFromBalanceKey(msg.sender);
-            payable(msg.sender).sendValue(amount);
         }
+
+        payable(msg.sender).sendValue(amount);
     }
 
     /// @notice method that allows a validator to join the subnet
