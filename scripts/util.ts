@@ -311,7 +311,7 @@ Replacement Facet Name: ${replacementFacetName}
         if (selectors.length > 0) {
             await cutFacetOnChain(
                 diamondAddress,
-                replacementFacet.address,
+                replacementFacet,
                 action,
                 selectors,
             )
