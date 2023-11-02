@@ -314,7 +314,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (!ok) {
             revert FailedAddIncompleteCheckpoint();
         }
-        
+
         CheckpointInfo memory info = CheckpointInfo({
             hash: checkpoint.toHash(),
             rootHash: membershipRootHash,
