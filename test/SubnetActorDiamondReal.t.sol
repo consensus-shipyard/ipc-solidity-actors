@@ -476,7 +476,7 @@ contract SubnetActorDiamondRealTest is Test {
         require(genesisAddrs.length == 1, "not one genesis addresses");
         // cannot release more than the initial balance of the address
         vm.expectRevert(NotEnoughBalance.selector);
-        saManager.preRelease(2*fundAmount);
+        saManager.preRelease(2 * fundAmount);
         // release all
         saManager.preRelease(fundAmount);
         (genesisAddrs, ) = saGetter.genesisBalances();
