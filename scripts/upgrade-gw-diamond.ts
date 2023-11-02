@@ -25,6 +25,14 @@ Address: ${facet.address}
 `)
 }
 
+function getDeployedFacetAddressFromName(facetName, deployments) {
+    for (let facet of deployments.Facets) {
+        if (facet.name === facetName) {
+            return facet.address
+        }
+    }
+}
+
 /**
  * Handle facet upgrades on chain.
  * @param facet - The facet to process.
@@ -39,13 +47,23 @@ async function upgradeFacet(
     gatewayDiamondAddress,
     updatedFacets,
     onChainFacetBytecodes,
+    deployments,
 ) {
     const facetBytecode = await getBytecodeFromFacet(facet)
 
     if (!onChainFacetBytecodes[facetBytecode]) {
         logMissingFacetInfo(facet)
 
-        const newFacet = await upgradeFacetOnChain(gatewayDiamondAddress, facet)
+        const onChainFunctionSelectors =
+            onChainFacets[
+                getDeployedFacetAddressFromName(facet.name, deployments)
+            ]
+
+        const newFacet = await upgradeFacetOnChain(
+            gatewayDiamondAddress,
+            facet,
+            onChainFunctionSelectors,
+        )
         for (let key in newFacet) updatedFacets[key] = newFacet[key]
 
         const DEPLOYMENT_STATUS_MESSAGE = `
@@ -78,6 +96,7 @@ async function upgradeGatewayActorDiamond(deployments) {
             gatewayDiamondAddress,
             updatedFacets,
             onChainFacetBytecodes,
+            deployments,
         )
     }
 
