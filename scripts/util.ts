@@ -239,9 +239,9 @@ Replacement Facet Name: ${replacementFacetName}
 
     console.log('on chain selectors:')
     console.log(onChainFunctionSelectors)
-    console.log('new selectors:')
-    console.log(getSelectors(replacementFacet))
-    return // XXX
+    console.log("new selectors:")
+    console.log(filterSelectors(getSelectors(replacementFacet)))
+
     const facetCuts = [
         {
             facetAddress: replacementFacet.address,
@@ -262,5 +262,8 @@ Replacement Facet Name: ${replacementFacetName}
         txArgs,
     )
     await tx.wait()
-    return { replacementFacetName: replacementFacet.address }
+    console.log("name is, ", replacementFacetName)
+    console.log("ret is", { [replacementFacetName]: replacementFacet.address });
+    return { [replacementFacetName]: replacementFacet.address };
+
 }
