@@ -28,12 +28,14 @@ Address: ${facet.address}
 /**
  * Handle facet upgrades on chain.
  * @param facet - The facet to process.
+ * @param onChainFacets - the on chain facets and their functions as returned by DiamondLoupe
  * @param gatewayDiamondAddress - The address of the Gateway Diamond.
  * @param updatedFacets - A collection of updated facets.
  * @param onChainFacetBytecodes - The bytecodes from the on-chain facets.
  */
 async function upgradeFacet(
     facet,
+    onChainFacets,
     gatewayDiamondAddress,
     updatedFacets,
     onChainFacetBytecodes,
@@ -63,13 +65,16 @@ New replacement facet (${facet.name}) deployed.
 async function upgradeGatewayActorDiamond(deployments) {
     const gatewayDiamondAddress = deployments.Gateway
 
-    const facets = await getFacets(gatewayDiamondAddress)
+    const onChainFacets = await getFacets(gatewayDiamondAddress)
     const updatedFacets = {}
-    const onChainFacetBytecodes = await getOnChainBytecodeFromFacets(facets)
+    const onChainFacetBytecodes = await getOnChainBytecodeFromFacets(
+        onChainFacets,
+    )
 
     for (const facet of deployments.Facets) {
         await upgradeFacet(
             facet,
+            onChainFacets,
             gatewayDiamondAddress,
             updatedFacets,
             onChainFacetBytecodes,
