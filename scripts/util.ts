@@ -210,11 +210,10 @@ function filterSelectors(input) {
 
 // given a facet address and a diamond address,
 // upgrade the diamond to use the new facet
-export async function upgradeFacet(
-    diamondAddress: string,
-    replacementFacetName: string,
-    facetLibs: { [key in string]: string },
-) {
+export async function upgradeFacetOnChain(diamondAddress: string, facet) {
+    const replacementFacetName = facet.name
+    const facetLibs = facet.libs
+
     console.info(`
 Diamond Facet Upgrade:
 -----------------------------------

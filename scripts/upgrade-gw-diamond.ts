@@ -1,40 +1,21 @@
-import hre, { ethers } from 'hardhat'
+import { ethers } from 'hardhat'
 import {
     getFacets,
     getBytecodeFromFacet,
     getOnChainBytecodeFromFacets,
-    upgradeFacet,
+    upgradeFacetOnChain,
 } from './util'
 
-const lazyImport = async (module: any) => {
-    return await import(module)
-}
+/**
+ * Log information about a missing facet.
+ * @param facet - The facet to display.
+ */
+function logMissingFacetInfo(facet) {
+    const formattedLibs = Object.entries(facet.libs)
+        .map(([key, value]) => `  - ${key}: ${value}`)
+        .join('\n')
 
-
-// Function to upgrade the Subnet Actor Diamond
-async function upgradeGatewayActorDiamond(deployments) {
-    // Get the Gateway Diamond address from the deployments
-    const gatewayDiamondAddress = deployments.Gateway
-
-    // Get the facets of the Gateway Diamond
-    const facets = await getFacets(gatewayDiamondAddress)
-    const provider = ethers.provider
-
-    //return this object to update the caller on what facets where updated
-    const updatedFacets = {}
-
-    const onChainFacetBytecodes = await getOnChainBytecodeFromFacets(facets)
-
-    // Loop through each facet in the deployments
-    for (let facetIndex in deployments.Facets) {
-        const facet = deployments.Facets[facetIndex]
-        const facetBytecode = await getBytecodeFromFacet(facet)
-        if (!onChainFacetBytecodes.hasOwnProperty(facetBytecode)) {
-            let formattedLibs = Object.entries(facet.libs)
-                .map(([key, value]) => `  - ${key}: ${value}`)
-                .join('\n')
-
-            console.info(`
+    console.info(`
 Facet Bytecode Not Found:
 ---------------------------------
 Facet Name: ${facet.name}
@@ -42,21 +23,60 @@ Libraries:
 ${formattedLibs}
 Address: ${facet.address}
 `)
+}
 
-            const newFacet = await upgradeFacet(
-                gatewayDiamondAddress,
-                facet.name,
-                facet.libs,
-            )
-            for (let key in newFacet) updatedFacets[key] = newFacet[key]
+/**
+ * Handle facet upgrades on chain.
+ * @param facet - The facet to process.
+ * @param gatewayDiamondAddress - The address of the Gateway Diamond.
+ * @param updatedFacets - A collection of updated facets.
+ * @param onChainFacetBytecodes - The bytecodes from the on-chain facets.
+ */
+async function upgradeFacet(
+    facet,
+    gatewayDiamondAddress,
+    updatedFacets,
+    onChainFacetBytecodes,
+) {
+    const facetBytecode = await getBytecodeFromFacet(facet)
 
-            console.info(`
+    if (!onChainFacetBytecodes[facetBytecode]) {
+        logMissingFacetInfo(facet)
+
+        const newFacet = await upgradeFacetOnChain(gatewayDiamondAddress, facet)
+        for (let key in newFacet) updatedFacets[key] = newFacet[key]
+
+        const DEPLOYMENT_STATUS_MESSAGE = `
 Deployment Status:
 -------------------------
 New replacement facet (${facet.name}) deployed.
-`)
-        }
+`
+        console.info(DEPLOYMENT_STATUS_MESSAGE)
     }
+}
+
+/**
+ * Upgrade the Gateway Actor Diamond.
+ * @param deployments - The deployment data.
+ * @returns An object of updated facets.
+ */
+async function upgradeGatewayActorDiamond(deployments) {
+    const gatewayDiamondAddress = deployments.Gateway
+
+    const facets = await getFacets(gatewayDiamondAddress)
+    const updatedFacets = {}
+    const onChainFacetBytecodes = await getOnChainBytecodeFromFacets(facets)
+
+    for (const facet of deployments.Facets) {
+        await upgradeFacet(
+            facet,
+            gatewayDiamondAddress,
+            updatedFacets,
+            onChainFacetBytecodes,
+        )
+    }
+
     return updatedFacets
 }
-exports.upgradeDiamond = upgradeGatewayActorDiamond
+
+export { upgradeGatewayActorDiamond as upgradeDiamond }
