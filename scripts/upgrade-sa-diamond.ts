@@ -10,15 +10,18 @@ const lazyImport = async (module: any) => {
     return await import(module)
 }
 
-
 // Function to upgrade the Subnet Actor Diamond
 async function upgradeSubnetActorDiamond(deployments) {
-
-    // TODO XXX We need to get the subnet actor contract address from deployments 
-    // currently only the gateway is stored there
+    // Check if the subnet actor contract address is available in deployments
+    if (!deployments.SubnetActor) {
+        console.error(
+            'Error: Subnet actor contract address is not available in deployments.',
+        )
+        return
+    }
 
     // Get the Gateway Diamond address from the deployments
-    const diamondAddress = deployments.Gateway
+    const diamondAddress = deployments.SubnetActor
 
     // Get the facets of the Diamond
     const facets = await getFacets(diamondAddress)
