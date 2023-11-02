@@ -451,9 +451,10 @@ contract SubnetActorDiamondRealTest is Test {
         );
     }
 
-    function testSubnetActorDiamondReal_PreFund_works() public {
+    function testSubnetActorDiamondReal_PreFundRelease_works() public {
         (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
         address preFunder = address(102);
+        address preReleaser = address(103);
 
         // total collateral in the gateway
         uint256 collateral = 0;
@@ -463,6 +464,20 @@ contract SubnetActorDiamondRealTest is Test {
         require(!saGetter.isWaitingValidator(validator1), "waiting validator1");
 
         // ======== Step. Join ======
+
+        // pre-fund and pre-release from same address
+        vm.startPrank(preReleaser);
+        vm.deal(preReleaser, 2*fundAmount);
+        saManager.preFund{value: 2*fundAmount}();
+        require(saGetter.genesisCircSupply() == 2*fundAmount, "genesis circ supply not correct");
+        saManager.preRelease(fundAmount);
+        require(saGetter.genesisCircSupply() == fundAmount, "genesis circ supply not correct");
+        (address[] memory genesisAddrs, ) = saGetter.genesisBalances();
+        require(genesisAddrs.length == 1, "not one genesis addresses");
+        saManager.preRelease(fundAmount);
+        require(saGetter.genesisCircSupply() == 0, "genesis circ supply not correct");
+        require(genesisAddrs.length == 0, "not zero genesis addresses");
+
         // pre-fund from validator and from pre-funder
         vm.startPrank(validator1);
         vm.deal(validator1, fundAmount);
@@ -470,6 +485,8 @@ contract SubnetActorDiamondRealTest is Test {
         vm.startPrank(preFunder);
         vm.deal(preFunder, fundAmount);
         saManager.preFund{value: fundAmount}();
+
+
 
         // initial validator joins
         vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
@@ -484,7 +501,7 @@ contract SubnetActorDiamondRealTest is Test {
         );
 
         require(saGetter.genesisCircSupply() == 2 * fundAmount, "genesis circ supply not correct");
-        (address[] memory genesisAddrs, ) = saGetter.genesisBalances();
+        (genesisAddrs, ) = saGetter.genesisBalances();
         require(genesisAddrs.length == 2, "not two genesis addresses");
 
         // collateral confirmed immediately and network boostrapped
