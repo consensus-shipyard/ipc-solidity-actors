@@ -467,14 +467,15 @@ contract SubnetActorDiamondRealTest is Test {
 
         // pre-fund and pre-release from same address
         vm.startPrank(preReleaser);
-        vm.deal(preReleaser, 2*fundAmount);
-        saManager.preFund{value: 2*fundAmount}();
-        require(saGetter.genesisCircSupply() == 2*fundAmount, "genesis circ supply not correct");
+        vm.deal(preReleaser, 2 * fundAmount);
+        saManager.preFund{value: 2 * fundAmount}();
+        require(saGetter.genesisCircSupply() == 2 * fundAmount, "genesis circ supply not correct");
         saManager.preRelease(fundAmount);
         require(saGetter.genesisCircSupply() == fundAmount, "genesis circ supply not correct");
         (address[] memory genesisAddrs, ) = saGetter.genesisBalances();
         require(genesisAddrs.length == 1, "not one genesis addresses");
         saManager.preRelease(fundAmount);
+        (genesisAddrs, ) = saGetter.genesisBalances();
         require(saGetter.genesisCircSupply() == 0, "genesis circ supply not correct");
         require(genesisAddrs.length == 0, "not zero genesis addresses");
 
@@ -485,8 +486,6 @@ contract SubnetActorDiamondRealTest is Test {
         vm.startPrank(preFunder);
         vm.deal(preFunder, fundAmount);
         saManager.preFund{value: fundAmount}();
-
-
 
         // initial validator joins
         vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
@@ -519,10 +518,56 @@ contract SubnetActorDiamondRealTest is Test {
         require(nextConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER, "next config num not 1");
         require(startConfigNum == LibStaking.INITIAL_CONFIGURATION_NUMBER, "start config num not 1");
 
+        // pre-fund not allowed with bootstrapped subnet
         vm.startPrank(preFunder);
         vm.expectRevert(SubnetAlreadyBootstrapped.selector);
         vm.deal(preFunder, fundAmount);
         saManager.preFund{value: fundAmount}();
+
+        vm.stopPrank();
+    }
+
+    function testSubnetActorDiamondReal_PreFundAndLeave_works() public {
+        (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
+
+        // total collateral in the gateway
+        uint256 collateral = DEFAULT_MIN_VALIDATOR_STAKE - 100;
+        uint256 fundAmount = 100;
+
+        // pre-fund from validator
+        vm.startPrank(validator1);
+        vm.deal(validator1, fundAmount);
+        saManager.preFund{value: fundAmount}();
+
+        // initial validator joins but doesn't bootstrap the subnet
+        vm.deal(validator1, collateral);
+        vm.startPrank(validator1);
+        saManager.join{value: collateral}(publicKey1);
+        require(
+            address(saDiamond).balance == collateral + fundAmount,
+            "subnet balance is incorrect after validator1 joining"
+        );
+        require(saGetter.genesisCircSupply() == fundAmount, "genesis circ supply not correct");
+        (address[] memory genesisAddrs, ) = saGetter.genesisBalances();
+        require(genesisAddrs.length == 1, "not one genesis addresses");
+
+        // Leave should return the collateral and the initial balance
+        saManager.leave();
+        require(address(saDiamond).balance == 0, "subnet balance is incorrect after validator1 leaving");
+        require(saGetter.genesisCircSupply() == 0, "genesis circ supply not zero");
+        (genesisAddrs, ) = saGetter.genesisBalances();
+        require(genesisAddrs.length == 0, "not zero genesis addresses");
+
+        // initial validator joins to bootstrap the subnet
+        vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
+
+        vm.startPrank(validator1);
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+
+        // pre-release not allowed with bootstrapped subnet
+        vm.startPrank(validator1);
+        vm.expectRevert(SubnetAlreadyBootstrapped.selector);
+        saManager.preRelease(fundAmount);
 
         vm.stopPrank();
     }
