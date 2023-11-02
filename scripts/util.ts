@@ -208,6 +208,40 @@ function filterSelectors(input) {
     })
 }
 
+function compareArrays(onChain, newArr) {
+  const result = {
+    removedSelectors: [],
+    matchingSelectors: [],
+    addedSelectors: []
+  };
+
+  // Create a Map for easier lookup
+  const onChainMap = new Map();
+  onChain.forEach(selector => onChainMap.set(selector, true));
+
+  const newArrMap = new Map();
+  newArr.forEach(selector => newArrMap.set(selector, true));
+
+  // Find matching and removed selectors
+  onChain.forEach(selector => {
+    if (newArrMap.has(selector)) {
+      result.matchingSelectors.push(selector);
+    } else {
+      result.removedSelectors.push(selector);
+    }
+  });
+
+  // Find added selectors
+  newArr.forEach(selector => {
+    if (!onChainMap.has(selector)) {
+      result.addedSelectors.push(selector);
+    }
+  });
+
+  return result;
+}
+
+
 // given a facet address and a diamond address,
 // upgrade the diamond to use the new facet
 export async function upgradeFacetOnChain(
@@ -240,7 +274,9 @@ Replacement Facet Name: ${replacementFacetName}
     console.log('on chain selectors:')
     console.log(onChainFunctionSelectors)
     console.log("new selectors:")
-    console.log(filterSelectors(getSelectors(replacementFacet)))
+    const result = compareArrays(onChainFunctionSelectors, filterSelectors(getSelectors(replacementFacet)))
+    console.log("diff:")
+    console.log(result)
 
     const facetCuts = [
         {
