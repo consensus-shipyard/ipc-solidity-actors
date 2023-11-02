@@ -232,10 +232,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert CheckpointNotCreated();
         }
 
-        bytes32 checkpointHash = checkpointInfo.hash;
-
         // slither-disable-next-line unused-return
-        (address recoveredSignatory, ECDSA.RecoverError err, ) = ECDSA.tryRecover(checkpointHash, signature);
+        (address recoveredSignatory, ECDSA.RecoverError err, ) = ECDSA.tryRecover(checkpointInfo.hash, signature);
         if (err != ECDSA.RecoverError.NoError) {
             revert InvalidSignature();
         }
@@ -273,13 +271,13 @@ contract GatewayRouterFacet is GatewayActorModifiers {
                 }
                 emit QuorumReached({
                     height: height,
-                    checkpoint: checkpointHash,
+                    checkpoint: checkpointInfo.hash,
                     quorumWeight: checkpointInfo.currentWeight
                 });
             } else {
                 emit QuorumWeightUpdated({
                     height: height,
-                    checkpoint: checkpointHash,
+                    checkpoint: checkpointInfo.hash,
                     newWeight: checkpointInfo.currentWeight
                 });
             }
