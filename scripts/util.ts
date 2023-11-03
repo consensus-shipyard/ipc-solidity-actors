@@ -251,7 +251,10 @@ async function cutFacetOnChain(
 
     const facetCuts = [
         {
-            facetAddress: replacementFacet.address,
+            facetAddress:
+                action === FacetCutAction.Remove
+                    ? ethers.constants.AddressZero
+                    : replacementFacet.address,
             action: action,
             functionSelectors: functionSelectors,
         },
