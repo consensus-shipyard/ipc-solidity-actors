@@ -59,7 +59,6 @@ async function saveDeploymentsFacets(
 
     const facets = deploymentsJson[env]['Facets']
     for (const facetIndex in facets) {
-
         const facetName = facets[facetIndex].name
         if (updatedFacets[facetName]) {
             facets[facetIndex].address = updatedFacets[facetName]
