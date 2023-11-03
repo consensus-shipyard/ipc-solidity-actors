@@ -29,6 +29,7 @@ async function upgradeGatewayActorDiamond(deployments) {
     for (let facetIndex in deployments.Facets) {
         const facet = deployments.Facets[facetIndex]
         const facetBytecode = await getBytecodeFromFacet(facet)
+       // compare the bytecode of the facets deployed with the local version of the contract.
         if (!onChainFacetBytecodes.hasOwnProperty(facetBytecode)) {
             let formattedLibs = Object.entries(facet.libs)
                 .map(([key, value]) => `  - ${key}: ${value}`)
