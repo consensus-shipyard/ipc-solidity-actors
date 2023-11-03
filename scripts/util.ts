@@ -302,9 +302,6 @@ Replacement Facet Name: ${replacementFacetName}
     )
     await replacementFacet.deployed()
 
-    console.log('on chain selectors:')
-    console.log(onChainFunctionSelectors)
-    console.log('new selectors:')
     const result = compareArrays(
         onChainFunctionSelectors,
         filterSelectors(getSelectors(replacementFacet)),
