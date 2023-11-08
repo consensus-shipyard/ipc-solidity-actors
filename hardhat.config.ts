@@ -111,6 +111,20 @@ task(
 )
 
 task(
+    'deploy-subnet-registry',
+    'Builds and deploys the Registry contract on the selected network',
+    async (args, hre: HardhatRuntimeEnvironment) => {
+        const network = hre.network.name
+
+         const { deploy } = await lazyImport('./scripts/deploy-registry')
+        const subnetRegistryDeployment = await deploy()
+
+        console.log(JSON.stringify(subnetRegistryDeployment, null, 2))
+     },
+)
+
+
+task(
     'deploy-subnet',
     'Builds and deploys the SubnetActor contract on the selected network',
     async (args, hre: HardhatRuntimeEnvironment) => {

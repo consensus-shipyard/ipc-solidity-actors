@@ -3,9 +3,8 @@ import { deployContractWithDeployer, getTransactionFees } from './util';
 
 const { getSelectors, FacetCutAction } = require("./js/diamond.js");
 
-async function main() {
-  try {
-    const [deployer] = await ethers.getSigners();
+export async function deploy() {
+     const [deployer] = await ethers.getSigners();
     const balance = await deployer.getBalance();
 
     console.log(`Deploying contracts with account: ${deployer.address} and balance: ${balance.toString()}`);
@@ -89,7 +88,7 @@ for (const facet of facets) {
       "SubnetIDHelper": LIBMAP["SubnetIDHelper"]
     }
     // deploy Diamond
-    const contract = await deployContractWithDeployer(
+    const { address: subnetRegistryAddress } = await deployContractWithDeployer(
       deployer,
       "SubnetRegistryDiamond",
       {},
@@ -98,17 +97,13 @@ for (const facet of facets) {
       txArgs
     );
 
+    return {
+       SubnetRegistry: subnetRegistryAddress,
+      Facets: facets,
+    };
+  
 
-
-
-    // FEVM: 
-    console.log(`registry contract deployed to: ${contract.address}`);
-
-    process.exit(0);
-  } catch (error) {
-    console.error(error);
-    process.exit(1);
-  }
+ 
+   
 }
-
-main();
+ 
