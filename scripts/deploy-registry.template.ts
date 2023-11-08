@@ -61,6 +61,9 @@ const facets = [
     "SubnetIDHelper": LIBMAP["SubnetIDHelper"]
   }},
   { name: "SubnetGetterFacet", libs: {} }, 
+  { name: "DiamondLoupeFacet", libs: {} },
+  { name: "DiamondCutFacet", libs: {} },
+
 ];
 
 for (const facet of facets) {

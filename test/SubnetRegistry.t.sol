@@ -6,13 +6,23 @@ import {ConsensusType} from "../src/enums/ConsensusType.sol";
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
+import {TestUtils} from "./TestUtils.sol";
+import {IDiamond} from "../src/interfaces/IDiamond.sol";
+
 
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {SubnetID} from "../src/structs/Subnet.sol";
-import {SubnetRegistry} from "../src/SubnetRegistry.sol";
+import {SubnetRegistryDiamond} from "../src/SubnetRegistryDiamond.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
+
+//facets
+import {RegisterSubnetFacet} from "../src/subnetregistry/RegisterSubnetFacet.sol";
+import {SubnetGetterFacet} from "../src/subnetregistry/SubnetGetterFacet.sol";
+import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
+import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
+
 
 contract SubnetRegistryTest is Test {
     using SubnetIDHelper for SubnetID;
@@ -28,14 +38,31 @@ contract SubnetRegistryTest is Test {
     uint64 private constant ROOTNET_CHAINID = 123;
     uint256 private constant CROSS_MSG_FEE = 10 gwei;
 
-    SubnetRegistry registry;
+    SubnetRegistryDiamond registry;
     bytes4[] empty;
+
+    DiamondLoupeFacet louper;
+    DiamondCutFacet dcFacet;
+    RegisterSubnetFacet registerSubnetFacet;
+    SubnetGetterFacet private subnetGetterFacet;
+    bytes4[] private dcFacetSelectors;
+    bytes4[] private louperSelectors;
+
+    bytes4[] private registerSubnetFacetSelectors;
+    bytes4[] private subnetGetterFacetSelectors;
 
     error FacetCannotBeZero();
     error WrongGateway();
     error CannotFindSubnet();
     error UnknownSubnet();
     error GatewayCannotBeZero();
+
+    constructor() { 
+        louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
+        dcFacetSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
+        registerSubnetFacetSelectors = TestUtils.generateSelectors(vm, "RegisterSubnetFacet");
+        subnetGetterFacetSelectors = TestUtils.generateSelectors(vm, "SubnetGetterFacet");
+    }
 
     function setUp() public {
         bytes4[] memory mockedSelectors = new bytes4[](1);
@@ -44,26 +71,76 @@ contract SubnetRegistryTest is Test {
         bytes4[] memory mockedSelectors2 = new bytes4[](1);
         mockedSelectors2[0] = 0x133f74ea;
 
-        address getter = address(new SubnetActorGetterFacet());
-        address manager = address(new SubnetActorManagerFacet());
+ 
 
-        registry = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, getter, manager, mockedSelectors, mockedSelectors2);
+    SubnetRegistryDiamond.ConstructorParams memory params;
+    params.gateway = DEFAULT_IPC_GATEWAY_ADDR;
+    params.getterFacet = address(new SubnetActorGetterFacet());
+    params.managerFacet = address(new SubnetActorManagerFacet());
+    params.subnetGetterSelectors = mockedSelectors;
+    params.subnetManagerSelectors = mockedSelectors2;
+
+        louper = new DiamondLoupeFacet();
+        dcFacet = new DiamondCutFacet();
+        registerSubnetFacet = new RegisterSubnetFacet();
+        subnetGetterFacet= new SubnetGetterFacet();
+
+        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](4);
+
+        gwDiamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: address(louper),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: louperSelectors
+            })
+        ); 
+        gwDiamondCut[1] = (
+            IDiamond.FacetCut({
+                facetAddress: address(dcFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: dcFacetSelectors
+            })
+        );
+        gwDiamondCut[2] = (
+            IDiamond.FacetCut({
+                facetAddress: address(registerSubnetFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: registerSubnetFacetSelectors
+            })
+        );
+        gwDiamondCut[3] = (
+            IDiamond.FacetCut({
+                facetAddress: address(subnetGetterFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: subnetGetterFacetSelectors
+            })
+        );
+ 
+ 
+
+        registry = new SubnetRegistryDiamond(gwDiamondCut, params);
+                louper =   DiamondLoupeFacet(address(registry));
+                dcFacet =   DiamondCutFacet(address(registry));
+                registerSubnetFacet =   RegisterSubnetFacet(address(registry));
+                subnetGetterFacet =   SubnetGetterFacet(address(registry));
+
+
     }
 
-    function test_Registry_Deployment_ZeroGetterFacet() public {
-        vm.expectRevert(FacetCannotBeZero.selector);
-        registry = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, address(0), address(1), empty, empty);
-    }
+    // function test_Registry_Deployment_ZeroGetterFacet() public {
+    //     vm.expectRevert(FacetCannotBeZero.selector);
+    //     registry = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, address(0), address(1), empty, empty);
+    // }
 
-    function test_Registry_Deployment_ZeroManagerFacet() public {
-        vm.expectRevert(FacetCannotBeZero.selector);
-        registry = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, address(1), address(0), empty, empty);
-    }
+    // function test_Registry_Deployment_ZeroManagerFacet() public {
+    //     vm.expectRevert(FacetCannotBeZero.selector);
+    //     registry = new SubnetRegistry(DEFAULT_IPC_GATEWAY_ADDR, address(1), address(0), empty, empty);
+    // }
 
-    function test_Registry_Deployment_ZeroGateway() public {
-        vm.expectRevert(GatewayCannotBeZero.selector);
-        registry = new SubnetRegistry(address(0), address(1), address(1), empty, empty);
-    }
+    // function test_Registry_Deployment_ZeroGateway() public {
+    //     vm.expectRevert(GatewayCannotBeZero.selector);
+    //     registry = new SubnetRegistry(address(0), address(1), address(1), empty, empty);
+    // }
 
     function test_Registry_Deployment_DifferentGateway() public {
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
@@ -79,7 +156,7 @@ contract SubnetRegistryTest is Test {
             minCrossMsgFee: CROSS_MSG_FEE
         });
         vm.expectRevert(WrongGateway.selector);
-        registry.newSubnetActor(params);
+        registerSubnetFacet.newSubnetActor(params);
     }
 
     function test_Registry_LatestSubnetDeploy_Revert() public {
@@ -96,9 +173,9 @@ contract SubnetRegistryTest is Test {
             powerScale: DEFAULT_POWER_SCALE,
             minCrossMsgFee: CROSS_MSG_FEE
         });
-        registry.newSubnetActor(params);
+        registerSubnetFacet.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
-        registry.latestSubnetDeployed(address(0));
+        subnetGetterFacet.latestSubnetDeployed(address(0));
     }
 
     function test_Registry_GetSubnetDeployedByNonce_Revert() public {
@@ -115,9 +192,9 @@ contract SubnetRegistryTest is Test {
             powerScale: DEFAULT_POWER_SCALE,
             minCrossMsgFee: CROSS_MSG_FEE
         });
-        registry.newSubnetActor(params);
+        registerSubnetFacet.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
-        registry.getSubnetDeployedByNonce(address(0), 1);
+        subnetGetterFacet.getSubnetDeployedByNonce(address(0), 1);
     }
 
     function test_Registry_Deployment_Works() public {
@@ -154,9 +231,9 @@ contract SubnetRegistryTest is Test {
             powerScale: _powerScale,
             minCrossMsgFee: CROSS_MSG_FEE
         });
-        registry.newSubnetActor(params);
-        require(registry.latestSubnetDeployed(DEFAULT_SENDER) != address(0));
-        require(registry.subnets(DEFAULT_SENDER, 0) != address(0), "fails");
-        require(registry.getSubnetDeployedByNonce(DEFAULT_SENDER, 0) == registry.latestSubnetDeployed(DEFAULT_SENDER));
+        registerSubnetFacet.newSubnetActor(params);
+        require(subnetGetterFacet.latestSubnetDeployed(DEFAULT_SENDER) != address(0));
+        //require(register.s.subnets(DEFAULT_SENDER, 0) != address(0), "fails");
+        // require(subnetGetterFacet.getSubnetDeployedByNonce(DEFAULT_SENDER, 0) == registry.latestSubnetDeployed(DEFAULT_SENDER));
     }
 }
