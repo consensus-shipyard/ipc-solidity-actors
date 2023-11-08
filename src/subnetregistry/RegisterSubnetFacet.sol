@@ -51,6 +51,8 @@ contract RegisterSubnetFacet is ReentrancyGuard {
         ++s.userNonces[msg.sender];
 
         emit SubnetDeployed(subnetAddr);
+
+        return subnetAddr;
     }
 
 }
