@@ -14,7 +14,6 @@ function logMissingFacetInfo(facet) {
     const formattedLibs = Object.entries(facet.libs)
         .map(([key, value]) => `  - ${key}: ${value}`)
         .join('\n')
-
     console.info(`
 Facet Bytecode Not Found:
 ---------------------------------
