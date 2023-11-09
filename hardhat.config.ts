@@ -192,41 +192,6 @@ task(
 
 task(
     'deploy-subnet',
-    'Builds and deploys the SubnetActor contract on the selected network',
-    async (args, hre: HardhatRuntimeEnvironment) => {
-        const network = hre.network.name
-
-        const deployments = await getDeployments(network)
-        const { deploy } = await lazyImport('./scripts/deploy-subnet')
-
-        // remove unused lib
-        delete deployments.libs['StorableMsgHelper']
-
-        const subnetDeployment = await deploy(
-            deployments.Gateway,
-            deployments.libs,
-        )
-
-        await saveDeployments(network, subnetDeployment)
-    },
-)
-
-task(
-    'deploy-gw-diamond-and-facets',
-    'Builds and deploys Gateway Actor diamond and its facets',
-    async (args, hre: HardhatRuntimeEnvironment) => {
-        const network = hre.network.name
-        const deployments = await getDeployments(network)
-        const { deployDiamond } = await lazyImport(
-            './scripts/deploy-gw-diamond',
-        )
-        const gatewayActorDiamond = await deployDiamond(deployments.libs)
-        await saveDeployments(network, gatewayActorDiamond)
-    },
-)
-
-task(
-    'deploy-sa-diamond-and-facets',
     'Builds and deploys Subnet Actor diamond and its facets',
     async (args, hre: HardhatRuntimeEnvironment) => {
         await hre.run('compile')
@@ -251,26 +216,6 @@ task(
         await hre.run('compile')
         await hre.run('deploy-libraries')
         await hre.run('deploy-gateway')
-    },
-)
-
-task(
-    'deploy-gw-diamond',
-    'Builds and deploys Gateway Actor diamond',
-    async (args, hre: HardhatRuntimeEnvironment) => {
-        await hre.run('compile')
-        await hre.run('deploy-libraries')
-        await hre.run('deploy-gw-diamond-and-facets')
-    },
-)
-
-task(
-    'deploy-sa-diamond',
-    'Builds and deploys Subnet Actor diamond',
-    async (args, hre: HardhatRuntimeEnvironment) => {
-        await hre.run('compile')
-        await hre.run('deploy-libraries')
-        await hre.run('deploy-sa-diamond-and-facets')
     },
 )
 
