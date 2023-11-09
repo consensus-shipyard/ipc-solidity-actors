@@ -330,7 +330,6 @@ Replacement Facet Name: ${replacementFacetName}
     return { [replacementFacetName]: replacementFacet.address }
 }
 
-
 /**
  * Log information about a missing facet.
  * @param facet - The facet to display.
