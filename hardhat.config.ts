@@ -195,6 +195,8 @@ task(
     'deploy-sa-diamond-and-facets',
     'Builds and deploys Subnet Actor diamond and its facets',
     async (args, hre: HardhatRuntimeEnvironment) => {
+        await hre.run('compile')
+
         const network = hre.network.name
         const deployments = await getDeployments(network)
         const { deployDiamond } = await lazyImport(
