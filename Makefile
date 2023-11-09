@@ -7,12 +7,17 @@ OUTPUT ?= ./out
 deploy-ipc:
 	./ops/deploy.sh $(NETWORK)
 
+deploy-subnet-registry:
+	./ops/deploy-subnet-registry.sh $(NETWORK)
+
+deploy-subnet:
+	./ops/deploy-subnet.sh $(NETWORK)
+
 upgrade-gw-diamond:
 	./ops/upgrade-gw-diamond.sh $(NETWORK)
 
 upgrade-sa-diamond:
 	./ops/upgrade-sa-diamond.sh $(NETWORK)
-
 
 upgrade-sr-diamond:
 	./ops/upgrade-sr-diamond.sh $(NETWORK)
