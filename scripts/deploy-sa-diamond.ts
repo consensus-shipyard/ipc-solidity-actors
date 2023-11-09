@@ -109,16 +109,16 @@ async function deploySubnetActorDiamond(
     console.log("parentId", parentId[1])
 
     const constructorParams = {
-        parentId: {root:  parentId[0],route: [parentId[0]]},
-        name: ethers.utils.formatBytes32String('Subnet'),
+        parentId,
         ipcGatewayAddr: gatewayDiamondAddress,
         consensus: 0,
         minActivationCollateral: ethers.utils.parseEther('1'),
         minValidators: 3,
         bottomUpCheckPeriod: 10,
-        topDownCheckPeriod: 10,
         majorityPercentage: 66,
-        genesis: 0,
+        activeValidatorsLimit: 100,
+        minCrossMsgFee:1,
+        powerScale:1,
     }
 
     console.log("constructorParams", constructorParams)
