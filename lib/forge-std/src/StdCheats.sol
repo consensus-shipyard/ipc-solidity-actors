@@ -212,37 +212,25 @@ abstract contract StdCheatsSafe {
         // forgefmt: disable-start
         if (chainId == 10 || chainId == 420) {
             // https://github.com/ethereum-optimism/optimism/blob/eaa371a0184b56b7ca6d9eb9cb0a2b78b2ccd864/op-bindings/predeploys/addresses.go#L6-L21
-            vm.assume(
-                addr < address(0x4200000000000000000000000000000000000000) ||
-                    addr > address(0x4200000000000000000000000000000000000800)
-            );
+            vm.assume(addr < address(0x4200000000000000000000000000000000000000) || addr > address(0x4200000000000000000000000000000000000800));
         } else if (chainId == 42161 || chainId == 421613) {
             // https://developer.arbitrum.io/useful-addresses#arbitrum-precompiles-l2-same-on-all-arb-chains
-            vm.assume(
-                addr < address(0x0000000000000000000000000000000000000064) ||
-                    addr > address(0x0000000000000000000000000000000000000068)
-            );
+            vm.assume(addr < address(0x0000000000000000000000000000000000000064) || addr > address(0x0000000000000000000000000000000000000068));
         } else if (chainId == 43114 || chainId == 43113) {
             // https://github.com/ava-labs/subnet-evm/blob/47c03fd007ecaa6de2c52ea081596e0a88401f58/precompile/params.go#L18-L59
-            vm.assume(
-                addr < address(0x0100000000000000000000000000000000000000) ||
-                    addr > address(0x01000000000000000000000000000000000000ff)
-            );
-            vm.assume(
-                addr < address(0x0200000000000000000000000000000000000000) ||
-                    addr > address(0x02000000000000000000000000000000000000FF)
-            );
-            vm.assume(
-                addr < address(0x0300000000000000000000000000000000000000) ||
-                    addr > address(0x03000000000000000000000000000000000000Ff)
-            );
+            vm.assume(addr < address(0x0100000000000000000000000000000000000000) || addr > address(0x01000000000000000000000000000000000000ff));
+            vm.assume(addr < address(0x0200000000000000000000000000000000000000) || addr > address(0x02000000000000000000000000000000000000FF));
+            vm.assume(addr < address(0x0300000000000000000000000000000000000000) || addr > address(0x03000000000000000000000000000000000000Ff));
         }
         // forgefmt: disable-end
     }
 
-    function readEIP1559ScriptArtifact(
-        string memory path
-    ) internal view virtual returns (EIP1559ScriptArtifact memory) {
+    function readEIP1559ScriptArtifact(string memory path)
+        internal
+        view
+        virtual
+        returns (EIP1559ScriptArtifact memory)
+    {
         string memory data = vm.readFile(path);
         bytes memory parsedData = vm.parseJson(data);
         RawEIP1559ScriptArtifact memory rawArtifact = abi.decode(parsedData, (RawEIP1559ScriptArtifact));
@@ -276,9 +264,12 @@ abstract contract StdCheatsSafe {
         return transaction;
     }
 
-    function rawToConvertedEIP1559Detail(
-        RawTx1559Detail memory rawDetail
-    ) internal pure virtual returns (Tx1559Detail memory) {
+    function rawToConvertedEIP1559Detail(RawTx1559Detail memory rawDetail)
+        internal
+        pure
+        virtual
+        returns (Tx1559Detail memory)
+    {
         Tx1559Detail memory txDetail;
         txDetail.data = rawDetail.data;
         txDetail.from = rawDetail.from;
@@ -348,9 +339,12 @@ abstract contract StdCheatsSafe {
         return receipt;
     }
 
-    function rawToConvertedReceiptLogs(
-        RawReceiptLog[] memory rawLogs
-    ) internal pure virtual returns (ReceiptLog[] memory) {
+    function rawToConvertedReceiptLogs(RawReceiptLog[] memory rawLogs)
+        internal
+        pure
+        virtual
+        returns (ReceiptLog[] memory)
+    {
         ReceiptLog[] memory logs = new ReceiptLog[](rawLogs.length);
         for (uint256 i; i < rawLogs.length; i++) {
             logs[i].logAddress = rawLogs[i].logAddress;
@@ -419,7 +413,7 @@ abstract contract StdCheatsSafe {
 
     // creates a labeled address
     function makeAddr(string memory name) internal virtual returns (address addr) {
-        (addr, ) = makeAddrAndKey(name);
+        (addr,) = makeAddrAndKey(name);
     }
 
     // creates a struct containing both a labeled address and the corresponding private key
@@ -427,10 +421,11 @@ abstract contract StdCheatsSafe {
         (account.addr, account.key) = makeAddrAndKey(name);
     }
 
-    function deriveRememberKey(
-        string memory mnemonic,
-        uint32 index
-    ) internal virtual returns (address who, uint256 privateKey) {
+    function deriveRememberKey(string memory mnemonic, uint32 index)
+        internal
+        virtual
+        returns (address who, uint256 privateKey)
+    {
         privateKey = vm.deriveKey(mnemonic, index);
         who = vm.rememberKey(privateKey);
     }
@@ -482,7 +477,7 @@ abstract contract StdCheatsSafe {
     // a cheat for fuzzing addresses that are payable only
     // see https://github.com/foundry-rs/foundry/issues/3631
     function assumePayable(address addr) internal virtual {
-        (bool success, ) = payable(addr).call{value: 0}("");
+        (bool success,) = payable(addr).call{value: 0}("");
         vm.assume(success);
     }
 }

@@ -75,7 +75,7 @@ abstract contract StdChains {
         chain = chains[chainAlias];
         require(
             chain.chainId != 0,
-            string(abi.encodePacked('StdChains getChain(string): Chain with alias "', chainAlias, '" not found.'))
+            string(abi.encodePacked("StdChains getChain(string): Chain with alias \"", chainAlias, "\" not found."))
         );
 
         chain = getChainWithUpdatedRpcUrl(chainAlias, chain);
@@ -114,9 +114,9 @@ abstract contract StdChains {
                 abi.encodePacked(
                     "StdChains setChain(string,ChainData): Chain ID ",
                     vm.toString(chain.chainId),
-                    ' already used by "',
+                    " already used by \"",
                     foundAlias,
-                    '".'
+                    "\"."
                 )
             )
         );
@@ -124,12 +124,8 @@ abstract contract StdChains {
         uint256 oldChainId = chains[chainAlias].chainId;
         delete idToAlias[oldChainId];
 
-        chains[chainAlias] = Chain({
-            name: chain.name,
-            chainId: chain.chainId,
-            chainAlias: chainAlias,
-            rpcUrl: chain.rpcUrl
-        });
+        chains[chainAlias] =
+            Chain({name: chain.name, chainId: chain.chainId, chainAlias: chainAlias, rpcUrl: chain.rpcUrl});
         idToAlias[chain.chainId] = chainAlias;
     }
 
@@ -166,10 +162,8 @@ abstract contract StdChains {
                     chain.rpcUrl = vm.envString(envName);
                 }
                 // distinguish 'not found' from 'cannot read'
-                bytes memory notFoundError = abi.encodeWithSignature(
-                    "CheatCodeError",
-                    string(abi.encodePacked("invalid rpc url ", chainAlias))
-                );
+                bytes memory notFoundError =
+                    abi.encodeWithSignature("CheatCodeError", string(abi.encodePacked("invalid rpc url ", chainAlias)));
                 if (keccak256(notFoundError) != keccak256(err) || bytes(chain.rpcUrl).length == 0) {
                     /// @solidity memory-safe-assembly
                     assembly {
@@ -193,38 +187,31 @@ abstract contract StdChains {
         // If adding an RPC here, make sure to test the default RPC URL in `testRpcs`
         setChainWithDefaultRpcUrl("anvil", ChainData("Anvil", 31337, "http://127.0.0.1:8545"));
         setChainWithDefaultRpcUrl(
-            "mainnet",
-            ChainData("Mainnet", 1, "https://mainnet.infura.io/v3/b9794ad1ddf84dfb8c34d6bb5dca2001")
+            "mainnet", ChainData("Mainnet", 1, "https://mainnet.infura.io/v3/b9794ad1ddf84dfb8c34d6bb5dca2001")
         );
         setChainWithDefaultRpcUrl(
-            "goerli",
-            ChainData("Goerli", 5, "https://goerli.infura.io/v3/b9794ad1ddf84dfb8c34d6bb5dca2001")
+            "goerli", ChainData("Goerli", 5, "https://goerli.infura.io/v3/b9794ad1ddf84dfb8c34d6bb5dca2001")
         );
         setChainWithDefaultRpcUrl(
-            "sepolia",
-            ChainData("Sepolia", 11155111, "https://sepolia.infura.io/v3/b9794ad1ddf84dfb8c34d6bb5dca2001")
+            "sepolia", ChainData("Sepolia", 11155111, "https://sepolia.infura.io/v3/b9794ad1ddf84dfb8c34d6bb5dca2001")
         );
         setChainWithDefaultRpcUrl("optimism", ChainData("Optimism", 10, "https://mainnet.optimism.io"));
         setChainWithDefaultRpcUrl("optimism_goerli", ChainData("Optimism Goerli", 420, "https://goerli.optimism.io"));
         setChainWithDefaultRpcUrl("arbitrum_one", ChainData("Arbitrum One", 42161, "https://arb1.arbitrum.io/rpc"));
         setChainWithDefaultRpcUrl(
-            "arbitrum_one_goerli",
-            ChainData("Arbitrum One Goerli", 421613, "https://goerli-rollup.arbitrum.io/rpc")
+            "arbitrum_one_goerli", ChainData("Arbitrum One Goerli", 421613, "https://goerli-rollup.arbitrum.io/rpc")
         );
         setChainWithDefaultRpcUrl("arbitrum_nova", ChainData("Arbitrum Nova", 42170, "https://nova.arbitrum.io/rpc"));
         setChainWithDefaultRpcUrl("polygon", ChainData("Polygon", 137, "https://polygon-rpc.com"));
         setChainWithDefaultRpcUrl(
-            "polygon_mumbai",
-            ChainData("Polygon Mumbai", 80001, "https://rpc-mumbai.maticvigil.com")
+            "polygon_mumbai", ChainData("Polygon Mumbai", 80001, "https://rpc-mumbai.maticvigil.com")
         );
         setChainWithDefaultRpcUrl("avalanche", ChainData("Avalanche", 43114, "https://api.avax.network/ext/bc/C/rpc"));
         setChainWithDefaultRpcUrl(
-            "avalanche_fuji",
-            ChainData("Avalanche Fuji", 43113, "https://api.avax-test.network/ext/bc/C/rpc")
+            "avalanche_fuji", ChainData("Avalanche Fuji", 43113, "https://api.avax-test.network/ext/bc/C/rpc")
         );
         setChainWithDefaultRpcUrl(
-            "bnb_smart_chain",
-            ChainData("BNB Smart Chain", 56, "https://bsc-dataseed1.binance.org")
+            "bnb_smart_chain", ChainData("BNB Smart Chain", 56, "https://bsc-dataseed1.binance.org")
         );
         setChainWithDefaultRpcUrl(
             "bnb_smart_chain_testnet",
