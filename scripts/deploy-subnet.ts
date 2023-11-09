@@ -12,6 +12,8 @@ export async function deploy(
     if (!libs || Object.keys(libs).length === 0)
         throw new Error(`Libraries are missing`)
 
+    await hre.run('compile')
+
     const [deployer] = await ethers.getSigners()
     const balance = await ethers.provider.getBalance(deployer.address)
     console.log(
