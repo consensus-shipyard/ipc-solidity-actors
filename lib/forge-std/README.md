@@ -11,6 +11,7 @@ forge install foundry-rs/forge-std
 ```
 
 ## Contracts
+
 ### stdError
 
 This is a helper contract for errors and reverts. In Forge, this contract is particularly helpful for the `expectRevert` cheatcode, as it provides all compiler builtin errors.
@@ -20,8 +21,7 @@ See the contract itself for all error codes.
 #### Example usage
 
 ```solidity
-
-import "forge-std/Test.sol";
+import 'forge-std/Test.sol';
 
 contract TestContract is Test {
     ErrorsTest test;
@@ -45,11 +45,12 @@ contract ErrorsTest {
 
 ### stdStorage
 
-This is a rather large contract due to all of the overloading to make the UX decent. Primarily, it is a wrapper around the `record` and `accesses` cheatcodes. It can *always* find and write the storage slot(s) associated with a particular variable without knowing the storage layout. The one _major_ caveat to this is while a slot can be found for packed storage variables, we can't write to that variable safely. If a user tries to write to a packed slot, the execution throws an error, unless it is uninitialized (`bytes32(0)`).
+This is a rather large contract due to all of the overloading to make the UX decent. Primarily, it is a wrapper around the `record` and `accesses` cheatcodes. It can _always_ find and write the storage slot(s) associated with a particular variable without knowing the storage layout. The one _major_ caveat to this is while a slot can be found for packed storage variables, we can't write to that variable safely. If a user tries to write to a packed slot, the execution throws an error, unless it is uninitialized (`bytes32(0)`).
 
 This works by recording all `SLOAD`s and `SSTORE`s during a function call. If there is a single slot read or written to, it immediately returns the slot. Otherwise, behind the scenes, we iterate through and check each one (assuming the user passed in a `depth` parameter). If the variable is a struct, you can pass in a `depth` parameter which is basically the field depth.
 
 I.e.:
+
 ```solidity
 struct T {
     // depth 0
@@ -62,7 +63,7 @@ struct T {
 #### Example usage
 
 ```solidity
-import "forge-std/Test.sol";
+import 'forge-std/Test.sol';
 
 contract TestContract is Test {
     using stdStorage for StdStorage;
@@ -77,7 +78,7 @@ contract TestContract is Test {
         // Lets say we want to find the slot for the public
         // variable `exists`. We just pass in the function selector
         // to the `find` command
-        uint256 slot = stdstore.target(address(test)).sig("exists()").find();
+        uint256 slot = stdstore.target(address(test)).sig('exists()').find();
         assertEq(slot, 0);
     }
 
@@ -85,7 +86,7 @@ contract TestContract is Test {
         // Lets say we want to write to the slot for the public
         // variable `exists`. We just pass in the function selector
         // to the `checked_write` command
-        stdstore.target(address(test)).sig("exists()").checked_write(100);
+        stdstore.target(address(test)).sig('exists()').checked_write(100);
         assertEq(test.exists(), 100);
     }
 
@@ -94,8 +95,11 @@ contract TestContract is Test {
         // `hidden` is a random hash of a bytes, iteration through slots would
         // not find it. Our mechanism does
         // Also, you can use the selector instead of a string
-        uint256 slot = stdstore.target(address(test)).sig(test.hidden.selector).find();
-        assertEq(slot, uint256(keccak256("my.random.var")));
+        uint256 slot = stdstore
+            .target(address(test))
+            .sig(test.hidden.selector)
+            .find();
+        assertEq(slot, uint256(keccak256('my.random.var')));
     }
 
     // If targeting a mapping, you have to pass in the keys necessary to perform the find
@@ -147,15 +151,13 @@ contract Storage {
     // mapping(address => Packed) public map_packed;
     mapping(address => UnpackedStruct) public map_struct;
     mapping(address => mapping(address => uint256)) public deep_map;
-    mapping(address => mapping(address => UnpackedStruct)) public deep_map_struct;
-    UnpackedStruct public basicStruct = UnpackedStruct({
-        a: 1,
-        b: 2
-    });
+    mapping(address => mapping(address => UnpackedStruct))
+        public deep_map_struct;
+    UnpackedStruct public basicStruct = UnpackedStruct({ a: 1, b: 2 });
 
     function hidden() public view returns (bytes32 t) {
         // an extremely hidden storage slot
-        bytes32 slot = keccak256("my.random.var");
+        bytes32 slot = keccak256('my.random.var');
         assembly {
             t := sload(slot)
         }
@@ -167,18 +169,18 @@ contract Storage {
 
 This is a wrapper over miscellaneous cheatcodes that need wrappers to be more dev friendly. Currently there are only functions related to `prank`. In general, users may expect ETH to be put into an address on `prank`, but this is not the case for safety reasons. Explicitly this `hoax` function should only be used for address that have expected balances as it will get overwritten. If an address already has ETH, you should just use `prank`. If you want to change that balance explicitly, just use `deal`. If you want to do both, `hoax` is also right for you.
 
-
 #### Example usage:
-```solidity
 
+```solidity
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.0;
 
-import "forge-std/Test.sol";
+import 'forge-std/Test.sol';
 
 // Inherit the stdCheats
 contract StdCheatsTest is Test {
     Bar test;
+
     function setUp() public {
         test = new Bar();
     }
@@ -187,12 +189,12 @@ contract StdCheatsTest is Test {
         // we call `hoax`, which gives the target address
         // eth and then calls `prank`
         hoax(address(1337));
-        test.bar{value: 100}(address(1337));
+        test.bar{ value: 100 }(address(1337));
 
         // overloaded to allow you to specify how much eth to
         // initialize the address with
         hoax(address(1337), 1);
-        test.bar{value: 1}(address(1337));
+        test.bar{ value: 1 }(address(1337));
     }
 
     function testStartHoax() public {
@@ -201,8 +203,8 @@ contract StdCheatsTest is Test {
         //
         // it is also overloaded so that you can specify an eth amount
         startHoax(address(1337));
-        test.bar{value: 100}(address(1337));
-        test.bar{value: 100}(address(1337));
+        test.bar{ value: 100 }(address(1337));
+        test.bar{ value: 100 }(address(1337));
         vm.stopPrank();
         test.bar(address(this));
     }
@@ -210,7 +212,7 @@ contract StdCheatsTest is Test {
 
 contract Bar {
     function bar(address expectedSender) public payable {
-        require(msg.sender == expectedSender, "!prank");
+        require(msg.sender == expectedSender, '!prank');
     }
 }
 ```

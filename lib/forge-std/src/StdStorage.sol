@@ -47,7 +47,7 @@ library stdStorageSafe {
             fdat = bytesToBytes32(rdat, 32 * field_depth);
         }
 
-        (bytes32[] memory reads,) = vm.accesses(address(who));
+        (bytes32[] memory reads, ) = vm.accesses(address(who));
         if (reads.length == 1) {
             bytes32 curr = vm.load(who, reads[0]);
             if (curr == bytes32(0)) {

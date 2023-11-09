@@ -137,10 +137,13 @@ abstract contract StdAssertions is DSTest {
         }
     }
 
-    function assertApproxEqAbsDecimal(uint256 a, uint256 b, uint256 maxDelta, uint256 decimals, string memory err)
-        internal
-        virtual
-    {
+    function assertApproxEqAbsDecimal(
+        uint256 a,
+        uint256 b,
+        uint256 maxDelta,
+        uint256 decimals,
+        string memory err
+    ) internal virtual {
         uint256 delta = stdMath.delta(a, b);
 
         if (delta > maxDelta) {
@@ -184,10 +187,13 @@ abstract contract StdAssertions is DSTest {
         }
     }
 
-    function assertApproxEqAbsDecimal(int256 a, int256 b, uint256 maxDelta, uint256 decimals, string memory err)
-        internal
-        virtual
-    {
+    function assertApproxEqAbsDecimal(
+        int256 a,
+        int256 b,
+        uint256 maxDelta,
+        uint256 decimals,
+        string memory err
+    ) internal virtual {
         uint256 delta = stdMath.delta(a, b);
 
         if (delta > maxDelta) {
@@ -309,10 +315,13 @@ abstract contract StdAssertions is DSTest {
         }
     }
 
-    function assertApproxEqRelDecimal(int256 a, int256 b, uint256 maxPercentDelta, uint256 decimals, string memory err)
-        internal
-        virtual
-    {
+    function assertApproxEqRelDecimal(
+        int256 a,
+        int256 b,
+        uint256 maxPercentDelta,
+        uint256 decimals,
+        string memory err
+    ) internal virtual {
         if (b == 0) return assertEq(a, b, err); // If the left is 0, right must be too.
 
         uint256 percentDelta = stdMath.percentDelta(a, b);
@@ -327,17 +336,21 @@ abstract contract StdAssertions is DSTest {
         assertEqCall(target, callDataA, target, callDataB, true);
     }
 
-    function assertEqCall(address targetA, bytes memory callDataA, address targetB, bytes memory callDataB)
-        internal
-        virtual
-    {
+    function assertEqCall(
+        address targetA,
+        bytes memory callDataA,
+        address targetB,
+        bytes memory callDataB
+    ) internal virtual {
         assertEqCall(targetA, callDataA, targetB, callDataB, true);
     }
 
-    function assertEqCall(address target, bytes memory callDataA, bytes memory callDataB, bool strictRevertData)
-        internal
-        virtual
-    {
+    function assertEqCall(
+        address target,
+        bytes memory callDataA,
+        bytes memory callDataB,
+        bool strictRevertData
+    ) internal virtual {
         assertEqCall(target, callDataA, target, callDataB, strictRevertData);
     }
 

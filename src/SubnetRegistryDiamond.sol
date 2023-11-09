@@ -3,18 +3,13 @@ pragma solidity 0.8.19;
 
 import {SubnetActorDiamond} from "./SubnetActorDiamond.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
- import {SubnetRegistryActorStorage} from "./lib/LibSubnetRegistryStorage.sol";
- import {GatewayCannotBeZero, FacetCannotBeZero} from "./errors/IPCErrors.sol";
- import {LibDiamond} from "./lib/LibDiamond.sol";
+import {SubnetRegistryActorStorage} from "./lib/LibSubnetRegistryStorage.sol";
+import {GatewayCannotBeZero, FacetCannotBeZero} from "./errors/IPCErrors.sol";
+import {LibDiamond} from "./lib/LibDiamond.sol";
 error FunctionNotFound(bytes4 _functionSelector);
 
 contract SubnetRegistryDiamond {
-
-
     SubnetRegistryActorStorage internal s;
-
-
-
 
     struct ConstructorParams {
         address gateway;
@@ -24,8 +19,7 @@ contract SubnetRegistryDiamond {
         bytes4[] subnetManagerSelectors;
     }
 
-       constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
-
+    constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
         if (params.gateway == address(0)) {
             revert GatewayCannotBeZero();
         }
@@ -47,8 +41,6 @@ contract SubnetRegistryDiamond {
         s.subnetManagerSelectors = params.subnetManagerSelectors;
     }
 
-
- 
     function _fallback() internal {
         LibDiamond.DiamondStorage storage ds;
         bytes32 position = LibDiamond.DIAMOND_STORAGE_POSITION;
