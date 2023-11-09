@@ -18,87 +18,48 @@ async function deploySubnetActorDiamond(
     const [deployer] = await ethers.getSigners()
     const txArgs = await getTransactionFees()
 
-    const FacetNames = ['SubnetActorGetterFacet', 'SubnetActorManagerFacet']
+  type Libraries = {
+    [libraryName: string]: string;
+  };
 
-    console.log('Target facets: ', FacetNames)
-    // The `facetCuts` variable is the FacetCut[] that contains the functions to add during diamond deployment
-    const facetCuts = []
-
-    type Libraries = {
-        [libraryName: string]: string
-    }
-
-    // ----
 
     const getterFacetLibs: Libraries = {
         CheckpointHelper: libs['CheckpointHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
     }
 
-    let getterFacet = await deployContractWithDeployer(
-        deployer,
-        'SubnetActorGetterFacet',
-        getterFacetLibs,
-        txArgs,
-    )
-    await getterFacet.deployed()
-    console.log(`${FacetNames[0]} deployed: ${getterFacet.address}`)
-
-    facetCuts.push({
-        facetAddress: getterFacet.address,
-        action: FacetCutAction.Add,
-        functionSelectors: getSelectors(getterFacet),
-    })
-
-    console.log(
-        'Subnet Actor Getter facet address: ',
-        facetCuts[0].facetAddress,
-    )
-
-    // ----
-
-    let diamondCutFacet = await deployContractWithDeployer(
-        deployer,
-        'DiamondCutFacet',
-        {},
-        txArgs,
-    )
-    await diamondCutFacet.deployed()
-
-    facetCuts.push({
-        facetAddress: diamondCutFacet.address,
-        action: FacetCutAction.Add,
-        functionSelectors: getSelectors(diamondCutFacet),
-    })
-
-    // ----
 
     const managerFacetLibs: Libraries = {
-        //CrossMsgHelper: libs['CrossMsgHelper'],
         LibStaking: libs['LibStaking'],
-        //SubnetIDHelper: libs['SubnetIDHelper'],
-        //CheckpointHelper: libs['CheckpointHelper'],
-        //EpochVoteSubmissionHelper: libs['EpochVoteSubmissionHelper'],
-        //ExecutableQueueHelper: libs['ExecutableQueueHelper'],
     }
 
-    const managerFacet = await deployContractWithDeployer(
-        deployer,
-        'SubnetActorManagerFacet',
-        managerFacetLibs,
-        txArgs,
-    )
+  const facets = [
+    { name: "DiamondLoupeFacet", libs: {} },
+    { name: "DiamondCutFacet", libs: {} },
+    { name: "SubnetActorGetterFacet", libs: getterFacetLibs },
+    { name: "SubnetActorManagerFacet", libs: managerFacetLibs },
+  ];
+    // The `facetCuts` variable is the FacetCut[] that contains the functions to add during diamond deployment
+    const facetCuts = []
 
-    console.log(`${FacetNames[1]} deployed: ${managerFacet.address}`)
+  for (const facet of facets) {
+    const facetInstance = await deployContractWithDeployer(
+      deployer,
+      facet.name,
+      facet.libs,
+      txArgs
+    );
+    await facetInstance.deployed();
+
+    facet.address = facetInstance.address;
+
     facetCuts.push({
-        facetAddress: managerFacet.address,
-        action: FacetCutAction.Add,
-        functionSelectors: getSelectors(managerFacet),
-    })
+      facetAddress: facetInstance.address,
+      action: FacetCutAction.Add,
+      functionSelectors: getSelectors(facetInstance),
+    });
+  }
 
-    console.log('Subnet Actor Manager facet: ', facetCuts[1].facetAddress)
-
-    // ----
 
     const gatewayGetterFacet = await ethers.getContractAt(
         'GatewayGetterFacet',
@@ -121,8 +82,6 @@ async function deploySubnetActorDiamond(
         powerScale:1,
     }
 
-    console.log("constructorParams", constructorParams)
-
     const diamondLibs: Libraries = {
         SubnetIDHelper: libs['SubnetIDHelper'],
     }
@@ -142,6 +101,7 @@ async function deploySubnetActorDiamond(
     // returning the address of the diamond
     return {
         SubnetActorDiamond: diamondAddress,
+        Facets: facets,
     }
 }
 
@@ -157,3 +117,4 @@ if (require.main === module) {
 }
 
 exports.deployDiamond = deploySubnetActorDiamond
+
