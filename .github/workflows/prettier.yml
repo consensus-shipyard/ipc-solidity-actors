@@ -36,5 +36,3 @@ jobs:
         with:
           commit_message: Apply Prettier formatting
           branch: ${{ github.head_ref }}
-          file_pattern: '*.{js,jsx,ts,tsx,json,css,md,sol}'
-
