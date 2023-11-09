@@ -77,11 +77,9 @@ async function saveSubnetRegistry(
             fs.readFileSync(subnetRegistryJsonPath).toString(),
         )
     }
-
-    subnetRegistryJson[env] = {
-        ...subnetRegistryJson[env],
-        ...subnetRegistryData,
-    }
+ 
+    subnetRegistryJson[env] = { ...subnetRegistryJson[env], ...subnetRegistryData }
+    
 
     fs.writeFileSync(subnetRegistryJsonPath, JSON.stringify(subnetRegistryJson))
 }
@@ -98,14 +96,15 @@ async function saveSubnetActor(
             fs.readFileSync(subnetRegistryJsonPath).toString(),
         )
     }
-
-    subnetRegistryJson[env] = {
-        ...subnetRegistryJson[env],
-        ...subnetRegistryData,
-    }
+ 
+    subnetRegistryJson[env] = { ...subnetRegistryJson[env], ...subnetRegistryData }
+    
 
     fs.writeFileSync(subnetRegistryJsonPath, JSON.stringify(subnetRegistryJson))
 }
+
+
+
 
 async function getSubnetRegistry(
     env: string,
@@ -122,6 +121,7 @@ async function getSubnetRegistry(
     return subnetRegistry
 }
 
+
 async function getSubnetActor(
     env: string,
 ): Promise<{ [key in string]: string }> {
@@ -136,6 +136,7 @@ async function getSubnetActor(
 
     return subnetRegistry
 }
+
 
 async function getDeployments(
     env: string,
@@ -184,11 +185,12 @@ task(
     'Builds and deploys the Registry contract on the selected network',
     async (args, hre: HardhatRuntimeEnvironment) => {
         const network = hre.network.name
-        const { deploy } = await lazyImport('./scripts/deploy-registry')
+         const { deploy } = await lazyImport('./scripts/deploy-registry')
         const subnetRegistryDeployment = await deploy()
         await saveSubnetRegistry(network, subnetRegistryDeployment)
-    },
+      },
 )
+
 
 task(
     'deploy-subnet',
@@ -300,13 +302,11 @@ task(
             './scripts/upgrade-sr-diamond',
         )
         const updatedFacets = await upgradeDiamond(subnetRegistry)
-        await saveDeploymentsFacets(
-            'subnet.registry.json',
-            network,
-            updatedFacets,
-        )
+        await saveDeploymentsFacets('subnet.registry.json', network, updatedFacets)
+
     },
 )
+
 
 task(
     'upgrade-sa-diamond',

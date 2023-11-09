@@ -3,16 +3,21 @@ pragma solidity 0.8.19;
 
 import {IDiamond} from "../interfaces/IDiamond.sol";
 import {SubnetActorDiamond} from "../SubnetActorDiamond.sol";
-import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
+ import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
 
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
-import {WrongGateway} from "../errors/IPCErrors.sol";
+ import {WrongGateway} from "../errors/IPCErrors.sol";
+
 
 contract RegisterSubnetFacet is ReentrancyGuard {
+
+
     SubnetRegistryActorStorage internal s;
+
 
     /// @notice Event emitted when a new subnet is deployed.
     event SubnetDeployed(address subnetAddr);
+
 
     /// @notice Deploys a new subnet actor.
     /// @param _params The constructor params for Subnet Actor Diamond.
@@ -49,4 +54,5 @@ contract RegisterSubnetFacet is ReentrancyGuard {
 
         return subnetAddr;
     }
+
 }
