@@ -169,7 +169,7 @@ library LibDiamond {
                 revert CannotRemoveImmutableFunction(selector);
             }
             // replace selector with last selector
-            selectorCount--;
+            --selectorCount;
             if (oldFacetAddressAndSelectorPosition.selectorPosition != selectorCount) {
                 bytes4 lastSelector = ds.selectors[selectorCount];
                 ds.selectors[oldFacetAddressAndSelectorPosition.selectorPosition] = lastSelector;
