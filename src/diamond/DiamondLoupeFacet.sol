@@ -33,24 +33,19 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
         // total number of facets
         uint256 numFacets;
         // loop through function selectors
-        for (uint256 selectorIndex; selectorIndex < selectorCount; ) {
+        for (uint256 selectorIndex; selectorIndex < selectorCount; selectorIndex++) {
             bytes4 selector = ds.selectors[selectorIndex];
             address facetAddress_ = ds.facetAddressAndSelectorPosition[selector].facetAddress;
             bool continueLoop = false;
-
             // find the functionSelectors array for selector and add selector to it
-            for (uint256 facetIndex; facetIndex < numFacets; ) {
+            for (uint256 facetIndex; facetIndex < numFacets; facetIndex++) {
                 if (facets_[facetIndex].facetAddress == facetAddress_) {
                     facets_[facetIndex].functionSelectors[numFacetSelectors[facetIndex]] = selector;
-                    ++numFacetSelectors[facetIndex];
+                    numFacetSelectors[facetIndex]++;
                     continueLoop = true;
                     break;
                 }
-                unchecked {
-                    ++facetIndex;
-                }
             }
-
             // if functionSelectors array exists for selector then continue loop
             if (continueLoop) {
                 continueLoop = false;
@@ -61,23 +56,15 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
             facets_[numFacets].functionSelectors = new bytes4[](selectorCount);
             facets_[numFacets].functionSelectors[0] = selector;
             numFacetSelectors[numFacets] = 1;
-            ++numFacets;
-
-            unchecked {
-                ++selectorIndex;
-            }
+            numFacets++;
         }
-
-        for (uint256 facetIndex; facetIndex < numFacets; ) {
+        for (uint256 facetIndex; facetIndex < numFacets; facetIndex++) {
             uint256 numSelectors = numFacetSelectors[facetIndex];
             bytes4[] memory selectors = facets_[facetIndex].functionSelectors;
             // setting the number of selectors
             // slither-disable-next-line assembly
             assembly {
                 mstore(selectors, numSelectors)
-            }
-            unchecked {
-                ++facetIndex;
             }
         }
         // setting the number of facets
@@ -98,15 +85,12 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
         uint256 numSelectors;
         _facetFunctionSelectors = new bytes4[](selectorCount);
         // loop through function selectors
-        for (uint256 selectorIndex; selectorIndex < selectorCount; ) {
+        for (uint256 selectorIndex; selectorIndex < selectorCount; selectorIndex++) {
             bytes4 selector = ds.selectors[selectorIndex];
             address facetAddress_ = ds.facetAddressAndSelectorPosition[selector].facetAddress;
             if (_facet == facetAddress_) {
                 _facetFunctionSelectors[numSelectors] = selector;
-                ++numSelectors;
-            }
-            unchecked {
-                ++selectorIndex;
+                numSelectors++;
             }
         }
         // Set the number of selectors in the array
@@ -125,18 +109,15 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
         facetAddresses_ = new address[](selectorCount);
         uint256 numFacets;
         // loop through function selectors
-        for (uint256 selectorIndex; selectorIndex < selectorCount; ) {
+        for (uint256 selectorIndex; selectorIndex < selectorCount; selectorIndex++) {
             bytes4 selector = ds.selectors[selectorIndex];
             address facetAddress_ = ds.facetAddressAndSelectorPosition[selector].facetAddress;
             bool continueLoop = false;
             // see if we have collected the address already and break out of loop if we have
-            for (uint256 facetIndex; facetIndex < numFacets; ) {
+            for (uint256 facetIndex; facetIndex < numFacets; facetIndex++) {
                 if (facetAddress_ == facetAddresses_[facetIndex]) {
                     continueLoop = true;
                     break;
-                }
-                unchecked {
-                    ++facetIndex;
                 }
             }
             // continue loop if we already have the address
@@ -146,10 +127,7 @@ contract DiamondLoupeFacet is IDiamondLoupe, IERC165 {
             }
             // include address
             facetAddresses_[numFacets] = facetAddress_;
-            ++numFacets;
-            unchecked {
-                ++selectorIndex;
-            }
+            numFacets++;
         }
         // Set the number of facet addresses in the array
         // slither-disable-next-line assembly
