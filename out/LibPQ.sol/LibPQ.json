@@ -215,32 +215,32 @@
   },
   "ast": {
     "absolutePath": "src/lib/priority/LibPQ.sol",
-    "id": 47061,
+    "id": 47067,
     "exportedSymbols": {
       "LibPQ": [
-        47060
+        47066
       ],
       "LibValidatorSet": [
-        43588
+        43594
       ],
       "PQ": [
-        46844
+        46850
       ],
       "PQDoesNotContainAddress": [
-        36961
+        36967
       ],
       "PQEmpty": [
-        36963
+        36969
       ],
       "ValidatorSet": [
-        47267
+        47273
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:2426:71",
     "nodes": [
       {
-        "id": 46823,
+        "id": 46829,
         "nodeType": "PragmaDirective",
         "src": "46:23:71",
         "nodes": [],
@@ -251,23 +251,23 @@
         ]
       },
       {
-        "id": 46825,
+        "id": 46831,
         "nodeType": "ImportDirective",
         "src": "71:50:71",
         "nodes": [],
         "absolutePath": "src/lib/LibStaking.sol",
         "file": "../LibStaking.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 47061,
-        "sourceUnit": 44524,
+        "scope": 47067,
+        "sourceUnit": 44530,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 46824,
+              "id": 46830,
               "name": "LibValidatorSet",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 43588,
+              "referencedDeclaration": 43594,
               "src": "79:15:71",
               "typeDescriptions": {}
             },
@@ -277,23 +277,23 @@
         "unitAlias": ""
       },
       {
-        "id": 46827,
+        "id": 46833,
         "nodeType": "ImportDirective",
         "src": "122:54:71",
         "nodes": [],
         "absolutePath": "src/structs/Subnet.sol",
         "file": "../../structs/Subnet.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 47061,
-        "sourceUnit": 47296,
+        "scope": 47067,
+        "sourceUnit": 47302,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 46826,
+              "id": 46832,
               "name": "ValidatorSet",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 47267,
+              "referencedDeclaration": 47273,
               "src": "130:12:71",
               "typeDescriptions": {}
             },
@@ -303,23 +303,23 @@
         "unitAlias": ""
       },
       {
-        "id": 46830,
+        "id": 46836,
         "nodeType": "ImportDirective",
         "src": "177:76:71",
         "nodes": [],
         "absolutePath": "src/errors/IPCErrors.sol",
         "file": "../../errors/IPCErrors.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 47061,
-        "sourceUnit": 36982,
+        "scope": 47067,
+        "sourceUnit": 36988,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 46828,
+              "id": 46834,
               "name": "PQEmpty",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 36963,
+              "referencedDeclaration": 36969,
               "src": "185:7:71",
               "typeDescriptions": {}
             },
@@ -327,11 +327,11 @@
           },
           {
             "foreign": {
-              "id": 46829,
+              "id": 46835,
               "name": "PQDoesNotContainAddress",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 36961,
+              "referencedDeclaration": 36967,
               "src": "194:23:71",
               "typeDescriptions": {}
             },
@@ -341,7 +341,7 @@
         "unitAlias": ""
       },
       {
-        "id": 46844,
+        "id": 46850,
         "nodeType": "StructDefinition",
         "src": "431:369:71",
         "nodes": [],
@@ -349,12 +349,12 @@
         "members": [
           {
             "constant": false,
-            "id": 46833,
+            "id": 46839,
             "mutability": "mutable",
             "name": "size",
             "nameLocation": "493:4:71",
             "nodeType": "VariableDeclaration",
-            "scope": 46844,
+            "scope": 46850,
             "src": "486:11:71",
             "stateVariable": false,
             "storageLocation": "default",
@@ -363,7 +363,7 @@
               "typeString": "uint16"
             },
             "typeName": {
-              "id": 46832,
+              "id": 46838,
               "name": "uint16",
               "nodeType": "ElementaryTypeName",
               "src": "486:6:71",
@@ -376,12 +376,12 @@
           },
           {
             "constant": false,
-            "id": 46838,
+            "id": 46844,
             "mutability": "mutable",
             "name": "addressToPos",
             "nameLocation": "650:12:71",
             "nodeType": "VariableDeclaration",
-            "scope": 46844,
+            "scope": 46850,
             "src": "623:39:71",
             "stateVariable": false,
             "storageLocation": "default",
@@ -390,11 +390,11 @@
               "typeString": "mapping(address => uint16)"
             },
             "typeName": {
-              "id": 46837,
+              "id": 46843,
               "keyName": "",
               "keyNameLocation": "-1:-1:-1",
               "keyType": {
-                "id": 46835,
+                "id": 46841,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "631:7:71",
@@ -412,7 +412,7 @@
               "valueName": "",
               "valueNameLocation": "-1:-1:-1",
               "valueType": {
-                "id": 46836,
+                "id": 46842,
                 "name": "uint16",
                 "nodeType": "ElementaryTypeName",
                 "src": "642:6:71",
@@ -426,12 +426,12 @@
           },
           {
             "constant": false,
-            "id": 46843,
+            "id": 46849,
             "mutability": "mutable",
             "name": "posToAddress",
             "nameLocation": "785:12:71",
             "nodeType": "VariableDeclaration",
-            "scope": 46844,
+            "scope": 46850,
             "src": "758:39:71",
             "stateVariable": false,
             "storageLocation": "default",
@@ -440,11 +440,11 @@
               "typeString": "mapping(uint16 => address)"
             },
             "typeName": {
-              "id": 46842,
+              "id": 46848,
               "keyName": "",
               "keyNameLocation": "-1:-1:-1",
               "keyType": {
-                "id": 46840,
+                "id": 46846,
                 "name": "uint16",
                 "nodeType": "ElementaryTypeName",
                 "src": "766:6:71",
@@ -462,7 +462,7 @@
               "valueName": "",
               "valueNameLocation": "-1:-1:-1",
               "valueType": {
-                "id": 46841,
+                "id": 46847,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "776:7:71",
@@ -478,58 +478,58 @@
         ],
         "name": "PQ",
         "nameLocation": "438:2:71",
-        "scope": 47061,
+        "scope": 47067,
         "visibility": "public"
       },
       {
-        "id": 47060,
+        "id": 47066,
         "nodeType": "ContractDefinition",
         "src": "802:1669:71",
         "nodes": [
           {
-            "id": 46848,
+            "id": 46854,
             "nodeType": "UsingForDirective",
             "src": "822:39:71",
             "nodes": [],
             "global": false,
             "libraryName": {
-              "id": 46845,
+              "id": 46851,
               "name": "LibValidatorSet",
               "nameLocations": [
                 "828:15:71"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 43588,
+              "referencedDeclaration": 43594,
               "src": "828:15:71"
             },
             "typeName": {
-              "id": 46847,
+              "id": 46853,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 46846,
+                "id": 46852,
                 "name": "ValidatorSet",
                 "nameLocations": [
                   "848:12:71"
                 ],
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 47267,
+                "referencedDeclaration": 47273,
                 "src": "848:12:71"
               },
-              "referencedDeclaration": 47267,
+              "referencedDeclaration": 47273,
               "src": "848:12:71",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_ValidatorSet_$47267_storage_ptr",
+                "typeIdentifier": "t_struct$_ValidatorSet_$47273_storage_ptr",
                 "typeString": "struct ValidatorSet"
               }
             }
           },
           {
-            "id": 46862,
+            "id": 46868,
             "nodeType": "FunctionDefinition",
             "src": "867:101:71",
             "nodes": [],
             "body": {
-              "id": 46861,
+              "id": 46867,
               "nodeType": "Block",
               "src": "930:38:71",
               "nodes": [],
@@ -540,25 +540,25 @@
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
                     },
-                    "id": 46859,
+                    "id": 46865,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
-                        "id": 46856,
+                        "id": 46862,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46851,
+                        "referencedDeclaration": 46857,
                         "src": "947:4:71",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                          "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                           "typeString": "struct PQ storage pointer"
                         }
                       },
-                      "id": 46857,
+                      "id": 46863,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -566,7 +566,7 @@
                       "memberLocation": "952:4:71",
                       "memberName": "size",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46833,
+                      "referencedDeclaration": 46839,
                       "src": "947:9:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -577,7 +577,7 @@
                     "operator": "==",
                     "rightExpression": {
                       "hexValue": "30",
-                      "id": 46858,
+                      "id": 46864,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -597,8 +597,8 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 46855,
-                  "id": 46860,
+                  "functionReturnParameters": 46861,
+                  "id": 46866,
                   "nodeType": "Return",
                   "src": "940:21:71"
                 }
@@ -610,41 +610,41 @@
             "name": "isEmpty",
             "nameLocation": "876:7:71",
             "parameters": {
-              "id": 46852,
+              "id": 46858,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46851,
+                  "id": 46857,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "895:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46862,
+                  "scope": 46868,
                   "src": "884:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46850,
+                    "id": 46856,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46849,
+                      "id": 46855,
                       "name": "PQ",
                       "nameLocations": [
                         "884:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "884:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "884:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -654,17 +654,17 @@
               "src": "883:17:71"
             },
             "returnParameters": {
-              "id": 46855,
+              "id": 46861,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46854,
+                  "id": 46860,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46862,
+                  "scope": 46868,
                   "src": "924:4:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -673,7 +673,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 46853,
+                    "id": 46859,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "924:4:71",
@@ -687,18 +687,18 @@
               ],
               "src": "923:6:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 46878,
+            "id": 46884,
             "nodeType": "FunctionDefinition",
             "src": "974:133:71",
             "nodes": [],
             "body": {
-              "id": 46877,
+              "id": 46883,
               "nodeType": "Block",
               "src": "1030:77:71",
               "nodes": [],
@@ -709,25 +709,25 @@
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
                     },
-                    "id": 46871,
+                    "id": 46877,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
-                        "id": 46868,
+                        "id": 46874,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46865,
+                        "referencedDeclaration": 46871,
                         "src": "1044:4:71",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                          "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                           "typeString": "struct PQ storage pointer"
                         }
                       },
-                      "id": 46869,
+                      "id": 46875,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -735,7 +735,7 @@
                       "memberLocation": "1049:4:71",
                       "memberName": "size",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46833,
+                      "referencedDeclaration": 46839,
                       "src": "1044:9:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -746,7 +746,7 @@
                     "operator": "==",
                     "rightExpression": {
                       "hexValue": "30",
-                      "id": 46870,
+                      "id": 46876,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -766,11 +766,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 46876,
+                  "id": 46882,
                   "nodeType": "IfStatement",
                   "src": "1040:61:71",
                   "trueBody": {
-                    "id": 46875,
+                    "id": 46881,
                     "nodeType": "Block",
                     "src": "1060:41:71",
                     "statements": [
@@ -779,18 +779,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 46872,
+                            "id": 46878,
                             "name": "PQEmpty",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 36963,
+                            "referencedDeclaration": 36969,
                             "src": "1081:7:71",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_error_pure$__$returns$__$",
                               "typeString": "function () pure"
                             }
                           },
-                          "id": 46873,
+                          "id": 46879,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -806,7 +806,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 46874,
+                        "id": 46880,
                         "nodeType": "RevertStatement",
                         "src": "1074:16:71"
                       }
@@ -821,41 +821,41 @@
             "name": "requireNotEmpty",
             "nameLocation": "983:15:71",
             "parameters": {
-              "id": 46866,
+              "id": 46872,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46865,
+                  "id": 46871,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "1010:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46878,
+                  "scope": 46884,
                   "src": "999:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46864,
+                    "id": 46870,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46863,
+                      "id": 46869,
                       "name": "PQ",
                       "nameLocations": [
                         "999:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "999:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "999:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -865,23 +865,23 @@
               "src": "998:17:71"
             },
             "returnParameters": {
-              "id": 46867,
+              "id": 46873,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1030:0:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 46890,
+            "id": 46896,
             "nodeType": "FunctionDefinition",
             "src": "1113:98:71",
             "nodes": [],
             "body": {
-              "id": 46889,
+              "id": 46895,
               "nodeType": "Block",
               "src": "1178:33:71",
               "nodes": [],
@@ -889,18 +889,18 @@
                 {
                   "expression": {
                     "expression": {
-                      "id": 46886,
+                      "id": 46892,
                       "name": "self",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46881,
+                      "referencedDeclaration": 46887,
                       "src": "1195:4:71",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                        "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                         "typeString": "struct PQ storage pointer"
                       }
                     },
-                    "id": 46887,
+                    "id": 46893,
                     "isConstant": false,
                     "isLValue": true,
                     "isPure": false,
@@ -908,15 +908,15 @@
                     "memberLocation": "1200:4:71",
                     "memberName": "size",
                     "nodeType": "MemberAccess",
-                    "referencedDeclaration": 46833,
+                    "referencedDeclaration": 46839,
                     "src": "1195:9:71",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
                     }
                   },
-                  "functionReturnParameters": 46885,
-                  "id": 46888,
+                  "functionReturnParameters": 46891,
+                  "id": 46894,
                   "nodeType": "Return",
                   "src": "1188:16:71"
                 }
@@ -928,41 +928,41 @@
             "name": "getSize",
             "nameLocation": "1122:7:71",
             "parameters": {
-              "id": 46882,
+              "id": 46888,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46881,
+                  "id": 46887,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "1141:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46890,
+                  "scope": 46896,
                   "src": "1130:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46880,
+                    "id": 46886,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46879,
+                      "id": 46885,
                       "name": "PQ",
                       "nameLocations": [
                         "1130:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "1130:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "1130:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -972,17 +972,17 @@
               "src": "1129:17:71"
             },
             "returnParameters": {
-              "id": 46885,
+              "id": 46891,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46884,
+                  "id": 46890,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46890,
+                  "scope": 46896,
                   "src": "1170:6:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -991,7 +991,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 46883,
+                    "id": 46889,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1170:6:71",
@@ -1005,18 +1005,18 @@
               ],
               "src": "1169:8:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 46908,
+            "id": 46914,
             "nodeType": "FunctionDefinition",
             "src": "1217:140:71",
             "nodes": [],
             "body": {
-              "id": 46907,
+              "id": 46913,
               "nodeType": "Block",
               "src": "1300:57:71",
               "nodes": [],
@@ -1027,7 +1027,7 @@
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
                     },
-                    "id": 46905,
+                    "id": 46911,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1035,18 +1035,18 @@
                     "leftExpression": {
                       "baseExpression": {
                         "expression": {
-                          "id": 46900,
+                          "id": 46906,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46893,
+                          "referencedDeclaration": 46899,
                           "src": "1317:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 46901,
+                        "id": 46907,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -1054,20 +1054,20 @@
                         "memberLocation": "1322:12:71",
                         "memberName": "addressToPos",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46838,
+                        "referencedDeclaration": 46844,
                         "src": "1317:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint16_$",
                           "typeString": "mapping(address => uint16)"
                         }
                       },
-                      "id": 46903,
+                      "id": 46909,
                       "indexExpression": {
-                        "id": 46902,
+                        "id": 46908,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46895,
+                        "referencedDeclaration": 46901,
                         "src": "1335:9:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1089,7 +1089,7 @@
                     "operator": "!=",
                     "rightExpression": {
                       "hexValue": "30",
-                      "id": 46904,
+                      "id": 46910,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1109,8 +1109,8 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 46899,
-                  "id": 46906,
+                  "functionReturnParameters": 46905,
+                  "id": 46912,
                   "nodeType": "Return",
                   "src": "1310:40:71"
                 }
@@ -1122,41 +1122,41 @@
             "name": "contains",
             "nameLocation": "1226:8:71",
             "parameters": {
-              "id": 46896,
+              "id": 46902,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46893,
+                  "id": 46899,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "1246:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46908,
+                  "scope": 46914,
                   "src": "1235:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46892,
+                    "id": 46898,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46891,
+                      "id": 46897,
                       "name": "PQ",
                       "nameLocations": [
                         "1235:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "1235:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "1235:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -1164,12 +1164,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 46895,
+                  "id": 46901,
                   "mutability": "mutable",
                   "name": "validator",
                   "nameLocation": "1260:9:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46908,
+                  "scope": 46914,
                   "src": "1252:17:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1178,7 +1178,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 46894,
+                    "id": 46900,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1252:7:71",
@@ -1194,17 +1194,17 @@
               "src": "1234:36:71"
             },
             "returnParameters": {
-              "id": 46899,
+              "id": 46905,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46898,
+                  "id": 46904,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46908,
+                  "scope": 46914,
                   "src": "1294:4:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1213,7 +1213,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 46897,
+                    "id": 46903,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1294:4:71",
@@ -1227,35 +1227,35 @@
               ],
               "src": "1293:6:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 46934,
+            "id": 46940,
             "nodeType": "FunctionDefinition",
             "src": "1363:226:71",
             "nodes": [],
             "body": {
-              "id": 46933,
+              "id": 46939,
               "nodeType": "Block",
               "src": "1458:131:71",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 46923,
+                    "id": 46929,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 46918,
+                      "id": 46924,
                       "name": "pos",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46916,
+                      "referencedDeclaration": 46922,
                       "src": "1468:3:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -1267,18 +1267,18 @@
                     "rightHandSide": {
                       "baseExpression": {
                         "expression": {
-                          "id": 46919,
+                          "id": 46925,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46911,
+                          "referencedDeclaration": 46917,
                           "src": "1474:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 46920,
+                        "id": 46926,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -1286,20 +1286,20 @@
                         "memberLocation": "1479:12:71",
                         "memberName": "addressToPos",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46838,
+                        "referencedDeclaration": 46844,
                         "src": "1474:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint16_$",
                           "typeString": "mapping(address => uint16)"
                         }
                       },
-                      "id": 46922,
+                      "id": 46928,
                       "indexExpression": {
-                        "id": 46921,
+                        "id": 46927,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46913,
+                        "referencedDeclaration": 46919,
                         "src": "1492:9:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1323,7 +1323,7 @@
                       "typeString": "uint16"
                     }
                   },
-                  "id": 46924,
+                  "id": 46930,
                   "nodeType": "ExpressionStatement",
                   "src": "1468:34:71"
                 },
@@ -1333,17 +1333,17 @@
                       "typeIdentifier": "t_uint16",
                       "typeString": "uint16"
                     },
-                    "id": 46927,
+                    "id": 46933,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 46925,
+                      "id": 46931,
                       "name": "pos",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46916,
+                      "referencedDeclaration": 46922,
                       "src": "1516:3:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -1354,7 +1354,7 @@
                     "operator": "==",
                     "rightExpression": {
                       "hexValue": "30",
-                      "id": 46926,
+                      "id": 46932,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1374,11 +1374,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 46932,
+                  "id": 46938,
                   "nodeType": "IfStatement",
                   "src": "1512:71:71",
                   "trueBody": {
-                    "id": 46931,
+                    "id": 46937,
                     "nodeType": "Block",
                     "src": "1526:57:71",
                     "statements": [
@@ -1387,18 +1387,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 46928,
+                            "id": 46934,
                             "name": "PQDoesNotContainAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 36961,
+                            "referencedDeclaration": 36967,
                             "src": "1547:23:71",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_error_pure$__$returns$__$",
                               "typeString": "function () pure"
                             }
                           },
-                          "id": 46929,
+                          "id": 46935,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1414,7 +1414,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 46930,
+                        "id": 46936,
                         "nodeType": "RevertStatement",
                         "src": "1540:32:71"
                       }
@@ -1429,41 +1429,41 @@
             "name": "getPosOrRevert",
             "nameLocation": "1372:14:71",
             "parameters": {
-              "id": 46914,
+              "id": 46920,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46911,
+                  "id": 46917,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "1398:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46934,
+                  "scope": 46940,
                   "src": "1387:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46910,
+                    "id": 46916,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46909,
+                      "id": 46915,
                       "name": "PQ",
                       "nameLocations": [
                         "1387:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "1387:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "1387:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -1471,12 +1471,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 46913,
+                  "id": 46919,
                   "mutability": "mutable",
                   "name": "validator",
                   "nameLocation": "1412:9:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46934,
+                  "scope": 46940,
                   "src": "1404:17:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1485,7 +1485,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 46912,
+                    "id": 46918,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1404:7:71",
@@ -1501,17 +1501,17 @@
               "src": "1386:36:71"
             },
             "returnParameters": {
-              "id": 46917,
+              "id": 46923,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46916,
+                  "id": 46922,
                   "mutability": "mutable",
                   "name": "pos",
                   "nameLocation": "1453:3:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46934,
+                  "scope": 46940,
                   "src": "1446:10:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1520,7 +1520,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 46915,
+                    "id": 46921,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1446:6:71",
@@ -1534,35 +1534,35 @@
               ],
               "src": "1445:12:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 46962,
+            "id": 46968,
             "nodeType": "FunctionDefinition",
             "src": "1595:184:71",
             "nodes": [],
             "body": {
-              "id": 46961,
+              "id": 46967,
               "nodeType": "Block",
               "src": "1646:133:71",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    46943
+                    46949
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 46943,
+                      "id": 46949,
                       "mutability": "mutable",
                       "name": "addr",
                       "nameLocation": "1664:4:71",
                       "nodeType": "VariableDeclaration",
-                      "scope": 46961,
+                      "scope": 46967,
                       "src": "1656:12:71",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -1571,7 +1571,7 @@
                         "typeString": "address"
                       },
                       "typeName": {
-                        "id": 46942,
+                        "id": 46948,
                         "name": "address",
                         "nodeType": "ElementaryTypeName",
                         "src": "1656:7:71",
@@ -1584,22 +1584,22 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 46948,
+                  "id": 46954,
                   "initialValue": {
                     "baseExpression": {
                       "expression": {
-                        "id": 46944,
+                        "id": 46950,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46937,
+                        "referencedDeclaration": 46943,
                         "src": "1671:4:71",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                          "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                           "typeString": "struct PQ storage pointer"
                         }
                       },
-                      "id": 46945,
+                      "id": 46951,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -1607,20 +1607,20 @@
                       "memberLocation": "1676:12:71",
                       "memberName": "posToAddress",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46843,
+                      "referencedDeclaration": 46849,
                       "src": "1671:17:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_uint16_$_t_address_$",
                         "typeString": "mapping(uint16 => address)"
                       }
                     },
-                    "id": 46947,
+                    "id": 46953,
                     "indexExpression": {
-                      "id": 46946,
+                      "id": 46952,
                       "name": "pos",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46939,
+                      "referencedDeclaration": 46945,
                       "src": "1689:3:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -1643,7 +1643,7 @@
                 },
                 {
                   "expression": {
-                    "id": 46953,
+                    "id": 46959,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1655,18 +1655,18 @@
                     "subExpression": {
                       "baseExpression": {
                         "expression": {
-                          "id": 46949,
+                          "id": 46955,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46937,
+                          "referencedDeclaration": 46943,
                           "src": "1710:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 46950,
+                        "id": 46956,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -1674,20 +1674,20 @@
                         "memberLocation": "1715:12:71",
                         "memberName": "posToAddress",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46843,
+                        "referencedDeclaration": 46849,
                         "src": "1710:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint16_$_t_address_$",
                           "typeString": "mapping(uint16 => address)"
                         }
                       },
-                      "id": 46952,
+                      "id": 46958,
                       "indexExpression": {
-                        "id": 46951,
+                        "id": 46957,
                         "name": "pos",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46939,
+                        "referencedDeclaration": 46945,
                         "src": "1728:3:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint16",
@@ -1710,13 +1710,13 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 46954,
+                  "id": 46960,
                   "nodeType": "ExpressionStatement",
                   "src": "1703:29:71"
                 },
                 {
                   "expression": {
-                    "id": 46959,
+                    "id": 46965,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1728,18 +1728,18 @@
                     "subExpression": {
                       "baseExpression": {
                         "expression": {
-                          "id": 46955,
+                          "id": 46961,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46937,
+                          "referencedDeclaration": 46943,
                           "src": "1749:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 46956,
+                        "id": 46962,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -1747,20 +1747,20 @@
                         "memberLocation": "1754:12:71",
                         "memberName": "addressToPos",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46838,
+                        "referencedDeclaration": 46844,
                         "src": "1749:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint16_$",
                           "typeString": "mapping(address => uint16)"
                         }
                       },
-                      "id": 46958,
+                      "id": 46964,
                       "indexExpression": {
-                        "id": 46957,
+                        "id": 46963,
                         "name": "addr",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46943,
+                        "referencedDeclaration": 46949,
                         "src": "1767:4:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1783,7 +1783,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 46960,
+                  "id": 46966,
                   "nodeType": "ExpressionStatement",
                   "src": "1742:30:71"
                 }
@@ -1795,41 +1795,41 @@
             "name": "del",
             "nameLocation": "1604:3:71",
             "parameters": {
-              "id": 46940,
+              "id": 46946,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46937,
+                  "id": 46943,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "1619:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46962,
+                  "scope": 46968,
                   "src": "1608:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46936,
+                    "id": 46942,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46935,
+                      "id": 46941,
                       "name": "PQ",
                       "nameLocations": [
                         "1608:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "1608:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "1608:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -1837,12 +1837,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 46939,
+                  "id": 46945,
                   "mutability": "mutable",
                   "name": "pos",
                   "nameLocation": "1632:3:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46962,
+                  "scope": 46968,
                   "src": "1625:10:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1851,7 +1851,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 46938,
+                    "id": 46944,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1625:6:71",
@@ -1866,40 +1866,40 @@
               "src": "1607:29:71"
             },
             "returnParameters": {
-              "id": 46941,
+              "id": 46947,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1646:0:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 46988,
+            "id": 46994,
             "nodeType": "FunctionDefinition",
             "src": "1785:266:71",
             "nodes": [],
             "body": {
-              "id": 46987,
+              "id": 46993,
               "nodeType": "Block",
               "src": "1941:110:71",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    46976
+                    46982
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 46976,
+                      "id": 46982,
                       "mutability": "mutable",
                       "name": "addr",
                       "nameLocation": "1959:4:71",
                       "nodeType": "VariableDeclaration",
-                      "scope": 46987,
+                      "scope": 46993,
                       "src": "1951:12:71",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -1908,7 +1908,7 @@
                         "typeString": "address"
                       },
                       "typeName": {
-                        "id": 46975,
+                        "id": 46981,
                         "name": "address",
                         "nodeType": "ElementaryTypeName",
                         "src": "1951:7:71",
@@ -1921,22 +1921,22 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 46981,
+                  "id": 46987,
                   "initialValue": {
                     "baseExpression": {
                       "expression": {
-                        "id": 46977,
+                        "id": 46983,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46965,
+                        "referencedDeclaration": 46971,
                         "src": "1966:4:71",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                          "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                           "typeString": "struct PQ storage pointer"
                         }
                       },
-                      "id": 46978,
+                      "id": 46984,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -1944,20 +1944,20 @@
                       "memberLocation": "1971:12:71",
                       "memberName": "posToAddress",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46843,
+                      "referencedDeclaration": 46849,
                       "src": "1966:17:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_uint16_$_t_address_$",
                         "typeString": "mapping(uint16 => address)"
                       }
                     },
-                    "id": 46980,
+                    "id": 46986,
                     "indexExpression": {
-                      "id": 46979,
+                      "id": 46985,
                       "name": "pos",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46970,
+                      "referencedDeclaration": 46976,
                       "src": "1984:3:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -1982,11 +1982,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 46984,
+                        "id": 46990,
                         "name": "addr",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46976,
+                        "referencedDeclaration": 46982,
                         "src": "2039:4:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2002,18 +2002,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 46982,
+                        "id": 46988,
                         "name": "validators",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46968,
+                        "referencedDeclaration": 46974,
                         "src": "2005:10:71",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_ValidatorSet_$47267_storage_ptr",
+                          "typeIdentifier": "t_struct$_ValidatorSet_$47273_storage_ptr",
                           "typeString": "struct ValidatorSet storage pointer"
                         }
                       },
-                      "id": 46983,
+                      "id": 46989,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -2021,14 +2021,14 @@
                       "memberLocation": "2016:22:71",
                       "memberName": "getConfirmedCollateral",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 42834,
+                      "referencedDeclaration": 42840,
                       "src": "2005:33:71",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_view$_t_struct$_ValidatorSet_$47267_storage_ptr_$_t_address_$returns$_t_uint256_$attached_to$_t_struct$_ValidatorSet_$47267_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_view$_t_struct$_ValidatorSet_$47273_storage_ptr_$_t_address_$returns$_t_uint256_$attached_to$_t_struct$_ValidatorSet_$47273_storage_ptr_$",
                         "typeString": "function (struct ValidatorSet storage pointer,address) view returns (uint256)"
                       }
                     },
-                    "id": 46985,
+                    "id": 46991,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2044,8 +2044,8 @@
                       "typeString": "uint256"
                     }
                   },
-                  "functionReturnParameters": 46974,
-                  "id": 46986,
+                  "functionReturnParameters": 46980,
+                  "id": 46992,
                   "nodeType": "Return",
                   "src": "1998:46:71"
                 }
@@ -2057,41 +2057,41 @@
             "name": "getConfirmedCollateral",
             "nameLocation": "1794:22:71",
             "parameters": {
-              "id": 46971,
+              "id": 46977,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46965,
+                  "id": 46971,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "1837:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46988,
+                  "scope": 46994,
                   "src": "1826:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46964,
+                    "id": 46970,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46963,
+                      "id": 46969,
                       "name": "PQ",
                       "nameLocations": [
                         "1826:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "1826:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "1826:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -2099,36 +2099,36 @@
                 },
                 {
                   "constant": false,
-                  "id": 46968,
+                  "id": 46974,
                   "mutability": "mutable",
                   "name": "validators",
                   "nameLocation": "1872:10:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46988,
+                  "scope": 46994,
                   "src": "1851:31:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_ValidatorSet_$47267_storage_ptr",
+                    "typeIdentifier": "t_struct$_ValidatorSet_$47273_storage_ptr",
                     "typeString": "struct ValidatorSet"
                   },
                   "typeName": {
-                    "id": 46967,
+                    "id": 46973,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46966,
+                      "id": 46972,
                       "name": "ValidatorSet",
                       "nameLocations": [
                         "1851:12:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 47267,
+                      "referencedDeclaration": 47273,
                       "src": "1851:12:71"
                     },
-                    "referencedDeclaration": 47267,
+                    "referencedDeclaration": 47273,
                     "src": "1851:12:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_ValidatorSet_$47267_storage_ptr",
+                      "typeIdentifier": "t_struct$_ValidatorSet_$47273_storage_ptr",
                       "typeString": "struct ValidatorSet"
                     }
                   },
@@ -2136,12 +2136,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 46970,
+                  "id": 46976,
                   "mutability": "mutable",
                   "name": "pos",
                   "nameLocation": "1899:3:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46988,
+                  "scope": 46994,
                   "src": "1892:10:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2150,7 +2150,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 46969,
+                    "id": 46975,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "1892:6:71",
@@ -2165,17 +2165,17 @@
               "src": "1816:92:71"
             },
             "returnParameters": {
-              "id": 46974,
+              "id": 46980,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46973,
+                  "id": 46979,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 46988,
+                  "scope": 46994,
                   "src": "1932:7:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2184,7 +2184,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 46972,
+                    "id": 46978,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1932:7:71",
@@ -2198,18 +2198,18 @@
               ],
               "src": "1931:9:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 47059,
+            "id": 47065,
             "nodeType": "FunctionDefinition",
             "src": "2057:412:71",
             "nodes": [],
             "body": {
-              "id": 47058,
+              "id": 47064,
               "nodeType": "Block",
               "src": "2127:342:71",
               "nodes": [],
@@ -2222,17 +2222,17 @@
                           "typeIdentifier": "t_uint16",
                           "typeString": "uint16"
                         },
-                        "id": 47002,
+                        "id": 47008,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 46999,
+                          "id": 47005,
                           "name": "pos1",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46993,
+                          "referencedDeclaration": 46999,
                           "src": "2144:4:71",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint16",
@@ -2243,18 +2243,18 @@
                         "operator": "<=",
                         "rightExpression": {
                           "expression": {
-                            "id": 47000,
+                            "id": 47006,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 46991,
+                            "referencedDeclaration": 46997,
                             "src": "2152:4:71",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                              "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                               "typeString": "struct PQ storage pointer"
                             }
                           },
-                          "id": 47001,
+                          "id": 47007,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -2262,7 +2262,7 @@
                           "memberLocation": "2157:4:71",
                           "memberName": "size",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 46833,
+                          "referencedDeclaration": 46839,
                           "src": "2152:9:71",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint16",
@@ -2283,7 +2283,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 46998,
+                      "id": 47004,
                       "name": "assert",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -2294,7 +2294,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 47003,
+                    "id": 47009,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2310,7 +2310,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 47004,
+                  "id": 47010,
                   "nodeType": "ExpressionStatement",
                   "src": "2137:25:71"
                 },
@@ -2322,17 +2322,17 @@
                           "typeIdentifier": "t_uint16",
                           "typeString": "uint16"
                         },
-                        "id": 47009,
+                        "id": 47015,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 47006,
+                          "id": 47012,
                           "name": "pos2",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46995,
+                          "referencedDeclaration": 47001,
                           "src": "2179:4:71",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint16",
@@ -2343,18 +2343,18 @@
                         "operator": "<=",
                         "rightExpression": {
                           "expression": {
-                            "id": 47007,
+                            "id": 47013,
                             "name": "self",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 46991,
+                            "referencedDeclaration": 46997,
                             "src": "2187:4:71",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                              "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                               "typeString": "struct PQ storage pointer"
                             }
                           },
-                          "id": 47008,
+                          "id": 47014,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -2362,7 +2362,7 @@
                           "memberLocation": "2192:4:71",
                           "memberName": "size",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 46833,
+                          "referencedDeclaration": 46839,
                           "src": "2187:9:71",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint16",
@@ -2383,7 +2383,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 47005,
+                      "id": 47011,
                       "name": "assert",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -2394,7 +2394,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 47010,
+                    "id": 47016,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2410,23 +2410,23 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 47011,
+                  "id": 47017,
                   "nodeType": "ExpressionStatement",
                   "src": "2172:25:71"
                 },
                 {
                   "assignments": [
-                    47013
+                    47019
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 47013,
+                      "id": 47019,
                       "mutability": "mutable",
                       "name": "addr1",
                       "nameLocation": "2216:5:71",
                       "nodeType": "VariableDeclaration",
-                      "scope": 47058,
+                      "scope": 47064,
                       "src": "2208:13:71",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -2435,7 +2435,7 @@
                         "typeString": "address"
                       },
                       "typeName": {
-                        "id": 47012,
+                        "id": 47018,
                         "name": "address",
                         "nodeType": "ElementaryTypeName",
                         "src": "2208:7:71",
@@ -2448,22 +2448,22 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 47018,
+                  "id": 47024,
                   "initialValue": {
                     "baseExpression": {
                       "expression": {
-                        "id": 47014,
+                        "id": 47020,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46991,
+                        "referencedDeclaration": 46997,
                         "src": "2224:4:71",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                          "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                           "typeString": "struct PQ storage pointer"
                         }
                       },
-                      "id": 47015,
+                      "id": 47021,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -2471,20 +2471,20 @@
                       "memberLocation": "2229:12:71",
                       "memberName": "posToAddress",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46843,
+                      "referencedDeclaration": 46849,
                       "src": "2224:17:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_uint16_$_t_address_$",
                         "typeString": "mapping(uint16 => address)"
                       }
                     },
-                    "id": 47017,
+                    "id": 47023,
                     "indexExpression": {
-                      "id": 47016,
+                      "id": 47022,
                       "name": "pos1",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46993,
+                      "referencedDeclaration": 46999,
                       "src": "2242:4:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -2507,17 +2507,17 @@
                 },
                 {
                   "assignments": [
-                    47020
+                    47026
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 47020,
+                      "id": 47026,
                       "mutability": "mutable",
                       "name": "addr2",
                       "nameLocation": "2265:5:71",
                       "nodeType": "VariableDeclaration",
-                      "scope": 47058,
+                      "scope": 47064,
                       "src": "2257:13:71",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -2526,7 +2526,7 @@
                         "typeString": "address"
                       },
                       "typeName": {
-                        "id": 47019,
+                        "id": 47025,
                         "name": "address",
                         "nodeType": "ElementaryTypeName",
                         "src": "2257:7:71",
@@ -2539,22 +2539,22 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 47025,
+                  "id": 47031,
                   "initialValue": {
                     "baseExpression": {
                       "expression": {
-                        "id": 47021,
+                        "id": 47027,
                         "name": "self",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46991,
+                        "referencedDeclaration": 46997,
                         "src": "2273:4:71",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                          "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                           "typeString": "struct PQ storage pointer"
                         }
                       },
-                      "id": 47022,
+                      "id": 47028,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -2562,20 +2562,20 @@
                       "memberLocation": "2278:12:71",
                       "memberName": "posToAddress",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46843,
+                      "referencedDeclaration": 46849,
                       "src": "2273:17:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_uint16_$_t_address_$",
                         "typeString": "mapping(uint16 => address)"
                       }
                     },
-                    "id": 47024,
+                    "id": 47030,
                     "indexExpression": {
-                      "id": 47023,
+                      "id": 47029,
                       "name": "pos2",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46995,
+                      "referencedDeclaration": 47001,
                       "src": "2291:4:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -2598,7 +2598,7 @@
                 },
                 {
                   "expression": {
-                    "id": 47032,
+                    "id": 47038,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2606,18 +2606,18 @@
                     "leftHandSide": {
                       "baseExpression": {
                         "expression": {
-                          "id": 47026,
+                          "id": 47032,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46991,
+                          "referencedDeclaration": 46997,
                           "src": "2307:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 47029,
+                        "id": 47035,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -2625,20 +2625,20 @@
                         "memberLocation": "2312:12:71",
                         "memberName": "addressToPos",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46838,
+                        "referencedDeclaration": 46844,
                         "src": "2307:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint16_$",
                           "typeString": "mapping(address => uint16)"
                         }
                       },
-                      "id": 47030,
+                      "id": 47036,
                       "indexExpression": {
-                        "id": 47028,
+                        "id": 47034,
                         "name": "addr1",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 47013,
+                        "referencedDeclaration": 47019,
                         "src": "2325:5:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2659,11 +2659,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 47031,
+                      "id": 47037,
                       "name": "pos2",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46995,
+                      "referencedDeclaration": 47001,
                       "src": "2334:4:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -2676,13 +2676,13 @@
                       "typeString": "uint16"
                     }
                   },
-                  "id": 47033,
+                  "id": 47039,
                   "nodeType": "ExpressionStatement",
                   "src": "2307:31:71"
                 },
                 {
                   "expression": {
-                    "id": 47040,
+                    "id": 47046,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2690,18 +2690,18 @@
                     "leftHandSide": {
                       "baseExpression": {
                         "expression": {
-                          "id": 47034,
+                          "id": 47040,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46991,
+                          "referencedDeclaration": 46997,
                           "src": "2348:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 47037,
+                        "id": 47043,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -2709,20 +2709,20 @@
                         "memberLocation": "2353:12:71",
                         "memberName": "addressToPos",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46838,
+                        "referencedDeclaration": 46844,
                         "src": "2348:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_address_$_t_uint16_$",
                           "typeString": "mapping(address => uint16)"
                         }
                       },
-                      "id": 47038,
+                      "id": 47044,
                       "indexExpression": {
-                        "id": 47036,
+                        "id": 47042,
                         "name": "addr2",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 47020,
+                        "referencedDeclaration": 47026,
                         "src": "2366:5:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -2743,11 +2743,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 47039,
+                      "id": 47045,
                       "name": "pos1",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46993,
+                      "referencedDeclaration": 46999,
                       "src": "2375:4:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint16",
@@ -2760,13 +2760,13 @@
                       "typeString": "uint16"
                     }
                   },
-                  "id": 47041,
+                  "id": 47047,
                   "nodeType": "ExpressionStatement",
                   "src": "2348:31:71"
                 },
                 {
                   "expression": {
-                    "id": 47048,
+                    "id": 47054,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2774,18 +2774,18 @@
                     "leftHandSide": {
                       "baseExpression": {
                         "expression": {
-                          "id": 47042,
+                          "id": 47048,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46991,
+                          "referencedDeclaration": 46997,
                           "src": "2390:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 47045,
+                        "id": 47051,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -2793,20 +2793,20 @@
                         "memberLocation": "2395:12:71",
                         "memberName": "posToAddress",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46843,
+                        "referencedDeclaration": 46849,
                         "src": "2390:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint16_$_t_address_$",
                           "typeString": "mapping(uint16 => address)"
                         }
                       },
-                      "id": 47046,
+                      "id": 47052,
                       "indexExpression": {
-                        "id": 47044,
+                        "id": 47050,
                         "name": "pos2",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46995,
+                        "referencedDeclaration": 47001,
                         "src": "2408:4:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint16",
@@ -2827,11 +2827,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 47047,
+                      "id": 47053,
                       "name": "addr1",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 47013,
+                      "referencedDeclaration": 47019,
                       "src": "2416:5:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -2844,13 +2844,13 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 47049,
+                  "id": 47055,
                   "nodeType": "ExpressionStatement",
                   "src": "2390:31:71"
                 },
                 {
                   "expression": {
-                    "id": 47056,
+                    "id": 47062,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2858,18 +2858,18 @@
                     "leftHandSide": {
                       "baseExpression": {
                         "expression": {
-                          "id": 47050,
+                          "id": 47056,
                           "name": "self",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46991,
+                          "referencedDeclaration": 46997,
                           "src": "2431:4:71",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                            "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                             "typeString": "struct PQ storage pointer"
                           }
                         },
-                        "id": 47053,
+                        "id": 47059,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -2877,20 +2877,20 @@
                         "memberLocation": "2436:12:71",
                         "memberName": "posToAddress",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46843,
+                        "referencedDeclaration": 46849,
                         "src": "2431:17:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_mapping$_t_uint16_$_t_address_$",
                           "typeString": "mapping(uint16 => address)"
                         }
                       },
-                      "id": 47054,
+                      "id": 47060,
                       "indexExpression": {
-                        "id": 47052,
+                        "id": 47058,
                         "name": "pos1",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46993,
+                        "referencedDeclaration": 46999,
                         "src": "2449:4:71",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint16",
@@ -2911,11 +2911,11 @@
                     "nodeType": "Assignment",
                     "operator": "=",
                     "rightHandSide": {
-                      "id": 47055,
+                      "id": 47061,
                       "name": "addr2",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 47020,
+                      "referencedDeclaration": 47026,
                       "src": "2457:5:71",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -2928,7 +2928,7 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 47057,
+                  "id": 47063,
                   "nodeType": "ExpressionStatement",
                   "src": "2431:31:71"
                 }
@@ -2940,41 +2940,41 @@
             "name": "exchange",
             "nameLocation": "2066:8:71",
             "parameters": {
-              "id": 46996,
+              "id": 47002,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 46991,
+                  "id": 46997,
                   "mutability": "mutable",
                   "name": "self",
                   "nameLocation": "2086:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 47059,
+                  "scope": 47065,
                   "src": "2075:15:71",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                    "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                     "typeString": "struct PQ"
                   },
                   "typeName": {
-                    "id": 46990,
+                    "id": 46996,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 46989,
+                      "id": 46995,
                       "name": "PQ",
                       "nameLocations": [
                         "2075:2:71"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46844,
+                      "referencedDeclaration": 46850,
                       "src": "2075:2:71"
                     },
-                    "referencedDeclaration": 46844,
+                    "referencedDeclaration": 46850,
                     "src": "2075:2:71",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_PQ_$46844_storage_ptr",
+                      "typeIdentifier": "t_struct$_PQ_$46850_storage_ptr",
                       "typeString": "struct PQ"
                     }
                   },
@@ -2982,12 +2982,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 46993,
+                  "id": 46999,
                   "mutability": "mutable",
                   "name": "pos1",
                   "nameLocation": "2099:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 47059,
+                  "scope": 47065,
                   "src": "2092:11:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2996,7 +2996,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 46992,
+                    "id": 46998,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "2092:6:71",
@@ -3009,12 +3009,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 46995,
+                  "id": 47001,
                   "mutability": "mutable",
                   "name": "pos2",
                   "nameLocation": "2112:4:71",
                   "nodeType": "VariableDeclaration",
-                  "scope": 47059,
+                  "scope": 47065,
                   "src": "2105:11:71",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -3023,7 +3023,7 @@
                     "typeString": "uint16"
                   },
                   "typeName": {
-                    "id": 46994,
+                    "id": 47000,
                     "name": "uint16",
                     "nodeType": "ElementaryTypeName",
                     "src": "2105:6:71",
@@ -3038,12 +3038,12 @@
               "src": "2074:43:71"
             },
             "returnParameters": {
-              "id": 46997,
+              "id": 47003,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2127:0:71"
             },
-            "scope": 47060,
+            "scope": 47066,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
@@ -3056,11 +3056,11 @@
         "contractKind": "library",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          47060
+          47066
         ],
         "name": "LibPQ",
         "nameLocation": "810:5:71",
-        "scope": 47061,
+        "scope": 47067,
         "usedErrors": []
       }
     ],

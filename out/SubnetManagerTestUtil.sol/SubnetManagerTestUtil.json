@@ -1642,23 +1642,23 @@
   },
   "ast": {
     "absolutePath": "test/subnetActorMock/SubnetManagerTestUtil.sol",
-    "id": 73820,
+    "id": 73826,
     "exportedSymbols": {
       "LibStaking": [
-        44300
+        44306
       ],
       "SubnetActorManagerFacet": [
-        48883
+        48889
       ],
       "SubnetManagerTestUtil": [
-        73819
+        73825
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:359:97",
     "nodes": [
       {
-        "id": 73800,
+        "id": 73806,
         "nodeType": "PragmaDirective",
         "src": "46:23:97",
         "nodes": [],
@@ -1669,23 +1669,23 @@
         ]
       },
       {
-        "id": 73802,
+        "id": 73808,
         "nodeType": "ImportDirective",
         "src": "71:85:97",
         "nodes": [],
         "absolutePath": "src/subnet/SubnetActorManagerFacet.sol",
         "file": "../../src/subnet/SubnetActorManagerFacet.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 73820,
-        "sourceUnit": 48884,
+        "scope": 73826,
+        "sourceUnit": 48890,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 73801,
+              "id": 73807,
               "name": "SubnetActorManagerFacet",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 48883,
+              "referencedDeclaration": 48889,
               "src": "79:23:97",
               "typeDescriptions": {}
             },
@@ -1695,23 +1695,23 @@
         "unitAlias": ""
       },
       {
-        "id": 73804,
+        "id": 73810,
         "nodeType": "ImportDirective",
         "src": "157:56:97",
         "nodes": [],
         "absolutePath": "src/lib/LibStaking.sol",
         "file": "../../src/lib/LibStaking.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 73820,
-        "sourceUnit": 44524,
+        "scope": 73826,
+        "sourceUnit": 44530,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 73803,
+              "id": 73809,
               "name": "LibStaking",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 44300,
+              "referencedDeclaration": 44306,
               "src": "165:10:97",
               "typeDescriptions": {}
             },
@@ -1721,17 +1721,17 @@
         "unitAlias": ""
       },
       {
-        "id": 73819,
+        "id": 73825,
         "nodeType": "ContractDefinition",
         "src": "215:190:97",
         "nodes": [
           {
-            "id": 73818,
+            "id": 73824,
             "nodeType": "FunctionDefinition",
             "src": "279:124:97",
             "nodes": [],
             "body": {
-              "id": 73817,
+              "id": 73823,
               "nodeType": "Block",
               "src": "340:63:97",
               "nodes": [],
@@ -1740,11 +1740,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 73814,
+                        "id": 73820,
                         "name": "_configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 73808,
+                        "referencedDeclaration": 73814,
                         "src": "375:20:97",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
@@ -1760,18 +1760,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 73811,
+                        "id": 73817,
                         "name": "LibStaking",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44300,
+                        "referencedDeclaration": 44306,
                         "src": "350:10:97",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44300_$",
+                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44306_$",
                           "typeString": "type(library LibStaking)"
                         }
                       },
-                      "id": 73813,
+                      "id": 73819,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1779,14 +1779,14 @@
                       "memberLocation": "361:13:97",
                       "memberName": "confirmChange",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 44299,
+                      "referencedDeclaration": 44305,
                       "src": "350:24:97",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint64_$returns$__$",
                         "typeString": "function (uint64)"
                       }
                     },
-                    "id": 73815,
+                    "id": 73821,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1802,7 +1802,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 73816,
+                  "id": 73822,
                   "nodeType": "ExpressionStatement",
                   "src": "350:46:97"
                 }
@@ -1815,17 +1815,17 @@
             "name": "confirmChange",
             "nameLocation": "288:13:97",
             "parameters": {
-              "id": 73809,
+              "id": 73815,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 73808,
+                  "id": 73814,
                   "mutability": "mutable",
                   "name": "_configurationNumber",
                   "nameLocation": "309:20:97",
                   "nodeType": "VariableDeclaration",
-                  "scope": 73818,
+                  "scope": 73824,
                   "src": "302:27:97",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1834,7 +1834,7 @@
                     "typeString": "uint64"
                   },
                   "typeName": {
-                    "id": 73807,
+                    "id": 73813,
                     "name": "uint64",
                     "nodeType": "ElementaryTypeName",
                     "src": "302:6:97",
@@ -1849,12 +1849,12 @@
               "src": "301:29:97"
             },
             "returnParameters": {
-              "id": 73810,
+              "id": 73816,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "340:0:97"
             },
-            "scope": 73819,
+            "scope": 73825,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -1864,16 +1864,16 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 73805,
+              "id": 73811,
               "name": "SubnetActorManagerFacet",
               "nameLocations": [
                 "249:23:97"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 48883,
+              "referencedDeclaration": 48889,
               "src": "249:23:97"
             },
-            "id": 73806,
+            "id": 73812,
             "nodeType": "InheritanceSpecifier",
             "src": "249:23:97"
           }
@@ -1883,42 +1883,42 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          73819,
-          48883,
-          42443,
-          44892,
-          39693
+          73825,
+          48889,
+          42449,
+          44898,
+          39699
         ],
         "name": "SubnetManagerTestUtil",
         "nameLocation": "224:21:97",
-        "scope": 73820,
+        "scope": 73826,
         "usedErrors": [
           32101,
           32109,
-          36845,
-          36849,
           36851,
-          36863,
-          36865,
-          36877,
-          36879,
-          36905,
-          36909,
+          36855,
+          36857,
+          36869,
+          36871,
+          36883,
+          36885,
+          36911,
           36915,
           36921,
-          36929,
-          36933,
-          36937,
-          36945,
-          36947,
+          36927,
+          36935,
+          36939,
+          36943,
           36951,
+          36953,
           36957,
-          36961,
           36963,
-          36971,
+          36967,
+          36969,
           36977,
-          36981,
-          42391
+          36983,
+          36987,
+          42397
         ]
       }
     ],

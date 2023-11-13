@@ -834,26 +834,26 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/ISubnetActor.sol",
-    "id": 39694,
+    "id": 39700,
     "exportedSymbols": {
       "BottomUpCheckpoint": [
-        47087
+        47093
       ],
       "CrossMsg": [
-        47109
+        47115
       ],
       "FvmAddress": [
-        47133
+        47139
       ],
       "ISubnetActor": [
-        39693
+        39699
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:2078:54",
     "nodes": [
       {
-        "id": 39619,
+        "id": 39625,
         "nodeType": "PragmaDirective",
         "src": "46:23:54",
         "nodes": [],
@@ -864,23 +864,23 @@
         ]
       },
       {
-        "id": 39622,
+        "id": 39628,
         "nodeType": "ImportDirective",
         "src": "71:71:54",
         "nodes": [],
         "absolutePath": "src/structs/Checkpoint.sol",
         "file": "../structs/Checkpoint.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 39694,
-        "sourceUnit": 47127,
+        "scope": 39700,
+        "sourceUnit": 47133,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 39620,
+              "id": 39626,
               "name": "BottomUpCheckpoint",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 47087,
+              "referencedDeclaration": 47093,
               "src": "79:18:54",
               "typeDescriptions": {}
             },
@@ -888,11 +888,11 @@
           },
           {
             "foreign": {
-              "id": 39621,
+              "id": 39627,
               "name": "CrossMsg",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 47109,
+              "referencedDeclaration": 47115,
               "src": "99:8:54",
               "typeDescriptions": {}
             },
@@ -902,23 +902,23 @@
         "unitAlias": ""
       },
       {
-        "id": 39624,
+        "id": 39630,
         "nodeType": "ImportDirective",
         "src": "143:53:54",
         "nodes": [],
         "absolutePath": "src/structs/FvmAddress.sol",
         "file": "../structs/FvmAddress.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 39694,
-        "sourceUnit": 47141,
+        "scope": 39700,
+        "sourceUnit": 47147,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 39623,
+              "id": 39629,
               "name": "FvmAddress",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 47133,
+              "referencedDeclaration": 47139,
               "src": "151:10:54",
               "typeDescriptions": {}
             },
@@ -928,17 +928,17 @@
         "unitAlias": ""
       },
       {
-        "id": 39693,
+        "id": 39699,
         "nodeType": "ContractDefinition",
         "src": "259:1864:54",
         "nodes": [
           {
-            "id": 39631,
+            "id": 39637,
             "nodeType": "FunctionDefinition",
             "src": "420:56:54",
             "nodes": [],
             "documentation": {
-              "id": 39626,
+              "id": 39632,
               "nodeType": "StructuredDocumentation",
               "src": "288:127:54",
               "text": "Called by peers looking to join a subnet.\n It implements the basic logic to onboard new peers to the subnet."
@@ -950,17 +950,17 @@
             "name": "join",
             "nameLocation": "429:4:54",
             "parameters": {
-              "id": 39629,
+              "id": 39635,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39628,
+                  "id": 39634,
                   "mutability": "mutable",
                   "name": "metadata",
                   "nameLocation": "449:8:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39631,
+                  "scope": 39637,
                   "src": "434:23:54",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -969,7 +969,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 39627,
+                    "id": 39633,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "434:5:54",
@@ -984,23 +984,23 @@
               "src": "433:25:54"
             },
             "returnParameters": {
-              "id": 39630,
+              "id": 39636,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "475:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39635,
+            "id": 39641,
             "nodeType": "FunctionDefinition",
             "src": "533:26:54",
             "nodes": [],
             "documentation": {
-              "id": 39632,
+              "id": 39638,
               "nodeType": "StructuredDocumentation",
               "src": "482:46:54",
               "text": "Called by peers looking to leave a subnet."
@@ -1012,29 +1012,29 @@
             "name": "leave",
             "nameLocation": "542:5:54",
             "parameters": {
-              "id": 39633,
+              "id": 39639,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "547:2:54"
             },
             "returnParameters": {
-              "id": 39634,
+              "id": 39640,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "558:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39639,
+            "id": 39645,
             "nodeType": "FunctionDefinition",
             "src": "628:34:54",
             "nodes": [],
             "documentation": {
-              "id": 39636,
+              "id": 39642,
               "nodeType": "StructuredDocumentation",
               "src": "565:58:54",
               "text": "Method that allows a validator to increase their stake"
@@ -1046,29 +1046,29 @@
             "name": "stake",
             "nameLocation": "637:5:54",
             "parameters": {
-              "id": 39637,
+              "id": 39643,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "642:2:54"
             },
             "returnParameters": {
-              "id": 39638,
+              "id": 39644,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "661:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39643,
+            "id": 39649,
             "nodeType": "FunctionDefinition",
             "src": "754:36:54",
             "nodes": [],
             "documentation": {
-              "id": 39640,
+              "id": 39646,
               "nodeType": "StructuredDocumentation",
               "src": "668:81:54",
               "text": "Method that allows to pre-fund an address in the subnet before it bootstraps."
@@ -1080,29 +1080,29 @@
             "name": "preFund",
             "nameLocation": "763:7:54",
             "parameters": {
-              "id": 39641,
+              "id": 39647,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "770:2:54"
             },
             "returnParameters": {
-              "id": 39642,
+              "id": 39648,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "789:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39649,
+            "id": 39655,
             "nodeType": "FunctionDefinition",
             "src": "909:45:54",
             "nodes": [],
             "documentation": {
-              "id": 39644,
+              "id": 39650,
               "nodeType": "StructuredDocumentation",
               "src": "796:108:54",
               "text": "Method that allows to recover initial balance for an address from a subnet that hasn't bootstrapped yet."
@@ -1114,17 +1114,17 @@
             "name": "preRelease",
             "nameLocation": "918:10:54",
             "parameters": {
-              "id": 39647,
+              "id": 39653,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39646,
+                  "id": 39652,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "937:6:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39649,
+                  "scope": 39655,
                   "src": "929:14:54",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1133,7 +1133,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 39645,
+                    "id": 39651,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "929:7:54",
@@ -1148,23 +1148,23 @@
               "src": "928:16:54"
             },
             "returnParameters": {
-              "id": 39648,
+              "id": 39654,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "953:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39655,
+            "id": 39661,
             "nodeType": "FunctionDefinition",
             "src": "1041:42:54",
             "nodes": [],
             "documentation": {
-              "id": 39650,
+              "id": 39656,
               "nodeType": "StructuredDocumentation",
               "src": "960:76:54",
               "text": "Method that allows a validator to unstake their collateral from a subnet"
@@ -1176,17 +1176,17 @@
             "name": "unstake",
             "nameLocation": "1050:7:54",
             "parameters": {
-              "id": 39653,
+              "id": 39659,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39652,
+                  "id": 39658,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "1066:6:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39655,
+                  "scope": 39661,
                   "src": "1058:14:54",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1195,7 +1195,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 39651,
+                    "id": 39657,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1058:7:54",
@@ -1210,23 +1210,23 @@
               "src": "1057:16:54"
             },
             "returnParameters": {
-              "id": 39654,
+              "id": 39660,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1082:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39659,
+            "id": 39665,
             "nodeType": "FunctionDefinition",
             "src": "1173:25:54",
             "nodes": [],
             "documentation": {
-              "id": 39656,
+              "id": 39662,
               "nodeType": "StructuredDocumentation",
               "src": "1089:79:54",
               "text": "Unregister the subnet from the hierarchy, making it no longer discoverable."
@@ -1238,29 +1238,29 @@
             "name": "kill",
             "nameLocation": "1182:4:54",
             "parameters": {
-              "id": 39657,
+              "id": 39663,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1186:2:54"
             },
             "returnParameters": {
-              "id": 39658,
+              "id": 39664,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1197:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39663,
+            "id": 39669,
             "nodeType": "FunctionDefinition",
             "src": "1249:26:54",
             "nodes": [],
             "documentation": {
-              "id": 39660,
+              "id": 39666,
               "nodeType": "StructuredDocumentation",
               "src": "1204:40:54",
               "text": "Validator claims released collateral"
@@ -1272,29 +1272,29 @@
             "name": "claim",
             "nameLocation": "1258:5:54",
             "parameters": {
-              "id": 39661,
+              "id": 39667,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1263:2:54"
             },
             "returnParameters": {
-              "id": 39662,
+              "id": 39668,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1274:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39667,
+            "id": 39673,
             "nodeType": "FunctionDefinition",
             "src": "1313:42:54",
             "nodes": [],
             "documentation": {
-              "id": 39664,
+              "id": 39670,
               "nodeType": "StructuredDocumentation",
               "src": "1281:27:54",
               "text": "Relayer claims a reward"
@@ -1306,29 +1306,29 @@
             "name": "claimRewardForRelayer",
             "nameLocation": "1322:21:54",
             "parameters": {
-              "id": 39665,
+              "id": 39671,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1343:2:54"
             },
             "returnParameters": {
-              "id": 39666,
+              "id": 39672,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1354:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39684,
+            "id": 39690,
             "nodeType": "FunctionDefinition",
             "src": "1624:204:54",
             "nodes": [],
             "documentation": {
-              "id": 39668,
+              "id": 39674,
               "nodeType": "StructuredDocumentation",
               "src": "1361:258:54",
               "text": "Executes the checkpoint if it is valid.\n It triggers the commitment of the checkpoint, the execution of related cross-net messages,\n and any other side-effects that need to be triggered by the checkpoint such as relayer reward book keeping."
@@ -1340,41 +1340,41 @@
             "name": "submitCheckpoint",
             "nameLocation": "1633:16:54",
             "parameters": {
-              "id": 39682,
+              "id": 39688,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39671,
+                  "id": 39677,
                   "mutability": "mutable",
                   "name": "checkpoint",
                   "nameLocation": "1687:10:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39684,
+                  "scope": 39690,
                   "src": "1659:38:54",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_BottomUpCheckpoint_$47087_calldata_ptr",
+                    "typeIdentifier": "t_struct$_BottomUpCheckpoint_$47093_calldata_ptr",
                     "typeString": "struct BottomUpCheckpoint"
                   },
                   "typeName": {
-                    "id": 39670,
+                    "id": 39676,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 39669,
+                      "id": 39675,
                       "name": "BottomUpCheckpoint",
                       "nameLocations": [
                         "1659:18:54"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 47087,
+                      "referencedDeclaration": 47093,
                       "src": "1659:18:54"
                     },
-                    "referencedDeclaration": 47087,
+                    "referencedDeclaration": 47093,
                     "src": "1659:18:54",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$47087_storage_ptr",
+                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$47093_storage_ptr",
                       "typeString": "struct BottomUpCheckpoint"
                     }
                   },
@@ -1382,45 +1382,45 @@
                 },
                 {
                   "constant": false,
-                  "id": 39675,
+                  "id": 39681,
                   "mutability": "mutable",
                   "name": "messages",
                   "nameLocation": "1727:8:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39684,
+                  "scope": 39690,
                   "src": "1707:28:54",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_CrossMsg_$47109_calldata_ptr_$dyn_calldata_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_CrossMsg_$47115_calldata_ptr_$dyn_calldata_ptr",
                     "typeString": "struct CrossMsg[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 39673,
+                      "id": 39679,
                       "nodeType": "UserDefinedTypeName",
                       "pathNode": {
-                        "id": 39672,
+                        "id": 39678,
                         "name": "CrossMsg",
                         "nameLocations": [
                           "1707:8:54"
                         ],
                         "nodeType": "IdentifierPath",
-                        "referencedDeclaration": 47109,
+                        "referencedDeclaration": 47115,
                         "src": "1707:8:54"
                       },
-                      "referencedDeclaration": 47109,
+                      "referencedDeclaration": 47115,
                       "src": "1707:8:54",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_CrossMsg_$47109_storage_ptr",
+                        "typeIdentifier": "t_struct$_CrossMsg_$47115_storage_ptr",
                         "typeString": "struct CrossMsg"
                       }
                     },
-                    "id": 39674,
+                    "id": 39680,
                     "nodeType": "ArrayTypeName",
                     "src": "1707:10:54",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_CrossMsg_$47109_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_CrossMsg_$47115_storage_$dyn_storage_ptr",
                       "typeString": "struct CrossMsg[]"
                     }
                   },
@@ -1428,12 +1428,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 39678,
+                  "id": 39684,
                   "mutability": "mutable",
                   "name": "signatories",
                   "nameLocation": "1764:11:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39684,
+                  "scope": 39690,
                   "src": "1745:30:54",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -1443,7 +1443,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 39676,
+                      "id": 39682,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "1745:7:54",
@@ -1453,7 +1453,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 39677,
+                    "id": 39683,
                     "nodeType": "ArrayTypeName",
                     "src": "1745:9:54",
                     "typeDescriptions": {
@@ -1465,12 +1465,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 39681,
+                  "id": 39687,
                   "mutability": "mutable",
                   "name": "signatures",
                   "nameLocation": "1802:10:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39684,
+                  "scope": 39690,
                   "src": "1785:27:54",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -1480,7 +1480,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 39679,
+                      "id": 39685,
                       "name": "bytes",
                       "nodeType": "ElementaryTypeName",
                       "src": "1785:5:54",
@@ -1489,7 +1489,7 @@
                         "typeString": "bytes"
                       }
                     },
-                    "id": 39680,
+                    "id": 39686,
                     "nodeType": "ArrayTypeName",
                     "src": "1785:7:54",
                     "typeDescriptions": {
@@ -1503,23 +1503,23 @@
               "src": "1649:169:54"
             },
             "returnParameters": {
-              "id": 39683,
+              "id": 39689,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1827:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39692,
+            "id": 39698,
             "nodeType": "FunctionDefinition",
             "src": "2037:84:54",
             "nodes": [],
             "documentation": {
-              "id": 39685,
+              "id": 39691,
               "nodeType": "StructuredDocumentation",
               "src": "1834:198:54",
               "text": "reward the relayers for processing checkpoint at height `height`.\n The reword includes the fixed reward for a relayer defined in the contract and `amount` of fees from the cross-messages."
@@ -1531,17 +1531,17 @@
             "name": "distributeRewardToRelayers",
             "nameLocation": "2046:26:54",
             "parameters": {
-              "id": 39690,
+              "id": 39696,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39687,
+                  "id": 39693,
                   "mutability": "mutable",
                   "name": "height",
                   "nameLocation": "2080:6:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39692,
+                  "scope": 39698,
                   "src": "2073:13:54",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1550,7 +1550,7 @@
                     "typeString": "uint64"
                   },
                   "typeName": {
-                    "id": 39686,
+                    "id": 39692,
                     "name": "uint64",
                     "nodeType": "ElementaryTypeName",
                     "src": "2073:6:54",
@@ -1563,12 +1563,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 39689,
+                  "id": 39695,
                   "mutability": "mutable",
                   "name": "amount",
                   "nameLocation": "2096:6:54",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39692,
+                  "scope": 39698,
                   "src": "2088:14:54",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1577,7 +1577,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 39688,
+                    "id": 39694,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "2088:7:54",
@@ -1592,12 +1592,12 @@
               "src": "2072:31:54"
             },
             "returnParameters": {
-              "id": 39691,
+              "id": 39697,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "2120:0:54"
             },
-            "scope": 39693,
+            "scope": 39699,
             "stateMutability": "payable",
             "virtual": false,
             "visibility": "external"
@@ -1609,18 +1609,18 @@
         "contractDependencies": [],
         "contractKind": "interface",
         "documentation": {
-          "id": 39625,
+          "id": 39631,
           "nodeType": "StructuredDocumentation",
           "src": "198:61:54",
           "text": "@title Subnet Actor interface\n @author LimeChain team"
         },
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          39693
+          39699
         ],
         "name": "ISubnetActor",
         "nameLocation": "269:12:54",
-        "scope": 39694,
+        "scope": 39700,
         "usedErrors": []
       }
     ],
