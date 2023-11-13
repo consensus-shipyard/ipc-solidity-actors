@@ -111,7 +111,7 @@ library LibMinPQ {
         uint256 parentCollateral;
 
         while (pos > 1) {
-             // parentPos = pos / 2;
+            // parentPos = pos / 2;
             parentPos = pos >> 1;
             parentCollateral = self.inner.getConfirmedCollateral(validators, parentPos);
 
