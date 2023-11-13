@@ -255,20 +255,20 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IDiamondCut.sol",
-    "id": 39475,
+    "id": 39469,
     "exportedSymbols": {
       "IDiamond": [
-        39455
+        39449
       ],
       "IDiamondCut": [
-        39474
+        39468
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:638:50",
     "nodes": [
       {
-        "id": 39457,
+        "id": 39451,
         "nodeType": "PragmaDirective",
         "src": "46:23:50",
         "nodes": [],
@@ -279,23 +279,23 @@
         ]
       },
       {
-        "id": 39459,
+        "id": 39453,
         "nodeType": "ImportDirective",
         "src": "71:40:50",
         "nodes": [],
         "absolutePath": "src/interfaces/IDiamond.sol",
         "file": "./IDiamond.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 39475,
-        "sourceUnit": 39456,
+        "scope": 39469,
+        "sourceUnit": 39450,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 39458,
+              "id": 39452,
               "name": "IDiamond",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 39455,
+              "referencedDeclaration": 39449,
               "src": "79:8:50",
               "typeDescriptions": {}
             },
@@ -305,17 +305,17 @@
         "unitAlias": ""
       },
       {
-        "id": 39474,
+        "id": 39468,
         "nodeType": "ContractDefinition",
         "src": "113:570:50",
         "nodes": [
           {
-            "id": 39473,
+            "id": 39467,
             "nodeType": "FunctionDefinition",
             "src": "569:112:50",
             "nodes": [],
             "documentation": {
-              "id": 39462,
+              "id": 39456,
               "nodeType": "StructuredDocumentation",
               "src": "153:411:50",
               "text": " @notice Add/replace/remove any number of functions and optionally execute a function with delegatecall\n @param _diamondCut Contains the facet addresses and function selectors\n @param _init The address of the contract or facet to execute _calldata\n @param _calldata A function call, including function selector and arguments _calldata is executed with delegatecall on `_init`"
@@ -327,51 +327,51 @@
             "name": "diamondCut",
             "nameLocation": "578:10:50",
             "parameters": {
-              "id": 39471,
+              "id": 39465,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39466,
+                  "id": 39460,
                   "mutability": "mutable",
                   "name": "_diamondCut",
                   "nameLocation": "618:11:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39473,
+                  "scope": 39467,
                   "src": "589:40:50",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_FacetCut_$39444_calldata_ptr_$dyn_calldata_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_FacetCut_$39438_calldata_ptr_$dyn_calldata_ptr",
                     "typeString": "struct IDiamond.FacetCut[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 39464,
+                      "id": 39458,
                       "nodeType": "UserDefinedTypeName",
                       "pathNode": {
-                        "id": 39463,
+                        "id": 39457,
                         "name": "IDiamond.FacetCut",
                         "nameLocations": [
                           "589:8:50",
                           "598:8:50"
                         ],
                         "nodeType": "IdentifierPath",
-                        "referencedDeclaration": 39444,
+                        "referencedDeclaration": 39438,
                         "src": "589:17:50"
                       },
-                      "referencedDeclaration": 39444,
+                      "referencedDeclaration": 39438,
                       "src": "589:17:50",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_FacetCut_$39444_storage_ptr",
+                        "typeIdentifier": "t_struct$_FacetCut_$39438_storage_ptr",
                         "typeString": "struct IDiamond.FacetCut"
                       }
                     },
-                    "id": 39465,
+                    "id": 39459,
                     "nodeType": "ArrayTypeName",
                     "src": "589:19:50",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_FacetCut_$39444_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_FacetCut_$39438_storage_$dyn_storage_ptr",
                       "typeString": "struct IDiamond.FacetCut[]"
                     }
                   },
@@ -379,12 +379,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 39468,
+                  "id": 39462,
                   "mutability": "mutable",
                   "name": "_init",
                   "nameLocation": "639:5:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39473,
+                  "scope": 39467,
                   "src": "631:13:50",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -393,7 +393,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 39467,
+                    "id": 39461,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "631:7:50",
@@ -407,12 +407,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 39470,
+                  "id": 39464,
                   "mutability": "mutable",
                   "name": "_calldata",
                   "nameLocation": "661:9:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39473,
+                  "scope": 39467,
                   "src": "646:24:50",
                   "stateVariable": false,
                   "storageLocation": "calldata",
@@ -421,7 +421,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 39469,
+                    "id": 39463,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "646:5:50",
@@ -436,12 +436,12 @@
               "src": "588:83:50"
             },
             "returnParameters": {
-              "id": 39472,
+              "id": 39466,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "680:0:50"
             },
-            "scope": 39474,
+            "scope": 39468,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -451,16 +451,16 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 39460,
+              "id": 39454,
               "name": "IDiamond",
               "nameLocations": [
                 "138:8:50"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 39455,
+              "referencedDeclaration": 39449,
               "src": "138:8:50"
             },
-            "id": 39461,
+            "id": 39455,
             "nodeType": "InheritanceSpecifier",
             "src": "138:8:50"
           }
@@ -470,12 +470,12 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          39474,
-          39455
+          39468,
+          39449
         ],
         "name": "IDiamondCut",
         "nameLocation": "123:11:50",
-        "scope": 39475,
+        "scope": 39469,
         "usedErrors": []
       }
     ],

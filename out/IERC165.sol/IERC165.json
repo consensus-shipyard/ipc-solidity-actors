@@ -124,17 +124,17 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IERC165.sol",
-    "id": 39527,
+    "id": 39521,
     "exportedSymbols": {
       "IERC165": [
-        39526
+        39520
       ]
     },
     "nodeType": "SourceUnit",
     "src": "32:506:52",
     "nodes": [
       {
-        "id": 39517,
+        "id": 39511,
         "nodeType": "PragmaDirective",
         "src": "32:23:52",
         "nodes": [],
@@ -145,17 +145,17 @@
         ]
       },
       {
-        "id": 39526,
+        "id": 39520,
         "nodeType": "ContractDefinition",
         "src": "57:480:52",
         "nodes": [
           {
-            "id": 39525,
+            "id": 39519,
             "nodeType": "FunctionDefinition",
             "src": "459:76:52",
             "nodes": [],
             "documentation": {
-              "id": 39518,
+              "id": 39512,
               "nodeType": "StructuredDocumentation",
               "src": "81:373:52",
               "text": "@notice Query if a contract implements an interface\n @param interfaceId The interface identifier, as specified in ERC-165\n @dev Interface identification is specified in ERC-165. This function\n  uses less than 30,000 gas.\n @return `true` if the contract implements `interfaceID` and\n  `interfaceID` is not 0xffffffff, `false` otherwise"
@@ -167,17 +167,17 @@
             "name": "supportsInterface",
             "nameLocation": "468:17:52",
             "parameters": {
-              "id": 39521,
+              "id": 39515,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39520,
+                  "id": 39514,
                   "mutability": "mutable",
                   "name": "interfaceId",
                   "nameLocation": "493:11:52",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39525,
+                  "scope": 39519,
                   "src": "486:18:52",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -186,7 +186,7 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 39519,
+                    "id": 39513,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
                     "src": "486:6:52",
@@ -201,17 +201,17 @@
               "src": "485:20:52"
             },
             "returnParameters": {
-              "id": 39524,
+              "id": 39518,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39523,
+                  "id": 39517,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39525,
+                  "scope": 39519,
                   "src": "529:4:52",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -220,7 +220,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 39522,
+                    "id": 39516,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "529:4:52",
@@ -234,7 +234,7 @@
               ],
               "src": "528:6:52"
             },
-            "scope": 39526,
+            "scope": 39520,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -247,11 +247,11 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          39526
+          39520
         ],
         "name": "IERC165",
         "nameLocation": "67:7:52",
-        "scope": 39527,
+        "scope": 39521,
         "usedErrors": []
       }
     ],
