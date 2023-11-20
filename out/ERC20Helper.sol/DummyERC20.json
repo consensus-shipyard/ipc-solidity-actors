@@ -1181,13 +1181,21 @@
   },
   "ast": {
     "absolutePath": "test/ERC20Helper.sol",
+<<<<<<< HEAD
     "id": 48935,
+=======
+    "id": 48757,
+>>>>>>> 6483d1c (commit ABI artifacts)
     "exportedSymbols": {
       "Context": [
         32500
       ],
       "DummyERC20": [
+<<<<<<< HEAD
         48934
+=======
+        48756
+>>>>>>> 6483d1c (commit ABI artifacts)
       ],
       "ERC20": [
         31990
@@ -1215,7 +1223,11 @@
     "src": "46:521:77",
     "nodes": [
       {
+<<<<<<< HEAD
         "id": 48885,
+=======
+        "id": 48707,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "PragmaDirective",
         "src": "46:23:77",
         "nodes": [],
@@ -1226,38 +1238,62 @@
         ]
       },
       {
+<<<<<<< HEAD
         "id": 48886,
+=======
+        "id": 48708,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "ImportDirective",
         "src": "71:54:77",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/token/ERC20/ERC20.sol",
         "file": "openzeppelin-contracts/token/ERC20/ERC20.sol",
         "nameLocation": "-1:-1:-1",
+<<<<<<< HEAD
         "scope": 48935,
+=======
+        "scope": 48757,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "sourceUnit": 31991,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
+<<<<<<< HEAD
         "id": 48887,
+=======
+        "id": 48709,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "ImportDirective",
         "src": "126:51:77",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/access/Ownable.sol",
         "file": "openzeppelin-contracts/access/Ownable.sol",
         "nameLocation": "-1:-1:-1",
+<<<<<<< HEAD
         "scope": 48935,
+=======
+        "scope": 48757,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "sourceUnit": 31215,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
+<<<<<<< HEAD
         "id": 48934,
+=======
+        "id": 48756,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "ContractDefinition",
         "src": "179:387:77",
         "nodes": [
           {
+<<<<<<< HEAD
             "id": 48894,
+=======
+            "id": 48716,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "nodeType": "VariableDeclaration",
             "src": "223:32:77",
             "nodes": [],
@@ -1266,7 +1302,11 @@
             "mutability": "mutable",
             "name": "currentSupply",
             "nameLocation": "238:13:77",
+<<<<<<< HEAD
             "scope": 48934,
+=======
+            "scope": 48756,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -1274,7 +1314,11 @@
               "typeString": "uint256"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 48892,
+=======
+              "id": 48714,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "223:7:77",
@@ -1285,7 +1329,11 @@
             },
             "value": {
               "hexValue": "30",
+<<<<<<< HEAD
               "id": 48893,
+=======
+              "id": 48715,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -1302,12 +1350,20 @@
             "visibility": "public"
           },
           {
+<<<<<<< HEAD
             "id": 48918,
+=======
+            "id": 48740,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "nodeType": "FunctionDefinition",
             "src": "262:199:77",
             "nodes": [],
             "body": {
+<<<<<<< HEAD
               "id": 48917,
+=======
+              "id": 48739,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "Block",
               "src": "414:47:77",
               "nodes": [],
@@ -1319,7 +1375,11 @@
                         "arguments": [],
                         "expression": {
                           "argumentTypes": [],
+<<<<<<< HEAD
                           "id": 48912,
+=======
+                          "id": 48734,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "name": "owner",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -1330,7 +1390,11 @@
                             "typeString": "function () view returns (address)"
                           }
                         },
+<<<<<<< HEAD
                         "id": 48913,
+=======
+                        "id": 48735,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1347,11 +1411,19 @@
                         }
                       },
                       {
+<<<<<<< HEAD
                         "id": 48914,
                         "name": "_initialSupply",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48900,
+=======
+                        "id": 48736,
+                        "name": "_initialSupply",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48722,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "439:14:77",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1370,7 +1442,11 @@
                           "typeString": "uint256"
                         }
                       ],
+<<<<<<< HEAD
                       "id": 48911,
+=======
+                      "id": 48733,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -1381,7 +1457,11 @@
                         "typeString": "function (address,uint256)"
                       }
                     },
+<<<<<<< HEAD
                     "id": 48915,
+=======
+                    "id": 48737,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1397,7 +1477,11 @@
                       "typeString": "tuple()"
                     }
                   },
+<<<<<<< HEAD
                   "id": 48916,
+=======
+                  "id": 48738,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "nodeType": "ExpressionStatement",
                   "src": "424:30:77"
                 }
@@ -1410,7 +1494,11 @@
                 "arguments": [
                   {
                     "expression": {
+<<<<<<< HEAD
                       "id": 48903,
+=======
+                      "id": 48725,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "name": "msg",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -1421,7 +1509,11 @@
                         "typeString": "msg"
                       }
                     },
+<<<<<<< HEAD
                     "id": 48904,
+=======
+                    "id": 48726,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1436,10 +1528,17 @@
                     }
                   }
                 ],
+<<<<<<< HEAD
                 "id": 48905,
                 "kind": "baseConstructorSpecifier",
                 "modifierName": {
                   "id": 48902,
+=======
+                "id": 48727,
+                "kind": "baseConstructorSpecifier",
+                "modifierName": {
+                  "id": 48724,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "name": "Ownable",
                   "nameLocations": [
                     "372:7:77"
@@ -1454,11 +1553,19 @@
               {
                 "arguments": [
                   {
+<<<<<<< HEAD
                     "id": 48907,
                     "name": "_name",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
                     "referencedDeclaration": 48896,
+=======
+                    "id": 48729,
+                    "name": "_name",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 48718,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "src": "398:5:77",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_memory_ptr",
@@ -1466,11 +1573,19 @@
                     }
                   },
                   {
+<<<<<<< HEAD
                     "id": 48908,
                     "name": "_symbol",
                     "nodeType": "Identifier",
                     "overloadedDeclarations": [],
                     "referencedDeclaration": 48898,
+=======
+                    "id": 48730,
+                    "name": "_symbol",
+                    "nodeType": "Identifier",
+                    "overloadedDeclarations": [],
+                    "referencedDeclaration": 48720,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "src": "405:7:77",
                     "typeDescriptions": {
                       "typeIdentifier": "t_string_memory_ptr",
@@ -1478,10 +1593,17 @@
                     }
                   }
                 ],
+<<<<<<< HEAD
                 "id": 48909,
                 "kind": "baseConstructorSpecifier",
                 "modifierName": {
                   "id": 48906,
+=======
+                "id": 48731,
+                "kind": "baseConstructorSpecifier",
+                "modifierName": {
+                  "id": 48728,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "name": "ERC20",
                   "nameLocations": [
                     "392:5:77"
@@ -1497,17 +1619,29 @@
             "name": "",
             "nameLocation": "-1:-1:-1",
             "parameters": {
+<<<<<<< HEAD
               "id": 48901,
+=======
+              "id": 48723,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48896,
+=======
+                  "id": 48718,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "_name",
                   "nameLocation": "297:5:77",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 48918,
+=======
+                  "scope": 48740,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "283:19:77",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1516,7 +1650,11 @@
                     "typeString": "string"
                   },
                   "typeName": {
+<<<<<<< HEAD
                     "id": 48895,
+=======
+                    "id": 48717,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "283:6:77",
@@ -1529,12 +1667,20 @@
                 },
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48898,
+=======
+                  "id": 48720,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "_symbol",
                   "nameLocation": "326:7:77",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 48918,
+=======
+                  "scope": 48740,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "312:21:77",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1543,7 +1689,11 @@
                     "typeString": "string"
                   },
                   "typeName": {
+<<<<<<< HEAD
                     "id": 48897,
+=======
+                    "id": 48719,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "name": "string",
                     "nodeType": "ElementaryTypeName",
                     "src": "312:6:77",
@@ -1556,12 +1706,20 @@
                 },
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48900,
+=======
+                  "id": 48722,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "_initialSupply",
                   "nameLocation": "351:14:77",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 48918,
+=======
+                  "scope": 48740,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "343:22:77",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1570,7 +1728,11 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
+<<<<<<< HEAD
                     "id": 48899,
+=======
+                    "id": 48721,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "343:7:77",
@@ -1585,23 +1747,39 @@
               "src": "273:98:77"
             },
             "returnParameters": {
+<<<<<<< HEAD
               "id": 48910,
+=======
+              "id": 48732,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "414:0:77"
             },
+<<<<<<< HEAD
             "scope": 48934,
+=======
+            "scope": 48756,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
+<<<<<<< HEAD
             "id": 48933,
+=======
+            "id": 48755,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "nodeType": "FunctionDefinition",
             "src": "467:97:77",
             "nodes": [],
             "body": {
+<<<<<<< HEAD
               "id": 48932,
+=======
+              "id": 48754,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "Block",
               "src": "528:36:77",
               "nodes": [],
@@ -1610,11 +1788,19 @@
                   "expression": {
                     "arguments": [
                       {
+<<<<<<< HEAD
                         "id": 48928,
                         "name": "_to",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48920,
+=======
+                        "id": 48750,
+                        "name": "_to",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48742,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "544:3:77",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
@@ -1622,11 +1808,19 @@
                         }
                       },
                       {
+<<<<<<< HEAD
                         "id": 48929,
                         "name": "_amount",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48922,
+=======
+                        "id": 48751,
+                        "name": "_amount",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48744,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "549:7:77",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1645,7 +1839,11 @@
                           "typeString": "uint256"
                         }
                       ],
+<<<<<<< HEAD
                       "id": 48927,
+=======
+                      "id": 48749,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "name": "_mint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -1656,7 +1854,11 @@
                         "typeString": "function (address,uint256)"
                       }
                     },
+<<<<<<< HEAD
                     "id": 48930,
+=======
+                    "id": 48752,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1672,7 +1874,11 @@
                       "typeString": "tuple()"
                     }
                   },
+<<<<<<< HEAD
                   "id": 48931,
+=======
+                  "id": 48753,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "nodeType": "ExpressionStatement",
                   "src": "538:19:77"
                 }
@@ -1683,10 +1889,17 @@
             "kind": "function",
             "modifiers": [
               {
+<<<<<<< HEAD
                 "id": 48925,
                 "kind": "modifierInvocation",
                 "modifierName": {
                   "id": 48924,
+=======
+                "id": 48747,
+                "kind": "modifierInvocation",
+                "modifierName": {
+                  "id": 48746,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "name": "onlyOwner",
                   "nameLocations": [
                     "518:9:77"
@@ -1702,17 +1915,29 @@
             "name": "mint",
             "nameLocation": "476:4:77",
             "parameters": {
+<<<<<<< HEAD
               "id": 48923,
+=======
+              "id": 48745,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48920,
+=======
+                  "id": 48742,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "_to",
                   "nameLocation": "489:3:77",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 48933,
+=======
+                  "scope": 48755,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "481:11:77",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1721,7 +1946,11 @@
                     "typeString": "address"
                   },
                   "typeName": {
+<<<<<<< HEAD
                     "id": 48919,
+=======
+                    "id": 48741,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "481:7:77",
@@ -1735,12 +1964,20 @@
                 },
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48922,
+=======
+                  "id": 48744,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "_amount",
                   "nameLocation": "502:7:77",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 48933,
+=======
+                  "scope": 48755,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "494:15:77",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1749,7 +1986,11 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
+<<<<<<< HEAD
                     "id": 48921,
+=======
+                    "id": 48743,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "494:7:77",
@@ -1764,12 +2005,20 @@
               "src": "480:30:77"
             },
             "returnParameters": {
+<<<<<<< HEAD
               "id": 48926,
+=======
+              "id": 48748,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "528:0:77"
             },
+<<<<<<< HEAD
             "scope": 48934,
+=======
+            "scope": 48756,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
@@ -1779,7 +2028,11 @@
         "baseContracts": [
           {
             "baseName": {
+<<<<<<< HEAD
               "id": 48888,
+=======
+              "id": 48710,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "ERC20",
               "nameLocations": [
                 "202:5:77"
@@ -1788,13 +2041,21 @@
               "referencedDeclaration": 31990,
               "src": "202:5:77"
             },
+<<<<<<< HEAD
             "id": 48889,
+=======
+            "id": 48711,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "nodeType": "InheritanceSpecifier",
             "src": "202:5:77"
           },
           {
             "baseName": {
+<<<<<<< HEAD
               "id": 48890,
+=======
+              "id": 48712,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "Ownable",
               "nameLocations": [
                 "209:7:77"
@@ -1803,7 +2064,11 @@
               "referencedDeclaration": 31214,
               "src": "209:7:77"
             },
+<<<<<<< HEAD
             "id": 48891,
+=======
+            "id": 48713,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "nodeType": "InheritanceSpecifier",
             "src": "209:7:77"
           }
@@ -1813,7 +2078,11 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
+<<<<<<< HEAD
           48934,
+=======
+          48756,
+>>>>>>> 6483d1c (commit ABI artifacts)
           31214,
           31990,
           31256,
@@ -1823,7 +2092,11 @@
         ],
         "name": "DummyERC20",
         "nameLocation": "188:10:77",
+<<<<<<< HEAD
         "scope": 48935,
+=======
+        "scope": 48757,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "usedErrors": [
           31095,
           31100,

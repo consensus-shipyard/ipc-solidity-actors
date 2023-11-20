@@ -10,7 +10,7 @@
   },
   "ast": {
     "absolutePath": "src/errors/IPCErrors.sol",
-    "id": 36982,
+    "id": 36986,
     "exportedSymbols": {
       "AddressShouldBeValidator": [
         36845
@@ -41,6 +41,9 @@
       ],
       "CollateralIsZero": [
         36863
+      ],
+      "DifferentRootNetwork": [
+        36983
       ],
       "EmptyAddress": [
         36865
@@ -98,6 +101,9 @@
       ],
       "InvalidRetentionHeight": [
         36899
+      ],
+      "InvalidRoute": [
+        36985
       ],
       "InvalidSignature": [
         36901
@@ -212,7 +218,7 @@
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "46:2050:44",
+    "src": "46:2102:44",
     "nodes": [
       {
         "id": 36843,
@@ -1299,6 +1305,36 @@
           "nodeType": "ParameterList",
           "parameters": [],
           "src": "2092:2:44"
+        }
+      },
+      {
+        "id": 36983,
+        "nodeType": "ErrorDefinition",
+        "src": "2096:29:44",
+        "nodes": [],
+        "errorSelector": "71859355",
+        "name": "DifferentRootNetwork",
+        "nameLocation": "2102:20:44",
+        "parameters": {
+          "id": 36982,
+          "nodeType": "ParameterList",
+          "parameters": [],
+          "src": "2122:2:44"
+        }
+      },
+      {
+        "id": 36985,
+        "nodeType": "ErrorDefinition",
+        "src": "2126:21:44",
+        "nodes": [],
+        "errorSelector": "84e505d2",
+        "name": "InvalidRoute",
+        "nameLocation": "2132:12:44",
+        "parameters": {
+          "id": 36984,
+          "nodeType": "ParameterList",
+          "parameters": [],
+          "src": "2144:2:44"
         }
       }
     ],

@@ -84,20 +84,32 @@
   },
   "ast": {
     "absolutePath": "test/MerkleTreeHelper.sol",
+<<<<<<< HEAD
     "id": 49081,
+=======
+    "id": 48903,
+>>>>>>> 6483d1c (commit ABI artifacts)
     "exportedSymbols": {
       "Merkle": [
         30565
       ],
       "MerkleTreeHelper": [
+<<<<<<< HEAD
         49080
+=======
+        48902
+>>>>>>> 6483d1c (commit ABI artifacts)
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:973:78",
     "nodes": [
       {
+<<<<<<< HEAD
         "id": 48936,
+=======
+        "id": 48758,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "PragmaDirective",
         "src": "46:23:78",
         "nodes": [],
@@ -108,19 +120,31 @@
         ]
       },
       {
+<<<<<<< HEAD
         "id": 48938,
+=======
+        "id": 48760,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "ImportDirective",
         "src": "71:40:78",
         "nodes": [],
         "absolutePath": "lib/murky/src/Merkle.sol",
         "file": "murky/Merkle.sol",
         "nameLocation": "-1:-1:-1",
+<<<<<<< HEAD
         "scope": 49081,
+=======
+        "scope": 48903,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "sourceUnit": 30566,
         "symbolAliases": [
           {
             "foreign": {
+<<<<<<< HEAD
               "id": 48937,
+=======
+              "id": 48759,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "Merkle",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -134,34 +158,58 @@
         "unitAlias": ""
       },
       {
+<<<<<<< HEAD
         "id": 49080,
+=======
+        "id": 48902,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "ContractDefinition",
         "src": "113:905:78",
         "nodes": [
           {
+<<<<<<< HEAD
             "id": 49079,
+=======
+            "id": 48901,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "nodeType": "FunctionDefinition",
             "src": "144:872:78",
             "nodes": [],
             "body": {
+<<<<<<< HEAD
               "id": 49078,
+=======
+              "id": 48900,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "Block",
               "src": "303:713:78",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
+<<<<<<< HEAD
                     48955
+=======
+                    48777
+>>>>>>> 6483d1c (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
+<<<<<<< HEAD
                       "id": 48955,
+=======
+                      "id": 48777,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "merkleTree",
                       "nameLocation": "320:10:78",
                       "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                       "scope": 49078,
+=======
+                      "scope": 48900,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "313:17:78",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -170,10 +218,17 @@
                         "typeString": "contract Merkle"
                       },
                       "typeName": {
+<<<<<<< HEAD
                         "id": 48954,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
                           "id": 48953,
+=======
+                        "id": 48776,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 48775,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "name": "Merkle",
                           "nameLocations": [
                             "313:6:78"
@@ -192,12 +247,20 @@
                       "visibility": "internal"
                     }
                   ],
+<<<<<<< HEAD
                   "id": 48960,
+=======
+                  "id": 48782,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "initialValue": {
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
+<<<<<<< HEAD
                       "id": 48958,
+=======
+                      "id": 48780,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -209,10 +272,17 @@
                         "typeString": "function () returns (contract Merkle)"
                       },
                       "typeName": {
+<<<<<<< HEAD
                         "id": 48957,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
                           "id": 48956,
+=======
+                        "id": 48779,
+                        "nodeType": "UserDefinedTypeName",
+                        "pathNode": {
+                          "id": 48778,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "name": "Merkle",
                           "nameLocations": [
                             "337:6:78"
@@ -229,7 +299,11 @@
                         }
                       }
                     },
+<<<<<<< HEAD
                     "id": 48959,
+=======
+                    "id": 48781,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -254,25 +328,41 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
+<<<<<<< HEAD
                     "id": 48965,
+=======
+                    "id": 48787,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
+<<<<<<< HEAD
                         "id": 48961,
                         "name": "addrs",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48941,
+=======
+                        "id": 48783,
+                        "name": "addrs",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48763,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "360:5:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
                           "typeString": "address[] memory"
                         }
                       },
+<<<<<<< HEAD
                       "id": 48962,
+=======
+                      "id": 48784,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -290,18 +380,30 @@
                     "operator": "!=",
                     "rightExpression": {
                       "expression": {
+<<<<<<< HEAD
                         "id": 48963,
                         "name": "weight",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48944,
+=======
+                        "id": 48785,
+                        "name": "weight",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48766,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "376:6:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                           "typeString": "uint256[] memory"
                         }
                       },
+<<<<<<< HEAD
                       "id": 48964,
+=======
+                      "id": 48786,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -321,11 +423,19 @@
                       "typeString": "bool"
                     }
                   },
+<<<<<<< HEAD
                   "id": 48971,
                   "nodeType": "IfStatement",
                   "src": "356:93:78",
                   "trueBody": {
                     "id": 48970,
+=======
+                  "id": 48793,
+                  "nodeType": "IfStatement",
+                  "src": "356:93:78",
+                  "trueBody": {
+                    "id": 48792,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "Block",
                     "src": "391:58:78",
                     "statements": [
@@ -334,7 +444,11 @@
                           "arguments": [
                             {
                               "hexValue": "646966666572656e74206172726179206c656e67746873",
+<<<<<<< HEAD
                               "id": 48967,
+=======
+                              "id": 48789,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -356,7 +470,11 @@
                                 "typeString": "literal_string \"different array lengths\""
                               }
                             ],
+<<<<<<< HEAD
                             "id": 48966,
+=======
+                            "id": 48788,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "name": "revert",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [
@@ -370,7 +488,11 @@
                               "typeString": "function (string memory) pure"
                             }
                           },
+<<<<<<< HEAD
                           "id": 48968,
+=======
+                          "id": 48790,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -386,7 +508,11 @@
                             "typeString": "tuple()"
                           }
                         },
+<<<<<<< HEAD
                         "id": 48969,
+=======
+                        "id": 48791,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "nodeType": "ExpressionStatement",
                         "src": "405:33:78"
                       }
@@ -395,17 +521,29 @@
                 },
                 {
                   "assignments": [
+<<<<<<< HEAD
                     48973
+=======
+                    48795
+>>>>>>> 6483d1c (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
+<<<<<<< HEAD
                       "id": 48973,
+=======
+                      "id": 48795,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "len",
                       "nameLocation": "466:3:78",
                       "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                       "scope": 49078,
+=======
+                      "scope": 48900,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "458:11:78",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -414,7 +552,11 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
+<<<<<<< HEAD
                         "id": 48972,
+=======
+                        "id": 48794,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "458:7:78",
@@ -426,6 +568,7 @@
                       "visibility": "internal"
                     }
                   ],
+<<<<<<< HEAD
                   "id": 48976,
                   "initialValue": {
                     "expression": {
@@ -434,13 +577,27 @@
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 48941,
+=======
+                  "id": 48798,
+                  "initialValue": {
+                    "expression": {
+                      "id": 48796,
+                      "name": "addrs",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48763,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "472:5:78",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
                         "typeString": "address[] memory"
                       }
                     },
+<<<<<<< HEAD
                     "id": 48975,
+=======
+                    "id": 48797,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -459,17 +616,29 @@
                 },
                 {
                   "assignments": [
+<<<<<<< HEAD
                     48978
+=======
+                    48800
+>>>>>>> 6483d1c (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
+<<<<<<< HEAD
                       "id": 48978,
+=======
+                      "id": 48800,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "root",
                       "nameLocation": "503:4:78",
                       "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                       "scope": 49078,
+=======
+                      "scope": 48900,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "495:12:78",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -478,7 +647,11 @@
                         "typeString": "bytes32"
                       },
                       "typeName": {
+<<<<<<< HEAD
                         "id": 48977,
+=======
+                        "id": 48799,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "name": "bytes32",
                         "nodeType": "ElementaryTypeName",
                         "src": "495:7:78",
@@ -490,23 +663,39 @@
                       "visibility": "internal"
                     }
                   ],
+<<<<<<< HEAD
                   "id": 48979,
+=======
+                  "id": 48801,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "nodeType": "VariableDeclarationStatement",
                   "src": "495:12:78"
                 },
                 {
                   "assignments": [
+<<<<<<< HEAD
                     48985
+=======
+                    48807
+>>>>>>> 6483d1c (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
+<<<<<<< HEAD
                       "id": 48985,
+=======
+                      "id": 48807,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "proofs",
                       "nameLocation": "536:6:78",
                       "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                       "scope": 49078,
+=======
+                      "scope": 48900,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "517:25:78",
                       "stateVariable": false,
                       "storageLocation": "memory",
@@ -517,7 +706,11 @@
                       "typeName": {
                         "baseType": {
                           "baseType": {
+<<<<<<< HEAD
                             "id": 48982,
+=======
+                            "id": 48804,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "name": "bytes32",
                             "nodeType": "ElementaryTypeName",
                             "src": "517:7:78",
@@ -526,7 +719,11 @@
                               "typeString": "bytes32"
                             }
                           },
+<<<<<<< HEAD
                           "id": 48983,
+=======
+                          "id": 48805,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "nodeType": "ArrayTypeName",
                           "src": "517:9:78",
                           "typeDescriptions": {
@@ -534,7 +731,11 @@
                             "typeString": "bytes32[]"
                           }
                         },
+<<<<<<< HEAD
                         "id": 48984,
+=======
+                        "id": 48806,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "nodeType": "ArrayTypeName",
                         "src": "517:11:78",
                         "typeDescriptions": {
@@ -545,6 +746,7 @@
                       "visibility": "internal"
                     }
                   ],
+<<<<<<< HEAD
                   "id": 48992,
                   "initialValue": {
                     "arguments": [
@@ -554,6 +756,17 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48973,
+=======
+                  "id": 48814,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 48812,
+                        "name": "len",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48795,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "561:3:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -568,7 +781,11 @@
                           "typeString": "uint256"
                         }
                       ],
+<<<<<<< HEAD
                       "id": 48989,
+=======
+                      "id": 48811,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -582,7 +799,11 @@
                       "typeName": {
                         "baseType": {
                           "baseType": {
+<<<<<<< HEAD
                             "id": 48986,
+=======
+                            "id": 48808,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "name": "bytes32",
                             "nodeType": "ElementaryTypeName",
                             "src": "549:7:78",
@@ -591,7 +812,11 @@
                               "typeString": "bytes32"
                             }
                           },
+<<<<<<< HEAD
                           "id": 48987,
+=======
+                          "id": 48809,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "nodeType": "ArrayTypeName",
                           "src": "549:9:78",
                           "typeDescriptions": {
@@ -599,7 +824,11 @@
                             "typeString": "bytes32[]"
                           }
                         },
+<<<<<<< HEAD
                         "id": 48988,
+=======
+                        "id": 48810,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "nodeType": "ArrayTypeName",
                         "src": "549:11:78",
                         "typeDescriptions": {
@@ -608,7 +837,11 @@
                         }
                       }
                     },
+<<<<<<< HEAD
                     "id": 48991,
+=======
+                    "id": 48813,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -629,17 +862,29 @@
                 },
                 {
                   "assignments": [
+<<<<<<< HEAD
                     48997
+=======
+                    48819
+>>>>>>> 6483d1c (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
+<<<<<<< HEAD
                       "id": 48997,
+=======
+                      "id": 48819,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "data",
                       "nameLocation": "592:4:78",
                       "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                       "scope": 49078,
+=======
+                      "scope": 48900,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "575:21:78",
                       "stateVariable": false,
                       "storageLocation": "memory",
@@ -649,7 +894,11 @@
                       },
                       "typeName": {
                         "baseType": {
+<<<<<<< HEAD
                           "id": 48995,
+=======
+                          "id": 48817,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "name": "bytes32",
                           "nodeType": "ElementaryTypeName",
                           "src": "575:7:78",
@@ -658,7 +907,11 @@
                             "typeString": "bytes32"
                           }
                         },
+<<<<<<< HEAD
                         "id": 48996,
+=======
+                        "id": 48818,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "nodeType": "ArrayTypeName",
                         "src": "575:9:78",
                         "typeDescriptions": {
@@ -669,6 +922,7 @@
                       "visibility": "internal"
                     }
                   ],
+<<<<<<< HEAD
                   "id": 49003,
                   "initialValue": {
                     "arguments": [
@@ -678,6 +932,17 @@
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48973,
+=======
+                  "id": 48825,
+                  "initialValue": {
+                    "arguments": [
+                      {
+                        "id": 48823,
+                        "name": "len",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48795,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "613:3:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -692,7 +957,11 @@
                           "typeString": "uint256"
                         }
                       ],
+<<<<<<< HEAD
                       "id": 49000,
+=======
+                      "id": 48822,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -705,7 +974,11 @@
                       },
                       "typeName": {
                         "baseType": {
+<<<<<<< HEAD
                           "id": 48998,
+=======
+                          "id": 48820,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "name": "bytes32",
                           "nodeType": "ElementaryTypeName",
                           "src": "603:7:78",
@@ -714,7 +987,11 @@
                             "typeString": "bytes32"
                           }
                         },
+<<<<<<< HEAD
                         "id": 48999,
+=======
+                        "id": 48821,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "nodeType": "ArrayTypeName",
                         "src": "603:9:78",
                         "typeDescriptions": {
@@ -723,7 +1000,11 @@
                         }
                       }
                     },
+<<<<<<< HEAD
                     "id": 49002,
+=======
+                    "id": 48824,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -744,30 +1025,47 @@
                 },
                 {
                   "body": {
+<<<<<<< HEAD
                     "id": 49036,
+=======
+                    "id": 48858,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "Block",
                     "src": "661:102:78",
                     "statements": [
                       {
                         "expression": {
+<<<<<<< HEAD
                           "id": 49034,
+=======
+                          "id": 48856,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftHandSide": {
                             "baseExpression": {
+<<<<<<< HEAD
                               "id": 49014,
                               "name": "data",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 48997,
+=======
+                              "id": 48836,
+                              "name": "data",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 48819,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "src": "675:4:78",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_array$_t_bytes32_$dyn_memory_ptr",
                                 "typeString": "bytes32[] memory"
                               }
                             },
+<<<<<<< HEAD
                             "id": 49016,
                             "indexExpression": {
                               "id": 49015,
@@ -775,6 +1073,15 @@
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 49005,
+=======
+                            "id": 48838,
+                            "indexExpression": {
+                              "id": 48837,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 48827,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "src": "680:1:78",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -804,17 +1111,26 @@
                                         "arguments": [
                                           {
                                             "baseExpression": {
+<<<<<<< HEAD
                                               "id": 49024,
                                               "name": "addrs",
                                               "nodeType": "Identifier",
                                               "overloadedDeclarations": [],
                                               "referencedDeclaration": 48941,
+=======
+                                              "id": 48846,
+                                              "name": "addrs",
+                                              "nodeType": "Identifier",
+                                              "overloadedDeclarations": [],
+                                              "referencedDeclaration": 48763,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                               "src": "729:5:78",
                                               "typeDescriptions": {
                                                 "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
                                                 "typeString": "address[] memory"
                                               }
                                             },
+<<<<<<< HEAD
                                             "id": 49026,
                                             "indexExpression": {
                                               "id": 49025,
@@ -822,6 +1138,15 @@
                                               "nodeType": "Identifier",
                                               "overloadedDeclarations": [],
                                               "referencedDeclaration": 49005,
+=======
+                                            "id": 48848,
+                                            "indexExpression": {
+                                              "id": 48847,
+                                              "name": "i",
+                                              "nodeType": "Identifier",
+                                              "overloadedDeclarations": [],
+                                              "referencedDeclaration": 48827,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                               "src": "735:1:78",
                                               "typeDescriptions": {
                                                 "typeIdentifier": "t_uint256",
@@ -841,17 +1166,26 @@
                                           },
                                           {
                                             "baseExpression": {
+<<<<<<< HEAD
                                               "id": 49027,
                                               "name": "weight",
                                               "nodeType": "Identifier",
                                               "overloadedDeclarations": [],
                                               "referencedDeclaration": 48944,
+=======
+                                              "id": 48849,
+                                              "name": "weight",
+                                              "nodeType": "Identifier",
+                                              "overloadedDeclarations": [],
+                                              "referencedDeclaration": 48766,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                               "src": "739:6:78",
                                               "typeDescriptions": {
                                                 "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                                                 "typeString": "uint256[] memory"
                                               }
                                             },
+<<<<<<< HEAD
                                             "id": 49029,
                                             "indexExpression": {
                                               "id": 49028,
@@ -859,6 +1193,15 @@
                                               "nodeType": "Identifier",
                                               "overloadedDeclarations": [],
                                               "referencedDeclaration": 49005,
+=======
+                                            "id": 48851,
+                                            "indexExpression": {
+                                              "id": 48850,
+                                              "name": "i",
+                                              "nodeType": "Identifier",
+                                              "overloadedDeclarations": [],
+                                              "referencedDeclaration": 48827,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                               "src": "746:1:78",
                                               "typeDescriptions": {
                                                 "typeIdentifier": "t_uint256",
@@ -889,7 +1232,11 @@
                                             }
                                           ],
                                           "expression": {
+<<<<<<< HEAD
                                             "id": 49022,
+=======
+                                            "id": 48844,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                             "name": "abi",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
@@ -900,7 +1247,11 @@
                                               "typeString": "abi"
                                             }
                                           },
+<<<<<<< HEAD
                                           "id": 49023,
+=======
+                                          "id": 48845,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                           "isConstant": false,
                                           "isLValue": false,
                                           "isPure": true,
@@ -914,7 +1265,11 @@
                                             "typeString": "function () pure returns (bytes memory)"
                                           }
                                         },
+<<<<<<< HEAD
                                         "id": 49030,
+=======
+                                        "id": 48852,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
@@ -938,7 +1293,11 @@
                                           "typeString": "bytes memory"
                                         }
                                       ],
+<<<<<<< HEAD
                                       "id": 49021,
+=======
+                                      "id": 48843,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                       "name": "keccak256",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
@@ -949,7 +1308,11 @@
                                         "typeString": "function (bytes memory) pure returns (bytes32)"
                                       }
                                     },
+<<<<<<< HEAD
                                     "id": 49031,
+=======
+                                    "id": 48853,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": false,
@@ -974,7 +1337,11 @@
                                     }
                                   ],
                                   "expression": {
+<<<<<<< HEAD
                                     "id": 49019,
+=======
+                                    "id": 48841,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -986,14 +1353,22 @@
                                       "typeString": "type(bytes storage pointer)"
                                     },
                                     "typeName": {
+<<<<<<< HEAD
                                       "id": 49018,
+=======
+                                      "id": 48840,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                       "name": "bytes",
                                       "nodeType": "ElementaryTypeName",
                                       "src": "695:5:78",
                                       "typeDescriptions": {}
                                     }
                                   },
+<<<<<<< HEAD
                                   "id": 49020,
+=======
+                                  "id": 48842,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": false,
@@ -1007,7 +1382,11 @@
                                     "typeString": "function () pure returns (bytes memory)"
                                   }
                                 },
+<<<<<<< HEAD
                                 "id": 49032,
+=======
+                                "id": 48854,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": false,
@@ -1031,7 +1410,11 @@
                                   "typeString": "bytes memory"
                                 }
                               ],
+<<<<<<< HEAD
                               "id": 49017,
+=======
+                              "id": 48839,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "name": "keccak256",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -1042,7 +1425,11 @@
                                 "typeString": "function (bytes memory) pure returns (bytes32)"
                               }
                             },
+<<<<<<< HEAD
                             "id": 49033,
+=======
+                            "id": 48855,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1064,7 +1451,11 @@
                             "typeString": "bytes32"
                           }
                         },
+<<<<<<< HEAD
                         "id": 49035,
+=======
+                        "id": 48857,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "nodeType": "ExpressionStatement",
                         "src": "675:77:78"
                       }
@@ -1075,17 +1466,29 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
+<<<<<<< HEAD
                     "id": 49010,
+=======
+                    "id": 48832,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
+<<<<<<< HEAD
                       "id": 49008,
                       "name": "i",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 49005,
+=======
+                      "id": 48830,
+                      "name": "i",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48827,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "647:1:78",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1095,11 +1498,19 @@
                     "nodeType": "BinaryOperation",
                     "operator": "<",
                     "rightExpression": {
+<<<<<<< HEAD
                       "id": 49009,
                       "name": "len",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 48973,
+=======
+                      "id": 48831,
+                      "name": "len",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48795,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "651:3:78",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1112,20 +1523,35 @@
                       "typeString": "bool"
                     }
                   },
+<<<<<<< HEAD
                   "id": 49037,
                   "initializationExpression": {
                     "assignments": [
                       49005
+=======
+                  "id": 48859,
+                  "initializationExpression": {
+                    "assignments": [
+                      48827
+>>>>>>> 6483d1c (commit ABI artifacts)
                     ],
                     "declarations": [
                       {
                         "constant": false,
+<<<<<<< HEAD
                         "id": 49005,
+=======
+                        "id": 48827,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "mutability": "mutable",
                         "name": "i",
                         "nameLocation": "640:1:78",
                         "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                         "scope": 49037,
+=======
+                        "scope": 48859,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "632:9:78",
                         "stateVariable": false,
                         "storageLocation": "default",
@@ -1134,7 +1560,11 @@
                           "typeString": "uint256"
                         },
                         "typeName": {
+<<<<<<< HEAD
                           "id": 49004,
+=======
+                          "id": 48826,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "name": "uint256",
                           "nodeType": "ElementaryTypeName",
                           "src": "632:7:78",
@@ -1146,10 +1576,17 @@
                         "visibility": "internal"
                       }
                     ],
+<<<<<<< HEAD
                     "id": 49007,
                     "initialValue": {
                       "hexValue": "30",
                       "id": 49006,
+=======
+                    "id": 48829,
+                    "initialValue": {
+                      "hexValue": "30",
+                      "id": 48828,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1168,7 +1605,11 @@
                   },
                   "loopExpression": {
                     "expression": {
+<<<<<<< HEAD
                       "id": 49012,
+=======
+                      "id": 48834,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1178,11 +1619,19 @@
                       "prefix": false,
                       "src": "656:3:78",
                       "subExpression": {
+<<<<<<< HEAD
                         "id": 49011,
                         "name": "i",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 49005,
+=======
+                        "id": 48833,
+                        "name": "i",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48827,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "656:1:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1194,7 +1643,11 @@
                         "typeString": "uint256"
                       }
                     },
+<<<<<<< HEAD
                     "id": 49013,
+=======
+                    "id": 48835,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "ExpressionStatement",
                     "src": "656:3:78"
                   },
@@ -1203,17 +1656,29 @@
                 },
                 {
                   "expression": {
+<<<<<<< HEAD
                     "id": 49043,
+=======
+                    "id": 48865,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
+<<<<<<< HEAD
                       "id": 49038,
                       "name": "root",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 48978,
+=======
+                      "id": 48860,
+                      "name": "root",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48800,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "773:4:78",
                       "typeDescriptions": {
                         "typeIdentifier": "t_bytes32",
@@ -1225,11 +1690,19 @@
                     "rightHandSide": {
                       "arguments": [
                         {
+<<<<<<< HEAD
                           "id": 49041,
                           "name": "data",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 48997,
+=======
+                          "id": 48863,
+                          "name": "data",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 48819,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "src": "799:4:78",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_bytes32_$dyn_memory_ptr",
@@ -1245,18 +1718,30 @@
                           }
                         ],
                         "expression": {
+<<<<<<< HEAD
                           "id": 49039,
                           "name": "merkleTree",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 48955,
+=======
+                          "id": 48861,
+                          "name": "merkleTree",
+                          "nodeType": "Identifier",
+                          "overloadedDeclarations": [],
+                          "referencedDeclaration": 48777,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "src": "780:10:78",
                           "typeDescriptions": {
                             "typeIdentifier": "t_contract$_Merkle_$30565",
                             "typeString": "contract Merkle"
                           }
                         },
+<<<<<<< HEAD
                         "id": 49040,
+=======
+                        "id": 48862,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1271,7 +1756,11 @@
                           "typeString": "function (bytes32[] memory) pure external returns (bytes32)"
                         }
                       },
+<<<<<<< HEAD
                       "id": 49042,
+=======
+                      "id": 48864,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1293,29 +1782,49 @@
                       "typeString": "bytes32"
                     }
                   },
+<<<<<<< HEAD
                   "id": 49044,
+=======
+                  "id": 48866,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "nodeType": "ExpressionStatement",
                   "src": "773:31:78"
                 },
                 {
                   "body": {
+<<<<<<< HEAD
                     "id": 49072,
+=======
+                    "id": 48894,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "Block",
                     "src": "869:109:78",
                     "statements": [
                       {
                         "assignments": [
+<<<<<<< HEAD
                           49059
+=======
+                          48881
+>>>>>>> 6483d1c (commit ABI artifacts)
                         ],
                         "declarations": [
                           {
                             "constant": false,
+<<<<<<< HEAD
                             "id": 49059,
+=======
+                            "id": 48881,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "mutability": "mutable",
                             "name": "proof",
                             "nameLocation": "900:5:78",
                             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                             "scope": 49072,
+=======
+                            "scope": 48894,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "src": "883:22:78",
                             "stateVariable": false,
                             "storageLocation": "memory",
@@ -1325,7 +1834,11 @@
                             },
                             "typeName": {
                               "baseType": {
+<<<<<<< HEAD
                                 "id": 49057,
+=======
+                                "id": 48879,
+>>>>>>> 6483d1c (commit ABI artifacts)
                                 "name": "bytes32",
                                 "nodeType": "ElementaryTypeName",
                                 "src": "883:7:78",
@@ -1334,7 +1847,11 @@
                                   "typeString": "bytes32"
                                 }
                               },
+<<<<<<< HEAD
                               "id": 49058,
+=======
+                              "id": 48880,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "nodeType": "ArrayTypeName",
                               "src": "883:9:78",
                               "typeDescriptions": {
@@ -1345,6 +1862,7 @@
                             "visibility": "internal"
                           }
                         ],
+<<<<<<< HEAD
                         "id": 49065,
                         "initialValue": {
                           "arguments": [
@@ -1354,6 +1872,17 @@
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 48997,
+=======
+                        "id": 48887,
+                        "initialValue": {
+                          "arguments": [
+                            {
+                              "id": 48884,
+                              "name": "data",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 48819,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "src": "928:4:78",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_array$_t_bytes32_$dyn_memory_ptr",
@@ -1361,11 +1890,19 @@
                               }
                             },
                             {
+<<<<<<< HEAD
                               "id": 49063,
                               "name": "i",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 49046,
+=======
+                              "id": 48885,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 48868,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "src": "934:1:78",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -1385,18 +1922,30 @@
                               }
                             ],
                             "expression": {
+<<<<<<< HEAD
                               "id": 49060,
                               "name": "merkleTree",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 48955,
+=======
+                              "id": 48882,
+                              "name": "merkleTree",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 48777,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "src": "908:10:78",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_contract$_Merkle_$30565",
                                 "typeString": "contract Merkle"
                               }
                             },
+<<<<<<< HEAD
                             "id": 49061,
+=======
+                            "id": 48883,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -1411,7 +1960,11 @@
                               "typeString": "function (bytes32[] memory,uint256) pure external returns (bytes32[] memory)"
                             }
                           },
+<<<<<<< HEAD
                           "id": 49064,
+=======
+                          "id": 48886,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1432,24 +1985,37 @@
                       },
                       {
                         "expression": {
+<<<<<<< HEAD
                           "id": 49070,
+=======
+                          "id": 48892,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftHandSide": {
                             "baseExpression": {
+<<<<<<< HEAD
                               "id": 49066,
                               "name": "proofs",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 48985,
+=======
+                              "id": 48888,
+                              "name": "proofs",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 48807,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "src": "950:6:78",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_array$_t_array$_t_bytes32_$dyn_memory_ptr_$dyn_memory_ptr",
                                 "typeString": "bytes32[] memory[] memory"
                               }
                             },
+<<<<<<< HEAD
                             "id": 49068,
                             "indexExpression": {
                               "id": 49067,
@@ -1457,6 +2023,15 @@
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 49046,
+=======
+                            "id": 48890,
+                            "indexExpression": {
+                              "id": 48889,
+                              "name": "i",
+                              "nodeType": "Identifier",
+                              "overloadedDeclarations": [],
+                              "referencedDeclaration": 48868,
+>>>>>>> 6483d1c (commit ABI artifacts)
                               "src": "957:1:78",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -1477,11 +2052,19 @@
                           "nodeType": "Assignment",
                           "operator": "=",
                           "rightHandSide": {
+<<<<<<< HEAD
                             "id": 49069,
                             "name": "proof",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 49059,
+=======
+                            "id": 48891,
+                            "name": "proof",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 48881,
+>>>>>>> 6483d1c (commit ABI artifacts)
                             "src": "962:5:78",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_bytes32_$dyn_memory_ptr",
@@ -1494,7 +2077,11 @@
                             "typeString": "bytes32[] memory"
                           }
                         },
+<<<<<<< HEAD
                         "id": 49071,
+=======
+                        "id": 48893,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "nodeType": "ExpressionStatement",
                         "src": "950:17:78"
                       }
@@ -1505,17 +2092,29 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
+<<<<<<< HEAD
                     "id": 49051,
+=======
+                    "id": 48873,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
+<<<<<<< HEAD
                       "id": 49049,
                       "name": "i",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 49046,
+=======
+                      "id": 48871,
+                      "name": "i",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48868,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "855:1:78",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1525,11 +2124,19 @@
                     "nodeType": "BinaryOperation",
                     "operator": "<",
                     "rightExpression": {
+<<<<<<< HEAD
                       "id": 49050,
                       "name": "len",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 48973,
+=======
+                      "id": 48872,
+                      "name": "len",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 48795,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "src": "859:3:78",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1542,20 +2149,35 @@
                       "typeString": "bool"
                     }
                   },
+<<<<<<< HEAD
                   "id": 49073,
                   "initializationExpression": {
                     "assignments": [
                       49046
+=======
+                  "id": 48895,
+                  "initializationExpression": {
+                    "assignments": [
+                      48868
+>>>>>>> 6483d1c (commit ABI artifacts)
                     ],
                     "declarations": [
                       {
                         "constant": false,
+<<<<<<< HEAD
                         "id": 49046,
+=======
+                        "id": 48868,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "mutability": "mutable",
                         "name": "i",
                         "nameLocation": "848:1:78",
                         "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                         "scope": 49073,
+=======
+                        "scope": 48895,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "840:9:78",
                         "stateVariable": false,
                         "storageLocation": "default",
@@ -1564,7 +2186,11 @@
                           "typeString": "uint256"
                         },
                         "typeName": {
+<<<<<<< HEAD
                           "id": 49045,
+=======
+                          "id": 48867,
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "name": "uint256",
                           "nodeType": "ElementaryTypeName",
                           "src": "840:7:78",
@@ -1576,10 +2202,17 @@
                         "visibility": "internal"
                       }
                     ],
+<<<<<<< HEAD
                     "id": 49048,
                     "initialValue": {
                       "hexValue": "30",
                       "id": 49047,
+=======
+                    "id": 48870,
+                    "initialValue": {
+                      "hexValue": "30",
+                      "id": 48869,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1598,7 +2231,11 @@
                   },
                   "loopExpression": {
                     "expression": {
+<<<<<<< HEAD
                       "id": 49053,
+=======
+                      "id": 48875,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1608,11 +2245,19 @@
                       "prefix": false,
                       "src": "864:3:78",
                       "subExpression": {
+<<<<<<< HEAD
                         "id": 49052,
                         "name": "i",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 49046,
+=======
+                        "id": 48874,
+                        "name": "i",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48868,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "864:1:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1624,7 +2269,11 @@
                         "typeString": "uint256"
                       }
                     },
+<<<<<<< HEAD
                     "id": 49054,
+=======
+                    "id": 48876,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "ExpressionStatement",
                     "src": "864:3:78"
                   },
@@ -1635,11 +2284,19 @@
                   "expression": {
                     "components": [
                       {
+<<<<<<< HEAD
                         "id": 49074,
                         "name": "root",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48978,
+=======
+                        "id": 48896,
+                        "name": "root",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48800,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "996:4:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes32",
@@ -1647,11 +2304,19 @@
                         }
                       },
                       {
+<<<<<<< HEAD
                         "id": 49075,
                         "name": "proofs",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 48985,
+=======
+                        "id": 48897,
+                        "name": "proofs",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 48807,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "src": "1002:6:78",
                         "typeDescriptions": {
                           "typeIdentifier": "t_array$_t_array$_t_bytes32_$dyn_memory_ptr_$dyn_memory_ptr",
@@ -1659,7 +2324,11 @@
                         }
                       }
                     ],
+<<<<<<< HEAD
                     "id": 49076,
+=======
+                    "id": 48898,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
@@ -1672,8 +2341,13 @@
                       "typeString": "tuple(bytes32,bytes32[] memory[] memory)"
                     }
                   },
+<<<<<<< HEAD
                   "functionReturnParameters": 48952,
                   "id": 49077,
+=======
+                  "functionReturnParameters": 48774,
+                  "id": 48899,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "nodeType": "Return",
                   "src": "988:21:78"
                 }
@@ -1685,17 +2359,29 @@
             "name": "createMerkleProofsForValidators",
             "nameLocation": "153:31:78",
             "parameters": {
+<<<<<<< HEAD
               "id": 48945,
+=======
+              "id": 48767,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48941,
+=======
+                  "id": 48763,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "addrs",
                   "nameLocation": "211:5:78",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 49079,
+=======
+                  "scope": 48901,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "194:22:78",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1705,7 +2391,11 @@
                   },
                   "typeName": {
                     "baseType": {
+<<<<<<< HEAD
                       "id": 48939,
+=======
+                      "id": 48761,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "194:7:78",
@@ -1715,7 +2405,11 @@
                         "typeString": "address"
                       }
                     },
+<<<<<<< HEAD
                     "id": 48940,
+=======
+                    "id": 48762,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "ArrayTypeName",
                     "src": "194:9:78",
                     "typeDescriptions": {
@@ -1727,12 +2421,20 @@
                 },
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48944,
+=======
+                  "id": 48766,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "weight",
                   "nameLocation": "243:6:78",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 49079,
+=======
+                  "scope": 48901,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "226:23:78",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1742,7 +2444,11 @@
                   },
                   "typeName": {
                     "baseType": {
+<<<<<<< HEAD
                       "id": 48942,
+=======
+                      "id": 48764,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "226:7:78",
@@ -1751,7 +2457,11 @@
                         "typeString": "uint256"
                       }
                     },
+<<<<<<< HEAD
                     "id": 48943,
+=======
+                    "id": 48765,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "ArrayTypeName",
                     "src": "226:9:78",
                     "typeDescriptions": {
@@ -1765,17 +2475,29 @@
               "src": "184:71:78"
             },
             "returnParameters": {
+<<<<<<< HEAD
               "id": 48952,
+=======
+              "id": 48774,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48947,
+=======
+                  "id": 48769,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 49079,
+=======
+                  "scope": 48901,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "274:7:78",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1784,7 +2506,11 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
+<<<<<<< HEAD
                     "id": 48946,
+=======
+                    "id": 48768,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "274:7:78",
@@ -1797,12 +2523,20 @@
                 },
                 {
                   "constant": false,
+<<<<<<< HEAD
                   "id": 48951,
+=======
+                  "id": 48773,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
                   "scope": 49079,
+=======
+                  "scope": 48901,
+>>>>>>> 6483d1c (commit ABI artifacts)
                   "src": "283:18:78",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1813,7 +2547,11 @@
                   "typeName": {
                     "baseType": {
                       "baseType": {
+<<<<<<< HEAD
                         "id": 48948,
+=======
+                        "id": 48770,
+>>>>>>> 6483d1c (commit ABI artifacts)
                         "name": "bytes32",
                         "nodeType": "ElementaryTypeName",
                         "src": "283:7:78",
@@ -1822,7 +2560,11 @@
                           "typeString": "bytes32"
                         }
                       },
+<<<<<<< HEAD
                       "id": 48949,
+=======
+                      "id": 48771,
+>>>>>>> 6483d1c (commit ABI artifacts)
                       "nodeType": "ArrayTypeName",
                       "src": "283:9:78",
                       "typeDescriptions": {
@@ -1830,7 +2572,11 @@
                         "typeString": "bytes32[]"
                       }
                     },
+<<<<<<< HEAD
                     "id": 48950,
+=======
+                    "id": 48772,
+>>>>>>> 6483d1c (commit ABI artifacts)
                     "nodeType": "ArrayTypeName",
                     "src": "283:11:78",
                     "typeDescriptions": {
@@ -1843,7 +2589,11 @@
               ],
               "src": "273:29:78"
             },
+<<<<<<< HEAD
             "scope": 49080,
+=======
+            "scope": 48902,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
@@ -1856,11 +2606,19 @@
         "contractKind": "library",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
+<<<<<<< HEAD
           49080
         ],
         "name": "MerkleTreeHelper",
         "nameLocation": "121:16:78",
         "scope": 49081,
+=======
+          48902
+        ],
+        "name": "MerkleTreeHelper",
+        "nameLocation": "121:16:78",
+        "scope": 48903,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "usedErrors": []
       }
     ],

@@ -353,13 +353,17 @@
         36823
       ],
       "IDiamondLoupe": [
-        39509
+        39490
       ],
       "IERC165": [
-        39520
+        39501
       ],
       "LibDiamond": [
+<<<<<<< HEAD
         41041
+=======
+        41012
+>>>>>>> 6483d1c (commit ABI artifacts)
       ]
     },
     "nodeType": "SourceUnit",
@@ -385,7 +389,11 @@
         "file": "../lib/LibDiamond.sol",
         "nameLocation": "-1:-1:-1",
         "scope": 36824,
+<<<<<<< HEAD
         "sourceUnit": 41042,
+=======
+        "sourceUnit": 41013,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "symbolAliases": [
           {
             "foreign": {
@@ -393,7 +401,11 @@
               "name": "LibDiamond",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
+<<<<<<< HEAD
               "referencedDeclaration": 41041,
+=======
+              "referencedDeclaration": 41012,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "src": "495:10:40",
               "typeDescriptions": {}
             },
@@ -411,7 +423,7 @@
         "file": "../interfaces/IDiamondLoupe.sol",
         "nameLocation": "-1:-1:-1",
         "scope": 36824,
-        "sourceUnit": 39510,
+        "sourceUnit": 39491,
         "symbolAliases": [
           {
             "foreign": {
@@ -419,7 +431,7 @@
               "name": "IDiamondLoupe",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 39509,
+              "referencedDeclaration": 39490,
               "src": "545:13:40",
               "typeDescriptions": {}
             },
@@ -437,7 +449,7 @@
         "file": "../interfaces/IERC165.sol",
         "nameLocation": "-1:-1:-1",
         "scope": 36824,
-        "sourceUnit": 39521,
+        "sourceUnit": 39502,
         "symbolAliases": [
           {
             "foreign": {
@@ -445,7 +457,7 @@
               "name": "IERC165",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 39520,
+              "referencedDeclaration": 39501,
               "src": "608:7:40",
               "typeDescriptions": {}
             },
@@ -487,7 +499,7 @@
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                        "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                         "typeString": "struct LibDiamond.DiamondStorage"
                       },
                       "typeName": {
@@ -501,13 +513,13 @@
                             "1174:14:40"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 40429,
+                          "referencedDeclaration": 40410,
                           "src": "1163:25:40"
                         },
-                        "referencedDeclaration": 40429,
+                        "referencedDeclaration": 40410,
                         "src": "1163:25:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage"
                         }
                       },
@@ -524,10 +536,17 @@
                         "name": "LibDiamond",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
+<<<<<<< HEAD
                         "referencedDeclaration": 41041,
                         "src": "1202:10:40",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41041_$",
+=======
+                        "referencedDeclaration": 41012,
+                        "src": "1202:10:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41012_$",
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "typeString": "type(library LibDiamond)"
                         }
                       },
@@ -539,10 +558,10 @@
                       "memberLocation": "1213:14:40",
                       "memberName": "diamondStorage",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40441,
+                      "referencedDeclaration": 40422,
                       "src": "1202:25:40",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40429_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40410_storage_ptr_$",
                         "typeString": "function () pure returns (struct LibDiamond.DiamondStorage storage pointer)"
                       }
                     },
@@ -558,7 +577,7 @@
                     "src": "1202:27:40",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                      "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                       "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                     }
                   },
@@ -609,7 +628,7 @@
                         "referencedDeclaration": 36410,
                         "src": "1263:2:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                         }
                       },
@@ -621,7 +640,7 @@
                       "memberLocation": "1266:9:40",
                       "memberName": "selectors",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40422,
+                      "referencedDeclaration": 40403,
                       "src": "1263:12:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_bytes4_$dyn_storage",
@@ -660,7 +679,7 @@
                       "referencedDeclaration": 36404,
                       "src": "1352:7:40",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                        "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                         "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                       }
                     },
@@ -696,7 +715,7 @@
                         "nodeType": "NewExpression",
                         "src": "1362:11:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr_$",
+                          "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr_$",
                           "typeString": "function (uint256) pure returns (struct IDiamondLoupe.Facet memory[] memory)"
                         },
                         "typeName": {
@@ -710,13 +729,13 @@
                                 "1366:5:40"
                               ],
                               "nodeType": "IdentifierPath",
-                              "referencedDeclaration": 39476,
+                              "referencedDeclaration": 39457,
                               "src": "1366:5:40"
                             },
-                            "referencedDeclaration": 39476,
+                            "referencedDeclaration": 39457,
                             "src": "1366:5:40",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Facet_$39476_storage_ptr",
+                              "typeIdentifier": "t_struct$_Facet_$39457_storage_ptr",
                               "typeString": "struct IDiamondLoupe.Facet"
                             }
                           },
@@ -724,7 +743,7 @@
                           "nodeType": "ArrayTypeName",
                           "src": "1366:7:40",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_array$_t_struct$_Facet_$39476_storage_$dyn_storage_ptr",
+                            "typeIdentifier": "t_array$_t_struct$_Facet_$39457_storage_$dyn_storage_ptr",
                             "typeString": "struct IDiamondLoupe.Facet[]"
                           }
                         }
@@ -741,13 +760,13 @@
                       "src": "1362:26:40",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                        "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                         "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                       }
                     },
                     "src": "1352:36:40",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                       "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                     }
                   },
@@ -957,7 +976,7 @@
                               "referencedDeclaration": 36410,
                               "src": "1762:2:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                                "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                                 "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                               }
                             },
@@ -969,7 +988,7 @@
                             "memberLocation": "1765:9:40",
                             "memberName": "selectors",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 40422,
+                            "referencedDeclaration": 40403,
                             "src": "1762:12:40",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_bytes4_$dyn_storage",
@@ -1049,7 +1068,7 @@
                                 "referencedDeclaration": 36410,
                                 "src": "1827:2:40",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                                  "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                                   "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                                 }
                               },
@@ -1061,10 +1080,10 @@
                               "memberLocation": "1830:31:40",
                               "memberName": "facetAddressAndSelectorPosition",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 40419,
+                              "referencedDeclaration": 40400,
                               "src": "1827:34:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40414_storage_$",
+                                "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40395_storage_$",
                                 "typeString": "mapping(bytes4 => struct LibDiamond.FacetAddressAndSelectorPosition storage ref)"
                               }
                             },
@@ -1088,7 +1107,7 @@
                             "nodeType": "IndexAccess",
                             "src": "1827:44:40",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40414_storage",
+                              "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40395_storage",
                               "typeString": "struct LibDiamond.FacetAddressAndSelectorPosition storage ref"
                             }
                           },
@@ -1100,7 +1119,7 @@
                           "memberLocation": "1872:12:40",
                           "memberName": "facetAddress",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 40411,
+                          "referencedDeclaration": 40392,
                           "src": "1827:57:40",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -1190,7 +1209,7 @@
                                       "referencedDeclaration": 36404,
                                       "src": "2106:7:40",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                                        "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                                         "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                                       }
                                     },
@@ -1214,7 +1233,7 @@
                                     "nodeType": "IndexAccess",
                                     "src": "2106:19:40",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_struct$_Facet_$39476_memory_ptr",
+                                      "typeIdentifier": "t_struct$_Facet_$39457_memory_ptr",
                                       "typeString": "struct IDiamondLoupe.Facet memory"
                                     }
                                   },
@@ -1226,7 +1245,7 @@
                                   "memberLocation": "2126:12:40",
                                   "memberName": "facetAddress",
                                   "nodeType": "MemberAccess",
-                                  "referencedDeclaration": 39472,
+                                  "referencedDeclaration": 39453,
                                   "src": "2106:32:40",
                                   "typeDescriptions": {
                                     "typeIdentifier": "t_address",
@@ -1279,7 +1298,7 @@
                                               "referencedDeclaration": 36404,
                                               "src": "2179:7:40",
                                               "typeDescriptions": {
-                                                "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                                                "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                                                 "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                                               }
                                             },
@@ -1303,7 +1322,7 @@
                                             "nodeType": "IndexAccess",
                                             "src": "2179:19:40",
                                             "typeDescriptions": {
-                                              "typeIdentifier": "t_struct$_Facet_$39476_memory_ptr",
+                                              "typeIdentifier": "t_struct$_Facet_$39457_memory_ptr",
                                               "typeString": "struct IDiamondLoupe.Facet memory"
                                             }
                                           },
@@ -1315,7 +1334,7 @@
                                           "memberLocation": "2199:17:40",
                                           "memberName": "functionSelectors",
                                           "nodeType": "MemberAccess",
-                                          "referencedDeclaration": 39475,
+                                          "referencedDeclaration": 39456,
                                           "src": "2179:37:40",
                                           "typeDescriptions": {
                                             "typeIdentifier": "t_array$_t_bytes4_$dyn_memory_ptr",
@@ -1717,7 +1736,7 @@
                                 "referencedDeclaration": 36404,
                                 "src": "2681:7:40",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                                  "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                                   "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                                 }
                               },
@@ -1741,7 +1760,7 @@
                               "nodeType": "IndexAccess",
                               "src": "2681:18:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Facet_$39476_memory_ptr",
+                                "typeIdentifier": "t_struct$_Facet_$39457_memory_ptr",
                                 "typeString": "struct IDiamondLoupe.Facet memory"
                               }
                             },
@@ -1753,7 +1772,7 @@
                             "memberLocation": "2700:12:40",
                             "memberName": "facetAddress",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 39472,
+                            "referencedDeclaration": 39453,
                             "src": "2681:31:40",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -1801,7 +1820,7 @@
                                 "referencedDeclaration": 36404,
                                 "src": "2742:7:40",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                                  "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                                   "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                                 }
                               },
@@ -1825,7 +1844,7 @@
                               "nodeType": "IndexAccess",
                               "src": "2742:18:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_Facet_$39476_memory_ptr",
+                                "typeIdentifier": "t_struct$_Facet_$39457_memory_ptr",
                                 "typeString": "struct IDiamondLoupe.Facet memory"
                               }
                             },
@@ -1837,7 +1856,7 @@
                             "memberLocation": "2761:17:40",
                             "memberName": "functionSelectors",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 39475,
+                            "referencedDeclaration": 39456,
                             "src": "2742:36:40",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_bytes4_$dyn_memory_ptr",
@@ -1943,7 +1962,7 @@
                                   "referencedDeclaration": 36404,
                                   "src": "2822:7:40",
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                                    "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                                     "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                                   }
                                 },
@@ -1967,7 +1986,7 @@
                                 "nodeType": "IndexAccess",
                                 "src": "2822:18:40",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_Facet_$39476_memory_ptr",
+                                  "typeIdentifier": "t_struct$_Facet_$39457_memory_ptr",
                                   "typeString": "struct IDiamondLoupe.Facet memory"
                                 }
                               },
@@ -1979,7 +1998,7 @@
                               "memberLocation": "2841:17:40",
                               "memberName": "functionSelectors",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 39475,
+                              "referencedDeclaration": 39456,
                               "src": "2822:36:40",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_array$_t_bytes4_$dyn_memory_ptr",
@@ -2392,7 +2411,7 @@
                               "referencedDeclaration": 36404,
                               "src": "3134:7:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                                "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                                 "typeString": "struct IDiamondLoupe.Facet memory[] memory"
                               }
                             },
@@ -2416,7 +2435,7 @@
                             "nodeType": "IndexAccess",
                             "src": "3134:19:40",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_Facet_$39476_memory_ptr",
+                              "typeIdentifier": "t_struct$_Facet_$39457_memory_ptr",
                               "typeString": "struct IDiamondLoupe.Facet memory"
                             }
                           },
@@ -2428,7 +2447,7 @@
                           "memberLocation": "3154:17:40",
                           "memberName": "functionSelectors",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 39475,
+                          "referencedDeclaration": 39456,
                           "src": "3134:37:40",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_bytes4_$dyn_memory_ptr",
@@ -2664,7 +2683,7 @@
               ]
             },
             "baseFunctions": [
-              39484
+              39465
             ],
             "documentation": {
               "id": 36398,
@@ -2706,7 +2725,7 @@
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Facet_$39476_memory_ptr_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Facet_$39457_memory_ptr_$dyn_memory_ptr",
                     "typeString": "struct IDiamondLoupe.Facet[]"
                   },
                   "typeName": {
@@ -2720,13 +2739,13 @@
                           "1129:5:40"
                         ],
                         "nodeType": "IdentifierPath",
-                        "referencedDeclaration": 39476,
+                        "referencedDeclaration": 39457,
                         "src": "1129:5:40"
                       },
-                      "referencedDeclaration": 39476,
+                      "referencedDeclaration": 39457,
                       "src": "1129:5:40",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Facet_$39476_storage_ptr",
+                        "typeIdentifier": "t_struct$_Facet_$39457_storage_ptr",
                         "typeString": "struct IDiamondLoupe.Facet"
                       }
                     },
@@ -2734,7 +2753,7 @@
                     "nodeType": "ArrayTypeName",
                     "src": "1129:7:40",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Facet_$39476_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Facet_$39457_storage_$dyn_storage_ptr",
                       "typeString": "struct IDiamondLoupe.Facet[]"
                     }
                   },
@@ -2776,7 +2795,7 @@
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                        "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                         "typeString": "struct LibDiamond.DiamondStorage"
                       },
                       "typeName": {
@@ -2790,13 +2809,13 @@
                             "3893:14:40"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 40429,
+                          "referencedDeclaration": 40410,
                           "src": "3882:25:40"
                         },
-                        "referencedDeclaration": 40429,
+                        "referencedDeclaration": 40410,
                         "src": "3882:25:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage"
                         }
                       },
@@ -2813,10 +2832,17 @@
                         "name": "LibDiamond",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
+<<<<<<< HEAD
                         "referencedDeclaration": 41041,
                         "src": "3921:10:40",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41041_$",
+=======
+                        "referencedDeclaration": 41012,
+                        "src": "3921:10:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41012_$",
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "typeString": "type(library LibDiamond)"
                         }
                       },
@@ -2828,10 +2854,10 @@
                       "memberLocation": "3932:14:40",
                       "memberName": "diamondStorage",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40441,
+                      "referencedDeclaration": 40422,
                       "src": "3921:25:40",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40429_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40410_storage_ptr_$",
                         "typeString": "function () pure returns (struct LibDiamond.DiamondStorage storage pointer)"
                       }
                     },
@@ -2847,7 +2873,7 @@
                     "src": "3921:27:40",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                      "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                       "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                     }
                   },
@@ -2898,7 +2924,7 @@
                         "referencedDeclaration": 36602,
                         "src": "3982:2:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                         }
                       },
@@ -2910,7 +2936,7 @@
                       "memberLocation": "3985:9:40",
                       "memberName": "selectors",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40422,
+                      "referencedDeclaration": 40403,
                       "src": "3982:12:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_bytes4_$dyn_storage",
@@ -3121,7 +3147,7 @@
                               "referencedDeclaration": 36602,
                               "src": "4255:2:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                                "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                                 "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                               }
                             },
@@ -3133,7 +3159,7 @@
                             "memberLocation": "4258:9:40",
                             "memberName": "selectors",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 40422,
+                            "referencedDeclaration": 40403,
                             "src": "4255:12:40",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_bytes4_$dyn_storage",
@@ -3213,7 +3239,7 @@
                                 "referencedDeclaration": 36602,
                                 "src": "4320:2:40",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                                  "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                                   "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                                 }
                               },
@@ -3225,10 +3251,10 @@
                               "memberLocation": "4323:31:40",
                               "memberName": "facetAddressAndSelectorPosition",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 40419,
+                              "referencedDeclaration": 40400,
                               "src": "4320:34:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40414_storage_$",
+                                "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40395_storage_$",
                                 "typeString": "mapping(bytes4 => struct LibDiamond.FacetAddressAndSelectorPosition storage ref)"
                               }
                             },
@@ -3252,7 +3278,7 @@
                             "nodeType": "IndexAccess",
                             "src": "4320:44:40",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40414_storage",
+                              "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40395_storage",
                               "typeString": "struct LibDiamond.FacetAddressAndSelectorPosition storage ref"
                             }
                           },
@@ -3264,7 +3290,7 @@
                           "memberLocation": "4365:12:40",
                           "memberName": "facetAddress",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 40411,
+                          "referencedDeclaration": 40392,
                           "src": "4320:57:40",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -3601,7 +3627,7 @@
               ]
             },
             "baseFunctions": [
-              39493
+              39474
             ],
             "documentation": {
               "id": 36589,
@@ -3732,7 +3758,7 @@
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                        "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                         "typeString": "struct LibDiamond.DiamondStorage"
                       },
                       "typeName": {
@@ -3746,13 +3772,13 @@
                             "4948:14:40"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 40429,
+                          "referencedDeclaration": 40410,
                           "src": "4937:25:40"
                         },
-                        "referencedDeclaration": 40429,
+                        "referencedDeclaration": 40410,
                         "src": "4937:25:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage"
                         }
                       },
@@ -3769,10 +3795,17 @@
                         "name": "LibDiamond",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
+<<<<<<< HEAD
                         "referencedDeclaration": 41041,
                         "src": "4976:10:40",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41041_$",
+=======
+                        "referencedDeclaration": 41012,
+                        "src": "4976:10:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41012_$",
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "typeString": "type(library LibDiamond)"
                         }
                       },
@@ -3784,10 +3817,10 @@
                       "memberLocation": "4987:14:40",
                       "memberName": "diamondStorage",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40441,
+                      "referencedDeclaration": 40422,
                       "src": "4976:25:40",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40429_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40410_storage_ptr_$",
                         "typeString": "function () pure returns (struct LibDiamond.DiamondStorage storage pointer)"
                       }
                     },
@@ -3803,7 +3836,7 @@
                     "src": "4976:27:40",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                      "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                       "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                     }
                   },
@@ -3854,7 +3887,7 @@
                         "referencedDeclaration": 36678,
                         "src": "5037:2:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                         }
                       },
@@ -3866,7 +3899,7 @@
                       "memberLocation": "5040:9:40",
                       "memberName": "selectors",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40422,
+                      "referencedDeclaration": 40403,
                       "src": "5037:12:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_bytes4_$dyn_storage",
@@ -4078,7 +4111,7 @@
                               "referencedDeclaration": 36678,
                               "src": "5360:2:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                                "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                                 "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                               }
                             },
@@ -4090,7 +4123,7 @@
                             "memberLocation": "5363:9:40",
                             "memberName": "selectors",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 40422,
+                            "referencedDeclaration": 40403,
                             "src": "5360:12:40",
                             "typeDescriptions": {
                               "typeIdentifier": "t_array$_t_bytes4_$dyn_storage",
@@ -4170,7 +4203,7 @@
                                 "referencedDeclaration": 36678,
                                 "src": "5425:2:40",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                                  "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                                   "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                                 }
                               },
@@ -4182,10 +4215,10 @@
                               "memberLocation": "5428:31:40",
                               "memberName": "facetAddressAndSelectorPosition",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 40419,
+                              "referencedDeclaration": 40400,
                               "src": "5425:34:40",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40414_storage_$",
+                                "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40395_storage_$",
                                 "typeString": "mapping(bytes4 => struct LibDiamond.FacetAddressAndSelectorPosition storage ref)"
                               }
                             },
@@ -4209,7 +4242,7 @@
                             "nodeType": "IndexAccess",
                             "src": "5425:44:40",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40414_storage",
+                              "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40395_storage",
                               "typeString": "struct LibDiamond.FacetAddressAndSelectorPosition storage ref"
                             }
                           },
@@ -4221,7 +4254,7 @@
                           "memberLocation": "5470:12:40",
                           "memberName": "facetAddress",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 40411,
+                          "referencedDeclaration": 40392,
                           "src": "5425:57:40",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
@@ -4887,7 +4920,7 @@
               ]
             },
             "baseFunctions": [
-              39500
+              39481
             ],
             "documentation": {
               "id": 36667,
@@ -4990,7 +5023,7 @@
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                        "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                         "typeString": "struct LibDiamond.DiamondStorage"
                       },
                       "typeName": {
@@ -5004,13 +5037,13 @@
                             "6700:14:40"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 40429,
+                          "referencedDeclaration": 40410,
                           "src": "6689:25:40"
                         },
-                        "referencedDeclaration": 40429,
+                        "referencedDeclaration": 40410,
                         "src": "6689:25:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage"
                         }
                       },
@@ -5027,10 +5060,17 @@
                         "name": "LibDiamond",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
+<<<<<<< HEAD
                         "referencedDeclaration": 41041,
                         "src": "6728:10:40",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41041_$",
+=======
+                        "referencedDeclaration": 41012,
+                        "src": "6728:10:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41012_$",
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "typeString": "type(library LibDiamond)"
                         }
                       },
@@ -5042,10 +5082,10 @@
                       "memberLocation": "6739:14:40",
                       "memberName": "diamondStorage",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40441,
+                      "referencedDeclaration": 40422,
                       "src": "6728:25:40",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40429_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40410_storage_ptr_$",
                         "typeString": "function () pure returns (struct LibDiamond.DiamondStorage storage pointer)"
                       }
                     },
@@ -5061,7 +5101,7 @@
                     "src": "6728:27:40",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                      "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                       "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                     }
                   },
@@ -5100,7 +5140,7 @@
                             "referencedDeclaration": 36785,
                             "src": "6781:2:40",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                              "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                               "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                             }
                           },
@@ -5112,10 +5152,10 @@
                           "memberLocation": "6784:31:40",
                           "memberName": "facetAddressAndSelectorPosition",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 40419,
+                          "referencedDeclaration": 40400,
                           "src": "6781:34:40",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40414_storage_$",
+                            "typeIdentifier": "t_mapping$_t_bytes4_$_t_struct$_FacetAddressAndSelectorPosition_$40395_storage_$",
                             "typeString": "mapping(bytes4 => struct LibDiamond.FacetAddressAndSelectorPosition storage ref)"
                           }
                         },
@@ -5139,7 +5179,7 @@
                         "nodeType": "IndexAccess",
                         "src": "6781:53:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40414_storage",
+                          "typeIdentifier": "t_struct$_FacetAddressAndSelectorPosition_$40395_storage",
                           "typeString": "struct LibDiamond.FacetAddressAndSelectorPosition storage ref"
                         }
                       },
@@ -5151,7 +5191,7 @@
                       "memberLocation": "6835:12:40",
                       "memberName": "facetAddress",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40411,
+                      "referencedDeclaration": 40392,
                       "src": "6781:66:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -5171,7 +5211,7 @@
               ]
             },
             "baseFunctions": [
-              39508
+              39489
             ],
             "documentation": {
               "id": 36773,
@@ -5293,7 +5333,7 @@
                       "stateVariable": false,
                       "storageLocation": "storage",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                        "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                         "typeString": "struct LibDiamond.DiamondStorage"
                       },
                       "typeName": {
@@ -5307,13 +5347,13 @@
                             "6999:14:40"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 40429,
+                          "referencedDeclaration": 40410,
                           "src": "6988:25:40"
                         },
-                        "referencedDeclaration": 40429,
+                        "referencedDeclaration": 40410,
                         "src": "6988:25:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage"
                         }
                       },
@@ -5330,10 +5370,17 @@
                         "name": "LibDiamond",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
+<<<<<<< HEAD
                         "referencedDeclaration": 41041,
                         "src": "7027:10:40",
                         "typeDescriptions": {
                           "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41041_$",
+=======
+                        "referencedDeclaration": 41012,
+                        "src": "7027:10:40",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_type$_t_contract$_LibDiamond_$41012_$",
+>>>>>>> 6483d1c (commit ABI artifacts)
                           "typeString": "type(library LibDiamond)"
                         }
                       },
@@ -5345,10 +5392,10 @@
                       "memberLocation": "7038:14:40",
                       "memberName": "diamondStorage",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40441,
+                      "referencedDeclaration": 40422,
                       "src": "7027:25:40",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40429_storage_ptr_$",
+                        "typeIdentifier": "t_function_internal_pure$__$returns$_t_struct$_DiamondStorage_$40410_storage_ptr_$",
                         "typeString": "function () pure returns (struct LibDiamond.DiamondStorage storage pointer)"
                       }
                     },
@@ -5364,7 +5411,7 @@
                     "src": "7027:27:40",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                      "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                       "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                     }
                   },
@@ -5382,7 +5429,7 @@
                         "referencedDeclaration": 36811,
                         "src": "7071:2:40",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DiamondStorage_$40429_storage_ptr",
+                          "typeIdentifier": "t_struct$_DiamondStorage_$40410_storage_ptr",
                           "typeString": "struct LibDiamond.DiamondStorage storage pointer"
                         }
                       },
@@ -5394,7 +5441,7 @@
                       "memberLocation": "7074:19:40",
                       "memberName": "supportedInterfaces",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 40426,
+                      "referencedDeclaration": 40407,
                       "src": "7071:22:40",
                       "typeDescriptions": {
                         "typeIdentifier": "t_mapping$_t_bytes4_$_t_bool_$",
@@ -5433,7 +5480,7 @@
               ]
             },
             "baseFunctions": [
-              39519
+              39500
             ],
             "functionSelector": "01ffc9a7",
             "implemented": true,
@@ -5531,7 +5578,7 @@
                 "682:13:40"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 39509,
+              "referencedDeclaration": 39490,
               "src": "682:13:40"
             },
             "id": 36395,
@@ -5546,7 +5593,7 @@
                 "697:7:40"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 39520,
+              "referencedDeclaration": 39501,
               "src": "697:7:40"
             },
             "id": 36397,
@@ -5560,8 +5607,8 @@
         "fullyImplemented": true,
         "linearizedBaseContracts": [
           36823,
-          39520,
-          39509
+          39501,
+          39490
         ],
         "name": "DiamondLoupeFacet",
         "nameLocation": "661:17:40",

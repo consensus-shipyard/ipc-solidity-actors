@@ -10,6 +10,7 @@
   },
   "ast": {
     "absolutePath": "src/structs/Checkpoint.sol",
+<<<<<<< HEAD
     "id": 47127,
     "exportedSymbols": {
       "BottomUpCheckpoint": [
@@ -32,13 +33,41 @@
       ],
       "SubnetID": [
         47163
+=======
+    "id": 46949,
+    "exportedSymbols": {
+      "BottomUpCheckpoint": [
+        46909
+      ],
+      "CheckpointInfo": [
+        46925
+      ],
+      "CrossMsg": [
+        46931
+      ],
+      "IPCAddress": [
+        47103
+      ],
+      "ParentFinality": [
+        46892
+      ],
+      "StorableMsg": [
+        46948
+      ],
+      "SubnetID": [
+        46985
+>>>>>>> 6483d1c (commit ABI artifacts)
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:2364:72",
     "nodes": [
       {
+<<<<<<< HEAD
         "id": 47062,
+=======
+        "id": 46884,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "PragmaDirective",
         "src": "46:23:72",
         "nodes": [],
@@ -49,13 +78,18 @@
         ]
       },
       {
+<<<<<<< HEAD
         "id": 47065,
+=======
+        "id": 46887,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "ImportDirective",
         "src": "71:50:72",
         "nodes": [],
         "absolutePath": "src/structs/Subnet.sol",
         "file": "./Subnet.sol",
         "nameLocation": "-1:-1:-1",
+<<<<<<< HEAD
         "scope": 47127,
         "sourceUnit": 47296,
         "symbolAliases": [
@@ -66,6 +100,18 @@
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
               "referencedDeclaration": 47163,
+=======
+        "scope": 46949,
+        "sourceUnit": 47118,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 46885,
+              "name": "SubnetID",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 46985,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "src": "79:8:72",
               "typeDescriptions": {}
             },
@@ -73,11 +119,19 @@
           },
           {
             "foreign": {
+<<<<<<< HEAD
               "id": 47064,
               "name": "IPCAddress",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
               "referencedDeclaration": 47281,
+=======
+              "id": 46886,
+              "name": "IPCAddress",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 47103,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "src": "89:10:72",
               "typeDescriptions": {}
             },
@@ -87,7 +141,11 @@
         "unitAlias": ""
       },
       {
+<<<<<<< HEAD
         "id": 47070,
+=======
+        "id": 46892,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "StructDefinition",
         "src": "189:68:72",
         "nodes": [],
@@ -95,12 +153,20 @@
         "members": [
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47067,
+=======
+            "id": 46889,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "height",
             "nameLocation": "225:6:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47070,
+=======
+            "scope": 46892,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "217:14:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -109,7 +175,11 @@
               "typeString": "uint256"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47066,
+=======
+              "id": 46888,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "217:7:72",
@@ -122,12 +192,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47069,
+=======
+            "id": 46891,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "blockHash",
             "nameLocation": "245:9:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47070,
+=======
+            "scope": 46892,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "237:17:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -136,7 +214,11 @@
               "typeString": "bytes32"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47068,
+=======
+              "id": 46890,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "237:7:72",
@@ -150,11 +232,19 @@
         ],
         "name": "ParentFinality",
         "nameLocation": "196:14:72",
+<<<<<<< HEAD
         "scope": 47127,
         "visibility": "public"
       },
       {
         "id": 47087,
+=======
+        "scope": 46949,
+        "visibility": "public"
+      },
+      {
+        "id": 46909,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "StructDefinition",
         "src": "300:1161:72",
         "nodes": [],
@@ -162,16 +252,25 @@
         "members": [
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47074,
+=======
+            "id": 46896,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "subnetID",
             "nameLocation": "558:8:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47087,
+=======
+            "scope": 46909,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "549:17:72",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
+<<<<<<< HEAD
               "typeIdentifier": "t_struct$_SubnetID_$47163_storage_ptr",
               "typeString": "struct SubnetID"
             },
@@ -180,11 +279,22 @@
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
                 "id": 47072,
+=======
+              "typeIdentifier": "t_struct$_SubnetID_$46985_storage_ptr",
+              "typeString": "struct SubnetID"
+            },
+            "typeName": {
+              "id": 46895,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 46894,
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "name": "SubnetID",
                 "nameLocations": [
                   "549:8:72"
                 ],
                 "nodeType": "IdentifierPath",
+<<<<<<< HEAD
                 "referencedDeclaration": 47163,
                 "src": "549:8:72"
               },
@@ -192,6 +302,15 @@
               "src": "549:8:72",
               "typeDescriptions": {
                 "typeIdentifier": "t_struct$_SubnetID_$47163_storage_ptr",
+=======
+                "referencedDeclaration": 46985,
+                "src": "549:8:72"
+              },
+              "referencedDeclaration": 46985,
+              "src": "549:8:72",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_SubnetID_$46985_storage_ptr",
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "typeString": "struct SubnetID"
               }
             },
@@ -199,12 +318,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47077,
+=======
+            "id": 46899,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "blockHeight",
             "nameLocation": "725:11:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47087,
+=======
+            "scope": 46909,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "718:18:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -213,7 +340,11 @@
               "typeString": "uint64"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47076,
+=======
+              "id": 46898,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint64",
               "nodeType": "ElementaryTypeName",
               "src": "718:6:72",
@@ -226,12 +357,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47080,
+=======
+            "id": 46902,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "blockHash",
             "nameLocation": "786:9:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47087,
+=======
+            "scope": 46909,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "778:17:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -240,7 +379,11 @@
               "typeString": "bytes32"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47079,
+=======
+              "id": 46901,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "778:7:72",
@@ -253,12 +396,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47083,
+=======
+            "id": 46905,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "nextConfigurationNumber",
             "nameLocation": "1058:23:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47087,
+=======
+            "scope": 46909,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "1051:30:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -267,7 +418,11 @@
               "typeString": "uint64"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47082,
+=======
+              "id": 46904,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint64",
               "nodeType": "ElementaryTypeName",
               "src": "1051:6:72",
@@ -280,12 +435,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47086,
+=======
+            "id": 46908,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "crossMessagesHash",
             "nameLocation": "1441:17:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47087,
+=======
+            "scope": 46909,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "1433:25:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -294,7 +457,11 @@
               "typeString": "bytes32"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47085,
+=======
+              "id": 46907,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "1433:7:72",
@@ -308,11 +475,19 @@
         ],
         "name": "BottomUpCheckpoint",
         "nameLocation": "307:18:72",
+<<<<<<< HEAD
         "scope": 47127,
         "visibility": "public"
       },
       {
         "id": 47103,
+=======
+        "scope": 46949,
+        "visibility": "public"
+      },
+      {
+        "id": 46925,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "StructDefinition",
         "src": "1463:486:72",
         "nodes": [],
@@ -320,12 +495,20 @@
         "members": [
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47090,
+=======
+            "id": 46912,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "hash",
             "nameLocation": "1564:4:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47103,
+=======
+            "scope": 46925,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "1556:12:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -334,7 +517,11 @@
               "typeString": "bytes32"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47089,
+=======
+              "id": 46911,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "1556:7:72",
@@ -347,12 +534,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47093,
+=======
+            "id": 46915,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "rootHash",
             "nameLocation": "1683:8:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47103,
+=======
+            "scope": 46925,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "1675:16:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -361,7 +556,11 @@
               "typeString": "bytes32"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47092,
+=======
+              "id": 46914,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bytes32",
               "nodeType": "ElementaryTypeName",
               "src": "1675:7:72",
@@ -374,12 +573,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47096,
+=======
+            "id": 46918,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "threshold",
             "nameLocation": "1783:9:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47103,
+=======
+            "scope": 46925,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "1775:17:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -388,7 +595,11 @@
               "typeString": "uint256"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47095,
+=======
+              "id": 46917,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "1775:7:72",
@@ -401,12 +612,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47099,
+=======
+            "id": 46921,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "currentWeight",
             "nameLocation": "1857:13:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47103,
+=======
+            "scope": 46925,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "1849:21:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -415,7 +634,11 @@
               "typeString": "uint256"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47098,
+=======
+              "id": 46920,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "1849:7:72",
@@ -428,12 +651,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47102,
+=======
+            "id": 46924,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "reached",
             "nameLocation": "1939:7:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47103,
+=======
+            "scope": 46925,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "1934:12:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -442,7 +673,11 @@
               "typeString": "bool"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47101,
+=======
+              "id": 46923,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "1934:4:72",
@@ -456,11 +691,19 @@
         ],
         "name": "CheckpointInfo",
         "nameLocation": "1470:14:72",
+<<<<<<< HEAD
         "scope": 47127,
         "visibility": "public"
       },
       {
         "id": 47109,
+=======
+        "scope": 46949,
+        "visibility": "public"
+      },
+      {
+        "id": 46931,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "StructDefinition",
         "src": "2192:62:72",
         "nodes": [],
@@ -468,16 +711,25 @@
         "members": [
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47106,
+=======
+            "id": 46928,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "message",
             "nameLocation": "2226:7:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47109,
+=======
+            "scope": 46931,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2214:19:72",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
+<<<<<<< HEAD
               "typeIdentifier": "t_struct$_StorableMsg_$47126_storage_ptr",
               "typeString": "struct StorableMsg"
             },
@@ -486,11 +738,22 @@
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
                 "id": 47104,
+=======
+              "typeIdentifier": "t_struct$_StorableMsg_$46948_storage_ptr",
+              "typeString": "struct StorableMsg"
+            },
+            "typeName": {
+              "id": 46927,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 46926,
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "name": "StorableMsg",
                 "nameLocations": [
                   "2214:11:72"
                 ],
                 "nodeType": "IdentifierPath",
+<<<<<<< HEAD
                 "referencedDeclaration": 47126,
                 "src": "2214:11:72"
               },
@@ -498,6 +761,15 @@
               "src": "2214:11:72",
               "typeDescriptions": {
                 "typeIdentifier": "t_struct$_StorableMsg_$47126_storage_ptr",
+=======
+                "referencedDeclaration": 46948,
+                "src": "2214:11:72"
+              },
+              "referencedDeclaration": 46948,
+              "src": "2214:11:72",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_StorableMsg_$46948_storage_ptr",
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "typeString": "struct StorableMsg"
               }
             },
@@ -505,12 +777,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47108,
+=======
+            "id": 46930,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "wrapped",
             "nameLocation": "2244:7:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47109,
+=======
+            "scope": 46931,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2239:12:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -519,7 +799,11 @@
               "typeString": "bool"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47107,
+=======
+              "id": 46929,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bool",
               "nodeType": "ElementaryTypeName",
               "src": "2239:4:72",
@@ -533,11 +817,19 @@
         ],
         "name": "CrossMsg",
         "nameLocation": "2199:8:72",
+<<<<<<< HEAD
         "scope": 47127,
         "visibility": "public"
       },
       {
         "id": 47126,
+=======
+        "scope": 46949,
+        "visibility": "public"
+      },
+      {
+        "id": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "nodeType": "StructDefinition",
         "src": "2256:153:72",
         "nodes": [],
@@ -545,16 +837,25 @@
         "members": [
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47112,
+=======
+            "id": 46934,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "from",
             "nameLocation": "2292:4:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47126,
+=======
+            "scope": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2281:15:72",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
+<<<<<<< HEAD
               "typeIdentifier": "t_struct$_IPCAddress_$47281_storage_ptr",
               "typeString": "struct IPCAddress"
             },
@@ -563,11 +864,22 @@
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
                 "id": 47110,
+=======
+              "typeIdentifier": "t_struct$_IPCAddress_$47103_storage_ptr",
+              "typeString": "struct IPCAddress"
+            },
+            "typeName": {
+              "id": 46933,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 46932,
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "name": "IPCAddress",
                 "nameLocations": [
                   "2281:10:72"
                 ],
                 "nodeType": "IdentifierPath",
+<<<<<<< HEAD
                 "referencedDeclaration": 47281,
                 "src": "2281:10:72"
               },
@@ -575,6 +887,15 @@
               "src": "2281:10:72",
               "typeDescriptions": {
                 "typeIdentifier": "t_struct$_IPCAddress_$47281_storage_ptr",
+=======
+                "referencedDeclaration": 47103,
+                "src": "2281:10:72"
+              },
+              "referencedDeclaration": 47103,
+              "src": "2281:10:72",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_IPCAddress_$47103_storage_ptr",
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "typeString": "struct IPCAddress"
               }
             },
@@ -582,16 +903,25 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47115,
+=======
+            "id": 46937,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "to",
             "nameLocation": "2313:2:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47126,
+=======
+            "scope": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2302:13:72",
             "stateVariable": false,
             "storageLocation": "default",
             "typeDescriptions": {
+<<<<<<< HEAD
               "typeIdentifier": "t_struct$_IPCAddress_$47281_storage_ptr",
               "typeString": "struct IPCAddress"
             },
@@ -600,11 +930,22 @@
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
                 "id": 47113,
+=======
+              "typeIdentifier": "t_struct$_IPCAddress_$47103_storage_ptr",
+              "typeString": "struct IPCAddress"
+            },
+            "typeName": {
+              "id": 46936,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 46935,
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "name": "IPCAddress",
                 "nameLocations": [
                   "2302:10:72"
                 ],
                 "nodeType": "IdentifierPath",
+<<<<<<< HEAD
                 "referencedDeclaration": 47281,
                 "src": "2302:10:72"
               },
@@ -612,6 +953,15 @@
               "src": "2302:10:72",
               "typeDescriptions": {
                 "typeIdentifier": "t_struct$_IPCAddress_$47281_storage_ptr",
+=======
+                "referencedDeclaration": 47103,
+                "src": "2302:10:72"
+              },
+              "referencedDeclaration": 47103,
+              "src": "2302:10:72",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_IPCAddress_$47103_storage_ptr",
+>>>>>>> 6483d1c (commit ABI artifacts)
                 "typeString": "struct IPCAddress"
               }
             },
@@ -619,12 +969,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47117,
+=======
+            "id": 46939,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "value",
             "nameLocation": "2329:5:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47126,
+=======
+            "scope": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2321:13:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -633,7 +991,11 @@
               "typeString": "uint256"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47116,
+=======
+              "id": 46938,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "2321:7:72",
@@ -646,12 +1008,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47119,
+=======
+            "id": 46941,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "nonce",
             "nameLocation": "2347:5:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47126,
+=======
+            "scope": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2340:12:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -660,7 +1030,11 @@
               "typeString": "uint64"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47118,
+=======
+              "id": 46940,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint64",
               "nodeType": "ElementaryTypeName",
               "src": "2340:6:72",
@@ -673,12 +1047,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47121,
+=======
+            "id": 46943,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "method",
             "nameLocation": "2365:6:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47126,
+=======
+            "scope": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2358:13:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -687,7 +1069,11 @@
               "typeString": "bytes4"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47120,
+=======
+              "id": 46942,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bytes4",
               "nodeType": "ElementaryTypeName",
               "src": "2358:6:72",
@@ -700,12 +1086,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47123,
+=======
+            "id": 46945,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "params",
             "nameLocation": "2383:6:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47126,
+=======
+            "scope": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2377:12:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -714,7 +1108,11 @@
               "typeString": "bytes"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47122,
+=======
+              "id": 46944,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "bytes",
               "nodeType": "ElementaryTypeName",
               "src": "2377:5:72",
@@ -727,12 +1125,20 @@
           },
           {
             "constant": false,
+<<<<<<< HEAD
             "id": 47125,
+=======
+            "id": 46947,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "mutability": "mutable",
             "name": "fee",
             "nameLocation": "2403:3:72",
             "nodeType": "VariableDeclaration",
+<<<<<<< HEAD
             "scope": 47126,
+=======
+            "scope": 46948,
+>>>>>>> 6483d1c (commit ABI artifacts)
             "src": "2395:11:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -741,7 +1147,11 @@
               "typeString": "uint256"
             },
             "typeName": {
+<<<<<<< HEAD
               "id": 47124,
+=======
+              "id": 46946,
+>>>>>>> 6483d1c (commit ABI artifacts)
               "name": "uint256",
               "nodeType": "ElementaryTypeName",
               "src": "2395:7:72",
@@ -755,7 +1165,11 @@
         ],
         "name": "StorableMsg",
         "nameLocation": "2263:11:72",
+<<<<<<< HEAD
         "scope": 47127,
+=======
+        "scope": 46949,
+>>>>>>> 6483d1c (commit ABI artifacts)
         "visibility": "public"
       }
     ],
