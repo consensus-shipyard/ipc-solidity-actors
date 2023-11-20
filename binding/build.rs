@@ -43,6 +43,7 @@ fn main() {
         "SubnetRegistry",
         "LibStaking",
         "LibStakingChangeLog",
+        "LibGateway",
     ] {
         let module_name = camel_to_snake(contract_name);
         let input_path = format!("{ipc_actors_dir}/out/{contract_name}.sol/{contract_name}.json");
