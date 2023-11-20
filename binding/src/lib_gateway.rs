@@ -55,15 +55,8 @@ pub mod lib_gateway {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::EventParam {
                                     name: ::std::borrow::ToOwned::to_owned("nextSubnet"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                        ::std::vec![
-                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                ::std::boxed::Box::new(
-                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                ),
-                                            ),
-                                        ],
+                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
+                                        32usize,
                                     ),
                                     indexed: true,
                                 },
@@ -145,12 +138,12 @@ pub mod lib_gateway {
     pub static LIBGATEWAY_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
-    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x9C\xEB\xBA\x1A\xC3\x95\xDC\xEE\xA7\xA0\xE3Z\xE9\xB4\x8C|\"\xC4\xCE\x90\x06\x95\xDB\x9C\x0E\xA4Bz^^\x80\x13dsolcC\0\x08\x13\x003";
+    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xEBz\x89\xE6f\x1Fh\xD7\xF5\x02\x7F\xE5\xA8\xF5\xD2\xD9z\xEC#\x95\xAEZ\xDC\xC1w\xD3P\x87\xB9\x1Ck.dsolcC\0\x08\x13\x003";
     /// The bytecode of the contract.
     pub static LIBGATEWAY_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__BYTECODE);
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x9C\xEB\xBA\x1A\xC3\x95\xDC\xEE\xA7\xA0\xE3Z\xE9\xB4\x8C|\"\xC4\xCE\x90\x06\x95\xDB\x9C\x0E\xA4Bz^^\x80\x13dsolcC\0\x08\x13\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xEBz\x89\xE6f\x1Fh\xD7\xF5\x02\x7F\xE5\xA8\xF5\xD2\xD9z\xEC#\x95\xAEZ\xDC\xC1w\xD3P\x87\xB9\x1Ck.dsolcC\0\x08\x13\x003";
     /// The deployed bytecode of the contract.
     pub static LIBGATEWAY_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
@@ -284,11 +277,11 @@ pub mod lib_gateway {
     )]
     #[ethevent(
         name = "NewTopDownMessage",
-        abi = "NewTopDownMessage((uint64,address[]),uint64,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
+        abi = "NewTopDownMessage(bytes32,uint64,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
     )]
     pub struct NewTopDownMessageFilter {
         #[ethevent(indexed)]
-        pub next_subnet: ::ethers::core::types::H256,
+        pub next_subnet: [u8; 32],
         #[ethevent(indexed)]
         pub nonce: u64,
         pub message: CrossMsg,
