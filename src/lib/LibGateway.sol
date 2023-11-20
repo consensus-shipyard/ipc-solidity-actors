@@ -26,7 +26,7 @@ library LibGateway {
     event MembershipUpdated(Membership);
     /// @dev nextSubnet refers to the next "down" subnet that the `CrossMsg.message.to` should be forwarded to.
     /// @dev nonce is also indexed so that top down execution gas optimization can directly query messages by nonce.
-    event NewTopDownMessage(SubnetID indexed nextSubnet, uint64 indexed nonce, CrossMsg message);
+    event NewTopDownMessage(bytes32 indexed nextSubnet, uint64 indexed nonce, CrossMsg message);
 
     /// @notice returns the current bottom-up checkpoint
     /// @return exists - whether the checkpoint exists
@@ -206,7 +206,7 @@ library LibGateway {
         subnet.topDownNonce = topDownNonce + 1;
         subnet.circSupply += crossMessage.message.value;
 
-        emit NewTopDownMessage({nextSubnet: subnetId, nonce: topDownNonce, message: crossMessage});
+        emit NewTopDownMessage({nextSubnet: subnetId.toHash(), nonce: topDownNonce, message: crossMessage});
     }
 
     /// @notice commit bottom-up messages for their execution in the subnet. Adds the message to the checkpoint for future execution

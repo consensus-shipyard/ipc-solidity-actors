@@ -72,6 +72,7 @@ fn main() {
         "GatewayRouterFacet",
         "GatewayMessengerFacet",
         "SubnetActorManagerFacet",
+        "LibGateway",
     ];
 
     let modules = fvm_address_conversion.into_iter().map(camel_to_snake);
