@@ -53,12 +53,20 @@ pub mod lib_staking_change_log {
     pub static LIBSTAKINGCHANGELOG_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
+<<<<<<< HEAD
     const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x0C7\xE5\x0E\xFE\xE6\xB4V`\xFDw \xBEY\xBD\x08\xE0\xEC\xE9\xC8\xBC\x9E\x14\xF0)\xDBc\xA6\xCAc\xC8\x91dsolcC\0\x08\x13\x003";
+=======
+    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x1C\xF6\xAB\x980\xE6\x96\x0Fl\x1Fm\x18\xF2\xBE\x14p\x81l\xE0,M\xB89\x1A\xE9\xB0\x83\x89T\xE7\x8F/dsolcC\0\x08\x13\x003";
+>>>>>>> 34b0635 (commit rust binding)
     /// The bytecode of the contract.
     pub static LIBSTAKINGCHANGELOG_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__BYTECODE);
     #[rustfmt::skip]
+<<<<<<< HEAD
     const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x0C7\xE5\x0E\xFE\xE6\xB4V`\xFDw \xBEY\xBD\x08\xE0\xEC\xE9\xC8\xBC\x9E\x14\xF0)\xDBc\xA6\xCAc\xC8\x91dsolcC\0\x08\x13\x003";
+=======
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x1C\xF6\xAB\x980\xE6\x96\x0Fl\x1Fm\x18\xF2\xBE\x14p\x81l\xE0,M\xB89\x1A\xE9\xB0\x83\x89T\xE7\x8F/dsolcC\0\x08\x13\x003";
+>>>>>>> 34b0635 (commit rust binding)
     /// The deployed bytecode of the contract.
     pub static LIBSTAKINGCHANGELOG_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
