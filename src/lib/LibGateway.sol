@@ -24,7 +24,7 @@ library LibGateway {
     using CheckpointHelper for BottomUpCheckpoint;
 
     event MembershipUpdated(Membership);
-    /// @dev subnet refers to the next "down" subnet that the `CrossMsg.message.to` should be forwarded to.
+    /// @dev `subnet` identifies the next subnet in the route of the message to its destination  (`CrossMsg.message.to`).
     event NewTopDownMessage(bytes32 indexed subnet, CrossMsg message);
 
     /// @notice returns the current bottom-up checkpoint
