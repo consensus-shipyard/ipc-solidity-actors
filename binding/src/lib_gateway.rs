@@ -61,11 +61,6 @@ pub mod lib_gateway {
                                     indexed: true,
                                 },
                                 ::ethers::core::abi::ethabi::EventParam {
-                                    name: ::std::borrow::ToOwned::to_owned("nonce"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                    indexed: true,
-                                },
-                                ::ethers::core::abi::ethabi::EventParam {
                                     name: ::std::borrow::ToOwned::to_owned("message"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
                                         ::std::vec![
@@ -138,12 +133,12 @@ pub mod lib_gateway {
     pub static LIBGATEWAY_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
-    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 q\x02sd\xFEwX\xB0\x17\x9C \xD7\x96\xAA&\xCC\xEC\x8D\xF7\xC2\xCCS-J\x12q9<\x8CJ\x9D\x0CdsolcC\0\x08\x13\x003";
+    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x8F\xD0\xD2\xB0\x110UFp\x8E}\x13|6\x1D\t\xFA-\xD0z\xE5A\xDAo\xA8\x91\xD6\xB2?Tt,dsolcC\0\x08\x13\x003";
     /// The bytecode of the contract.
     pub static LIBGATEWAY_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__BYTECODE);
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 q\x02sd\xFEwX\xB0\x17\x9C \xD7\x96\xAA&\xCC\xEC\x8D\xF7\xC2\xCCS-J\x12q9<\x8CJ\x9D\x0CdsolcC\0\x08\x13\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \x8F\xD0\xD2\xB0\x110UFp\x8E}\x13|6\x1D\t\xFA-\xD0z\xE5A\xDAo\xA8\x91\xD6\xB2?Tt,dsolcC\0\x08\x13\x003";
     /// The deployed bytecode of the contract.
     pub static LIBGATEWAY_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
@@ -277,13 +272,11 @@ pub mod lib_gateway {
     )]
     #[ethevent(
         name = "NewTopDownMessage",
-        abi = "NewTopDownMessage(bytes32,uint64,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
+        abi = "NewTopDownMessage(bytes32,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
     )]
     pub struct NewTopDownMessageFilter {
         #[ethevent(indexed)]
         pub subnet: [u8; 32],
-        #[ethevent(indexed)]
-        pub nonce: u64,
         pub message: CrossMsg,
     }
     ///Container type for all of the contract's events
