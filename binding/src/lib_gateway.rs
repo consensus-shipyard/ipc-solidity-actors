@@ -54,7 +54,7 @@ pub mod lib_gateway {
                             name: ::std::borrow::ToOwned::to_owned("NewTopDownMessage"),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::EventParam {
-                                    name: ::std::borrow::ToOwned::to_owned("nextSubnet"),
+                                    name: ::std::borrow::ToOwned::to_owned("subnet"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
                                         32usize,
                                     ),
@@ -138,12 +138,12 @@ pub mod lib_gateway {
     pub static LIBGATEWAY_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
         ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
-    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xEBz\x89\xE6f\x1Fh\xD7\xF5\x02\x7F\xE5\xA8\xF5\xD2\xD9z\xEC#\x95\xAEZ\xDC\xC1w\xD3P\x87\xB9\x1Ck.dsolcC\0\x08\x13\x003";
+    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 q\x02sd\xFEwX\xB0\x17\x9C \xD7\x96\xAA&\xCC\xEC\x8D\xF7\xC2\xCCS-J\x12q9<\x8CJ\x9D\x0CdsolcC\0\x08\x13\x003";
     /// The bytecode of the contract.
     pub static LIBGATEWAY_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__BYTECODE);
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xEBz\x89\xE6f\x1Fh\xD7\xF5\x02\x7F\xE5\xA8\xF5\xD2\xD9z\xEC#\x95\xAEZ\xDC\xC1w\xD3P\x87\xB9\x1Ck.dsolcC\0\x08\x13\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 q\x02sd\xFEwX\xB0\x17\x9C \xD7\x96\xAA&\xCC\xEC\x8D\xF7\xC2\xCCS-J\x12q9<\x8CJ\x9D\x0CdsolcC\0\x08\x13\x003";
     /// The deployed bytecode of the contract.
     pub static LIBGATEWAY_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
         ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
@@ -281,7 +281,7 @@ pub mod lib_gateway {
     )]
     pub struct NewTopDownMessageFilter {
         #[ethevent(indexed)]
-        pub next_subnet: [u8; 32],
+        pub subnet: [u8; 32],
         #[ethevent(indexed)]
         pub nonce: u64,
         pub message: CrossMsg,
