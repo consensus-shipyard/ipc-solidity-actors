@@ -119,7 +119,7 @@ library SubnetIDHelper {
     /// @notice In the path determined by the current subnet id, it moves
     /// down in the path from the subnet id given as argument.
     /// subnet2 needs to be a prefix of the subnet1.
-    /// If subnet1 is /a/b/c/d and the subnet2  is /a/b, then the return should be /a/b/c.
+    /// If subnet1 is /a/b/c/d and subnet2 is /a/b, then the returned ID should be /a/b/c.
     /// @dev Revert will be triggered if subnet2 is an invalid input.
     function down(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (SubnetID memory) {
         if (subnet1.root != subnet2.root) {
