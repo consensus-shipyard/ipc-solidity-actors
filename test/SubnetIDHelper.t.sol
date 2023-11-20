@@ -127,7 +127,7 @@ contract SubnetIDHelperTest is Test {
         require(subnetId3.down(subnetId1).equals(subnetId2));
     }
 
-    function test_Down_Works_Subnet2RouteLenghtLargerThanSubnet1() public {
+    function test_Down_Works_Subnet2RouteLengthLargerThanSubnet1() public {
         address[] memory route1 = new address[](0);
         address[] memory route2 = new address[](1);
         route2[0] = SUBNET_ONE_ADDRESS;
