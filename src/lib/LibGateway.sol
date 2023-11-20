@@ -24,6 +24,9 @@ library LibGateway {
     using CheckpointHelper for BottomUpCheckpoint;
 
     event MembershipUpdated(Membership);
+    /// @dev nextSubnet refers to the next "down" subnet that the `CrossMsg.message.to` should be forwarded to.
+    /// @dev nonce is also indexed so that top down execution gas optimization can directly query messages by nonce.
+    event NewTopDownMessage(SubnetID indexed nextSubnet, uint64 indexed nonce, CrossMsg message);
 
     /// @notice returns the current bottom-up checkpoint
     /// @return exists - whether the checkpoint exists
@@ -197,11 +200,13 @@ library LibGateway {
             revert NotRegisteredSubnet();
         }
 
-        crossMessage.message.nonce = subnet.topDownNonce;
-        subnet.topDownNonce += 1;
+        uint64 topDownNonce = subnet.topDownNonce;
+
+        crossMessage.message.nonce = topDownNonce;
+        subnet.topDownNonce = topDownNonce + 1;
         subnet.circSupply += crossMessage.message.value;
 
-        s.topDownMsgs[subnetId.toHash()][block.number].push(crossMessage);
+        emit NewTopDownMessage(subnetId, topDownNonce, crossMessage);
     }
 
     /// @notice commit bottom-up messages for their execution in the subnet. Adds the message to the checkpoint for future execution
@@ -214,52 +219,6 @@ library LibGateway {
 
         s.bottomUpMessages[epoch].push(crossMessage);
         s.bottomUpNonce += 1;
-    }
-
-    /// @notice get the list of top down messages from block number, we may also consider introducing pagination.
-    /// @param subnetId - The subnet id to fetch messages from
-    /// @param fromBlock - The starting block to get top down messages, inclusive.
-    /// @param toBlock - The ending block to get top down messages, inclusive.
-    function getTopDownMsgs(
-        SubnetID calldata subnetId,
-        uint256 fromBlock,
-        uint256 toBlock
-    ) internal view returns (CrossMsg[] memory) {
-        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-
-        // invalid from block number
-        if (fromBlock > toBlock) {
-            return new CrossMsg[](0);
-        }
-
-        bytes32 subnetHash = subnetId.toHash();
-        uint256 msgLength = 0;
-        for (uint256 i = fromBlock; i <= toBlock; ) {
-            msgLength += s.topDownMsgs[subnetHash][i].length;
-            unchecked {
-                ++i;
-            }
-        }
-
-        CrossMsg[] memory messages = new CrossMsg[](msgLength);
-        uint256 index = 0;
-        for (uint256 i = fromBlock; i <= toBlock; ) {
-            // perform copy
-            uint256 topDownMsgsLength = s.topDownMsgs[subnetHash][i].length;
-            for (uint256 j = 0; j < topDownMsgsLength; ) {
-                messages[index] = s.topDownMsgs[subnetHash][i][j];
-                unchecked {
-                    ++j;
-                    ++index;
-                }
-            }
-
-            unchecked {
-                ++i;
-            }
-        }
-
-        return messages;
     }
 
     /// @notice returns the subnet created by a validator

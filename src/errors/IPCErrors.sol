@@ -67,3 +67,5 @@ error SubnetNotFound();
 error WithdrawExceedingCollateral();
 error ZeroMembershipWeight();
 error SubnetAlreadyBootstrapped();
+error DifferentRootNetwork();
+error InvalidRoute();

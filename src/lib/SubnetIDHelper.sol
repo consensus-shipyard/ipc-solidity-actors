@@ -11,6 +11,8 @@ library SubnetIDHelper {
 
     error NoParentForSubnet();
     error EmptySubnet();
+    error DifferentRootNetwork();
+    error InvalidRoute();
 
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
         if (subnet.route.length == 0) {
@@ -119,10 +121,10 @@ library SubnetIDHelper {
     /// the subnet2 needs to be a subset of the subnet1
     function down(SubnetID calldata subnet1, SubnetID calldata subnet2) public pure returns (SubnetID memory) {
         if (subnet1.root != subnet2.root) {
-            return SubnetID({root: 0, route: new address[](0)});
+            revert DifferentRootNetwork();
         }
         if (subnet1.route.length <= subnet2.route.length) {
-            return SubnetID({root: 0, route: new address[](0)});
+            revert InvalidRoute();
         }
 
         uint256 i = 0;
