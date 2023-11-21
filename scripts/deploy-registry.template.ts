@@ -53,7 +53,7 @@ async function main() {
 
  
 
-const facetCuts = [] //TODO
+const facetCuts = []
 
 
 const facets = [ 
