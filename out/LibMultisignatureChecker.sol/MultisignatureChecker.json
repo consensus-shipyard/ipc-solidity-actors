@@ -15,19 +15,19 @@
     }
   ],
   "bytecode": {
-    "object": "0x608080604052346018576075908161001e823930815050f35b600080fdfe6080806040526004361015601257600080fd5b60003560e01c63540bc5ea14602657600080fd5b6000366003190112603a5780604160209252f35b600080fdfea26469706673582212205443049a5255c06c1d18094cc7a528fcc8e4bad41572936e3fa298686068697264736f6c63430008130033",
+    "object": "0x608080604052346018576075908161001e823930815050f35b600080fdfe6080806040526004361015601257600080fd5b60003560e01c63540bc5ea14602657600080fd5b6000366003190112603a5780604160209252f35b600080fdfea2646970667358221220946150b7e121897adf2278352b7bf2d89874381a639518310f063511238bb03364736f6c63430008130033",
     "sourceMap": "201:2404:62:-:0;;;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x6080806040526004361015601257600080fd5b60003560e01c63540bc5ea14602657600080fd5b6000366003190112603a5780604160209252f35b600080fdfea26469706673582212205443049a5255c06c1d18094cc7a528fcc8e4bad41572936e3fa298686068697264736f6c63430008130033",
+    "object": "0x6080806040526004361015601257600080fd5b60003560e01c63540bc5ea14602657600080fd5b6000366003190112603a5780604160209252f35b600080fdfea2646970667358221220946150b7e121897adf2278352b7bf2d89874381a639518310f063511238bb03364736f6c63430008130033",
     "sourceMap": "201:2404:62:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;201:2404:62;;;;;278:2;201:2404;;;;;;;",
     "linkReferences": {}
   },
   "methodIdentifiers": {
     "SIGNATURE_LENGTH()": "540bc5ea"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"SIGNATURE_LENGTH\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Multi-signature ECDSA verification helper.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/LibMultisignatureChecker.sol\":\"MultisignatureChecker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"lib/openzeppelin-contracts/contracts/utils/Strings.sol\":{\"keccak256\":\"0xb97d36c301445278c5f8fd94c7bda1c7406d28def61da67864cb6e27f359d6da\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63d542fd2f752d7f715057cbb956e95e198d1ce0545092212025369920a9c33a\",\"dweb:/ipfs/QmNbjRRr4u2denjbZrsQhU5d4mxPyyfv2m5t3suKToLwaB\"]},\"lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol\":{\"keccak256\":\"0x1fffbec76ddc32735c18799f454482cc2530d4b6736dda03c387813954df8e30\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://569336974d289a84354700865eb6c025daac404c8509d24489b883def3cffa9d\",\"dweb:/ipfs/QmVekxbW3BgwMHrZjuXdPgSazk7SwXi2Usa1g7SdyZXiQ9\"]},\"lib/openzeppelin-contracts/contracts/utils/math/Math.sol\":{\"keccak256\":\"0x3ddad25673a903c650b6f78ad878f0559c66c30ace86e1110ff44fd07900264c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7907214499f21a835a3582b3c24d2844f70a19c6874458e5daae3d0eef205c81\",\"dweb:/ipfs/QmSALTEWv1GbTHH5b739hjzrWC78DDe7trbxEgt5pniF9k\"]},\"lib/openzeppelin-contracts/contracts/utils/math/SignedMath.sol\":{\"keccak256\":\"0x63a4fc7046bc052edeec923181f2f886681e1e0b34c4f23ce84425acfe80a1fb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9cee5cb5fa0dc7d47c463f900b5fcd44abe84f6bce23433898af1221598a3a9b\",\"dweb:/ipfs/Qmdjp7Pf6RuGgAnSxUKd9CvniN8gUG6wLH1cdvhg5L9w4z\"]},\"src/lib/LibMultisignatureChecker.sol\":{\"keccak256\":\"0xa2a185d3f5e206dec977227bad731f8adbb5e3ca53fc2ed0e761177ce2dfb32a\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c31cf04f80ca0f281ed50b4175d9ff61a3cccc20f7e00b4549ce6274337a618e\",\"dweb:/ipfs/Qmf3a2p6p1MRVgEXZCVjQDUUVyb8nTYC8c9Pg9R558UcZy\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"SIGNATURE_LENGTH\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Multi-signature ECDSA verification helper.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/LibMultisignatureChecker.sol\":\"MultisignatureChecker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"lib/openzeppelin-contracts/contracts/utils/Strings.sol\":{\"keccak256\":\"0xb97d36c301445278c5f8fd94c7bda1c7406d28def61da67864cb6e27f359d6da\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63d542fd2f752d7f715057cbb956e95e198d1ce0545092212025369920a9c33a\",\"dweb:/ipfs/QmNbjRRr4u2denjbZrsQhU5d4mxPyyfv2m5t3suKToLwaB\"]},\"lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol\":{\"keccak256\":\"0x1fffbec76ddc32735c18799f454482cc2530d4b6736dda03c387813954df8e30\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://569336974d289a84354700865eb6c025daac404c8509d24489b883def3cffa9d\",\"dweb:/ipfs/QmVekxbW3BgwMHrZjuXdPgSazk7SwXi2Usa1g7SdyZXiQ9\"]},\"lib/openzeppelin-contracts/contracts/utils/math/Math.sol\":{\"keccak256\":\"0x3ddad25673a903c650b6f78ad878f0559c66c30ace86e1110ff44fd07900264c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7907214499f21a835a3582b3c24d2844f70a19c6874458e5daae3d0eef205c81\",\"dweb:/ipfs/QmSALTEWv1GbTHH5b739hjzrWC78DDe7trbxEgt5pniF9k\"]},\"lib/openzeppelin-contracts/contracts/utils/math/SignedMath.sol\":{\"keccak256\":\"0x63a4fc7046bc052edeec923181f2f886681e1e0b34c4f23ce84425acfe80a1fb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9cee5cb5fa0dc7d47c463f900b5fcd44abe84f6bce23433898af1221598a3a9b\",\"dweb:/ipfs/Qmdjp7Pf6RuGgAnSxUKd9CvniN8gUG6wLH1cdvhg5L9w4z\"]},\"src/lib/LibMultisignatureChecker.sol\":{\"keccak256\":\"0xa2a185d3f5e206dec977227bad731f8adbb5e3ca53fc2ed0e761177ce2dfb32a\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c31cf04f80ca0f281ed50b4175d9ff61a3cccc20f7e00b4549ce6274337a618e\",\"dweb:/ipfs/Qmf3a2p6p1MRVgEXZCVjQDUUVyb8nTYC8c9Pg9R558UcZy\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -62,11 +62,14 @@
     },
     "settings": {
       "remappings": [
+        "@openzeppelin/=node_modules/@openzeppelin/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
         "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
         "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
         "fevmate/=lib/fevmate/contracts/",
         "forge-std/=lib/forge-std/src/",
+        "hardhat-deploy/=node_modules/hardhat-deploy/",
+        "hardhat/=node_modules/hardhat/",
         "murky/=lib/murky/src/",
         "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
         "openzeppelin/=lib/openzeppelin-contracts/contracts/"
@@ -130,56 +133,20 @@
   },
   "ast": {
     "absolutePath": "src/lib/LibMultisignatureChecker.sol",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "id": 42379,
-=======
-    "id": 42212,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-    "id": 42213,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
     "id": 42206,
->>>>>>> 720382b (commit ABI artifacts)
     "exportedSymbols": {
       "ECDSA": [
         33165
       ],
       "MultisignatureChecker": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        42378
-=======
-        42211
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        42212
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
         42205
->>>>>>> 720382b (commit ABI artifacts)
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:2560:62",
     "nodes": [
       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "id": 42224,
-=======
-        "id": 42057,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "id": 42058,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
         "id": 42051,
->>>>>>> 720382b (commit ABI artifacts)
         "nodeType": "PragmaDirective",
         "src": "46:23:62",
         "nodes": [],
@@ -190,55 +157,19 @@
         ]
       },
       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "id": 42226,
-=======
-        "id": 42059,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "id": 42060,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
         "id": 42053,
->>>>>>> 720382b (commit ABI artifacts)
         "nodeType": "ImportDirective",
         "src": "71:74:62",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol",
         "file": "openzeppelin-contracts/utils/cryptography/ECDSA.sol",
         "nameLocation": "-1:-1:-1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "scope": 42379,
-=======
-        "scope": 42212,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "scope": 42213,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
         "scope": 42206,
->>>>>>> 720382b (commit ABI artifacts)
         "sourceUnit": 33166,
         "symbolAliases": [
           {
             "foreign": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 42225,
-=======
-              "id": 42058,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 42059,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
               "id": 42052,
->>>>>>> 720382b (commit ABI artifacts)
               "name": "ECDSA",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -252,36 +183,12 @@
         "unitAlias": ""
       },
       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "id": 42378,
-=======
-        "id": 42211,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "id": 42212,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
         "id": 42205,
->>>>>>> 720382b (commit ABI artifacts)
         "nodeType": "ContractDefinition",
         "src": "201:2404:62",
         "nodes": [
           {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "id": 42230,
-=======
-            "id": 42063,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "id": 42064,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
             "id": 42057,
->>>>>>> 720382b (commit ABI artifacts)
             "nodeType": "VariableDeclaration",
             "src": "237:43:62",
             "nodes": [],
@@ -290,19 +197,7 @@
             "mutability": "constant",
             "name": "SIGNATURE_LENGTH",
             "nameLocation": "259:16:62",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "scope": 42378,
-=======
-            "scope": 42211,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "scope": 42212,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
             "scope": 42205,
->>>>>>> 720382b (commit ABI artifacts)
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -310,19 +205,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 42228,
-=======
-              "id": 42061,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 42062,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
               "id": 42055,
->>>>>>> 720382b (commit ABI artifacts)
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "237:5:62",
@@ -333,19 +216,7 @@
             },
             "value": {
               "hexValue": "3635",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 42229,
-=======
-              "id": 42062,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 42063,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
               "id": 42056,
->>>>>>> 720382b (commit ABI artifacts)
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -362,152 +233,56 @@
             "visibility": "public"
           },
           {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "id": 42238,
-=======
-            "id": 42071,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "id": 42072,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
             "id": 42065,
->>>>>>> 720382b (commit ABI artifacts)
             "nodeType": "EnumDefinition",
             "src": "287:204:62",
             "nodes": [],
             "canonicalName": "MultisignatureChecker.Error",
             "members": [
               {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 42231,
-=======
-                "id": 42064,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                "id": 42065,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                 "id": 42058,
->>>>>>> 720382b (commit ABI artifacts)
                 "name": "Nil",
                 "nameLocation": "308:3:62",
                 "nodeType": "EnumValue",
                 "src": "308:3:62"
               },
               {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 42232,
-=======
-                "id": 42065,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                "id": 42066,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                 "id": 42059,
->>>>>>> 720382b (commit ABI artifacts)
                 "name": "InvalidArrayLength",
                 "nameLocation": "321:18:62",
                 "nodeType": "EnumValue",
                 "src": "321:18:62"
               },
               {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 42233,
-=======
-                "id": 42066,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                "id": 42067,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                 "id": 42060,
->>>>>>> 720382b (commit ABI artifacts)
                 "name": "EmptySignatures",
                 "nameLocation": "349:15:62",
                 "nodeType": "EnumValue",
                 "src": "349:15:62"
               },
               {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 42234,
-=======
-                "id": 42067,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                "id": 42068,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                 "id": 42061,
->>>>>>> 720382b (commit ABI artifacts)
                 "name": "InvalidSignatureLength",
                 "nameLocation": "374:22:62",
                 "nodeType": "EnumValue",
                 "src": "374:22:62"
               },
               {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 42235,
-=======
-                "id": 42068,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                "id": 42069,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                 "id": 42062,
->>>>>>> 720382b (commit ABI artifacts)
                 "name": "InvalidSignatory",
                 "nameLocation": "406:16:62",
                 "nodeType": "EnumValue",
                 "src": "406:16:62"
               },
               {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 42236,
-=======
-                "id": 42069,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                "id": 42070,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                 "id": 42063,
->>>>>>> 720382b (commit ABI artifacts)
                 "name": "InvalidSignature",
                 "nameLocation": "432:16:62",
                 "nodeType": "EnumValue",
                 "src": "432:16:62"
               },
               {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                "id": 42237,
-=======
-                "id": 42070,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                "id": 42071,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                 "id": 42064,
->>>>>>> 720382b (commit ABI artifacts)
                 "name": "WeightsSumLessThanThreshold",
                 "nameLocation": "458:27:62",
                 "nodeType": "EnumValue",
@@ -518,89 +293,29 @@
             "nameLocation": "292:5:62"
           },
           {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "id": 42377,
-=======
-            "id": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "id": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
             "id": 42204,
->>>>>>> 720382b (commit ABI artifacts)
             "nodeType": "FunctionDefinition",
             "src": "1270:1333:62",
             "nodes": [],
             "body": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 42376,
-=======
-              "id": 42209,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 42210,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
               "id": 42203,
->>>>>>> 720382b (commit ABI artifacts)
               "nodeType": "Block",
               "src": "1507:1096:62",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    42261
-=======
-                    42094
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    42095
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     42088
->>>>>>> 720382b (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42261,
-=======
-                      "id": 42094,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42095,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42088,
->>>>>>> 720382b (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "valid",
                       "nameLocation": "1522:5:62",
                       "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "scope": 42376,
-=======
-                      "scope": 42209,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "scope": 42210,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "scope": 42203,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1517:10:62",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -609,19 +324,7 @@
                         "typeString": "bool"
                       },
                       "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42260,
-=======
-                        "id": 42093,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42094,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42087,
->>>>>>> 720382b (commit ABI artifacts)
                         "name": "bool",
                         "nodeType": "ElementaryTypeName",
                         "src": "1517:4:62",
@@ -633,31 +336,10 @@
                       "visibility": "internal"
                     }
                   ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42263,
-                  "initialValue": {
-                    "hexValue": "74727565",
-                    "id": 42262,
-=======
-                  "id": 42096,
-                  "initialValue": {
-                    "hexValue": "74727565",
-                    "id": 42095,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42097,
-                  "initialValue": {
-                    "hexValue": "74727565",
-                    "id": 42096,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42090,
                   "initialValue": {
                     "hexValue": "74727565",
                     "id": 42089,
->>>>>>> 720382b (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -676,53 +358,17 @@
                 },
                 {
                   "assignments": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    42265
-=======
-                    42098
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    42099
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     42092
->>>>>>> 720382b (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42265,
-=======
-                      "id": 42098,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42099,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42092,
->>>>>>> 720382b (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "weight",
                       "nameLocation": "1552:6:62",
                       "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "scope": 42376,
-=======
-                      "scope": 42209,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "scope": 42210,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "scope": 42203,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1544:14:62",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -731,19 +377,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42264,
-=======
-                        "id": 42097,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42098,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42091,
->>>>>>> 720382b (commit ABI artifacts)
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "1544:7:62",
@@ -755,71 +389,23 @@
                       "visibility": "internal"
                     }
                   ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42266,
-=======
-                  "id": 42099,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42100,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42093,
->>>>>>> 720382b (commit ABI artifacts)
                   "nodeType": "VariableDeclarationStatement",
                   "src": "1544:14:62"
                 },
                 {
                   "assignments": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    42268
-=======
-                    42101
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    42102
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     42095
->>>>>>> 720382b (commit ABI artifacts)
                   ],
                   "declarations": [
                     {
                       "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42268,
-=======
-                      "id": 42101,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42102,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42095,
->>>>>>> 720382b (commit ABI artifacts)
                       "mutability": "mutable",
                       "name": "signaturesNumber",
                       "nameLocation": "1577:16:62",
                       "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "scope": 42376,
-=======
-                      "scope": 42209,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "scope": 42210,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "scope": 42203,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1569:24:62",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -828,19 +414,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42267,
-=======
-                        "id": 42100,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42101,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42094,
->>>>>>> 720382b (commit ABI artifacts)
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "1569:7:62",
@@ -852,60 +426,21 @@
                       "visibility": "internal"
                     }
                   ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42271,
-                  "initialValue": {
-                    "expression": {
-                      "id": 42269,
-                      "name": "signatures",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42252,
-=======
-                  "id": 42104,
-=======
-                  "id": 42105,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42098,
->>>>>>> 720382b (commit ABI artifacts)
                   "initialValue": {
                     "expression": {
                       "id": 42096,
                       "name": "signatures",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 42085,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 42086,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "referencedDeclaration": 42079,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1596:10:62",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_bytes_memory_ptr_$dyn_memory_ptr",
                         "typeString": "bytes memory[] memory"
                       }
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42270,
-=======
-                    "id": 42103,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42104,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42097,
->>>>>>> 720382b (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -928,53 +463,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42274,
-=======
-                    "id": 42107,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42108,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42101,
->>>>>>> 720382b (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42272,
-                      "name": "signaturesNumber",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42268,
-=======
-                      "id": 42105,
-                      "name": "signaturesNumber",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42101,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42106,
-                      "name": "signaturesNumber",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42102,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42099,
                       "name": "signaturesNumber",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 42095,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1627:16:62",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -985,19 +484,7 @@
                     "operator": "==",
                     "rightExpression": {
                       "hexValue": "30",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42273,
-=======
-                      "id": 42106,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42107,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42100,
->>>>>>> 720382b (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1017,35 +504,11 @@
                       "typeString": "bool"
                     }
                   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42282,
-                  "nodeType": "IfStatement",
-                  "src": "1623:90:62",
-                  "trueBody": {
-                    "id": 42281,
-=======
-                  "id": 42115,
-                  "nodeType": "IfStatement",
-                  "src": "1623:90:62",
-                  "trueBody": {
-                    "id": 42114,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42116,
-                  "nodeType": "IfStatement",
-                  "src": "1623:90:62",
-                  "trueBody": {
-                    "id": 42115,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42109,
                   "nodeType": "IfStatement",
                   "src": "1623:90:62",
                   "trueBody": {
                     "id": 42108,
->>>>>>> 720382b (commit ABI artifacts)
                     "nodeType": "Block",
                     "src": "1650:63:62",
                     "statements": [
@@ -1053,19 +516,7 @@
                         "expression": {
                           "components": [
                             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42276,
-=======
-                              "id": 42109,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42110,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42103,
->>>>>>> 720382b (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1075,35 +526,11 @@
                               "prefix": true,
                               "src": "1672:6:62",
                               "subExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42275,
-                                "name": "valid",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42261,
-=======
-                                "id": 42108,
-                                "name": "valid",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42094,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42109,
-                                "name": "valid",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42095,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42102,
                                 "name": "valid",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
                                 "referencedDeclaration": 42088,
->>>>>>> 720382b (commit ABI artifacts)
                                 "src": "1673:5:62",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_bool",
@@ -1117,29 +544,7 @@
                             },
                             {
                               "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42277,
-                                "name": "Error",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42238,
-                                "src": "1680:5:62",
-                                "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_enum$_Error_$42238_$",
-                                  "typeString": "type(enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "id": 42278,
-=======
-                                "id": 42110,
-=======
-                                "id": 42111,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42104,
->>>>>>> 720382b (commit ABI artifacts)
                                 "name": "Error",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
@@ -1150,16 +555,7 @@
                                   "typeString": "type(enum MultisignatureChecker.Error)"
                                 }
                               },
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42111,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42112,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42105,
->>>>>>> 720382b (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -1167,48 +563,15 @@
                               "memberLocation": "1686:15:62",
                               "memberName": "EmptySignatures",
                               "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "referencedDeclaration": 42233,
-                              "src": "1680:21:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42238",
-=======
-                              "referencedDeclaration": 42066,
-                              "src": "1680:21:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42071",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "referencedDeclaration": 42067,
-                              "src": "1680:21:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "referencedDeclaration": 42060,
                               "src": "1680:21:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                                 "typeString": "enum MultisignatureChecker.Error"
                               }
                             }
                           ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42279,
-=======
-                          "id": 42112,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42113,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42106,
->>>>>>> 720382b (commit ABI artifacts)
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -1217,39 +580,12 @@
                           "nodeType": "TupleExpression",
                           "src": "1671:31:62",
                           "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42238_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42259,
-                        "id": 42280,
-=======
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42071_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42092,
-                        "id": 42113,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42072_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42093,
-                        "id": 42114,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
                             "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                           }
                         },
                         "functionReturnParameters": 42086,
                         "id": 42107,
->>>>>>> 720382b (commit ABI artifacts)
                         "nodeType": "Return",
                         "src": "1664:38:62"
                       }
@@ -1262,19 +598,7 @@
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42291,
-=======
-                    "id": 42124,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42125,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42118,
->>>>>>> 720382b (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1284,53 +608,17 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42286,
-=======
-                      "id": 42119,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42120,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42113,
->>>>>>> 720382b (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42283,
-                        "name": "signaturesNumber",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 42268,
-=======
-                        "id": 42116,
-                        "name": "signaturesNumber",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 42101,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42117,
-                        "name": "signaturesNumber",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 42102,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42110,
                         "name": "signaturesNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 42095,
->>>>>>> 720382b (commit ABI artifacts)
                         "src": "1727:16:62",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1341,54 +629,18 @@
                       "operator": "!=",
                       "rightExpression": {
                         "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42284,
-                          "name": "signatories",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42242,
-=======
-                          "id": 42117,
-                          "name": "signatories",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42075,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42118,
-                          "name": "signatories",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42076,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42111,
                           "name": "signatories",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 42069,
->>>>>>> 720382b (commit ABI artifacts)
                           "src": "1747:11:62",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
                             "typeString": "address[] memory"
                           }
                         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42285,
-=======
-                        "id": 42118,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42119,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42112,
->>>>>>> 720382b (commit ABI artifacts)
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1415,53 +667,17 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42290,
-=======
-                      "id": 42123,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42124,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42117,
->>>>>>> 720382b (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42287,
-                        "name": "signaturesNumber",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 42268,
-=======
-                        "id": 42120,
-                        "name": "signaturesNumber",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 42101,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42121,
-                        "name": "signaturesNumber",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 42102,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42114,
                         "name": "signaturesNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": 42095,
->>>>>>> 720382b (commit ABI artifacts)
                         "src": "1769:16:62",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -1472,54 +688,18 @@
                       "operator": "!=",
                       "rightExpression": {
                         "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42288,
-                          "name": "weights",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42245,
-=======
-                          "id": 42121,
-                          "name": "weights",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42078,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42122,
-                          "name": "weights",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42079,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42115,
                           "name": "weights",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 42072,
->>>>>>> 720382b (commit ABI artifacts)
                           "src": "1789:7:62",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                             "typeString": "uint256[] memory"
                           }
                         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42289,
-=======
-                        "id": 42122,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42123,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42116,
->>>>>>> 720382b (commit ABI artifacts)
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1545,35 +725,11 @@
                       "typeString": "bool"
                     }
                   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42299,
-                  "nodeType": "IfStatement",
-                  "src": "1723:148:62",
-                  "trueBody": {
-                    "id": 42298,
-=======
-                  "id": 42132,
-                  "nodeType": "IfStatement",
-                  "src": "1723:148:62",
-                  "trueBody": {
-                    "id": 42131,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42133,
-                  "nodeType": "IfStatement",
-                  "src": "1723:148:62",
-                  "trueBody": {
-                    "id": 42132,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42126,
                   "nodeType": "IfStatement",
                   "src": "1723:148:62",
                   "trueBody": {
                     "id": 42125,
->>>>>>> 720382b (commit ABI artifacts)
                     "nodeType": "Block",
                     "src": "1805:66:62",
                     "statements": [
@@ -1581,19 +737,7 @@
                         "expression": {
                           "components": [
                             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42293,
-=======
-                              "id": 42126,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42127,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42120,
->>>>>>> 720382b (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1603,35 +747,11 @@
                               "prefix": true,
                               "src": "1827:6:62",
                               "subExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42292,
-                                "name": "valid",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42261,
-=======
-                                "id": 42125,
-                                "name": "valid",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42094,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42126,
-                                "name": "valid",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42095,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42119,
                                 "name": "valid",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
                                 "referencedDeclaration": 42088,
->>>>>>> 720382b (commit ABI artifacts)
                                 "src": "1828:5:62",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_bool",
@@ -1645,29 +765,7 @@
                             },
                             {
                               "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42294,
-                                "name": "Error",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42238,
-                                "src": "1835:5:62",
-                                "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_enum$_Error_$42238_$",
-                                  "typeString": "type(enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "id": 42295,
-=======
-                                "id": 42127,
-=======
-                                "id": 42128,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42121,
->>>>>>> 720382b (commit ABI artifacts)
                                 "name": "Error",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
@@ -1678,16 +776,7 @@
                                   "typeString": "type(enum MultisignatureChecker.Error)"
                                 }
                               },
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42128,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42129,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42122,
->>>>>>> 720382b (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -1695,48 +784,15 @@
                               "memberLocation": "1841:18:62",
                               "memberName": "InvalidArrayLength",
                               "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "referencedDeclaration": 42232,
-                              "src": "1835:24:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42238",
-=======
-                              "referencedDeclaration": 42065,
-                              "src": "1835:24:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42071",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "referencedDeclaration": 42066,
-                              "src": "1835:24:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "referencedDeclaration": 42059,
                               "src": "1835:24:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                                 "typeString": "enum MultisignatureChecker.Error"
                               }
                             }
                           ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42296,
-=======
-                          "id": 42129,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42130,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42123,
->>>>>>> 720382b (commit ABI artifacts)
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -1745,39 +801,12 @@
                           "nodeType": "TupleExpression",
                           "src": "1826:34:62",
                           "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42238_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42259,
-                        "id": 42297,
-=======
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42071_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42092,
-                        "id": 42130,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42072_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42093,
-                        "id": 42131,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
                             "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                           }
                         },
                         "functionReturnParameters": 42086,
                         "id": 42124,
->>>>>>> 720382b (commit ABI artifacts)
                         "nodeType": "Return",
                         "src": "1819:41:62"
                       }
@@ -1786,76 +815,25 @@
                 },
                 {
                   "body": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42358,
-=======
-                    "id": 42191,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42192,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42185,
->>>>>>> 720382b (commit ABI artifacts)
                     "nodeType": "Block",
                     "src": "1925:528:62",
                     "statements": [
                       {
                         "assignments": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          42308,
-                          42311,
-=======
-                          42141,
-                          42144,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          42142,
-                          42145,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           42135,
                           42138,
->>>>>>> 720382b (commit ABI artifacts)
                           null
                         ],
                         "declarations": [
                           {
                             "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42308,
-=======
-                            "id": 42141,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42142,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42135,
->>>>>>> 720382b (commit ABI artifacts)
                             "mutability": "mutable",
                             "name": "recovered",
                             "nameLocation": "1948:9:62",
                             "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "scope": 42358,
-=======
-                            "scope": 42191,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "scope": 42192,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "scope": 42185,
->>>>>>> 720382b (commit ABI artifacts)
                             "src": "1940:17:62",
                             "stateVariable": false,
                             "storageLocation": "default",
@@ -1864,19 +842,7 @@
                               "typeString": "address"
                             },
                             "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42307,
-=======
-                              "id": 42140,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42141,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42134,
->>>>>>> 720382b (commit ABI artifacts)
                               "name": "address",
                               "nodeType": "ElementaryTypeName",
                               "src": "1940:7:62",
@@ -1890,36 +856,12 @@
                           },
                           {
                             "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42311,
-=======
-                            "id": 42144,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42145,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42138,
->>>>>>> 720382b (commit ABI artifacts)
                             "mutability": "mutable",
                             "name": "ecdsaErr",
                             "nameLocation": "1978:8:62",
                             "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "scope": 42358,
-=======
-                            "scope": 42191,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "scope": 42192,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "scope": 42185,
->>>>>>> 720382b (commit ABI artifacts)
                             "src": "1959:27:62",
                             "stateVariable": false,
                             "storageLocation": "default",
@@ -1928,31 +870,10 @@
                               "typeString": "enum ECDSA.RecoverError"
                             },
                             "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42310,
-                              "nodeType": "UserDefinedTypeName",
-                              "pathNode": {
-                                "id": 42309,
-=======
-                              "id": 42143,
-                              "nodeType": "UserDefinedTypeName",
-                              "pathNode": {
-                                "id": 42142,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42144,
-                              "nodeType": "UserDefinedTypeName",
-                              "pathNode": {
-                                "id": 42143,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42137,
                               "nodeType": "UserDefinedTypeName",
                               "pathNode": {
                                 "id": 42136,
->>>>>>> 720382b (commit ABI artifacts)
                                 "name": "ECDSA.RecoverError",
                                 "nameLocations": [
                                   "1959:5:62",
@@ -1973,26 +894,7 @@
                           },
                           null
                         ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42319,
-                        "initialValue": {
-                          "arguments": [
-                            {
-                              "id": 42314,
-                              "name": "hash",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42249,
-=======
-                        "id": 42152,
-=======
-                        "id": 42153,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42146,
->>>>>>> 720382b (commit ABI artifacts)
                         "initialValue": {
                           "arguments": [
                             {
@@ -2000,16 +902,7 @@
                               "name": "hash",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "referencedDeclaration": 42082,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "referencedDeclaration": 42083,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "referencedDeclaration": 42076,
->>>>>>> 720382b (commit ABI artifacts)
                               "src": "2033:4:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bytes32",
@@ -2018,74 +911,24 @@
                             },
                             {
                               "baseExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42315,
-                                "name": "signatures",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42252,
-=======
-                                "id": 42148,
-                                "name": "signatures",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42085,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42149,
-                                "name": "signatures",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42086,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42142,
                                 "name": "signatures",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
                                 "referencedDeclaration": 42079,
->>>>>>> 720382b (commit ABI artifacts)
                                 "src": "2066:10:62",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_array$_t_bytes_memory_ptr_$dyn_memory_ptr",
                                   "typeString": "bytes memory[] memory"
                                 }
                               },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42317,
-                              "indexExpression": {
-                                "id": 42316,
-                                "name": "i",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42301,
-=======
-                              "id": 42150,
-=======
-                              "id": 42151,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42144,
->>>>>>> 720382b (commit ABI artifacts)
                               "indexExpression": {
                                 "id": 42143,
                                 "name": "i",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "referencedDeclaration": 42134,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "referencedDeclaration": 42135,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "referencedDeclaration": 42128,
->>>>>>> 720382b (commit ABI artifacts)
                                 "src": "2077:1:62",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -2116,19 +959,7 @@
                               }
                             ],
                             "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42312,
-=======
-                              "id": 42145,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42146,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42139,
->>>>>>> 720382b (commit ABI artifacts)
                               "name": "ECDSA",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -2139,19 +970,7 @@
                                 "typeString": "type(library ECDSA)"
                               }
                             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42313,
-=======
-                            "id": 42146,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42147,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42140,
->>>>>>> 720382b (commit ABI artifacts)
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -2166,19 +985,7 @@
                               "typeString": "function (bytes32,bytes memory) pure returns (address,enum ECDSA.RecoverError,bytes32)"
                             }
                           },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42318,
-=======
-                          "id": 42151,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42152,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42145,
->>>>>>> 720382b (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2209,53 +1016,17 @@
                             "typeIdentifier": "t_enum$_RecoverError_$32762",
                             "typeString": "enum ECDSA.RecoverError"
                           },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42324,
-=======
-                          "id": 42157,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42158,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42151,
->>>>>>> 720382b (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42320,
-                            "name": "ecdsaErr",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42311,
-=======
-                            "id": 42153,
-                            "name": "ecdsaErr",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42144,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42154,
-                            "name": "ecdsaErr",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42145,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42147,
                             "name": "ecdsaErr",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 42138,
->>>>>>> 720382b (commit ABI artifacts)
                             "src": "2112:8:62",
                             "typeDescriptions": {
                               "typeIdentifier": "t_enum$_RecoverError_$32762",
@@ -2267,19 +1038,7 @@
                           "rightExpression": {
                             "expression": {
                               "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42321,
-=======
-                                "id": 42154,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42155,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42148,
->>>>>>> 720382b (commit ABI artifacts)
                                 "name": "ECDSA",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
@@ -2290,19 +1049,7 @@
                                   "typeString": "type(library ECDSA)"
                                 }
                               },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42322,
-=======
-                              "id": 42155,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42156,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42149,
->>>>>>> 720382b (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -2317,19 +1064,7 @@
                                 "typeString": "type(enum ECDSA.RecoverError)"
                               }
                             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42323,
-=======
-                            "id": 42156,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42157,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42150,
->>>>>>> 720382b (commit ABI artifacts)
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -2350,35 +1085,11 @@
                             "typeString": "bool"
                           }
                         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42332,
-                        "nodeType": "IfStatement",
-                        "src": "2108:116:62",
-                        "trueBody": {
-                          "id": 42331,
-=======
-                        "id": 42165,
-                        "nodeType": "IfStatement",
-                        "src": "2108:116:62",
-                        "trueBody": {
-                          "id": 42164,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42166,
-                        "nodeType": "IfStatement",
-                        "src": "2108:116:62",
-                        "trueBody": {
-                          "id": 42165,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42159,
                         "nodeType": "IfStatement",
                         "src": "2108:116:62",
                         "trueBody": {
                           "id": 42158,
->>>>>>> 720382b (commit ABI artifacts)
                           "nodeType": "Block",
                           "src": "2152:72:62",
                           "statements": [
@@ -2386,19 +1097,7 @@
                               "expression": {
                                 "components": [
                                   {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                    "id": 42326,
-=======
-                                    "id": 42159,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                    "id": 42160,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                     "id": 42153,
->>>>>>> 720382b (commit ABI artifacts)
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": false,
@@ -2408,35 +1107,11 @@
                                     "prefix": true,
                                     "src": "2178:6:62",
                                     "subExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                      "id": 42325,
-                                      "name": "valid",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42261,
-=======
-                                      "id": 42158,
-                                      "name": "valid",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42094,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                      "id": 42159,
-                                      "name": "valid",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42095,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                       "id": 42152,
                                       "name": "valid",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
                                       "referencedDeclaration": 42088,
->>>>>>> 720382b (commit ABI artifacts)
                                       "src": "2179:5:62",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_bool",
@@ -2450,29 +1125,7 @@
                                   },
                                   {
                                     "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                      "id": 42327,
-                                      "name": "Error",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42238,
-                                      "src": "2186:5:62",
-                                      "typeDescriptions": {
-                                        "typeIdentifier": "t_type$_t_enum$_Error_$42238_$",
-                                        "typeString": "type(enum MultisignatureChecker.Error)"
-                                      }
-                                    },
-                                    "id": 42328,
-=======
-                                      "id": 42160,
-=======
-                                      "id": 42161,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                       "id": 42154,
->>>>>>> 720382b (commit ABI artifacts)
                                       "name": "Error",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
@@ -2483,16 +1136,7 @@
                                         "typeString": "type(enum MultisignatureChecker.Error)"
                                       }
                                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                    "id": 42161,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                    "id": 42162,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                     "id": 42155,
->>>>>>> 720382b (commit ABI artifacts)
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -2500,48 +1144,15 @@
                                     "memberLocation": "2192:16:62",
                                     "memberName": "InvalidSignature",
                                     "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                    "referencedDeclaration": 42236,
-                                    "src": "2186:22:62",
-                                    "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42238",
-=======
-                                    "referencedDeclaration": 42069,
-                                    "src": "2186:22:62",
-                                    "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42071",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                    "referencedDeclaration": 42070,
-                                    "src": "2186:22:62",
-                                    "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                     "referencedDeclaration": 42063,
                                     "src": "2186:22:62",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                                       "typeString": "enum MultisignatureChecker.Error"
                                     }
                                   }
                                 ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42329,
-=======
-                                "id": 42162,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42163,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42156,
->>>>>>> 720382b (commit ABI artifacts)
                                 "isConstant": false,
                                 "isInlineArray": false,
                                 "isLValue": false,
@@ -2550,39 +1161,12 @@
                                 "nodeType": "TupleExpression",
                                 "src": "2177:32:62",
                                 "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42238_$",
-                                  "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "functionReturnParameters": 42259,
-                              "id": 42330,
-=======
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42071_$",
-                                  "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "functionReturnParameters": 42092,
-                              "id": 42163,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42072_$",
-                                  "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "functionReturnParameters": 42093,
-                              "id": 42164,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                   "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
                                   "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                                 }
                               },
                               "functionReturnParameters": 42086,
                               "id": 42157,
->>>>>>> 720382b (commit ABI artifacts)
                               "nodeType": "Return",
                               "src": "2170:39:62"
                             }
@@ -2595,53 +1179,17 @@
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42337,
-=======
-                          "id": 42170,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42171,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42164,
->>>>>>> 720382b (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42333,
-                            "name": "recovered",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42308,
-=======
-                            "id": 42166,
-                            "name": "recovered",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42141,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42167,
-                            "name": "recovered",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42142,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42160,
                             "name": "recovered",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 42135,
->>>>>>> 720382b (commit ABI artifacts)
                             "src": "2241:9:62",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -2652,74 +1200,24 @@
                           "operator": "!=",
                           "rightExpression": {
                             "baseExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42334,
-                              "name": "signatories",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42242,
-=======
-                              "id": 42167,
-                              "name": "signatories",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42075,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42168,
-                              "name": "signatories",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42076,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42161,
                               "name": "signatories",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 42069,
->>>>>>> 720382b (commit ABI artifacts)
                               "src": "2254:11:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
                                 "typeString": "address[] memory"
                               }
                             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42336,
-                            "indexExpression": {
-                              "id": 42335,
-                              "name": "i",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42301,
-=======
-                            "id": 42169,
-=======
-                            "id": 42170,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42163,
->>>>>>> 720382b (commit ABI artifacts)
                             "indexExpression": {
                               "id": 42162,
                               "name": "i",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "referencedDeclaration": 42134,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "referencedDeclaration": 42135,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "referencedDeclaration": 42128,
->>>>>>> 720382b (commit ABI artifacts)
                               "src": "2266:1:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -2743,35 +1241,11 @@
                             "typeString": "bool"
                           }
                         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42345,
-                        "nodeType": "IfStatement",
-                        "src": "2237:105:62",
-                        "trueBody": {
-                          "id": 42344,
-=======
-                        "id": 42178,
-                        "nodeType": "IfStatement",
-                        "src": "2237:105:62",
-                        "trueBody": {
-                          "id": 42177,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42179,
-                        "nodeType": "IfStatement",
-                        "src": "2237:105:62",
-                        "trueBody": {
-                          "id": 42178,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42172,
                         "nodeType": "IfStatement",
                         "src": "2237:105:62",
                         "trueBody": {
                           "id": 42171,
->>>>>>> 720382b (commit ABI artifacts)
                           "nodeType": "Block",
                           "src": "2270:72:62",
                           "statements": [
@@ -2779,19 +1253,7 @@
                               "expression": {
                                 "components": [
                                   {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                    "id": 42339,
-=======
-                                    "id": 42172,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                    "id": 42173,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                     "id": 42166,
->>>>>>> 720382b (commit ABI artifacts)
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": false,
@@ -2801,35 +1263,11 @@
                                     "prefix": true,
                                     "src": "2296:6:62",
                                     "subExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                      "id": 42338,
-                                      "name": "valid",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42261,
-=======
-                                      "id": 42171,
-                                      "name": "valid",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42094,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                      "id": 42172,
-                                      "name": "valid",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42095,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                       "id": 42165,
                                       "name": "valid",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
                                       "referencedDeclaration": 42088,
->>>>>>> 720382b (commit ABI artifacts)
                                       "src": "2297:5:62",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_bool",
@@ -2843,29 +1281,7 @@
                                   },
                                   {
                                     "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                      "id": 42340,
-                                      "name": "Error",
-                                      "nodeType": "Identifier",
-                                      "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42238,
-                                      "src": "2304:5:62",
-                                      "typeDescriptions": {
-                                        "typeIdentifier": "t_type$_t_enum$_Error_$42238_$",
-                                        "typeString": "type(enum MultisignatureChecker.Error)"
-                                      }
-                                    },
-                                    "id": 42341,
-=======
-                                      "id": 42173,
-=======
-                                      "id": 42174,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                       "id": 42167,
->>>>>>> 720382b (commit ABI artifacts)
                                       "name": "Error",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
@@ -2876,16 +1292,7 @@
                                         "typeString": "type(enum MultisignatureChecker.Error)"
                                       }
                                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                    "id": 42174,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                    "id": 42175,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                     "id": 42168,
->>>>>>> 720382b (commit ABI artifacts)
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -2893,48 +1300,15 @@
                                     "memberLocation": "2310:16:62",
                                     "memberName": "InvalidSignatory",
                                     "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                    "referencedDeclaration": 42235,
-                                    "src": "2304:22:62",
-                                    "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42238",
-=======
-                                    "referencedDeclaration": 42068,
-                                    "src": "2304:22:62",
-                                    "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42071",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                    "referencedDeclaration": 42069,
-                                    "src": "2304:22:62",
-                                    "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                     "referencedDeclaration": 42062,
                                     "src": "2304:22:62",
                                     "typeDescriptions": {
                                       "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                                       "typeString": "enum MultisignatureChecker.Error"
                                     }
                                   }
                                 ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42342,
-=======
-                                "id": 42175,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42176,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42169,
->>>>>>> 720382b (commit ABI artifacts)
                                 "isConstant": false,
                                 "isInlineArray": false,
                                 "isLValue": false,
@@ -2943,39 +1317,12 @@
                                 "nodeType": "TupleExpression",
                                 "src": "2295:32:62",
                                 "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42238_$",
-                                  "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "functionReturnParameters": 42259,
-                              "id": 42343,
-=======
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42071_$",
-                                  "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "functionReturnParameters": 42092,
-                              "id": 42176,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42072_$",
-                                  "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "functionReturnParameters": 42093,
-                              "id": 42177,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                   "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
                                   "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                                 }
                               },
                               "functionReturnParameters": 42086,
                               "id": 42170,
->>>>>>> 720382b (commit ABI artifacts)
                               "nodeType": "Return",
                               "src": "2288:39:62"
                             }
@@ -2984,53 +1331,17 @@
                       },
                       {
                         "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42352,
-=======
-                          "id": 42185,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42186,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42179,
->>>>>>> 720382b (commit ABI artifacts)
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftHandSide": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42346,
-                            "name": "weight",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42265,
-=======
-                            "id": 42179,
-                            "name": "weight",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42098,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42180,
-                            "name": "weight",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": 42099,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42173,
                             "name": "weight",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
                             "referencedDeclaration": 42092,
->>>>>>> 720382b (commit ABI artifacts)
                             "src": "2355:6:62",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -3044,53 +1355,17 @@
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42351,
-=======
-                            "id": 42184,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42185,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42178,
->>>>>>> 720382b (commit ABI artifacts)
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42347,
-                              "name": "weight",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42265,
-=======
-                              "id": 42180,
-                              "name": "weight",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42098,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42181,
-                              "name": "weight",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42099,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42174,
                               "name": "weight",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 42092,
->>>>>>> 720382b (commit ABI artifacts)
                               "src": "2364:6:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -3101,74 +1376,24 @@
                             "operator": "+",
                             "rightExpression": {
                               "baseExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42348,
-                                "name": "weights",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42245,
-=======
-                                "id": 42181,
-                                "name": "weights",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42078,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42182,
-                                "name": "weights",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42079,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42175,
                                 "name": "weights",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
                                 "referencedDeclaration": 42072,
->>>>>>> 720382b (commit ABI artifacts)
                                 "src": "2373:7:62",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                                   "typeString": "uint256[] memory"
                                 }
                               },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42350,
-                              "indexExpression": {
-                                "id": 42349,
-                                "name": "i",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42301,
-=======
-                              "id": 42183,
-=======
-                              "id": 42184,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42177,
->>>>>>> 720382b (commit ABI artifacts)
                               "indexExpression": {
                                 "id": 42176,
                                 "name": "i",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "referencedDeclaration": 42134,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "referencedDeclaration": 42135,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "referencedDeclaration": 42128,
->>>>>>> 720382b (commit ABI artifacts)
                                 "src": "2381:1:62",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -3198,54 +1423,18 @@
                             "typeString": "uint256"
                           }
                         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42353,
-=======
-                        "id": 42186,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42187,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42180,
->>>>>>> 720382b (commit ABI artifacts)
                         "nodeType": "ExpressionStatement",
                         "src": "2355:28:62"
                       },
                       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42357,
-=======
-                        "id": 42190,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42191,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42184,
->>>>>>> 720382b (commit ABI artifacts)
                         "nodeType": "UncheckedBlock",
                         "src": "2397:46:62",
                         "statements": [
                           {
                             "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42355,
-=======
-                              "id": 42188,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42189,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42182,
->>>>>>> 720382b (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -3255,35 +1444,11 @@
                               "prefix": true,
                               "src": "2425:3:62",
                               "subExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42354,
-                                "name": "i",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42301,
-=======
-                                "id": 42187,
-                                "name": "i",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42134,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "id": 42188,
-                                "name": "i",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42135,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42181,
                                 "name": "i",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
                                 "referencedDeclaration": 42128,
->>>>>>> 720382b (commit ABI artifacts)
                                 "src": "2427:1:62",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -3295,19 +1460,7 @@
                                 "typeString": "uint256"
                               }
                             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "id": 42356,
-=======
-                            "id": 42189,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "id": 42190,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "id": 42183,
->>>>>>> 720382b (commit ABI artifacts)
                             "nodeType": "ExpressionStatement",
                             "src": "2425:3:62"
                           }
@@ -3320,53 +1473,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42306,
-=======
-                    "id": 42139,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42140,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42133,
->>>>>>> 720382b (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42304,
-                      "name": "i",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42301,
-=======
-                      "id": 42137,
-                      "name": "i",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42134,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42138,
-                      "name": "i",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42135,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42131,
                       "name": "i",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 42128,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1901:1:62",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3376,35 +1493,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": "<",
                     "rightExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42305,
-                      "name": "signaturesNumber",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42268,
-=======
-                      "id": 42138,
-                      "name": "signaturesNumber",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42101,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42139,
-                      "name": "signaturesNumber",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42102,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42132,
                       "name": "signaturesNumber",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 42095,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1905:16:62",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3417,65 +1510,20 @@
                       "typeString": "bool"
                     }
                   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42359,
-                  "initializationExpression": {
-                    "assignments": [
-                      42301
-=======
-                  "id": 42192,
-                  "initializationExpression": {
-                    "assignments": [
-                      42134
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42193,
-                  "initializationExpression": {
-                    "assignments": [
-                      42135
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42186,
                   "initializationExpression": {
                     "assignments": [
                       42128
->>>>>>> 720382b (commit ABI artifacts)
                     ],
                     "declarations": [
                       {
                         "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42301,
-=======
-                        "id": 42134,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42135,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42128,
->>>>>>> 720382b (commit ABI artifacts)
                         "mutability": "mutable",
                         "name": "i",
                         "nameLocation": "1894:1:62",
                         "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "scope": 42359,
-=======
-                        "scope": 42192,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "scope": 42193,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "scope": 42186,
->>>>>>> 720382b (commit ABI artifacts)
                         "src": "1886:9:62",
                         "stateVariable": false,
                         "storageLocation": "default",
@@ -3484,19 +1532,7 @@
                           "typeString": "uint256"
                         },
                         "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42300,
-=======
-                          "id": 42133,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42134,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42127,
->>>>>>> 720382b (commit ABI artifacts)
                           "name": "uint256",
                           "nodeType": "ElementaryTypeName",
                           "src": "1886:7:62",
@@ -3508,31 +1544,10 @@
                         "visibility": "internal"
                       }
                     ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42303,
-                    "initialValue": {
-                      "hexValue": "30",
-                      "id": 42302,
-=======
-                    "id": 42136,
-                    "initialValue": {
-                      "hexValue": "30",
-                      "id": 42135,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42137,
-                    "initialValue": {
-                      "hexValue": "30",
-                      "id": 42136,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42130,
                     "initialValue": {
                       "hexValue": "30",
                       "id": 42129,
->>>>>>> 720382b (commit ABI artifacts)
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -3558,53 +1573,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42362,
-=======
-                    "id": 42195,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42196,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42189,
->>>>>>> 720382b (commit ABI artifacts)
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42360,
-                      "name": "weight",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42265,
-=======
-                      "id": 42193,
-                      "name": "weight",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42098,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42194,
-                      "name": "weight",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42099,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42187,
                       "name": "weight",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 42092,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "2466:6:62",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3614,35 +1593,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": ">=",
                     "rightExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42361,
-                      "name": "threshold",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42247,
-=======
-                      "id": 42194,
-                      "name": "threshold",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42080,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42195,
-                      "name": "threshold",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 42081,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42188,
                       "name": "threshold",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
                       "referencedDeclaration": 42074,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "2476:9:62",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -3655,35 +1610,11 @@
                       "typeString": "bool"
                     }
                   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42369,
-                  "nodeType": "IfStatement",
-                  "src": "2462:75:62",
-                  "trueBody": {
-                    "id": 42368,
-=======
-                  "id": 42202,
-                  "nodeType": "IfStatement",
-                  "src": "2462:75:62",
-                  "trueBody": {
-                    "id": 42201,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42203,
-                  "nodeType": "IfStatement",
-                  "src": "2462:75:62",
-                  "trueBody": {
-                    "id": 42202,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42196,
                   "nodeType": "IfStatement",
                   "src": "2462:75:62",
                   "trueBody": {
                     "id": 42195,
->>>>>>> 720382b (commit ABI artifacts)
                     "nodeType": "Block",
                     "src": "2487:50:62",
                     "statements": [
@@ -3691,35 +1622,11 @@
                         "expression": {
                           "components": [
                             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42363,
-                              "name": "valid",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42261,
-=======
-                              "id": 42196,
-                              "name": "valid",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42094,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42197,
-                              "name": "valid",
-                              "nodeType": "Identifier",
-                              "overloadedDeclarations": [],
-                              "referencedDeclaration": 42095,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42190,
                               "name": "valid",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
                               "referencedDeclaration": 42088,
->>>>>>> 720382b (commit ABI artifacts)
                               "src": "2509:5:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bool",
@@ -3728,29 +1635,7 @@
                             },
                             {
                               "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "id": 42364,
-                                "name": "Error",
-                                "nodeType": "Identifier",
-                                "overloadedDeclarations": [],
-                                "referencedDeclaration": 42238,
-                                "src": "2516:5:62",
-                                "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_enum$_Error_$42238_$",
-                                  "typeString": "type(enum MultisignatureChecker.Error)"
-                                }
-                              },
-                              "id": 42365,
-=======
-                                "id": 42197,
-=======
-                                "id": 42198,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                                 "id": 42191,
->>>>>>> 720382b (commit ABI artifacts)
                                 "name": "Error",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
@@ -3761,16 +1646,7 @@
                                   "typeString": "type(enum MultisignatureChecker.Error)"
                                 }
                               },
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "id": 42198,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "id": 42199,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "id": 42192,
->>>>>>> 720382b (commit ABI artifacts)
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -3778,48 +1654,15 @@
                               "memberLocation": "2522:3:62",
                               "memberName": "Nil",
                               "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "referencedDeclaration": 42231,
-                              "src": "2516:9:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42238",
-=======
-                              "referencedDeclaration": 42064,
-                              "src": "2516:9:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42071",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "referencedDeclaration": 42065,
-                              "src": "2516:9:62",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                               "referencedDeclaration": 42058,
                               "src": "2516:9:62",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                                 "typeString": "enum MultisignatureChecker.Error"
                               }
                             }
                           ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42366,
-=======
-                          "id": 42199,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42200,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42193,
->>>>>>> 720382b (commit ABI artifacts)
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -3828,39 +1671,12 @@
                           "nodeType": "TupleExpression",
                           "src": "2508:18:62",
                           "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42238_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42259,
-                        "id": 42367,
-=======
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42071_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42092,
-                        "id": 42200,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42072_$",
-                            "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "functionReturnParameters": 42093,
-                        "id": 42201,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                             "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
                             "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                           }
                         },
                         "functionReturnParameters": 42086,
                         "id": 42194,
->>>>>>> 720382b (commit ABI artifacts)
                         "nodeType": "Return",
                         "src": "2501:25:62"
                       }
@@ -3871,19 +1687,7 @@
                   "expression": {
                     "components": [
                       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42371,
-=======
-                        "id": 42204,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42205,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42198,
->>>>>>> 720382b (commit ABI artifacts)
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3893,35 +1697,11 @@
                         "prefix": true,
                         "src": "2554:6:62",
                         "subExpression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42370,
-                          "name": "valid",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42261,
-=======
-                          "id": 42203,
-                          "name": "valid",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42094,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "id": 42204,
-                          "name": "valid",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42095,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42197,
                           "name": "valid",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
                           "referencedDeclaration": 42088,
->>>>>>> 720382b (commit ABI artifacts)
                           "src": "2555:5:62",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
@@ -3935,29 +1715,7 @@
                       },
                       {
                         "expression": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "id": 42372,
-                          "name": "Error",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 42238,
-                          "src": "2562:5:62",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_Error_$42238_$",
-                            "typeString": "type(enum MultisignatureChecker.Error)"
-                          }
-                        },
-                        "id": 42373,
-=======
-                          "id": 42205,
-=======
-                          "id": 42206,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                           "id": 42199,
->>>>>>> 720382b (commit ABI artifacts)
                           "name": "Error",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -3968,16 +1726,7 @@
                             "typeString": "type(enum MultisignatureChecker.Error)"
                           }
                         },
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "id": 42206,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "id": 42207,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "id": 42200,
->>>>>>> 720382b (commit ABI artifacts)
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3985,48 +1734,15 @@
                         "memberLocation": "2568:27:62",
                         "memberName": "WeightsSumLessThanThreshold",
                         "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "referencedDeclaration": 42237,
-                        "src": "2562:33:62",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_Error_$42238",
-=======
-                        "referencedDeclaration": 42070,
-                        "src": "2562:33:62",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_Error_$42071",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "referencedDeclaration": 42071,
-                        "src": "2562:33:62",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                         "referencedDeclaration": 42064,
                         "src": "2562:33:62",
                         "typeDescriptions": {
                           "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                           "typeString": "enum MultisignatureChecker.Error"
                         }
                       }
                     ],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42374,
-=======
-                    "id": 42207,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42208,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42201,
->>>>>>> 720382b (commit ABI artifacts)
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
@@ -4035,58 +1751,19 @@
                     "nodeType": "TupleExpression",
                     "src": "2553:43:62",
                     "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42238_$",
-                      "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                    }
-                  },
-                  "functionReturnParameters": 42259,
-                  "id": 42375,
-=======
-                      "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42071_$",
-                      "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                    }
-                  },
-                  "functionReturnParameters": 42092,
-                  "id": 42208,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42072_$",
-                      "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
-                    }
-                  },
-                  "functionReturnParameters": 42093,
-                  "id": 42209,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
                       "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                     }
                   },
                   "functionReturnParameters": 42086,
                   "id": 42202,
->>>>>>> 720382b (commit ABI artifacts)
                   "nodeType": "Return",
                   "src": "2546:50:62"
                 }
               ]
             },
             "documentation": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 42239,
-=======
-              "id": 42072,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 42073,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
               "id": 42066,
->>>>>>> 720382b (commit ABI artifacts)
               "nodeType": "StructuredDocumentation",
               "src": "497:768:62",
               "text": " @notice Checks if a weighted multi-signature is valid for a given message hash, set of signatories, set of weights, and set of signatures.\n @dev Signatures are validated using `ECDSA.recover`.\n      The multi-signature fails if the sum of the signatory weights is less than the threshold.\n      Signatories in `signatories` and  signatures in `signatures` must have the same order.\n @param signatories The addresses of the signatories.\n @param weights The weights of the signatories.\n @param threshold The number that must be reach to consider `signatures` valid.\n @param hash of the verified data.\n @param signatures Packed signatures. Each signature is in `({bytes32 r}{bytes32 s}{uint8 v})` format."
@@ -4097,53 +1774,17 @@
             "name": "isValidWeightedMultiSignature",
             "nameLocation": "1279:29:62",
             "parameters": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 42253,
-=======
-              "id": 42086,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 42087,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
               "id": 42080,
->>>>>>> 720382b (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42242,
-=======
-                  "id": 42075,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42076,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42069,
->>>>>>> 720382b (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "signatories",
                   "nameLocation": "1335:11:62",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 42377,
-=======
-                  "scope": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "scope": 42204,
->>>>>>> 720382b (commit ABI artifacts)
                   "src": "1318:28:62",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -4153,19 +1794,7 @@
                   },
                   "typeName": {
                     "baseType": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42240,
-=======
-                      "id": 42073,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42074,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42067,
->>>>>>> 720382b (commit ABI artifacts)
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "1318:7:62",
@@ -4175,19 +1804,7 @@
                         "typeString": "address"
                       }
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42241,
-=======
-                    "id": 42074,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42075,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42068,
->>>>>>> 720382b (commit ABI artifacts)
                     "nodeType": "ArrayTypeName",
                     "src": "1318:9:62",
                     "typeDescriptions": {
@@ -4199,36 +1816,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42245,
-=======
-                  "id": 42078,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42079,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42072,
->>>>>>> 720382b (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "weights",
                   "nameLocation": "1373:7:62",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 42377,
-=======
-                  "scope": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "scope": 42204,
->>>>>>> 720382b (commit ABI artifacts)
                   "src": "1356:24:62",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -4238,19 +1831,7 @@
                   },
                   "typeName": {
                     "baseType": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42243,
-=======
-                      "id": 42076,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42077,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42070,
->>>>>>> 720382b (commit ABI artifacts)
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "1356:7:62",
@@ -4259,19 +1840,7 @@
                         "typeString": "uint256"
                       }
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42244,
-=======
-                    "id": 42077,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42078,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42071,
->>>>>>> 720382b (commit ABI artifacts)
                     "nodeType": "ArrayTypeName",
                     "src": "1356:9:62",
                     "typeDescriptions": {
@@ -4283,36 +1852,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42247,
-=======
-                  "id": 42080,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42081,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42074,
->>>>>>> 720382b (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "threshold",
                   "nameLocation": "1398:9:62",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 42377,
-=======
-                  "scope": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "scope": 42204,
->>>>>>> 720382b (commit ABI artifacts)
                   "src": "1390:17:62",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4321,19 +1866,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42246,
-=======
-                    "id": 42079,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42080,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42073,
->>>>>>> 720382b (commit ABI artifacts)
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1390:7:62",
@@ -4346,36 +1879,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42249,
-=======
-                  "id": 42082,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42083,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42076,
->>>>>>> 720382b (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "hash",
                   "nameLocation": "1425:4:62",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 42377,
-=======
-                  "scope": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "scope": 42204,
->>>>>>> 720382b (commit ABI artifacts)
                   "src": "1417:12:62",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4384,19 +1893,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42248,
-=======
-                    "id": 42081,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42082,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42075,
->>>>>>> 720382b (commit ABI artifacts)
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1417:7:62",
@@ -4409,36 +1906,12 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42252,
-=======
-                  "id": 42085,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42086,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42079,
->>>>>>> 720382b (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "signatures",
                   "nameLocation": "1454:10:62",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 42377,
-=======
-                  "scope": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "scope": 42204,
->>>>>>> 720382b (commit ABI artifacts)
                   "src": "1439:25:62",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -4448,19 +1921,7 @@
                   },
                   "typeName": {
                     "baseType": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42250,
-=======
-                      "id": 42083,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42084,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42077,
->>>>>>> 720382b (commit ABI artifacts)
                       "name": "bytes",
                       "nodeType": "ElementaryTypeName",
                       "src": "1439:5:62",
@@ -4469,19 +1930,7 @@
                         "typeString": "bytes"
                       }
                     },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42251,
-=======
-                    "id": 42084,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42085,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42078,
->>>>>>> 720382b (commit ABI artifacts)
                     "nodeType": "ArrayTypeName",
                     "src": "1439:7:62",
                     "typeDescriptions": {
@@ -4495,53 +1944,17 @@
               "src": "1308:162:62"
             },
             "returnParameters": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 42259,
-=======
-              "id": 42092,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 42093,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
               "id": 42086,
->>>>>>> 720382b (commit ABI artifacts)
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42255,
-=======
-                  "id": 42088,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42089,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42082,
->>>>>>> 720382b (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 42377,
-=======
-                  "scope": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "scope": 42204,
->>>>>>> 720382b (commit ABI artifacts)
                   "src": "1494:4:62",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -4550,19 +1963,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 42254,
-=======
-                    "id": 42087,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 42088,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "id": 42081,
->>>>>>> 720382b (commit ABI artifacts)
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1494:4:62",
@@ -4575,113 +1976,36 @@
                 },
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 42258,
-=======
-                  "id": 42091,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 42092,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "id": 42085,
->>>>>>> 720382b (commit ABI artifacts)
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 42377,
-=======
-                  "scope": 42210,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 42211,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                   "scope": 42204,
->>>>>>> 720382b (commit ABI artifacts)
                   "src": "1500:5:62",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "typeIdentifier": "t_enum$_Error_$42238",
-                    "typeString": "enum MultisignatureChecker.Error"
-                  },
-                  "typeName": {
-                    "id": 42257,
-                    "nodeType": "UserDefinedTypeName",
-                    "pathNode": {
-                      "id": 42256,
-=======
-                    "typeIdentifier": "t_enum$_Error_$42071",
-=======
-                    "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                     "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                     "typeString": "enum MultisignatureChecker.Error"
                   },
                   "typeName": {
                     "id": 42084,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "id": 42089,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "id": 42090,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "id": 42083,
->>>>>>> 720382b (commit ABI artifacts)
                       "name": "Error",
                       "nameLocations": [
                         "1500:5:62"
                       ],
                       "nodeType": "IdentifierPath",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 42238,
-                      "src": "1500:5:62"
-                    },
-                    "referencedDeclaration": 42238,
-                    "src": "1500:5:62",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_Error_$42238",
-=======
-                      "referencedDeclaration": 42071,
-=======
-                      "referencedDeclaration": 42072,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "referencedDeclaration": 42065,
->>>>>>> 720382b (commit ABI artifacts)
                       "src": "1500:5:62"
                     },
                     "referencedDeclaration": 42065,
                     "src": "1500:5:62",
                     "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_enum$_Error_$42071",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_enum$_Error_$42072",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
                       "typeIdentifier": "t_enum$_Error_$42065",
->>>>>>> 720382b (commit ABI artifacts)
                       "typeString": "enum MultisignatureChecker.Error"
                     }
                   },
@@ -4690,19 +2014,7 @@
               ],
               "src": "1493:13:62"
             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "scope": 42378,
-=======
-            "scope": 42211,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "scope": 42212,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
             "scope": 42205,
->>>>>>> 720382b (commit ABI artifacts)
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
@@ -4714,54 +2026,18 @@
         "contractDependencies": [],
         "contractKind": "library",
         "documentation": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          "id": 42227,
-=======
-          "id": 42060,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-          "id": 42061,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
           "id": 42054,
->>>>>>> 720382b (commit ABI artifacts)
           "nodeType": "StructuredDocumentation",
           "src": "147:54:62",
           "text": "@title Multi-signature ECDSA verification helper."
         },
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          42378
-        ],
-        "name": "MultisignatureChecker",
-        "nameLocation": "209:21:62",
-        "scope": 42379,
-=======
-          42211
-        ],
-        "name": "MultisignatureChecker",
-        "nameLocation": "209:21:62",
-        "scope": 42212,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-          42212
-        ],
-        "name": "MultisignatureChecker",
-        "nameLocation": "209:21:62",
-        "scope": 42213,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
           42205
         ],
         "name": "MultisignatureChecker",
         "nameLocation": "209:21:62",
         "scope": 42206,
->>>>>>> 720382b (commit ABI artifacts)
         "usedErrors": []
       }
     ],

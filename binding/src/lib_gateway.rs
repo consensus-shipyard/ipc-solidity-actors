@@ -7,7 +7,7 @@ pub use lib_gateway::*;
     clippy::upper_case_acronyms,
     clippy::type_complexity,
     dead_code,
-    non_camel_case_types
+    non_camel_case_types,
 )]
 pub mod lib_gateway {
     #[allow(deprecated)]
@@ -55,9 +55,7 @@ pub mod lib_gateway {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::EventParam {
                                     name: ::std::borrow::ToOwned::to_owned("subnet"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
-                                        32usize,
-                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
                                     indexed: true,
                                 },
                                 ::ethers::core::abi::ethabi::EventParam {
@@ -130,18 +128,21 @@ pub mod lib_gateway {
         }
     }
     ///The parsed JSON ABI of the contract.
-    pub static LIBGATEWAY_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> =
-        ::ethers::contract::Lazy::new(__abi);
+    pub static LIBGATEWAY_ABI: ::ethers::contract::Lazy<::ethers::core::abi::Abi> = ::ethers::contract::Lazy::new(
+        __abi,
+    );
     #[rustfmt::skip]
-    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xBC=\xF7n*\x8E\xFC@\xA8\xF0\xB6\x0Cc\r.\x11\x0FK)&\xA2l\x8Eq\xCBL\x9Aw\xCFI\xC7\x06dsolcC\0\x08\x13\x003";
+    const __BYTECODE: &[u8] = b"`\x80\x80`@R4`\x17W`:\x90\x81`\x1D\x8290\x81PP\xF3[`\0\x80\xFD\xFE`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xDBa\x81\xB4\xD0 \x01\xC8|\xDB\x91\xD2\xE5}\xB2\x12\xD3Z\x91e\x95\xCD\x97i\xB7\xB7\xDD\x04P\xE1\xED\xA0dsolcC\0\x08\x13\x003";
     /// The bytecode of the contract.
-    pub static LIBGATEWAY_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__BYTECODE);
+    pub static LIBGATEWAY_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __BYTECODE,
+    );
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xBC=\xF7n*\x8E\xFC@\xA8\xF0\xB6\x0Cc\r.\x11\x0FK)&\xA2l\x8Eq\xCBL\x9Aw\xCFI\xC7\x06dsolcC\0\x08\x13\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\0\x80\xFD\xFE\xA2dipfsX\"\x12 \xDBa\x81\xB4\xD0 \x01\xC8|\xDB\x91\xD2\xE5}\xB2\x12\xD3Z\x91e\x95\xCD\x97i\xB7\xB7\xDD\x04P\xE1\xED\xA0dsolcC\0\x08\x13\x003";
     /// The deployed bytecode of the contract.
-    pub static LIBGATEWAY_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes =
-        ::ethers::core::types::Bytes::from_static(__DEPLOYED_BYTECODE);
+    pub static LIBGATEWAY_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
+        __DEPLOYED_BYTECODE,
+    );
     pub struct LibGateway<M>(::ethers::contract::Contract<M>);
     impl<M> ::core::clone::Clone for LibGateway<M> {
         fn clone(&self) -> Self {
@@ -161,9 +162,7 @@ pub mod lib_gateway {
     }
     impl<M> ::core::fmt::Debug for LibGateway<M> {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
-            f.debug_tuple(::core::stringify!(LibGateway))
-                .field(&self.address())
-                .finish()
+            f.debug_tuple(::core::stringify!(LibGateway)).field(&self.address()).finish()
         }
     }
     impl<M: ::ethers::providers::Middleware> LibGateway<M> {
@@ -173,11 +172,13 @@ pub mod lib_gateway {
             address: T,
             client: ::std::sync::Arc<M>,
         ) -> Self {
-            Self(::ethers::contract::Contract::new(
-                address.into(),
-                LIBGATEWAY_ABI.clone(),
-                client,
-            ))
+            Self(
+                ::ethers::contract::Contract::new(
+                    address.into(),
+                    LIBGATEWAY_ABI.clone(),
+                    client,
+                ),
+            )
         }
         /// Constructs the general purpose `Deployer` instance based on the provided constructor arguments and sends it.
         /// Returns a new instance of a deployer that returns an instance of this contract after sending the transaction
@@ -221,26 +222,36 @@ pub mod lib_gateway {
         ///Gets the contract's `MembershipUpdated` event
         pub fn membership_updated_filter(
             &self,
-        ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, MembershipUpdatedFilter>
-        {
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            MembershipUpdatedFilter,
+        > {
             self.0.event()
         }
         ///Gets the contract's `NewTopDownMessage` event
         pub fn new_top_down_message_filter(
             &self,
-        ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, NewTopDownMessageFilter>
-        {
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewTopDownMessageFilter,
+        > {
             self.0.event()
         }
         /// Returns an `Event` builder for all the events of this contract.
         pub fn events(
             &self,
-        ) -> ::ethers::contract::builders::Event<::std::sync::Arc<M>, M, LibGatewayEvents> {
-            self.0
-                .event_with_filter(::core::default::Default::default())
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            LibGatewayEvents,
+        > {
+            self.0.event_with_filter(::core::default::Default::default())
         }
     }
-    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>> for LibGateway<M> {
+    impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
+    for LibGateway<M> {
         fn from(contract: ::ethers::contract::Contract<M>) -> Self {
             Self::new(contract.address(), contract.client())
         }
@@ -253,7 +264,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethevent(
         name = "MembershipUpdated",
@@ -268,15 +279,15 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     #[ethevent(
         name = "NewTopDownMessage",
-        abi = "NewTopDownMessage(bytes32,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
+        abi = "NewTopDownMessage(address,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
     )]
     pub struct NewTopDownMessageFilter {
         #[ethevent(indexed)]
-        pub subnet: [u8; 32],
+        pub subnet: ::ethers::core::types::Address,
         pub message: CrossMsg,
     }
     ///Container type for all of the contract's events
@@ -301,8 +312,12 @@ pub mod lib_gateway {
     impl ::core::fmt::Display for LibGatewayEvents {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::MembershipUpdatedFilter(element) => ::core::fmt::Display::fmt(element, f),
-                Self::NewTopDownMessageFilter(element) => ::core::fmt::Display::fmt(element, f),
+                Self::MembershipUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NewTopDownMessageFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
         }
     }
@@ -325,7 +340,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct CrossMsg {
         pub message: StorableMsg,
@@ -340,7 +355,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct FvmAddress {
         pub addr_type: u8,
@@ -355,7 +370,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct Ipcaddress {
         pub subnet_id: SubnetID,
@@ -370,7 +385,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct Membership {
         pub validators: ::std::vec::Vec<Validator>,
@@ -385,7 +400,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct StorableMsg {
         pub from: Ipcaddress,
@@ -405,7 +420,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct SubnetID {
         pub root: u64,
@@ -420,7 +435,7 @@ pub mod lib_gateway {
         Debug,
         PartialEq,
         Eq,
-        Hash,
+        Hash
     )]
     pub struct Validator {
         pub weight: ::ethers::core::types::U256,

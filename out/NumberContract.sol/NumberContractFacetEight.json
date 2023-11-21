@@ -15,19 +15,19 @@
     }
   ],
   "bytecode": {
-    "object": "0x608080604052346014576079908161001a8239f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea26469706673582212203bb205d87288b314d5e0ac509bd78528280e2ff25e793137316ed9993d65976264736f6c63430008130033",
+    "object": "0x608080604052346014576079908161001a8239f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea264697066735822122019d0406fff061bfbcab125d5b270164bb4fa59dd34fec7da3b02a36b05da35c164736f6c63430008130033",
     "sourceMap": "188:115:79:-:0;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea26469706673582212203bb205d87288b314d5e0ac509bd78528280e2ff25e793137316ed9993d65976264736f6c63430008130033",
+    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea264697066735822122019d0406fff061bfbcab125d5b270164bb4fa59dd34fec7da3b02a36b05da35c164736f6c63430008130033",
     "sourceMap": "188:115:79:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;293:1;188:115;;;;;;;",
     "linkReferences": {}
   },
   "methodIdentifiers": {
     "getNum()": "67e0badb"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getNum\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"test/NumberContract.sol\":\"NumberContractFacetEight\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"test/NumberContract.sol\":{\"keccak256\":\"0x7843a93e945fc1a86f1b7c0ee964b9220e148459cabdefe89774e7028e390b7e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://0dd3665ba5496ee7fa57386fa2fe87b669bd652bf73a28883ef716b56e42f4a5\",\"dweb:/ipfs/QmTdg91FczJijJnguNCKPCSFKXLRk5G94UXc9RcATGbsDY\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getNum\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"test/NumberContract.sol\":\"NumberContractFacetEight\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"test/NumberContract.sol\":{\"keccak256\":\"0x7843a93e945fc1a86f1b7c0ee964b9220e148459cabdefe89774e7028e390b7e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://0dd3665ba5496ee7fa57386fa2fe87b669bd652bf73a28883ef716b56e42f4a5\",\"dweb:/ipfs/QmTdg91FczJijJnguNCKPCSFKXLRk5G94UXc9RcATGbsDY\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -62,11 +62,14 @@
     },
     "settings": {
       "remappings": [
+        "@openzeppelin/=node_modules/@openzeppelin/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
         "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
         "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
         "fevmate/=lib/fevmate/contracts/",
         "forge-std/=lib/forge-std/src/",
+        "hardhat-deploy/=node_modules/hardhat-deploy/",
+        "hardhat/=node_modules/hardhat/",
         "murky/=lib/murky/src/",
         "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
         "openzeppelin/=lib/openzeppelin-contracts/contracts/"
@@ -98,58 +101,20 @@
   },
   "ast": {
     "absolutePath": "test/NumberContract.sol",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-    "id": 49101,
+    "id": 48943,
     "exportedSymbols": {
       "NumberContractFacetEight": [
-        49100
+        48942
       ],
       "NumberContractFacetSeven": [
-        49091
-=======
-    "id": 48923,
-=======
-    "id": 48924,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-    "id": 48917,
->>>>>>> 720382b (commit ABI artifacts)
-    "exportedSymbols": {
-      "NumberContractFacetEight": [
-        48916
-      ],
-      "NumberContractFacetSeven": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-        48913
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        48914
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-        48907
->>>>>>> 720382b (commit ABI artifacts)
+        48933
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:258:79",
     "nodes": [
       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "id": 49082,
-=======
-        "id": 48904,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "id": 48905,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-        "id": 48898,
->>>>>>> 720382b (commit ABI artifacts)
+        "id": 48924,
         "nodeType": "PragmaDirective",
         "src": "46:23:79",
         "nodes": [],
@@ -160,53 +125,17 @@
         ]
       },
       {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "id": 49091,
-=======
-        "id": 48913,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "id": 48914,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-        "id": 48907,
->>>>>>> 720382b (commit ABI artifacts)
+        "id": 48933,
         "nodeType": "ContractDefinition",
         "src": "71:115:79",
         "nodes": [
           {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "id": 49090,
-=======
-            "id": 48912,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "id": 48913,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-            "id": 48906,
->>>>>>> 720382b (commit ABI artifacts)
+            "id": 48932,
             "nodeType": "FunctionDefinition",
             "src": "111:73:79",
             "nodes": [],
             "body": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 49089,
-=======
-              "id": 48911,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 48912,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "id": 48905,
->>>>>>> 720382b (commit ABI artifacts)
+              "id": 48931,
               "nodeType": "Block",
               "src": "159:25:79",
               "nodes": [],
@@ -214,19 +143,7 @@
                 {
                   "expression": {
                     "hexValue": "37",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 49087,
-=======
-                    "id": 48909,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 48910,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "id": 48903,
->>>>>>> 720382b (commit ABI artifacts)
+                    "id": 48929,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -240,23 +157,8 @@
                     },
                     "value": "7"
                   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "functionReturnParameters": 49086,
-                  "id": 49088,
-=======
-                  "functionReturnParameters": 48908,
-                  "id": 48910,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "functionReturnParameters": 48909,
-                  "id": 48911,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                  "functionReturnParameters": 48902,
-                  "id": 48904,
->>>>>>> 720382b (commit ABI artifacts)
+                  "functionReturnParameters": 48928,
+                  "id": 48930,
                   "nodeType": "Return",
                   "src": "169:8:79"
                 }
@@ -269,71 +171,23 @@
             "name": "getNum",
             "nameLocation": "120:6:79",
             "parameters": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 49083,
-=======
-              "id": 48905,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 48906,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "id": 48899,
->>>>>>> 720382b (commit ABI artifacts)
+              "id": 48925,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "126:2:79"
             },
             "returnParameters": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 49086,
-=======
-              "id": 48908,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 48909,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "id": 48902,
->>>>>>> 720382b (commit ABI artifacts)
+              "id": 48928,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 49085,
-=======
-                  "id": 48907,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 48908,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                  "id": 48901,
->>>>>>> 720382b (commit ABI artifacts)
+                  "id": 48927,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 49090,
-=======
-                  "scope": 48912,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 48913,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                  "scope": 48906,
->>>>>>> 720382b (commit ABI artifacts)
+                  "scope": 48932,
                   "src": "152:5:79",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -342,19 +196,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 49084,
-=======
-                    "id": 48906,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 48907,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "id": 48900,
->>>>>>> 720382b (commit ABI artifacts)
+                    "id": 48926,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "152:5:79",
@@ -368,19 +210,7 @@
               ],
               "src": "151:7:79"
             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "scope": 49091,
-=======
-            "scope": 48913,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "scope": 48914,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-            "scope": 48907,
->>>>>>> 720382b (commit ABI artifacts)
+            "scope": 48933,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "external"
@@ -393,77 +223,25 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          49091
+          48933
         ],
         "name": "NumberContractFacetSeven",
         "nameLocation": "80:24:79",
-        "scope": 49101,
+        "scope": 48943,
         "usedErrors": []
       },
       {
-        "id": 49100,
-=======
-          48913
-=======
-          48914
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-          48907
->>>>>>> 720382b (commit ABI artifacts)
-        ],
-        "name": "NumberContractFacetSeven",
-        "nameLocation": "80:24:79",
-        "scope": 48917,
-        "usedErrors": []
-      },
-      {
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "id": 48922,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "id": 48923,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-        "id": 48916,
->>>>>>> 720382b (commit ABI artifacts)
+        "id": 48942,
         "nodeType": "ContractDefinition",
         "src": "188:115:79",
         "nodes": [
           {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "id": 49099,
-=======
-            "id": 48921,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "id": 48922,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-            "id": 48915,
->>>>>>> 720382b (commit ABI artifacts)
+            "id": 48941,
             "nodeType": "FunctionDefinition",
             "src": "228:73:79",
             "nodes": [],
             "body": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 49098,
-=======
-              "id": 48920,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 48921,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "id": 48914,
->>>>>>> 720382b (commit ABI artifacts)
+              "id": 48940,
               "nodeType": "Block",
               "src": "276:25:79",
               "nodes": [],
@@ -471,19 +249,7 @@
                 {
                   "expression": {
                     "hexValue": "38",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 49096,
-=======
-                    "id": 48918,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 48919,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "id": 48912,
->>>>>>> 720382b (commit ABI artifacts)
+                    "id": 48938,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -497,23 +263,8 @@
                     },
                     "value": "8"
                   },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "functionReturnParameters": 49095,
-                  "id": 49097,
-=======
-                  "functionReturnParameters": 48917,
-                  "id": 48919,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "functionReturnParameters": 48918,
-                  "id": 48920,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                  "functionReturnParameters": 48911,
-                  "id": 48913,
->>>>>>> 720382b (commit ABI artifacts)
+                  "functionReturnParameters": 48937,
+                  "id": 48939,
                   "nodeType": "Return",
                   "src": "286:8:79"
                 }
@@ -526,71 +277,23 @@
             "name": "getNum",
             "nameLocation": "237:6:79",
             "parameters": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 49092,
-=======
-              "id": 48914,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 48915,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "id": 48908,
->>>>>>> 720382b (commit ABI artifacts)
+              "id": 48934,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "243:2:79"
             },
             "returnParameters": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "id": 49095,
-=======
-              "id": 48917,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "id": 48918,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "id": 48911,
->>>>>>> 720382b (commit ABI artifacts)
+              "id": 48937,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "id": 49094,
-=======
-                  "id": 48916,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "id": 48917,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                  "id": 48910,
->>>>>>> 720382b (commit ABI artifacts)
+                  "id": 48936,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                  "scope": 49099,
-=======
-                  "scope": 48921,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                  "scope": 48922,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                  "scope": 48915,
->>>>>>> 720382b (commit ABI artifacts)
+                  "scope": 48941,
                   "src": "269:5:79",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -599,19 +302,7 @@
                     "typeString": "uint8"
                   },
                   "typeName": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "id": 49093,
-=======
-                    "id": 48915,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "id": 48916,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "id": 48909,
->>>>>>> 720382b (commit ABI artifacts)
+                    "id": 48935,
                     "name": "uint8",
                     "nodeType": "ElementaryTypeName",
                     "src": "269:5:79",
@@ -625,19 +316,7 @@
               ],
               "src": "268:7:79"
             },
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-            "scope": 49100,
-=======
-            "scope": 48922,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-            "scope": 48923,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-            "scope": 48916,
->>>>>>> 720382b (commit ABI artifacts)
+            "scope": 48942,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "external"
@@ -650,35 +329,11 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-          49100
+          48942
         ],
         "name": "NumberContractFacetEight",
         "nameLocation": "197:24:79",
-        "scope": 49101,
-=======
-          48922
-        ],
-        "name": "NumberContractFacetEight",
-        "nameLocation": "197:24:79",
-        "scope": 48923,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-          48923
-        ],
-        "name": "NumberContractFacetEight",
-        "nameLocation": "197:24:79",
-        "scope": 48924,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-          48916
-        ],
-        "name": "NumberContractFacetEight",
-        "nameLocation": "197:24:79",
-        "scope": 48917,
->>>>>>> 720382b (commit ABI artifacts)
+        "scope": 48943,
         "usedErrors": []
       }
     ],

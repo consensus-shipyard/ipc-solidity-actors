@@ -59,12 +59,12 @@
     }
   ],
   "bytecode": {
-    "object": "0x608080604052346100195760db908161001f823930815050f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea26469706673582212209452ca33b461b8f20ff567598ba87ac24773a2ad5b383d589a3c20ce53d8513d64736f6c63430008130033",
+    "object": "0x608080604052346100195760db908161001f823930815050f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea26469706673582212209402ff66c65298d41f439aa24ff0674fcfe82ac7c7fe36091aea29b96a6c857a64736f6c63430008130033",
     "sourceMap": "186:2075:58:-:0;;;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea26469706673582212209452ca33b461b8f20ff567598ba87ac24773a2ad5b383d589a3c20ce53d8513d64736f6c63430008130033",
+    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea26469706673582212209402ff66c65298d41f439aa24ff0674fcfe82ac7c7fe36091aea29b96a6c857a64736f6c63430008130033",
     "sourceMap": "186:2075:58:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;361:2;186:2075;;;;;;;;;;;;;;;;;;;313:1;186:2075;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;480:2;186:2075;;;;;;;",
     "linkReferences": {}
   },
@@ -74,7 +74,7 @@
     "PAYLOAD_HASH_LEN()": "cf8e4a6e",
     "SECP256K1()": "ab528f21"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"NotDelegatedEvmAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DELEGATED\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EAM_ACTOR\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PAYLOAD_HASH_LEN\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SECP256K1\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Helper library for Fil Address\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"DELEGATED()\":{\"notice\":\"For delegated FIL address\"},\"SECP256K1()\":{\"notice\":\"f1: SECP256K1 key address, 20 byte hash of PublicKey.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/FvmAddressHelper.sol\":\"FvmAddressHelper\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"src/lib/FvmAddressHelper.sol\":{\"keccak256\":\"0x2ffadbf7e4247b489386e96d0af302cb633f376a160d4d6de2188aef69c443d8\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6a148fb5ace9772aa8049427466a07a9e2eed71b11a4cda3721cdbb91039e12\",\"dweb:/ipfs/QmUmxKwVMMqejELpFoMqeFJpRL6fmVmn76EXPXvJhSwQMp\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"NotDelegatedEvmAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DELEGATED\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EAM_ACTOR\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PAYLOAD_HASH_LEN\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SECP256K1\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Helper library for Fil Address\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"DELEGATED()\":{\"notice\":\"For delegated FIL address\"},\"SECP256K1()\":{\"notice\":\"f1: SECP256K1 key address, 20 byte hash of PublicKey.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/FvmAddressHelper.sol\":\"FvmAddressHelper\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"src/lib/FvmAddressHelper.sol\":{\"keccak256\":\"0x2ffadbf7e4247b489386e96d0af302cb633f376a160d4d6de2188aef69c443d8\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6a148fb5ace9772aa8049427466a07a9e2eed71b11a4cda3721cdbb91039e12\",\"dweb:/ipfs/QmUmxKwVMMqejELpFoMqeFJpRL6fmVmn76EXPXvJhSwQMp\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -160,11 +160,14 @@
     },
     "settings": {
       "remappings": [
+        "@openzeppelin/=node_modules/@openzeppelin/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
         "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
         "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
         "fevmate/=lib/fevmate/contracts/",
         "forge-std/=lib/forge-std/src/",
+        "hardhat-deploy/=node_modules/hardhat-deploy/",
+        "hardhat/=node_modules/hardhat/",
         "murky/=lib/murky/src/",
         "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
         "openzeppelin/=lib/openzeppelin-contracts/contracts/"
@@ -207,30 +210,10 @@
     "id": 40297,
     "exportedSymbols": {
       "DelegatedAddress": [
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-        47140
+        46982
       ],
       "FvmAddress": [
-        47133
-=======
-        46962
-      ],
-      "FvmAddress": [
-        46955
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        46963
-      ],
-      "FvmAddress": [
-=======
->>>>>>> 720382b (commit ABI artifacts)
-        46956
->>>>>>> 55aa9ea (commit ABI artifacts)
-      ],
-      "FvmAddress": [
-        46949
+        46975
       ],
       "FvmAddressHelper": [
         40296
@@ -258,22 +241,8 @@
         "absolutePath": "src/structs/FvmAddress.sol",
         "file": "../structs/FvmAddress.sol",
         "nameLocation": "-1:-1:-1",
-<<<<<<< HEAD
-<<<<<<< HEAD
-        "scope": 40320,
-        "sourceUnit": 47141,
-=======
-        "scope": 40301,
-<<<<<<< HEAD
-        "sourceUnit": 46963,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-        "sourceUnit": 46964,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
         "scope": 40297,
-        "sourceUnit": 46957,
->>>>>>> 720382b (commit ABI artifacts)
+        "sourceUnit": 46983,
         "symbolAliases": [
           {
             "foreign": {
@@ -281,19 +250,7 @@
               "name": "FvmAddress",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "referencedDeclaration": 47133,
-=======
-              "referencedDeclaration": 46955,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "referencedDeclaration": 46956,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "referencedDeclaration": 46949,
->>>>>>> 720382b (commit ABI artifacts)
+              "referencedDeclaration": 46975,
               "src": "79:10:58",
               "typeDescriptions": {}
             },
@@ -305,19 +262,7 @@
               "name": "DelegatedAddress",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-              "referencedDeclaration": 47140,
-=======
-              "referencedDeclaration": 46962,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-              "referencedDeclaration": 46963,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-              "referencedDeclaration": 46956,
->>>>>>> 720382b (commit ABI artifacts)
+              "referencedDeclaration": 46982,
               "src": "91:16:58",
               "typeDescriptions": {}
             },
@@ -699,31 +644,10 @@
                           "name": "DelegatedAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "referencedDeclaration": 47140,
+                          "referencedDeclaration": 46982,
                           "src": "719:16:58",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47140_storage_ptr_$",
-=======
-                          "referencedDeclaration": 46962,
-                          "src": "719:16:58",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46962_storage_ptr_$",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46963,
-                          "src": "719:16:58",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46963_storage_ptr_$",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46956,
-                          "src": "719:16:58",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46956_storage_ptr_$",
->>>>>>> 720382b (commit ABI artifacts)
+                            "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46982_storage_ptr_$",
                             "typeString": "type(struct DelegatedAddress storage pointer)"
                           }
                         },
@@ -747,19 +671,7 @@
                         "src": "719:84:58",
                         "tryCall": false,
                         "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       }
@@ -767,19 +679,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       ],
@@ -843,19 +743,7 @@
                       "referencedDeclaration": 40144,
                       "src": "824:10:58",
                       "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                        "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                        "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                        "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                         "typeString": "struct FvmAddress memory"
                       }
                     },
@@ -903,31 +791,10 @@
                         "name": "FvmAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "referencedDeclaration": 47133,
+                        "referencedDeclaration": 46975,
                         "src": "837:10:58",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_FvmAddress_$47133_storage_ptr_$",
-=======
-                        "referencedDeclaration": 46955,
-                        "src": "837:10:58",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_FvmAddress_$46955_storage_ptr_$",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "referencedDeclaration": 46956,
-                        "src": "837:10:58",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_FvmAddress_$46956_storage_ptr_$",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                        "referencedDeclaration": 46949,
-                        "src": "837:10:58",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_FvmAddress_$46949_storage_ptr_$",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_type$_t_struct$_FvmAddress_$46975_storage_ptr_$",
                           "typeString": "type(struct FvmAddress storage pointer)"
                         }
                       },
@@ -949,37 +816,13 @@
                       "src": "837:51:58",
                       "tryCall": false,
                       "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                        "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                        "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                        "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                         "typeString": "struct FvmAddress memory"
                       }
                     },
                     "src": "824:64:58",
                     "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                      "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                       "typeString": "struct FvmAddress memory"
                     }
                   },
@@ -1051,19 +894,7 @@
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                    "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
@@ -1076,39 +907,13 @@
                         "632:10:58"
                       ],
                       "nodeType": "IdentifierPath",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47133,
+                      "referencedDeclaration": 46975,
                       "src": "632:10:58"
                     },
-                    "referencedDeclaration": 47133,
+                    "referencedDeclaration": 46975,
                     "src": "632:10:58",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$47133_storage_ptr",
-=======
-                      "referencedDeclaration": 46955,
-=======
-                      "referencedDeclaration": 46956,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46949,
->>>>>>> 720382b (commit ABI artifacts)
-                      "src": "632:10:58"
-                    },
-                    "referencedDeclaration": 46949,
-                    "src": "632:10:58",
-                    "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_struct$_FvmAddress_$46955_storage_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46956_storage_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46949_storage_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                      "typeIdentifier": "t_struct$_FvmAddress_$46975_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -1146,19 +951,7 @@
                             "referencedDeclaration": 40172,
                             "src": "1069:10:58",
                             "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                              "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           }
@@ -1166,19 +959,7 @@
                         "expression": {
                           "argumentTypes": [
                             {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                              "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           ],
@@ -1293,19 +1074,7 @@
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                    "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
@@ -1318,39 +1087,13 @@
                         "969:10:58"
                       ],
                       "nodeType": "IdentifierPath",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47133,
+                      "referencedDeclaration": 46975,
                       "src": "969:10:58"
                     },
-                    "referencedDeclaration": 47133,
+                    "referencedDeclaration": 46975,
                     "src": "969:10:58",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$47133_storage_ptr",
-=======
-                      "referencedDeclaration": 46955,
-=======
-                      "referencedDeclaration": 46956,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46949,
->>>>>>> 720382b (commit ABI artifacts)
-                      "src": "969:10:58"
-                    },
-                    "referencedDeclaration": 46949,
-                    "src": "969:10:58",
-                    "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_struct$_FvmAddress_$46955_storage_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46956_storage_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46949_storage_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                      "typeIdentifier": "t_struct$_FvmAddress_$46975_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -1449,19 +1192,7 @@
                             "referencedDeclaration": 40189,
                             "src": "1263:1:58",
                             "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                              "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           },
@@ -1473,19 +1204,7 @@
                           "memberLocation": "1265:8:58",
                           "memberName": "addrType",
                           "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "referencedDeclaration": 47130,
-=======
-                          "referencedDeclaration": 46952,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46953,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46946,
->>>>>>> 720382b (commit ABI artifacts)
+                          "referencedDeclaration": 46972,
                           "src": "1263:10:58",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint8",
@@ -1503,19 +1222,7 @@
                             "referencedDeclaration": 40192,
                             "src": "1277:1:58",
                             "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                              "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           },
@@ -1527,19 +1234,7 @@
                           "memberLocation": "1279:8:58",
                           "memberName": "addrType",
                           "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "referencedDeclaration": 47130,
-=======
-                          "referencedDeclaration": 46952,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46953,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46946,
->>>>>>> 720382b (commit ABI artifacts)
+                          "referencedDeclaration": 46972,
                           "src": "1277:10:58",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint8",
@@ -1574,19 +1269,7 @@
                               "referencedDeclaration": 40189,
                               "src": "1303:1:58",
                               "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                                "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
@@ -1598,19 +1281,7 @@
                             "memberLocation": "1305:7:58",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "referencedDeclaration": 47132,
-=======
-                            "referencedDeclaration": 46954,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46955,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46948,
->>>>>>> 720382b (commit ABI artifacts)
+                            "referencedDeclaration": 46974,
                             "src": "1303:9:58",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
@@ -1643,19 +1314,7 @@
                               "referencedDeclaration": 40192,
                               "src": "1323:1:58",
                               "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                                "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
@@ -1667,19 +1326,7 @@
                             "memberLocation": "1325:7:58",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "referencedDeclaration": 47132,
-=======
-                            "referencedDeclaration": 46954,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46955,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46948,
->>>>>>> 720382b (commit ABI artifacts)
+                            "referencedDeclaration": 46974,
                             "src": "1323:9:58",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
@@ -1735,19 +1382,7 @@
                               "referencedDeclaration": 40189,
                               "src": "1365:1:58",
                               "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                                "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
@@ -1759,19 +1394,7 @@
                             "memberLocation": "1367:7:58",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "referencedDeclaration": 47132,
-=======
-                            "referencedDeclaration": 46954,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46955,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46948,
->>>>>>> 720382b (commit ABI artifacts)
+                            "referencedDeclaration": 46974,
                             "src": "1365:9:58",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
@@ -1826,19 +1449,7 @@
                               "referencedDeclaration": 40192,
                               "src": "1389:1:58",
                               "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                                "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                                "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                                "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
@@ -1850,19 +1461,7 @@
                             "memberLocation": "1391:7:58",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "referencedDeclaration": 47132,
-=======
-                            "referencedDeclaration": 46954,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46955,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46948,
->>>>>>> 720382b (commit ABI artifacts)
+                            "referencedDeclaration": 46974,
                             "src": "1389:9:58",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
@@ -1950,19 +1549,7 @@
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                    "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
@@ -1975,39 +1562,13 @@
                         "1163:10:58"
                       ],
                       "nodeType": "IdentifierPath",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47133,
+                      "referencedDeclaration": 46975,
                       "src": "1163:10:58"
                     },
-                    "referencedDeclaration": 47133,
+                    "referencedDeclaration": 46975,
                     "src": "1163:10:58",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$47133_storage_ptr",
-=======
-                      "referencedDeclaration": 46955,
-=======
-                      "referencedDeclaration": 46956,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46949,
->>>>>>> 720382b (commit ABI artifacts)
-                      "src": "1163:10:58"
-                    },
-                    "referencedDeclaration": 46949,
-                    "src": "1163:10:58",
-                    "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_struct$_FvmAddress_$46955_storage_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46956_storage_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46949_storage_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                      "typeIdentifier": "t_struct$_FvmAddress_$46975_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -2025,19 +1586,7 @@
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                    "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
@@ -2050,39 +1599,13 @@
                         "1184:10:58"
                       ],
                       "nodeType": "IdentifierPath",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47133,
+                      "referencedDeclaration": 46975,
                       "src": "1184:10:58"
                     },
-                    "referencedDeclaration": 47133,
+                    "referencedDeclaration": 46975,
                     "src": "1184:10:58",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$47133_storage_ptr",
-=======
-                      "referencedDeclaration": 46955,
-=======
-                      "referencedDeclaration": 46956,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46949,
->>>>>>> 720382b (commit ABI artifacts)
-                      "src": "1184:10:58"
-                    },
-                    "referencedDeclaration": 46949,
-                    "src": "1184:10:58",
-                    "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_struct$_FvmAddress_$46955_storage_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46956_storage_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46949_storage_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                      "typeIdentifier": "t_struct$_FvmAddress_$46975_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -2161,19 +1684,7 @@
                         "referencedDeclaration": 40225,
                         "src": "1520:10:58",
                         "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                          "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                           "typeString": "struct FvmAddress memory"
                         }
                       },
@@ -2185,19 +1696,7 @@
                       "memberLocation": "1531:8:58",
                       "memberName": "addrType",
                       "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47130,
-=======
-                      "referencedDeclaration": 46952,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46953,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46946,
->>>>>>> 720382b (commit ABI artifacts)
+                      "referencedDeclaration": 46972,
                       "src": "1520:19:58",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint8",
@@ -2288,19 +1787,7 @@
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                        "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                        "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                        "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                         "typeString": "struct DelegatedAddress"
                       },
                       "typeName": {
@@ -2313,39 +1800,13 @@
                             "1620:16:58"
                           ],
                           "nodeType": "IdentifierPath",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "referencedDeclaration": 47140,
+                          "referencedDeclaration": 46982,
                           "src": "1620:16:58"
                         },
-                        "referencedDeclaration": 47140,
+                        "referencedDeclaration": 46982,
                         "src": "1620:16:58",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$47140_storage_ptr",
-=======
-                          "referencedDeclaration": 46962,
-=======
-                          "referencedDeclaration": 46963,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46956,
->>>>>>> 720382b (commit ABI artifacts)
-                          "src": "1620:16:58"
-                        },
-                        "referencedDeclaration": 46956,
-                        "src": "1620:16:58",
-                        "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46962_storage_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46963_storage_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46956_storage_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$46982_storage_ptr",
                           "typeString": "struct DelegatedAddress"
                         }
                       },
@@ -2364,19 +1825,7 @@
                           "referencedDeclaration": 40225,
                           "src": "1667:10:58",
                           "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                            "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                            "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                            "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                             "typeString": "struct FvmAddress memory"
                           }
                         },
@@ -2388,19 +1837,7 @@
                         "memberLocation": "1678:7:58",
                         "memberName": "payload",
                         "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "referencedDeclaration": 47132,
-=======
-                        "referencedDeclaration": 46954,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "referencedDeclaration": 46955,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                        "referencedDeclaration": 46948,
->>>>>>> 720382b (commit ABI artifacts)
+                        "referencedDeclaration": 46974,
                         "src": "1667:18:58",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
@@ -2414,31 +1851,10 @@
                             "name": "DelegatedAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "referencedDeclaration": 47140,
+                            "referencedDeclaration": 46982,
                             "src": "1688:16:58",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47140_storage_ptr_$",
-=======
-                            "referencedDeclaration": 46962,
-                            "src": "1688:16:58",
-                            "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46962_storage_ptr_$",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46963,
-                            "src": "1688:16:58",
-                            "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46963_storage_ptr_$",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                            "referencedDeclaration": 46956,
-                            "src": "1688:16:58",
-                            "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46956_storage_ptr_$",
->>>>>>> 720382b (commit ABI artifacts)
+                              "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46982_storage_ptr_$",
                               "typeString": "type(struct DelegatedAddress storage pointer)"
                             }
                           }
@@ -2452,19 +1868,7 @@
                         "nodeType": "TupleExpression",
                         "src": "1687:18:58",
                         "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47140_storage_ptr_$",
-=======
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46962_storage_ptr_$",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46963_storage_ptr_$",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46956_storage_ptr_$",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46982_storage_ptr_$",
                           "typeString": "type(struct DelegatedAddress storage pointer)"
                         }
                       }
@@ -2476,19 +1880,7 @@
                           "typeString": "bytes memory"
                         },
                         {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47140_storage_ptr_$",
-=======
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46962_storage_ptr_$",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46963_storage_ptr_$",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46956_storage_ptr_$",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46982_storage_ptr_$",
                           "typeString": "type(struct DelegatedAddress storage pointer)"
                         }
                       ],
@@ -2530,19 +1922,7 @@
                     "src": "1656:50:58",
                     "tryCall": false,
                     "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                      "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                      "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                       "typeString": "struct DelegatedAddress memory"
                     }
                   },
@@ -2569,19 +1949,7 @@
                         "referencedDeclaration": 40241,
                         "src": "1721:9:58",
                         "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       },
@@ -2593,19 +1961,7 @@
                       "memberLocation": "1731:9:58",
                       "memberName": "namespace",
                       "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47135,
-=======
-                      "referencedDeclaration": 46957,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46958,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46951,
->>>>>>> 720382b (commit ABI artifacts)
+                      "referencedDeclaration": 46977,
                       "src": "1721:19:58",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
@@ -2699,19 +2055,7 @@
                         "referencedDeclaration": 40241,
                         "src": "1824:9:58",
                         "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       },
@@ -2723,19 +2067,7 @@
                       "memberLocation": "1834:6:58",
                       "memberName": "length",
                       "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47137,
-=======
-                      "referencedDeclaration": 46959,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46960,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46953,
->>>>>>> 720382b (commit ABI artifacts)
+                      "referencedDeclaration": 46979,
                       "src": "1824:16:58",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint128",
@@ -2834,19 +2166,7 @@
                           "referencedDeclaration": 40241,
                           "src": "1917:9:58",
                           "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                            "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                            "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                            "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                            "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                            "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                             "typeString": "struct DelegatedAddress memory"
                           }
                         },
@@ -2858,19 +2178,7 @@
                         "memberLocation": "1927:6:58",
                         "memberName": "buffer",
                         "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                        "referencedDeclaration": 47139,
-=======
-                        "referencedDeclaration": 46961,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                        "referencedDeclaration": 46962,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                        "referencedDeclaration": 46955,
->>>>>>> 720382b (commit ABI artifacts)
+                        "referencedDeclaration": 46981,
                         "src": "1917:16:58",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
@@ -2994,19 +2302,7 @@
                             "referencedDeclaration": 40241,
                             "src": "2037:9:58",
                             "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                              "typeIdentifier": "t_struct$_DelegatedAddress_$47140_memory_ptr",
-=======
-                              "typeIdentifier": "t_struct$_DelegatedAddress_$46962_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_DelegatedAddress_$46963_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                              "typeIdentifier": "t_struct$_DelegatedAddress_$46956_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                              "typeIdentifier": "t_struct$_DelegatedAddress_$46982_memory_ptr",
                               "typeString": "struct DelegatedAddress memory"
                             }
                           },
@@ -3018,19 +2314,7 @@
                           "memberLocation": "2047:6:58",
                           "memberName": "buffer",
                           "nodeType": "MemberAccess",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                          "referencedDeclaration": 47139,
-=======
-                          "referencedDeclaration": 46961,
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46962,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                          "referencedDeclaration": 46955,
->>>>>>> 720382b (commit ABI artifacts)
+                          "referencedDeclaration": 46981,
                           "src": "2037:16:58",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes_memory_ptr",
@@ -3105,19 +2389,7 @@
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                    "typeIdentifier": "t_struct$_FvmAddress_$47133_memory_ptr",
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46955_memory_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46956_memory_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                    "typeIdentifier": "t_struct$_FvmAddress_$46949_memory_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                    "typeIdentifier": "t_struct$_FvmAddress_$46975_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
@@ -3130,39 +2402,13 @@
                         "1439:10:58"
                       ],
                       "nodeType": "IdentifierPath",
-<<<<<<< HEAD
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "referencedDeclaration": 47133,
+                      "referencedDeclaration": 46975,
                       "src": "1439:10:58"
                     },
-                    "referencedDeclaration": 47133,
+                    "referencedDeclaration": 46975,
                     "src": "1439:10:58",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$47133_storage_ptr",
-=======
-                      "referencedDeclaration": 46955,
-=======
-                      "referencedDeclaration": 46956,
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "referencedDeclaration": 46949,
->>>>>>> 720382b (commit ABI artifacts)
-                      "src": "1439:10:58"
-                    },
-                    "referencedDeclaration": 46949,
-                    "src": "1439:10:58",
-                    "typeDescriptions": {
-<<<<<<< HEAD
-<<<<<<< HEAD
-                      "typeIdentifier": "t_struct$_FvmAddress_$46955_storage_ptr",
->>>>>>> 6483d1c (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46956_storage_ptr",
->>>>>>> 55aa9ea (commit ABI artifacts)
-=======
-                      "typeIdentifier": "t_struct$_FvmAddress_$46949_storage_ptr",
->>>>>>> 720382b (commit ABI artifacts)
+                      "typeIdentifier": "t_struct$_FvmAddress_$46975_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
