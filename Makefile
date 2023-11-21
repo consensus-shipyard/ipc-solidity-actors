@@ -13,12 +13,11 @@ upgrade-gw-diamond:
 upgrade-sa-diamond:
 	./ops/upgrade-sa-diamond.sh $(NETWORK)
 
-
 upgrade-sr-diamond:
 	./ops/upgrade-sr-diamond.sh $(NETWORK)
-
-compile-abi:
-	./ops/compile-abi.sh $(OUTPUT)
+ 
+compile-abi: | forge
+ 	./ops/compile-abi.sh $(OUTPUT)
 
 rust-binding:
 	BUILD_BINDINGS=1 cargo build --release --manifest-path ./binding/Cargo.toml -p ipc_actors_abis
@@ -44,7 +43,7 @@ lint:
 fmt:
 	npx prettier --check -w 'src/**/*.sol' 'test/*.sol'
 
-build:
+build: | forge
 	forge build
 
 test:
@@ -66,6 +65,9 @@ check-rust-binding:
 commit-rust-binding:
 	./ops/commit-rust-binding.sh
 
+commit-abi:
+	./ops/commit-abi.sh
+
 storage:
 	rm -rf ./cache
 	rm -rf ./cache_hardhat
@@ -77,12 +79,20 @@ clean:
 	rm -rf ./cache_hardhat
 	rm -rf ./typechain
 
-coverage:
+coverage: | forge
 	forge coverage --ffi --report lcov -C ./src
 	genhtml -o coverage_report lcov.info --branch-coverage
 	./tools/check_coverage.sh
 
 prepare: fmt lint test slither
+
+# Forge is used by the ipc-solidity-actors compilation steps.
+.PHONY: forge
+forge:
+	@if [ -z "$(shell which forge)" ]; then \
+		echo "Please install Foundry. See https://book.getfoundry.sh/getting-started/installation"; \
+		exit 1; \
+	fi
 
 # ==============================================================================
 .PHONY: deploy-ipc lint fmt check-subnet slither check-gateway test prepare storage build clean

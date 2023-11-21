@@ -52,7 +52,7 @@ export async function deploy() {
 
  
 
-const facetCuts = [] //TODO
+const facetCuts = []
 
 
 const facets = [ 
