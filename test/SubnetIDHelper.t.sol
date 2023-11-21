@@ -176,7 +176,7 @@ contract SubnetIDHelperTest is Test {
 
         require(subnetId.toHash() == ROOT_SUBNET_ID.createSubnetId(subnetRoute1[0]).toHash());
     }
-
+    
     function test_Down_Works_AllCommon() public pure {
         address[] memory subnetRoute1 = new address[](4);
         subnetRoute1[0] = address(100);
@@ -201,6 +201,15 @@ contract SubnetIDHelperTest is Test {
         require(subnetId.toHash() == SubnetID(ROOTNET_CHAINID, expectedRoute).toHash());
     }
 
+    function test_GetAddress_Works() public pure {
+        address[] memory subnetRoute1 = new address[](2);
+        subnetRoute1[0] = address(101);
+        subnetRoute1[1] = address(100);
+
+        SubnetID memory subnetId = SubnetID(ROOTNET_CHAINID, subnetRoute1);
+
+        require(subnetId.getAddress() == address(100), "address from subnet id invalid");
+    }
     function test_ToString_Works_NoRoutes() public view {
         require(EMPTY_SUBNET_ID.toString().equal("/r0"));
     }

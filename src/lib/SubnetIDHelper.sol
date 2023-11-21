@@ -16,10 +16,12 @@ library SubnetIDHelper {
     error InvalidRoute();
 
     function getAddress(SubnetID memory subnet) public pure returns (address) {
-        if (subnet.route.length == 0) {
+        uint256 length = subnet.route.length;
+
+        if (length == 0) {
             revert NoAddressForRoot();
         }
-        return subnet.route[0];
+        return subnet.route[length - 1];
     }
 
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
