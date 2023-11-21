@@ -82,6 +82,8 @@ async function deploySubnetActorDiamond(
         powerScale:1,
     }
 
+    console.log("constructorParams", constructorParams)
+
     const diamondLibs: Libraries = {
         SubnetIDHelper: libs['SubnetIDHelper'],
     }

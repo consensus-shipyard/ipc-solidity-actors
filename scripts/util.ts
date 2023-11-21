@@ -282,7 +282,6 @@ export async function upgradeFacetOnChain(
 ) {
     const replacementFacetName = facet.name
     const facetLibs = facet.libs
-
     console.info(`
 Diamond Facet Upgrade:
 -----------------------------------
