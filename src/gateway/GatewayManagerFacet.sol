@@ -16,7 +16,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 
 contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
-     using FilAddress for address payable;
+    using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
 
     /// @notice register a subnet in the gateway. It is called by a subnet when it reaches the threshold stake
