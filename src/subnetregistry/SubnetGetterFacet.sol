@@ -1,10 +1,9 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
- import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
- import {CannotFindSubnet} from "../errors/IPCErrors.sol";
+import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
+import {CannotFindSubnet} from "../errors/IPCErrors.sol";
 
 contract SubnetGetterFacet {
-
     SubnetRegistryActorStorage internal s;
 
     /// @notice Returns the address of the latest subnet actor deployed by a user
@@ -28,6 +27,4 @@ contract SubnetGetterFacet {
             revert CannotFindSubnet();
         }
     }
-
 }
-  
