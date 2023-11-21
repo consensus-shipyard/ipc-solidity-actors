@@ -5,7 +5,7 @@ import {
     getOnChainBytecodeFromFacets,
     upgradeFacetOnChain,
     upgradeFacet,
-    logMissingFacetInfo,
+    logMissingFacetInfo
 } from './util'
 
 /**
@@ -37,3 +37,4 @@ async function upgradeSubnetActorDiamond(deployments) {
 }
 
 export { upgradeSubnetActorDiamond as upgradeDiamond }
+

@@ -4,6 +4,7 @@ import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
 import {CannotFindSubnet} from "../errors/IPCErrors.sol";
 
 contract SubnetGetterFacet {
+    // slither-disable-next-line uninitialized-state
     SubnetRegistryActorStorage internal s;
 
     /// @notice Returns the address of the latest subnet actor deployed by a user
