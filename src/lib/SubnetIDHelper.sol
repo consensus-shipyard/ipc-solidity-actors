@@ -10,9 +10,17 @@ library SubnetIDHelper {
     using Strings for address;
 
     error NoParentForSubnet();
+    error NoAddressForRoot();
     error EmptySubnet();
     error DifferentRootNetwork();
     error InvalidRoute();
+
+    function getAddress(SubnetID memory subnet) public pure returns (address) {
+        if (subnet.route.length == 0) {
+            revert NoAddressForRoot();
+        }
+        return subnet.route[0];
+    }
 
     function getParentSubnet(SubnetID memory subnet) public pure returns (SubnetID memory) {
         if (subnet.route.length == 0) {
