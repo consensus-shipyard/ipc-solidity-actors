@@ -33,17 +33,17 @@
     }
   ],
   "bytecode": {
-    "object": "0x60566037600b82828239805160001a607314602a57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220bd818ca3f82d8207dee17a8e1714fd9ec6ff835b3fe1c9cf29f88f5bc001c95c64736f6c63430008130033",
-    "sourceMap": "205:3137:58:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;205:3137:58;;;;;;;;;;;;;;;;;",
+    "object": "0x60808060405234601757603a9081601d823930815050f35b600080fdfe600080fdfea2646970667358221220c7a152dbb397f27eb0eca7c5535294cfd2d77a26b38015b8503621830f00925064736f6c63430008130033",
+    "sourceMap": "205:3137:64:-:0;;;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x73000000000000000000000000000000000000000030146080604052600080fdfea2646970667358221220bd818ca3f82d8207dee17a8e1714fd9ec6ff835b3fe1c9cf29f88f5bc001c95c64736f6c63430008130033",
-    "sourceMap": "205:3137:58:-:0;;;;;;;;",
+    "object": "0x600080fdfea2646970667358221220c7a152dbb397f27eb0eca7c5535294cfd2d77a26b38015b8503621830f00925064736f6c63430008130033",
+    "sourceMap": "205:3137:64:-:0;;",
     "linkReferences": {}
   },
   "methodIdentifiers": {},
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"enum StakingOperation\",\"name\":\"op\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"},{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"configurationNumber\",\"type\":\"uint64\"}],\"name\":\"NewStakingChangeRequest\",\"type\":\"event\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"The util library for `StakingChangeLog`\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/LibStakingChangeLog.sol\":\"LibStakingChangeLog\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":sol-explore/=node_modules/sol-explore/\"]},\"sources\":{\"lib/fevmate/contracts/utils/FilAddress.sol\":{\"keccak256\":\"0x8707b4f152e92b852090c313419c0dc772eebf4428472a0659dd6b13dd6bee31\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://442fc3cb02e610424f0599f4cc519e4fbead47da09911697b62208a2ae51e4a7\",\"dweb:/ipfs/QmRpKJ9tWWTHgMpRB18DHJLbCT4YT9yp2G89H9mHGu5ss2\"]},\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0x67ca7745e6032aeda339ba3f5813abf9eeb4ec683520944fa878c2867aea58f1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c13ff04f87357176e2b267730f288013269eefce0862ea8f4bf3f420948eb7d5\",\"dweb:/ipfs/QmQZRjF3CdCdoUvqhrT9KXYjrjmdmFQqENtuiHTMbyt6xo\"]},\"lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol\":{\"keccak256\":\"0xeefcbb8cb69f04a18f6dc61d4811133ce9aeff96ce60820f758abc52ef55b892\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://81c61c0dd40890f6a4b1fb792bc5b5b61e821fcafa2aae6c7eda6d4f1ece2593\",\"dweb:/ipfs/QmRLMrq6BiPS9wGu7ZC174SFYWCu6cxbU3agDw2XgJeDpT\"]},\"src/constants/Constants.sol\":{\"keccak256\":\"0xe09e20d591a8c9cabf6f2e44a90029fb3b2a8cdd6c09dc4105b81781ffb44546\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://b3c4df8d0fd2aa770abf8b43a134ce0fc0bc3091f97ec02415d09cca09f4f940\",\"dweb:/ipfs/QmSUpMfWLN8WWhvLmbZymCdR48ZmpsuyvBnSPeAtdorxDx\"]},\"src/enums/ConsensusType.sol\":{\"keccak256\":\"0xc5efd8c66b57dadaba4178c4b4d087b30cb84cbac38fb288a8c3b65075a9f59d\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6fcffaa8e40322ae27958603884cc07d06e9efd59cf12764f28945b7a47e11d0\",\"dweb:/ipfs/Qmc3PBovpcvj7jgVq5GwR5SkiUXBymT1tw74mvu5ccNqoZ\"]},\"src/enums/Status.sol\":{\"keccak256\":\"0x8f5921e4df87420127988b54f67a3ccfb6fbfae767891e8ed4edbf371598e16c\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://7a81d9a00ea7a2a85cfe1b2662236412dddb55e09fa70c70a34dc4dfc5ffea33\",\"dweb:/ipfs/QmRh4uA4491B2DVjrUtdfCTTtjpoXpKEp3Zz9CBYueNW1R\"]},\"src/errors/IPCErrors.sol\":{\"keccak256\":\"0x89ee65643858f78c51c49457f6cd127c773f794bf1b70ea50bd5e59f1b48e467\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://a4e9c19f69ab5bcd7ec8ac2b058a84bff7125ebc42eb195c7d8c7094c2049dec\",\"dweb:/ipfs/QmeN67eDEQefw5PS8iXk9TDzULVqK1QNA9ajzD3Z2jqxwK\"]},\"src/interfaces/IGateway.sol\":{\"keccak256\":\"0xb4209b44c3965fd233387ece78149461bd64a47788c3af24edb7c99ea1ef8868\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://4db7a4573100063387e170c55a69772b20e403444e9d97b24cc220a71a52fbbb\",\"dweb:/ipfs/QmTYsSjmFsTwuNTXBByZKueJZLpe7RwNzLRWNPxXGA3YKB\"]},\"src/lib/AccountHelper.sol\":{\"keccak256\":\"0xd5f3c0079e3002218c63b70b43f6e018eb5d39f064b7d4321b6409c84f6a22b5\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e5857fe645e020bc964cd53a33e1fbd4fd9d0de405170a8251cc0b040519cbdc\",\"dweb:/ipfs/QmaFUeVbA1mqn7dTJMqgX4DbKx6yzBrSkmeNTcaVjBJd9z\"]},\"src/lib/LibGatewayActorStorage.sol\":{\"keccak256\":\"0x4731b1de63c99bfccfa12c1c59481f27630994c8d04c0a555c6f6845f3873157\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://641337e8c2d3876ccefdb1f181c9cfeb9568f7c015f51da668d0c2dc582773d3\",\"dweb:/ipfs/QmNzgGXzXjULKJE6iYN6ioZLJvh3ykLdwt6gTjVp7gX9f6\"]},\"src/lib/LibStaking.sol\":{\"keccak256\":\"0xb6ca249f7087f420c81d6405b122d7c8386fe3815169c01d338435f534a941f2\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://57203af0442e93b342cbf6dc0cb72d7b25c57d2c520c49221268806ac1171dff\",\"dweb:/ipfs/QmaCcc95fKYZsKkghaNfNdC8U9x7SBWd8ob1BLL1PvYiUs\"]},\"src/lib/LibStakingChangeLog.sol\":{\"keccak256\":\"0x1ec44b7c417dae8bec87da6f1f48eb10a1eacdfb4935144dd9094dc1bbe9aa9b\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6fcbd14fe0743c0ea0a8a8d2ea851b4864559c3553773f07d6ae708bcc83318\",\"dweb:/ipfs/QmYb6v6U27FAY4ut6gCZy6oK1MjN165RTxUGhrY6zxtg93\"]},\"src/lib/LibSubnetActorStorage.sol\":{\"keccak256\":\"0xe11ae56d18ef43fd9ebdf9350977f9a26da4ee9a3288b46b04c5b973aa231f28\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://f616b61fde1528a8666d09c962d7f23a82b200229691794933f39c4d3781fc1c\",\"dweb:/ipfs/QmXQsNGv6R34wAx1fRoyMiwdtGgQVn1qDXGCr7cED92vvJ\"]},\"src/lib/priority/LibMaxPQ.sol\":{\"keccak256\":\"0x57844d18d78e8e555b2de3581a5e2908403e75252018b9c85d0274799e12a131\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://9125638cad4d136be39501e18307484f7b072ab0a882dc83da0b3a3569337014\",\"dweb:/ipfs/QmZ7Ho1edVXaPn2EwZwvrrwyHfqvZL1WUbt6ionX5GNX7V\"]},\"src/lib/priority/LibMinPQ.sol\":{\"keccak256\":\"0x7ca7b9c2c57102005714da3bdb1684050afd3f3d1e90c9dd5929a005eb17efa3\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e958a3990a39a77b71b84c241ac3342262349fa38fcbb68fb7f50ddab6d3ba97\",\"dweb:/ipfs/QmQggiqv5n3xPW2dChtqDw2yiRjPsukLWuM58jqcsVo9M4\"]},\"src/lib/priority/LibPQ.sol\":{\"keccak256\":\"0x4d4290087995d669e80f8fdd405bfaae545323393c0c54689b84965ffb87303e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c21b563f6bf23afacb38fc97ab94d1afe12e4ad3dfde96d4484068bf26b13a2c\",\"dweb:/ipfs/Qmd5d3EnZwaSRnjG4ZFH2X8HKgymzd6vQgus8A6oEoh5pJ\"]},\"src/structs/Checkpoint.sol\":{\"keccak256\":\"0x1982a747516dce183434bbf0e96b5b1fedbf3a90928beffcc046cadf47ee0746\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://253b9df56334aae80fe4a0da805e4fdc3d186fb2624edade864ae06bfd472f2a\",\"dweb:/ipfs/QmVAaz1ViF96LjM9Aknn3vtwQ5a5oDiJRZP47ddJ1V9Fww\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]},\"src/structs/Subnet.sol\":{\"keccak256\":\"0x1ddb626039baf4a4411f06b5340aaa80dcd65e9980da7673b73ab16633d871ce\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://af017eef4cb46262ac29b4cf47faa1fc5d2b61970ec7d6d021eae4cf45b5577b\",\"dweb:/ipfs/QmZJiA2t934fbe62513neQYzxSNswnCRTJybp7d6X2RyWR\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"internalType\":\"enum StakingOperation\",\"name\":\"op\",\"type\":\"uint8\"},{\"indexed\":false,\"internalType\":\"address\",\"name\":\"validator\",\"type\":\"address\"},{\"indexed\":false,\"internalType\":\"bytes\",\"name\":\"payload\",\"type\":\"bytes\"},{\"indexed\":false,\"internalType\":\"uint64\",\"name\":\"configurationNumber\",\"type\":\"uint64\"}],\"name\":\"NewStakingChangeRequest\",\"type\":\"event\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"notice\":\"The util library for `StakingChangeLog`\",\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/LibStakingChangeLog.sol\":\"LibStakingChangeLog\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"lib/fevmate/contracts/utils/FilAddress.sol\":{\"keccak256\":\"0x8707b4f152e92b852090c313419c0dc772eebf4428472a0659dd6b13dd6bee31\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://442fc3cb02e610424f0599f4cc519e4fbead47da09911697b62208a2ae51e4a7\",\"dweb:/ipfs/QmRpKJ9tWWTHgMpRB18DHJLbCT4YT9yp2G89H9mHGu5ss2\"]},\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0x67ca7745e6032aeda339ba3f5813abf9eeb4ec683520944fa878c2867aea58f1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c13ff04f87357176e2b267730f288013269eefce0862ea8f4bf3f420948eb7d5\",\"dweb:/ipfs/QmQZRjF3CdCdoUvqhrT9KXYjrjmdmFQqENtuiHTMbyt6xo\"]},\"lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol\":{\"keccak256\":\"0xeefcbb8cb69f04a18f6dc61d4811133ce9aeff96ce60820f758abc52ef55b892\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://81c61c0dd40890f6a4b1fb792bc5b5b61e821fcafa2aae6c7eda6d4f1ece2593\",\"dweb:/ipfs/QmRLMrq6BiPS9wGu7ZC174SFYWCu6cxbU3agDw2XgJeDpT\"]},\"src/constants/Constants.sol\":{\"keccak256\":\"0xe09e20d591a8c9cabf6f2e44a90029fb3b2a8cdd6c09dc4105b81781ffb44546\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://b3c4df8d0fd2aa770abf8b43a134ce0fc0bc3091f97ec02415d09cca09f4f940\",\"dweb:/ipfs/QmSUpMfWLN8WWhvLmbZymCdR48ZmpsuyvBnSPeAtdorxDx\"]},\"src/enums/ConsensusType.sol\":{\"keccak256\":\"0xc5efd8c66b57dadaba4178c4b4d087b30cb84cbac38fb288a8c3b65075a9f59d\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6fcffaa8e40322ae27958603884cc07d06e9efd59cf12764f28945b7a47e11d0\",\"dweb:/ipfs/Qmc3PBovpcvj7jgVq5GwR5SkiUXBymT1tw74mvu5ccNqoZ\"]},\"src/enums/Status.sol\":{\"keccak256\":\"0x8f5921e4df87420127988b54f67a3ccfb6fbfae767891e8ed4edbf371598e16c\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://7a81d9a00ea7a2a85cfe1b2662236412dddb55e09fa70c70a34dc4dfc5ffea33\",\"dweb:/ipfs/QmRh4uA4491B2DVjrUtdfCTTtjpoXpKEp3Zz9CBYueNW1R\"]},\"src/errors/IPCErrors.sol\":{\"keccak256\":\"0x89ee65643858f78c51c49457f6cd127c773f794bf1b70ea50bd5e59f1b48e467\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://a4e9c19f69ab5bcd7ec8ac2b058a84bff7125ebc42eb195c7d8c7094c2049dec\",\"dweb:/ipfs/QmeN67eDEQefw5PS8iXk9TDzULVqK1QNA9ajzD3Z2jqxwK\"]},\"src/interfaces/IGateway.sol\":{\"keccak256\":\"0xb4209b44c3965fd233387ece78149461bd64a47788c3af24edb7c99ea1ef8868\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://4db7a4573100063387e170c55a69772b20e403444e9d97b24cc220a71a52fbbb\",\"dweb:/ipfs/QmTYsSjmFsTwuNTXBByZKueJZLpe7RwNzLRWNPxXGA3YKB\"]},\"src/lib/AccountHelper.sol\":{\"keccak256\":\"0xd5f3c0079e3002218c63b70b43f6e018eb5d39f064b7d4321b6409c84f6a22b5\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e5857fe645e020bc964cd53a33e1fbd4fd9d0de405170a8251cc0b040519cbdc\",\"dweb:/ipfs/QmaFUeVbA1mqn7dTJMqgX4DbKx6yzBrSkmeNTcaVjBJd9z\"]},\"src/lib/LibGatewayActorStorage.sol\":{\"keccak256\":\"0x4731b1de63c99bfccfa12c1c59481f27630994c8d04c0a555c6f6845f3873157\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://641337e8c2d3876ccefdb1f181c9cfeb9568f7c015f51da668d0c2dc582773d3\",\"dweb:/ipfs/QmNzgGXzXjULKJE6iYN6ioZLJvh3ykLdwt6gTjVp7gX9f6\"]},\"src/lib/LibStaking.sol\":{\"keccak256\":\"0xb6ca249f7087f420c81d6405b122d7c8386fe3815169c01d338435f534a941f2\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://57203af0442e93b342cbf6dc0cb72d7b25c57d2c520c49221268806ac1171dff\",\"dweb:/ipfs/QmaCcc95fKYZsKkghaNfNdC8U9x7SBWd8ob1BLL1PvYiUs\"]},\"src/lib/LibStakingChangeLog.sol\":{\"keccak256\":\"0x1ec44b7c417dae8bec87da6f1f48eb10a1eacdfb4935144dd9094dc1bbe9aa9b\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6fcbd14fe0743c0ea0a8a8d2ea851b4864559c3553773f07d6ae708bcc83318\",\"dweb:/ipfs/QmYb6v6U27FAY4ut6gCZy6oK1MjN165RTxUGhrY6zxtg93\"]},\"src/lib/LibSubnetActorStorage.sol\":{\"keccak256\":\"0xe11ae56d18ef43fd9ebdf9350977f9a26da4ee9a3288b46b04c5b973aa231f28\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://f616b61fde1528a8666d09c962d7f23a82b200229691794933f39c4d3781fc1c\",\"dweb:/ipfs/QmXQsNGv6R34wAx1fRoyMiwdtGgQVn1qDXGCr7cED92vvJ\"]},\"src/lib/priority/LibMaxPQ.sol\":{\"keccak256\":\"0x57844d18d78e8e555b2de3581a5e2908403e75252018b9c85d0274799e12a131\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://9125638cad4d136be39501e18307484f7b072ab0a882dc83da0b3a3569337014\",\"dweb:/ipfs/QmZ7Ho1edVXaPn2EwZwvrrwyHfqvZL1WUbt6ionX5GNX7V\"]},\"src/lib/priority/LibMinPQ.sol\":{\"keccak256\":\"0x7ca7b9c2c57102005714da3bdb1684050afd3f3d1e90c9dd5929a005eb17efa3\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e958a3990a39a77b71b84c241ac3342262349fa38fcbb68fb7f50ddab6d3ba97\",\"dweb:/ipfs/QmQggiqv5n3xPW2dChtqDw2yiRjPsukLWuM58jqcsVo9M4\"]},\"src/lib/priority/LibPQ.sol\":{\"keccak256\":\"0x4d4290087995d669e80f8fdd405bfaae545323393c0c54689b84965ffb87303e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c21b563f6bf23afacb38fc97ab94d1afe12e4ad3dfde96d4484068bf26b13a2c\",\"dweb:/ipfs/Qmd5d3EnZwaSRnjG4ZFH2X8HKgymzd6vQgus8A6oEoh5pJ\"]},\"src/structs/Checkpoint.sol\":{\"keccak256\":\"0x1982a747516dce183434bbf0e96b5b1fedbf3a90928beffcc046cadf47ee0746\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://253b9df56334aae80fe4a0da805e4fdc3d186fb2624edade864ae06bfd472f2a\",\"dweb:/ipfs/QmVAaz1ViF96LjM9Aknn3vtwQ5a5oDiJRZP47ddJ1V9Fww\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]},\"src/structs/Subnet.sol\":{\"keccak256\":\"0x1ddb626039baf4a4411f06b5340aaa80dcd65e9980da7673b73ab16633d871ce\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://af017eef4cb46262ac29b4cf47faa1fc5d2b61970ec7d6d021eae4cf45b5577b\",\"dweb:/ipfs/QmZJiA2t934fbe62513neQYzxSNswnCRTJybp7d6X2RyWR\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -96,18 +96,14 @@
     },
     "settings": {
       "remappings": [
-        "@openzeppelin/=node_modules/@openzeppelin/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
         "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
         "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
         "fevmate/=lib/fevmate/contracts/",
         "forge-std/=lib/forge-std/src/",
-        "hardhat-deploy/=node_modules/hardhat-deploy/",
-        "hardhat/=node_modules/hardhat/",
         "murky/=lib/murky/src/",
         "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
-        "openzeppelin/=lib/openzeppelin-contracts/contracts/",
-        "sol-explore/=node_modules/sol-explore/"
+        "openzeppelin/=lib/openzeppelin-contracts/contracts/"
       ],
       "optimizer": {
         "enabled": true,
@@ -119,7 +115,8 @@
       "compilationTarget": {
         "src/lib/LibStakingChangeLog.sol": "LibStakingChangeLog"
       },
-      "libraries": {}
+      "libraries": {},
+      "viaIR": true
     },
     "sources": {
       "lib/fevmate/contracts/utils/FilAddress.sol": {
@@ -279,28 +276,28 @@
   },
   "ast": {
     "absolutePath": "src/lib/LibStakingChangeLog.sol",
-    "id": 43418,
+    "id": 44383,
     "exportedSymbols": {
       "LibStakingChangeLog": [
-        43417
+        44382
       ],
       "StakingChange": [
-        45933
+        46898
       ],
       "StakingChangeLog": [
-        45952
+        46917
       ],
       "StakingOperation": [
-        45925
+        46890
       ]
     },
     "nodeType": "SourceUnit",
-    "src": "46:3297:58",
+    "src": "46:3297:64",
     "nodes": [
       {
-        "id": 43221,
+        "id": 44186,
         "nodeType": "PragmaDirective",
-        "src": "46:23:58",
+        "src": "46:23:64",
         "nodes": [],
         "literals": [
           "solidity",
@@ -309,48 +306,48 @@
         ]
       },
       {
-        "id": 43225,
+        "id": 44190,
         "nodeType": "ImportDirective",
-        "src": "71:88:58",
+        "src": "71:88:64",
         "nodes": [],
         "absolutePath": "src/structs/Subnet.sol",
         "file": "../structs/Subnet.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 43418,
-        "sourceUnit": 46037,
+        "scope": 44383,
+        "sourceUnit": 47002,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 43222,
+              "id": 44187,
               "name": "StakingChangeLog",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 45952,
-              "src": "79:16:58",
+              "referencedDeclaration": 46917,
+              "src": "79:16:64",
               "typeDescriptions": {}
             },
             "nameLocation": "-1:-1:-1"
           },
           {
             "foreign": {
-              "id": 43223,
+              "id": 44188,
               "name": "StakingChange",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 45933,
-              "src": "97:13:58",
+              "referencedDeclaration": 46898,
+              "src": "97:13:64",
               "typeDescriptions": {}
             },
             "nameLocation": "-1:-1:-1"
           },
           {
             "foreign": {
-              "id": 43224,
+              "id": 44189,
               "name": "StakingOperation",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 45925,
-              "src": "112:16:58",
+              "referencedDeclaration": 46890,
+              "src": "112:16:64",
               "typeDescriptions": {}
             },
             "nameLocation": "-1:-1:-1"
@@ -359,56 +356,56 @@
         "unitAlias": ""
       },
       {
-        "id": 43417,
+        "id": 44382,
         "nodeType": "ContractDefinition",
-        "src": "205:3137:58",
+        "src": "205:3137:64",
         "nodes": [
           {
-            "id": 43237,
+            "id": 44202,
             "nodeType": "EventDefinition",
-            "src": "239:113:58",
+            "src": "239:113:64",
             "nodes": [],
             "anonymous": false,
             "eventSelector": "1c593a2b803c3f9038e8b6743ba79fbc4276d2770979a01d2768ed12bea3243f",
             "name": "NewStakingChangeRequest",
-            "nameLocation": "245:23:58",
+            "nameLocation": "245:23:64",
             "parameters": {
-              "id": 43236,
+              "id": 44201,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43229,
+                  "id": 44194,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "op",
-                  "nameLocation": "286:2:58",
+                  "nameLocation": "286:2:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43237,
-                  "src": "269:19:58",
+                  "scope": 44202,
+                  "src": "269:19:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                    "typeIdentifier": "t_enum$_StakingOperation_$46890",
                     "typeString": "enum StakingOperation"
                   },
                   "typeName": {
-                    "id": 43228,
+                    "id": 44193,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43227,
+                      "id": 44192,
                       "name": "StakingOperation",
                       "nameLocations": [
-                        "269:16:58"
+                        "269:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45925,
-                      "src": "269:16:58"
+                      "referencedDeclaration": 46890,
+                      "src": "269:16:64"
                     },
-                    "referencedDeclaration": 45925,
-                    "src": "269:16:58",
+                    "referencedDeclaration": 46890,
+                    "src": "269:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                      "typeIdentifier": "t_enum$_StakingOperation_$46890",
                       "typeString": "enum StakingOperation"
                     }
                   },
@@ -416,14 +413,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 43231,
+                  "id": 44196,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "validator",
-                  "nameLocation": "298:9:58",
+                  "nameLocation": "298:9:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43237,
-                  "src": "290:17:58",
+                  "scope": 44202,
+                  "src": "290:17:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -431,10 +428,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43230,
+                    "id": 44195,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "290:7:58",
+                    "src": "290:7:64",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -445,14 +442,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 43233,
+                  "id": 44198,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "payload",
-                  "nameLocation": "315:7:58",
+                  "nameLocation": "315:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43237,
-                  "src": "309:13:58",
+                  "scope": 44202,
+                  "src": "309:13:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -460,10 +457,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 43232,
+                    "id": 44197,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "309:5:58",
+                    "src": "309:5:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -473,14 +470,14 @@
                 },
                 {
                   "constant": false,
-                  "id": 43235,
+                  "id": 44200,
                   "indexed": false,
                   "mutability": "mutable",
                   "name": "configurationNumber",
-                  "nameLocation": "331:19:58",
+                  "nameLocation": "331:19:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43237,
-                  "src": "324:26:58",
+                  "scope": 44202,
+                  "src": "324:26:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -488,10 +485,10 @@
                     "typeString": "uint64"
                   },
                   "typeName": {
-                    "id": 43234,
+                    "id": 44199,
                     "name": "uint64",
                     "nodeType": "ElementaryTypeName",
-                    "src": "324:6:58",
+                    "src": "324:6:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
                       "typeString": "uint64"
@@ -500,34 +497,34 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "268:83:58"
+              "src": "268:83:64"
             }
           },
           {
-            "id": 43267,
+            "id": 44232,
             "nodeType": "FunctionDefinition",
-            "src": "415:539:58",
+            "src": "415:539:64",
             "nodes": [],
             "body": {
-              "id": 43266,
+              "id": 44231,
               "nodeType": "Block",
-              "src": "527:427:58",
+              "src": "527:427:64",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    43249
+                    44214
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 43249,
+                      "id": 44214,
                       "mutability": "mutable",
                       "name": "configurationNumber",
-                      "nameLocation": "544:19:58",
+                      "nameLocation": "544:19:64",
                       "nodeType": "VariableDeclaration",
-                      "scope": 43266,
-                      "src": "537:26:58",
+                      "scope": 44231,
+                      "src": "537:26:64",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -535,10 +532,10 @@
                         "typeString": "uint64"
                       },
                       "typeName": {
-                        "id": 43248,
+                        "id": 44213,
                         "name": "uint64",
                         "nodeType": "ElementaryTypeName",
-                        "src": "537:6:58",
+                        "src": "537:6:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -547,28 +544,28 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 43257,
+                  "id": 44222,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 43251,
+                        "id": 44216,
                         "name": "changes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43241,
-                        "src": "602:7:58",
+                        "referencedDeclaration": 44206,
+                        "src": "602:7:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         }
                       },
                       {
-                        "id": 43252,
+                        "id": 44217,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43243,
-                        "src": "634:9:58",
+                        "referencedDeclaration": 44208,
+                        "src": "634:9:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -576,39 +573,39 @@
                       },
                       {
                         "expression": {
-                          "id": 43253,
+                          "id": 44218,
                           "name": "StakingOperation",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 45925,
-                          "src": "661:16:58",
+                          "referencedDeclaration": 46890,
+                          "src": "661:16:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$45925_$",
+                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$46890_$",
                             "typeString": "type(enum StakingOperation)"
                           }
                         },
-                        "id": 43254,
+                        "id": 44219,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "678:11:58",
+                        "memberLocation": "678:11:64",
                         "memberName": "SetMetadata",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45924,
-                        "src": "661:28:58",
+                        "referencedDeclaration": 46889,
+                        "src": "661:28:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         }
                       },
                       {
-                        "id": 43255,
+                        "id": 44220,
                         "name": "metadata",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43245,
-                        "src": "712:8:58",
+                        "referencedDeclaration": 44210,
+                        "src": "712:8:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_calldata_ptr",
                           "typeString": "bytes calldata"
@@ -618,7 +615,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         },
                         {
@@ -626,7 +623,7 @@
                           "typeString": "address"
                         },
                         {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         },
                         {
@@ -634,28 +631,28 @@
                           "typeString": "bytes calldata"
                         }
                       ],
-                      "id": 43250,
+                      "id": 44215,
                       "name": "recordChange",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43383,
-                      "src": "566:12:58",
+                      "referencedDeclaration": 44348,
+                      "src": "566:12:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_StakingChangeLog_$45952_storage_ptr_$_t_address_$_t_enum$_StakingOperation_$45925_$_t_bytes_memory_ptr_$returns$_t_uint64_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_StakingChangeLog_$46917_storage_ptr_$_t_address_$_t_enum$_StakingOperation_$46890_$_t_bytes_memory_ptr_$returns$_t_uint64_$",
                         "typeString": "function (struct StakingChangeLog storage pointer,address,enum StakingOperation,bytes memory) returns (uint64)"
                       }
                     },
-                    "id": 43256,
+                    "id": 44221,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
                     "nameLocations": [
-                      "593:7:58",
-                      "623:9:58",
-                      "657:2:58",
-                      "703:7:58"
+                      "593:7:64",
+                      "623:9:64",
+                      "657:2:64",
+                      "703:7:64"
                     ],
                     "names": [
                       "changes",
@@ -664,7 +661,7 @@
                       "payload"
                     ],
                     "nodeType": "FunctionCall",
-                    "src": "566:165:58",
+                    "src": "566:165:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
@@ -672,70 +669,70 @@
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "537:194:58"
+                  "src": "537:194:64"
                 },
                 {
                   "eventCall": {
                     "arguments": [
                       {
                         "expression": {
-                          "id": 43259,
+                          "id": 44224,
                           "name": "StakingOperation",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 45925,
-                          "src": "789:16:58",
+                          "referencedDeclaration": 46890,
+                          "src": "789:16:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$45925_$",
+                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$46890_$",
                             "typeString": "type(enum StakingOperation)"
                           }
                         },
-                        "id": 43260,
+                        "id": 44225,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "806:11:58",
+                        "memberLocation": "806:11:64",
                         "memberName": "SetMetadata",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45924,
-                        "src": "789:28:58",
+                        "referencedDeclaration": 46889,
+                        "src": "789:28:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         }
                       },
                       {
-                        "id": 43261,
+                        "id": 44226,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43243,
-                        "src": "842:9:58",
+                        "referencedDeclaration": 44208,
+                        "src": "842:9:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         }
                       },
                       {
-                        "id": 43262,
+                        "id": 44227,
                         "name": "metadata",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43245,
-                        "src": "874:8:58",
+                        "referencedDeclaration": 44210,
+                        "src": "874:8:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_calldata_ptr",
                           "typeString": "bytes calldata"
                         }
                       },
                       {
-                        "id": 43263,
+                        "id": 44228,
                         "name": "configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43249,
-                        "src": "917:19:58",
+                        "referencedDeclaration": 44214,
+                        "src": "917:19:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -745,7 +742,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         },
                         {
@@ -761,28 +758,28 @@
                           "typeString": "uint64"
                         }
                       ],
-                      "id": 43258,
+                      "id": 44223,
                       "name": "NewStakingChangeRequest",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43237,
-                      "src": "747:23:58",
+                      "referencedDeclaration": 44202,
+                      "src": "747:23:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_enum$_StakingOperation_$45925_$_t_address_$_t_bytes_memory_ptr_$_t_uint64_$returns$__$",
+                        "typeIdentifier": "t_function_event_nonpayable$_t_enum$_StakingOperation_$46890_$_t_address_$_t_bytes_memory_ptr_$_t_uint64_$returns$__$",
                         "typeString": "function (enum StakingOperation,address,bytes memory,uint64)"
                       }
                     },
-                    "id": 43264,
+                    "id": 44229,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
                     "nameLocations": [
-                      "785:2:58",
-                      "831:9:58",
-                      "865:7:58",
-                      "896:19:58"
+                      "785:2:64",
+                      "831:9:64",
+                      "865:7:64",
+                      "896:19:64"
                     ],
                     "names": [
                       "op",
@@ -791,66 +788,66 @@
                       "configurationNumber"
                     ],
                     "nodeType": "FunctionCall",
-                    "src": "747:200:58",
+                    "src": "747:200:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 43265,
+                  "id": 44230,
                   "nodeType": "EmitStatement",
-                  "src": "742:205:58"
+                  "src": "742:205:64"
                 }
               ]
             },
             "documentation": {
-              "id": 43238,
+              "id": 44203,
               "nodeType": "StructuredDocumentation",
-              "src": "358:52:58",
+              "src": "358:52:64",
               "text": "@notice Validator request to update its metadata"
             },
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "metadataRequest",
-            "nameLocation": "424:15:58",
+            "nameLocation": "424:15:64",
             "parameters": {
-              "id": 43246,
+              "id": 44211,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43241,
+                  "id": 44206,
                   "mutability": "mutable",
                   "name": "changes",
-                  "nameLocation": "465:7:58",
+                  "nameLocation": "465:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43267,
-                  "src": "440:32:58",
+                  "scope": 44232,
+                  "src": "440:32:64",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                    "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                     "typeString": "struct StakingChangeLog"
                   },
                   "typeName": {
-                    "id": 43240,
+                    "id": 44205,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43239,
+                      "id": 44204,
                       "name": "StakingChangeLog",
                       "nameLocations": [
-                        "440:16:58"
+                        "440:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45952,
-                      "src": "440:16:58"
+                      "referencedDeclaration": 46917,
+                      "src": "440:16:64"
                     },
-                    "referencedDeclaration": 45952,
-                    "src": "440:16:58",
+                    "referencedDeclaration": 46917,
+                    "src": "440:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                      "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                       "typeString": "struct StakingChangeLog"
                     }
                   },
@@ -858,13 +855,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43243,
+                  "id": 44208,
                   "mutability": "mutable",
                   "name": "validator",
-                  "nameLocation": "482:9:58",
+                  "nameLocation": "482:9:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43267,
-                  "src": "474:17:58",
+                  "scope": 44232,
+                  "src": "474:17:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -872,10 +869,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43242,
+                    "id": 44207,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "474:7:58",
+                    "src": "474:7:64",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -886,13 +883,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43245,
+                  "id": 44210,
                   "mutability": "mutable",
                   "name": "metadata",
-                  "nameLocation": "508:8:58",
+                  "nameLocation": "508:8:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43267,
-                  "src": "493:23:58",
+                  "scope": 44232,
+                  "src": "493:23:64",
                   "stateVariable": false,
                   "storageLocation": "calldata",
                   "typeDescriptions": {
@@ -900,10 +897,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 43244,
+                    "id": 44209,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "493:5:58",
+                    "src": "493:5:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -912,44 +909,44 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "439:78:58"
+              "src": "439:78:64"
             },
             "returnParameters": {
-              "id": 43247,
+              "id": 44212,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "527:0:58"
+              "src": "527:0:64"
             },
-            "scope": 43417,
+            "scope": 44382,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 43304,
+            "id": 44269,
             "nodeType": "FunctionDefinition",
-            "src": "1174:574:58",
+            "src": "1174:574:64",
             "nodes": [],
             "body": {
-              "id": 43303,
+              "id": 44268,
               "nodeType": "Block",
-              "src": "1277:471:58",
+              "src": "1277:471:64",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    43279
+                    44244
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 43279,
+                      "id": 44244,
                       "mutability": "mutable",
                       "name": "payload",
-                      "nameLocation": "1300:7:58",
+                      "nameLocation": "1300:7:64",
                       "nodeType": "VariableDeclaration",
-                      "scope": 43303,
-                      "src": "1287:20:58",
+                      "scope": 44268,
+                      "src": "1287:20:64",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
@@ -957,10 +954,10 @@
                         "typeString": "bytes"
                       },
                       "typeName": {
-                        "id": 43278,
+                        "id": 44243,
                         "name": "bytes",
                         "nodeType": "ElementaryTypeName",
-                        "src": "1287:5:58",
+                        "src": "1287:5:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_storage_ptr",
                           "typeString": "bytes"
@@ -969,16 +966,16 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 43284,
+                  "id": 44249,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 43282,
+                        "id": 44247,
                         "name": "amount",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43275,
-                        "src": "1321:6:58",
+                        "referencedDeclaration": 44240,
+                        "src": "1321:6:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -993,32 +990,32 @@
                         }
                       ],
                       "expression": {
-                        "id": 43280,
+                        "id": 44245,
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": -1,
-                        "src": "1310:3:58",
+                        "src": "1310:3:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_abi",
                           "typeString": "abi"
                         }
                       },
-                      "id": 43281,
+                      "id": 44246,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "lValueRequested": false,
-                      "memberLocation": "1314:6:58",
+                      "memberLocation": "1314:6:64",
                       "memberName": "encode",
                       "nodeType": "MemberAccess",
-                      "src": "1310:10:58",
+                      "src": "1310:10:64",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
                         "typeString": "function () pure returns (bytes memory)"
                       }
                     },
-                    "id": 43283,
+                    "id": 44248,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1027,7 +1024,7 @@
                     "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1310:18:58",
+                    "src": "1310:18:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_memory_ptr",
@@ -1035,22 +1032,22 @@
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1287:41:58"
+                  "src": "1287:41:64"
                 },
                 {
                   "assignments": [
-                    43286
+                    44251
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 43286,
+                      "id": 44251,
                       "mutability": "mutable",
                       "name": "configurationNumber",
-                      "nameLocation": "1346:19:58",
+                      "nameLocation": "1346:19:64",
                       "nodeType": "VariableDeclaration",
-                      "scope": 43303,
-                      "src": "1339:26:58",
+                      "scope": 44268,
+                      "src": "1339:26:64",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -1058,10 +1055,10 @@
                         "typeString": "uint64"
                       },
                       "typeName": {
-                        "id": 43285,
+                        "id": 44250,
                         "name": "uint64",
                         "nodeType": "ElementaryTypeName",
-                        "src": "1339:6:58",
+                        "src": "1339:6:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -1070,28 +1067,28 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 43294,
+                  "id": 44259,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 43288,
+                        "id": 44253,
                         "name": "changes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43271,
-                        "src": "1404:7:58",
+                        "referencedDeclaration": 44236,
+                        "src": "1404:7:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         }
                       },
                       {
-                        "id": 43289,
+                        "id": 44254,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43273,
-                        "src": "1436:9:58",
+                        "referencedDeclaration": 44238,
+                        "src": "1436:9:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1099,39 +1096,39 @@
                       },
                       {
                         "expression": {
-                          "id": 43290,
+                          "id": 44255,
                           "name": "StakingOperation",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 45925,
-                          "src": "1463:16:58",
+                          "referencedDeclaration": 46890,
+                          "src": "1463:16:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$45925_$",
+                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$46890_$",
                             "typeString": "type(enum StakingOperation)"
                           }
                         },
-                        "id": 43291,
+                        "id": 44256,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "1480:8:58",
+                        "memberLocation": "1480:8:64",
                         "memberName": "Withdraw",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45923,
-                        "src": "1463:25:58",
+                        "referencedDeclaration": 46888,
+                        "src": "1463:25:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         }
                       },
                       {
-                        "id": 43292,
+                        "id": 44257,
                         "name": "payload",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43279,
-                        "src": "1511:7:58",
+                        "referencedDeclaration": 44244,
+                        "src": "1511:7:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
                           "typeString": "bytes memory"
@@ -1141,7 +1138,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         },
                         {
@@ -1149,7 +1146,7 @@
                           "typeString": "address"
                         },
                         {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         },
                         {
@@ -1157,28 +1154,28 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "id": 43287,
+                      "id": 44252,
                       "name": "recordChange",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43383,
-                      "src": "1368:12:58",
+                      "referencedDeclaration": 44348,
+                      "src": "1368:12:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_StakingChangeLog_$45952_storage_ptr_$_t_address_$_t_enum$_StakingOperation_$45925_$_t_bytes_memory_ptr_$returns$_t_uint64_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_StakingChangeLog_$46917_storage_ptr_$_t_address_$_t_enum$_StakingOperation_$46890_$_t_bytes_memory_ptr_$returns$_t_uint64_$",
                         "typeString": "function (struct StakingChangeLog storage pointer,address,enum StakingOperation,bytes memory) returns (uint64)"
                       }
                     },
-                    "id": 43293,
+                    "id": 44258,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
                     "nameLocations": [
-                      "1395:7:58",
-                      "1425:9:58",
-                      "1459:2:58",
-                      "1502:7:58"
+                      "1395:7:64",
+                      "1425:9:64",
+                      "1459:2:64",
+                      "1502:7:64"
                     ],
                     "names": [
                       "changes",
@@ -1187,7 +1184,7 @@
                       "payload"
                     ],
                     "nodeType": "FunctionCall",
-                    "src": "1368:161:58",
+                    "src": "1368:161:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
@@ -1195,70 +1192,70 @@
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1339:190:58"
+                  "src": "1339:190:64"
                 },
                 {
                   "eventCall": {
                     "arguments": [
                       {
                         "expression": {
-                          "id": 43296,
+                          "id": 44261,
                           "name": "StakingOperation",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 45925,
-                          "src": "1587:16:58",
+                          "referencedDeclaration": 46890,
+                          "src": "1587:16:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$45925_$",
+                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$46890_$",
                             "typeString": "type(enum StakingOperation)"
                           }
                         },
-                        "id": 43297,
+                        "id": 44262,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "1604:8:58",
+                        "memberLocation": "1604:8:64",
                         "memberName": "Withdraw",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45923,
-                        "src": "1587:25:58",
+                        "referencedDeclaration": 46888,
+                        "src": "1587:25:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         }
                       },
                       {
-                        "id": 43298,
+                        "id": 44263,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43273,
-                        "src": "1637:9:58",
+                        "referencedDeclaration": 44238,
+                        "src": "1637:9:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         }
                       },
                       {
-                        "id": 43299,
+                        "id": 44264,
                         "name": "payload",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43279,
-                        "src": "1669:7:58",
+                        "referencedDeclaration": 44244,
+                        "src": "1669:7:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
                           "typeString": "bytes memory"
                         }
                       },
                       {
-                        "id": 43300,
+                        "id": 44265,
                         "name": "configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43286,
-                        "src": "1711:19:58",
+                        "referencedDeclaration": 44251,
+                        "src": "1711:19:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -1268,7 +1265,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         },
                         {
@@ -1284,28 +1281,28 @@
                           "typeString": "uint64"
                         }
                       ],
-                      "id": 43295,
+                      "id": 44260,
                       "name": "NewStakingChangeRequest",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43237,
-                      "src": "1545:23:58",
+                      "referencedDeclaration": 44202,
+                      "src": "1545:23:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_enum$_StakingOperation_$45925_$_t_address_$_t_bytes_memory_ptr_$_t_uint64_$returns$__$",
+                        "typeIdentifier": "t_function_event_nonpayable$_t_enum$_StakingOperation_$46890_$_t_address_$_t_bytes_memory_ptr_$_t_uint64_$returns$__$",
                         "typeString": "function (enum StakingOperation,address,bytes memory,uint64)"
                       }
                     },
-                    "id": 43301,
+                    "id": 44266,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
                     "nameLocations": [
-                      "1583:2:58",
-                      "1626:9:58",
-                      "1660:7:58",
-                      "1690:19:58"
+                      "1583:2:64",
+                      "1626:9:64",
+                      "1660:7:64",
+                      "1690:19:64"
                     ],
                     "names": [
                       "op",
@@ -1314,66 +1311,66 @@
                       "configurationNumber"
                     ],
                     "nodeType": "FunctionCall",
-                    "src": "1545:196:58",
+                    "src": "1545:196:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 43302,
+                  "id": 44267,
                   "nodeType": "EmitStatement",
-                  "src": "1540:201:58"
+                  "src": "1540:201:64"
                 }
               ]
             },
             "documentation": {
-              "id": 43268,
+              "id": 44233,
               "nodeType": "StructuredDocumentation",
-              "src": "960:209:58",
+              "src": "960:209:64",
               "text": "@notice Perform upsert operation to the withdraw changes, return total value to withdraw\n @notice of the validator.\n Each insert will increment the configuration number by 1, update will not."
             },
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "withdrawRequest",
-            "nameLocation": "1183:15:58",
+            "nameLocation": "1183:15:64",
             "parameters": {
-              "id": 43276,
+              "id": 44241,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43271,
+                  "id": 44236,
                   "mutability": "mutable",
                   "name": "changes",
-                  "nameLocation": "1224:7:58",
+                  "nameLocation": "1224:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43304,
-                  "src": "1199:32:58",
+                  "scope": 44269,
+                  "src": "1199:32:64",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                    "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                     "typeString": "struct StakingChangeLog"
                   },
                   "typeName": {
-                    "id": 43270,
+                    "id": 44235,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43269,
+                      "id": 44234,
                       "name": "StakingChangeLog",
                       "nameLocations": [
-                        "1199:16:58"
+                        "1199:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45952,
-                      "src": "1199:16:58"
+                      "referencedDeclaration": 46917,
+                      "src": "1199:16:64"
                     },
-                    "referencedDeclaration": 45952,
-                    "src": "1199:16:58",
+                    "referencedDeclaration": 46917,
+                    "src": "1199:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                      "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                       "typeString": "struct StakingChangeLog"
                     }
                   },
@@ -1381,13 +1378,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43273,
+                  "id": 44238,
                   "mutability": "mutable",
                   "name": "validator",
-                  "nameLocation": "1241:9:58",
+                  "nameLocation": "1241:9:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43304,
-                  "src": "1233:17:58",
+                  "scope": 44269,
+                  "src": "1233:17:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1395,10 +1392,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43272,
+                    "id": 44237,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1233:7:58",
+                    "src": "1233:7:64",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1409,13 +1406,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43275,
+                  "id": 44240,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "1260:6:58",
+                  "nameLocation": "1260:6:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43304,
-                  "src": "1252:14:58",
+                  "scope": 44269,
+                  "src": "1252:14:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1423,10 +1420,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 43274,
+                    "id": 44239,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1252:7:58",
+                    "src": "1252:7:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1435,44 +1432,44 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1198:69:58"
+              "src": "1198:69:64"
             },
             "returnParameters": {
-              "id": 43277,
+              "id": 44242,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1277:0:58"
+              "src": "1277:0:64"
             },
-            "scope": 43417,
+            "scope": 44382,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 43341,
+            "id": 44306,
             "nodeType": "FunctionDefinition",
-            "src": "1818:571:58",
+            "src": "1818:571:64",
             "nodes": [],
             "body": {
-              "id": 43340,
+              "id": 44305,
               "nodeType": "Block",
-              "src": "1920:469:58",
+              "src": "1920:469:64",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    43316
+                    44281
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 43316,
+                      "id": 44281,
                       "mutability": "mutable",
                       "name": "payload",
-                      "nameLocation": "1943:7:58",
+                      "nameLocation": "1943:7:64",
                       "nodeType": "VariableDeclaration",
-                      "scope": 43340,
-                      "src": "1930:20:58",
+                      "scope": 44305,
+                      "src": "1930:20:64",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
@@ -1480,10 +1477,10 @@
                         "typeString": "bytes"
                       },
                       "typeName": {
-                        "id": 43315,
+                        "id": 44280,
                         "name": "bytes",
                         "nodeType": "ElementaryTypeName",
-                        "src": "1930:5:58",
+                        "src": "1930:5:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_storage_ptr",
                           "typeString": "bytes"
@@ -1492,16 +1489,16 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 43321,
+                  "id": 44286,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 43319,
+                        "id": 44284,
                         "name": "amount",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43312,
-                        "src": "1964:6:58",
+                        "referencedDeclaration": 44277,
+                        "src": "1964:6:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
@@ -1516,32 +1513,32 @@
                         }
                       ],
                       "expression": {
-                        "id": 43317,
+                        "id": 44282,
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
                         "referencedDeclaration": -1,
-                        "src": "1953:3:58",
+                        "src": "1953:3:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_magic_abi",
                           "typeString": "abi"
                         }
                       },
-                      "id": 43318,
+                      "id": 44283,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
                       "lValueRequested": false,
-                      "memberLocation": "1957:6:58",
+                      "memberLocation": "1957:6:64",
                       "memberName": "encode",
                       "nodeType": "MemberAccess",
-                      "src": "1953:10:58",
+                      "src": "1953:10:64",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
                         "typeString": "function () pure returns (bytes memory)"
                       }
                     },
-                    "id": 43320,
+                    "id": 44285,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1550,7 +1547,7 @@
                     "nameLocations": [],
                     "names": [],
                     "nodeType": "FunctionCall",
-                    "src": "1953:18:58",
+                    "src": "1953:18:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_memory_ptr",
@@ -1558,22 +1555,22 @@
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1930:41:58"
+                  "src": "1930:41:64"
                 },
                 {
                   "assignments": [
-                    43323
+                    44288
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 43323,
+                      "id": 44288,
                       "mutability": "mutable",
                       "name": "configurationNumber",
-                      "nameLocation": "1989:19:58",
+                      "nameLocation": "1989:19:64",
                       "nodeType": "VariableDeclaration",
-                      "scope": 43340,
-                      "src": "1982:26:58",
+                      "scope": 44305,
+                      "src": "1982:26:64",
                       "stateVariable": false,
                       "storageLocation": "default",
                       "typeDescriptions": {
@@ -1581,10 +1578,10 @@
                         "typeString": "uint64"
                       },
                       "typeName": {
-                        "id": 43322,
+                        "id": 44287,
                         "name": "uint64",
                         "nodeType": "ElementaryTypeName",
-                        "src": "1982:6:58",
+                        "src": "1982:6:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -1593,28 +1590,28 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 43331,
+                  "id": 44296,
                   "initialValue": {
                     "arguments": [
                       {
-                        "id": 43325,
+                        "id": 44290,
                         "name": "changes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43308,
-                        "src": "2047:7:58",
+                        "referencedDeclaration": 44273,
+                        "src": "2047:7:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         }
                       },
                       {
-                        "id": 43326,
+                        "id": 44291,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43310,
-                        "src": "2079:9:58",
+                        "referencedDeclaration": 44275,
+                        "src": "2079:9:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
@@ -1622,39 +1619,39 @@
                       },
                       {
                         "expression": {
-                          "id": 43327,
+                          "id": 44292,
                           "name": "StakingOperation",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 45925,
-                          "src": "2106:16:58",
+                          "referencedDeclaration": 46890,
+                          "src": "2106:16:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$45925_$",
+                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$46890_$",
                             "typeString": "type(enum StakingOperation)"
                           }
                         },
-                        "id": 43328,
+                        "id": 44293,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "2123:7:58",
+                        "memberLocation": "2123:7:64",
                         "memberName": "Deposit",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45922,
-                        "src": "2106:24:58",
+                        "referencedDeclaration": 46887,
+                        "src": "2106:24:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         }
                       },
                       {
-                        "id": 43329,
+                        "id": 44294,
                         "name": "payload",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43316,
-                        "src": "2153:7:58",
+                        "referencedDeclaration": 44281,
+                        "src": "2153:7:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
                           "typeString": "bytes memory"
@@ -1664,7 +1661,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         },
                         {
@@ -1672,7 +1669,7 @@
                           "typeString": "address"
                         },
                         {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         },
                         {
@@ -1680,28 +1677,28 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "id": 43324,
+                      "id": 44289,
                       "name": "recordChange",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43383,
-                      "src": "2011:12:58",
+                      "referencedDeclaration": 44348,
+                      "src": "2011:12:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_StakingChangeLog_$45952_storage_ptr_$_t_address_$_t_enum$_StakingOperation_$45925_$_t_bytes_memory_ptr_$returns$_t_uint64_$",
+                        "typeIdentifier": "t_function_internal_nonpayable$_t_struct$_StakingChangeLog_$46917_storage_ptr_$_t_address_$_t_enum$_StakingOperation_$46890_$_t_bytes_memory_ptr_$returns$_t_uint64_$",
                         "typeString": "function (struct StakingChangeLog storage pointer,address,enum StakingOperation,bytes memory) returns (uint64)"
                       }
                     },
-                    "id": 43330,
+                    "id": 44295,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
                     "nameLocations": [
-                      "2038:7:58",
-                      "2068:9:58",
-                      "2102:2:58",
-                      "2144:7:58"
+                      "2038:7:64",
+                      "2068:9:64",
+                      "2102:2:64",
+                      "2144:7:64"
                     ],
                     "names": [
                       "changes",
@@ -1710,7 +1707,7 @@
                       "payload"
                     ],
                     "nodeType": "FunctionCall",
-                    "src": "2011:160:58",
+                    "src": "2011:160:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
@@ -1718,70 +1715,70 @@
                     }
                   },
                   "nodeType": "VariableDeclarationStatement",
-                  "src": "1982:189:58"
+                  "src": "1982:189:64"
                 },
                 {
                   "eventCall": {
                     "arguments": [
                       {
                         "expression": {
-                          "id": 43333,
+                          "id": 44298,
                           "name": "StakingOperation",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 45925,
-                          "src": "2229:16:58",
+                          "referencedDeclaration": 46890,
+                          "src": "2229:16:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$45925_$",
+                            "typeIdentifier": "t_type$_t_enum$_StakingOperation_$46890_$",
                             "typeString": "type(enum StakingOperation)"
                           }
                         },
-                        "id": 43334,
+                        "id": 44299,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "lValueRequested": false,
-                        "memberLocation": "2246:7:58",
+                        "memberLocation": "2246:7:64",
                         "memberName": "Deposit",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45922,
-                        "src": "2229:24:58",
+                        "referencedDeclaration": 46887,
+                        "src": "2229:24:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         }
                       },
                       {
-                        "id": 43335,
+                        "id": 44300,
                         "name": "validator",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43310,
-                        "src": "2278:9:58",
+                        "referencedDeclaration": 44275,
+                        "src": "2278:9:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_address",
                           "typeString": "address"
                         }
                       },
                       {
-                        "id": 43336,
+                        "id": 44301,
                         "name": "payload",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43316,
-                        "src": "2310:7:58",
+                        "referencedDeclaration": 44281,
+                        "src": "2310:7:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
                           "typeString": "bytes memory"
                         }
                       },
                       {
-                        "id": 43337,
+                        "id": 44302,
                         "name": "configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43323,
-                        "src": "2352:19:58",
+                        "referencedDeclaration": 44288,
+                        "src": "2352:19:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -1791,7 +1788,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                          "typeIdentifier": "t_enum$_StakingOperation_$46890",
                           "typeString": "enum StakingOperation"
                         },
                         {
@@ -1807,28 +1804,28 @@
                           "typeString": "uint64"
                         }
                       ],
-                      "id": 43332,
+                      "id": 44297,
                       "name": "NewStakingChangeRequest",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43237,
-                      "src": "2187:23:58",
+                      "referencedDeclaration": 44202,
+                      "src": "2187:23:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_function_event_nonpayable$_t_enum$_StakingOperation_$45925_$_t_address_$_t_bytes_memory_ptr_$_t_uint64_$returns$__$",
+                        "typeIdentifier": "t_function_event_nonpayable$_t_enum$_StakingOperation_$46890_$_t_address_$_t_bytes_memory_ptr_$_t_uint64_$returns$__$",
                         "typeString": "function (enum StakingOperation,address,bytes memory,uint64)"
                       }
                     },
-                    "id": 43338,
+                    "id": 44303,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "kind": "functionCall",
                     "lValueRequested": false,
                     "nameLocations": [
-                      "2225:2:58",
-                      "2267:9:58",
-                      "2301:7:58",
-                      "2331:19:58"
+                      "2225:2:64",
+                      "2267:9:64",
+                      "2301:7:64",
+                      "2331:19:64"
                     ],
                     "names": [
                       "op",
@@ -1837,66 +1834,66 @@
                       "configurationNumber"
                     ],
                     "nodeType": "FunctionCall",
-                    "src": "2187:195:58",
+                    "src": "2187:195:64",
                     "tryCall": false,
                     "typeDescriptions": {
                       "typeIdentifier": "t_tuple$__$",
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 43339,
+                  "id": 44304,
                   "nodeType": "EmitStatement",
-                  "src": "2182:200:58"
+                  "src": "2182:200:64"
                 }
               ]
             },
             "documentation": {
-              "id": 43305,
+              "id": 44270,
               "nodeType": "StructuredDocumentation",
-              "src": "1754:59:58",
+              "src": "1754:59:64",
               "text": "@notice Perform upsert operation to the deposit changes"
             },
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "depositRequest",
-            "nameLocation": "1827:14:58",
+            "nameLocation": "1827:14:64",
             "parameters": {
-              "id": 43313,
+              "id": 44278,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43308,
+                  "id": 44273,
                   "mutability": "mutable",
                   "name": "changes",
-                  "nameLocation": "1867:7:58",
+                  "nameLocation": "1867:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43341,
-                  "src": "1842:32:58",
+                  "scope": 44306,
+                  "src": "1842:32:64",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                    "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                     "typeString": "struct StakingChangeLog"
                   },
                   "typeName": {
-                    "id": 43307,
+                    "id": 44272,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43306,
+                      "id": 44271,
                       "name": "StakingChangeLog",
                       "nameLocations": [
-                        "1842:16:58"
+                        "1842:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45952,
-                      "src": "1842:16:58"
+                      "referencedDeclaration": 46917,
+                      "src": "1842:16:64"
                     },
-                    "referencedDeclaration": 45952,
-                    "src": "1842:16:58",
+                    "referencedDeclaration": 46917,
+                    "src": "1842:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                      "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                       "typeString": "struct StakingChangeLog"
                     }
                   },
@@ -1904,13 +1901,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43310,
+                  "id": 44275,
                   "mutability": "mutable",
                   "name": "validator",
-                  "nameLocation": "1884:9:58",
+                  "nameLocation": "1884:9:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43341,
-                  "src": "1876:17:58",
+                  "scope": 44306,
+                  "src": "1876:17:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1918,10 +1915,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43309,
+                    "id": 44274,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1876:7:58",
+                    "src": "1876:7:64",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -1932,13 +1929,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43312,
+                  "id": 44277,
                   "mutability": "mutable",
                   "name": "amount",
-                  "nameLocation": "1903:6:58",
+                  "nameLocation": "1903:6:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43341,
-                  "src": "1895:14:58",
+                  "scope": 44306,
+                  "src": "1895:14:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -1946,10 +1943,10 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 43311,
+                    "id": 44276,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
-                    "src": "1895:7:58",
+                    "src": "1895:7:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
@@ -1958,44 +1955,44 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "1841:69:58"
+              "src": "1841:69:64"
             },
             "returnParameters": {
-              "id": 43314,
+              "id": 44279,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "1920:0:58"
+              "src": "1920:0:64"
             },
-            "scope": 43417,
+            "scope": 44382,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 43383,
+            "id": 44348,
             "nodeType": "FunctionDefinition",
-            "src": "2459:453:58",
+            "src": "2459:453:64",
             "nodes": [],
             "body": {
-              "id": 43382,
+              "id": 44347,
               "nodeType": "Block",
-              "src": "2661:251:58",
+              "src": "2661:251:64",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 43360,
+                    "id": 44325,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 43357,
+                      "id": 44322,
                       "name": "configurationNumber",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43355,
-                      "src": "2671:19:58",
+                      "referencedDeclaration": 44320,
+                      "src": "2671:19:64",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
                         "typeString": "uint64"
@@ -2005,45 +2002,45 @@
                     "operator": "=",
                     "rightHandSide": {
                       "expression": {
-                        "id": 43358,
+                        "id": 44323,
                         "name": "changes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43345,
-                        "src": "2693:7:58",
+                        "referencedDeclaration": 44310,
+                        "src": "2693:7:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         }
                       },
-                      "id": 43359,
+                      "id": 44324,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
-                      "memberLocation": "2701:23:58",
+                      "memberLocation": "2701:23:64",
                       "memberName": "nextConfigurationNumber",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 45942,
-                      "src": "2693:31:58",
+                      "referencedDeclaration": 46907,
+                      "src": "2693:31:64",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
                         "typeString": "uint64"
                       }
                     },
-                    "src": "2671:53:58",
+                    "src": "2671:53:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
                       "typeString": "uint64"
                     }
                   },
-                  "id": 43361,
+                  "id": 44326,
                   "nodeType": "ExpressionStatement",
-                  "src": "2671:53:58"
+                  "src": "2671:53:64"
                 },
                 {
                   "expression": {
-                    "id": 43372,
+                    "id": 44337,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2051,40 +2048,40 @@
                     "leftHandSide": {
                       "baseExpression": {
                         "expression": {
-                          "id": 43362,
+                          "id": 44327,
                           "name": "changes",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 43345,
-                          "src": "2735:7:58",
+                          "referencedDeclaration": 44310,
+                          "src": "2735:7:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                            "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                             "typeString": "struct StakingChangeLog storage pointer"
                           }
                         },
-                        "id": 43365,
+                        "id": 44330,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "2743:7:58",
+                        "memberLocation": "2743:7:64",
                         "memberName": "changes",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45951,
-                        "src": "2735:15:58",
+                        "referencedDeclaration": 46916,
+                        "src": "2735:15:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$45933_storage_$",
+                          "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$46898_storage_$",
                           "typeString": "mapping(uint64 => struct StakingChange storage ref)"
                         }
                       },
-                      "id": 43366,
+                      "id": 44331,
                       "indexExpression": {
-                        "id": 43364,
+                        "id": 44329,
                         "name": "configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43355,
-                        "src": "2751:19:58",
+                        "referencedDeclaration": 44320,
+                        "src": "2751:19:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -2095,9 +2092,9 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "2735:36:58",
+                      "src": "2735:36:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_StakingChange_$45933_storage",
+                        "typeIdentifier": "t_struct$_StakingChange_$46898_storage",
                         "typeString": "struct StakingChange storage ref"
                       }
                     },
@@ -2106,36 +2103,36 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 43368,
+                          "id": 44333,
                           "name": "op",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 43350,
-                          "src": "2793:2:58",
+                          "referencedDeclaration": 44315,
+                          "src": "2793:2:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                            "typeIdentifier": "t_enum$_StakingOperation_$46890",
                             "typeString": "enum StakingOperation"
                           }
                         },
                         {
-                          "id": 43369,
+                          "id": 44334,
                           "name": "validator",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 43347,
-                          "src": "2808:9:58",
+                          "referencedDeclaration": 44312,
+                          "src": "2808:9:64",
                           "typeDescriptions": {
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           }
                         },
                         {
-                          "id": 43370,
+                          "id": 44335,
                           "name": "payload",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 43352,
-                          "src": "2828:7:58",
+                          "referencedDeclaration": 44317,
+                          "src": "2828:7:64",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes_memory_ptr",
                             "typeString": "bytes memory"
@@ -2145,7 +2142,7 @@
                       "expression": {
                         "argumentTypes": [
                           {
-                            "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                            "typeIdentifier": "t_enum$_StakingOperation_$46890",
                             "typeString": "enum StakingOperation"
                           },
                           {
@@ -2157,27 +2154,27 @@
                             "typeString": "bytes memory"
                           }
                         ],
-                        "id": 43367,
+                        "id": 44332,
                         "name": "StakingChange",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 45933,
-                        "src": "2774:13:58",
+                        "referencedDeclaration": 46898,
+                        "src": "2774:13:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_StakingChange_$45933_storage_ptr_$",
+                          "typeIdentifier": "t_type$_t_struct$_StakingChange_$46898_storage_ptr_$",
                           "typeString": "type(struct StakingChange storage pointer)"
                         }
                       },
-                      "id": 43371,
+                      "id": 44336,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "kind": "structConstructorCall",
                       "lValueRequested": false,
                       "nameLocations": [
-                        "2789:2:58",
-                        "2797:9:58",
-                        "2819:7:58"
+                        "2789:2:64",
+                        "2797:9:64",
+                        "2819:7:64"
                       ],
                       "names": [
                         "op",
@@ -2185,53 +2182,53 @@
                         "payload"
                       ],
                       "nodeType": "FunctionCall",
-                      "src": "2774:63:58",
+                      "src": "2774:63:64",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_StakingChange_$45933_memory_ptr",
+                        "typeIdentifier": "t_struct$_StakingChange_$46898_memory_ptr",
                         "typeString": "struct StakingChange memory"
                       }
                     },
-                    "src": "2735:102:58",
+                    "src": "2735:102:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChange_$45933_storage",
+                      "typeIdentifier": "t_struct$_StakingChange_$46898_storage",
                       "typeString": "struct StakingChange storage ref"
                     }
                   },
-                  "id": 43373,
+                  "id": 44338,
                   "nodeType": "ExpressionStatement",
-                  "src": "2735:102:58"
+                  "src": "2735:102:64"
                 },
                 {
                   "expression": {
-                    "id": 43380,
+                    "id": 44345,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "expression": {
-                        "id": 43374,
+                        "id": 44339,
                         "name": "changes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43345,
-                        "src": "2848:7:58",
+                        "referencedDeclaration": 44310,
+                        "src": "2848:7:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         }
                       },
-                      "id": 43376,
+                      "id": 44341,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": true,
-                      "memberLocation": "2856:23:58",
+                      "memberLocation": "2856:23:64",
                       "memberName": "nextConfigurationNumber",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 45942,
-                      "src": "2848:31:58",
+                      "referencedDeclaration": 46907,
+                      "src": "2848:31:64",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
                         "typeString": "uint64"
@@ -2244,18 +2241,18 @@
                         "typeIdentifier": "t_uint64",
                         "typeString": "uint64"
                       },
-                      "id": 43379,
+                      "id": 44344,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-                        "id": 43377,
+                        "id": 44342,
                         "name": "configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43355,
-                        "src": "2882:19:58",
+                        "referencedDeclaration": 44320,
+                        "src": "2882:19:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -2265,85 +2262,85 @@
                       "operator": "+",
                       "rightExpression": {
                         "hexValue": "31",
-                        "id": 43378,
+                        "id": 44343,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
                         "kind": "number",
                         "lValueRequested": false,
                         "nodeType": "Literal",
-                        "src": "2904:1:58",
+                        "src": "2904:1:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_rational_1_by_1",
                           "typeString": "int_const 1"
                         },
                         "value": "1"
                       },
-                      "src": "2882:23:58",
+                      "src": "2882:23:64",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
                         "typeString": "uint64"
                       }
                     },
-                    "src": "2848:57:58",
+                    "src": "2848:57:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
                       "typeString": "uint64"
                     }
                   },
-                  "id": 43381,
+                  "id": 44346,
                   "nodeType": "ExpressionStatement",
-                  "src": "2848:57:58"
+                  "src": "2848:57:64"
                 }
               ]
             },
             "documentation": {
-              "id": 43342,
+              "id": 44307,
               "nodeType": "StructuredDocumentation",
-              "src": "2395:59:58",
+              "src": "2395:59:64",
               "text": "@notice Perform upsert operation to the deposit changes"
             },
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "recordChange",
-            "nameLocation": "2468:12:58",
+            "nameLocation": "2468:12:64",
             "parameters": {
-              "id": 43353,
+              "id": 44318,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43345,
+                  "id": 44310,
                   "mutability": "mutable",
                   "name": "changes",
-                  "nameLocation": "2515:7:58",
+                  "nameLocation": "2515:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43383,
-                  "src": "2490:32:58",
+                  "scope": 44348,
+                  "src": "2490:32:64",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                    "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                     "typeString": "struct StakingChangeLog"
                   },
                   "typeName": {
-                    "id": 43344,
+                    "id": 44309,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43343,
+                      "id": 44308,
                       "name": "StakingChangeLog",
                       "nameLocations": [
-                        "2490:16:58"
+                        "2490:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45952,
-                      "src": "2490:16:58"
+                      "referencedDeclaration": 46917,
+                      "src": "2490:16:64"
                     },
-                    "referencedDeclaration": 45952,
-                    "src": "2490:16:58",
+                    "referencedDeclaration": 46917,
+                    "src": "2490:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                      "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                       "typeString": "struct StakingChangeLog"
                     }
                   },
@@ -2351,13 +2348,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43347,
+                  "id": 44312,
                   "mutability": "mutable",
                   "name": "validator",
-                  "nameLocation": "2540:9:58",
+                  "nameLocation": "2540:9:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43383,
-                  "src": "2532:17:58",
+                  "scope": 44348,
+                  "src": "2532:17:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2365,10 +2362,10 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 43346,
+                    "id": 44311,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2532:7:58",
+                    "src": "2532:7:64",
                     "stateMutability": "nonpayable",
                     "typeDescriptions": {
                       "typeIdentifier": "t_address",
@@ -2379,36 +2376,36 @@
                 },
                 {
                   "constant": false,
-                  "id": 43350,
+                  "id": 44315,
                   "mutability": "mutable",
                   "name": "op",
-                  "nameLocation": "2576:2:58",
+                  "nameLocation": "2576:2:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43383,
-                  "src": "2559:19:58",
+                  "scope": 44348,
+                  "src": "2559:19:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                    "typeIdentifier": "t_enum$_StakingOperation_$46890",
                     "typeString": "enum StakingOperation"
                   },
                   "typeName": {
-                    "id": 43349,
+                    "id": 44314,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43348,
+                      "id": 44313,
                       "name": "StakingOperation",
                       "nameLocations": [
-                        "2559:16:58"
+                        "2559:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45925,
-                      "src": "2559:16:58"
+                      "referencedDeclaration": 46890,
+                      "src": "2559:16:64"
                     },
-                    "referencedDeclaration": 45925,
-                    "src": "2559:16:58",
+                    "referencedDeclaration": 46890,
+                    "src": "2559:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_StakingOperation_$45925",
+                      "typeIdentifier": "t_enum$_StakingOperation_$46890",
                       "typeString": "enum StakingOperation"
                     }
                   },
@@ -2416,13 +2413,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43352,
+                  "id": 44317,
                   "mutability": "mutable",
                   "name": "payload",
-                  "nameLocation": "2601:7:58",
+                  "nameLocation": "2601:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43383,
-                  "src": "2588:20:58",
+                  "scope": 44348,
+                  "src": "2588:20:64",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
@@ -2430,10 +2427,10 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 43351,
+                    "id": 44316,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2588:5:58",
+                    "src": "2588:5:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_bytes_storage_ptr",
                       "typeString": "bytes"
@@ -2442,21 +2439,21 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2480:134:58"
+              "src": "2480:134:64"
             },
             "returnParameters": {
-              "id": 43356,
+              "id": 44321,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43355,
+                  "id": 44320,
                   "mutability": "mutable",
                   "name": "configurationNumber",
-                  "nameLocation": "2640:19:58",
+                  "nameLocation": "2640:19:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43383,
-                  "src": "2633:26:58",
+                  "scope": 44348,
+                  "src": "2633:26:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2464,10 +2461,10 @@
                     "typeString": "uint64"
                   },
                   "typeName": {
-                    "id": 43354,
+                    "id": 44319,
                     "name": "uint64",
                     "nodeType": "ElementaryTypeName",
-                    "src": "2633:6:58",
+                    "src": "2633:6:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
                       "typeString": "uint64"
@@ -2476,62 +2473,62 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2632:28:58"
+              "src": "2632:28:64"
             },
-            "scope": 43417,
+            "scope": 44382,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 43401,
+            "id": 44366,
             "nodeType": "FunctionDefinition",
-            "src": "2973:209:58",
+            "src": "2973:209:64",
             "nodes": [],
             "body": {
-              "id": 43400,
+              "id": 44365,
               "nodeType": "Block",
-              "src": "3122:60:58",
+              "src": "3122:60:64",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
                     "baseExpression": {
                       "expression": {
-                        "id": 43395,
+                        "id": 44360,
                         "name": "changes",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43387,
-                        "src": "3139:7:58",
+                        "referencedDeclaration": 44352,
+                        "src": "3139:7:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                          "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                           "typeString": "struct StakingChangeLog storage pointer"
                         }
                       },
-                      "id": 43396,
+                      "id": 44361,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
                       "lValueRequested": false,
-                      "memberLocation": "3147:7:58",
+                      "memberLocation": "3147:7:64",
                       "memberName": "changes",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 45951,
-                      "src": "3139:15:58",
+                      "referencedDeclaration": 46916,
+                      "src": "3139:15:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$45933_storage_$",
+                        "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$46898_storage_$",
                         "typeString": "mapping(uint64 => struct StakingChange storage ref)"
                       }
                     },
-                    "id": 43398,
+                    "id": 44363,
                     "indexExpression": {
-                      "id": 43397,
+                      "id": 44362,
                       "name": "configurationNumber",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 43389,
-                      "src": "3155:19:58",
+                      "referencedDeclaration": 44354,
+                      "src": "3155:19:64",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
                         "typeString": "uint64"
@@ -2542,66 +2539,66 @@
                     "isPure": false,
                     "lValueRequested": false,
                     "nodeType": "IndexAccess",
-                    "src": "3139:36:58",
+                    "src": "3139:36:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChange_$45933_storage",
+                      "typeIdentifier": "t_struct$_StakingChange_$46898_storage",
                       "typeString": "struct StakingChange storage ref"
                     }
                   },
-                  "functionReturnParameters": 43394,
-                  "id": 43399,
+                  "functionReturnParameters": 44359,
+                  "id": 44364,
                   "nodeType": "Return",
-                  "src": "3132:43:58"
+                  "src": "3132:43:64"
                 }
               ]
             },
             "documentation": {
-              "id": 43384,
+              "id": 44349,
               "nodeType": "StructuredDocumentation",
-              "src": "2918:50:58",
+              "src": "2918:50:64",
               "text": "@notice Get the change at configuration number"
             },
             "implemented": true,
             "kind": "function",
             "modifiers": [],
             "name": "getChange",
-            "nameLocation": "2982:9:58",
+            "nameLocation": "2982:9:64",
             "parameters": {
-              "id": 43390,
+              "id": 44355,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43387,
+                  "id": 44352,
                   "mutability": "mutable",
                   "name": "changes",
-                  "nameLocation": "3026:7:58",
+                  "nameLocation": "3026:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43401,
-                  "src": "3001:32:58",
+                  "scope": 44366,
+                  "src": "3001:32:64",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                    "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                     "typeString": "struct StakingChangeLog"
                   },
                   "typeName": {
-                    "id": 43386,
+                    "id": 44351,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43385,
+                      "id": 44350,
                       "name": "StakingChangeLog",
                       "nameLocations": [
-                        "3001:16:58"
+                        "3001:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45952,
-                      "src": "3001:16:58"
+                      "referencedDeclaration": 46917,
+                      "src": "3001:16:64"
                     },
-                    "referencedDeclaration": 45952,
-                    "src": "3001:16:58",
+                    "referencedDeclaration": 46917,
+                    "src": "3001:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                      "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                       "typeString": "struct StakingChangeLog"
                     }
                   },
@@ -2609,13 +2606,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43389,
+                  "id": 44354,
                   "mutability": "mutable",
                   "name": "configurationNumber",
-                  "nameLocation": "3050:19:58",
+                  "nameLocation": "3050:19:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43401,
-                  "src": "3043:26:58",
+                  "scope": 44366,
+                  "src": "3043:26:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2623,10 +2620,10 @@
                     "typeString": "uint64"
                   },
                   "typeName": {
-                    "id": 43388,
+                    "id": 44353,
                     "name": "uint64",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3043:6:58",
+                    "src": "3043:6:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
                       "typeString": "uint64"
@@ -2635,71 +2632,71 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "2991:84:58"
+              "src": "2991:84:64"
             },
             "returnParameters": {
-              "id": 43394,
+              "id": 44359,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43393,
+                  "id": 44358,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43401,
-                  "src": "3099:21:58",
+                  "scope": 44366,
+                  "src": "3099:21:64",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_StakingChange_$45933_storage_ptr",
+                    "typeIdentifier": "t_struct$_StakingChange_$46898_storage_ptr",
                     "typeString": "struct StakingChange"
                   },
                   "typeName": {
-                    "id": 43392,
+                    "id": 44357,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43391,
+                      "id": 44356,
                       "name": "StakingChange",
                       "nameLocations": [
-                        "3099:13:58"
+                        "3099:13:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45933,
-                      "src": "3099:13:58"
+                      "referencedDeclaration": 46898,
+                      "src": "3099:13:64"
                     },
-                    "referencedDeclaration": 45933,
-                    "src": "3099:13:58",
+                    "referencedDeclaration": 46898,
+                    "src": "3099:13:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChange_$45933_storage_ptr",
+                      "typeIdentifier": "t_struct$_StakingChange_$46898_storage_ptr",
                       "typeString": "struct StakingChange"
                     }
                   },
                   "visibility": "internal"
                 }
               ],
-              "src": "3098:23:58"
+              "src": "3098:23:64"
             },
-            "scope": 43417,
+            "scope": 44382,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 43416,
+            "id": 44381,
             "nodeType": "FunctionDefinition",
-            "src": "3188:152:58",
+            "src": "3188:152:64",
             "nodes": [],
             "body": {
-              "id": 43415,
+              "id": 44380,
               "nodeType": "Block",
-              "src": "3280:60:58",
+              "src": "3280:60:64",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 43413,
+                    "id": 44378,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2707,44 +2704,44 @@
                     "nodeType": "UnaryOperation",
                     "operator": "delete",
                     "prefix": true,
-                    "src": "3290:43:58",
+                    "src": "3290:43:64",
                     "subExpression": {
                       "baseExpression": {
                         "expression": {
-                          "id": 43409,
+                          "id": 44374,
                           "name": "changes",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 43404,
-                          "src": "3297:7:58",
+                          "referencedDeclaration": 44369,
+                          "src": "3297:7:64",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                            "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                             "typeString": "struct StakingChangeLog storage pointer"
                           }
                         },
-                        "id": 43410,
+                        "id": 44375,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
                         "lValueRequested": false,
-                        "memberLocation": "3305:7:58",
+                        "memberLocation": "3305:7:64",
                         "memberName": "changes",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 45951,
-                        "src": "3297:15:58",
+                        "referencedDeclaration": 46916,
+                        "src": "3297:15:64",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$45933_storage_$",
+                          "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$46898_storage_$",
                           "typeString": "mapping(uint64 => struct StakingChange storage ref)"
                         }
                       },
-                      "id": 43412,
+                      "id": 44377,
                       "indexExpression": {
-                        "id": 43411,
+                        "id": 44376,
                         "name": "configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 43406,
-                        "src": "3313:19:58",
+                        "referencedDeclaration": 44371,
+                        "src": "3313:19:64",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
@@ -2755,9 +2752,9 @@
                       "isPure": false,
                       "lValueRequested": true,
                       "nodeType": "IndexAccess",
-                      "src": "3297:36:58",
+                      "src": "3297:36:64",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_StakingChange_$45933_storage",
+                        "typeIdentifier": "t_struct$_StakingChange_$46898_storage",
                         "typeString": "struct StakingChange storage ref"
                       }
                     },
@@ -2766,9 +2763,9 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 43414,
+                  "id": 44379,
                   "nodeType": "ExpressionStatement",
-                  "src": "3290:43:58"
+                  "src": "3290:43:64"
                 }
               ]
             },
@@ -2776,43 +2773,43 @@
             "kind": "function",
             "modifiers": [],
             "name": "purgeChange",
-            "nameLocation": "3197:11:58",
+            "nameLocation": "3197:11:64",
             "parameters": {
-              "id": 43407,
+              "id": 44372,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 43404,
+                  "id": 44369,
                   "mutability": "mutable",
                   "name": "changes",
-                  "nameLocation": "3234:7:58",
+                  "nameLocation": "3234:7:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43416,
-                  "src": "3209:32:58",
+                  "scope": 44381,
+                  "src": "3209:32:64",
                   "stateVariable": false,
                   "storageLocation": "storage",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                    "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                     "typeString": "struct StakingChangeLog"
                   },
                   "typeName": {
-                    "id": 43403,
+                    "id": 44368,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 43402,
+                      "id": 44367,
                       "name": "StakingChangeLog",
                       "nameLocations": [
-                        "3209:16:58"
+                        "3209:16:64"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 45952,
-                      "src": "3209:16:58"
+                      "referencedDeclaration": 46917,
+                      "src": "3209:16:64"
                     },
-                    "referencedDeclaration": 45952,
-                    "src": "3209:16:58",
+                    "referencedDeclaration": 46917,
+                    "src": "3209:16:64",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_StakingChangeLog_$45952_storage_ptr",
+                      "typeIdentifier": "t_struct$_StakingChangeLog_$46917_storage_ptr",
                       "typeString": "struct StakingChangeLog"
                     }
                   },
@@ -2820,13 +2817,13 @@
                 },
                 {
                   "constant": false,
-                  "id": 43406,
+                  "id": 44371,
                   "mutability": "mutable",
                   "name": "configurationNumber",
-                  "nameLocation": "3250:19:58",
+                  "nameLocation": "3250:19:64",
                   "nodeType": "VariableDeclaration",
-                  "scope": 43416,
-                  "src": "3243:26:58",
+                  "scope": 44381,
+                  "src": "3243:26:64",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
@@ -2834,10 +2831,10 @@
                     "typeString": "uint64"
                   },
                   "typeName": {
-                    "id": 43405,
+                    "id": 44370,
                     "name": "uint64",
                     "nodeType": "ElementaryTypeName",
-                    "src": "3243:6:58",
+                    "src": "3243:6:64",
                     "typeDescriptions": {
                       "typeIdentifier": "t_uint64",
                       "typeString": "uint64"
@@ -2846,15 +2843,15 @@
                   "visibility": "internal"
                 }
               ],
-              "src": "3208:62:58"
+              "src": "3208:62:64"
             },
             "returnParameters": {
-              "id": 43408,
+              "id": 44373,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "3280:0:58"
+              "src": "3280:0:64"
             },
-            "scope": 43417,
+            "scope": 44382,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "internal"
@@ -2866,22 +2863,22 @@
         "contractDependencies": [],
         "contractKind": "library",
         "documentation": {
-          "id": 43226,
+          "id": 44191,
           "nodeType": "StructuredDocumentation",
-          "src": "161:44:58",
+          "src": "161:44:64",
           "text": "The util library for `StakingChangeLog`"
         },
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          43417
+          44382
         ],
         "name": "LibStakingChangeLog",
-        "nameLocation": "213:19:58",
-        "scope": 43418,
+        "nameLocation": "213:19:64",
+        "scope": 44383,
         "usedErrors": []
       }
     ],
     "license": "MIT OR Apache-2.0"
   },
-  "id": 58
+  "id": 64
 }

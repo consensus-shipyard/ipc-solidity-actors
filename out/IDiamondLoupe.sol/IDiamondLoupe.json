@@ -268,17 +268,17 @@
   },
   "ast": {
     "absolutePath": "src/interfaces/IDiamondLoupe.sol",
-    "id": 39333,
+    "id": 39323,
     "exportedSymbols": {
       "IDiamondLoupe": [
-        39332
+        39322
       ]
     },
     "nodeType": "SourceUnit",
     "src": "32:1598:50",
     "nodes": [
       {
-        "id": 39293,
+        "id": 39283,
         "nodeType": "PragmaDirective",
         "src": "32:23:50",
         "nodes": [],
@@ -289,12 +289,12 @@
         ]
       },
       {
-        "id": 39332,
+        "id": 39322,
         "nodeType": "ContractDefinition",
         "src": "463:1166:50",
         "nodes": [
           {
-            "id": 39299,
+            "id": 39289,
             "nodeType": "StructDefinition",
             "src": "573:86:50",
             "nodes": [],
@@ -302,12 +302,12 @@
             "members": [
               {
                 "constant": false,
-                "id": 39295,
+                "id": 39285,
                 "mutability": "mutable",
                 "name": "facetAddress",
                 "nameLocation": "604:12:50",
                 "nodeType": "VariableDeclaration",
-                "scope": 39299,
+                "scope": 39289,
                 "src": "596:20:50",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -316,7 +316,7 @@
                   "typeString": "address"
                 },
                 "typeName": {
-                  "id": 39294,
+                  "id": 39284,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "596:7:50",
@@ -330,12 +330,12 @@
               },
               {
                 "constant": false,
-                "id": 39298,
+                "id": 39288,
                 "mutability": "mutable",
                 "name": "functionSelectors",
                 "nameLocation": "635:17:50",
                 "nodeType": "VariableDeclaration",
-                "scope": 39299,
+                "scope": 39289,
                 "src": "626:26:50",
                 "stateVariable": false,
                 "storageLocation": "default",
@@ -345,7 +345,7 @@
                 },
                 "typeName": {
                   "baseType": {
-                    "id": 39296,
+                    "id": 39286,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
                     "src": "626:6:50",
@@ -354,7 +354,7 @@
                       "typeString": "bytes4"
                     }
                   },
-                  "id": 39297,
+                  "id": 39287,
                   "nodeType": "ArrayTypeName",
                   "src": "626:8:50",
                   "typeDescriptions": {
@@ -367,16 +367,16 @@
             ],
             "name": "Facet",
             "nameLocation": "580:5:50",
-            "scope": 39332,
+            "scope": 39322,
             "visibility": "public"
           },
           {
-            "id": 39307,
+            "id": 39297,
             "nodeType": "FunctionDefinition",
             "src": "776:65:50",
             "nodes": [],
             "documentation": {
-              "id": 39300,
+              "id": 39290,
               "nodeType": "StructuredDocumentation",
               "src": "665:106:50",
               "text": "@notice Gets all facet addresses and their four byte function selectors.\n @return facets_ Facet"
@@ -388,56 +388,56 @@
             "name": "facets",
             "nameLocation": "785:6:50",
             "parameters": {
-              "id": 39301,
+              "id": 39291,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "791:2:50"
             },
             "returnParameters": {
-              "id": 39306,
+              "id": 39296,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39305,
+                  "id": 39295,
                   "mutability": "mutable",
                   "name": "facets_",
                   "nameLocation": "832:7:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39307,
+                  "scope": 39297,
                   "src": "817:22:50",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_array$_t_struct$_Facet_$39299_memory_ptr_$dyn_memory_ptr",
+                    "typeIdentifier": "t_array$_t_struct$_Facet_$39289_memory_ptr_$dyn_memory_ptr",
                     "typeString": "struct IDiamondLoupe.Facet[]"
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 39303,
+                      "id": 39293,
                       "nodeType": "UserDefinedTypeName",
                       "pathNode": {
-                        "id": 39302,
+                        "id": 39292,
                         "name": "Facet",
                         "nameLocations": [
                           "817:5:50"
                         ],
                         "nodeType": "IdentifierPath",
-                        "referencedDeclaration": 39299,
+                        "referencedDeclaration": 39289,
                         "src": "817:5:50"
                       },
-                      "referencedDeclaration": 39299,
+                      "referencedDeclaration": 39289,
                       "src": "817:5:50",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_Facet_$39299_storage_ptr",
+                        "typeIdentifier": "t_struct$_Facet_$39289_storage_ptr",
                         "typeString": "struct IDiamondLoupe.Facet"
                       }
                     },
-                    "id": 39304,
+                    "id": 39294,
                     "nodeType": "ArrayTypeName",
                     "src": "817:7:50",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_array$_t_struct$_Facet_$39299_storage_$dyn_storage_ptr",
+                      "typeIdentifier": "t_array$_t_struct$_Facet_$39289_storage_$dyn_storage_ptr",
                       "typeString": "struct IDiamondLoupe.Facet[]"
                     }
                   },
@@ -446,18 +446,18 @@
               ],
               "src": "816:24:50"
             },
-            "scope": 39332,
+            "scope": 39322,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39316,
+            "id": 39306,
             "nodeType": "FunctionDefinition",
             "src": "1007:112:50",
             "nodes": [],
             "documentation": {
-              "id": 39308,
+              "id": 39298,
               "nodeType": "StructuredDocumentation",
               "src": "847:155:50",
               "text": "@notice Gets all the function selectors supported by a specific facet.\n @param _facet The facet address.\n @return facetFunctionSelectors_"
@@ -469,17 +469,17 @@
             "name": "facetFunctionSelectors",
             "nameLocation": "1016:22:50",
             "parameters": {
-              "id": 39311,
+              "id": 39301,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39310,
+                  "id": 39300,
                   "mutability": "mutable",
                   "name": "_facet",
                   "nameLocation": "1047:6:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39316,
+                  "scope": 39306,
                   "src": "1039:14:50",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -488,7 +488,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 39309,
+                    "id": 39299,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1039:7:50",
@@ -504,17 +504,17 @@
               "src": "1038:16:50"
             },
             "returnParameters": {
-              "id": 39315,
+              "id": 39305,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39314,
+                  "id": 39304,
                   "mutability": "mutable",
                   "name": "facetFunctionSelectors_",
                   "nameLocation": "1094:23:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39316,
+                  "scope": 39306,
                   "src": "1078:39:50",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -524,7 +524,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 39312,
+                      "id": 39302,
                       "name": "bytes4",
                       "nodeType": "ElementaryTypeName",
                       "src": "1078:6:50",
@@ -533,7 +533,7 @@
                         "typeString": "bytes4"
                       }
                     },
-                    "id": 39313,
+                    "id": 39303,
                     "nodeType": "ArrayTypeName",
                     "src": "1078:8:50",
                     "typeDescriptions": {
@@ -546,18 +546,18 @@
               ],
               "src": "1077:41:50"
             },
-            "scope": 39332,
+            "scope": 39322,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39323,
+            "id": 39313,
             "nodeType": "FunctionDefinition",
             "src": "1220:83:50",
             "nodes": [],
             "documentation": {
-              "id": 39317,
+              "id": 39307,
               "nodeType": "StructuredDocumentation",
               "src": "1125:90:50",
               "text": "@notice Get all the facet addresses used by a diamond.\n @return facetAddresses_"
@@ -569,23 +569,23 @@
             "name": "facetAddresses",
             "nameLocation": "1229:14:50",
             "parameters": {
-              "id": 39318,
+              "id": 39308,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "1243:2:50"
             },
             "returnParameters": {
-              "id": 39322,
+              "id": 39312,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39321,
+                  "id": 39311,
                   "mutability": "mutable",
                   "name": "facetAddresses_",
                   "nameLocation": "1286:15:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39323,
+                  "scope": 39313,
                   "src": "1269:32:50",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -595,7 +595,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 39319,
+                      "id": 39309,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "1269:7:50",
@@ -605,7 +605,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 39320,
+                    "id": 39310,
                     "nodeType": "ArrayTypeName",
                     "src": "1269:9:50",
                     "typeDescriptions": {
@@ -618,18 +618,18 @@
               ],
               "src": "1268:34:50"
             },
-            "scope": 39332,
+            "scope": 39322,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 39331,
+            "id": 39321,
             "nodeType": "FunctionDefinition",
             "src": "1533:94:50",
             "nodes": [],
             "documentation": {
-              "id": 39324,
+              "id": 39314,
               "nodeType": "StructuredDocumentation",
               "src": "1309:219:50",
               "text": "@notice Gets the facet that supports the given selector.\n @dev If facet is not found return address(0).\n @param _functionSelector The function selector.\n @return facetAddress_ The facet address."
@@ -641,17 +641,17 @@
             "name": "facetAddress",
             "nameLocation": "1542:12:50",
             "parameters": {
-              "id": 39327,
+              "id": 39317,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39326,
+                  "id": 39316,
                   "mutability": "mutable",
                   "name": "_functionSelector",
                   "nameLocation": "1562:17:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39331,
+                  "scope": 39321,
                   "src": "1555:24:50",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -660,7 +660,7 @@
                     "typeString": "bytes4"
                   },
                   "typeName": {
-                    "id": 39325,
+                    "id": 39315,
                     "name": "bytes4",
                     "nodeType": "ElementaryTypeName",
                     "src": "1555:6:50",
@@ -675,17 +675,17 @@
               "src": "1554:26:50"
             },
             "returnParameters": {
-              "id": 39330,
+              "id": 39320,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39329,
+                  "id": 39319,
                   "mutability": "mutable",
                   "name": "facetAddress_",
                   "nameLocation": "1612:13:50",
                   "nodeType": "VariableDeclaration",
-                  "scope": 39331,
+                  "scope": 39321,
                   "src": "1604:21:50",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -694,7 +694,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 39328,
+                    "id": 39318,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1604:7:50",
@@ -709,7 +709,7 @@
               ],
               "src": "1603:23:50"
             },
-            "scope": 39332,
+            "scope": 39322,
             "stateMutability": "view",
             "virtual": false,
             "visibility": "external"
@@ -722,11 +722,11 @@
         "contractKind": "interface",
         "fullyImplemented": false,
         "linearizedBaseContracts": [
-          39332
+          39322
         ],
         "name": "IDiamondLoupe",
         "nameLocation": "473:13:50",
-        "scope": 39333,
+        "scope": 39323,
         "usedErrors": []
       }
     ],
