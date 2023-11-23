@@ -308,7 +308,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         }
         uint256 relayerReward = reward / relayersLength;
 
-        for (uint256 i = 0; i < relayersLength; ) {
+        for (uint256 i; i < relayersLength; ) {
             s.relayerRewards[relayers[i]] += relayerReward;
             unchecked {
                 ++i;
@@ -360,8 +360,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice Removes an address from the initial balance keys
     function rmAddressFromBalanceKey(address addr) internal {
-        uint length = s.genesisBalanceKeys.length;
-        for (uint i = 0; i < length; ) {
+        uint256 length = s.genesisBalanceKeys.length;
+        for (uint256 i; i < length; ) {
             if (s.genesisBalanceKeys[i] == addr) {
                 s.genesisBalanceKeys[i] = s.genesisBalanceKeys[length - 1];
                 s.genesisBalanceKeys.pop();

@@ -8,7 +8,7 @@ import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
 /// @title Helper library for manipulating Checkpoint struct
 /// @author LimeChain team
 library CheckpointHelper {
-    bytes32 public constant EMPTY_BOTTOMUPCHECKPOINT_HASH =
+    bytes32 private constant EMPTY_BOTTOMUPCHECKPOINT_HASH =
         keccak256(
             abi.encode(
                 BottomUpCheckpoint({

@@ -61,10 +61,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert SubnetNotActive();
         }
 
-        uint256 totalValue = 0;
-        uint256 totalFee = 0;
+        uint256 totalValue;
+        uint256 totalFee;
         uint256 crossMsgLength = messages.length;
-        for (uint256 i = 0; i < crossMsgLength; ) {
+        for (uint256 i; i < crossMsgLength; ) {
             totalValue += messages[i].message.value;
             totalFee += messages[i].message.fee;
             unchecked {
@@ -128,7 +128,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         address[] memory validators = s.validatorsTracker.validators.listActiveValidators();
         uint256 vLength = validators.length;
         Validator[] memory vs = new Validator[](vLength);
-        for (uint256 i = 0; i < vLength; ) {
+        for (uint256 i; i < vLength; ) {
             address addr = validators[i];
             ValidatorInfo storage info = s.validatorsTracker.validators.validators[addr];
             vs[i] = Validator({weight: info.confirmedCollateral, addr: addr, metadata: info.metadata});
@@ -202,7 +202,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param crossMsgs - the cross-net messages to apply
     function _applyMessages(SubnetID memory forwarder, CrossMsg[] memory crossMsgs) internal {
         uint256 crossMsgsLength = crossMsgs.length;
-        for (uint256 i = 0; i < crossMsgsLength; ) {
+        for (uint256 i; i < crossMsgsLength; ) {
             _applyMsg(forwarder, crossMsgs[i]);
             unchecked {
                 ++i;
@@ -345,7 +345,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             address[] memory validators = s.bottomUpSignatureSenders[h].values();
             uint256 n = validators.length;
 
-            for (uint256 i = 0; i < n; ) {
+            for (uint256 i; i < n; ) {
                 delete s.bottomUpSignatures[h][validators[i]];
                 unchecked {
                     ++i;
