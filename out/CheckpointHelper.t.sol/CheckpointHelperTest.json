@@ -1577,22 +1577,22 @@
   },
   "ast": {
     "absolutePath": "test/CheckpointHelper.t.sol",
-    "id": 49256,
+    "id": 49272,
     "exportedSymbols": {
       "BottomUpCheckpoint": [
-        46968
-      ],
-      "CheckpointHelper": [
-        39772
-      ],
-      "CheckpointHelperTest": [
-        49255
-      ],
-      "CheckpointInfo": [
         46984
       ],
+      "CheckpointHelper": [
+        39788
+      ],
+      "CheckpointHelperTest": [
+        49271
+      ],
+      "CheckpointInfo": [
+        47000
+      ],
       "CrossMsg": [
-        46990
+        47006
       ],
       "DSTest": [
         3720
@@ -1601,10 +1601,10 @@
         36316
       ],
       "IPCAddress": [
-        47162
+        47178
       ],
       "ParentFinality": [
-        46951
+        46967
       ],
       "StdAssertions": [
         5210
@@ -1628,10 +1628,10 @@
         12691
       ],
       "StorableMsg": [
-        47007
+        47023
       ],
       "SubnetID": [
-        47044
+        47060
       ],
       "Test": [
         12740
@@ -1665,7 +1665,7 @@
     "src": "46:1327:80",
     "nodes": [
       {
-        "id": 49155,
+        "id": 49171,
         "nodeType": "PragmaDirective",
         "src": "46:23:80",
         "nodes": [],
@@ -1676,88 +1676,88 @@
         ]
       },
       {
-        "id": 49156,
+        "id": 49172,
         "nodeType": "ImportDirective",
         "src": "71:28:80",
         "nodes": [],
         "absolutePath": "lib/forge-std/src/Test.sol",
         "file": "forge-std/Test.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 49256,
+        "scope": 49272,
         "sourceUnit": 12741,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 49157,
+        "id": 49173,
         "nodeType": "ImportDirective",
         "src": "101:39:80",
         "nodes": [],
         "absolutePath": "src/structs/Checkpoint.sol",
         "file": "../src/structs/Checkpoint.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 49256,
-        "sourceUnit": 47008,
+        "scope": 49272,
+        "sourceUnit": 47024,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 49158,
+        "id": 49174,
         "nodeType": "ImportDirective",
         "src": "141:41:80",
         "nodes": [],
         "absolutePath": "src/lib/CheckpointHelper.sol",
         "file": "../src/lib/CheckpointHelper.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 49256,
-        "sourceUnit": 39773,
+        "scope": 49272,
+        "sourceUnit": 39789,
         "symbolAliases": [],
         "unitAlias": ""
       },
       {
-        "id": 49255,
+        "id": 49271,
         "nodeType": "ContractDefinition",
         "src": "184:1188:80",
         "nodes": [
           {
-            "id": 49164,
+            "id": 49180,
             "nodeType": "UsingForDirective",
             "src": "228:46:80",
             "nodes": [],
             "global": false,
             "libraryName": {
-              "id": 49161,
+              "id": 49177,
               "name": "CheckpointHelper",
               "nameLocations": [
                 "234:16:80"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 39772,
+              "referencedDeclaration": 39788,
               "src": "234:16:80"
             },
             "typeName": {
-              "id": 49163,
+              "id": 49179,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 49162,
+                "id": 49178,
                 "name": "BottomUpCheckpoint",
                 "nameLocations": [
                   "255:18:80"
                 ],
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 46968,
+                "referencedDeclaration": 46984,
                 "src": "255:18:80"
               },
-              "referencedDeclaration": 46968,
+              "referencedDeclaration": 46984,
               "src": "255:18:80",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_storage_ptr",
+                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_storage_ptr",
                 "typeString": "struct BottomUpCheckpoint"
               }
             }
           },
           {
-            "id": 49167,
+            "id": 49183,
             "nodeType": "VariableDeclaration",
             "src": "280:36:80",
             "nodes": [],
@@ -1766,67 +1766,67 @@
             "mutability": "mutable",
             "name": "checkpoint",
             "nameLocation": "306:10:80",
-            "scope": 49255,
+            "scope": 49271,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
-              "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_storage",
+              "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_storage",
               "typeString": "struct BottomUpCheckpoint"
             },
             "typeName": {
-              "id": 49166,
+              "id": 49182,
               "nodeType": "UserDefinedTypeName",
               "pathNode": {
-                "id": 49165,
+                "id": 49181,
                 "name": "BottomUpCheckpoint",
                 "nameLocations": [
                   "280:18:80"
                 ],
                 "nodeType": "IdentifierPath",
-                "referencedDeclaration": 46968,
+                "referencedDeclaration": 46984,
                 "src": "280:18:80"
               },
-              "referencedDeclaration": 46968,
+              "referencedDeclaration": 46984,
               "src": "280:18:80",
               "typeDescriptions": {
-                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_storage_ptr",
+                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_storage_ptr",
                 "typeString": "struct BottomUpCheckpoint"
               }
             },
             "visibility": "public"
           },
           {
-            "id": 49200,
+            "id": 49216,
             "nodeType": "FunctionDefinition",
             "src": "323:409:80",
             "nodes": [],
             "body": {
-              "id": 49199,
+              "id": 49215,
               "nodeType": "Block",
               "src": "378:354:80",
               "nodes": [],
               "statements": [
                 {
                   "expression": {
-                    "id": 49174,
+                    "id": 49190,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
                       "expression": {
-                        "id": 49170,
+                        "id": 49186,
                         "name": "checkpoint",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 49167,
+                        "referencedDeclaration": 49183,
                         "src": "388:10:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_storage",
+                          "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_storage",
                           "typeString": "struct BottomUpCheckpoint storage ref"
                         }
                       },
-                      "id": 49172,
+                      "id": 49188,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -1834,7 +1834,7 @@
                       "memberLocation": "399:11:80",
                       "memberName": "blockHeight",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46958,
+                      "referencedDeclaration": 46974,
                       "src": "388:22:80",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
@@ -1845,7 +1845,7 @@
                     "operator": "=",
                     "rightHandSide": {
                       "hexValue": "3130",
-                      "id": 49173,
+                      "id": 49189,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1865,7 +1865,7 @@
                       "typeString": "uint64"
                     }
                   },
-                  "id": 49175,
+                  "id": 49191,
                   "nodeType": "ExpressionStatement",
                   "src": "388:27:80"
                 },
@@ -1877,7 +1877,7 @@
                           "typeIdentifier": "t_bytes32",
                           "typeString": "bytes32"
                         },
-                        "id": 49196,
+                        "id": 49212,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1892,7 +1892,7 @@
                                   "arguments": [
                                     {
                                       "hexValue": "30",
-                                      "id": 49179,
+                                      "id": 49195,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": true,
@@ -1910,7 +1910,7 @@
                                       "arguments": [
                                         {
                                           "hexValue": "30",
-                                          "id": 49183,
+                                          "id": 49199,
                                           "isConstant": false,
                                           "isLValue": false,
                                           "isPure": true,
@@ -1932,7 +1932,7 @@
                                             "typeString": "int_const 0"
                                           }
                                         ],
-                                        "id": 49182,
+                                        "id": 49198,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": true,
@@ -1945,7 +1945,7 @@
                                         },
                                         "typeName": {
                                           "baseType": {
-                                            "id": 49180,
+                                            "id": 49196,
                                             "name": "address",
                                             "nodeType": "ElementaryTypeName",
                                             "src": "510:7:80",
@@ -1955,7 +1955,7 @@
                                               "typeString": "address"
                                             }
                                           },
-                                          "id": 49181,
+                                          "id": 49197,
                                           "nodeType": "ArrayTypeName",
                                           "src": "510:9:80",
                                           "typeDescriptions": {
@@ -1964,7 +1964,7 @@
                                           }
                                         }
                                       },
-                                      "id": 49184,
+                                      "id": 49200,
                                       "isConstant": false,
                                       "isLValue": false,
                                       "isPure": true,
@@ -1992,18 +1992,18 @@
                                         "typeString": "address[] memory"
                                       }
                                     ],
-                                    "id": 49178,
+                                    "id": 49194,
                                     "name": "SubnetID",
                                     "nodeType": "Identifier",
                                     "overloadedDeclarations": [],
-                                    "referencedDeclaration": 47044,
+                                    "referencedDeclaration": 47060,
                                     "src": "494:8:80",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_type$_t_struct$_SubnetID_$47044_storage_ptr_$",
+                                      "typeIdentifier": "t_type$_t_struct$_SubnetID_$47060_storage_ptr_$",
                                       "typeString": "type(struct SubnetID storage pointer)"
                                     }
                                   },
-                                  "id": 49185,
+                                  "id": 49201,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -2015,13 +2015,13 @@
                                   "src": "494:29:80",
                                   "tryCall": false,
                                   "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_SubnetID_$47044_memory_ptr",
+                                    "typeIdentifier": "t_struct$_SubnetID_$47060_memory_ptr",
                                     "typeString": "struct SubnetID memory"
                                   }
                                 },
                                 {
                                   "hexValue": "3130",
-                                  "id": 49186,
+                                  "id": 49202,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -2037,7 +2037,7 @@
                                 },
                                 {
                                   "hexValue": "30",
-                                  "id": 49187,
+                                  "id": 49203,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -2053,7 +2053,7 @@
                                 },
                                 {
                                   "hexValue": "30",
-                                  "id": 49188,
+                                  "id": 49204,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -2069,7 +2069,7 @@
                                 },
                                 {
                                   "hexValue": "30",
-                                  "id": 49189,
+                                  "id": 49205,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -2087,7 +2087,7 @@
                               "expression": {
                                 "argumentTypes": [
                                   {
-                                    "typeIdentifier": "t_struct$_SubnetID_$47044_memory_ptr",
+                                    "typeIdentifier": "t_struct$_SubnetID_$47060_memory_ptr",
                                     "typeString": "struct SubnetID memory"
                                   },
                                   {
@@ -2107,18 +2107,18 @@
                                     "typeString": "int_const 0"
                                   }
                                 ],
-                                "id": 49177,
+                                "id": 49193,
                                 "name": "BottomUpCheckpoint",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 46968,
+                                "referencedDeclaration": 46984,
                                 "src": "447:18:80",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46968_storage_ptr_$",
+                                  "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46984_storage_ptr_$",
                                   "typeString": "type(struct BottomUpCheckpoint storage pointer)"
                                 }
                               },
-                              "id": 49190,
+                              "id": 49206,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -2142,11 +2142,11 @@
                               "src": "447:236:80",
                               "tryCall": false,
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                                 "typeString": "struct BottomUpCheckpoint memory"
                               }
                             },
-                            "id": 49191,
+                            "id": 49207,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -2154,14 +2154,14 @@
                             "memberLocation": "684:6:80",
                             "memberName": "toHash",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 39756,
+                            "referencedDeclaration": 39772,
                             "src": "447:243:80",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$returns$_t_bytes32_$attached_to$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$",
+                              "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$returns$_t_bytes32_$attached_to$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$",
                               "typeString": "function (struct BottomUpCheckpoint memory) pure returns (bytes32)"
                             }
                           },
-                          "id": 49192,
+                          "id": 49208,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2184,18 +2184,18 @@
                           "expression": {
                             "argumentTypes": [],
                             "expression": {
-                              "id": 49193,
+                              "id": 49209,
                               "name": "checkpoint",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 49167,
+                              "referencedDeclaration": 49183,
                               "src": "696:10:80",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_storage",
+                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_storage",
                                 "typeString": "struct BottomUpCheckpoint storage ref"
                               }
                             },
-                            "id": 49194,
+                            "id": 49210,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -2203,14 +2203,14 @@
                             "memberLocation": "707:6:80",
                             "memberName": "toHash",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 39756,
+                            "referencedDeclaration": 39772,
                             "src": "696:17:80",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$returns$_t_bytes32_$attached_to$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$",
+                              "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$returns$_t_bytes32_$attached_to$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$",
                               "typeString": "function (struct BottomUpCheckpoint memory) pure returns (bytes32)"
                             }
                           },
-                          "id": 49195,
+                          "id": 49211,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2240,7 +2240,7 @@
                           "typeString": "bool"
                         }
                       ],
-                      "id": 49176,
+                      "id": 49192,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -2254,7 +2254,7 @@
                         "typeString": "function (bool) pure"
                       }
                     },
-                    "id": 49197,
+                    "id": 49213,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2270,7 +2270,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 49198,
+                  "id": 49214,
                   "nodeType": "ExpressionStatement",
                   "src": "426:299:80"
                 }
@@ -2283,84 +2283,84 @@
             "name": "test_ToHash_Works_BottomUpCheckpoint",
             "nameLocation": "332:36:80",
             "parameters": {
-              "id": 49168,
+              "id": 49184,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "368:2:80"
             },
             "returnParameters": {
-              "id": 49169,
+              "id": 49185,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "378:0:80"
             },
-            "scope": 49255,
+            "scope": 49271,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "public"
           },
           {
-            "id": 49254,
+            "id": 49270,
             "nodeType": "FunctionDefinition",
             "src": "738:632:80",
             "nodes": [],
             "body": {
-              "id": 49253,
+              "id": 49269,
               "nodeType": "Block",
               "src": "799:571:80",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    49205
+                    49221
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 49205,
+                      "id": 49221,
                       "mutability": "mutable",
                       "name": "ch",
                       "nameLocation": "835:2:80",
                       "nodeType": "VariableDeclaration",
-                      "scope": 49253,
+                      "scope": 49269,
                       "src": "809:28:80",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                         "typeString": "struct BottomUpCheckpoint"
                       },
                       "typeName": {
-                        "id": 49204,
+                        "id": 49220,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
-                          "id": 49203,
+                          "id": 49219,
                           "name": "BottomUpCheckpoint",
                           "nameLocations": [
                             "809:18:80"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 46968,
+                          "referencedDeclaration": 46984,
                           "src": "809:18:80"
                         },
-                        "referencedDeclaration": 46968,
+                        "referencedDeclaration": 46984,
                         "src": "809:18:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_storage_ptr",
+                          "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_storage_ptr",
                           "typeString": "struct BottomUpCheckpoint"
                         }
                       },
                       "visibility": "internal"
                     }
                   ],
-                  "id": 49220,
+                  "id": 49236,
                   "initialValue": {
                     "arguments": [
                       {
                         "arguments": [
                           {
                             "hexValue": "30",
-                            "id": 49208,
+                            "id": 49224,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -2378,7 +2378,7 @@
                             "arguments": [
                               {
                                 "hexValue": "30",
-                                "id": 49212,
+                                "id": 49228,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -2400,7 +2400,7 @@
                                   "typeString": "int_const 0"
                                 }
                               ],
-                              "id": 49211,
+                              "id": 49227,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -2413,7 +2413,7 @@
                               },
                               "typeName": {
                                 "baseType": {
-                                  "id": 49209,
+                                  "id": 49225,
                                   "name": "address",
                                   "nodeType": "ElementaryTypeName",
                                   "src": "899:7:80",
@@ -2423,7 +2423,7 @@
                                     "typeString": "address"
                                   }
                                 },
-                                "id": 49210,
+                                "id": 49226,
                                 "nodeType": "ArrayTypeName",
                                 "src": "899:9:80",
                                 "typeDescriptions": {
@@ -2432,7 +2432,7 @@
                                 }
                               }
                             },
-                            "id": 49213,
+                            "id": 49229,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -2460,18 +2460,18 @@
                               "typeString": "address[] memory"
                             }
                           ],
-                          "id": 49207,
+                          "id": 49223,
                           "name": "SubnetID",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 47044,
+                          "referencedDeclaration": 47060,
                           "src": "883:8:80",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_SubnetID_$47044_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_SubnetID_$47060_storage_ptr_$",
                             "typeString": "type(struct SubnetID storage pointer)"
                           }
                         },
-                        "id": 49214,
+                        "id": 49230,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2483,13 +2483,13 @@
                         "src": "883:29:80",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_SubnetID_$47044_memory_ptr",
+                          "typeIdentifier": "t_struct$_SubnetID_$47060_memory_ptr",
                           "typeString": "struct SubnetID memory"
                         }
                       },
                       {
                         "hexValue": "30",
-                        "id": 49215,
+                        "id": 49231,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2505,7 +2505,7 @@
                       },
                       {
                         "hexValue": "30",
-                        "id": 49216,
+                        "id": 49232,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2521,7 +2521,7 @@
                       },
                       {
                         "hexValue": "30",
-                        "id": 49217,
+                        "id": 49233,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2537,7 +2537,7 @@
                       },
                       {
                         "hexValue": "30",
-                        "id": 49218,
+                        "id": 49234,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2555,7 +2555,7 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_SubnetID_$47044_memory_ptr",
+                          "typeIdentifier": "t_struct$_SubnetID_$47060_memory_ptr",
                           "typeString": "struct SubnetID memory"
                         },
                         {
@@ -2575,18 +2575,18 @@
                           "typeString": "int_const 0"
                         }
                       ],
-                      "id": 49206,
+                      "id": 49222,
                       "name": "BottomUpCheckpoint",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 46968,
+                      "referencedDeclaration": 46984,
                       "src": "840:18:80",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46968_storage_ptr_$",
+                        "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46984_storage_ptr_$",
                         "typeString": "type(struct BottomUpCheckpoint storage pointer)"
                       }
                     },
-                    "id": 49219,
+                    "id": 49235,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -2610,7 +2610,7 @@
                     "src": "840:211:80",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                       "typeString": "struct BottomUpCheckpoint memory"
                     }
                   },
@@ -2625,18 +2625,18 @@
                         "expression": {
                           "argumentTypes": [],
                           "expression": {
-                            "id": 49222,
+                            "id": 49238,
                             "name": "ch",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 49205,
+                            "referencedDeclaration": 49221,
                             "src": "1069:2:80",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                              "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                               "typeString": "struct BottomUpCheckpoint memory"
                             }
                           },
-                          "id": 49223,
+                          "id": 49239,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -2644,14 +2644,14 @@
                           "memberLocation": "1072:7:80",
                           "memberName": "isEmpty",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 39771,
+                          "referencedDeclaration": 39787,
                           "src": "1069:10:80",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$returns$_t_bool_$attached_to$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$",
+                            "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$returns$_t_bool_$attached_to$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$",
                             "typeString": "function (struct BottomUpCheckpoint memory) pure returns (bool)"
                           }
                         },
-                        "id": 49224,
+                        "id": 49240,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -2669,7 +2669,7 @@
                       },
                       {
                         "hexValue": "6e6f7420656d707479",
-                        "id": 49225,
+                        "id": 49241,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -2695,7 +2695,7 @@
                           "typeString": "literal_string \"not empty\""
                         }
                       ],
-                      "id": 49221,
+                      "id": 49237,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -2709,7 +2709,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 49226,
+                    "id": 49242,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2725,26 +2725,26 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 49227,
+                  "id": 49243,
                   "nodeType": "ExpressionStatement",
                   "src": "1061:34:80"
                 },
                 {
                   "expression": {
-                    "id": 49243,
+                    "id": 49259,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 49228,
+                      "id": 49244,
                       "name": "ch",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 49205,
+                      "referencedDeclaration": 49221,
                       "src": "1106:2:80",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                         "typeString": "struct BottomUpCheckpoint memory"
                       }
                     },
@@ -2756,7 +2756,7 @@
                           "arguments": [
                             {
                               "hexValue": "30",
-                              "id": 49231,
+                              "id": 49247,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -2774,7 +2774,7 @@
                               "arguments": [
                                 {
                                   "hexValue": "30",
-                                  "id": 49235,
+                                  "id": 49251,
                                   "isConstant": false,
                                   "isLValue": false,
                                   "isPure": true,
@@ -2796,7 +2796,7 @@
                                     "typeString": "int_const 0"
                                   }
                                 ],
-                                "id": 49234,
+                                "id": 49250,
                                 "isConstant": false,
                                 "isLValue": false,
                                 "isPure": true,
@@ -2809,7 +2809,7 @@
                                 },
                                 "typeName": {
                                   "baseType": {
-                                    "id": 49232,
+                                    "id": 49248,
                                     "name": "address",
                                     "nodeType": "ElementaryTypeName",
                                     "src": "1170:7:80",
@@ -2819,7 +2819,7 @@
                                       "typeString": "address"
                                     }
                                   },
-                                  "id": 49233,
+                                  "id": 49249,
                                   "nodeType": "ArrayTypeName",
                                   "src": "1170:9:80",
                                   "typeDescriptions": {
@@ -2828,7 +2828,7 @@
                                   }
                                 }
                               },
-                              "id": 49236,
+                              "id": 49252,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -2856,18 +2856,18 @@
                                 "typeString": "address[] memory"
                               }
                             ],
-                            "id": 49230,
+                            "id": 49246,
                             "name": "SubnetID",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 47044,
+                            "referencedDeclaration": 47060,
                             "src": "1154:8:80",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_struct$_SubnetID_$47044_storage_ptr_$",
+                              "typeIdentifier": "t_type$_t_struct$_SubnetID_$47060_storage_ptr_$",
                               "typeString": "type(struct SubnetID storage pointer)"
                             }
                           },
-                          "id": 49237,
+                          "id": 49253,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2879,13 +2879,13 @@
                           "src": "1154:29:80",
                           "tryCall": false,
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_SubnetID_$47044_memory_ptr",
+                            "typeIdentifier": "t_struct$_SubnetID_$47060_memory_ptr",
                             "typeString": "struct SubnetID memory"
                           }
                         },
                         {
                           "hexValue": "31",
-                          "id": 49238,
+                          "id": 49254,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2901,7 +2901,7 @@
                         },
                         {
                           "hexValue": "30",
-                          "id": 49239,
+                          "id": 49255,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2917,7 +2917,7 @@
                         },
                         {
                           "hexValue": "30",
-                          "id": 49240,
+                          "id": 49256,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2933,7 +2933,7 @@
                         },
                         {
                           "hexValue": "30",
-                          "id": 49241,
+                          "id": 49257,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2951,7 +2951,7 @@
                       "expression": {
                         "argumentTypes": [
                           {
-                            "typeIdentifier": "t_struct$_SubnetID_$47044_memory_ptr",
+                            "typeIdentifier": "t_struct$_SubnetID_$47060_memory_ptr",
                             "typeString": "struct SubnetID memory"
                           },
                           {
@@ -2971,18 +2971,18 @@
                             "typeString": "int_const 0"
                           }
                         ],
-                        "id": 49229,
+                        "id": 49245,
                         "name": "BottomUpCheckpoint",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46968,
+                        "referencedDeclaration": 46984,
                         "src": "1111:18:80",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46968_storage_ptr_$",
+                          "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46984_storage_ptr_$",
                           "typeString": "type(struct BottomUpCheckpoint storage pointer)"
                         }
                       },
-                      "id": 49242,
+                      "id": 49258,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -3006,17 +3006,17 @@
                       "src": "1111:211:80",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                         "typeString": "struct BottomUpCheckpoint memory"
                       }
                     },
                     "src": "1106:216:80",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                       "typeString": "struct BottomUpCheckpoint memory"
                     }
                   },
-                  "id": 49244,
+                  "id": 49260,
                   "nodeType": "ExpressionStatement",
                   "src": "1106:216:80"
                 },
@@ -3024,7 +3024,7 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 49249,
+                        "id": 49265,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -3038,18 +3038,18 @@
                           "expression": {
                             "argumentTypes": [],
                             "expression": {
-                              "id": 49246,
+                              "id": 49262,
                               "name": "ch",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 49205,
+                              "referencedDeclaration": 49221,
                               "src": "1341:2:80",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46968_memory_ptr",
+                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46984_memory_ptr",
                                 "typeString": "struct BottomUpCheckpoint memory"
                               }
                             },
-                            "id": 49247,
+                            "id": 49263,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -3057,14 +3057,14 @@
                             "memberLocation": "1344:7:80",
                             "memberName": "isEmpty",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 39771,
+                            "referencedDeclaration": 39787,
                             "src": "1341:10:80",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$returns$_t_bool_$attached_to$_t_struct$_BottomUpCheckpoint_$46968_memory_ptr_$",
+                              "typeIdentifier": "t_function_delegatecall_pure$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$returns$_t_bool_$attached_to$_t_struct$_BottomUpCheckpoint_$46984_memory_ptr_$",
                               "typeString": "function (struct BottomUpCheckpoint memory) pure returns (bool)"
                             }
                           },
-                          "id": 49248,
+                          "id": 49264,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -3087,7 +3087,7 @@
                       },
                       {
                         "hexValue": "656d707479",
-                        "id": 49250,
+                        "id": 49266,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -3113,7 +3113,7 @@
                           "typeString": "literal_string \"empty\""
                         }
                       ],
-                      "id": 49245,
+                      "id": 49261,
                       "name": "require",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [
@@ -3127,7 +3127,7 @@
                         "typeString": "function (bool,string memory) pure"
                       }
                     },
-                    "id": 49251,
+                    "id": 49267,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -3143,7 +3143,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 49252,
+                  "id": 49268,
                   "nodeType": "ExpressionStatement",
                   "src": "1332:31:80"
                 }
@@ -3156,18 +3156,18 @@
             "name": "test_IsEmpty_Works_BottomUpCheckpoint",
             "nameLocation": "747:37:80",
             "parameters": {
-              "id": 49201,
+              "id": 49217,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "784:2:80"
             },
             "returnParameters": {
-              "id": 49202,
+              "id": 49218,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "799:0:80"
             },
-            "scope": 49255,
+            "scope": 49271,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "public"
@@ -3177,7 +3177,7 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 49159,
+              "id": 49175,
               "name": "Test",
               "nameLocations": [
                 "217:4:80"
@@ -3186,7 +3186,7 @@
               "referencedDeclaration": 12740,
               "src": "217:4:80"
             },
-            "id": 49160,
+            "id": 49176,
             "nodeType": "InheritanceSpecifier",
             "src": "217:4:80"
           }
@@ -3196,7 +3196,7 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          49255,
+          49271,
           12740,
           3780,
           3777,
@@ -3210,7 +3210,7 @@
         ],
         "name": "CheckpointHelperTest",
         "nameLocation": "193:20:80",
-        "scope": 49256,
+        "scope": 49272,
         "usedErrors": []
       }
     ],

@@ -1419,18 +1419,14 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         uint256[] memory weights = new uint[](1);
         weights[0] = 100;
 
+        SubnetID memory id = gwGetter.getNetworkName();
+
         CrossMsg[] memory topDownMsgs = new CrossMsg[](n);
         for (uint64 i = 0; i < n; i++) {
             topDownMsgs[i] = CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({
-                        subnetId: gwGetter.getNetworkName(),
-                        rawAddress: FvmAddressHelper.from(address(this))
-                    }),
-                    to: IPCAddress({
-                        subnetId: gwGetter.getNetworkName(),
-                        rawAddress: FvmAddressHelper.from(address(this))
-                    }),
+                    from: IPCAddress({subnetId: id, rawAddress: FvmAddressHelper.from(address(this))}),
+                    to: IPCAddress({subnetId: id, rawAddress: FvmAddressHelper.from(address(this))}),
                     value: 0,
                     nonce: i,
                     method: this.callback.selector,
@@ -1444,6 +1440,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
         gwRouter.applyCrossMessages(topDownMsgs);
+        require(gwGetter.getSubnetTopDownMsgsLength(id) == 0, "unexpected top-down message");
+        (bool ok, uint64 tdn) = gwGetter.getAppliedTopDownNonce(id);
+        console.log(tdn);
+        require(!ok && tdn == 0, "unexpected nonce");
 
         vm.stopPrank();
     }
@@ -1492,10 +1492,12 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         require(recv.crossMessagesHash == keccak256("messages1"), "received cross messages incorrect");
         require(gwGetter.bottomUpMessages(gwGetter.bottomUpCheckPeriod()).length == 0, "there are messages");
 
+        uint64 d = gwGetter.bottomUpCheckPeriod();
+
         // failed to create a checkpoint with the same height
         checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: gwGetter.bottomUpCheckPeriod(),
+            blockHeight: d,
             blockHash: keccak256("block"),
             nextConfigurationNumber: 2,
             crossMessagesHash: keccak256("newmessages")
@@ -1509,7 +1511,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         // failed to create a checkpoint with the height not multiple to checkpoint period
         checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
-            blockHeight: gwGetter.bottomUpCheckPeriod() + gwGetter.bottomUpCheckPeriod() / 2,
+            blockHeight: d + d / 2,
             blockHash: keccak256("block2"),
             nextConfigurationNumber: 2,
             crossMessagesHash: keccak256("newmessages")
@@ -1519,6 +1521,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.expectRevert(InvalidCheckpointEpoch.selector);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
+
+        (bool ok, uint64 e, ) = gwGetter.getCurrentBottomUpCheckpoint();
+        require(ok, "checkpoint not exist");
+        require(e == d, "out height incorrect");
     }
 
     function testGatewayDiamond_commitBottomUpCheckpoint_InvalidCheckpointSource() public {

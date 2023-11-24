@@ -15,19 +15,19 @@
     }
   ],
   "bytecode": {
-    "object": "0x608080604052346018576075908161001e823930815050f35b600080fdfe6080806040526004361015601257600080fd5b60003560e01c63540bc5ea14602657600080fd5b6000366003190112603a5780604160209252f35b600080fdfea2646970667358221220e89139054c6e2c5c7e38c3754ab0ac1080b308e7537fef88b278cab6cf087c9b64736f6c63430008130033",
-    "sourceMap": "201:2404:61:-:0;;;;;;;;;;;;;;;;;;;;;",
+    "object": "0x608b610038600b82828239805160001a607314602b57634e487b7160e01b600052600060045260246000fd5b30600052607381538281f3fe730000000000000000000000000000000000000000301460806040526004361060335760003560e01c8063540bc5ea146038575b600080fd5b603f604181565b60405160ff909116815260200160405180910390f3fea26469706673582212205b9298d298b139e58772f3a67bf8a2a77b0dcba8215e77f956eb6e5eb803ab0164736f6c63430008130033",
+    "sourceMap": "201:2404:61:-:0;;;;;;;;;;;;;;;-1:-1:-1;;;201:2404:61;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x6080806040526004361015601257600080fd5b60003560e01c63540bc5ea14602657600080fd5b6000366003190112603a5780604160209252f35b600080fdfea2646970667358221220e89139054c6e2c5c7e38c3754ab0ac1080b308e7537fef88b278cab6cf087c9b64736f6c63430008130033",
-    "sourceMap": "201:2404:61:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;-1:-1:-1;;201:2404:61;;;;;278:2;201:2404;;;;;;;",
+    "object": "0x730000000000000000000000000000000000000000301460806040526004361060335760003560e01c8063540bc5ea146038575b600080fd5b603f604181565b60405160ff909116815260200160405180910390f3fea26469706673582212205b9298d298b139e58772f3a67bf8a2a77b0dcba8215e77f956eb6e5eb803ab0164736f6c63430008130033",
+    "sourceMap": "201:2404:61:-:0;;;;;;;;;;;;;;;;;;;;;;;;237:43;;278:2;237:43;;;;;194:4:100;182:17;;;164:36;;152:2;137:18;237:43:61;;;;;;",
     "linkReferences": {}
   },
   "methodIdentifiers": {
     "SIGNATURE_LENGTH()": "540bc5ea"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"SIGNATURE_LENGTH\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Multi-signature ECDSA verification helper.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/LibMultisignatureChecker.sol\":\"MultisignatureChecker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":sol-explore/=node_modules/sol-explore/\"],\"viaIR\":true},\"sources\":{\"lib/openzeppelin-contracts/contracts/utils/Strings.sol\":{\"keccak256\":\"0xb97d36c301445278c5f8fd94c7bda1c7406d28def61da67864cb6e27f359d6da\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63d542fd2f752d7f715057cbb956e95e198d1ce0545092212025369920a9c33a\",\"dweb:/ipfs/QmNbjRRr4u2denjbZrsQhU5d4mxPyyfv2m5t3suKToLwaB\"]},\"lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol\":{\"keccak256\":\"0x1fffbec76ddc32735c18799f454482cc2530d4b6736dda03c387813954df8e30\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://569336974d289a84354700865eb6c025daac404c8509d24489b883def3cffa9d\",\"dweb:/ipfs/QmVekxbW3BgwMHrZjuXdPgSazk7SwXi2Usa1g7SdyZXiQ9\"]},\"lib/openzeppelin-contracts/contracts/utils/math/Math.sol\":{\"keccak256\":\"0x3ddad25673a903c650b6f78ad878f0559c66c30ace86e1110ff44fd07900264c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7907214499f21a835a3582b3c24d2844f70a19c6874458e5daae3d0eef205c81\",\"dweb:/ipfs/QmSALTEWv1GbTHH5b739hjzrWC78DDe7trbxEgt5pniF9k\"]},\"lib/openzeppelin-contracts/contracts/utils/math/SignedMath.sol\":{\"keccak256\":\"0x63a4fc7046bc052edeec923181f2f886681e1e0b34c4f23ce84425acfe80a1fb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9cee5cb5fa0dc7d47c463f900b5fcd44abe84f6bce23433898af1221598a3a9b\",\"dweb:/ipfs/Qmdjp7Pf6RuGgAnSxUKd9CvniN8gUG6wLH1cdvhg5L9w4z\"]},\"src/lib/LibMultisignatureChecker.sol\":{\"keccak256\":\"0xa2a185d3f5e206dec977227bad731f8adbb5e3ca53fc2ed0e761177ce2dfb32a\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c31cf04f80ca0f281ed50b4175d9ff61a3cccc20f7e00b4549ce6274337a618e\",\"dweb:/ipfs/Qmf3a2p6p1MRVgEXZCVjQDUUVyb8nTYC8c9Pg9R558UcZy\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"SIGNATURE_LENGTH\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Multi-signature ECDSA verification helper.\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/LibMultisignatureChecker.sol\":\"MultisignatureChecker\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":sol-explore/=node_modules/sol-explore/\"]},\"sources\":{\"lib/openzeppelin-contracts/contracts/utils/Strings.sol\":{\"keccak256\":\"0xb97d36c301445278c5f8fd94c7bda1c7406d28def61da67864cb6e27f359d6da\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://63d542fd2f752d7f715057cbb956e95e198d1ce0545092212025369920a9c33a\",\"dweb:/ipfs/QmNbjRRr4u2denjbZrsQhU5d4mxPyyfv2m5t3suKToLwaB\"]},\"lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol\":{\"keccak256\":\"0x1fffbec76ddc32735c18799f454482cc2530d4b6736dda03c387813954df8e30\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://569336974d289a84354700865eb6c025daac404c8509d24489b883def3cffa9d\",\"dweb:/ipfs/QmVekxbW3BgwMHrZjuXdPgSazk7SwXi2Usa1g7SdyZXiQ9\"]},\"lib/openzeppelin-contracts/contracts/utils/math/Math.sol\":{\"keccak256\":\"0x3ddad25673a903c650b6f78ad878f0559c66c30ace86e1110ff44fd07900264c\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://7907214499f21a835a3582b3c24d2844f70a19c6874458e5daae3d0eef205c81\",\"dweb:/ipfs/QmSALTEWv1GbTHH5b739hjzrWC78DDe7trbxEgt5pniF9k\"]},\"lib/openzeppelin-contracts/contracts/utils/math/SignedMath.sol\":{\"keccak256\":\"0x63a4fc7046bc052edeec923181f2f886681e1e0b34c4f23ce84425acfe80a1fb\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://9cee5cb5fa0dc7d47c463f900b5fcd44abe84f6bce23433898af1221598a3a9b\",\"dweb:/ipfs/Qmdjp7Pf6RuGgAnSxUKd9CvniN8gUG6wLH1cdvhg5L9w4z\"]},\"src/lib/LibMultisignatureChecker.sol\":{\"keccak256\":\"0xa2a185d3f5e206dec977227bad731f8adbb5e3ca53fc2ed0e761177ce2dfb32a\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c31cf04f80ca0f281ed50b4175d9ff61a3cccc20f7e00b4549ce6274337a618e\",\"dweb:/ipfs/Qmf3a2p6p1MRVgEXZCVjQDUUVyb8nTYC8c9Pg9R558UcZy\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -85,8 +85,7 @@
       "compilationTarget": {
         "src/lib/LibMultisignatureChecker.sol": "MultisignatureChecker"
       },
-      "libraries": {},
-      "viaIR": true
+      "libraries": {}
     },
     "sources": {
       "lib/openzeppelin-contracts/contracts/utils/Strings.sol": {
@@ -134,20 +133,20 @@
   },
   "ast": {
     "absolutePath": "src/lib/LibMultisignatureChecker.sol",
-    "id": 42206,
+    "id": 42222,
     "exportedSymbols": {
       "ECDSA": [
         33096
       ],
       "MultisignatureChecker": [
-        42205
+        42221
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:2560:61",
     "nodes": [
       {
-        "id": 42051,
+        "id": 42067,
         "nodeType": "PragmaDirective",
         "src": "46:23:61",
         "nodes": [],
@@ -158,19 +157,19 @@
         ]
       },
       {
-        "id": 42053,
+        "id": 42069,
         "nodeType": "ImportDirective",
         "src": "71:74:61",
         "nodes": [],
         "absolutePath": "lib/openzeppelin-contracts/contracts/utils/cryptography/ECDSA.sol",
         "file": "openzeppelin-contracts/utils/cryptography/ECDSA.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 42206,
+        "scope": 42222,
         "sourceUnit": 33097,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 42052,
+              "id": 42068,
               "name": "ECDSA",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
@@ -184,12 +183,12 @@
         "unitAlias": ""
       },
       {
-        "id": 42205,
+        "id": 42221,
         "nodeType": "ContractDefinition",
         "src": "201:2404:61",
         "nodes": [
           {
-            "id": 42057,
+            "id": 42073,
             "nodeType": "VariableDeclaration",
             "src": "237:43:61",
             "nodes": [],
@@ -198,7 +197,7 @@
             "mutability": "constant",
             "name": "SIGNATURE_LENGTH",
             "nameLocation": "259:16:61",
-            "scope": 42205,
+            "scope": 42221,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -206,7 +205,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 42055,
+              "id": 42071,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "237:5:61",
@@ -217,7 +216,7 @@
             },
             "value": {
               "hexValue": "3635",
-              "id": 42056,
+              "id": 42072,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -234,56 +233,56 @@
             "visibility": "public"
           },
           {
-            "id": 42065,
+            "id": 42081,
             "nodeType": "EnumDefinition",
             "src": "287:204:61",
             "nodes": [],
             "canonicalName": "MultisignatureChecker.Error",
             "members": [
               {
-                "id": 42058,
+                "id": 42074,
                 "name": "Nil",
                 "nameLocation": "308:3:61",
                 "nodeType": "EnumValue",
                 "src": "308:3:61"
               },
               {
-                "id": 42059,
+                "id": 42075,
                 "name": "InvalidArrayLength",
                 "nameLocation": "321:18:61",
                 "nodeType": "EnumValue",
                 "src": "321:18:61"
               },
               {
-                "id": 42060,
+                "id": 42076,
                 "name": "EmptySignatures",
                 "nameLocation": "349:15:61",
                 "nodeType": "EnumValue",
                 "src": "349:15:61"
               },
               {
-                "id": 42061,
+                "id": 42077,
                 "name": "InvalidSignatureLength",
                 "nameLocation": "374:22:61",
                 "nodeType": "EnumValue",
                 "src": "374:22:61"
               },
               {
-                "id": 42062,
+                "id": 42078,
                 "name": "InvalidSignatory",
                 "nameLocation": "406:16:61",
                 "nodeType": "EnumValue",
                 "src": "406:16:61"
               },
               {
-                "id": 42063,
+                "id": 42079,
                 "name": "InvalidSignature",
                 "nameLocation": "432:16:61",
                 "nodeType": "EnumValue",
                 "src": "432:16:61"
               },
               {
-                "id": 42064,
+                "id": 42080,
                 "name": "WeightsSumLessThanThreshold",
                 "nameLocation": "458:27:61",
                 "nodeType": "EnumValue",
@@ -294,29 +293,29 @@
             "nameLocation": "292:5:61"
           },
           {
-            "id": 42204,
+            "id": 42220,
             "nodeType": "FunctionDefinition",
             "src": "1270:1333:61",
             "nodes": [],
             "body": {
-              "id": 42203,
+              "id": 42219,
               "nodeType": "Block",
               "src": "1507:1096:61",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    42088
+                    42104
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 42088,
+                      "id": 42104,
                       "mutability": "mutable",
                       "name": "valid",
                       "nameLocation": "1522:5:61",
                       "nodeType": "VariableDeclaration",
-                      "scope": 42203,
+                      "scope": 42219,
                       "src": "1517:10:61",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -325,7 +324,7 @@
                         "typeString": "bool"
                       },
                       "typeName": {
-                        "id": 42087,
+                        "id": 42103,
                         "name": "bool",
                         "nodeType": "ElementaryTypeName",
                         "src": "1517:4:61",
@@ -337,10 +336,10 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 42090,
+                  "id": 42106,
                   "initialValue": {
                     "hexValue": "74727565",
-                    "id": 42089,
+                    "id": 42105,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": true,
@@ -359,17 +358,17 @@
                 },
                 {
                   "assignments": [
-                    42092
+                    42108
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 42092,
+                      "id": 42108,
                       "mutability": "mutable",
                       "name": "weight",
                       "nameLocation": "1552:6:61",
                       "nodeType": "VariableDeclaration",
-                      "scope": 42203,
+                      "scope": 42219,
                       "src": "1544:14:61",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -378,7 +377,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 42091,
+                        "id": 42107,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "1544:7:61",
@@ -390,23 +389,23 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 42093,
+                  "id": 42109,
                   "nodeType": "VariableDeclarationStatement",
                   "src": "1544:14:61"
                 },
                 {
                   "assignments": [
-                    42095
+                    42111
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 42095,
+                      "id": 42111,
                       "mutability": "mutable",
                       "name": "signaturesNumber",
                       "nameLocation": "1577:16:61",
                       "nodeType": "VariableDeclaration",
-                      "scope": 42203,
+                      "scope": 42219,
                       "src": "1569:24:61",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -415,7 +414,7 @@
                         "typeString": "uint256"
                       },
                       "typeName": {
-                        "id": 42094,
+                        "id": 42110,
                         "name": "uint256",
                         "nodeType": "ElementaryTypeName",
                         "src": "1569:7:61",
@@ -427,21 +426,21 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 42098,
+                  "id": 42114,
                   "initialValue": {
                     "expression": {
-                      "id": 42096,
+                      "id": 42112,
                       "name": "signatures",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 42079,
+                      "referencedDeclaration": 42095,
                       "src": "1596:10:61",
                       "typeDescriptions": {
                         "typeIdentifier": "t_array$_t_bytes_memory_ptr_$dyn_memory_ptr",
                         "typeString": "bytes memory[] memory"
                       }
                     },
-                    "id": 42097,
+                    "id": 42113,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -464,17 +463,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 42101,
+                    "id": 42117,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 42099,
+                      "id": 42115,
                       "name": "signaturesNumber",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 42095,
+                      "referencedDeclaration": 42111,
                       "src": "1627:16:61",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -485,7 +484,7 @@
                     "operator": "==",
                     "rightExpression": {
                       "hexValue": "30",
-                      "id": 42100,
+                      "id": 42116,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -505,11 +504,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 42109,
+                  "id": 42125,
                   "nodeType": "IfStatement",
                   "src": "1623:90:61",
                   "trueBody": {
-                    "id": 42108,
+                    "id": 42124,
                     "nodeType": "Block",
                     "src": "1650:63:61",
                     "statements": [
@@ -517,7 +516,7 @@
                         "expression": {
                           "components": [
                             {
-                              "id": 42103,
+                              "id": 42119,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -527,11 +526,11 @@
                               "prefix": true,
                               "src": "1672:6:61",
                               "subExpression": {
-                                "id": 42102,
+                                "id": 42118,
                                 "name": "valid",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42088,
+                                "referencedDeclaration": 42104,
                                 "src": "1673:5:61",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_bool",
@@ -545,18 +544,18 @@
                             },
                             {
                               "expression": {
-                                "id": 42104,
+                                "id": 42120,
                                 "name": "Error",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42065,
+                                "referencedDeclaration": 42081,
                                 "src": "1680:5:61",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_enum$_Error_$42065_$",
+                                  "typeIdentifier": "t_type$_t_enum$_Error_$42081_$",
                                   "typeString": "type(enum MultisignatureChecker.Error)"
                                 }
                               },
-                              "id": 42105,
+                              "id": 42121,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -564,15 +563,15 @@
                               "memberLocation": "1686:15:61",
                               "memberName": "EmptySignatures",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 42060,
+                              "referencedDeclaration": 42076,
                               "src": "1680:21:61",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42065",
+                                "typeIdentifier": "t_enum$_Error_$42081",
                                 "typeString": "enum MultisignatureChecker.Error"
                               }
                             }
                           ],
-                          "id": 42106,
+                          "id": 42122,
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -581,12 +580,12 @@
                           "nodeType": "TupleExpression",
                           "src": "1671:31:61",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
+                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42081_$",
                             "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                           }
                         },
-                        "functionReturnParameters": 42086,
-                        "id": 42107,
+                        "functionReturnParameters": 42102,
+                        "id": 42123,
                         "nodeType": "Return",
                         "src": "1664:38:61"
                       }
@@ -599,7 +598,7 @@
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     },
-                    "id": 42118,
+                    "id": 42134,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -609,17 +608,17 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-                      "id": 42113,
+                      "id": 42129,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-                        "id": 42110,
+                        "id": 42126,
                         "name": "signaturesNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 42095,
+                        "referencedDeclaration": 42111,
                         "src": "1727:16:61",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -630,18 +629,18 @@
                       "operator": "!=",
                       "rightExpression": {
                         "expression": {
-                          "id": 42111,
+                          "id": 42127,
                           "name": "signatories",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 42069,
+                          "referencedDeclaration": 42085,
                           "src": "1747:11:61",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
                             "typeString": "address[] memory"
                           }
                         },
-                        "id": 42112,
+                        "id": 42128,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -668,17 +667,17 @@
                         "typeIdentifier": "t_uint256",
                         "typeString": "uint256"
                       },
-                      "id": 42117,
+                      "id": 42133,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
                       "lValueRequested": false,
                       "leftExpression": {
-                        "id": 42114,
+                        "id": 42130,
                         "name": "signaturesNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 42095,
+                        "referencedDeclaration": 42111,
                         "src": "1769:16:61",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint256",
@@ -689,18 +688,18 @@
                       "operator": "!=",
                       "rightExpression": {
                         "expression": {
-                          "id": 42115,
+                          "id": 42131,
                           "name": "weights",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 42072,
+                          "referencedDeclaration": 42088,
                           "src": "1789:7:61",
                           "typeDescriptions": {
                             "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                             "typeString": "uint256[] memory"
                           }
                         },
-                        "id": 42116,
+                        "id": 42132,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -726,11 +725,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 42126,
+                  "id": 42142,
                   "nodeType": "IfStatement",
                   "src": "1723:148:61",
                   "trueBody": {
-                    "id": 42125,
+                    "id": 42141,
                     "nodeType": "Block",
                     "src": "1805:66:61",
                     "statements": [
@@ -738,7 +737,7 @@
                         "expression": {
                           "components": [
                             {
-                              "id": 42120,
+                              "id": 42136,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -748,11 +747,11 @@
                               "prefix": true,
                               "src": "1827:6:61",
                               "subExpression": {
-                                "id": 42119,
+                                "id": 42135,
                                 "name": "valid",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42088,
+                                "referencedDeclaration": 42104,
                                 "src": "1828:5:61",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_bool",
@@ -766,18 +765,18 @@
                             },
                             {
                               "expression": {
-                                "id": 42121,
+                                "id": 42137,
                                 "name": "Error",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42065,
+                                "referencedDeclaration": 42081,
                                 "src": "1835:5:61",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_enum$_Error_$42065_$",
+                                  "typeIdentifier": "t_type$_t_enum$_Error_$42081_$",
                                   "typeString": "type(enum MultisignatureChecker.Error)"
                                 }
                               },
-                              "id": 42122,
+                              "id": 42138,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -785,15 +784,15 @@
                               "memberLocation": "1841:18:61",
                               "memberName": "InvalidArrayLength",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 42059,
+                              "referencedDeclaration": 42075,
                               "src": "1835:24:61",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42065",
+                                "typeIdentifier": "t_enum$_Error_$42081",
                                 "typeString": "enum MultisignatureChecker.Error"
                               }
                             }
                           ],
-                          "id": 42123,
+                          "id": 42139,
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -802,12 +801,12 @@
                           "nodeType": "TupleExpression",
                           "src": "1826:34:61",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
+                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42081_$",
                             "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                           }
                         },
-                        "functionReturnParameters": 42086,
-                        "id": 42124,
+                        "functionReturnParameters": 42102,
+                        "id": 42140,
                         "nodeType": "Return",
                         "src": "1819:41:61"
                       }
@@ -816,25 +815,25 @@
                 },
                 {
                   "body": {
-                    "id": 42185,
+                    "id": 42201,
                     "nodeType": "Block",
                     "src": "1925:528:61",
                     "statements": [
                       {
                         "assignments": [
-                          42135,
-                          42138,
+                          42151,
+                          42154,
                           null
                         ],
                         "declarations": [
                           {
                             "constant": false,
-                            "id": 42135,
+                            "id": 42151,
                             "mutability": "mutable",
                             "name": "recovered",
                             "nameLocation": "1948:9:61",
                             "nodeType": "VariableDeclaration",
-                            "scope": 42185,
+                            "scope": 42201,
                             "src": "1940:17:61",
                             "stateVariable": false,
                             "storageLocation": "default",
@@ -843,7 +842,7 @@
                               "typeString": "address"
                             },
                             "typeName": {
-                              "id": 42134,
+                              "id": 42150,
                               "name": "address",
                               "nodeType": "ElementaryTypeName",
                               "src": "1940:7:61",
@@ -857,12 +856,12 @@
                           },
                           {
                             "constant": false,
-                            "id": 42138,
+                            "id": 42154,
                             "mutability": "mutable",
                             "name": "ecdsaErr",
                             "nameLocation": "1978:8:61",
                             "nodeType": "VariableDeclaration",
-                            "scope": 42185,
+                            "scope": 42201,
                             "src": "1959:27:61",
                             "stateVariable": false,
                             "storageLocation": "default",
@@ -871,10 +870,10 @@
                               "typeString": "enum ECDSA.RecoverError"
                             },
                             "typeName": {
-                              "id": 42137,
+                              "id": 42153,
                               "nodeType": "UserDefinedTypeName",
                               "pathNode": {
-                                "id": 42136,
+                                "id": 42152,
                                 "name": "ECDSA.RecoverError",
                                 "nameLocations": [
                                   "1959:5:61",
@@ -895,15 +894,15 @@
                           },
                           null
                         ],
-                        "id": 42146,
+                        "id": 42162,
                         "initialValue": {
                           "arguments": [
                             {
-                              "id": 42141,
+                              "id": 42157,
                               "name": "hash",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 42076,
+                              "referencedDeclaration": 42092,
                               "src": "2033:4:61",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bytes32",
@@ -912,24 +911,24 @@
                             },
                             {
                               "baseExpression": {
-                                "id": 42142,
+                                "id": 42158,
                                 "name": "signatures",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42079,
+                                "referencedDeclaration": 42095,
                                 "src": "2066:10:61",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_array$_t_bytes_memory_ptr_$dyn_memory_ptr",
                                   "typeString": "bytes memory[] memory"
                                 }
                               },
-                              "id": 42144,
+                              "id": 42160,
                               "indexExpression": {
-                                "id": 42143,
+                                "id": 42159,
                                 "name": "i",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42128,
+                                "referencedDeclaration": 42144,
                                 "src": "2077:1:61",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -960,7 +959,7 @@
                               }
                             ],
                             "expression": {
-                              "id": 42139,
+                              "id": 42155,
                               "name": "ECDSA",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
@@ -971,7 +970,7 @@
                                 "typeString": "type(library ECDSA)"
                               }
                             },
-                            "id": 42140,
+                            "id": 42156,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -986,7 +985,7 @@
                               "typeString": "function (bytes32,bytes memory) pure returns (address,enum ECDSA.RecoverError,bytes32)"
                             }
                           },
-                          "id": 42145,
+                          "id": 42161,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1017,17 +1016,17 @@
                             "typeIdentifier": "t_enum$_RecoverError_$32693",
                             "typeString": "enum ECDSA.RecoverError"
                           },
-                          "id": 42151,
+                          "id": 42167,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 42147,
+                            "id": 42163,
                             "name": "ecdsaErr",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 42138,
+                            "referencedDeclaration": 42154,
                             "src": "2112:8:61",
                             "typeDescriptions": {
                               "typeIdentifier": "t_enum$_RecoverError_$32693",
@@ -1039,7 +1038,7 @@
                           "rightExpression": {
                             "expression": {
                               "expression": {
-                                "id": 42148,
+                                "id": 42164,
                                 "name": "ECDSA",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
@@ -1050,7 +1049,7 @@
                                   "typeString": "type(library ECDSA)"
                                 }
                               },
-                              "id": 42149,
+                              "id": 42165,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1065,7 +1064,7 @@
                                 "typeString": "type(enum ECDSA.RecoverError)"
                               }
                             },
-                            "id": 42150,
+                            "id": 42166,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -1086,11 +1085,11 @@
                             "typeString": "bool"
                           }
                         },
-                        "id": 42159,
+                        "id": 42175,
                         "nodeType": "IfStatement",
                         "src": "2108:116:61",
                         "trueBody": {
-                          "id": 42158,
+                          "id": 42174,
                           "nodeType": "Block",
                           "src": "2152:72:61",
                           "statements": [
@@ -1098,7 +1097,7 @@
                               "expression": {
                                 "components": [
                                   {
-                                    "id": 42153,
+                                    "id": 42169,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": false,
@@ -1108,11 +1107,11 @@
                                     "prefix": true,
                                     "src": "2178:6:61",
                                     "subExpression": {
-                                      "id": 42152,
+                                      "id": 42168,
                                       "name": "valid",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42088,
+                                      "referencedDeclaration": 42104,
                                       "src": "2179:5:61",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_bool",
@@ -1126,18 +1125,18 @@
                                   },
                                   {
                                     "expression": {
-                                      "id": 42154,
+                                      "id": 42170,
                                       "name": "Error",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42065,
+                                      "referencedDeclaration": 42081,
                                       "src": "2186:5:61",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_type$_t_enum$_Error_$42065_$",
+                                        "typeIdentifier": "t_type$_t_enum$_Error_$42081_$",
                                         "typeString": "type(enum MultisignatureChecker.Error)"
                                       }
                                     },
-                                    "id": 42155,
+                                    "id": 42171,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -1145,15 +1144,15 @@
                                     "memberLocation": "2192:16:61",
                                     "memberName": "InvalidSignature",
                                     "nodeType": "MemberAccess",
-                                    "referencedDeclaration": 42063,
+                                    "referencedDeclaration": 42079,
                                     "src": "2186:22:61",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42065",
+                                      "typeIdentifier": "t_enum$_Error_$42081",
                                       "typeString": "enum MultisignatureChecker.Error"
                                     }
                                   }
                                 ],
-                                "id": 42156,
+                                "id": 42172,
                                 "isConstant": false,
                                 "isInlineArray": false,
                                 "isLValue": false,
@@ -1162,12 +1161,12 @@
                                 "nodeType": "TupleExpression",
                                 "src": "2177:32:61",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
+                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42081_$",
                                   "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                                 }
                               },
-                              "functionReturnParameters": 42086,
-                              "id": 42157,
+                              "functionReturnParameters": 42102,
+                              "id": 42173,
                               "nodeType": "Return",
                               "src": "2170:39:61"
                             }
@@ -1180,17 +1179,17 @@
                             "typeIdentifier": "t_address",
                             "typeString": "address"
                           },
-                          "id": 42164,
+                          "id": 42180,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftExpression": {
-                            "id": 42160,
+                            "id": 42176,
                             "name": "recovered",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 42135,
+                            "referencedDeclaration": 42151,
                             "src": "2241:9:61",
                             "typeDescriptions": {
                               "typeIdentifier": "t_address",
@@ -1201,24 +1200,24 @@
                           "operator": "!=",
                           "rightExpression": {
                             "baseExpression": {
-                              "id": 42161,
+                              "id": 42177,
                               "name": "signatories",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 42069,
+                              "referencedDeclaration": 42085,
                               "src": "2254:11:61",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
                                 "typeString": "address[] memory"
                               }
                             },
-                            "id": 42163,
+                            "id": 42179,
                             "indexExpression": {
-                              "id": 42162,
+                              "id": 42178,
                               "name": "i",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 42128,
+                              "referencedDeclaration": 42144,
                               "src": "2266:1:61",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -1242,11 +1241,11 @@
                             "typeString": "bool"
                           }
                         },
-                        "id": 42172,
+                        "id": 42188,
                         "nodeType": "IfStatement",
                         "src": "2237:105:61",
                         "trueBody": {
-                          "id": 42171,
+                          "id": 42187,
                           "nodeType": "Block",
                           "src": "2270:72:61",
                           "statements": [
@@ -1254,7 +1253,7 @@
                               "expression": {
                                 "components": [
                                   {
-                                    "id": 42166,
+                                    "id": 42182,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": false,
@@ -1264,11 +1263,11 @@
                                     "prefix": true,
                                     "src": "2296:6:61",
                                     "subExpression": {
-                                      "id": 42165,
+                                      "id": 42181,
                                       "name": "valid",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42088,
+                                      "referencedDeclaration": 42104,
                                       "src": "2297:5:61",
                                       "typeDescriptions": {
                                         "typeIdentifier": "t_bool",
@@ -1282,18 +1281,18 @@
                                   },
                                   {
                                     "expression": {
-                                      "id": 42167,
+                                      "id": 42183,
                                       "name": "Error",
                                       "nodeType": "Identifier",
                                       "overloadedDeclarations": [],
-                                      "referencedDeclaration": 42065,
+                                      "referencedDeclaration": 42081,
                                       "src": "2304:5:61",
                                       "typeDescriptions": {
-                                        "typeIdentifier": "t_type$_t_enum$_Error_$42065_$",
+                                        "typeIdentifier": "t_type$_t_enum$_Error_$42081_$",
                                         "typeString": "type(enum MultisignatureChecker.Error)"
                                       }
                                     },
-                                    "id": 42168,
+                                    "id": 42184,
                                     "isConstant": false,
                                     "isLValue": false,
                                     "isPure": true,
@@ -1301,15 +1300,15 @@
                                     "memberLocation": "2310:16:61",
                                     "memberName": "InvalidSignatory",
                                     "nodeType": "MemberAccess",
-                                    "referencedDeclaration": 42062,
+                                    "referencedDeclaration": 42078,
                                     "src": "2304:22:61",
                                     "typeDescriptions": {
-                                      "typeIdentifier": "t_enum$_Error_$42065",
+                                      "typeIdentifier": "t_enum$_Error_$42081",
                                       "typeString": "enum MultisignatureChecker.Error"
                                     }
                                   }
                                 ],
-                                "id": 42169,
+                                "id": 42185,
                                 "isConstant": false,
                                 "isInlineArray": false,
                                 "isLValue": false,
@@ -1318,12 +1317,12 @@
                                 "nodeType": "TupleExpression",
                                 "src": "2295:32:61",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
+                                  "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42081_$",
                                   "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                                 }
                               },
-                              "functionReturnParameters": 42086,
-                              "id": 42170,
+                              "functionReturnParameters": 42102,
+                              "id": 42186,
                               "nodeType": "Return",
                               "src": "2288:39:61"
                             }
@@ -1332,17 +1331,17 @@
                       },
                       {
                         "expression": {
-                          "id": 42179,
+                          "id": 42195,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
                           "lValueRequested": false,
                           "leftHandSide": {
-                            "id": 42173,
+                            "id": 42189,
                             "name": "weight",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 42092,
+                            "referencedDeclaration": 42108,
                             "src": "2355:6:61",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint256",
@@ -1356,17 +1355,17 @@
                               "typeIdentifier": "t_uint256",
                               "typeString": "uint256"
                             },
-                            "id": 42178,
+                            "id": 42194,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
                             "lValueRequested": false,
                             "leftExpression": {
-                              "id": 42174,
+                              "id": 42190,
                               "name": "weight",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 42092,
+                              "referencedDeclaration": 42108,
                               "src": "2364:6:61",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
@@ -1377,24 +1376,24 @@
                             "operator": "+",
                             "rightExpression": {
                               "baseExpression": {
-                                "id": 42175,
+                                "id": 42191,
                                 "name": "weights",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42072,
+                                "referencedDeclaration": 42088,
                                 "src": "2373:7:61",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_array$_t_uint256_$dyn_memory_ptr",
                                   "typeString": "uint256[] memory"
                                 }
                               },
-                              "id": 42177,
+                              "id": 42193,
                               "indexExpression": {
-                                "id": 42176,
+                                "id": 42192,
                                 "name": "i",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42128,
+                                "referencedDeclaration": 42144,
                                 "src": "2381:1:61",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1424,18 +1423,18 @@
                             "typeString": "uint256"
                           }
                         },
-                        "id": 42180,
+                        "id": 42196,
                         "nodeType": "ExpressionStatement",
                         "src": "2355:28:61"
                       },
                       {
-                        "id": 42184,
+                        "id": 42200,
                         "nodeType": "UncheckedBlock",
                         "src": "2397:46:61",
                         "statements": [
                           {
                             "expression": {
-                              "id": 42182,
+                              "id": 42198,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": false,
@@ -1445,11 +1444,11 @@
                               "prefix": true,
                               "src": "2425:3:61",
                               "subExpression": {
-                                "id": 42181,
+                                "id": 42197,
                                 "name": "i",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42128,
+                                "referencedDeclaration": 42144,
                                 "src": "2427:1:61",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_uint256",
@@ -1461,7 +1460,7 @@
                                 "typeString": "uint256"
                               }
                             },
-                            "id": 42183,
+                            "id": 42199,
                             "nodeType": "ExpressionStatement",
                             "src": "2425:3:61"
                           }
@@ -1474,17 +1473,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 42133,
+                    "id": 42149,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 42131,
+                      "id": 42147,
                       "name": "i",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 42128,
+                      "referencedDeclaration": 42144,
                       "src": "1901:1:61",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1494,11 +1493,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": "<",
                     "rightExpression": {
-                      "id": 42132,
+                      "id": 42148,
                       "name": "signaturesNumber",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 42095,
+                      "referencedDeclaration": 42111,
                       "src": "1905:16:61",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1511,20 +1510,20 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 42186,
+                  "id": 42202,
                   "initializationExpression": {
                     "assignments": [
-                      42128
+                      42144
                     ],
                     "declarations": [
                       {
                         "constant": false,
-                        "id": 42128,
+                        "id": 42144,
                         "mutability": "mutable",
                         "name": "i",
                         "nameLocation": "1894:1:61",
                         "nodeType": "VariableDeclaration",
-                        "scope": 42186,
+                        "scope": 42202,
                         "src": "1886:9:61",
                         "stateVariable": false,
                         "storageLocation": "default",
@@ -1533,7 +1532,7 @@
                           "typeString": "uint256"
                         },
                         "typeName": {
-                          "id": 42127,
+                          "id": 42143,
                           "name": "uint256",
                           "nodeType": "ElementaryTypeName",
                           "src": "1886:7:61",
@@ -1545,10 +1544,10 @@
                         "visibility": "internal"
                       }
                     ],
-                    "id": 42130,
+                    "id": 42146,
                     "initialValue": {
                       "hexValue": "30",
-                      "id": 42129,
+                      "id": 42145,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1574,17 +1573,17 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 42189,
+                    "id": 42205,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
-                      "id": 42187,
+                      "id": 42203,
                       "name": "weight",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 42092,
+                      "referencedDeclaration": 42108,
                       "src": "2466:6:61",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1594,11 +1593,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": ">=",
                     "rightExpression": {
-                      "id": 42188,
+                      "id": 42204,
                       "name": "threshold",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 42074,
+                      "referencedDeclaration": 42090,
                       "src": "2476:9:61",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint256",
@@ -1611,11 +1610,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 42196,
+                  "id": 42212,
                   "nodeType": "IfStatement",
                   "src": "2462:75:61",
                   "trueBody": {
-                    "id": 42195,
+                    "id": 42211,
                     "nodeType": "Block",
                     "src": "2487:50:61",
                     "statements": [
@@ -1623,11 +1622,11 @@
                         "expression": {
                           "components": [
                             {
-                              "id": 42190,
+                              "id": 42206,
                               "name": "valid",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 42088,
+                              "referencedDeclaration": 42104,
                               "src": "2509:5:61",
                               "typeDescriptions": {
                                 "typeIdentifier": "t_bool",
@@ -1636,18 +1635,18 @@
                             },
                             {
                               "expression": {
-                                "id": 42191,
+                                "id": 42207,
                                 "name": "Error",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 42065,
+                                "referencedDeclaration": 42081,
                                 "src": "2516:5:61",
                                 "typeDescriptions": {
-                                  "typeIdentifier": "t_type$_t_enum$_Error_$42065_$",
+                                  "typeIdentifier": "t_type$_t_enum$_Error_$42081_$",
                                   "typeString": "type(enum MultisignatureChecker.Error)"
                                 }
                               },
-                              "id": 42192,
+                              "id": 42208,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -1655,15 +1654,15 @@
                               "memberLocation": "2522:3:61",
                               "memberName": "Nil",
                               "nodeType": "MemberAccess",
-                              "referencedDeclaration": 42058,
+                              "referencedDeclaration": 42074,
                               "src": "2516:9:61",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Error_$42065",
+                                "typeIdentifier": "t_enum$_Error_$42081",
                                 "typeString": "enum MultisignatureChecker.Error"
                               }
                             }
                           ],
-                          "id": 42193,
+                          "id": 42209,
                           "isConstant": false,
                           "isInlineArray": false,
                           "isLValue": false,
@@ -1672,12 +1671,12 @@
                           "nodeType": "TupleExpression",
                           "src": "2508:18:61",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
+                            "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42081_$",
                             "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                           }
                         },
-                        "functionReturnParameters": 42086,
-                        "id": 42194,
+                        "functionReturnParameters": 42102,
+                        "id": 42210,
                         "nodeType": "Return",
                         "src": "2501:25:61"
                       }
@@ -1688,7 +1687,7 @@
                   "expression": {
                     "components": [
                       {
-                        "id": 42198,
+                        "id": 42214,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1698,11 +1697,11 @@
                         "prefix": true,
                         "src": "2554:6:61",
                         "subExpression": {
-                          "id": 42197,
+                          "id": 42213,
                           "name": "valid",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 42088,
+                          "referencedDeclaration": 42104,
                           "src": "2555:5:61",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bool",
@@ -1716,18 +1715,18 @@
                       },
                       {
                         "expression": {
-                          "id": 42199,
+                          "id": 42215,
                           "name": "Error",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 42065,
+                          "referencedDeclaration": 42081,
                           "src": "2562:5:61",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_enum$_Error_$42065_$",
+                            "typeIdentifier": "t_type$_t_enum$_Error_$42081_$",
                             "typeString": "type(enum MultisignatureChecker.Error)"
                           }
                         },
-                        "id": 42200,
+                        "id": 42216,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": true,
@@ -1735,15 +1734,15 @@
                         "memberLocation": "2568:27:61",
                         "memberName": "WeightsSumLessThanThreshold",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 42064,
+                        "referencedDeclaration": 42080,
                         "src": "2562:33:61",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_enum$_Error_$42065",
+                          "typeIdentifier": "t_enum$_Error_$42081",
                           "typeString": "enum MultisignatureChecker.Error"
                         }
                       }
                     ],
-                    "id": 42201,
+                    "id": 42217,
                     "isConstant": false,
                     "isInlineArray": false,
                     "isLValue": false,
@@ -1752,19 +1751,19 @@
                     "nodeType": "TupleExpression",
                     "src": "2553:43:61",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42065_$",
+                      "typeIdentifier": "t_tuple$_t_bool_$_t_enum$_Error_$42081_$",
                       "typeString": "tuple(bool,enum MultisignatureChecker.Error)"
                     }
                   },
-                  "functionReturnParameters": 42086,
-                  "id": 42202,
+                  "functionReturnParameters": 42102,
+                  "id": 42218,
                   "nodeType": "Return",
                   "src": "2546:50:61"
                 }
               ]
             },
             "documentation": {
-              "id": 42066,
+              "id": 42082,
               "nodeType": "StructuredDocumentation",
               "src": "497:768:61",
               "text": " @notice Checks if a weighted multi-signature is valid for a given message hash, set of signatories, set of weights, and set of signatures.\n @dev Signatures are validated using `ECDSA.recover`.\n      The multi-signature fails if the sum of the signatory weights is less than the threshold.\n      Signatories in `signatories` and  signatures in `signatures` must have the same order.\n @param signatories The addresses of the signatories.\n @param weights The weights of the signatories.\n @param threshold The number that must be reach to consider `signatures` valid.\n @param hash of the verified data.\n @param signatures Packed signatures. Each signature is in `({bytes32 r}{bytes32 s}{uint8 v})` format."
@@ -1775,17 +1774,17 @@
             "name": "isValidWeightedMultiSignature",
             "nameLocation": "1279:29:61",
             "parameters": {
-              "id": 42080,
+              "id": 42096,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 42069,
+                  "id": 42085,
                   "mutability": "mutable",
                   "name": "signatories",
                   "nameLocation": "1335:11:61",
                   "nodeType": "VariableDeclaration",
-                  "scope": 42204,
+                  "scope": 42220,
                   "src": "1318:28:61",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1795,7 +1794,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 42067,
+                      "id": 42083,
                       "name": "address",
                       "nodeType": "ElementaryTypeName",
                       "src": "1318:7:61",
@@ -1805,7 +1804,7 @@
                         "typeString": "address"
                       }
                     },
-                    "id": 42068,
+                    "id": 42084,
                     "nodeType": "ArrayTypeName",
                     "src": "1318:9:61",
                     "typeDescriptions": {
@@ -1817,12 +1816,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 42072,
+                  "id": 42088,
                   "mutability": "mutable",
                   "name": "weights",
                   "nameLocation": "1373:7:61",
                   "nodeType": "VariableDeclaration",
-                  "scope": 42204,
+                  "scope": 42220,
                   "src": "1356:24:61",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1832,7 +1831,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 42070,
+                      "id": 42086,
                       "name": "uint256",
                       "nodeType": "ElementaryTypeName",
                       "src": "1356:7:61",
@@ -1841,7 +1840,7 @@
                         "typeString": "uint256"
                       }
                     },
-                    "id": 42071,
+                    "id": 42087,
                     "nodeType": "ArrayTypeName",
                     "src": "1356:9:61",
                     "typeDescriptions": {
@@ -1853,12 +1852,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 42074,
+                  "id": 42090,
                   "mutability": "mutable",
                   "name": "threshold",
                   "nameLocation": "1398:9:61",
                   "nodeType": "VariableDeclaration",
-                  "scope": 42204,
+                  "scope": 42220,
                   "src": "1390:17:61",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1867,7 +1866,7 @@
                     "typeString": "uint256"
                   },
                   "typeName": {
-                    "id": 42073,
+                    "id": 42089,
                     "name": "uint256",
                     "nodeType": "ElementaryTypeName",
                     "src": "1390:7:61",
@@ -1880,12 +1879,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 42076,
+                  "id": 42092,
                   "mutability": "mutable",
                   "name": "hash",
                   "nameLocation": "1425:4:61",
                   "nodeType": "VariableDeclaration",
-                  "scope": 42204,
+                  "scope": 42220,
                   "src": "1417:12:61",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1894,7 +1893,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 42075,
+                    "id": 42091,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1417:7:61",
@@ -1907,12 +1906,12 @@
                 },
                 {
                   "constant": false,
-                  "id": 42079,
+                  "id": 42095,
                   "mutability": "mutable",
                   "name": "signatures",
                   "nameLocation": "1454:10:61",
                   "nodeType": "VariableDeclaration",
-                  "scope": 42204,
+                  "scope": 42220,
                   "src": "1439:25:61",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -1922,7 +1921,7 @@
                   },
                   "typeName": {
                     "baseType": {
-                      "id": 42077,
+                      "id": 42093,
                       "name": "bytes",
                       "nodeType": "ElementaryTypeName",
                       "src": "1439:5:61",
@@ -1931,7 +1930,7 @@
                         "typeString": "bytes"
                       }
                     },
-                    "id": 42078,
+                    "id": 42094,
                     "nodeType": "ArrayTypeName",
                     "src": "1439:7:61",
                     "typeDescriptions": {
@@ -1945,17 +1944,17 @@
               "src": "1308:162:61"
             },
             "returnParameters": {
-              "id": 42086,
+              "id": 42102,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 42082,
+                  "id": 42098,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 42204,
+                  "scope": 42220,
                   "src": "1494:4:61",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1964,7 +1963,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 42081,
+                    "id": 42097,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1494:4:61",
@@ -1977,36 +1976,36 @@
                 },
                 {
                   "constant": false,
-                  "id": 42085,
+                  "id": 42101,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 42204,
+                  "scope": 42220,
                   "src": "1500:5:61",
                   "stateVariable": false,
                   "storageLocation": "default",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_enum$_Error_$42065",
+                    "typeIdentifier": "t_enum$_Error_$42081",
                     "typeString": "enum MultisignatureChecker.Error"
                   },
                   "typeName": {
-                    "id": 42084,
+                    "id": 42100,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 42083,
+                      "id": 42099,
                       "name": "Error",
                       "nameLocations": [
                         "1500:5:61"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 42065,
+                      "referencedDeclaration": 42081,
                       "src": "1500:5:61"
                     },
-                    "referencedDeclaration": 42065,
+                    "referencedDeclaration": 42081,
                     "src": "1500:5:61",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_enum$_Error_$42065",
+                      "typeIdentifier": "t_enum$_Error_$42081",
                       "typeString": "enum MultisignatureChecker.Error"
                     }
                   },
@@ -2015,7 +2014,7 @@
               ],
               "src": "1493:13:61"
             },
-            "scope": 42205,
+            "scope": 42221,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
@@ -2027,18 +2026,18 @@
         "contractDependencies": [],
         "contractKind": "library",
         "documentation": {
-          "id": 42054,
+          "id": 42070,
           "nodeType": "StructuredDocumentation",
           "src": "147:54:61",
           "text": "@title Multi-signature ECDSA verification helper."
         },
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          42205
+          42221
         ],
         "name": "MultisignatureChecker",
         "nameLocation": "209:21:61",
-        "scope": 42206,
+        "scope": 42222,
         "usedErrors": []
       }
     ],
