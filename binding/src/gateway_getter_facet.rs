@@ -370,6 +370,61 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("getCurrentBottomUpCheckpoint"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getCurrentBottomUpCheckpoint",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bool"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                        ::std::boxed::Box::new(
+                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned(
+                                            "struct BottomUpCheckpoint",
+                                        ),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("getCurrentConfigurationNumber"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -1241,6 +1296,17 @@ pub mod gateway_getter_facet {
                 .method_hash([69, 18, 255, 99], h)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `getCurrentBottomUpCheckpoint` (0xd6c5c397) function
+        pub fn get_current_bottom_up_checkpoint(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            (bool, u64, BottomUpCheckpoint),
+        > {
+            self.0
+                .method_hash([214, 197, 195, 151], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `getCurrentConfigurationNumber` (0x544dddff) function
         pub fn get_current_configuration_number(
             &self,
@@ -1567,6 +1633,22 @@ pub mod gateway_getter_facet {
     pub struct GetCheckpointInfoCall {
         pub h: u64,
     }
+    ///Container type for all input parameters for the `getCurrentBottomUpCheckpoint` function with signature `getCurrentBottomUpCheckpoint()` and selector `0xd6c5c397`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "getCurrentBottomUpCheckpoint",
+        abi = "getCurrentBottomUpCheckpoint()"
+    )]
+    pub struct GetCurrentBottomUpCheckpointCall;
     ///Container type for all input parameters for the `getCurrentConfigurationNumber` function with signature `getCurrentConfigurationNumber()` and selector `0x544dddff`
     #[derive(
         Clone,
@@ -1850,6 +1932,7 @@ pub mod gateway_getter_facet {
         GetBottomUpRetentionHeight(GetBottomUpRetentionHeightCall),
         GetCheckpointCurrentWeight(GetCheckpointCurrentWeightCall),
         GetCheckpointInfo(GetCheckpointInfoCall),
+        GetCurrentBottomUpCheckpoint(GetCurrentBottomUpCheckpointCall),
         GetCurrentConfigurationNumber(GetCurrentConfigurationNumberCall),
         GetCurrentMembership(GetCurrentMembershipCall),
         GetIncompleteCheckpointHeights(GetIncompleteCheckpointHeightsCall),
@@ -1924,6 +2007,11 @@ pub mod gateway_getter_facet {
                 data,
             ) {
                 return Ok(Self::GetCheckpointInfo(decoded));
+            }
+            if let Ok(decoded) = <GetCurrentBottomUpCheckpointCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetCurrentBottomUpCheckpoint(decoded));
             }
             if let Ok(decoded) = <GetCurrentConfigurationNumberCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2056,6 +2144,9 @@ pub mod gateway_getter_facet {
                 Self::GetCheckpointInfo(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::GetCurrentBottomUpCheckpoint(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::GetCurrentConfigurationNumber(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2137,6 +2228,9 @@ pub mod gateway_getter_facet {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::GetCheckpointInfo(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetCurrentBottomUpCheckpoint(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::GetCurrentConfigurationNumber(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -2229,6 +2323,12 @@ pub mod gateway_getter_facet {
     impl ::core::convert::From<GetCheckpointInfoCall> for GatewayGetterFacetCalls {
         fn from(value: GetCheckpointInfoCall) -> Self {
             Self::GetCheckpointInfo(value)
+        }
+    }
+    impl ::core::convert::From<GetCurrentBottomUpCheckpointCall>
+    for GatewayGetterFacetCalls {
+        fn from(value: GetCurrentBottomUpCheckpointCall) -> Self {
+            Self::GetCurrentBottomUpCheckpoint(value)
         }
     }
     impl ::core::convert::From<GetCurrentConfigurationNumberCall>
@@ -2451,6 +2551,22 @@ pub mod gateway_getter_facet {
         Hash
     )]
     pub struct GetCheckpointInfoReturn(pub CheckpointInfo);
+    ///Container type for all return fields from the `getCurrentBottomUpCheckpoint` function with signature `getCurrentBottomUpCheckpoint()` and selector `0xd6c5c397`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetCurrentBottomUpCheckpointReturn(
+        pub bool,
+        pub u64,
+        pub BottomUpCheckpoint,
+    );
     ///Container type for all return fields from the `getCurrentConfigurationNumber` function with signature `getCurrentConfigurationNumber()` and selector `0x544dddff`
     #[derive(
         Clone,
