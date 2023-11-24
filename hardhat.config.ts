@@ -191,27 +191,6 @@ task(
 )
 
 task(
-    'deploy-subnet',
-    'Builds and deploys the SubnetActor contract on the selected network',
-    async (args, hre: HardhatRuntimeEnvironment) => {
-        const network = hre.network.name
-
-        const deployments = await getDeployments(network)
-        const { deploy } = await lazyImport('./scripts/deploy-subnet')
-
-        // remove unused lib
-        delete deployments.libs['StorableMsgHelper']
-
-        const subnetDeployment = await deploy(
-            deployments.Gateway,
-            deployments.libs,
-        )
-
-        await saveDeployments(network, subnetDeployment)
-    },
-)
-
-task(
     'deploy-gw-diamond-and-facets',
     'Builds and deploys Gateway Actor diamond and its facets',
     async (args, hre: HardhatRuntimeEnvironment) => {

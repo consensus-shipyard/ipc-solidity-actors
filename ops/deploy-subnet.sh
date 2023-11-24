@@ -16,5 +16,5 @@ if [ "$NETWORK" = "auto" ]; then
 fi
 
 
-npx hardhat deploy-subnet --network ${NETWORK}
+npx hardhat deploy-sa-diamond-and-facets --network ${NETWORK}
 
