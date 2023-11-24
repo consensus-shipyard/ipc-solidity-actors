@@ -59,12 +59,12 @@
     }
   ],
   "bytecode": {
-    "object": "0x608080604052346100195760db908161001f823930815050f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea26469706673582212209452ca33b461b8f20ff567598ba87ac24773a2ad5b383d589a3c20ce53d8513d64736f6c63430008130033",
+    "object": "0x608080604052346100195760db908161001f823930815050f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea2646970667358221220253b06b8f84e8b266da82bf1ac164fce8e4ddc36b01c4d9dcc60329f5e83285864736f6c63430008130033",
     "sourceMap": "186:2075:57:-:0;;;;;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea26469706673582212209452ca33b461b8f20ff567598ba87ac24773a2ad5b383d589a3c20ce53d8513d64736f6c63430008130033",
+    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c9081635279ff9914608c575080639c6e06c0146076578063ab528f211460605763cf8e4a6e14604857600080fd5b80600319360112605d57602060405160148152f35b80fd5b5080600319360112605d57602060405160018152f35b5080600319360112605d57602060405160048152f35b90508160031936011260a15780600a60209252f35b5080fdfea2646970667358221220253b06b8f84e8b266da82bf1ac164fce8e4ddc36b01c4d9dcc60329f5e83285864736f6c63430008130033",
     "sourceMap": "186:2075:57:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;361:2;186:2075;;;;;;;;;;;;;;;;;;;313:1;186:2075;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;480:2;186:2075;;;;;;;",
     "linkReferences": {}
   },
@@ -74,7 +74,7 @@
     "PAYLOAD_HASH_LEN()": "cf8e4a6e",
     "SECP256K1()": "ab528f21"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"NotDelegatedEvmAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DELEGATED\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EAM_ACTOR\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PAYLOAD_HASH_LEN\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SECP256K1\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Helper library for Fil Address\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"DELEGATED()\":{\"notice\":\"For delegated FIL address\"},\"SECP256K1()\":{\"notice\":\"f1: SECP256K1 key address, 20 byte hash of PublicKey.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/FvmAddressHelper.sol\":\"FvmAddressHelper\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"src/lib/FvmAddressHelper.sol\":{\"keccak256\":\"0x2ffadbf7e4247b489386e96d0af302cb633f376a160d4d6de2188aef69c443d8\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6a148fb5ace9772aa8049427466a07a9e2eed71b11a4cda3721cdbb91039e12\",\"dweb:/ipfs/QmUmxKwVMMqejELpFoMqeFJpRL6fmVmn76EXPXvJhSwQMp\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"NotDelegatedEvmAddress\",\"type\":\"error\"},{\"inputs\":[],\"name\":\"DELEGATED\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"EAM_ACTOR\",\"outputs\":[{\"internalType\":\"uint64\",\"name\":\"\",\"type\":\"uint64\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"PAYLOAD_HASH_LEN\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"name\":\"SECP256K1\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"view\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"title\":\"Helper library for Fil Address\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{\"DELEGATED()\":{\"notice\":\"For delegated FIL address\"},\"SECP256K1()\":{\"notice\":\"f1: SECP256K1 key address, 20 byte hash of PublicKey.\"}},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/FvmAddressHelper.sol\":\"FvmAddressHelper\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":sol-explore/=node_modules/sol-explore/\"],\"viaIR\":true},\"sources\":{\"src/lib/FvmAddressHelper.sol\":{\"keccak256\":\"0x2ffadbf7e4247b489386e96d0af302cb633f376a160d4d6de2188aef69c443d8\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6a148fb5ace9772aa8049427466a07a9e2eed71b11a4cda3721cdbb91039e12\",\"dweb:/ipfs/QmUmxKwVMMqejELpFoMqeFJpRL6fmVmn76EXPXvJhSwQMp\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -160,14 +160,18 @@
     },
     "settings": {
       "remappings": [
+        "@openzeppelin/=node_modules/@openzeppelin/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
         "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
         "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
         "fevmate/=lib/fevmate/contracts/",
         "forge-std/=lib/forge-std/src/",
+        "hardhat-deploy/=node_modules/hardhat-deploy/",
+        "hardhat/=node_modules/hardhat/",
         "murky/=lib/murky/src/",
         "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
-        "openzeppelin/=lib/openzeppelin-contracts/contracts/"
+        "openzeppelin/=lib/openzeppelin-contracts/contracts/",
+        "sol-explore/=node_modules/sol-explore/"
       ],
       "optimizer": {
         "enabled": true,
@@ -204,23 +208,23 @@
   },
   "ast": {
     "absolutePath": "src/lib/FvmAddressHelper.sol",
-    "id": 40143,
+    "id": 40287,
     "exportedSymbols": {
       "DelegatedAddress": [
-        46877
+        47021
       ],
       "FvmAddress": [
-        46870
+        47014
       ],
       "FvmAddressHelper": [
-        40142
+        40286
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:2216:57",
     "nodes": [
       {
-        "id": 39963,
+        "id": 40107,
         "nodeType": "PragmaDirective",
         "src": "46:23:57",
         "nodes": [],
@@ -231,23 +235,23 @@
         ]
       },
       {
-        "id": 39966,
+        "id": 40110,
         "nodeType": "ImportDirective",
         "src": "71:71:57",
         "nodes": [],
         "absolutePath": "src/structs/FvmAddress.sol",
         "file": "../structs/FvmAddress.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 40143,
-        "sourceUnit": 46878,
+        "scope": 40287,
+        "sourceUnit": 47022,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 39964,
+              "id": 40108,
               "name": "FvmAddress",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 46870,
+              "referencedDeclaration": 47014,
               "src": "79:10:57",
               "typeDescriptions": {}
             },
@@ -255,11 +259,11 @@
           },
           {
             "foreign": {
-              "id": 39965,
+              "id": 40109,
               "name": "DelegatedAddress",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 46877,
+              "referencedDeclaration": 47021,
               "src": "91:16:57",
               "typeDescriptions": {}
             },
@@ -269,18 +273,18 @@
         "unitAlias": ""
       },
       {
-        "id": 40142,
+        "id": 40286,
         "nodeType": "ContractDefinition",
         "src": "186:2075:57",
         "nodes": [
           {
-            "id": 39971,
+            "id": 40115,
             "nodeType": "VariableDeclaration",
             "src": "279:35:57",
             "nodes": [],
             "constant": true,
             "documentation": {
-              "id": 39968,
+              "id": 40112,
               "nodeType": "StructuredDocumentation",
               "src": "217:57:57",
               "text": "f1: SECP256K1 key address, 20 byte hash of PublicKey."
@@ -289,7 +293,7 @@
             "mutability": "constant",
             "name": "SECP256K1",
             "nameLocation": "301:9:57",
-            "scope": 40142,
+            "scope": 40286,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -297,7 +301,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 39969,
+              "id": 40113,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "279:5:57",
@@ -308,7 +312,7 @@
             },
             "value": {
               "hexValue": "31",
-              "id": 39970,
+              "id": 40114,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -325,7 +329,7 @@
             "visibility": "public"
           },
           {
-            "id": 39974,
+            "id": 40118,
             "nodeType": "VariableDeclaration",
             "src": "320:43:57",
             "nodes": [],
@@ -334,7 +338,7 @@
             "mutability": "constant",
             "name": "PAYLOAD_HASH_LEN",
             "nameLocation": "342:16:57",
-            "scope": 40142,
+            "scope": 40286,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -342,7 +346,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 39972,
+              "id": 40116,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "320:5:57",
@@ -353,7 +357,7 @@
             },
             "value": {
               "hexValue": "3230",
-              "id": 39973,
+              "id": 40117,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -370,13 +374,13 @@
             "visibility": "public"
           },
           {
-            "id": 39978,
+            "id": 40122,
             "nodeType": "VariableDeclaration",
             "src": "404:35:57",
             "nodes": [],
             "constant": true,
             "documentation": {
-              "id": 39975,
+              "id": 40119,
               "nodeType": "StructuredDocumentation",
               "src": "370:29:57",
               "text": "For delegated FIL address"
@@ -385,7 +389,7 @@
             "mutability": "constant",
             "name": "DELEGATED",
             "nameLocation": "426:9:57",
-            "scope": 40142,
+            "scope": 40286,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -393,7 +397,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 39976,
+              "id": 40120,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "404:5:57",
@@ -404,7 +408,7 @@
             },
             "value": {
               "hexValue": "34",
-              "id": 39977,
+              "id": 40121,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -421,7 +425,7 @@
             "visibility": "public"
           },
           {
-            "id": 39981,
+            "id": 40125,
             "nodeType": "VariableDeclaration",
             "src": "445:37:57",
             "nodes": [],
@@ -430,7 +434,7 @@
             "mutability": "constant",
             "name": "EAM_ACTOR",
             "nameLocation": "468:9:57",
-            "scope": 40142,
+            "scope": 40286,
             "stateVariable": true,
             "storageLocation": "default",
             "typeDescriptions": {
@@ -438,7 +442,7 @@
               "typeString": "uint64"
             },
             "typeName": {
-              "id": 39979,
+              "id": 40123,
               "name": "uint64",
               "nodeType": "ElementaryTypeName",
               "src": "445:6:57",
@@ -449,7 +453,7 @@
             },
             "value": {
               "hexValue": "3130",
-              "id": 39980,
+              "id": 40124,
               "isConstant": false,
               "isLValue": false,
               "isPure": true,
@@ -466,7 +470,7 @@
             "visibility": "public"
           },
           {
-            "id": 39983,
+            "id": 40127,
             "nodeType": "ErrorDefinition",
             "src": "489:31:57",
             "nodes": [],
@@ -474,36 +478,36 @@
             "name": "NotDelegatedEvmAddress",
             "nameLocation": "495:22:57",
             "parameters": {
-              "id": 39982,
+              "id": 40126,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "517:2:57"
             }
           },
           {
-            "id": 40014,
+            "id": 40158,
             "nodeType": "FunctionDefinition",
             "src": "581:314:57",
             "nodes": [],
             "body": {
-              "id": 40013,
+              "id": 40157,
               "nodeType": "Block",
               "src": "662:233:57",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    39993
+                    40137
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 39993,
+                      "id": 40137,
                       "mutability": "mutable",
                       "name": "payload",
                       "nameLocation": "685:7:57",
                       "nodeType": "VariableDeclaration",
-                      "scope": 40013,
+                      "scope": 40157,
                       "src": "672:20:57",
                       "stateVariable": false,
                       "storageLocation": "memory",
@@ -512,7 +516,7 @@
                         "typeString": "bytes"
                       },
                       "typeName": {
-                        "id": 39992,
+                        "id": 40136,
                         "name": "bytes",
                         "nodeType": "ElementaryTypeName",
                         "src": "672:5:57",
@@ -524,17 +528,17 @@
                       "visibility": "internal"
                     }
                   ],
-                  "id": 40005,
+                  "id": 40149,
                   "initialValue": {
                     "arguments": [
                       {
                         "arguments": [
                           {
-                            "id": 39997,
+                            "id": 40141,
                             "name": "EAM_ACTOR",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 39981,
+                            "referencedDeclaration": 40125,
                             "src": "748:9:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_uint64",
@@ -543,7 +547,7 @@
                           },
                           {
                             "hexValue": "3230",
-                            "id": 39998,
+                            "id": 40142,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": true,
@@ -560,11 +564,11 @@
                           {
                             "arguments": [
                               {
-                                "id": 40001,
+                                "id": 40145,
                                 "name": "addr",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
-                                "referencedDeclaration": 39986,
+                                "referencedDeclaration": 40130,
                                 "src": "796:4:57",
                                 "typeDescriptions": {
                                   "typeIdentifier": "t_address",
@@ -580,7 +584,7 @@
                                 }
                               ],
                               "expression": {
-                                "id": 39999,
+                                "id": 40143,
                                 "name": "abi",
                                 "nodeType": "Identifier",
                                 "overloadedDeclarations": [],
@@ -591,7 +595,7 @@
                                   "typeString": "abi"
                                 }
                               },
-                              "id": 40000,
+                              "id": 40144,
                               "isConstant": false,
                               "isLValue": false,
                               "isPure": true,
@@ -605,7 +609,7 @@
                                 "typeString": "function () pure returns (bytes memory)"
                               }
                             },
-                            "id": 40002,
+                            "id": 40146,
                             "isConstant": false,
                             "isLValue": false,
                             "isPure": false,
@@ -637,18 +641,18 @@
                               "typeString": "bytes memory"
                             }
                           ],
-                          "id": 39996,
+                          "id": 40140,
                           "name": "DelegatedAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 46877,
+                          "referencedDeclaration": 47021,
                           "src": "719:16:57",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46877_storage_ptr_$",
+                            "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47021_storage_ptr_$",
                             "typeString": "type(struct DelegatedAddress storage pointer)"
                           }
                         },
-                        "id": 40003,
+                        "id": 40147,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -668,7 +672,7 @@
                         "src": "719:84:57",
                         "tryCall": false,
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       }
@@ -676,12 +680,12 @@
                     "expression": {
                       "argumentTypes": [
                         {
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       ],
                       "expression": {
-                        "id": 39994,
+                        "id": 40138,
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -692,7 +696,7 @@
                           "typeString": "abi"
                         }
                       },
-                      "id": 39995,
+                      "id": 40139,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -706,7 +710,7 @@
                         "typeString": "function () pure returns (bytes memory)"
                       }
                     },
-                    "id": 40004,
+                    "id": 40148,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -727,20 +731,20 @@
                 },
                 {
                   "expression": {
-                    "id": 40011,
+                    "id": 40155,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 40006,
+                      "id": 40150,
                       "name": "fvmAddress",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 39990,
+                      "referencedDeclaration": 40134,
                       "src": "824:10:57",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                        "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                         "typeString": "struct FvmAddress memory"
                       }
                     },
@@ -749,11 +753,11 @@
                     "rightHandSide": {
                       "arguments": [
                         {
-                          "id": 40008,
+                          "id": 40152,
                           "name": "DELEGATED",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 39978,
+                          "referencedDeclaration": 40122,
                           "src": "859:9:57",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint8",
@@ -761,11 +765,11 @@
                           }
                         },
                         {
-                          "id": 40009,
+                          "id": 40153,
                           "name": "payload",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 39993,
+                          "referencedDeclaration": 40137,
                           "src": "879:7:57",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes_memory_ptr",
@@ -784,18 +788,18 @@
                             "typeString": "bytes memory"
                           }
                         ],
-                        "id": 40007,
+                        "id": 40151,
                         "name": "FvmAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 46870,
+                        "referencedDeclaration": 47014,
                         "src": "837:10:57",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_FvmAddress_$46870_storage_ptr_$",
+                          "typeIdentifier": "t_type$_t_struct$_FvmAddress_$47014_storage_ptr_$",
                           "typeString": "type(struct FvmAddress storage pointer)"
                         }
                       },
-                      "id": 40010,
+                      "id": 40154,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -813,24 +817,24 @@
                       "src": "837:51:57",
                       "tryCall": false,
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                        "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                         "typeString": "struct FvmAddress memory"
                       }
                     },
                     "src": "824:64:57",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                      "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                       "typeString": "struct FvmAddress memory"
                     }
                   },
-                  "id": 40012,
+                  "id": 40156,
                   "nodeType": "ExpressionStatement",
                   "src": "824:64:57"
                 }
               ]
             },
             "documentation": {
-              "id": 39984,
+              "id": 40128,
               "nodeType": "StructuredDocumentation",
               "src": "526:50:57",
               "text": "@notice Creates a FvmAddress from address type"
@@ -841,17 +845,17 @@
             "name": "from",
             "nameLocation": "590:4:57",
             "parameters": {
-              "id": 39987,
+              "id": 40131,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39986,
+                  "id": 40130,
                   "mutability": "mutable",
                   "name": "addr",
                   "nameLocation": "603:4:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40014,
+                  "scope": 40158,
                   "src": "595:12:57",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -860,7 +864,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 39985,
+                    "id": 40129,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "595:7:57",
@@ -876,41 +880,41 @@
               "src": "594:14:57"
             },
             "returnParameters": {
-              "id": 39991,
+              "id": 40135,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 39990,
+                  "id": 40134,
                   "mutability": "mutable",
                   "name": "fvmAddress",
                   "nameLocation": "650:10:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40014,
+                  "scope": 40158,
                   "src": "632:28:57",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                    "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
-                    "id": 39989,
+                    "id": 40133,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 39988,
+                      "id": 40132,
                       "name": "FvmAddress",
                       "nameLocations": [
                         "632:10:57"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46870,
+                      "referencedDeclaration": 47014,
                       "src": "632:10:57"
                     },
-                    "referencedDeclaration": 46870,
+                    "referencedDeclaration": 47014,
                     "src": "632:10:57",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$46870_storage_ptr",
+                      "typeIdentifier": "t_struct$_FvmAddress_$47014_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -919,18 +923,18 @@
               ],
               "src": "631:30:57"
             },
-            "scope": 40142,
+            "scope": 40286,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 40031,
+            "id": 40175,
             "nodeType": "FunctionDefinition",
             "src": "953:135:57",
             "nodes": [],
             "body": {
-              "id": 40030,
+              "id": 40174,
               "nodeType": "Block",
               "src": "1031:57:57",
               "nodes": [],
@@ -941,14 +945,14 @@
                       {
                         "arguments": [
                           {
-                            "id": 40026,
+                            "id": 40170,
                             "name": "fvmAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 40018,
+                            "referencedDeclaration": 40162,
                             "src": "1069:10:57",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                              "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           }
@@ -956,12 +960,12 @@
                         "expression": {
                           "argumentTypes": [
                             {
-                              "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                              "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           ],
                           "expression": {
-                            "id": 40024,
+                            "id": 40168,
                             "name": "abi",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -972,7 +976,7 @@
                               "typeString": "abi"
                             }
                           },
-                          "id": 40025,
+                          "id": 40169,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -986,7 +990,7 @@
                             "typeString": "function () pure returns (bytes memory)"
                           }
                         },
-                        "id": 40027,
+                        "id": 40171,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1010,7 +1014,7 @@
                           "typeString": "bytes memory"
                         }
                       ],
-                      "id": 40023,
+                      "id": 40167,
                       "name": "keccak256",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
@@ -1021,7 +1025,7 @@
                         "typeString": "function (bytes memory) pure returns (bytes32)"
                       }
                     },
-                    "id": 40028,
+                    "id": 40172,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1037,15 +1041,15 @@
                       "typeString": "bytes32"
                     }
                   },
-                  "functionReturnParameters": 40022,
-                  "id": 40029,
+                  "functionReturnParameters": 40166,
+                  "id": 40173,
                   "nodeType": "Return",
                   "src": "1041:40:57"
                 }
               ]
             },
             "documentation": {
-              "id": 40015,
+              "id": 40159,
               "nodeType": "StructuredDocumentation",
               "src": "901:47:57",
               "text": "@notice Obtains the hash of the fvm address"
@@ -1056,41 +1060,41 @@
             "name": "toHash",
             "nameLocation": "962:6:57",
             "parameters": {
-              "id": 40019,
+              "id": 40163,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40018,
+                  "id": 40162,
                   "mutability": "mutable",
                   "name": "fvmAddress",
                   "nameLocation": "987:10:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40031,
+                  "scope": 40175,
                   "src": "969:28:57",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                    "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
-                    "id": 40017,
+                    "id": 40161,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 40016,
+                      "id": 40160,
                       "name": "FvmAddress",
                       "nameLocations": [
                         "969:10:57"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46870,
+                      "referencedDeclaration": 47014,
                       "src": "969:10:57"
                     },
-                    "referencedDeclaration": 46870,
+                    "referencedDeclaration": 47014,
                     "src": "969:10:57",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$46870_storage_ptr",
+                      "typeIdentifier": "t_struct$_FvmAddress_$47014_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -1100,17 +1104,17 @@
               "src": "968:30:57"
             },
             "returnParameters": {
-              "id": 40022,
+              "id": 40166,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40021,
+                  "id": 40165,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40031,
+                  "scope": 40175,
                   "src": "1022:7:57",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1119,7 +1123,7 @@
                     "typeString": "bytes32"
                   },
                   "typeName": {
-                    "id": 40020,
+                    "id": 40164,
                     "name": "bytes32",
                     "nodeType": "ElementaryTypeName",
                     "src": "1022:7:57",
@@ -1133,18 +1137,18 @@
               ],
               "src": "1021:9:57"
             },
-            "scope": 40142,
+            "scope": 40286,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 40068,
+            "id": 40212,
             "nodeType": "FunctionDefinition",
             "src": "1148:258:57",
             "nodes": [],
             "body": {
-              "id": 40067,
+              "id": 40211,
               "nodeType": "Block",
               "src": "1234:172:57",
               "nodes": [],
@@ -1155,7 +1159,7 @@
                       "typeIdentifier": "t_bool",
                       "typeString": "bool"
                     },
-                    "id": 40065,
+                    "id": 40209,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1165,7 +1169,7 @@
                         "typeIdentifier": "t_bool",
                         "typeString": "bool"
                       },
-                      "id": 40055,
+                      "id": 40199,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1175,25 +1179,25 @@
                           "typeIdentifier": "t_uint8",
                           "typeString": "uint8"
                         },
-                        "id": 40047,
+                        "id": 40191,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
                           "expression": {
-                            "id": 40043,
+                            "id": 40187,
                             "name": "a",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 40035,
+                            "referencedDeclaration": 40179,
                             "src": "1263:1:57",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                              "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           },
-                          "id": 40044,
+                          "id": 40188,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -1201,7 +1205,7 @@
                           "memberLocation": "1265:8:57",
                           "memberName": "addrType",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 46867,
+                          "referencedDeclaration": 47011,
                           "src": "1263:10:57",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint8",
@@ -1212,18 +1216,18 @@
                         "operator": "==",
                         "rightExpression": {
                           "expression": {
-                            "id": 40045,
+                            "id": 40189,
                             "name": "b",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 40038,
+                            "referencedDeclaration": 40182,
                             "src": "1277:1:57",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                              "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                               "typeString": "struct FvmAddress memory"
                             }
                           },
-                          "id": 40046,
+                          "id": 40190,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -1231,7 +1235,7 @@
                           "memberLocation": "1279:8:57",
                           "memberName": "addrType",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 46867,
+                          "referencedDeclaration": 47011,
                           "src": "1277:10:57",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint8",
@@ -1251,7 +1255,7 @@
                           "typeIdentifier": "t_uint256",
                           "typeString": "uint256"
                         },
-                        "id": 40054,
+                        "id": 40198,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1259,18 +1263,18 @@
                         "leftExpression": {
                           "expression": {
                             "expression": {
-                              "id": 40048,
+                              "id": 40192,
                               "name": "a",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 40035,
+                              "referencedDeclaration": 40179,
                               "src": "1303:1:57",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                                "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
-                            "id": 40049,
+                            "id": 40193,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -1278,14 +1282,14 @@
                             "memberLocation": "1305:7:57",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 46869,
+                            "referencedDeclaration": 47013,
                             "src": "1303:9:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
                               "typeString": "bytes memory"
                             }
                           },
-                          "id": 40050,
+                          "id": 40194,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1304,18 +1308,18 @@
                         "rightExpression": {
                           "expression": {
                             "expression": {
-                              "id": 40051,
+                              "id": 40195,
                               "name": "b",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 40038,
+                              "referencedDeclaration": 40182,
                               "src": "1323:1:57",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                                "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
-                            "id": 40052,
+                            "id": 40196,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -1323,14 +1327,14 @@
                             "memberLocation": "1325:7:57",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 46869,
+                            "referencedDeclaration": 47013,
                             "src": "1323:9:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
                               "typeString": "bytes memory"
                             }
                           },
-                          "id": 40053,
+                          "id": 40197,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1363,7 +1367,7 @@
                         "typeIdentifier": "t_bytes32",
                         "typeString": "bytes32"
                       },
-                      "id": 40064,
+                      "id": 40208,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1372,18 +1376,18 @@
                         "arguments": [
                           {
                             "expression": {
-                              "id": 40057,
+                              "id": 40201,
                               "name": "a",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 40035,
+                              "referencedDeclaration": 40179,
                               "src": "1365:1:57",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                                "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
-                            "id": 40058,
+                            "id": 40202,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -1391,7 +1395,7 @@
                             "memberLocation": "1367:7:57",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 46869,
+                            "referencedDeclaration": 47013,
                             "src": "1365:9:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
@@ -1406,7 +1410,7 @@
                               "typeString": "bytes memory"
                             }
                           ],
-                          "id": 40056,
+                          "id": 40200,
                           "name": "keccak256",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -1417,7 +1421,7 @@
                             "typeString": "function (bytes memory) pure returns (bytes32)"
                           }
                         },
-                        "id": 40059,
+                        "id": 40203,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1439,18 +1443,18 @@
                         "arguments": [
                           {
                             "expression": {
-                              "id": 40061,
+                              "id": 40205,
                               "name": "b",
                               "nodeType": "Identifier",
                               "overloadedDeclarations": [],
-                              "referencedDeclaration": 40038,
+                              "referencedDeclaration": 40182,
                               "src": "1389:1:57",
                               "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                                "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                                 "typeString": "struct FvmAddress memory"
                               }
                             },
-                            "id": 40062,
+                            "id": 40206,
                             "isConstant": false,
                             "isLValue": true,
                             "isPure": false,
@@ -1458,7 +1462,7 @@
                             "memberLocation": "1391:7:57",
                             "memberName": "payload",
                             "nodeType": "MemberAccess",
-                            "referencedDeclaration": 46869,
+                            "referencedDeclaration": 47013,
                             "src": "1389:9:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_bytes_memory_ptr",
@@ -1473,7 +1477,7 @@
                               "typeString": "bytes memory"
                             }
                           ],
-                          "id": 40060,
+                          "id": 40204,
                           "name": "keccak256",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
@@ -1484,7 +1488,7 @@
                             "typeString": "function (bytes memory) pure returns (bytes32)"
                           }
                         },
-                        "id": 40063,
+                        "id": 40207,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
@@ -1512,15 +1516,15 @@
                       "typeString": "bool"
                     }
                   },
-                  "functionReturnParameters": 40042,
-                  "id": 40066,
+                  "functionReturnParameters": 40186,
+                  "id": 40210,
                   "nodeType": "Return",
                   "src": "1244:155:57"
                 }
               ]
             },
             "documentation": {
-              "id": 40032,
+              "id": 40176,
               "nodeType": "StructuredDocumentation",
               "src": "1094:49:57",
               "text": "@notice Checks if two fvm addresses are equal"
@@ -1531,41 +1535,41 @@
             "name": "equal",
             "nameLocation": "1157:5:57",
             "parameters": {
-              "id": 40039,
+              "id": 40183,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40035,
+                  "id": 40179,
                   "mutability": "mutable",
                   "name": "a",
                   "nameLocation": "1181:1:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40068,
+                  "scope": 40212,
                   "src": "1163:19:57",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                    "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
-                    "id": 40034,
+                    "id": 40178,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 40033,
+                      "id": 40177,
                       "name": "FvmAddress",
                       "nameLocations": [
                         "1163:10:57"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46870,
+                      "referencedDeclaration": 47014,
                       "src": "1163:10:57"
                     },
-                    "referencedDeclaration": 46870,
+                    "referencedDeclaration": 47014,
                     "src": "1163:10:57",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$46870_storage_ptr",
+                      "typeIdentifier": "t_struct$_FvmAddress_$47014_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -1573,36 +1577,36 @@
                 },
                 {
                   "constant": false,
-                  "id": 40038,
+                  "id": 40182,
                   "mutability": "mutable",
                   "name": "b",
                   "nameLocation": "1202:1:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40068,
+                  "scope": 40212,
                   "src": "1184:19:57",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                    "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
-                    "id": 40037,
+                    "id": 40181,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 40036,
+                      "id": 40180,
                       "name": "FvmAddress",
                       "nameLocations": [
                         "1184:10:57"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46870,
+                      "referencedDeclaration": 47014,
                       "src": "1184:10:57"
                     },
-                    "referencedDeclaration": 46870,
+                    "referencedDeclaration": 47014,
                     "src": "1184:10:57",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$46870_storage_ptr",
+                      "typeIdentifier": "t_struct$_FvmAddress_$47014_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -1612,17 +1616,17 @@
               "src": "1162:42:57"
             },
             "returnParameters": {
-              "id": 40042,
+              "id": 40186,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40041,
+                  "id": 40185,
                   "mutability": "mutable",
                   "name": "",
                   "nameLocation": "-1:-1:-1",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40068,
+                  "scope": 40212,
                   "src": "1228:4:57",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1631,7 +1635,7 @@
                     "typeString": "bool"
                   },
                   "typeName": {
-                    "id": 40040,
+                    "id": 40184,
                     "name": "bool",
                     "nodeType": "ElementaryTypeName",
                     "src": "1228:4:57",
@@ -1645,18 +1649,18 @@
               ],
               "src": "1227:6:57"
             },
-            "scope": 40142,
+            "scope": 40286,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 40132,
+            "id": 40276,
             "nodeType": "FunctionDefinition",
             "src": "1412:649:57",
             "nodes": [],
             "body": {
-              "id": 40131,
+              "id": 40275,
               "nodeType": "Block",
               "src": "1506:555:57",
               "nodes": [],
@@ -1667,25 +1671,25 @@
                       "typeIdentifier": "t_uint8",
                       "typeString": "uint8"
                     },
-                    "id": 40079,
+                    "id": 40223,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
-                        "id": 40076,
+                        "id": 40220,
                         "name": "fvmAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 40071,
+                        "referencedDeclaration": 40215,
                         "src": "1520:10:57",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                          "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                           "typeString": "struct FvmAddress memory"
                         }
                       },
-                      "id": 40077,
+                      "id": 40221,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -1693,7 +1697,7 @@
                       "memberLocation": "1531:8:57",
                       "memberName": "addrType",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46867,
+                      "referencedDeclaration": 47011,
                       "src": "1520:19:57",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint8",
@@ -1703,11 +1707,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": "!=",
                     "rightExpression": {
-                      "id": 40078,
+                      "id": 40222,
                       "name": "DELEGATED",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 39978,
+                      "referencedDeclaration": 40122,
                       "src": "1543:9:57",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint8",
@@ -1720,11 +1724,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 40084,
+                  "id": 40228,
                   "nodeType": "IfStatement",
                   "src": "1516:94:57",
                   "trueBody": {
-                    "id": 40083,
+                    "id": 40227,
                     "nodeType": "Block",
                     "src": "1554:56:57",
                     "statements": [
@@ -1733,18 +1737,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 40080,
+                            "id": 40224,
                             "name": "NotDelegatedEvmAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 39983,
+                            "referencedDeclaration": 40127,
                             "src": "1575:22:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_error_pure$__$returns$__$",
                               "typeString": "function () pure"
                             }
                           },
-                          "id": 40081,
+                          "id": 40225,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -1760,7 +1764,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 40082,
+                        "id": 40226,
                         "nodeType": "RevertStatement",
                         "src": "1568:31:57"
                       }
@@ -1769,64 +1773,64 @@
                 },
                 {
                   "assignments": [
-                    40087
+                    40231
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 40087,
+                      "id": 40231,
                       "mutability": "mutable",
                       "name": "delegated",
                       "nameLocation": "1644:9:57",
                       "nodeType": "VariableDeclaration",
-                      "scope": 40131,
+                      "scope": 40275,
                       "src": "1620:33:57",
                       "stateVariable": false,
                       "storageLocation": "memory",
                       "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                        "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                         "typeString": "struct DelegatedAddress"
                       },
                       "typeName": {
-                        "id": 40086,
+                        "id": 40230,
                         "nodeType": "UserDefinedTypeName",
                         "pathNode": {
-                          "id": 40085,
+                          "id": 40229,
                           "name": "DelegatedAddress",
                           "nameLocations": [
                             "1620:16:57"
                           ],
                           "nodeType": "IdentifierPath",
-                          "referencedDeclaration": 46877,
+                          "referencedDeclaration": 47021,
                           "src": "1620:16:57"
                         },
-                        "referencedDeclaration": 46877,
+                        "referencedDeclaration": 47021,
                         "src": "1620:16:57",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46877_storage_ptr",
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$47021_storage_ptr",
                           "typeString": "struct DelegatedAddress"
                         }
                       },
                       "visibility": "internal"
                     }
                   ],
-                  "id": 40095,
+                  "id": 40239,
                   "initialValue": {
                     "arguments": [
                       {
                         "expression": {
-                          "id": 40090,
+                          "id": 40234,
                           "name": "fvmAddress",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 40071,
+                          "referencedDeclaration": 40215,
                           "src": "1667:10:57",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                            "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                             "typeString": "struct FvmAddress memory"
                           }
                         },
-                        "id": 40091,
+                        "id": 40235,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -1834,7 +1838,7 @@
                         "memberLocation": "1678:7:57",
                         "memberName": "payload",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46869,
+                        "referencedDeclaration": 47013,
                         "src": "1667:18:57",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
@@ -1844,19 +1848,19 @@
                       {
                         "components": [
                           {
-                            "id": 40092,
+                            "id": 40236,
                             "name": "DelegatedAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 46877,
+                            "referencedDeclaration": 47021,
                             "src": "1688:16:57",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46877_storage_ptr_$",
+                              "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47021_storage_ptr_$",
                               "typeString": "type(struct DelegatedAddress storage pointer)"
                             }
                           }
                         ],
-                        "id": 40093,
+                        "id": 40237,
                         "isConstant": false,
                         "isInlineArray": false,
                         "isLValue": false,
@@ -1865,7 +1869,7 @@
                         "nodeType": "TupleExpression",
                         "src": "1687:18:57",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46877_storage_ptr_$",
+                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47021_storage_ptr_$",
                           "typeString": "type(struct DelegatedAddress storage pointer)"
                         }
                       }
@@ -1877,12 +1881,12 @@
                           "typeString": "bytes memory"
                         },
                         {
-                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$46877_storage_ptr_$",
+                          "typeIdentifier": "t_type$_t_struct$_DelegatedAddress_$47021_storage_ptr_$",
                           "typeString": "type(struct DelegatedAddress storage pointer)"
                         }
                       ],
                       "expression": {
-                        "id": 40088,
+                        "id": 40232,
                         "name": "abi",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
@@ -1893,7 +1897,7 @@
                           "typeString": "abi"
                         }
                       },
-                      "id": 40089,
+                      "id": 40233,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -1907,7 +1911,7 @@
                         "typeString": "function () pure"
                       }
                     },
-                    "id": 40094,
+                    "id": 40238,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1919,7 +1923,7 @@
                     "src": "1656:50:57",
                     "tryCall": false,
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                      "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                       "typeString": "struct DelegatedAddress memory"
                     }
                   },
@@ -1932,25 +1936,25 @@
                       "typeIdentifier": "t_uint64",
                       "typeString": "uint64"
                     },
-                    "id": 40099,
+                    "id": 40243,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
-                        "id": 40096,
+                        "id": 40240,
                         "name": "delegated",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 40087,
+                        "referencedDeclaration": 40231,
                         "src": "1721:9:57",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       },
-                      "id": 40097,
+                      "id": 40241,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -1958,7 +1962,7 @@
                       "memberLocation": "1731:9:57",
                       "memberName": "namespace",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46872,
+                      "referencedDeclaration": 47016,
                       "src": "1721:19:57",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
@@ -1968,11 +1972,11 @@
                     "nodeType": "BinaryOperation",
                     "operator": "!=",
                     "rightExpression": {
-                      "id": 40098,
+                      "id": 40242,
                       "name": "EAM_ACTOR",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 39981,
+                      "referencedDeclaration": 40125,
                       "src": "1744:9:57",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint64",
@@ -1985,11 +1989,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 40104,
+                  "id": 40248,
                   "nodeType": "IfStatement",
                   "src": "1717:94:57",
                   "trueBody": {
-                    "id": 40103,
+                    "id": 40247,
                     "nodeType": "Block",
                     "src": "1755:56:57",
                     "statements": [
@@ -1998,18 +2002,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 40100,
+                            "id": 40244,
                             "name": "NotDelegatedEvmAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 39983,
+                            "referencedDeclaration": 40127,
                             "src": "1776:22:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_error_pure$__$returns$__$",
                               "typeString": "function () pure"
                             }
                           },
-                          "id": 40101,
+                          "id": 40245,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2025,7 +2029,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 40102,
+                        "id": 40246,
                         "nodeType": "RevertStatement",
                         "src": "1769:31:57"
                       }
@@ -2038,25 +2042,25 @@
                       "typeIdentifier": "t_uint128",
                       "typeString": "uint128"
                     },
-                    "id": 40108,
+                    "id": 40252,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftExpression": {
                       "expression": {
-                        "id": 40105,
+                        "id": 40249,
                         "name": "delegated",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 40087,
+                        "referencedDeclaration": 40231,
                         "src": "1824:9:57",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                          "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                           "typeString": "struct DelegatedAddress memory"
                         }
                       },
-                      "id": 40106,
+                      "id": 40250,
                       "isConstant": false,
                       "isLValue": true,
                       "isPure": false,
@@ -2064,7 +2068,7 @@
                       "memberLocation": "1834:6:57",
                       "memberName": "length",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 46874,
+                      "referencedDeclaration": 47018,
                       "src": "1824:16:57",
                       "typeDescriptions": {
                         "typeIdentifier": "t_uint128",
@@ -2075,7 +2079,7 @@
                     "operator": "!=",
                     "rightExpression": {
                       "hexValue": "3230",
-                      "id": 40107,
+                      "id": 40251,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2095,11 +2099,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 40113,
+                  "id": 40257,
                   "nodeType": "IfStatement",
                   "src": "1820:84:57",
                   "trueBody": {
-                    "id": 40112,
+                    "id": 40256,
                     "nodeType": "Block",
                     "src": "1848:56:57",
                     "statements": [
@@ -2108,18 +2112,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 40109,
+                            "id": 40253,
                             "name": "NotDelegatedEvmAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 39983,
+                            "referencedDeclaration": 40127,
                             "src": "1869:22:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_error_pure$__$returns$__$",
                               "typeString": "function () pure"
                             }
                           },
-                          "id": 40110,
+                          "id": 40254,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2135,7 +2139,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 40111,
+                        "id": 40255,
                         "nodeType": "RevertStatement",
                         "src": "1862:31:57"
                       }
@@ -2148,7 +2152,7 @@
                       "typeIdentifier": "t_uint256",
                       "typeString": "uint256"
                     },
-                    "id": 40118,
+                    "id": 40262,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2156,18 +2160,18 @@
                     "leftExpression": {
                       "expression": {
                         "expression": {
-                          "id": 40114,
+                          "id": 40258,
                           "name": "delegated",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 40087,
+                          "referencedDeclaration": 40231,
                           "src": "1917:9:57",
                           "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                            "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                             "typeString": "struct DelegatedAddress memory"
                           }
                         },
-                        "id": 40115,
+                        "id": 40259,
                         "isConstant": false,
                         "isLValue": true,
                         "isPure": false,
@@ -2175,14 +2179,14 @@
                         "memberLocation": "1927:6:57",
                         "memberName": "buffer",
                         "nodeType": "MemberAccess",
-                        "referencedDeclaration": 46876,
+                        "referencedDeclaration": 47020,
                         "src": "1917:16:57",
                         "typeDescriptions": {
                           "typeIdentifier": "t_bytes_memory_ptr",
                           "typeString": "bytes memory"
                         }
                       },
-                      "id": 40116,
+                      "id": 40260,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2200,7 +2204,7 @@
                     "operator": "!=",
                     "rightExpression": {
                       "hexValue": "3230",
-                      "id": 40117,
+                      "id": 40261,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": true,
@@ -2220,11 +2224,11 @@
                       "typeString": "bool"
                     }
                   },
-                  "id": 40123,
+                  "id": 40267,
                   "nodeType": "IfStatement",
                   "src": "1913:91:57",
                   "trueBody": {
-                    "id": 40122,
+                    "id": 40266,
                     "nodeType": "Block",
                     "src": "1948:56:57",
                     "statements": [
@@ -2233,18 +2237,18 @@
                           "arguments": [],
                           "expression": {
                             "argumentTypes": [],
-                            "id": 40119,
+                            "id": 40263,
                             "name": "NotDelegatedEvmAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 39983,
+                            "referencedDeclaration": 40127,
                             "src": "1969:22:57",
                             "typeDescriptions": {
                               "typeIdentifier": "t_function_error_pure$__$returns$__$",
                               "typeString": "function () pure"
                             }
                           },
-                          "id": 40120,
+                          "id": 40264,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": false,
@@ -2260,7 +2264,7 @@
                             "typeString": "tuple()"
                           }
                         },
-                        "id": 40121,
+                        "id": 40265,
                         "nodeType": "RevertStatement",
                         "src": "1962:31:57"
                       }
@@ -2269,17 +2273,17 @@
                 },
                 {
                   "expression": {
-                    "id": 40129,
+                    "id": 40273,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
                     "lValueRequested": false,
                     "leftHandSide": {
-                      "id": 40124,
+                      "id": 40268,
                       "name": "addr",
                       "nodeType": "Identifier",
                       "overloadedDeclarations": [],
-                      "referencedDeclaration": 40074,
+                      "referencedDeclaration": 40218,
                       "src": "2014:4:57",
                       "typeDescriptions": {
                         "typeIdentifier": "t_address",
@@ -2292,18 +2296,18 @@
                       "arguments": [
                         {
                           "expression": {
-                            "id": 40126,
+                            "id": 40270,
                             "name": "delegated",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 40087,
+                            "referencedDeclaration": 40231,
                             "src": "2037:9:57",
                             "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_DelegatedAddress_$46877_memory_ptr",
+                              "typeIdentifier": "t_struct$_DelegatedAddress_$47021_memory_ptr",
                               "typeString": "struct DelegatedAddress memory"
                             }
                           },
-                          "id": 40127,
+                          "id": 40271,
                           "isConstant": false,
                           "isLValue": true,
                           "isPure": false,
@@ -2311,7 +2315,7 @@
                           "memberLocation": "2047:6:57",
                           "memberName": "buffer",
                           "nodeType": "MemberAccess",
-                          "referencedDeclaration": 46876,
+                          "referencedDeclaration": 47020,
                           "src": "2037:16:57",
                           "typeDescriptions": {
                             "typeIdentifier": "t_bytes_memory_ptr",
@@ -2326,18 +2330,18 @@
                             "typeString": "bytes memory"
                           }
                         ],
-                        "id": 40125,
+                        "id": 40269,
                         "name": "_bytesToAddress",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 40141,
+                        "referencedDeclaration": 40285,
                         "src": "2021:15:57",
                         "typeDescriptions": {
                           "typeIdentifier": "t_function_internal_pure$_t_bytes_memory_ptr_$returns$_t_address_$",
                           "typeString": "function (bytes memory) pure returns (address)"
                         }
                       },
-                      "id": 40128,
+                      "id": 40272,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2359,7 +2363,7 @@
                       "typeString": "address"
                     }
                   },
-                  "id": 40130,
+                  "id": 40274,
                   "nodeType": "ExpressionStatement",
                   "src": "2014:40:57"
                 }
@@ -2371,41 +2375,41 @@
             "name": "extractEvmAddress",
             "nameLocation": "1421:17:57",
             "parameters": {
-              "id": 40072,
+              "id": 40216,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40071,
+                  "id": 40215,
                   "mutability": "mutable",
                   "name": "fvmAddress",
                   "nameLocation": "1457:10:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40132,
+                  "scope": 40276,
                   "src": "1439:28:57",
                   "stateVariable": false,
                   "storageLocation": "memory",
                   "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_FvmAddress_$46870_memory_ptr",
+                    "typeIdentifier": "t_struct$_FvmAddress_$47014_memory_ptr",
                     "typeString": "struct FvmAddress"
                   },
                   "typeName": {
-                    "id": 40070,
+                    "id": 40214,
                     "nodeType": "UserDefinedTypeName",
                     "pathNode": {
-                      "id": 40069,
+                      "id": 40213,
                       "name": "FvmAddress",
                       "nameLocations": [
                         "1439:10:57"
                       ],
                       "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46870,
+                      "referencedDeclaration": 47014,
                       "src": "1439:10:57"
                     },
-                    "referencedDeclaration": 46870,
+                    "referencedDeclaration": 47014,
                     "src": "1439:10:57",
                     "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_FvmAddress_$46870_storage_ptr",
+                      "typeIdentifier": "t_struct$_FvmAddress_$47014_storage_ptr",
                       "typeString": "struct FvmAddress"
                     }
                   },
@@ -2415,17 +2419,17 @@
               "src": "1438:30:57"
             },
             "returnParameters": {
-              "id": 40075,
+              "id": 40219,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40074,
+                  "id": 40218,
                   "mutability": "mutable",
                   "name": "addr",
                   "nameLocation": "1500:4:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40132,
+                  "scope": 40276,
                   "src": "1492:12:57",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2434,7 +2438,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 40073,
+                    "id": 40217,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "1492:7:57",
@@ -2449,18 +2453,18 @@
               ],
               "src": "1491:14:57"
             },
-            "scope": 40142,
+            "scope": 40286,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "internal"
           },
           {
-            "id": 40141,
+            "id": 40285,
             "nodeType": "FunctionDefinition",
             "src": "2067:192:57",
             "nodes": [],
             "body": {
-              "id": 40140,
+              "id": 40284,
               "nodeType": "Block",
               "src": "2146:113:57",
               "nodes": [],
@@ -2520,21 +2524,21 @@
                   "evmVersion": "paris",
                   "externalReferences": [
                     {
-                      "declaration": 40137,
+                      "declaration": 40281,
                       "isOffset": false,
                       "isSlot": false,
                       "src": "2216:4:57",
                       "valueSize": 1
                     },
                     {
-                      "declaration": 40134,
+                      "declaration": 40278,
                       "isOffset": false,
                       "isSlot": false,
                       "src": "2234:3:57",
                       "valueSize": 1
                     }
                   ],
-                  "id": 40139,
+                  "id": 40283,
                   "nodeType": "InlineAssembly",
                   "src": "2193:60:57"
                 }
@@ -2546,17 +2550,17 @@
             "name": "_bytesToAddress",
             "nameLocation": "2076:15:57",
             "parameters": {
-              "id": 40135,
+              "id": 40279,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40134,
+                  "id": 40278,
                   "mutability": "mutable",
                   "name": "bys",
                   "nameLocation": "2105:3:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40141,
+                  "scope": 40285,
                   "src": "2092:16:57",
                   "stateVariable": false,
                   "storageLocation": "memory",
@@ -2565,7 +2569,7 @@
                     "typeString": "bytes"
                   },
                   "typeName": {
-                    "id": 40133,
+                    "id": 40277,
                     "name": "bytes",
                     "nodeType": "ElementaryTypeName",
                     "src": "2092:5:57",
@@ -2580,17 +2584,17 @@
               "src": "2091:18:57"
             },
             "returnParameters": {
-              "id": 40138,
+              "id": 40282,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 40137,
+                  "id": 40281,
                   "mutability": "mutable",
                   "name": "addr",
                   "nameLocation": "2140:4:57",
                   "nodeType": "VariableDeclaration",
-                  "scope": 40141,
+                  "scope": 40285,
                   "src": "2132:12:57",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -2599,7 +2603,7 @@
                     "typeString": "address"
                   },
                   "typeName": {
-                    "id": 40136,
+                    "id": 40280,
                     "name": "address",
                     "nodeType": "ElementaryTypeName",
                     "src": "2132:7:57",
@@ -2614,7 +2618,7 @@
               ],
               "src": "2131:14:57"
             },
-            "scope": 40142,
+            "scope": 40286,
             "stateMutability": "pure",
             "virtual": false,
             "visibility": "private"
@@ -2626,20 +2630,20 @@
         "contractDependencies": [],
         "contractKind": "library",
         "documentation": {
-          "id": 39967,
+          "id": 40111,
           "nodeType": "StructuredDocumentation",
           "src": "144:42:57",
           "text": "@title Helper library for Fil Address"
         },
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          40142
+          40286
         ],
         "name": "FvmAddressHelper",
         "nameLocation": "194:16:57",
-        "scope": 40143,
+        "scope": 40287,
         "usedErrors": [
-          39983
+          40127
         ]
       }
     ],
