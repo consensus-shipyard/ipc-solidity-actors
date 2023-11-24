@@ -213,9 +213,9 @@ contract GatewayGetterFacet {
     function getCurrentBottomUpCheckpoint()
         external
         view
-        returns (bool ok, uint64 epoch, BottomUpCheckpoint memory checkpoint)
+        returns (bool exists, uint64 epoch, BottomUpCheckpoint memory checkpoint)
     {
-        (ok, epoch, checkpoint) = LibGateway.getCurrentBottomUpCheckpoint();
-        return (ok, epoch, checkpoint);
+        (exists, epoch, checkpoint) = LibGateway.getCurrentBottomUpCheckpoint();
+        return (exists, epoch, checkpoint);
     }
 }
