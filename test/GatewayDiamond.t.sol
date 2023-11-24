@@ -9,6 +9,7 @@ import {NumberContractFacetSeven, NumberContractFacetEight} from "./NumberContra
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
+import {IERC165} from "../src/interfaces/IERC165.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
 import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
@@ -66,14 +67,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     bytes4[] gwManagerSelectors;
     bytes4[] gwGetterSelectors;
     bytes4[] gwMessengerSelectors;
-    bytes4[] dcFacetSelectors;
+    bytes4[] cutFacetSelectors;
+    bytes4[] louperSelectors;
 
     GatewayDiamond gatewayDiamond;
     GatewayManagerFacet gwManager;
     GatewayGetterFacet gwGetter;
     GatewayRouterFacet gwRouter;
     GatewayMessengerFacet gwMessenger;
-    DiamondCutFacet dcFacet;
+    DiamondCutFacet cutFacet;
+    DiamondLoupeFacet louper;
 
     GatewayDiamond gatewayDiamond2;
     GatewayManagerFacet gwManager2;
@@ -86,11 +89,6 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     SubnetActorDiamond saDiamond;
     SubnetManagerTestUtil saManager;
     SubnetActorGetterFacet saGetter;
-
-    bytes4[] louperSelectors;
-    DiamondLoupeFacet louper;
-
-    bytes4[] ncGetterSelectors;
 
     uint64 private constant ROOTNET_CHAINID = 123;
     address public constant ROOTNET_ADDRESS = address(1);
@@ -105,7 +103,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
         gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
         gwMessengerSelectors = TestUtils.generateSelectors(vm, "GatewayMessengerFacet");
-        dcFacetSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
+        cutFacetSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
 
         louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
     }
@@ -115,7 +113,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwManager = new GatewayManagerFacet();
         gwGetter = new GatewayGetterFacet();
         gwMessenger = new GatewayMessengerFacet();
-        dcFacet = new DiamondCutFacet();
+        cutFacet = new DiamondCutFacet();
 
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](5);
 
@@ -153,9 +151,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         diamondCut[4] = (
             IDiamond.FacetCut({
-                facetAddress: address(dcFacet),
+                facetAddress: address(cutFacet),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: dcFacetSelectors
+                functionSelectors: cutFacetSelectors
             })
         );
 
@@ -189,7 +187,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwGetter = new GatewayGetterFacet();
         gwMessenger = new GatewayMessengerFacet();
         louper = new DiamondLoupeFacet();
-        dcFacet = new DiamondCutFacet();
+        cutFacet = new DiamondCutFacet();
 
         IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](6);
 
@@ -235,9 +233,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         gwDiamondCut[5] = (
             IDiamond.FacetCut({
-                facetAddress: address(dcFacet),
+                facetAddress: address(cutFacet),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: dcFacetSelectors
+                functionSelectors: cutFacetSelectors
             })
         );
 
@@ -324,6 +322,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_LoupeFunction() public view {
         require(louper.facets().length == 6, "unexpected length");
+        require(louper.supportsInterface(type(IERC165).interfaceId) == true, "IERC165 not supported");
+        require(louper.supportsInterface(type(IDiamondCut).interfaceId) == true, "IDiamondCut not supported");
+        require(louper.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
     }
 
     function testGatewayDiamond_DiamondCut() public {
@@ -337,7 +338,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         DiamondCutFacet gwDiamondCutter = DiamondCutFacet(address(gatewayDiamond));
         IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](1);
-        ncGetterSelectors = TestUtils.generateSelectors(vm, "NumberContractFacetSeven");
+        bytes4[] memory ncGetterSelectors = TestUtils.generateSelectors(vm, "NumberContractFacetSeven");
 
         gwDiamondCut[0] = (
             IDiamond.FacetCut({

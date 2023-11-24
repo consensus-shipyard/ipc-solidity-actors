@@ -119,7 +119,7 @@ Run `make install-dev` to install all necessary dependencies for development.
 Before committing:
 
 ```bash
-make format
+make fmt
 make lint
 make test
 make slither
@@ -131,7 +131,7 @@ make prepare
 
 Use `make storage` to check that the storage layout has not been corrupted.
 
-Use `make coverage` to get test coverage report.
+Use `make coverage` to get the test coverage report.
 
 # Bugs
 Please report any bugs using the [issue tracker](https://github.com/consensus-shipyard/ipc-solidity-actors/issues).
