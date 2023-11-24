@@ -15,19 +15,19 @@
     }
   ],
   "bytecode": {
-    "object": "0x608080604052346014576079908161001a8239f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea26469706673582212207911c177c00d97ee647b8df8d37509a541c6fa5ce5c3ffe7e0e2293aa7b58ad964736f6c63430008130033",
+    "object": "0x608080604052346014576079908161001a8239f35b600080fdfe6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea26469706673582212203bb205d87288b314d5e0ac509bd78528280e2ff25e793137316ed9993d65976264736f6c63430008130033",
     "sourceMap": "188:115:81:-:0;;;;;;;;;;;;;;;;;",
     "linkReferences": {}
   },
   "deployedBytecode": {
-    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea26469706673582212207911c177c00d97ee647b8df8d37509a541c6fa5ce5c3ffe7e0e2293aa7b58ad964736f6c63430008130033",
+    "object": "0x6080806040526004361015601257600080fd5b600090813560e01c6367e0badb14602857600080fd5b34603f5781600319360112603f5780600860209252f35b5080fdfea26469706673582212203bb205d87288b314d5e0ac509bd78528280e2ff25e793137316ed9993d65976264736f6c63430008130033",
     "sourceMap": "188:115:81:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;293:1;188:115;;;;;;;",
     "linkReferences": {}
   },
   "methodIdentifiers": {
     "getNum()": "67e0badb"
   },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getNum\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"test/NumberContract.sol\":\"NumberContractFacetEight\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":sol-explore/=node_modules/sol-explore/\"],\"viaIR\":true},\"sources\":{\"test/NumberContract.sol\":{\"keccak256\":\"0x7843a93e945fc1a86f1b7c0ee964b9220e148459cabdefe89774e7028e390b7e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://0dd3665ba5496ee7fa57386fa2fe87b669bd652bf73a28883ef716b56e42f4a5\",\"dweb:/ipfs/QmTdg91FczJijJnguNCKPCSFKXLRk5G94UXc9RcATGbsDY\"]}},\"version\":1}",
+  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[],\"name\":\"getNum\",\"outputs\":[{\"internalType\":\"uint8\",\"name\":\"\",\"type\":\"uint8\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"kind\":\"dev\",\"methods\":{},\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"test/NumberContract.sol\":\"NumberContractFacetEight\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"test/NumberContract.sol\":{\"keccak256\":\"0x7843a93e945fc1a86f1b7c0ee964b9220e148459cabdefe89774e7028e390b7e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://0dd3665ba5496ee7fa57386fa2fe87b669bd652bf73a28883ef716b56e42f4a5\",\"dweb:/ipfs/QmTdg91FczJijJnguNCKPCSFKXLRk5G94UXc9RcATGbsDY\"]}},\"version\":1}",
   "metadata": {
     "compiler": {
       "version": "0.8.19+commit.7dd6d404"
@@ -62,18 +62,14 @@
     },
     "settings": {
       "remappings": [
-        "@openzeppelin/=node_modules/@openzeppelin/",
         "ds-test/=lib/forge-std/lib/ds-test/src/",
         "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
         "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
         "fevmate/=lib/fevmate/contracts/",
         "forge-std/=lib/forge-std/src/",
-        "hardhat-deploy/=node_modules/hardhat-deploy/",
-        "hardhat/=node_modules/hardhat/",
         "murky/=lib/murky/src/",
         "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
-        "openzeppelin/=lib/openzeppelin-contracts/contracts/",
-        "sol-explore/=node_modules/sol-explore/"
+        "openzeppelin/=lib/openzeppelin-contracts/contracts/"
       ],
       "optimizer": {
         "enabled": true,
