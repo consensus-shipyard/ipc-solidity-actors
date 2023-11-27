@@ -9,7 +9,6 @@ import {Membership, Validator} from "../structs/Subnet.sol";
 import {OldConfigurationNumber, NotRegisteredSubnet, InvalidActorAddress, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
@@ -21,7 +20,6 @@ library LibGateway {
     using FvmAddressHelper for FvmAddress;
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
-    using CheckpointHelper for BottomUpCheckpoint;
 
     event MembershipUpdated(Membership);
     /// @dev subnet refers to the next "down" subnet that the `CrossMsg.message.to` should be forwarded to.

@@ -14,7 +14,6 @@ import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, Not
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
 import {NotEnoughBalance, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
-import {CheckpointHelper} from "../lib/CheckpointHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
@@ -31,7 +30,6 @@ import {Address} from "openzeppelin-contracts/utils/Address.sol";
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
     using SubnetIDHelper for SubnetID;
-    using CheckpointHelper for BottomUpCheckpoint;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
     using EnumerableSet for EnumerableSet.UintSet;
@@ -316,7 +314,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         CheckpointInfo memory info = CheckpointInfo({
-            hash: checkpoint.toHash(),
+            hash: keccak256(abi.encode(checkpoint)),
             rootHash: membershipRootHash,
             threshold: threshold,
             currentWeight: 0,
