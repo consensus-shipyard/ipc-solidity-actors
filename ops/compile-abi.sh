@@ -11,7 +11,7 @@ fi
 OUTPUT=$1
 
 echo "[*] Compiling contracts and output core contracts ABI in $OUTPUT" 
-forge build --via-ir --sizes --skip test --out=$OUTPUT
+forge build -C ./src/ --via-ir --sizes --skip test --out=$OUTPUT
 
 mkdir -p $OUTPUT
 
@@ -24,4 +24,4 @@ cp $OUTPUT/GatewayManagerFacet.sol/* $OUTPUT
 cp $OUTPUT/GatewayRouterFacet.sol/* $OUTPUT
 cp $OUTPUT/GatewayDiamond.sol/* $OUTPUT
 
-cp $OUTPUT/SubnetRegistry.sol/* $OUTPUT
+cp $OUTPUT/SubnetRegistryDiamond.sol/* $OUTPUT
