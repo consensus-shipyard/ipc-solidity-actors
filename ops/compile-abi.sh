@@ -11,7 +11,7 @@ fi
 OUTPUT=$1
 
 echo "[*] Compiling contracts and output core contracts ABI in $OUTPUT" 
-forge build -C ./src/ --via-ir --sizes --skip test --out=$OUTPUT
+forge build -C ./src/ --via-ir --sizes --skip test console TestUtils Vm Merkle --out=$OUTPUT
 
 mkdir -p $OUTPUT
 
