@@ -12,16 +12,3 @@ OUTPUT=$1
 
 echo "[*] Compiling contracts and output core contracts ABI in $OUTPUT" 
 forge build -C ./src/ --via-ir --sizes --skip test console TestUtils Vm Merkle --out=$OUTPUT
-
-mkdir -p $OUTPUT
-
-cp $OUTPUT/SubnetActorGetterFacet.sol/* $OUTPUT
-cp $OUTPUT/SubnetActorManagerFacet.sol/* $OUTPUT
-cp $OUTPUT/SubnetActorDiamond.sol/* $OUTPUT
-
-cp $OUTPUT/GatewayGetterFacet.sol/* $OUTPUT
-cp $OUTPUT/GatewayManagerFacet.sol/* $OUTPUT
-cp $OUTPUT/GatewayRouterFacet.sol/* $OUTPUT
-cp $OUTPUT/GatewayDiamond.sol/* $OUTPUT
-
-cp $OUTPUT/SubnetRegistryDiamond.sol/* $OUTPUT
