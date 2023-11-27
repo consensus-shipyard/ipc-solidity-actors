@@ -24,24 +24,4 @@ contract CheckpointHelperTest is Test {
             }).toHash() == checkpoint.toHash()
         );
     }
-
-    function test_IsEmpty_Works_BottomUpCheckpoint() public pure {
-        BottomUpCheckpoint memory ch = BottomUpCheckpoint({
-            subnetID: SubnetID(0, new address[](0)),
-            blockHeight: 0,
-            blockHash: 0,
-            nextConfigurationNumber: 0,
-            crossMessagesHash: 0
-        });
-        require(ch.isEmpty(), "not empty");
-
-        ch = BottomUpCheckpoint({
-            subnetID: SubnetID(0, new address[](0)),
-            blockHeight: 1,
-            blockHash: 0,
-            nextConfigurationNumber: 0,
-            crossMessagesHash: 0
-        });
-        require(!ch.isEmpty(), "empty");
-    }
 }
