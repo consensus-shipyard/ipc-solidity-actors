@@ -1,1385 +1,1369 @@
 {
-  "abi": [
-    {
-      "inputs": [
+    "abi": [
         {
-          "components": [
-            {
-              "components": [
+            "inputs": [
                 {
-                  "internalType": "uint64",
-                  "name": "root",
-                  "type": "uint64"
-                },
-                {
-                  "internalType": "address[]",
-                  "name": "route",
-                  "type": "address[]"
+                    "components": [
+                        {
+                            "components": [
+                                {
+                                    "internalType": "uint64",
+                                    "name": "root",
+                                    "type": "uint64"
+                                },
+                                {
+                                    "internalType": "address[]",
+                                    "name": "route",
+                                    "type": "address[]"
+                                }
+                            ],
+                            "internalType": "struct SubnetID",
+                            "name": "subnetID",
+                            "type": "tuple"
+                        },
+                        {
+                            "internalType": "uint64",
+                            "name": "blockHeight",
+                            "type": "uint64"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "blockHash",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "uint64",
+                            "name": "nextConfigurationNumber",
+                            "type": "uint64"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "crossMessagesHash",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "internalType": "struct BottomUpCheckpoint",
+                    "name": "bottomUpCheckpoint",
+                    "type": "tuple"
                 }
-              ],
-              "internalType": "struct SubnetID",
-              "name": "subnetID",
-              "type": "tuple"
-            },
-            {
-              "internalType": "uint64",
-              "name": "blockHeight",
-              "type": "uint64"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "blockHash",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "uint64",
-              "name": "nextConfigurationNumber",
-              "type": "uint64"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "crossMessagesHash",
-              "type": "bytes32"
-            }
-          ],
-          "internalType": "struct BottomUpCheckpoint",
-          "name": "bottomUpCheckpoint",
-          "type": "tuple"
-        }
-      ],
-      "name": "isEmpty",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "pure",
-      "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "components": [
-            {
-              "components": [
+            ],
+            "name": "isEmpty",
+            "outputs": [
                 {
-                  "internalType": "uint64",
-                  "name": "root",
-                  "type": "uint64"
-                },
-                {
-                  "internalType": "address[]",
-                  "name": "route",
-                  "type": "address[]"
+                    "internalType": "bool",
+                    "name": "",
+                    "type": "bool"
                 }
-              ],
-              "internalType": "struct SubnetID",
-              "name": "subnetID",
-              "type": "tuple"
-            },
-            {
-              "internalType": "uint64",
-              "name": "blockHeight",
-              "type": "uint64"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "blockHash",
-              "type": "bytes32"
-            },
-            {
-              "internalType": "uint64",
-              "name": "nextConfigurationNumber",
-              "type": "uint64"
-            },
-            {
-              "internalType": "bytes32",
-              "name": "crossMessagesHash",
-              "type": "bytes32"
-            }
-          ],
-          "internalType": "struct BottomUpCheckpoint",
-          "name": "bottomupCheckpoint",
-          "type": "tuple"
-        }
-      ],
-      "name": "toHash",
-      "outputs": [
-        {
-          "internalType": "bytes32",
-          "name": "",
-          "type": "bytes32"
-        }
-      ],
-      "stateMutability": "pure",
-      "type": "function"
-    }
-  ],
-  "bytecode": {
-    "object": "0x6080806040523461001a576103949081610020823930815050f35b600080fdfe604060808152600436101561001357600080fd5b600090813560e01c806339aa47fb146100de576345d51b121461003557600080fd5b6100466100413661017e565b610343565b81516020810181811067ffffffffffffffff8211176100ca57936020948452808252835191610074836100f4565b8183528583015283519161008783610126565b825280858301528084830152806060830152608082015282516100bf816100b187820194856102ac565b03601f198101835282610142565b519020149051908152f35b634e487b7160e01b85526041600452602485fd5b6020826100ed6100413661017e565b9051908152f35b6040810190811067ffffffffffffffff82111761011057604052565b634e487b7160e01b600052604160045260246000fd5b60a0810190811067ffffffffffffffff82111761011057604052565b90601f8019910116810190811067ffffffffffffffff82111761011057604052565b359067ffffffffffffffff8216820361017957565b600080fd5b600319919060208382018113610179576004359067ffffffffffffffff948583116101795760a081848603011261017957604051936101bc85610126565b836004013587811161017957604090850192838303011261017957604051916101e4836100f4565b6101f060048201610164565b8352602481013590888211610179570181602382011215610179576004810135978811610110578760051b906040519861022c8684018b610142565b89526024858a019282010192831161017957602401905b82821061028d57505050608493949582820152845261026460248301610164565b908401526044810135604084015261027e60648201610164565b60608401520135608082015290565b81356001600160a01b0381168103610179578152908401908401610243565b602091828252805160a0848401526101008301938067ffffffffffffffff928381511660c0870152015194604060e0860152855180915281610120860196019060005b81811061032657505050918160809260a0948301511660408601526040820151606086015260608201511682850152015191015290565b82516001600160a01b0316885296830196918301916001016102ef565b604051610358816100b16020820194856102ac565b5190209056fea2646970667358221220167032d0ea9339b2dad2f8e1a5736b1a781769814ebaab6e4970e0fb5902149964736f6c63430008130033",
-    "sourceMap": "335:775:55:-:0;;;;;;;;;;;;;;;;;;;;;",
-    "linkReferences": {}
-  },
-  "deployedBytecode": {
-    "object": "0x604060808152600436101561001357600080fd5b600090813560e01c806339aa47fb146100de576345d51b121461003557600080fd5b6100466100413661017e565b610343565b81516020810181811067ffffffffffffffff8211176100ca57936020948452808252835191610074836100f4565b8183528583015283519161008783610126565b825280858301528084830152806060830152608082015282516100bf816100b187820194856102ac565b03601f198101835282610142565b519020149051908152f35b634e487b7160e01b85526041600452602485fd5b6020826100ed6100413661017e565b9051908152f35b6040810190811067ffffffffffffffff82111761011057604052565b634e487b7160e01b600052604160045260246000fd5b60a0810190811067ffffffffffffffff82111761011057604052565b90601f8019910116810190811067ffffffffffffffff82111761011057604052565b359067ffffffffffffffff8216820361017957565b600080fd5b600319919060208382018113610179576004359067ffffffffffffffff948583116101795760a081848603011261017957604051936101bc85610126565b836004013587811161017957604090850192838303011261017957604051916101e4836100f4565b6101f060048201610164565b8352602481013590888211610179570181602382011215610179576004810135978811610110578760051b906040519861022c8684018b610142565b89526024858a019282010192831161017957602401905b82821061028d57505050608493949582820152845261026460248301610164565b908401526044810135604084015261027e60648201610164565b60608401520135608082015290565b81356001600160a01b0381168103610179578152908401908401610243565b602091828252805160a0848401526101008301938067ffffffffffffffff928381511660c0870152015194604060e0860152855180915281610120860196019060005b81811061032657505050918160809260a0948301511660408601526040820151606086015260608201511682850152015191015290565b82516001600160a01b0316885296830196918301916001016102ef565b604051610358816100b16020820194856102ac565b5190209056fea2646970667358221220167032d0ea9339b2dad2f8e1a5736b1a781769814ebaab6e4970e0fb5902149964736f6c63430008130033",
-    "sourceMap": "335:775:55:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1042:26;335:775;;;:::i;:::-;1042:26;:::i;:::-;335:775;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;533:29;;;335:775;;;;;;;:::i;:::-;;;482:259;;;;335:775;482:259;;;;335:775;482:259;;;;335:775;482:259;;;335:775;;;454:301;;;;;;;;;:::i;:::-;;335:775;;454:301;;;;;;:::i;:::-;335:775;431:334;;1042:59;335:775;;;;;;;-1:-1:-1;;;335:775:55;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;:::o;:::-;;;;;-1:-1:-1;;335:775:55;;;;;;;-1:-1:-1;335:775:55;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;:::o;:::-;;;-1:-1:-1;;;;;335:775:55;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;-1:-1:-1;;;;;335:775:55;;;;;;;;;;;;;;;772:157;335:775;;891:30;;;;;;;;;:::i;:::-;335:775;881:41;;772:157;:::o",
-    "linkReferences": {}
-  },
-  "methodIdentifiers": {
-    "isEmpty(BottomUpCheckpoint)": "45d51b12",
-    "toHash(BottomUpCheckpoint)": "39aa47fb"
-  },
-  "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"components\":[{\"internalType\":\"uint64\",\"name\":\"root\",\"type\":\"uint64\"},{\"internalType\":\"address[]\",\"name\":\"route\",\"type\":\"address[]\"}],\"internalType\":\"struct SubnetID\",\"name\":\"subnetID\",\"type\":\"tuple\"},{\"internalType\":\"uint64\",\"name\":\"blockHeight\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"},{\"internalType\":\"uint64\",\"name\":\"nextConfigurationNumber\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"crossMessagesHash\",\"type\":\"bytes32\"}],\"internalType\":\"struct BottomUpCheckpoint\",\"name\":\"bottomUpCheckpoint\",\"type\":\"tuple\"}],\"name\":\"isEmpty\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"components\":[{\"internalType\":\"uint64\",\"name\":\"root\",\"type\":\"uint64\"},{\"internalType\":\"address[]\",\"name\":\"route\",\"type\":\"address[]\"}],\"internalType\":\"struct SubnetID\",\"name\":\"subnetID\",\"type\":\"tuple\"},{\"internalType\":\"uint64\",\"name\":\"blockHeight\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"},{\"internalType\":\"uint64\",\"name\":\"nextConfigurationNumber\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"crossMessagesHash\",\"type\":\"bytes32\"}],\"internalType\":\"struct BottomUpCheckpoint\",\"name\":\"bottomupCheckpoint\",\"type\":\"tuple\"}],\"name\":\"toHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"LimeChain team\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Helper library for manipulating Checkpoint struct\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/CheckpointHelper.sol\":\"CheckpointHelper\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\"],\"viaIR\":true},\"sources\":{\"lib/fevmate/contracts/utils/FilAddress.sol\":{\"keccak256\":\"0x8707b4f152e92b852090c313419c0dc772eebf4428472a0659dd6b13dd6bee31\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://442fc3cb02e610424f0599f4cc519e4fbead47da09911697b62208a2ae51e4a7\",\"dweb:/ipfs/QmRpKJ9tWWTHgMpRB18DHJLbCT4YT9yp2G89H9mHGu5ss2\"]},\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0x67ca7745e6032aeda339ba3f5813abf9eeb4ec683520944fa878c2867aea58f1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c13ff04f87357176e2b267730f288013269eefce0862ea8f4bf3f420948eb7d5\",\"dweb:/ipfs/QmQZRjF3CdCdoUvqhrT9KXYjrjmdmFQqENtuiHTMbyt6xo\"]},\"lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol\":{\"keccak256\":\"0xeefcbb8cb69f04a18f6dc61d4811133ce9aeff96ce60820f758abc52ef55b892\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://81c61c0dd40890f6a4b1fb792bc5b5b61e821fcafa2aae6c7eda6d4f1ece2593\",\"dweb:/ipfs/QmRLMrq6BiPS9wGu7ZC174SFYWCu6cxbU3agDw2XgJeDpT\"]},\"src/constants/Constants.sol\":{\"keccak256\":\"0xe09e20d591a8c9cabf6f2e44a90029fb3b2a8cdd6c09dc4105b81781ffb44546\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://b3c4df8d0fd2aa770abf8b43a134ce0fc0bc3091f97ec02415d09cca09f4f940\",\"dweb:/ipfs/QmSUpMfWLN8WWhvLmbZymCdR48ZmpsuyvBnSPeAtdorxDx\"]},\"src/enums/ConsensusType.sol\":{\"keccak256\":\"0xc5efd8c66b57dadaba4178c4b4d087b30cb84cbac38fb288a8c3b65075a9f59d\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6fcffaa8e40322ae27958603884cc07d06e9efd59cf12764f28945b7a47e11d0\",\"dweb:/ipfs/Qmc3PBovpcvj7jgVq5GwR5SkiUXBymT1tw74mvu5ccNqoZ\"]},\"src/enums/Status.sol\":{\"keccak256\":\"0x8f5921e4df87420127988b54f67a3ccfb6fbfae767891e8ed4edbf371598e16c\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://7a81d9a00ea7a2a85cfe1b2662236412dddb55e09fa70c70a34dc4dfc5ffea33\",\"dweb:/ipfs/QmRh4uA4491B2DVjrUtdfCTTtjpoXpKEp3Zz9CBYueNW1R\"]},\"src/errors/IPCErrors.sol\":{\"keccak256\":\"0x89ee65643858f78c51c49457f6cd127c773f794bf1b70ea50bd5e59f1b48e467\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://a4e9c19f69ab5bcd7ec8ac2b058a84bff7125ebc42eb195c7d8c7094c2049dec\",\"dweb:/ipfs/QmeN67eDEQefw5PS8iXk9TDzULVqK1QNA9ajzD3Z2jqxwK\"]},\"src/interfaces/IGateway.sol\":{\"keccak256\":\"0xb4209b44c3965fd233387ece78149461bd64a47788c3af24edb7c99ea1ef8868\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://4db7a4573100063387e170c55a69772b20e403444e9d97b24cc220a71a52fbbb\",\"dweb:/ipfs/QmTYsSjmFsTwuNTXBByZKueJZLpe7RwNzLRWNPxXGA3YKB\"]},\"src/lib/AccountHelper.sol\":{\"keccak256\":\"0xd5f3c0079e3002218c63b70b43f6e018eb5d39f064b7d4321b6409c84f6a22b5\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e5857fe645e020bc964cd53a33e1fbd4fd9d0de405170a8251cc0b040519cbdc\",\"dweb:/ipfs/QmaFUeVbA1mqn7dTJMqgX4DbKx6yzBrSkmeNTcaVjBJd9z\"]},\"src/lib/CheckpointHelper.sol\":{\"keccak256\":\"0x52398dfc1f8f7bc3a224b110c47d30112486fc98676064e75fa2d22f5f85a554\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://f3a8451197c26b511d67c1e635e036b8a59a6420ef4b41712073bf6a7a6edb3f\",\"dweb:/ipfs/QmVDsdKYxkdNcgjTDmiEYb5Fq35XWkGPRh7R39e7oRnVCv\"]},\"src/lib/LibGatewayActorStorage.sol\":{\"keccak256\":\"0x4731b1de63c99bfccfa12c1c59481f27630994c8d04c0a555c6f6845f3873157\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://641337e8c2d3876ccefdb1f181c9cfeb9568f7c015f51da668d0c2dc582773d3\",\"dweb:/ipfs/QmNzgGXzXjULKJE6iYN6ioZLJvh3ykLdwt6gTjVp7gX9f6\"]},\"src/lib/LibStaking.sol\":{\"keccak256\":\"0xb6ca249f7087f420c81d6405b122d7c8386fe3815169c01d338435f534a941f2\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://57203af0442e93b342cbf6dc0cb72d7b25c57d2c520c49221268806ac1171dff\",\"dweb:/ipfs/QmaCcc95fKYZsKkghaNfNdC8U9x7SBWd8ob1BLL1PvYiUs\"]},\"src/lib/LibStakingChangeLog.sol\":{\"keccak256\":\"0x1ec44b7c417dae8bec87da6f1f48eb10a1eacdfb4935144dd9094dc1bbe9aa9b\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6fcbd14fe0743c0ea0a8a8d2ea851b4864559c3553773f07d6ae708bcc83318\",\"dweb:/ipfs/QmYb6v6U27FAY4ut6gCZy6oK1MjN165RTxUGhrY6zxtg93\"]},\"src/lib/LibSubnetActorStorage.sol\":{\"keccak256\":\"0xe11ae56d18ef43fd9ebdf9350977f9a26da4ee9a3288b46b04c5b973aa231f28\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://f616b61fde1528a8666d09c962d7f23a82b200229691794933f39c4d3781fc1c\",\"dweb:/ipfs/QmXQsNGv6R34wAx1fRoyMiwdtGgQVn1qDXGCr7cED92vvJ\"]},\"src/lib/priority/LibMaxPQ.sol\":{\"keccak256\":\"0x57844d18d78e8e555b2de3581a5e2908403e75252018b9c85d0274799e12a131\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://9125638cad4d136be39501e18307484f7b072ab0a882dc83da0b3a3569337014\",\"dweb:/ipfs/QmZ7Ho1edVXaPn2EwZwvrrwyHfqvZL1WUbt6ionX5GNX7V\"]},\"src/lib/priority/LibMinPQ.sol\":{\"keccak256\":\"0x7ca7b9c2c57102005714da3bdb1684050afd3f3d1e90c9dd5929a005eb17efa3\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e958a3990a39a77b71b84c241ac3342262349fa38fcbb68fb7f50ddab6d3ba97\",\"dweb:/ipfs/QmQggiqv5n3xPW2dChtqDw2yiRjPsukLWuM58jqcsVo9M4\"]},\"src/lib/priority/LibPQ.sol\":{\"keccak256\":\"0x4d4290087995d669e80f8fdd405bfaae545323393c0c54689b84965ffb87303e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c21b563f6bf23afacb38fc97ab94d1afe12e4ad3dfde96d4484068bf26b13a2c\",\"dweb:/ipfs/Qmd5d3EnZwaSRnjG4ZFH2X8HKgymzd6vQgus8A6oEoh5pJ\"]},\"src/structs/Checkpoint.sol\":{\"keccak256\":\"0x1982a747516dce183434bbf0e96b5b1fedbf3a90928beffcc046cadf47ee0746\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://253b9df56334aae80fe4a0da805e4fdc3d186fb2624edade864ae06bfd472f2a\",\"dweb:/ipfs/QmVAaz1ViF96LjM9Aknn3vtwQ5a5oDiJRZP47ddJ1V9Fww\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]},\"src/structs/Subnet.sol\":{\"keccak256\":\"0x1ddb626039baf4a4411f06b5340aaa80dcd65e9980da7673b73ab16633d871ce\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://af017eef4cb46262ac29b4cf47faa1fc5d2b61970ec7d6d021eae4cf45b5577b\",\"dweb:/ipfs/QmZJiA2t934fbe62513neQYzxSNswnCRTJybp7d6X2RyWR\"]}},\"version\":1}",
-  "metadata": {
-    "compiler": {
-      "version": "0.8.19+commit.7dd6d404"
-    },
-    "language": "Solidity",
-    "output": {
-      "abi": [
-        {
-          "inputs": [
-            {
-              "internalType": "struct BottomUpCheckpoint",
-              "name": "bottomUpCheckpoint",
-              "type": "tuple",
-              "components": [
-                {
-                  "internalType": "struct SubnetID",
-                  "name": "subnetID",
-                  "type": "tuple",
-                  "components": [
-                    {
-                      "internalType": "uint64",
-                      "name": "root",
-                      "type": "uint64"
-                    },
-                    {
-                      "internalType": "address[]",
-                      "name": "route",
-                      "type": "address[]"
-                    }
-                  ]
-                },
-                {
-                  "internalType": "uint64",
-                  "name": "blockHeight",
-                  "type": "uint64"
-                },
-                {
-                  "internalType": "bytes32",
-                  "name": "blockHash",
-                  "type": "bytes32"
-                },
-                {
-                  "internalType": "uint64",
-                  "name": "nextConfigurationNumber",
-                  "type": "uint64"
-                },
-                {
-                  "internalType": "bytes32",
-                  "name": "crossMessagesHash",
-                  "type": "bytes32"
-                }
-              ]
-            }
-          ],
-          "stateMutability": "pure",
-          "type": "function",
-          "name": "isEmpty",
-          "outputs": [
-            {
-              "internalType": "bool",
-              "name": "",
-              "type": "bool"
-            }
-          ]
+            ],
+            "stateMutability": "pure",
+            "type": "function"
         },
         {
-          "inputs": [
-            {
-              "internalType": "struct BottomUpCheckpoint",
-              "name": "bottomupCheckpoint",
-              "type": "tuple",
-              "components": [
+            "inputs": [
                 {
-                  "internalType": "struct SubnetID",
-                  "name": "subnetID",
-                  "type": "tuple",
-                  "components": [
-                    {
-                      "internalType": "uint64",
-                      "name": "root",
-                      "type": "uint64"
-                    },
-                    {
-                      "internalType": "address[]",
-                      "name": "route",
-                      "type": "address[]"
-                    }
-                  ]
-                },
-                {
-                  "internalType": "uint64",
-                  "name": "blockHeight",
-                  "type": "uint64"
-                },
-                {
-                  "internalType": "bytes32",
-                  "name": "blockHash",
-                  "type": "bytes32"
-                },
-                {
-                  "internalType": "uint64",
-                  "name": "nextConfigurationNumber",
-                  "type": "uint64"
-                },
-                {
-                  "internalType": "bytes32",
-                  "name": "crossMessagesHash",
-                  "type": "bytes32"
-                }
-              ]
-            }
-          ],
-          "stateMutability": "pure",
-          "type": "function",
-          "name": "toHash",
-          "outputs": [
-            {
-              "internalType": "bytes32",
-              "name": "",
-              "type": "bytes32"
-            }
-          ]
-        }
-      ],
-      "devdoc": {
-        "kind": "dev",
-        "methods": {},
-        "version": 1
-      },
-      "userdoc": {
-        "kind": "user",
-        "methods": {},
-        "version": 1
-      }
-    },
-    "settings": {
-      "remappings": [
-        "ds-test/=lib/forge-std/lib/ds-test/src/",
-        "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
-        "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
-        "fevmate/=lib/fevmate/contracts/",
-        "forge-std/=lib/forge-std/src/",
-        "murky/=lib/murky/src/",
-        "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
-        "openzeppelin/=lib/openzeppelin-contracts/contracts/"
-      ],
-      "optimizer": {
-        "enabled": true,
-        "runs": 200
-      },
-      "metadata": {
-        "bytecodeHash": "ipfs"
-      },
-      "compilationTarget": {
-        "src/lib/CheckpointHelper.sol": "CheckpointHelper"
-      },
-      "libraries": {},
-      "viaIR": true
-    },
-    "sources": {
-      "lib/fevmate/contracts/utils/FilAddress.sol": {
-        "keccak256": "0x8707b4f152e92b852090c313419c0dc772eebf4428472a0659dd6b13dd6bee31",
-        "urls": [
-          "bzz-raw://442fc3cb02e610424f0599f4cc519e4fbead47da09911697b62208a2ae51e4a7",
-          "dweb:/ipfs/QmRpKJ9tWWTHgMpRB18DHJLbCT4YT9yp2G89H9mHGu5ss2"
-        ],
-        "license": "MIT"
-      },
-      "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
-        "keccak256": "0x67ca7745e6032aeda339ba3f5813abf9eeb4ec683520944fa878c2867aea58f1",
-        "urls": [
-          "bzz-raw://c13ff04f87357176e2b267730f288013269eefce0862ea8f4bf3f420948eb7d5",
-          "dweb:/ipfs/QmQZRjF3CdCdoUvqhrT9KXYjrjmdmFQqENtuiHTMbyt6xo"
-        ],
-        "license": "MIT"
-      },
-      "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol": {
-        "keccak256": "0xeefcbb8cb69f04a18f6dc61d4811133ce9aeff96ce60820f758abc52ef55b892",
-        "urls": [
-          "bzz-raw://81c61c0dd40890f6a4b1fb792bc5b5b61e821fcafa2aae6c7eda6d4f1ece2593",
-          "dweb:/ipfs/QmRLMrq6BiPS9wGu7ZC174SFYWCu6cxbU3agDw2XgJeDpT"
-        ],
-        "license": "MIT"
-      },
-      "src/constants/Constants.sol": {
-        "keccak256": "0xe09e20d591a8c9cabf6f2e44a90029fb3b2a8cdd6c09dc4105b81781ffb44546",
-        "urls": [
-          "bzz-raw://b3c4df8d0fd2aa770abf8b43a134ce0fc0bc3091f97ec02415d09cca09f4f940",
-          "dweb:/ipfs/QmSUpMfWLN8WWhvLmbZymCdR48ZmpsuyvBnSPeAtdorxDx"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/enums/ConsensusType.sol": {
-        "keccak256": "0xc5efd8c66b57dadaba4178c4b4d087b30cb84cbac38fb288a8c3b65075a9f59d",
-        "urls": [
-          "bzz-raw://6fcffaa8e40322ae27958603884cc07d06e9efd59cf12764f28945b7a47e11d0",
-          "dweb:/ipfs/Qmc3PBovpcvj7jgVq5GwR5SkiUXBymT1tw74mvu5ccNqoZ"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/enums/Status.sol": {
-        "keccak256": "0x8f5921e4df87420127988b54f67a3ccfb6fbfae767891e8ed4edbf371598e16c",
-        "urls": [
-          "bzz-raw://7a81d9a00ea7a2a85cfe1b2662236412dddb55e09fa70c70a34dc4dfc5ffea33",
-          "dweb:/ipfs/QmRh4uA4491B2DVjrUtdfCTTtjpoXpKEp3Zz9CBYueNW1R"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/errors/IPCErrors.sol": {
-        "keccak256": "0x89ee65643858f78c51c49457f6cd127c773f794bf1b70ea50bd5e59f1b48e467",
-        "urls": [
-          "bzz-raw://a4e9c19f69ab5bcd7ec8ac2b058a84bff7125ebc42eb195c7d8c7094c2049dec",
-          "dweb:/ipfs/QmeN67eDEQefw5PS8iXk9TDzULVqK1QNA9ajzD3Z2jqxwK"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/interfaces/IGateway.sol": {
-        "keccak256": "0xb4209b44c3965fd233387ece78149461bd64a47788c3af24edb7c99ea1ef8868",
-        "urls": [
-          "bzz-raw://4db7a4573100063387e170c55a69772b20e403444e9d97b24cc220a71a52fbbb",
-          "dweb:/ipfs/QmTYsSjmFsTwuNTXBByZKueJZLpe7RwNzLRWNPxXGA3YKB"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/AccountHelper.sol": {
-        "keccak256": "0xd5f3c0079e3002218c63b70b43f6e018eb5d39f064b7d4321b6409c84f6a22b5",
-        "urls": [
-          "bzz-raw://e5857fe645e020bc964cd53a33e1fbd4fd9d0de405170a8251cc0b040519cbdc",
-          "dweb:/ipfs/QmaFUeVbA1mqn7dTJMqgX4DbKx6yzBrSkmeNTcaVjBJd9z"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/CheckpointHelper.sol": {
-        "keccak256": "0x52398dfc1f8f7bc3a224b110c47d30112486fc98676064e75fa2d22f5f85a554",
-        "urls": [
-          "bzz-raw://f3a8451197c26b511d67c1e635e036b8a59a6420ef4b41712073bf6a7a6edb3f",
-          "dweb:/ipfs/QmVDsdKYxkdNcgjTDmiEYb5Fq35XWkGPRh7R39e7oRnVCv"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/LibGatewayActorStorage.sol": {
-        "keccak256": "0x4731b1de63c99bfccfa12c1c59481f27630994c8d04c0a555c6f6845f3873157",
-        "urls": [
-          "bzz-raw://641337e8c2d3876ccefdb1f181c9cfeb9568f7c015f51da668d0c2dc582773d3",
-          "dweb:/ipfs/QmNzgGXzXjULKJE6iYN6ioZLJvh3ykLdwt6gTjVp7gX9f6"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/LibStaking.sol": {
-        "keccak256": "0xb6ca249f7087f420c81d6405b122d7c8386fe3815169c01d338435f534a941f2",
-        "urls": [
-          "bzz-raw://57203af0442e93b342cbf6dc0cb72d7b25c57d2c520c49221268806ac1171dff",
-          "dweb:/ipfs/QmaCcc95fKYZsKkghaNfNdC8U9x7SBWd8ob1BLL1PvYiUs"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/LibStakingChangeLog.sol": {
-        "keccak256": "0x1ec44b7c417dae8bec87da6f1f48eb10a1eacdfb4935144dd9094dc1bbe9aa9b",
-        "urls": [
-          "bzz-raw://d6fcbd14fe0743c0ea0a8a8d2ea851b4864559c3553773f07d6ae708bcc83318",
-          "dweb:/ipfs/QmYb6v6U27FAY4ut6gCZy6oK1MjN165RTxUGhrY6zxtg93"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/LibSubnetActorStorage.sol": {
-        "keccak256": "0xe11ae56d18ef43fd9ebdf9350977f9a26da4ee9a3288b46b04c5b973aa231f28",
-        "urls": [
-          "bzz-raw://f616b61fde1528a8666d09c962d7f23a82b200229691794933f39c4d3781fc1c",
-          "dweb:/ipfs/QmXQsNGv6R34wAx1fRoyMiwdtGgQVn1qDXGCr7cED92vvJ"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/priority/LibMaxPQ.sol": {
-        "keccak256": "0x57844d18d78e8e555b2de3581a5e2908403e75252018b9c85d0274799e12a131",
-        "urls": [
-          "bzz-raw://9125638cad4d136be39501e18307484f7b072ab0a882dc83da0b3a3569337014",
-          "dweb:/ipfs/QmZ7Ho1edVXaPn2EwZwvrrwyHfqvZL1WUbt6ionX5GNX7V"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/priority/LibMinPQ.sol": {
-        "keccak256": "0x7ca7b9c2c57102005714da3bdb1684050afd3f3d1e90c9dd5929a005eb17efa3",
-        "urls": [
-          "bzz-raw://e958a3990a39a77b71b84c241ac3342262349fa38fcbb68fb7f50ddab6d3ba97",
-          "dweb:/ipfs/QmQggiqv5n3xPW2dChtqDw2yiRjPsukLWuM58jqcsVo9M4"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/lib/priority/LibPQ.sol": {
-        "keccak256": "0x4d4290087995d669e80f8fdd405bfaae545323393c0c54689b84965ffb87303e",
-        "urls": [
-          "bzz-raw://c21b563f6bf23afacb38fc97ab94d1afe12e4ad3dfde96d4484068bf26b13a2c",
-          "dweb:/ipfs/Qmd5d3EnZwaSRnjG4ZFH2X8HKgymzd6vQgus8A6oEoh5pJ"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/structs/Checkpoint.sol": {
-        "keccak256": "0x1982a747516dce183434bbf0e96b5b1fedbf3a90928beffcc046cadf47ee0746",
-        "urls": [
-          "bzz-raw://253b9df56334aae80fe4a0da805e4fdc3d186fb2624edade864ae06bfd472f2a",
-          "dweb:/ipfs/QmVAaz1ViF96LjM9Aknn3vtwQ5a5oDiJRZP47ddJ1V9Fww"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/structs/FvmAddress.sol": {
-        "keccak256": "0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069",
-        "urls": [
-          "bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac",
-          "dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu"
-        ],
-        "license": "MIT OR Apache-2.0"
-      },
-      "src/structs/Subnet.sol": {
-        "keccak256": "0x1ddb626039baf4a4411f06b5340aaa80dcd65e9980da7673b73ab16633d871ce",
-        "urls": [
-          "bzz-raw://af017eef4cb46262ac29b4cf47faa1fc5d2b61970ec7d6d021eae4cf45b5577b",
-          "dweb:/ipfs/QmZJiA2t934fbe62513neQYzxSNswnCRTJybp7d6X2RyWR"
-        ],
-        "license": "MIT OR Apache-2.0"
-      }
-    },
-    "version": 1
-  },
-  "ast": {
-    "absolutePath": "src/lib/CheckpointHelper.sol",
-    "id": 39619,
-    "exportedSymbols": {
-      "BottomUpCheckpoint": [
-        46793
-      ],
-      "CheckpointHelper": [
-        39618
-      ],
-      "CrossMsg": [
-        46815
-      ],
-      "EMPTY_HASH": [
-        36172
-      ],
-      "SubnetID": [
-        46869
-      ]
-    },
-    "nodeType": "SourceUnit",
-    "src": "46:1065:55",
-    "nodes": [
-      {
-        "id": 39557,
-        "nodeType": "PragmaDirective",
-        "src": "46:23:55",
-        "nodes": [],
-        "literals": [
-          "solidity",
-          "0.8",
-          ".19"
-        ]
-      },
-      {
-        "id": 39559,
-        "nodeType": "ImportDirective",
-        "src": "71:54:55",
-        "nodes": [],
-        "absolutePath": "src/constants/Constants.sol",
-        "file": "../constants/Constants.sol",
-        "nameLocation": "-1:-1:-1",
-        "scope": 39619,
-        "sourceUnit": 36188,
-        "symbolAliases": [
-          {
-            "foreign": {
-              "id": 39558,
-              "name": "EMPTY_HASH",
-              "nodeType": "Identifier",
-              "overloadedDeclarations": [],
-              "referencedDeclaration": 36172,
-              "src": "79:10:55",
-              "typeDescriptions": {}
-            },
-            "nameLocation": "-1:-1:-1"
-          }
-        ],
-        "unitAlias": ""
-      },
-      {
-        "id": 39561,
-        "nodeType": "ImportDirective",
-        "src": "126:47:55",
-        "nodes": [],
-        "absolutePath": "src/structs/Subnet.sol",
-        "file": "../structs/Subnet.sol",
-        "nameLocation": "-1:-1:-1",
-        "scope": 39619,
-        "sourceUnit": 47002,
-        "symbolAliases": [
-          {
-            "foreign": {
-              "id": 39560,
-              "name": "SubnetID",
-              "nodeType": "Identifier",
-              "overloadedDeclarations": [],
-              "referencedDeclaration": 46869,
-              "src": "134:8:55",
-              "typeDescriptions": {}
-            },
-            "nameLocation": "-1:-1:-1"
-          }
-        ],
-        "unitAlias": ""
-      },
-      {
-        "id": 39564,
-        "nodeType": "ImportDirective",
-        "src": "174:71:55",
-        "nodes": [],
-        "absolutePath": "src/structs/Checkpoint.sol",
-        "file": "../structs/Checkpoint.sol",
-        "nameLocation": "-1:-1:-1",
-        "scope": 39619,
-        "sourceUnit": 46833,
-        "symbolAliases": [
-          {
-            "foreign": {
-              "id": 39562,
-              "name": "BottomUpCheckpoint",
-              "nodeType": "Identifier",
-              "overloadedDeclarations": [],
-              "referencedDeclaration": 46793,
-              "src": "182:18:55",
-              "typeDescriptions": {}
-            },
-            "nameLocation": "-1:-1:-1"
-          },
-          {
-            "foreign": {
-              "id": 39563,
-              "name": "CrossMsg",
-              "nodeType": "Identifier",
-              "overloadedDeclarations": [],
-              "referencedDeclaration": 46815,
-              "src": "202:8:55",
-              "typeDescriptions": {}
-            },
-            "nameLocation": "-1:-1:-1"
-          }
-        ],
-        "unitAlias": ""
-      },
-      {
-        "id": 39618,
-        "nodeType": "ContractDefinition",
-        "src": "335:775:55",
-        "nodes": [
-          {
-            "id": 39586,
-            "nodeType": "VariableDeclaration",
-            "src": "366:399:55",
-            "nodes": [],
-            "constant": true,
-            "mutability": "constant",
-            "name": "EMPTY_BOTTOMUPCHECKPOINT_HASH",
-            "nameLocation": "391:29:55",
-            "scope": 39618,
-            "stateVariable": true,
-            "storageLocation": "default",
-            "typeDescriptions": {
-              "typeIdentifier": "t_bytes32",
-              "typeString": "bytes32"
-            },
-            "typeName": {
-              "id": 39566,
-              "name": "bytes32",
-              "nodeType": "ElementaryTypeName",
-              "src": "366:7:55",
-              "typeDescriptions": {
-                "typeIdentifier": "t_bytes32",
-                "typeString": "bytes32"
-              }
-            },
-            "value": {
-              "arguments": [
-                {
-                  "arguments": [
-                    {
-                      "arguments": [
+                    "components": [
                         {
-                          "arguments": [
-                            {
-                              "hexValue": "30",
-                              "id": 39572,
-                              "isConstant": false,
-                              "isLValue": false,
-                              "isPure": true,
-                              "kind": "number",
-                              "lValueRequested": false,
-                              "nodeType": "Literal",
-                              "src": "542:1:55",
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_rational_0_by_1",
-                                "typeString": "int_const 0"
-                              },
-                              "value": "0"
-                            },
-                            {
-                              "arguments": [
+                            "components": [
                                 {
-                                  "hexValue": "30",
-                                  "id": 39576,
-                                  "isConstant": false,
-                                  "isLValue": false,
-                                  "isPure": true,
-                                  "kind": "number",
-                                  "lValueRequested": false,
-                                  "nodeType": "Literal",
-                                  "src": "559:1:55",
-                                  "typeDescriptions": {
-                                    "typeIdentifier": "t_rational_0_by_1",
-                                    "typeString": "int_const 0"
-                                  },
-                                  "value": "0"
-                                }
-                              ],
-                              "expression": {
-                                "argumentTypes": [
-                                  {
-                                    "typeIdentifier": "t_rational_0_by_1",
-                                    "typeString": "int_const 0"
-                                  }
-                                ],
-                                "id": 39575,
-                                "isConstant": false,
-                                "isLValue": false,
-                                "isPure": true,
-                                "lValueRequested": false,
-                                "nodeType": "NewExpression",
-                                "src": "545:13:55",
-                                "typeDescriptions": {
-                                  "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_address_$dyn_memory_ptr_$",
-                                  "typeString": "function (uint256) pure returns (address[] memory)"
+                                    "internalType": "uint64",
+                                    "name": "root",
+                                    "type": "uint64"
                                 },
-                                "typeName": {
-                                  "baseType": {
-                                    "id": 39573,
-                                    "name": "address",
-                                    "nodeType": "ElementaryTypeName",
-                                    "src": "549:7:55",
-                                    "stateMutability": "nonpayable",
-                                    "typeDescriptions": {
-                                      "typeIdentifier": "t_address",
-                                      "typeString": "address"
-                                    }
-                                  },
-                                  "id": 39574,
-                                  "nodeType": "ArrayTypeName",
-                                  "src": "549:9:55",
-                                  "typeDescriptions": {
-                                    "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
-                                    "typeString": "address[]"
-                                  }
+                                {
+                                    "internalType": "address[]",
+                                    "name": "route",
+                                    "type": "address[]"
                                 }
-                              },
-                              "id": 39577,
-                              "isConstant": false,
-                              "isLValue": false,
-                              "isPure": true,
-                              "kind": "functionCall",
-                              "lValueRequested": false,
-                              "nameLocations": [],
-                              "names": [],
-                              "nodeType": "FunctionCall",
-                              "src": "545:16:55",
-                              "tryCall": false,
-                              "typeDescriptions": {
-                                "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
-                                "typeString": "address[] memory"
-                              }
-                            }
-                          ],
-                          "expression": {
-                            "argumentTypes": [
-                              {
-                                "typeIdentifier": "t_rational_0_by_1",
-                                "typeString": "int_const 0"
-                              },
-                              {
-                                "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
-                                "typeString": "address[] memory"
-                              }
                             ],
-                            "id": 39571,
+                            "internalType": "struct SubnetID",
+                            "name": "subnetID",
+                            "type": "tuple"
+                        },
+                        {
+                            "internalType": "uint64",
+                            "name": "blockHeight",
+                            "type": "uint64"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "blockHash",
+                            "type": "bytes32"
+                        },
+                        {
+                            "internalType": "uint64",
+                            "name": "nextConfigurationNumber",
+                            "type": "uint64"
+                        },
+                        {
+                            "internalType": "bytes32",
+                            "name": "crossMessagesHash",
+                            "type": "bytes32"
+                        }
+                    ],
+                    "internalType": "struct BottomUpCheckpoint",
+                    "name": "bottomupCheckpoint",
+                    "type": "tuple"
+                }
+            ],
+            "name": "toHash",
+            "outputs": [
+                {
+                    "internalType": "bytes32",
+                    "name": "",
+                    "type": "bytes32"
+                }
+            ],
+            "stateMutability": "pure",
+            "type": "function"
+        }
+    ],
+    "bytecode": {
+        "object": "0x6080806040523461001a576103949081610020823930815050f35b600080fdfe604060808152600436101561001357600080fd5b600090813560e01c806339aa47fb146100de576345d51b121461003557600080fd5b6100466100413661017e565b610343565b81516020810181811067ffffffffffffffff8211176100ca57936020948452808252835191610074836100f4565b8183528583015283519161008783610126565b825280858301528084830152806060830152608082015282516100bf816100b187820194856102ac565b03601f198101835282610142565b519020149051908152f35b634e487b7160e01b85526041600452602485fd5b6020826100ed6100413661017e565b9051908152f35b6040810190811067ffffffffffffffff82111761011057604052565b634e487b7160e01b600052604160045260246000fd5b60a0810190811067ffffffffffffffff82111761011057604052565b90601f8019910116810190811067ffffffffffffffff82111761011057604052565b359067ffffffffffffffff8216820361017957565b600080fd5b600319919060208382018113610179576004359067ffffffffffffffff948583116101795760a081848603011261017957604051936101bc85610126565b836004013587811161017957604090850192838303011261017957604051916101e4836100f4565b6101f060048201610164565b8352602481013590888211610179570181602382011215610179576004810135978811610110578760051b906040519861022c8684018b610142565b89526024858a019282010192831161017957602401905b82821061028d57505050608493949582820152845261026460248301610164565b908401526044810135604084015261027e60648201610164565b60608401520135608082015290565b81356001600160a01b0381168103610179578152908401908401610243565b602091828252805160a0848401526101008301938067ffffffffffffffff928381511660c0870152015194604060e0860152855180915281610120860196019060005b81811061032657505050918160809260a0948301511660408601526040820151606086015260608201511682850152015191015290565b82516001600160a01b0316885296830196918301916001016102ef565b604051610358816100b16020820194856102ac565b5190209056fea26469706673582212209e00282ab908283883b42bd3da57efacd6e820da325878ac728b925b58f87e6c64736f6c63430008130033",
+        "sourceMap": "335:775:55:-:0;;;;;;;;;;;;;;;;;;;;;",
+        "linkReferences": {}
+    },
+    "deployedBytecode": {
+        "object": "0x604060808152600436101561001357600080fd5b600090813560e01c806339aa47fb146100de576345d51b121461003557600080fd5b6100466100413661017e565b610343565b81516020810181811067ffffffffffffffff8211176100ca57936020948452808252835191610074836100f4565b8183528583015283519161008783610126565b825280858301528084830152806060830152608082015282516100bf816100b187820194856102ac565b03601f198101835282610142565b519020149051908152f35b634e487b7160e01b85526041600452602485fd5b6020826100ed6100413661017e565b9051908152f35b6040810190811067ffffffffffffffff82111761011057604052565b634e487b7160e01b600052604160045260246000fd5b60a0810190811067ffffffffffffffff82111761011057604052565b90601f8019910116810190811067ffffffffffffffff82111761011057604052565b359067ffffffffffffffff8216820361017957565b600080fd5b600319919060208382018113610179576004359067ffffffffffffffff948583116101795760a081848603011261017957604051936101bc85610126565b836004013587811161017957604090850192838303011261017957604051916101e4836100f4565b6101f060048201610164565b8352602481013590888211610179570181602382011215610179576004810135978811610110578760051b906040519861022c8684018b610142565b89526024858a019282010192831161017957602401905b82821061028d57505050608493949582820152845261026460248301610164565b908401526044810135604084015261027e60648201610164565b60608401520135608082015290565b81356001600160a01b0381168103610179578152908401908401610243565b602091828252805160a0848401526101008301938067ffffffffffffffff928381511660c0870152015194604060e0860152855180915281610120860196019060005b81811061032657505050918160809260a0948301511660408601526040820151606086015260608201511682850152015191015290565b82516001600160a01b0316885296830196918301916001016102ef565b604051610358816100b16020820194856102ac565b5190209056fea26469706673582212209e00282ab908283883b42bd3da57efacd6e820da325878ac728b925b58f87e6c64736f6c63430008130033",
+        "sourceMap": "335:775:55:-:0;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;1042:26;335:775;;;:::i;:::-;1042:26;:::i;:::-;335:775;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;533:29;;;335:775;;;;;;;:::i;:::-;;;482:259;;;;335:775;482:259;;;;335:775;482:259;;;;335:775;482:259;;;335:775;;;454:301;;;;;;;;;:::i;:::-;;335:775;;454:301;;;;;;:::i;:::-;335:775;431:334;;1042:59;335:775;;;;;;;-1:-1:-1;;;335:775:55;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;;;;;;;;:::o;:::-;;;;;-1:-1:-1;;335:775:55;;;;;;;-1:-1:-1;335:775:55;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;;;;;;;:::i;:::-;;;;;;;;;;;;:::o;:::-;;;-1:-1:-1;;;;;335:775:55;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;:::o;:::-;;;-1:-1:-1;;;;;335:775:55;;;;;;;;;;;;;;;772:157;335:775;;891:30;;;;;;;;;:::i;:::-;335:775;881:41;;772:157;:::o",
+        "linkReferences": {}
+    },
+    "methodIdentifiers": {
+        "isEmpty(BottomUpCheckpoint)": "45d51b12",
+        "toHash(BottomUpCheckpoint)": "39aa47fb"
+    },
+    "rawMetadata": "{\"compiler\":{\"version\":\"0.8.19+commit.7dd6d404\"},\"language\":\"Solidity\",\"output\":{\"abi\":[{\"inputs\":[{\"components\":[{\"components\":[{\"internalType\":\"uint64\",\"name\":\"root\",\"type\":\"uint64\"},{\"internalType\":\"address[]\",\"name\":\"route\",\"type\":\"address[]\"}],\"internalType\":\"struct SubnetID\",\"name\":\"subnetID\",\"type\":\"tuple\"},{\"internalType\":\"uint64\",\"name\":\"blockHeight\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"},{\"internalType\":\"uint64\",\"name\":\"nextConfigurationNumber\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"crossMessagesHash\",\"type\":\"bytes32\"}],\"internalType\":\"struct BottomUpCheckpoint\",\"name\":\"bottomUpCheckpoint\",\"type\":\"tuple\"}],\"name\":\"isEmpty\",\"outputs\":[{\"internalType\":\"bool\",\"name\":\"\",\"type\":\"bool\"}],\"stateMutability\":\"pure\",\"type\":\"function\"},{\"inputs\":[{\"components\":[{\"components\":[{\"internalType\":\"uint64\",\"name\":\"root\",\"type\":\"uint64\"},{\"internalType\":\"address[]\",\"name\":\"route\",\"type\":\"address[]\"}],\"internalType\":\"struct SubnetID\",\"name\":\"subnetID\",\"type\":\"tuple\"},{\"internalType\":\"uint64\",\"name\":\"blockHeight\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"blockHash\",\"type\":\"bytes32\"},{\"internalType\":\"uint64\",\"name\":\"nextConfigurationNumber\",\"type\":\"uint64\"},{\"internalType\":\"bytes32\",\"name\":\"crossMessagesHash\",\"type\":\"bytes32\"}],\"internalType\":\"struct BottomUpCheckpoint\",\"name\":\"bottomupCheckpoint\",\"type\":\"tuple\"}],\"name\":\"toHash\",\"outputs\":[{\"internalType\":\"bytes32\",\"name\":\"\",\"type\":\"bytes32\"}],\"stateMutability\":\"pure\",\"type\":\"function\"}],\"devdoc\":{\"author\":\"LimeChain team\",\"kind\":\"dev\",\"methods\":{},\"title\":\"Helper library for manipulating Checkpoint struct\",\"version\":1},\"userdoc\":{\"kind\":\"user\",\"methods\":{},\"version\":1}},\"settings\":{\"compilationTarget\":{\"src/lib/CheckpointHelper.sol\":\"CheckpointHelper\"},\"evmVersion\":\"paris\",\"libraries\":{},\"metadata\":{\"bytecodeHash\":\"ipfs\"},\"optimizer\":{\"enabled\":true,\"runs\":200},\"remappings\":[\":@openzeppelin/=node_modules/@openzeppelin/\",\":ds-test/=lib/forge-std/lib/ds-test/src/\",\":elliptic-curve-solidity/=lib/elliptic-curve-solidity/\",\":erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/\",\":fevmate/=lib/fevmate/contracts/\",\":forge-std/=lib/forge-std/src/\",\":hardhat-deploy/=node_modules/hardhat-deploy/\",\":hardhat/=node_modules/hardhat/\",\":murky/=lib/murky/src/\",\":openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/\",\":openzeppelin/=lib/openzeppelin-contracts/contracts/\",\":sol-explore/=node_modules/sol-explore/\"],\"viaIR\":true},\"sources\":{\"lib/fevmate/contracts/utils/FilAddress.sol\":{\"keccak256\":\"0x8707b4f152e92b852090c313419c0dc772eebf4428472a0659dd6b13dd6bee31\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://442fc3cb02e610424f0599f4cc519e4fbead47da09911697b62208a2ae51e4a7\",\"dweb:/ipfs/QmRpKJ9tWWTHgMpRB18DHJLbCT4YT9yp2G89H9mHGu5ss2\"]},\"lib/openzeppelin-contracts/contracts/utils/Address.sol\":{\"keccak256\":\"0x67ca7745e6032aeda339ba3f5813abf9eeb4ec683520944fa878c2867aea58f1\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://c13ff04f87357176e2b267730f288013269eefce0862ea8f4bf3f420948eb7d5\",\"dweb:/ipfs/QmQZRjF3CdCdoUvqhrT9KXYjrjmdmFQqENtuiHTMbyt6xo\"]},\"lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol\":{\"keccak256\":\"0xeefcbb8cb69f04a18f6dc61d4811133ce9aeff96ce60820f758abc52ef55b892\",\"license\":\"MIT\",\"urls\":[\"bzz-raw://81c61c0dd40890f6a4b1fb792bc5b5b61e821fcafa2aae6c7eda6d4f1ece2593\",\"dweb:/ipfs/QmRLMrq6BiPS9wGu7ZC174SFYWCu6cxbU3agDw2XgJeDpT\"]},\"src/constants/Constants.sol\":{\"keccak256\":\"0xe09e20d591a8c9cabf6f2e44a90029fb3b2a8cdd6c09dc4105b81781ffb44546\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://b3c4df8d0fd2aa770abf8b43a134ce0fc0bc3091f97ec02415d09cca09f4f940\",\"dweb:/ipfs/QmSUpMfWLN8WWhvLmbZymCdR48ZmpsuyvBnSPeAtdorxDx\"]},\"src/enums/ConsensusType.sol\":{\"keccak256\":\"0xc5efd8c66b57dadaba4178c4b4d087b30cb84cbac38fb288a8c3b65075a9f59d\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6fcffaa8e40322ae27958603884cc07d06e9efd59cf12764f28945b7a47e11d0\",\"dweb:/ipfs/Qmc3PBovpcvj7jgVq5GwR5SkiUXBymT1tw74mvu5ccNqoZ\"]},\"src/enums/Status.sol\":{\"keccak256\":\"0x8f5921e4df87420127988b54f67a3ccfb6fbfae767891e8ed4edbf371598e16c\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://7a81d9a00ea7a2a85cfe1b2662236412dddb55e09fa70c70a34dc4dfc5ffea33\",\"dweb:/ipfs/QmRh4uA4491B2DVjrUtdfCTTtjpoXpKEp3Zz9CBYueNW1R\"]},\"src/errors/IPCErrors.sol\":{\"keccak256\":\"0x89ee65643858f78c51c49457f6cd127c773f794bf1b70ea50bd5e59f1b48e467\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://a4e9c19f69ab5bcd7ec8ac2b058a84bff7125ebc42eb195c7d8c7094c2049dec\",\"dweb:/ipfs/QmeN67eDEQefw5PS8iXk9TDzULVqK1QNA9ajzD3Z2jqxwK\"]},\"src/interfaces/IGateway.sol\":{\"keccak256\":\"0xb4209b44c3965fd233387ece78149461bd64a47788c3af24edb7c99ea1ef8868\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://4db7a4573100063387e170c55a69772b20e403444e9d97b24cc220a71a52fbbb\",\"dweb:/ipfs/QmTYsSjmFsTwuNTXBByZKueJZLpe7RwNzLRWNPxXGA3YKB\"]},\"src/lib/AccountHelper.sol\":{\"keccak256\":\"0xd5f3c0079e3002218c63b70b43f6e018eb5d39f064b7d4321b6409c84f6a22b5\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e5857fe645e020bc964cd53a33e1fbd4fd9d0de405170a8251cc0b040519cbdc\",\"dweb:/ipfs/QmaFUeVbA1mqn7dTJMqgX4DbKx6yzBrSkmeNTcaVjBJd9z\"]},\"src/lib/CheckpointHelper.sol\":{\"keccak256\":\"0x52398dfc1f8f7bc3a224b110c47d30112486fc98676064e75fa2d22f5f85a554\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://f3a8451197c26b511d67c1e635e036b8a59a6420ef4b41712073bf6a7a6edb3f\",\"dweb:/ipfs/QmVDsdKYxkdNcgjTDmiEYb5Fq35XWkGPRh7R39e7oRnVCv\"]},\"src/lib/LibGatewayActorStorage.sol\":{\"keccak256\":\"0x4731b1de63c99bfccfa12c1c59481f27630994c8d04c0a555c6f6845f3873157\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://641337e8c2d3876ccefdb1f181c9cfeb9568f7c015f51da668d0c2dc582773d3\",\"dweb:/ipfs/QmNzgGXzXjULKJE6iYN6ioZLJvh3ykLdwt6gTjVp7gX9f6\"]},\"src/lib/LibStaking.sol\":{\"keccak256\":\"0xb6ca249f7087f420c81d6405b122d7c8386fe3815169c01d338435f534a941f2\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://57203af0442e93b342cbf6dc0cb72d7b25c57d2c520c49221268806ac1171dff\",\"dweb:/ipfs/QmaCcc95fKYZsKkghaNfNdC8U9x7SBWd8ob1BLL1PvYiUs\"]},\"src/lib/LibStakingChangeLog.sol\":{\"keccak256\":\"0x1ec44b7c417dae8bec87da6f1f48eb10a1eacdfb4935144dd9094dc1bbe9aa9b\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://d6fcbd14fe0743c0ea0a8a8d2ea851b4864559c3553773f07d6ae708bcc83318\",\"dweb:/ipfs/QmYb6v6U27FAY4ut6gCZy6oK1MjN165RTxUGhrY6zxtg93\"]},\"src/lib/LibSubnetActorStorage.sol\":{\"keccak256\":\"0xe11ae56d18ef43fd9ebdf9350977f9a26da4ee9a3288b46b04c5b973aa231f28\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://f616b61fde1528a8666d09c962d7f23a82b200229691794933f39c4d3781fc1c\",\"dweb:/ipfs/QmXQsNGv6R34wAx1fRoyMiwdtGgQVn1qDXGCr7cED92vvJ\"]},\"src/lib/priority/LibMaxPQ.sol\":{\"keccak256\":\"0x57844d18d78e8e555b2de3581a5e2908403e75252018b9c85d0274799e12a131\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://9125638cad4d136be39501e18307484f7b072ab0a882dc83da0b3a3569337014\",\"dweb:/ipfs/QmZ7Ho1edVXaPn2EwZwvrrwyHfqvZL1WUbt6ionX5GNX7V\"]},\"src/lib/priority/LibMinPQ.sol\":{\"keccak256\":\"0x7ca7b9c2c57102005714da3bdb1684050afd3f3d1e90c9dd5929a005eb17efa3\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://e958a3990a39a77b71b84c241ac3342262349fa38fcbb68fb7f50ddab6d3ba97\",\"dweb:/ipfs/QmQggiqv5n3xPW2dChtqDw2yiRjPsukLWuM58jqcsVo9M4\"]},\"src/lib/priority/LibPQ.sol\":{\"keccak256\":\"0x4d4290087995d669e80f8fdd405bfaae545323393c0c54689b84965ffb87303e\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://c21b563f6bf23afacb38fc97ab94d1afe12e4ad3dfde96d4484068bf26b13a2c\",\"dweb:/ipfs/Qmd5d3EnZwaSRnjG4ZFH2X8HKgymzd6vQgus8A6oEoh5pJ\"]},\"src/structs/Checkpoint.sol\":{\"keccak256\":\"0x1982a747516dce183434bbf0e96b5b1fedbf3a90928beffcc046cadf47ee0746\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://253b9df56334aae80fe4a0da805e4fdc3d186fb2624edade864ae06bfd472f2a\",\"dweb:/ipfs/QmVAaz1ViF96LjM9Aknn3vtwQ5a5oDiJRZP47ddJ1V9Fww\"]},\"src/structs/FvmAddress.sol\":{\"keccak256\":\"0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac\",\"dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu\"]},\"src/structs/Subnet.sol\":{\"keccak256\":\"0x1ddb626039baf4a4411f06b5340aaa80dcd65e9980da7673b73ab16633d871ce\",\"license\":\"MIT OR Apache-2.0\",\"urls\":[\"bzz-raw://af017eef4cb46262ac29b4cf47faa1fc5d2b61970ec7d6d021eae4cf45b5577b\",\"dweb:/ipfs/QmZJiA2t934fbe62513neQYzxSNswnCRTJybp7d6X2RyWR\"]}},\"version\":1}",
+    "metadata": {
+        "compiler": {
+            "version": "0.8.19+commit.7dd6d404"
+        },
+        "language": "Solidity",
+        "output": {
+            "abi": [
+                {
+                    "inputs": [
+                        {
+                            "internalType": "struct BottomUpCheckpoint",
+                            "name": "bottomUpCheckpoint",
+                            "type": "tuple",
+                            "components": [
+                                {
+                                    "internalType": "struct SubnetID",
+                                    "name": "subnetID",
+                                    "type": "tuple",
+                                    "components": [
+                                        {
+                                            "internalType": "uint64",
+                                            "name": "root",
+                                            "type": "uint64"
+                                        },
+                                        {
+                                            "internalType": "address[]",
+                                            "name": "route",
+                                            "type": "address[]"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "internalType": "uint64",
+                                    "name": "blockHeight",
+                                    "type": "uint64"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "blockHash",
+                                    "type": "bytes32"
+                                },
+                                {
+                                    "internalType": "uint64",
+                                    "name": "nextConfigurationNumber",
+                                    "type": "uint64"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "crossMessagesHash",
+                                    "type": "bytes32"
+                                }
+                            ]
+                        }
+                    ],
+                    "stateMutability": "pure",
+                    "type": "function",
+                    "name": "isEmpty",
+                    "outputs": [
+                        {
+                            "internalType": "bool",
+                            "name": "",
+                            "type": "bool"
+                        }
+                    ]
+                },
+                {
+                    "inputs": [
+                        {
+                            "internalType": "struct BottomUpCheckpoint",
+                            "name": "bottomupCheckpoint",
+                            "type": "tuple",
+                            "components": [
+                                {
+                                    "internalType": "struct SubnetID",
+                                    "name": "subnetID",
+                                    "type": "tuple",
+                                    "components": [
+                                        {
+                                            "internalType": "uint64",
+                                            "name": "root",
+                                            "type": "uint64"
+                                        },
+                                        {
+                                            "internalType": "address[]",
+                                            "name": "route",
+                                            "type": "address[]"
+                                        }
+                                    ]
+                                },
+                                {
+                                    "internalType": "uint64",
+                                    "name": "blockHeight",
+                                    "type": "uint64"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "blockHash",
+                                    "type": "bytes32"
+                                },
+                                {
+                                    "internalType": "uint64",
+                                    "name": "nextConfigurationNumber",
+                                    "type": "uint64"
+                                },
+                                {
+                                    "internalType": "bytes32",
+                                    "name": "crossMessagesHash",
+                                    "type": "bytes32"
+                                }
+                            ]
+                        }
+                    ],
+                    "stateMutability": "pure",
+                    "type": "function",
+                    "name": "toHash",
+                    "outputs": [
+                        {
+                            "internalType": "bytes32",
+                            "name": "",
+                            "type": "bytes32"
+                        }
+                    ]
+                }
+            ],
+            "devdoc": {
+                "kind": "dev",
+                "methods": {},
+                "version": 1
+            },
+            "userdoc": {
+                "kind": "user",
+                "methods": {},
+                "version": 1
+            }
+        },
+        "settings": {
+            "remappings": [
+                "@openzeppelin/=node_modules/@openzeppelin/",
+                "ds-test/=lib/forge-std/lib/ds-test/src/",
+                "elliptic-curve-solidity/=lib/elliptic-curve-solidity/",
+                "erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/",
+                "fevmate/=lib/fevmate/contracts/",
+                "forge-std/=lib/forge-std/src/",
+                "hardhat-deploy/=node_modules/hardhat-deploy/",
+                "hardhat/=node_modules/hardhat/",
+                "murky/=lib/murky/src/",
+                "openzeppelin-contracts/=lib/openzeppelin-contracts/contracts/",
+                "openzeppelin/=lib/openzeppelin-contracts/contracts/",
+                "sol-explore/=node_modules/sol-explore/"
+            ],
+            "optimizer": {
+                "enabled": true,
+                "runs": 200
+            },
+            "metadata": {
+                "bytecodeHash": "ipfs"
+            },
+            "compilationTarget": {
+                "src/lib/CheckpointHelper.sol": "CheckpointHelper"
+            },
+            "libraries": {},
+            "viaIR": true
+        },
+        "sources": {
+            "lib/fevmate/contracts/utils/FilAddress.sol": {
+                "keccak256": "0x8707b4f152e92b852090c313419c0dc772eebf4428472a0659dd6b13dd6bee31",
+                "urls": [
+                    "bzz-raw://442fc3cb02e610424f0599f4cc519e4fbead47da09911697b62208a2ae51e4a7",
+                    "dweb:/ipfs/QmRpKJ9tWWTHgMpRB18DHJLbCT4YT9yp2G89H9mHGu5ss2"
+                ],
+                "license": "MIT"
+            },
+            "lib/openzeppelin-contracts/contracts/utils/Address.sol": {
+                "keccak256": "0x67ca7745e6032aeda339ba3f5813abf9eeb4ec683520944fa878c2867aea58f1",
+                "urls": [
+                    "bzz-raw://c13ff04f87357176e2b267730f288013269eefce0862ea8f4bf3f420948eb7d5",
+                    "dweb:/ipfs/QmQZRjF3CdCdoUvqhrT9KXYjrjmdmFQqENtuiHTMbyt6xo"
+                ],
+                "license": "MIT"
+            },
+            "lib/openzeppelin-contracts/contracts/utils/structs/EnumerableSet.sol": {
+                "keccak256": "0xeefcbb8cb69f04a18f6dc61d4811133ce9aeff96ce60820f758abc52ef55b892",
+                "urls": [
+                    "bzz-raw://81c61c0dd40890f6a4b1fb792bc5b5b61e821fcafa2aae6c7eda6d4f1ece2593",
+                    "dweb:/ipfs/QmRLMrq6BiPS9wGu7ZC174SFYWCu6cxbU3agDw2XgJeDpT"
+                ],
+                "license": "MIT"
+            },
+            "src/constants/Constants.sol": {
+                "keccak256": "0xe09e20d591a8c9cabf6f2e44a90029fb3b2a8cdd6c09dc4105b81781ffb44546",
+                "urls": [
+                    "bzz-raw://b3c4df8d0fd2aa770abf8b43a134ce0fc0bc3091f97ec02415d09cca09f4f940",
+                    "dweb:/ipfs/QmSUpMfWLN8WWhvLmbZymCdR48ZmpsuyvBnSPeAtdorxDx"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/enums/ConsensusType.sol": {
+                "keccak256": "0xc5efd8c66b57dadaba4178c4b4d087b30cb84cbac38fb288a8c3b65075a9f59d",
+                "urls": [
+                    "bzz-raw://6fcffaa8e40322ae27958603884cc07d06e9efd59cf12764f28945b7a47e11d0",
+                    "dweb:/ipfs/Qmc3PBovpcvj7jgVq5GwR5SkiUXBymT1tw74mvu5ccNqoZ"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/enums/Status.sol": {
+                "keccak256": "0x8f5921e4df87420127988b54f67a3ccfb6fbfae767891e8ed4edbf371598e16c",
+                "urls": [
+                    "bzz-raw://7a81d9a00ea7a2a85cfe1b2662236412dddb55e09fa70c70a34dc4dfc5ffea33",
+                    "dweb:/ipfs/QmRh4uA4491B2DVjrUtdfCTTtjpoXpKEp3Zz9CBYueNW1R"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/errors/IPCErrors.sol": {
+                "keccak256": "0x89ee65643858f78c51c49457f6cd127c773f794bf1b70ea50bd5e59f1b48e467",
+                "urls": [
+                    "bzz-raw://a4e9c19f69ab5bcd7ec8ac2b058a84bff7125ebc42eb195c7d8c7094c2049dec",
+                    "dweb:/ipfs/QmeN67eDEQefw5PS8iXk9TDzULVqK1QNA9ajzD3Z2jqxwK"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/interfaces/IGateway.sol": {
+                "keccak256": "0xb4209b44c3965fd233387ece78149461bd64a47788c3af24edb7c99ea1ef8868",
+                "urls": [
+                    "bzz-raw://4db7a4573100063387e170c55a69772b20e403444e9d97b24cc220a71a52fbbb",
+                    "dweb:/ipfs/QmTYsSjmFsTwuNTXBByZKueJZLpe7RwNzLRWNPxXGA3YKB"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/AccountHelper.sol": {
+                "keccak256": "0xd5f3c0079e3002218c63b70b43f6e018eb5d39f064b7d4321b6409c84f6a22b5",
+                "urls": [
+                    "bzz-raw://e5857fe645e020bc964cd53a33e1fbd4fd9d0de405170a8251cc0b040519cbdc",
+                    "dweb:/ipfs/QmaFUeVbA1mqn7dTJMqgX4DbKx6yzBrSkmeNTcaVjBJd9z"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/CheckpointHelper.sol": {
+                "keccak256": "0x52398dfc1f8f7bc3a224b110c47d30112486fc98676064e75fa2d22f5f85a554",
+                "urls": [
+                    "bzz-raw://f3a8451197c26b511d67c1e635e036b8a59a6420ef4b41712073bf6a7a6edb3f",
+                    "dweb:/ipfs/QmVDsdKYxkdNcgjTDmiEYb5Fq35XWkGPRh7R39e7oRnVCv"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/LibGatewayActorStorage.sol": {
+                "keccak256": "0x4731b1de63c99bfccfa12c1c59481f27630994c8d04c0a555c6f6845f3873157",
+                "urls": [
+                    "bzz-raw://641337e8c2d3876ccefdb1f181c9cfeb9568f7c015f51da668d0c2dc582773d3",
+                    "dweb:/ipfs/QmNzgGXzXjULKJE6iYN6ioZLJvh3ykLdwt6gTjVp7gX9f6"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/LibStaking.sol": {
+                "keccak256": "0xb6ca249f7087f420c81d6405b122d7c8386fe3815169c01d338435f534a941f2",
+                "urls": [
+                    "bzz-raw://57203af0442e93b342cbf6dc0cb72d7b25c57d2c520c49221268806ac1171dff",
+                    "dweb:/ipfs/QmaCcc95fKYZsKkghaNfNdC8U9x7SBWd8ob1BLL1PvYiUs"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/LibStakingChangeLog.sol": {
+                "keccak256": "0x1ec44b7c417dae8bec87da6f1f48eb10a1eacdfb4935144dd9094dc1bbe9aa9b",
+                "urls": [
+                    "bzz-raw://d6fcbd14fe0743c0ea0a8a8d2ea851b4864559c3553773f07d6ae708bcc83318",
+                    "dweb:/ipfs/QmYb6v6U27FAY4ut6gCZy6oK1MjN165RTxUGhrY6zxtg93"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/LibSubnetActorStorage.sol": {
+                "keccak256": "0xe11ae56d18ef43fd9ebdf9350977f9a26da4ee9a3288b46b04c5b973aa231f28",
+                "urls": [
+                    "bzz-raw://f616b61fde1528a8666d09c962d7f23a82b200229691794933f39c4d3781fc1c",
+                    "dweb:/ipfs/QmXQsNGv6R34wAx1fRoyMiwdtGgQVn1qDXGCr7cED92vvJ"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/priority/LibMaxPQ.sol": {
+                "keccak256": "0x57844d18d78e8e555b2de3581a5e2908403e75252018b9c85d0274799e12a131",
+                "urls": [
+                    "bzz-raw://9125638cad4d136be39501e18307484f7b072ab0a882dc83da0b3a3569337014",
+                    "dweb:/ipfs/QmZ7Ho1edVXaPn2EwZwvrrwyHfqvZL1WUbt6ionX5GNX7V"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/priority/LibMinPQ.sol": {
+                "keccak256": "0x7ca7b9c2c57102005714da3bdb1684050afd3f3d1e90c9dd5929a005eb17efa3",
+                "urls": [
+                    "bzz-raw://e958a3990a39a77b71b84c241ac3342262349fa38fcbb68fb7f50ddab6d3ba97",
+                    "dweb:/ipfs/QmQggiqv5n3xPW2dChtqDw2yiRjPsukLWuM58jqcsVo9M4"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/lib/priority/LibPQ.sol": {
+                "keccak256": "0x4d4290087995d669e80f8fdd405bfaae545323393c0c54689b84965ffb87303e",
+                "urls": [
+                    "bzz-raw://c21b563f6bf23afacb38fc97ab94d1afe12e4ad3dfde96d4484068bf26b13a2c",
+                    "dweb:/ipfs/Qmd5d3EnZwaSRnjG4ZFH2X8HKgymzd6vQgus8A6oEoh5pJ"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/structs/Checkpoint.sol": {
+                "keccak256": "0x1982a747516dce183434bbf0e96b5b1fedbf3a90928beffcc046cadf47ee0746",
+                "urls": [
+                    "bzz-raw://253b9df56334aae80fe4a0da805e4fdc3d186fb2624edade864ae06bfd472f2a",
+                    "dweb:/ipfs/QmVAaz1ViF96LjM9Aknn3vtwQ5a5oDiJRZP47ddJ1V9Fww"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/structs/FvmAddress.sol": {
+                "keccak256": "0xfc8c16b96bd5b7d4a163f586bd36936f7170304de70aa487a0b11c60e5ac9069",
+                "urls": [
+                    "bzz-raw://6b6572d5f28a9fa12ff91d45601c063cdaf68a12b9f8e46131c6dc4cd28255ac",
+                    "dweb:/ipfs/QmSC8gRWVuPKjobgDDyHbm2cmcPN8pWzbEmXKmdMZR8YKu"
+                ],
+                "license": "MIT OR Apache-2.0"
+            },
+            "src/structs/Subnet.sol": {
+                "keccak256": "0x1ddb626039baf4a4411f06b5340aaa80dcd65e9980da7673b73ab16633d871ce",
+                "urls": [
+                    "bzz-raw://af017eef4cb46262ac29b4cf47faa1fc5d2b61970ec7d6d021eae4cf45b5577b",
+                    "dweb:/ipfs/QmZJiA2t934fbe62513neQYzxSNswnCRTJybp7d6X2RyWR"
+                ],
+                "license": "MIT OR Apache-2.0"
+            }
+        },
+        "version": 1
+    },
+    "ast": {
+        "absolutePath": "src/lib/CheckpointHelper.sol",
+        "id": 39789,
+        "exportedSymbols": {
+            "BottomUpCheckpoint": [46963],
+            "CheckpointHelper": [39788],
+            "CrossMsg": [46985],
+            "EMPTY_HASH": [36316],
+            "SubnetID": [47039]
+        },
+        "nodeType": "SourceUnit",
+        "src": "46:1065:55",
+        "nodes": [
+            {
+                "id": 39727,
+                "nodeType": "PragmaDirective",
+                "src": "46:23:55",
+                "nodes": [],
+                "literals": ["solidity", "0.8", ".19"]
+            },
+            {
+                "id": 39729,
+                "nodeType": "ImportDirective",
+                "src": "71:54:55",
+                "nodes": [],
+                "absolutePath": "src/constants/Constants.sol",
+                "file": "../constants/Constants.sol",
+                "nameLocation": "-1:-1:-1",
+                "scope": 39789,
+                "sourceUnit": 36332,
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 39728,
+                            "name": "EMPTY_HASH",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 36316,
+                            "src": "79:10:55",
+                            "typeDescriptions": {}
+                        },
+                        "nameLocation": "-1:-1:-1"
+                    }
+                ],
+                "unitAlias": ""
+            },
+            {
+                "id": 39731,
+                "nodeType": "ImportDirective",
+                "src": "126:47:55",
+                "nodes": [],
+                "absolutePath": "src/structs/Subnet.sol",
+                "file": "../structs/Subnet.sol",
+                "nameLocation": "-1:-1:-1",
+                "scope": 39789,
+                "sourceUnit": 47172,
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 39730,
                             "name": "SubnetID",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 46869,
-                            "src": "533:8:55",
-                            "typeDescriptions": {
-                              "typeIdentifier": "t_type$_t_struct$_SubnetID_$46869_storage_ptr_$",
-                              "typeString": "type(struct SubnetID storage pointer)"
-                            }
-                          },
-                          "id": 39578,
-                          "isConstant": false,
-                          "isLValue": false,
-                          "isPure": true,
-                          "kind": "structConstructorCall",
-                          "lValueRequested": false,
-                          "nameLocations": [],
-                          "names": [],
-                          "nodeType": "FunctionCall",
-                          "src": "533:29:55",
-                          "tryCall": false,
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_SubnetID_$46869_memory_ptr",
-                            "typeString": "struct SubnetID memory"
-                          }
+                            "referencedDeclaration": 47039,
+                            "src": "134:8:55",
+                            "typeDescriptions": {}
                         },
-                        {
-                          "hexValue": "30",
-                          "id": 39579,
-                          "isConstant": false,
-                          "isLValue": false,
-                          "isPure": true,
-                          "kind": "number",
-                          "lValueRequested": false,
-                          "nodeType": "Literal",
-                          "src": "597:1:55",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          },
-                          "value": "0"
-                        },
-                        {
-                          "hexValue": "30",
-                          "id": 39580,
-                          "isConstant": false,
-                          "isLValue": false,
-                          "isPure": true,
-                          "kind": "number",
-                          "lValueRequested": false,
-                          "nodeType": "Literal",
-                          "src": "631:1:55",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          },
-                          "value": "0"
-                        },
-                        {
-                          "hexValue": "30",
-                          "id": 39581,
-                          "isConstant": false,
-                          "isLValue": false,
-                          "isPure": true,
-                          "kind": "number",
-                          "lValueRequested": false,
-                          "nodeType": "Literal",
-                          "src": "679:1:55",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          },
-                          "value": "0"
-                        },
-                        {
-                          "hexValue": "30",
-                          "id": 39582,
-                          "isConstant": false,
-                          "isLValue": false,
-                          "isPure": true,
-                          "kind": "number",
-                          "lValueRequested": false,
-                          "nodeType": "Literal",
-                          "src": "721:1:55",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          },
-                          "value": "0"
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": [
-                          {
-                            "typeIdentifier": "t_struct$_SubnetID_$46869_memory_ptr",
-                            "typeString": "struct SubnetID memory"
-                          },
-                          {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          },
-                          {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          },
-                          {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          },
-                          {
-                            "typeIdentifier": "t_rational_0_by_1",
-                            "typeString": "int_const 0"
-                          }
-                        ],
-                        "id": 39570,
-                        "name": "BottomUpCheckpoint",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 46793,
-                        "src": "482:18:55",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46793_storage_ptr_$",
-                          "typeString": "type(struct BottomUpCheckpoint storage pointer)"
-                        }
-                      },
-                      "id": 39583,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": true,
-                      "kind": "structConstructorCall",
-                      "lValueRequested": false,
-                      "nameLocations": [
-                        "523:8:55",
-                        "584:11:55",
-                        "620:9:55",
-                        "654:23:55",
-                        "702:17:55"
-                      ],
-                      "names": [
-                        "subnetID",
-                        "blockHeight",
-                        "blockHash",
-                        "nextConfigurationNumber",
-                        "crossMessagesHash"
-                      ],
-                      "nodeType": "FunctionCall",
-                      "src": "482:259:55",
-                      "tryCall": false,
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                        "typeString": "struct BottomUpCheckpoint memory"
-                      }
+                        "nameLocation": "-1:-1:-1"
                     }
-                  ],
-                  "expression": {
-                    "argumentTypes": [
-                      {
-                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                        "typeString": "struct BottomUpCheckpoint memory"
-                      }
-                    ],
-                    "expression": {
-                      "id": 39568,
-                      "name": "abi",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": -1,
-                      "src": "454:3:55",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_magic_abi",
-                        "typeString": "abi"
-                      }
-                    },
-                    "id": 39569,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": true,
-                    "lValueRequested": false,
-                    "memberLocation": "458:6:55",
-                    "memberName": "encode",
-                    "nodeType": "MemberAccess",
-                    "src": "454:10:55",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
-                      "typeString": "function () pure returns (bytes memory)"
-                    }
-                  },
-                  "id": 39584,
-                  "isConstant": false,
-                  "isLValue": false,
-                  "isPure": true,
-                  "kind": "functionCall",
-                  "lValueRequested": false,
-                  "nameLocations": [],
-                  "names": [],
-                  "nodeType": "FunctionCall",
-                  "src": "454:301:55",
-                  "tryCall": false,
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bytes_memory_ptr",
-                    "typeString": "bytes memory"
-                  }
-                }
-              ],
-              "expression": {
-                "argumentTypes": [
-                  {
-                    "typeIdentifier": "t_bytes_memory_ptr",
-                    "typeString": "bytes memory"
-                  }
                 ],
-                "id": 39567,
-                "name": "keccak256",
-                "nodeType": "Identifier",
-                "overloadedDeclarations": [],
-                "referencedDeclaration": -8,
-                "src": "431:9:55",
-                "typeDescriptions": {
-                  "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
-                  "typeString": "function (bytes memory) pure returns (bytes32)"
-                }
-              },
-              "id": 39585,
-              "isConstant": false,
-              "isLValue": false,
-              "isPure": true,
-              "kind": "functionCall",
-              "lValueRequested": false,
-              "nameLocations": [],
-              "names": [],
-              "nodeType": "FunctionCall",
-              "src": "431:334:55",
-              "tryCall": false,
-              "typeDescriptions": {
-                "typeIdentifier": "t_bytes32",
-                "typeString": "bytes32"
-              }
+                "unitAlias": ""
             },
-            "visibility": "private"
-          },
-          {
-            "id": 39602,
-            "nodeType": "FunctionDefinition",
-            "src": "772:157:55",
-            "nodes": [],
-            "body": {
-              "id": 39601,
-              "nodeType": "Block",
-              "src": "864:65:55",
-              "nodes": [],
-              "statements": [
-                {
-                  "expression": {
-                    "arguments": [
-                      {
-                        "arguments": [
-                          {
-                            "id": 39597,
-                            "name": "bottomupCheckpoint",
+            {
+                "id": 39734,
+                "nodeType": "ImportDirective",
+                "src": "174:71:55",
+                "nodes": [],
+                "absolutePath": "src/structs/Checkpoint.sol",
+                "file": "../structs/Checkpoint.sol",
+                "nameLocation": "-1:-1:-1",
+                "scope": 39789,
+                "sourceUnit": 47003,
+                "symbolAliases": [
+                    {
+                        "foreign": {
+                            "id": 39732,
+                            "name": "BottomUpCheckpoint",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 39589,
-                            "src": "902:18:55",
-                            "typeDescriptions": {
-                              "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                              "typeString": "struct BottomUpCheckpoint memory"
-                            }
-                          }
-                        ],
-                        "expression": {
-                          "argumentTypes": [
-                            {
-                              "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                              "typeString": "struct BottomUpCheckpoint memory"
-                            }
-                          ],
-                          "expression": {
-                            "id": 39595,
-                            "name": "abi",
-                            "nodeType": "Identifier",
-                            "overloadedDeclarations": [],
-                            "referencedDeclaration": -1,
-                            "src": "891:3:55",
-                            "typeDescriptions": {
-                              "typeIdentifier": "t_magic_abi",
-                              "typeString": "abi"
-                            }
-                          },
-                          "id": 39596,
-                          "isConstant": false,
-                          "isLValue": false,
-                          "isPure": true,
-                          "lValueRequested": false,
-                          "memberLocation": "895:6:55",
-                          "memberName": "encode",
-                          "nodeType": "MemberAccess",
-                          "src": "891:10:55",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
-                            "typeString": "function () pure returns (bytes memory)"
-                          }
+                            "referencedDeclaration": 46963,
+                            "src": "182:18:55",
+                            "typeDescriptions": {}
                         },
-                        "id": 39598,
-                        "isConstant": false,
-                        "isLValue": false,
-                        "isPure": false,
-                        "kind": "functionCall",
-                        "lValueRequested": false,
-                        "nameLocations": [],
-                        "names": [],
-                        "nodeType": "FunctionCall",
-                        "src": "891:30:55",
-                        "tryCall": false,
+                        "nameLocation": "-1:-1:-1"
+                    },
+                    {
+                        "foreign": {
+                            "id": 39733,
+                            "name": "CrossMsg",
+                            "nodeType": "Identifier",
+                            "overloadedDeclarations": [],
+                            "referencedDeclaration": 46985,
+                            "src": "202:8:55",
+                            "typeDescriptions": {}
+                        },
+                        "nameLocation": "-1:-1:-1"
+                    }
+                ],
+                "unitAlias": ""
+            },
+            {
+                "id": 39788,
+                "nodeType": "ContractDefinition",
+                "src": "335:775:55",
+                "nodes": [
+                    {
+                        "id": 39756,
+                        "nodeType": "VariableDeclaration",
+                        "src": "366:399:55",
+                        "nodes": [],
+                        "constant": true,
+                        "mutability": "constant",
+                        "name": "EMPTY_BOTTOMUPCHECKPOINT_HASH",
+                        "nameLocation": "391:29:55",
+                        "scope": 39788,
+                        "stateVariable": true,
+                        "storageLocation": "default",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_bytes_memory_ptr",
-                          "typeString": "bytes memory"
-                        }
-                      }
-                    ],
-                    "expression": {
-                      "argumentTypes": [
-                        {
-                          "typeIdentifier": "t_bytes_memory_ptr",
-                          "typeString": "bytes memory"
-                        }
-                      ],
-                      "id": 39594,
-                      "name": "keccak256",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": -8,
-                      "src": "881:9:55",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
-                        "typeString": "function (bytes memory) pure returns (bytes32)"
-                      }
+                            "typeIdentifier": "t_bytes32",
+                            "typeString": "bytes32"
+                        },
+                        "typeName": {
+                            "id": 39736,
+                            "name": "bytes32",
+                            "nodeType": "ElementaryTypeName",
+                            "src": "366:7:55",
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_bytes32",
+                                "typeString": "bytes32"
+                            }
+                        },
+                        "value": {
+                            "arguments": [
+                                {
+                                    "arguments": [
+                                        {
+                                            "arguments": [
+                                                {
+                                                    "arguments": [
+                                                        {
+                                                            "hexValue": "30",
+                                                            "id": 39742,
+                                                            "isConstant": false,
+                                                            "isLValue": false,
+                                                            "isPure": true,
+                                                            "kind": "number",
+                                                            "lValueRequested": false,
+                                                            "nodeType": "Literal",
+                                                            "src": "542:1:55",
+                                                            "typeDescriptions": {
+                                                                "typeIdentifier": "t_rational_0_by_1",
+                                                                "typeString": "int_const 0"
+                                                            },
+                                                            "value": "0"
+                                                        },
+                                                        {
+                                                            "arguments": [
+                                                                {
+                                                                    "hexValue": "30",
+                                                                    "id": 39746,
+                                                                    "isConstant": false,
+                                                                    "isLValue": false,
+                                                                    "isPure": true,
+                                                                    "kind": "number",
+                                                                    "lValueRequested": false,
+                                                                    "nodeType": "Literal",
+                                                                    "src": "559:1:55",
+                                                                    "typeDescriptions": {
+                                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                                        "typeString": "int_const 0"
+                                                                    },
+                                                                    "value": "0"
+                                                                }
+                                                            ],
+                                                            "expression": {
+                                                                "argumentTypes": [
+                                                                    {
+                                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                                        "typeString": "int_const 0"
+                                                                    }
+                                                                ],
+                                                                "id": 39745,
+                                                                "isConstant": false,
+                                                                "isLValue": false,
+                                                                "isPure": true,
+                                                                "lValueRequested": false,
+                                                                "nodeType": "NewExpression",
+                                                                "src": "545:13:55",
+                                                                "typeDescriptions": {
+                                                                    "typeIdentifier": "t_function_objectcreation_pure$_t_uint256_$returns$_t_array$_t_address_$dyn_memory_ptr_$",
+                                                                    "typeString": "function (uint256) pure returns (address[] memory)"
+                                                                },
+                                                                "typeName": {
+                                                                    "baseType": {
+                                                                        "id": 39743,
+                                                                        "name": "address",
+                                                                        "nodeType": "ElementaryTypeName",
+                                                                        "src": "549:7:55",
+                                                                        "stateMutability": "nonpayable",
+                                                                        "typeDescriptions": {
+                                                                            "typeIdentifier": "t_address",
+                                                                            "typeString": "address"
+                                                                        }
+                                                                    },
+                                                                    "id": 39744,
+                                                                    "nodeType": "ArrayTypeName",
+                                                                    "src": "549:9:55",
+                                                                    "typeDescriptions": {
+                                                                        "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                                                                        "typeString": "address[]"
+                                                                    }
+                                                                }
+                                                            },
+                                                            "id": 39747,
+                                                            "isConstant": false,
+                                                            "isLValue": false,
+                                                            "isPure": true,
+                                                            "kind": "functionCall",
+                                                            "lValueRequested": false,
+                                                            "nameLocations": [],
+                                                            "names": [],
+                                                            "nodeType": "FunctionCall",
+                                                            "src": "545:16:55",
+                                                            "tryCall": false,
+                                                            "typeDescriptions": {
+                                                                "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                                                                "typeString": "address[] memory"
+                                                            }
+                                                        }
+                                                    ],
+                                                    "expression": {
+                                                        "argumentTypes": [
+                                                            {
+                                                                "typeIdentifier": "t_rational_0_by_1",
+                                                                "typeString": "int_const 0"
+                                                            },
+                                                            {
+                                                                "typeIdentifier": "t_array$_t_address_$dyn_memory_ptr",
+                                                                "typeString": "address[] memory"
+                                                            }
+                                                        ],
+                                                        "id": 39741,
+                                                        "name": "SubnetID",
+                                                        "nodeType": "Identifier",
+                                                        "overloadedDeclarations": [],
+                                                        "referencedDeclaration": 47039,
+                                                        "src": "533:8:55",
+                                                        "typeDescriptions": {
+                                                            "typeIdentifier": "t_type$_t_struct$_SubnetID_$47039_storage_ptr_$",
+                                                            "typeString": "type(struct SubnetID storage pointer)"
+                                                        }
+                                                    },
+                                                    "id": 39748,
+                                                    "isConstant": false,
+                                                    "isLValue": false,
+                                                    "isPure": true,
+                                                    "kind": "structConstructorCall",
+                                                    "lValueRequested": false,
+                                                    "nameLocations": [],
+                                                    "names": [],
+                                                    "nodeType": "FunctionCall",
+                                                    "src": "533:29:55",
+                                                    "tryCall": false,
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_struct$_SubnetID_$47039_memory_ptr",
+                                                        "typeString": "struct SubnetID memory"
+                                                    }
+                                                },
+                                                {
+                                                    "hexValue": "30",
+                                                    "id": 39749,
+                                                    "isConstant": false,
+                                                    "isLValue": false,
+                                                    "isPure": true,
+                                                    "kind": "number",
+                                                    "lValueRequested": false,
+                                                    "nodeType": "Literal",
+                                                    "src": "597:1:55",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    "value": "0"
+                                                },
+                                                {
+                                                    "hexValue": "30",
+                                                    "id": 39750,
+                                                    "isConstant": false,
+                                                    "isLValue": false,
+                                                    "isPure": true,
+                                                    "kind": "number",
+                                                    "lValueRequested": false,
+                                                    "nodeType": "Literal",
+                                                    "src": "631:1:55",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    "value": "0"
+                                                },
+                                                {
+                                                    "hexValue": "30",
+                                                    "id": 39751,
+                                                    "isConstant": false,
+                                                    "isLValue": false,
+                                                    "isPure": true,
+                                                    "kind": "number",
+                                                    "lValueRequested": false,
+                                                    "nodeType": "Literal",
+                                                    "src": "679:1:55",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    "value": "0"
+                                                },
+                                                {
+                                                    "hexValue": "30",
+                                                    "id": 39752,
+                                                    "isConstant": false,
+                                                    "isLValue": false,
+                                                    "isPure": true,
+                                                    "kind": "number",
+                                                    "lValueRequested": false,
+                                                    "nodeType": "Literal",
+                                                    "src": "721:1:55",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    "value": "0"
+                                                }
+                                            ],
+                                            "expression": {
+                                                "argumentTypes": [
+                                                    {
+                                                        "typeIdentifier": "t_struct$_SubnetID_$47039_memory_ptr",
+                                                        "typeString": "struct SubnetID memory"
+                                                    },
+                                                    {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    },
+                                                    {
+                                                        "typeIdentifier": "t_rational_0_by_1",
+                                                        "typeString": "int_const 0"
+                                                    }
+                                                ],
+                                                "id": 39740,
+                                                "name": "BottomUpCheckpoint",
+                                                "nodeType": "Identifier",
+                                                "overloadedDeclarations": [],
+                                                "referencedDeclaration": 46963,
+                                                "src": "482:18:55",
+                                                "typeDescriptions": {
+                                                    "typeIdentifier": "t_type$_t_struct$_BottomUpCheckpoint_$46963_storage_ptr_$",
+                                                    "typeString": "type(struct BottomUpCheckpoint storage pointer)"
+                                                }
+                                            },
+                                            "id": 39753,
+                                            "isConstant": false,
+                                            "isLValue": false,
+                                            "isPure": true,
+                                            "kind": "structConstructorCall",
+                                            "lValueRequested": false,
+                                            "nameLocations": [
+                                                "523:8:55",
+                                                "584:11:55",
+                                                "620:9:55",
+                                                "654:23:55",
+                                                "702:17:55"
+                                            ],
+                                            "names": [
+                                                "subnetID",
+                                                "blockHeight",
+                                                "blockHash",
+                                                "nextConfigurationNumber",
+                                                "crossMessagesHash"
+                                            ],
+                                            "nodeType": "FunctionCall",
+                                            "src": "482:259:55",
+                                            "tryCall": false,
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                                "typeString": "struct BottomUpCheckpoint memory"
+                                            }
+                                        }
+                                    ],
+                                    "expression": {
+                                        "argumentTypes": [
+                                            {
+                                                "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                                "typeString": "struct BottomUpCheckpoint memory"
+                                            }
+                                        ],
+                                        "expression": {
+                                            "id": 39738,
+                                            "name": "abi",
+                                            "nodeType": "Identifier",
+                                            "overloadedDeclarations": [],
+                                            "referencedDeclaration": -1,
+                                            "src": "454:3:55",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_magic_abi",
+                                                "typeString": "abi"
+                                            }
+                                        },
+                                        "id": 39739,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": true,
+                                        "lValueRequested": false,
+                                        "memberLocation": "458:6:55",
+                                        "memberName": "encode",
+                                        "nodeType": "MemberAccess",
+                                        "src": "454:10:55",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
+                                            "typeString": "function () pure returns (bytes memory)"
+                                        }
+                                    },
+                                    "id": 39754,
+                                    "isConstant": false,
+                                    "isLValue": false,
+                                    "isPure": true,
+                                    "kind": "functionCall",
+                                    "lValueRequested": false,
+                                    "nameLocations": [],
+                                    "names": [],
+                                    "nodeType": "FunctionCall",
+                                    "src": "454:301:55",
+                                    "tryCall": false,
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes_memory_ptr",
+                                        "typeString": "bytes memory"
+                                    }
+                                }
+                            ],
+                            "expression": {
+                                "argumentTypes": [
+                                    {
+                                        "typeIdentifier": "t_bytes_memory_ptr",
+                                        "typeString": "bytes memory"
+                                    }
+                                ],
+                                "id": 39737,
+                                "name": "keccak256",
+                                "nodeType": "Identifier",
+                                "overloadedDeclarations": [],
+                                "referencedDeclaration": -8,
+                                "src": "431:9:55",
+                                "typeDescriptions": {
+                                    "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                                    "typeString": "function (bytes memory) pure returns (bytes32)"
+                                }
+                            },
+                            "id": 39755,
+                            "isConstant": false,
+                            "isLValue": false,
+                            "isPure": true,
+                            "kind": "functionCall",
+                            "lValueRequested": false,
+                            "nameLocations": [],
+                            "names": [],
+                            "nodeType": "FunctionCall",
+                            "src": "431:334:55",
+                            "tryCall": false,
+                            "typeDescriptions": {
+                                "typeIdentifier": "t_bytes32",
+                                "typeString": "bytes32"
+                            }
+                        },
+                        "visibility": "private"
                     },
-                    "id": 39599,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "kind": "functionCall",
-                    "lValueRequested": false,
-                    "nameLocations": [],
-                    "names": [],
-                    "nodeType": "FunctionCall",
-                    "src": "881:41:55",
-                    "tryCall": false,
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "functionReturnParameters": 39593,
-                  "id": 39600,
-                  "nodeType": "Return",
-                  "src": "874:48:55"
-                }
-              ]
-            },
-            "functionSelector": "39aa47fb",
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "toHash",
-            "nameLocation": "781:6:55",
-            "parameters": {
-              "id": 39590,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 39589,
-                  "mutability": "mutable",
-                  "name": "bottomupCheckpoint",
-                  "nameLocation": "814:18:55",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 39602,
-                  "src": "788:44:55",
-                  "stateVariable": false,
-                  "storageLocation": "memory",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                    "typeString": "struct BottomUpCheckpoint"
-                  },
-                  "typeName": {
-                    "id": 39588,
-                    "nodeType": "UserDefinedTypeName",
-                    "pathNode": {
-                      "id": 39587,
-                      "name": "BottomUpCheckpoint",
-                      "nameLocations": [
-                        "788:18:55"
-                      ],
-                      "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46793,
-                      "src": "788:18:55"
-                    },
-                    "referencedDeclaration": 46793,
-                    "src": "788:18:55",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_storage_ptr",
-                      "typeString": "struct BottomUpCheckpoint"
-                    }
-                  },
-                  "visibility": "internal"
-                }
-              ],
-              "src": "787:46:55"
-            },
-            "returnParameters": {
-              "id": 39593,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 39592,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nameLocation": "-1:-1:-1",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 39602,
-                  "src": "855:7:55",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bytes32",
-                    "typeString": "bytes32"
-                  },
-                  "typeName": {
-                    "id": 39591,
-                    "name": "bytes32",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "855:7:55",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    }
-                  },
-                  "visibility": "internal"
-                }
-              ],
-              "src": "854:9:55"
-            },
-            "scope": 39618,
-            "stateMutability": "pure",
-            "virtual": false,
-            "visibility": "public"
-          },
-          {
-            "id": 39617,
-            "nodeType": "FunctionDefinition",
-            "src": "935:173:55",
-            "nodes": [],
-            "body": {
-              "id": 39616,
-              "nodeType": "Block",
-              "src": "1025:83:55",
-              "nodes": [],
-              "statements": [
-                {
-                  "expression": {
-                    "commonType": {
-                      "typeIdentifier": "t_bytes32",
-                      "typeString": "bytes32"
-                    },
-                    "id": 39614,
-                    "isConstant": false,
-                    "isLValue": false,
-                    "isPure": false,
-                    "lValueRequested": false,
-                    "leftExpression": {
-                      "arguments": [
-                        {
-                          "id": 39611,
-                          "name": "bottomUpCheckpoint",
-                          "nodeType": "Identifier",
-                          "overloadedDeclarations": [],
-                          "referencedDeclaration": 39605,
-                          "src": "1049:18:55",
-                          "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                            "typeString": "struct BottomUpCheckpoint memory"
-                          }
-                        }
-                      ],
-                      "expression": {
-                        "argumentTypes": [
-                          {
-                            "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                            "typeString": "struct BottomUpCheckpoint memory"
-                          }
-                        ],
-                        "id": 39610,
+                    {
+                        "id": 39772,
+                        "nodeType": "FunctionDefinition",
+                        "src": "772:157:55",
+                        "nodes": [],
+                        "body": {
+                            "id": 39771,
+                            "nodeType": "Block",
+                            "src": "864:65:55",
+                            "nodes": [],
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "arguments": [
+                                            {
+                                                "arguments": [
+                                                    {
+                                                        "id": 39767,
+                                                        "name": "bottomupCheckpoint",
+                                                        "nodeType": "Identifier",
+                                                        "overloadedDeclarations": [],
+                                                        "referencedDeclaration": 39759,
+                                                        "src": "902:18:55",
+                                                        "typeDescriptions": {
+                                                            "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                                            "typeString": "struct BottomUpCheckpoint memory"
+                                                        }
+                                                    }
+                                                ],
+                                                "expression": {
+                                                    "argumentTypes": [
+                                                        {
+                                                            "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                                            "typeString": "struct BottomUpCheckpoint memory"
+                                                        }
+                                                    ],
+                                                    "expression": {
+                                                        "id": 39765,
+                                                        "name": "abi",
+                                                        "nodeType": "Identifier",
+                                                        "overloadedDeclarations": [],
+                                                        "referencedDeclaration": -1,
+                                                        "src": "891:3:55",
+                                                        "typeDescriptions": {
+                                                            "typeIdentifier": "t_magic_abi",
+                                                            "typeString": "abi"
+                                                        }
+                                                    },
+                                                    "id": 39766,
+                                                    "isConstant": false,
+                                                    "isLValue": false,
+                                                    "isPure": true,
+                                                    "lValueRequested": false,
+                                                    "memberLocation": "895:6:55",
+                                                    "memberName": "encode",
+                                                    "nodeType": "MemberAccess",
+                                                    "src": "891:10:55",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_function_abiencode_pure$__$returns$_t_bytes_memory_ptr_$",
+                                                        "typeString": "function () pure returns (bytes memory)"
+                                                    }
+                                                },
+                                                "id": 39768,
+                                                "isConstant": false,
+                                                "isLValue": false,
+                                                "isPure": false,
+                                                "kind": "functionCall",
+                                                "lValueRequested": false,
+                                                "nameLocations": [],
+                                                "names": [],
+                                                "nodeType": "FunctionCall",
+                                                "src": "891:30:55",
+                                                "tryCall": false,
+                                                "typeDescriptions": {
+                                                    "typeIdentifier": "t_bytes_memory_ptr",
+                                                    "typeString": "bytes memory"
+                                                }
+                                            }
+                                        ],
+                                        "expression": {
+                                            "argumentTypes": [
+                                                {
+                                                    "typeIdentifier": "t_bytes_memory_ptr",
+                                                    "typeString": "bytes memory"
+                                                }
+                                            ],
+                                            "id": 39764,
+                                            "name": "keccak256",
+                                            "nodeType": "Identifier",
+                                            "overloadedDeclarations": [],
+                                            "referencedDeclaration": -8,
+                                            "src": "881:9:55",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_function_keccak256_pure$_t_bytes_memory_ptr_$returns$_t_bytes32_$",
+                                                "typeString": "function (bytes memory) pure returns (bytes32)"
+                                            }
+                                        },
+                                        "id": 39769,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": false,
+                                        "kind": "functionCall",
+                                        "lValueRequested": false,
+                                        "nameLocations": [],
+                                        "names": [],
+                                        "nodeType": "FunctionCall",
+                                        "src": "881:41:55",
+                                        "tryCall": false,
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "functionReturnParameters": 39763,
+                                    "id": 39770,
+                                    "nodeType": "Return",
+                                    "src": "874:48:55"
+                                }
+                            ]
+                        },
+                        "functionSelector": "39aa47fb",
+                        "implemented": true,
+                        "kind": "function",
+                        "modifiers": [],
                         "name": "toHash",
-                        "nodeType": "Identifier",
-                        "overloadedDeclarations": [],
-                        "referencedDeclaration": 39602,
-                        "src": "1042:6:55",
-                        "typeDescriptions": {
-                          "typeIdentifier": "t_function_internal_pure$_t_struct$_BottomUpCheckpoint_$46793_memory_ptr_$returns$_t_bytes32_$",
-                          "typeString": "function (struct BottomUpCheckpoint memory) pure returns (bytes32)"
-                        }
-                      },
-                      "id": 39612,
-                      "isConstant": false,
-                      "isLValue": false,
-                      "isPure": false,
-                      "kind": "functionCall",
-                      "lValueRequested": false,
-                      "nameLocations": [],
-                      "names": [],
-                      "nodeType": "FunctionCall",
-                      "src": "1042:26:55",
-                      "tryCall": false,
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bytes32",
-                        "typeString": "bytes32"
-                      }
+                        "nameLocation": "781:6:55",
+                        "parameters": {
+                            "id": 39760,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 39759,
+                                    "mutability": "mutable",
+                                    "name": "bottomupCheckpoint",
+                                    "nameLocation": "814:18:55",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 39772,
+                                    "src": "788:44:55",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                        "typeString": "struct BottomUpCheckpoint"
+                                    },
+                                    "typeName": {
+                                        "id": 39758,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 39757,
+                                            "name": "BottomUpCheckpoint",
+                                            "nameLocations": ["788:18:55"],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 46963,
+                                            "src": "788:18:55"
+                                        },
+                                        "referencedDeclaration": 46963,
+                                        "src": "788:18:55",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_storage_ptr",
+                                            "typeString": "struct BottomUpCheckpoint"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "787:46:55"
+                        },
+                        "returnParameters": {
+                            "id": 39763,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 39762,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 39772,
+                                    "src": "855:7:55",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bytes32",
+                                        "typeString": "bytes32"
+                                    },
+                                    "typeName": {
+                                        "id": 39761,
+                                        "name": "bytes32",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "855:7:55",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "854:9:55"
+                        },
+                        "scope": 39788,
+                        "stateMutability": "pure",
+                        "virtual": false,
+                        "visibility": "public"
                     },
-                    "nodeType": "BinaryOperation",
-                    "operator": "==",
-                    "rightExpression": {
-                      "id": 39613,
-                      "name": "EMPTY_BOTTOMUPCHECKPOINT_HASH",
-                      "nodeType": "Identifier",
-                      "overloadedDeclarations": [],
-                      "referencedDeclaration": 39586,
-                      "src": "1072:29:55",
-                      "typeDescriptions": {
-                        "typeIdentifier": "t_bytes32",
-                        "typeString": "bytes32"
-                      }
-                    },
-                    "src": "1042:59:55",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
+                    {
+                        "id": 39787,
+                        "nodeType": "FunctionDefinition",
+                        "src": "935:173:55",
+                        "nodes": [],
+                        "body": {
+                            "id": 39786,
+                            "nodeType": "Block",
+                            "src": "1025:83:55",
+                            "nodes": [],
+                            "statements": [
+                                {
+                                    "expression": {
+                                        "commonType": {
+                                            "typeIdentifier": "t_bytes32",
+                                            "typeString": "bytes32"
+                                        },
+                                        "id": 39784,
+                                        "isConstant": false,
+                                        "isLValue": false,
+                                        "isPure": false,
+                                        "lValueRequested": false,
+                                        "leftExpression": {
+                                            "arguments": [
+                                                {
+                                                    "id": 39781,
+                                                    "name": "bottomUpCheckpoint",
+                                                    "nodeType": "Identifier",
+                                                    "overloadedDeclarations": [],
+                                                    "referencedDeclaration": 39775,
+                                                    "src": "1049:18:55",
+                                                    "typeDescriptions": {
+                                                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                                        "typeString": "struct BottomUpCheckpoint memory"
+                                                    }
+                                                }
+                                            ],
+                                            "expression": {
+                                                "argumentTypes": [
+                                                    {
+                                                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                                        "typeString": "struct BottomUpCheckpoint memory"
+                                                    }
+                                                ],
+                                                "id": 39780,
+                                                "name": "toHash",
+                                                "nodeType": "Identifier",
+                                                "overloadedDeclarations": [],
+                                                "referencedDeclaration": 39772,
+                                                "src": "1042:6:55",
+                                                "typeDescriptions": {
+                                                    "typeIdentifier": "t_function_internal_pure$_t_struct$_BottomUpCheckpoint_$46963_memory_ptr_$returns$_t_bytes32_$",
+                                                    "typeString": "function (struct BottomUpCheckpoint memory) pure returns (bytes32)"
+                                                }
+                                            },
+                                            "id": 39782,
+                                            "isConstant": false,
+                                            "isLValue": false,
+                                            "isPure": false,
+                                            "kind": "functionCall",
+                                            "lValueRequested": false,
+                                            "nameLocations": [],
+                                            "names": [],
+                                            "nodeType": "FunctionCall",
+                                            "src": "1042:26:55",
+                                            "tryCall": false,
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_bytes32",
+                                                "typeString": "bytes32"
+                                            }
+                                        },
+                                        "nodeType": "BinaryOperation",
+                                        "operator": "==",
+                                        "rightExpression": {
+                                            "id": 39783,
+                                            "name": "EMPTY_BOTTOMUPCHECKPOINT_HASH",
+                                            "nodeType": "Identifier",
+                                            "overloadedDeclarations": [],
+                                            "referencedDeclaration": 39756,
+                                            "src": "1072:29:55",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_bytes32",
+                                                "typeString": "bytes32"
+                                            }
+                                        },
+                                        "src": "1042:59:55",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        }
+                                    },
+                                    "functionReturnParameters": 39779,
+                                    "id": 39785,
+                                    "nodeType": "Return",
+                                    "src": "1035:66:55"
+                                }
+                            ]
+                        },
+                        "functionSelector": "45d51b12",
+                        "implemented": true,
+                        "kind": "function",
+                        "modifiers": [],
+                        "name": "isEmpty",
+                        "nameLocation": "944:7:55",
+                        "parameters": {
+                            "id": 39776,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 39775,
+                                    "mutability": "mutable",
+                                    "name": "bottomUpCheckpoint",
+                                    "nameLocation": "978:18:55",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 39787,
+                                    "src": "952:44:55",
+                                    "stateVariable": false,
+                                    "storageLocation": "memory",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_memory_ptr",
+                                        "typeString": "struct BottomUpCheckpoint"
+                                    },
+                                    "typeName": {
+                                        "id": 39774,
+                                        "nodeType": "UserDefinedTypeName",
+                                        "pathNode": {
+                                            "id": 39773,
+                                            "name": "BottomUpCheckpoint",
+                                            "nameLocations": ["952:18:55"],
+                                            "nodeType": "IdentifierPath",
+                                            "referencedDeclaration": 46963,
+                                            "src": "952:18:55"
+                                        },
+                                        "referencedDeclaration": 46963,
+                                        "src": "952:18:55",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46963_storage_ptr",
+                                            "typeString": "struct BottomUpCheckpoint"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "951:46:55"
+                        },
+                        "returnParameters": {
+                            "id": 39779,
+                            "nodeType": "ParameterList",
+                            "parameters": [
+                                {
+                                    "constant": false,
+                                    "id": 39778,
+                                    "mutability": "mutable",
+                                    "name": "",
+                                    "nameLocation": "-1:-1:-1",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 39787,
+                                    "src": "1019:4:55",
+                                    "stateVariable": false,
+                                    "storageLocation": "default",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_bool",
+                                        "typeString": "bool"
+                                    },
+                                    "typeName": {
+                                        "id": 39777,
+                                        "name": "bool",
+                                        "nodeType": "ElementaryTypeName",
+                                        "src": "1019:4:55",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_bool",
+                                            "typeString": "bool"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                }
+                            ],
+                            "src": "1018:6:55"
+                        },
+                        "scope": 39788,
+                        "stateMutability": "pure",
+                        "virtual": false,
+                        "visibility": "public"
                     }
-                  },
-                  "functionReturnParameters": 39609,
-                  "id": 39615,
-                  "nodeType": "Return",
-                  "src": "1035:66:55"
-                }
-              ]
-            },
-            "functionSelector": "45d51b12",
-            "implemented": true,
-            "kind": "function",
-            "modifiers": [],
-            "name": "isEmpty",
-            "nameLocation": "944:7:55",
-            "parameters": {
-              "id": 39606,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 39605,
-                  "mutability": "mutable",
-                  "name": "bottomUpCheckpoint",
-                  "nameLocation": "978:18:55",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 39617,
-                  "src": "952:44:55",
-                  "stateVariable": false,
-                  "storageLocation": "memory",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_memory_ptr",
-                    "typeString": "struct BottomUpCheckpoint"
-                  },
-                  "typeName": {
-                    "id": 39604,
-                    "nodeType": "UserDefinedTypeName",
-                    "pathNode": {
-                      "id": 39603,
-                      "name": "BottomUpCheckpoint",
-                      "nameLocations": [
-                        "952:18:55"
-                      ],
-                      "nodeType": "IdentifierPath",
-                      "referencedDeclaration": 46793,
-                      "src": "952:18:55"
-                    },
-                    "referencedDeclaration": 46793,
-                    "src": "952:18:55",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_struct$_BottomUpCheckpoint_$46793_storage_ptr",
-                      "typeString": "struct BottomUpCheckpoint"
-                    }
-                  },
-                  "visibility": "internal"
-                }
-              ],
-              "src": "951:46:55"
-            },
-            "returnParameters": {
-              "id": 39609,
-              "nodeType": "ParameterList",
-              "parameters": [
-                {
-                  "constant": false,
-                  "id": 39608,
-                  "mutability": "mutable",
-                  "name": "",
-                  "nameLocation": "-1:-1:-1",
-                  "nodeType": "VariableDeclaration",
-                  "scope": 39617,
-                  "src": "1019:4:55",
-                  "stateVariable": false,
-                  "storageLocation": "default",
-                  "typeDescriptions": {
-                    "typeIdentifier": "t_bool",
-                    "typeString": "bool"
-                  },
-                  "typeName": {
-                    "id": 39607,
-                    "name": "bool",
-                    "nodeType": "ElementaryTypeName",
-                    "src": "1019:4:55",
-                    "typeDescriptions": {
-                      "typeIdentifier": "t_bool",
-                      "typeString": "bool"
-                    }
-                  },
-                  "visibility": "internal"
-                }
-              ],
-              "src": "1018:6:55"
-            },
-            "scope": 39618,
-            "stateMutability": "pure",
-            "virtual": false,
-            "visibility": "public"
-          }
+                ],
+                "abstract": false,
+                "baseContracts": [],
+                "canonicalName": "CheckpointHelper",
+                "contractDependencies": [],
+                "contractKind": "library",
+                "documentation": {
+                    "id": 39735,
+                    "nodeType": "StructuredDocumentation",
+                    "src": "247:88:55",
+                    "text": "@title Helper library for manipulating Checkpoint struct\n @author LimeChain team"
+                },
+                "fullyImplemented": true,
+                "linearizedBaseContracts": [39788],
+                "name": "CheckpointHelper",
+                "nameLocation": "343:16:55",
+                "scope": 39789,
+                "usedErrors": []
+            }
         ],
-        "abstract": false,
-        "baseContracts": [],
-        "canonicalName": "CheckpointHelper",
-        "contractDependencies": [],
-        "contractKind": "library",
-        "documentation": {
-          "id": 39565,
-          "nodeType": "StructuredDocumentation",
-          "src": "247:88:55",
-          "text": "@title Helper library for manipulating Checkpoint struct\n @author LimeChain team"
-        },
-        "fullyImplemented": true,
-        "linearizedBaseContracts": [
-          39618
-        ],
-        "name": "CheckpointHelper",
-        "nameLocation": "343:16:55",
-        "scope": 39619,
-        "usedErrors": []
-      }
-    ],
-    "license": "MIT OR Apache-2.0"
-  },
-  "id": 55
+        "license": "MIT OR Apache-2.0"
+    },
+    "id": 55
 }
