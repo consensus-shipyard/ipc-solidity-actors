@@ -1,10 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {Test} from "forge-std/Test.sol";
-import {TestUtils} from "./TestUtils.sol";
-import {console} from "forge-std/console.sol";
 import "../src/errors/IPCErrors.sol";
+import {Test} from "forge-std/Test.sol";
 import {TestUtils} from "./TestUtils.sol";
 import {NumberContractFacetSeven, NumberContractFacetEight} from "./NumberContract.sol";
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
