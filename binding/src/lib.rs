@@ -4,6 +4,10 @@ mod convert;
 #[allow(clippy::all)]
 pub mod i_diamond;
 #[allow(clippy::all)]
+pub mod diamond_loupe_facet;
+#[allow(clippy::all)]
+pub mod diamond_cut_facet;
+#[allow(clippy::all)]
 pub mod gateway_diamond;
 #[allow(clippy::all)]
 pub mod gateway_manager_facet;
@@ -21,6 +25,10 @@ pub mod subnet_actor_getter_facet;
 pub mod subnet_actor_manager_facet;
 #[allow(clippy::all)]
 pub mod subnet_registry_diamond;
+#[allow(clippy::all)]
+pub mod register_subnet_facet;
+#[allow(clippy::all)]
+pub mod subnet_getter_facet;
 #[allow(clippy::all)]
 pub mod lib_staking;
 #[allow(clippy::all)]
