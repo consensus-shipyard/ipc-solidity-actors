@@ -44,6 +44,7 @@ fn main() {
         "SubnetActorManagerFacet",
         "SubnetRegistryDiamond",
         "RegisterSubnetFacet",
+        "SubnetGetterFacet",
         "LibStaking",
         "LibStakingChangeLog",
         "LibGateway",

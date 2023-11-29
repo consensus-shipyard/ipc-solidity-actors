@@ -28,6 +28,8 @@ pub mod subnet_registry_diamond;
 #[allow(clippy::all)]
 pub mod register_subnet_facet;
 #[allow(clippy::all)]
+pub mod subnet_getter_facet;
+#[allow(clippy::all)]
 pub mod lib_staking;
 #[allow(clippy::all)]
 pub mod lib_staking_change_log;
