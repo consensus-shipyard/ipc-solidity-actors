@@ -20,7 +20,7 @@ pub mod subnet_actor_getter_facet;
 #[allow(clippy::all)]
 pub mod subnet_actor_manager_facet;
 #[allow(clippy::all)]
-pub mod subnet_registry;
+pub mod subnet_registry_diamond;
 #[allow(clippy::all)]
 pub mod lib_staking;
 #[allow(clippy::all)]
