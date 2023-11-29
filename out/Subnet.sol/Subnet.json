@@ -10,59 +10,59 @@
     },
     "ast": {
         "absolutePath": "src/structs/Subnet.sol",
-        "id": 16335,
+        "id": 47119,
         "exportedSymbols": {
-            "AddressStakingReleases": [16267],
-            "BottomUpCheckpoint": [16126],
-            "CrossMsg": [16148],
-            "FvmAddress": [16172],
-            "IPCAddress": [16320],
-            "MaxPQ": [14636],
-            "Membership": [16334],
-            "MinPQ": [15254],
-            "ParentValidatorsTracker": [16313],
-            "StakingChange": [16231],
-            "StakingChangeLog": [16250],
-            "StakingChangeRequest": [16237],
-            "StakingOperation": [16223],
-            "StakingRelease": [16257],
-            "StakingReleaseQueue": [16277],
-            "Status": [6038],
-            "Subnet": [16219],
-            "SubnetID": [16202],
-            "Validator": [16327],
-            "ValidatorInfo": [16285],
-            "ValidatorSet": [16306]
+            "AddressStakingReleases": [47051],
+            "BottomUpCheckpoint": [46910],
+            "CrossMsg": [46932],
+            "FvmAddress": [46956],
+            "IPCAddress": [47104],
+            "MaxPQ": [45420],
+            "Membership": [47118],
+            "MinPQ": [46038],
+            "ParentValidatorsTracker": [47097],
+            "StakingChange": [47015],
+            "StakingChangeLog": [47034],
+            "StakingChangeRequest": [47021],
+            "StakingOperation": [47007],
+            "StakingRelease": [47041],
+            "StakingReleaseQueue": [47061],
+            "Status": [36822],
+            "Subnet": [47003],
+            "SubnetID": [46986],
+            "Validator": [47111],
+            "ValidatorInfo": [47069],
+            "ValidatorSet": [47090]
         },
         "nodeType": "SourceUnit",
-        "src": "46:4375:53",
+        "src": "46:4375:73",
         "nodes": [
             {
-                "id": 16181,
+                "id": 46965,
                 "nodeType": "PragmaDirective",
-                "src": "46:23:53",
+                "src": "46:23:73",
                 "nodes": [],
                 "literals": ["solidity", "0.8", ".19"]
             },
             {
-                "id": 16183,
+                "id": 46967,
                 "nodeType": "ImportDirective",
-                "src": "71:38:53",
+                "src": "71:38:73",
                 "nodes": [],
                 "absolutePath": "src/structs/Subnet.sol",
                 "file": "./Subnet.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 16335,
-                "sourceUnit": 16335,
+                "scope": 47119,
+                "sourceUnit": 47119,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 16182,
+                            "id": 46966,
                             "name": "SubnetID",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 16202,
-                            "src": "79:8:53",
+                            "referencedDeclaration": 46986,
+                            "src": "79:8:73",
                             "typeDescriptions": {}
                         },
                         "nameLocation": "-1:-1:-1"
@@ -71,24 +71,24 @@
                 "unitAlias": ""
             },
             {
-                "id": 16185,
+                "id": 46969,
                 "nodeType": "ImportDirective",
-                "src": "110:44:53",
+                "src": "110:44:73",
                 "nodes": [],
                 "absolutePath": "src/structs/FvmAddress.sol",
                 "file": "./FvmAddress.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 16335,
-                "sourceUnit": 16180,
+                "scope": 47119,
+                "sourceUnit": 46964,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 16184,
+                            "id": 46968,
                             "name": "FvmAddress",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 16172,
-                            "src": "118:10:53",
+                            "referencedDeclaration": 46956,
+                            "src": "118:10:73",
                             "typeDescriptions": {}
                         },
                         "nameLocation": "-1:-1:-1"
@@ -97,36 +97,36 @@
                 "unitAlias": ""
             },
             {
-                "id": 16188,
+                "id": 46972,
                 "nodeType": "ImportDirective",
-                "src": "155:62:53",
+                "src": "155:62:73",
                 "nodes": [],
                 "absolutePath": "src/structs/Checkpoint.sol",
                 "file": "./Checkpoint.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 16335,
-                "sourceUnit": 16166,
+                "scope": 47119,
+                "sourceUnit": 46950,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 16186,
+                            "id": 46970,
                             "name": "BottomUpCheckpoint",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 16126,
-                            "src": "163:18:53",
+                            "referencedDeclaration": 46910,
+                            "src": "163:18:73",
                             "typeDescriptions": {}
                         },
                         "nameLocation": "-1:-1:-1"
                     },
                     {
                         "foreign": {
-                            "id": 16187,
+                            "id": 46971,
                             "name": "CrossMsg",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 16148,
-                            "src": "183:8:53",
+                            "referencedDeclaration": 46932,
+                            "src": "183:8:73",
                             "typeDescriptions": {}
                         },
                         "nameLocation": "-1:-1:-1"
@@ -135,24 +135,24 @@
                 "unitAlias": ""
             },
             {
-                "id": 16190,
+                "id": 46974,
                 "nodeType": "ImportDirective",
-                "src": "218:43:53",
+                "src": "218:43:73",
                 "nodes": [],
                 "absolutePath": "src/enums/Status.sol",
                 "file": "../enums/Status.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 16335,
-                "sourceUnit": 6039,
+                "scope": 47119,
+                "sourceUnit": 36823,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 16189,
+                            "id": 46973,
                             "name": "Status",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 6038,
-                            "src": "226:6:53",
+                            "referencedDeclaration": 36822,
+                            "src": "226:6:73",
                             "typeDescriptions": {}
                         },
                         "nameLocation": "-1:-1:-1"
@@ -161,24 +161,24 @@
                 "unitAlias": ""
             },
             {
-                "id": 16192,
+                "id": 46976,
                 "nodeType": "ImportDirective",
-                "src": "262:51:53",
+                "src": "262:51:73",
                 "nodes": [],
                 "absolutePath": "src/lib/priority/LibMaxPQ.sol",
                 "file": "../lib/priority/LibMaxPQ.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 16335,
-                "sourceUnit": 15242,
+                "scope": 47119,
+                "sourceUnit": 46026,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 16191,
+                            "id": 46975,
                             "name": "MaxPQ",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 14636,
-                            "src": "270:5:53",
+                            "referencedDeclaration": 45420,
+                            "src": "270:5:73",
                             "typeDescriptions": {}
                         },
                         "nameLocation": "-1:-1:-1"
@@ -187,24 +187,24 @@
                 "unitAlias": ""
             },
             {
-                "id": 16194,
+                "id": 46978,
                 "nodeType": "ImportDirective",
-                "src": "314:51:53",
+                "src": "314:51:73",
                 "nodes": [],
                 "absolutePath": "src/lib/priority/LibMinPQ.sol",
                 "file": "../lib/priority/LibMinPQ.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 16335,
-                "sourceUnit": 15861,
+                "scope": 47119,
+                "sourceUnit": 46645,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 16193,
+                            "id": 46977,
                             "name": "MinPQ",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
-                            "referencedDeclaration": 15254,
-                            "src": "322:5:53",
+                            "referencedDeclaration": 46038,
+                            "src": "322:5:73",
                             "typeDescriptions": {}
                         },
                         "nameLocation": "-1:-1:-1"
@@ -213,21 +213,21 @@
                 "unitAlias": ""
             },
             {
-                "id": 16202,
+                "id": 46986,
                 "nodeType": "StructDefinition",
-                "src": "367:142:53",
+                "src": "367:142:73",
                 "nodes": [],
                 "canonicalName": "SubnetID",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16197,
+                        "id": 46981,
                         "mutability": "mutable",
                         "name": "root",
-                        "nameLocation": "439:4:53",
+                        "nameLocation": "439:4:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16202,
-                        "src": "432:11:53",
+                        "scope": 46986,
+                        "src": "432:11:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -235,10 +235,10 @@
                             "typeString": "uint64"
                         },
                         "typeName": {
-                            "id": 16196,
+                            "id": 46980,
                             "name": "uint64",
                             "nodeType": "ElementaryTypeName",
-                            "src": "432:6:53",
+                            "src": "432:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint64",
                                 "typeString": "uint64"
@@ -248,13 +248,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16201,
+                        "id": 46985,
                         "mutability": "mutable",
                         "name": "route",
-                        "nameLocation": "501:5:53",
+                        "nameLocation": "501:5:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16202,
-                        "src": "491:15:53",
+                        "scope": 46986,
+                        "src": "491:15:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -263,19 +263,19 @@
                         },
                         "typeName": {
                             "baseType": {
-                                "id": 16199,
+                                "id": 46983,
                                 "name": "address",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "491:7:53",
+                                "src": "491:7:73",
                                 "stateMutability": "nonpayable",
                                 "typeDescriptions": {
                                     "typeIdentifier": "t_address",
                                     "typeString": "address"
                                 }
                             },
-                            "id": 16200,
+                            "id": 46984,
                             "nodeType": "ArrayTypeName",
-                            "src": "491:9:53",
+                            "src": "491:9:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
                                 "typeString": "address[]"
@@ -285,26 +285,26 @@
                     }
                 ],
                 "name": "SubnetID",
-                "nameLocation": "374:8:53",
-                "scope": 16335,
+                "nameLocation": "374:8:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16219,
+                "id": 47003,
                 "nodeType": "StructDefinition",
-                "src": "511:180:53",
+                "src": "511:180:73",
                 "nodes": [],
                 "canonicalName": "Subnet",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16204,
+                        "id": 46988,
                         "mutability": "mutable",
                         "name": "stake",
-                        "nameLocation": "539:5:53",
+                        "nameLocation": "539:5:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16219,
-                        "src": "531:13:53",
+                        "scope": 47003,
+                        "src": "531:13:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -312,10 +312,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16203,
+                            "id": 46987,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "531:7:53",
+                            "src": "531:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -325,13 +325,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16206,
+                        "id": 46990,
                         "mutability": "mutable",
                         "name": "genesisEpoch",
-                        "nameLocation": "558:12:53",
+                        "nameLocation": "558:12:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16219,
-                        "src": "550:20:53",
+                        "scope": 47003,
+                        "src": "550:20:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -339,10 +339,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16205,
+                            "id": 46989,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "550:7:53",
+                            "src": "550:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -352,13 +352,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16208,
+                        "id": 46992,
                         "mutability": "mutable",
                         "name": "circSupply",
-                        "nameLocation": "584:10:53",
+                        "nameLocation": "584:10:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16219,
-                        "src": "576:18:53",
+                        "scope": 47003,
+                        "src": "576:18:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -366,10 +366,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16207,
+                            "id": 46991,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "576:7:53",
+                            "src": "576:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -379,13 +379,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16210,
+                        "id": 46994,
                         "mutability": "mutable",
                         "name": "topDownNonce",
-                        "nameLocation": "607:12:53",
+                        "nameLocation": "607:12:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16219,
-                        "src": "600:19:53",
+                        "scope": 47003,
+                        "src": "600:19:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -393,10 +393,10 @@
                             "typeString": "uint64"
                         },
                         "typeName": {
-                            "id": 16209,
+                            "id": 46993,
                             "name": "uint64",
                             "nodeType": "ElementaryTypeName",
-                            "src": "600:6:53",
+                            "src": "600:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint64",
                                 "typeString": "uint64"
@@ -406,13 +406,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16212,
+                        "id": 46996,
                         "mutability": "mutable",
                         "name": "appliedBottomUpNonce",
-                        "nameLocation": "632:20:53",
+                        "nameLocation": "632:20:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16219,
-                        "src": "625:27:53",
+                        "scope": 47003,
+                        "src": "625:27:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -420,10 +420,10 @@
                             "typeString": "uint64"
                         },
                         "typeName": {
-                            "id": 16211,
+                            "id": 46995,
                             "name": "uint64",
                             "nodeType": "ElementaryTypeName",
-                            "src": "625:6:53",
+                            "src": "625:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint64",
                                 "typeString": "uint64"
@@ -433,34 +433,34 @@
                     },
                     {
                         "constant": false,
-                        "id": 16215,
+                        "id": 46999,
                         "mutability": "mutable",
                         "name": "status",
-                        "nameLocation": "665:6:53",
+                        "nameLocation": "665:6:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16219,
-                        "src": "658:13:53",
+                        "scope": 47003,
+                        "src": "658:13:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_Status_$6038",
+                            "typeIdentifier": "t_enum$_Status_$36822",
                             "typeString": "enum Status"
                         },
                         "typeName": {
-                            "id": 16214,
+                            "id": 46998,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16213,
+                                "id": 46997,
                                 "name": "Status",
-                                "nameLocations": ["658:6:53"],
+                                "nameLocations": ["658:6:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 6038,
-                                "src": "658:6:53"
+                                "referencedDeclaration": 36822,
+                                "src": "658:6:73"
                             },
-                            "referencedDeclaration": 6038,
-                            "src": "658:6:53",
+                            "referencedDeclaration": 36822,
+                            "src": "658:6:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_Status_$6038",
+                                "typeIdentifier": "t_enum$_Status_$36822",
                                 "typeString": "enum Status"
                             }
                         },
@@ -468,34 +468,34 @@
                     },
                     {
                         "constant": false,
-                        "id": 16218,
+                        "id": 47002,
                         "mutability": "mutable",
                         "name": "id",
-                        "nameLocation": "686:2:53",
+                        "nameLocation": "686:2:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16219,
-                        "src": "677:11:53",
+                        "scope": 47003,
+                        "src": "677:11:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_SubnetID_$16202_storage_ptr",
+                            "typeIdentifier": "t_struct$_SubnetID_$46986_storage_ptr",
                             "typeString": "struct SubnetID"
                         },
                         "typeName": {
-                            "id": 16217,
+                            "id": 47001,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16216,
+                                "id": 47000,
                                 "name": "SubnetID",
-                                "nameLocations": ["677:8:53"],
+                                "nameLocations": ["677:8:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 16202,
-                                "src": "677:8:53"
+                                "referencedDeclaration": 46986,
+                                "src": "677:8:73"
                             },
-                            "referencedDeclaration": 16202,
-                            "src": "677:8:53",
+                            "referencedDeclaration": 46986,
+                            "src": "677:8:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_SubnetID_$16202_storage_ptr",
+                                "typeIdentifier": "t_struct$_SubnetID_$46986_storage_ptr",
                                 "typeString": "struct SubnetID"
                             }
                         },
@@ -503,79 +503,79 @@
                     }
                 ],
                 "name": "Subnet",
-                "nameLocation": "518:6:53",
-                "scope": 16335,
+                "nameLocation": "518:6:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16223,
+                "id": 47007,
                 "nodeType": "EnumDefinition",
-                "src": "728:68:53",
+                "src": "728:68:73",
                 "nodes": [],
                 "canonicalName": "StakingOperation",
                 "members": [
                     {
-                        "id": 16220,
+                        "id": 47004,
                         "name": "Deposit",
-                        "nameLocation": "756:7:53",
+                        "nameLocation": "756:7:73",
                         "nodeType": "EnumValue",
-                        "src": "756:7:53"
+                        "src": "756:7:73"
                     },
                     {
-                        "id": 16221,
+                        "id": 47005,
                         "name": "Withdraw",
-                        "nameLocation": "769:8:53",
+                        "nameLocation": "769:8:73",
                         "nodeType": "EnumValue",
-                        "src": "769:8:53"
+                        "src": "769:8:73"
                     },
                     {
-                        "id": 16222,
+                        "id": 47006,
                         "name": "SetMetadata",
-                        "nameLocation": "783:11:53",
+                        "nameLocation": "783:11:73",
                         "nodeType": "EnumValue",
-                        "src": "783:11:53"
+                        "src": "783:11:73"
                     }
                 ],
                 "name": "StakingOperation",
-                "nameLocation": "733:16:53"
+                "nameLocation": "733:16:73"
             },
             {
-                "id": 16231,
+                "id": 47015,
                 "nodeType": "StructDefinition",
-                "src": "842:91:53",
+                "src": "842:91:73",
                 "nodes": [],
                 "canonicalName": "StakingChange",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16226,
+                        "id": 47010,
                         "mutability": "mutable",
                         "name": "op",
-                        "nameLocation": "886:2:53",
+                        "nameLocation": "886:2:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16231,
-                        "src": "869:19:53",
+                        "scope": 47015,
+                        "src": "869:19:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_enum$_StakingOperation_$16223",
+                            "typeIdentifier": "t_enum$_StakingOperation_$47007",
                             "typeString": "enum StakingOperation"
                         },
                         "typeName": {
-                            "id": 16225,
+                            "id": 47009,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16224,
+                                "id": 47008,
                                 "name": "StakingOperation",
-                                "nameLocations": ["869:16:53"],
+                                "nameLocations": ["869:16:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 16223,
-                                "src": "869:16:53"
+                                "referencedDeclaration": 47007,
+                                "src": "869:16:73"
                             },
-                            "referencedDeclaration": 16223,
-                            "src": "869:16:53",
+                            "referencedDeclaration": 47007,
+                            "src": "869:16:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_enum$_StakingOperation_$16223",
+                                "typeIdentifier": "t_enum$_StakingOperation_$47007",
                                 "typeString": "enum StakingOperation"
                             }
                         },
@@ -583,13 +583,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16228,
+                        "id": 47012,
                         "mutability": "mutable",
                         "name": "payload",
-                        "nameLocation": "900:7:53",
+                        "nameLocation": "900:7:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16231,
-                        "src": "894:13:53",
+                        "scope": 47015,
+                        "src": "894:13:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -597,10 +597,10 @@
                             "typeString": "bytes"
                         },
                         "typeName": {
-                            "id": 16227,
+                            "id": 47011,
                             "name": "bytes",
                             "nodeType": "ElementaryTypeName",
-                            "src": "894:5:53",
+                            "src": "894:5:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_bytes_storage_ptr",
                                 "typeString": "bytes"
@@ -610,13 +610,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16230,
+                        "id": 47014,
                         "mutability": "mutable",
                         "name": "validator",
-                        "nameLocation": "921:9:53",
+                        "nameLocation": "921:9:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16231,
-                        "src": "913:17:53",
+                        "scope": 47015,
+                        "src": "913:17:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -624,10 +624,10 @@
                             "typeString": "address"
                         },
                         "typeName": {
-                            "id": 16229,
+                            "id": 47013,
                             "name": "address",
                             "nodeType": "ElementaryTypeName",
-                            "src": "913:7:53",
+                            "src": "913:7:73",
                             "stateMutability": "nonpayable",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_address",
@@ -638,47 +638,47 @@
                     }
                 ],
                 "name": "StakingChange",
-                "nameLocation": "849:13:53",
-                "scope": 16335,
+                "nameLocation": "849:13:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16237,
+                "id": 47021,
                 "nodeType": "StructDefinition",
-                "src": "1005:89:53",
+                "src": "1005:89:73",
                 "nodes": [],
                 "canonicalName": "StakingChangeRequest",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16234,
+                        "id": 47018,
                         "mutability": "mutable",
                         "name": "change",
-                        "nameLocation": "1053:6:53",
+                        "nameLocation": "1053:6:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16237,
-                        "src": "1039:20:53",
+                        "scope": 47021,
+                        "src": "1039:20:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_StakingChange_$16231_storage_ptr",
+                            "typeIdentifier": "t_struct$_StakingChange_$47015_storage_ptr",
                             "typeString": "struct StakingChange"
                         },
                         "typeName": {
-                            "id": 16233,
+                            "id": 47017,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16232,
+                                "id": 47016,
                                 "name": "StakingChange",
-                                "nameLocations": ["1039:13:53"],
+                                "nameLocations": ["1039:13:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 16231,
-                                "src": "1039:13:53"
+                                "referencedDeclaration": 47015,
+                                "src": "1039:13:73"
                             },
-                            "referencedDeclaration": 16231,
-                            "src": "1039:13:53",
+                            "referencedDeclaration": 47015,
+                            "src": "1039:13:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_StakingChange_$16231_storage_ptr",
+                                "typeIdentifier": "t_struct$_StakingChange_$47015_storage_ptr",
                                 "typeString": "struct StakingChange"
                             }
                         },
@@ -686,13 +686,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16236,
+                        "id": 47020,
                         "mutability": "mutable",
                         "name": "configurationNumber",
-                        "nameLocation": "1072:19:53",
+                        "nameLocation": "1072:19:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16237,
-                        "src": "1065:26:53",
+                        "scope": 47021,
+                        "src": "1065:26:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -700,10 +700,10 @@
                             "typeString": "uint64"
                         },
                         "typeName": {
-                            "id": 16235,
+                            "id": 47019,
                             "name": "uint64",
                             "nodeType": "ElementaryTypeName",
-                            "src": "1065:6:53",
+                            "src": "1065:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint64",
                                 "typeString": "uint64"
@@ -713,26 +713,26 @@
                     }
                 ],
                 "name": "StakingChangeRequest",
-                "nameLocation": "1012:20:53",
-                "scope": 16335,
+                "nameLocation": "1012:20:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16250,
+                "id": 47034,
                 "nodeType": "StructDefinition",
-                "src": "1134:356:53",
+                "src": "1134:356:73",
                 "nodes": [],
                 "canonicalName": "StakingChangeLog",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16240,
+                        "id": 47024,
                         "mutability": "mutable",
                         "name": "nextConfigurationNumber",
-                        "nameLocation": "1243:23:53",
+                        "nameLocation": "1243:23:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16250,
-                        "src": "1236:30:53",
+                        "scope": 47034,
+                        "src": "1236:30:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -740,10 +740,10 @@
                             "typeString": "uint64"
                         },
                         "typeName": {
-                            "id": 16239,
+                            "id": 47023,
                             "name": "uint64",
                             "nodeType": "ElementaryTypeName",
-                            "src": "1236:6:53",
+                            "src": "1236:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint64",
                                 "typeString": "uint64"
@@ -753,13 +753,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16243,
+                        "id": 47027,
                         "mutability": "mutable",
                         "name": "startConfigurationNumber",
-                        "nameLocation": "1337:24:53",
+                        "nameLocation": "1337:24:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16250,
-                        "src": "1330:31:53",
+                        "scope": 47034,
+                        "src": "1330:31:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -767,10 +767,10 @@
                             "typeString": "uint64"
                         },
                         "typeName": {
-                            "id": 16242,
+                            "id": 47026,
                             "name": "uint64",
                             "nodeType": "ElementaryTypeName",
-                            "src": "1330:6:53",
+                            "src": "1330:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint64",
                                 "typeString": "uint64"
@@ -780,56 +780,56 @@
                     },
                     {
                         "constant": false,
-                        "id": 16249,
+                        "id": 47033,
                         "mutability": "mutable",
                         "name": "changes",
-                        "nameLocation": "1480:7:53",
+                        "nameLocation": "1480:7:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16250,
-                        "src": "1447:40:53",
+                        "scope": 47034,
+                        "src": "1447:40:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$16231_storage_$",
+                            "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$47015_storage_$",
                             "typeString": "mapping(uint64 => struct StakingChange)"
                         },
                         "typeName": {
-                            "id": 16248,
+                            "id": 47032,
                             "keyName": "",
                             "keyNameLocation": "-1:-1:-1",
                             "keyType": {
-                                "id": 16245,
+                                "id": 47029,
                                 "name": "uint64",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "1455:6:53",
+                                "src": "1455:6:73",
                                 "typeDescriptions": {
                                     "typeIdentifier": "t_uint64",
                                     "typeString": "uint64"
                                 }
                             },
                             "nodeType": "Mapping",
-                            "src": "1447:32:53",
+                            "src": "1447:32:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$16231_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$47015_storage_$",
                                 "typeString": "mapping(uint64 => struct StakingChange)"
                             },
                             "valueName": "",
                             "valueNameLocation": "-1:-1:-1",
                             "valueType": {
-                                "id": 16247,
+                                "id": 47031,
                                 "nodeType": "UserDefinedTypeName",
                                 "pathNode": {
-                                    "id": 16246,
+                                    "id": 47030,
                                     "name": "StakingChange",
-                                    "nameLocations": ["1465:13:53"],
+                                    "nameLocations": ["1465:13:73"],
                                     "nodeType": "IdentifierPath",
-                                    "referencedDeclaration": 16231,
-                                    "src": "1465:13:53"
+                                    "referencedDeclaration": 47015,
+                                    "src": "1465:13:73"
                                 },
-                                "referencedDeclaration": 16231,
-                                "src": "1465:13:53",
+                                "referencedDeclaration": 47015,
+                                "src": "1465:13:73",
                                 "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_StakingChange_$16231_storage_ptr",
+                                    "typeIdentifier": "t_struct$_StakingChange_$47015_storage_ptr",
                                     "typeString": "struct StakingChange"
                                 }
                             }
@@ -838,26 +838,26 @@
                     }
                 ],
                 "name": "StakingChangeLog",
-                "nameLocation": "1141:16:53",
-                "scope": 16335,
+                "nameLocation": "1141:16:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16257,
+                "id": 47041,
                 "nodeType": "StructDefinition",
-                "src": "1533:189:53",
+                "src": "1533:189:73",
                 "nodes": [],
                 "canonicalName": "StakingRelease",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16253,
+                        "id": 47037,
                         "mutability": "mutable",
                         "name": "releaseAt",
-                        "nameLocation": "1633:9:53",
+                        "nameLocation": "1633:9:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16257,
-                        "src": "1625:17:53",
+                        "scope": 47041,
+                        "src": "1625:17:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -865,10 +865,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16252,
+                            "id": 47036,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "1625:7:53",
+                            "src": "1625:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -878,13 +878,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16256,
+                        "id": 47040,
                         "mutability": "mutable",
                         "name": "amount",
-                        "nameLocation": "1713:6:53",
+                        "nameLocation": "1713:6:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16257,
-                        "src": "1705:14:53",
+                        "scope": 47041,
+                        "src": "1705:14:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -892,10 +892,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16255,
+                            "id": 47039,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "1705:7:53",
+                            "src": "1705:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -905,26 +905,26 @@
                     }
                 ],
                 "name": "StakingRelease",
-                "nameLocation": "1540:14:53",
-                "scope": 16335,
+                "nameLocation": "1540:14:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16267,
+                "id": 47051,
                 "nodeType": "StructDefinition",
-                "src": "1867:121:53",
+                "src": "1867:121:73",
                 "nodes": [],
                 "canonicalName": "AddressStakingReleases",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16259,
+                        "id": 47043,
                         "mutability": "mutable",
                         "name": "length",
-                        "nameLocation": "1910:6:53",
+                        "nameLocation": "1910:6:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16267,
-                        "src": "1903:13:53",
+                        "scope": 47051,
+                        "src": "1903:13:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -932,10 +932,10 @@
                             "typeString": "uint16"
                         },
                         "typeName": {
-                            "id": 16258,
+                            "id": 47042,
                             "name": "uint16",
                             "nodeType": "ElementaryTypeName",
-                            "src": "1903:6:53",
+                            "src": "1903:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint16",
                                 "typeString": "uint16"
@@ -945,13 +945,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16261,
+                        "id": 47045,
                         "mutability": "mutable",
                         "name": "startIdx",
-                        "nameLocation": "1929:8:53",
+                        "nameLocation": "1929:8:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16267,
-                        "src": "1922:15:53",
+                        "scope": 47051,
+                        "src": "1922:15:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -959,10 +959,10 @@
                             "typeString": "uint16"
                         },
                         "typeName": {
-                            "id": 16260,
+                            "id": 47044,
                             "name": "uint16",
                             "nodeType": "ElementaryTypeName",
-                            "src": "1922:6:53",
+                            "src": "1922:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint16",
                                 "typeString": "uint16"
@@ -972,56 +972,56 @@
                     },
                     {
                         "constant": false,
-                        "id": 16266,
+                        "id": 47050,
                         "mutability": "mutable",
                         "name": "releases",
-                        "nameLocation": "1977:8:53",
+                        "nameLocation": "1977:8:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16267,
-                        "src": "1943:42:53",
+                        "scope": 47051,
+                        "src": "1943:42:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_uint16_$_t_struct$_StakingRelease_$16257_storage_$",
+                            "typeIdentifier": "t_mapping$_t_uint16_$_t_struct$_StakingRelease_$47041_storage_$",
                             "typeString": "mapping(uint16 => struct StakingRelease)"
                         },
                         "typeName": {
-                            "id": 16265,
+                            "id": 47049,
                             "keyName": "",
                             "keyNameLocation": "-1:-1:-1",
                             "keyType": {
-                                "id": 16262,
+                                "id": 47046,
                                 "name": "uint16",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "1951:6:53",
+                                "src": "1951:6:73",
                                 "typeDescriptions": {
                                     "typeIdentifier": "t_uint16",
                                     "typeString": "uint16"
                                 }
                             },
                             "nodeType": "Mapping",
-                            "src": "1943:33:53",
+                            "src": "1943:33:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_uint16_$_t_struct$_StakingRelease_$16257_storage_$",
+                                "typeIdentifier": "t_mapping$_t_uint16_$_t_struct$_StakingRelease_$47041_storage_$",
                                 "typeString": "mapping(uint16 => struct StakingRelease)"
                             },
                             "valueName": "",
                             "valueNameLocation": "-1:-1:-1",
                             "valueType": {
-                                "id": 16264,
+                                "id": 47048,
                                 "nodeType": "UserDefinedTypeName",
                                 "pathNode": {
-                                    "id": 16263,
+                                    "id": 47047,
                                     "name": "StakingRelease",
-                                    "nameLocations": ["1961:14:53"],
+                                    "nameLocations": ["1961:14:73"],
                                     "nodeType": "IdentifierPath",
-                                    "referencedDeclaration": 16257,
-                                    "src": "1961:14:53"
+                                    "referencedDeclaration": 47041,
+                                    "src": "1961:14:73"
                                 },
-                                "referencedDeclaration": 16257,
-                                "src": "1961:14:53",
+                                "referencedDeclaration": 47041,
+                                "src": "1961:14:73",
                                 "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_StakingRelease_$16257_storage_ptr",
+                                    "typeIdentifier": "t_struct$_StakingRelease_$47041_storage_ptr",
                                     "typeString": "struct StakingRelease"
                                 }
                             }
@@ -1030,26 +1030,26 @@
                     }
                 ],
                 "name": "AddressStakingReleases",
-                "nameLocation": "1874:22:53",
-                "scope": 16335,
+                "nameLocation": "1874:22:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16277,
+                "id": 47061,
                 "nodeType": "StructDefinition",
-                "src": "2028:246:53",
+                "src": "2028:246:73",
                 "nodes": [],
                 "canonicalName": "StakingReleaseQueue",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16270,
+                        "id": 47054,
                         "mutability": "mutable",
                         "name": "lockingDuration",
-                        "nameLocation": "2133:15:53",
+                        "nameLocation": "2133:15:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16277,
-                        "src": "2125:23:53",
+                        "scope": 47061,
+                        "src": "2125:23:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1057,10 +1057,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16269,
+                            "id": 47053,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "2125:7:53",
+                            "src": "2125:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -1070,56 +1070,56 @@
                     },
                     {
                         "constant": false,
-                        "id": 16276,
+                        "id": 47060,
                         "mutability": "mutable",
                         "name": "releases",
-                        "nameLocation": "2263:8:53",
+                        "nameLocation": "2263:8:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16277,
-                        "src": "2220:51:53",
+                        "scope": 47061,
+                        "src": "2220:51:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$16267_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$47051_storage_$",
                             "typeString": "mapping(address => struct AddressStakingReleases)"
                         },
                         "typeName": {
-                            "id": 16275,
+                            "id": 47059,
                             "keyName": "",
                             "keyNameLocation": "-1:-1:-1",
                             "keyType": {
-                                "id": 16272,
+                                "id": 47056,
                                 "name": "address",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "2228:7:53",
+                                "src": "2228:7:73",
                                 "typeDescriptions": {
                                     "typeIdentifier": "t_address",
                                     "typeString": "address"
                                 }
                             },
                             "nodeType": "Mapping",
-                            "src": "2220:42:53",
+                            "src": "2220:42:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$16267_storage_$",
+                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$47051_storage_$",
                                 "typeString": "mapping(address => struct AddressStakingReleases)"
                             },
                             "valueName": "",
                             "valueNameLocation": "-1:-1:-1",
                             "valueType": {
-                                "id": 16274,
+                                "id": 47058,
                                 "nodeType": "UserDefinedTypeName",
                                 "pathNode": {
-                                    "id": 16273,
+                                    "id": 47057,
                                     "name": "AddressStakingReleases",
-                                    "nameLocations": ["2239:22:53"],
+                                    "nameLocations": ["2239:22:73"],
                                     "nodeType": "IdentifierPath",
-                                    "referencedDeclaration": 16267,
-                                    "src": "2239:22:53"
+                                    "referencedDeclaration": 47051,
+                                    "src": "2239:22:73"
                                 },
-                                "referencedDeclaration": 16267,
-                                "src": "2239:22:53",
+                                "referencedDeclaration": 47051,
+                                "src": "2239:22:73",
                                 "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_AddressStakingReleases_$16267_storage_ptr",
+                                    "typeIdentifier": "t_struct$_AddressStakingReleases_$47051_storage_ptr",
                                     "typeString": "struct AddressStakingReleases"
                                 }
                             }
@@ -1128,26 +1128,26 @@
                     }
                 ],
                 "name": "StakingReleaseQueue",
-                "nameLocation": "2035:19:53",
-                "scope": 16335,
+                "nameLocation": "2035:19:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16285,
+                "id": 47069,
                 "nodeType": "StructDefinition",
-                "src": "2560:313:53",
+                "src": "2560:313:73",
                 "nodes": [],
                 "canonicalName": "ValidatorInfo",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16279,
+                        "id": 47063,
                         "mutability": "mutable",
                         "name": "confirmedCollateral",
-                        "nameLocation": "2595:19:53",
+                        "nameLocation": "2595:19:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16285,
-                        "src": "2587:27:53",
+                        "scope": 47069,
+                        "src": "2587:27:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1155,10 +1155,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16278,
+                            "id": 47062,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "2587:7:53",
+                            "src": "2587:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -1168,13 +1168,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16281,
+                        "id": 47065,
                         "mutability": "mutable",
                         "name": "totalCollateral",
-                        "nameLocation": "2628:15:53",
+                        "nameLocation": "2628:15:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16285,
-                        "src": "2620:23:53",
+                        "scope": 47069,
+                        "src": "2620:23:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1182,10 +1182,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16280,
+                            "id": 47064,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "2620:7:53",
+                            "src": "2620:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -1195,13 +1195,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16284,
+                        "id": 47068,
                         "mutability": "mutable",
                         "name": "metadata",
-                        "nameLocation": "2862:8:53",
+                        "nameLocation": "2862:8:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16285,
-                        "src": "2856:14:53",
+                        "scope": 47069,
+                        "src": "2856:14:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1209,10 +1209,10 @@
                             "typeString": "bytes"
                         },
                         "typeName": {
-                            "id": 16283,
+                            "id": 47067,
                             "name": "bytes",
                             "nodeType": "ElementaryTypeName",
-                            "src": "2856:5:53",
+                            "src": "2856:5:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_bytes_storage_ptr",
                                 "typeString": "bytes"
@@ -1222,26 +1222,26 @@
                     }
                 ],
                 "name": "ValidatorInfo",
-                "nameLocation": "2567:13:53",
-                "scope": 16335,
+                "nameLocation": "2567:13:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16306,
+                "id": 47090,
                 "nodeType": "StructDefinition",
-                "src": "3432:498:53",
+                "src": "3432:498:73",
                 "nodes": [],
                 "canonicalName": "ValidatorSet",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16288,
+                        "id": 47072,
                         "mutability": "mutable",
                         "name": "activeLimit",
-                        "nameLocation": "3520:11:53",
+                        "nameLocation": "3520:11:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16306,
-                        "src": "3513:18:53",
+                        "scope": 47090,
+                        "src": "3513:18:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1249,10 +1249,10 @@
                             "typeString": "uint16"
                         },
                         "typeName": {
-                            "id": 16287,
+                            "id": 47071,
                             "name": "uint16",
                             "nodeType": "ElementaryTypeName",
-                            "src": "3513:6:53",
+                            "src": "3513:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint16",
                                 "typeString": "uint16"
@@ -1262,13 +1262,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16291,
+                        "id": 47075,
                         "mutability": "mutable",
                         "name": "totalConfirmedCollateral",
-                        "nameLocation": "3585:24:53",
+                        "nameLocation": "3585:24:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16306,
-                        "src": "3577:32:53",
+                        "scope": 47090,
+                        "src": "3577:32:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1276,10 +1276,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16290,
+                            "id": 47074,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "3577:7:53",
+                            "src": "3577:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -1289,56 +1289,56 @@
                     },
                     {
                         "constant": false,
-                        "id": 16297,
+                        "id": 47081,
                         "mutability": "mutable",
                         "name": "validators",
-                        "nameLocation": "3715:10:53",
+                        "nameLocation": "3715:10:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16306,
-                        "src": "3681:44:53",
+                        "scope": 47090,
+                        "src": "3681:44:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_ValidatorInfo_$16285_storage_$",
+                            "typeIdentifier": "t_mapping$_t_address_$_t_struct$_ValidatorInfo_$47069_storage_$",
                             "typeString": "mapping(address => struct ValidatorInfo)"
                         },
                         "typeName": {
-                            "id": 16296,
+                            "id": 47080,
                             "keyName": "",
                             "keyNameLocation": "-1:-1:-1",
                             "keyType": {
-                                "id": 16293,
+                                "id": 47077,
                                 "name": "address",
                                 "nodeType": "ElementaryTypeName",
-                                "src": "3689:7:53",
+                                "src": "3689:7:73",
                                 "typeDescriptions": {
                                     "typeIdentifier": "t_address",
                                     "typeString": "address"
                                 }
                             },
                             "nodeType": "Mapping",
-                            "src": "3681:33:53",
+                            "src": "3681:33:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_ValidatorInfo_$16285_storage_$",
+                                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_ValidatorInfo_$47069_storage_$",
                                 "typeString": "mapping(address => struct ValidatorInfo)"
                             },
                             "valueName": "",
                             "valueNameLocation": "-1:-1:-1",
                             "valueType": {
-                                "id": 16295,
+                                "id": 47079,
                                 "nodeType": "UserDefinedTypeName",
                                 "pathNode": {
-                                    "id": 16294,
+                                    "id": 47078,
                                     "name": "ValidatorInfo",
-                                    "nameLocations": ["3700:13:53"],
+                                    "nameLocations": ["3700:13:73"],
                                     "nodeType": "IdentifierPath",
-                                    "referencedDeclaration": 16285,
-                                    "src": "3700:13:53"
+                                    "referencedDeclaration": 47069,
+                                    "src": "3700:13:73"
                                 },
-                                "referencedDeclaration": 16285,
-                                "src": "3700:13:53",
+                                "referencedDeclaration": 47069,
+                                "src": "3700:13:73",
                                 "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_ValidatorInfo_$16285_storage_ptr",
+                                    "typeIdentifier": "t_struct$_ValidatorInfo_$47069_storage_ptr",
                                     "typeString": "struct ValidatorInfo"
                                 }
                             }
@@ -1347,34 +1347,34 @@
                     },
                     {
                         "constant": false,
-                        "id": 16301,
+                        "id": 47085,
                         "mutability": "mutable",
                         "name": "activeValidators",
-                        "nameLocation": "3809:16:53",
+                        "nameLocation": "3809:16:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16306,
-                        "src": "3803:22:53",
+                        "scope": 47090,
+                        "src": "3803:22:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_MinPQ_$15254_storage_ptr",
+                            "typeIdentifier": "t_struct$_MinPQ_$46038_storage_ptr",
                             "typeString": "struct MinPQ"
                         },
                         "typeName": {
-                            "id": 16300,
+                            "id": 47084,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16299,
+                                "id": 47083,
                                 "name": "MinPQ",
-                                "nameLocations": ["3803:5:53"],
+                                "nameLocations": ["3803:5:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 15254,
-                                "src": "3803:5:53"
+                                "referencedDeclaration": 46038,
+                                "src": "3803:5:73"
                             },
-                            "referencedDeclaration": 15254,
-                            "src": "3803:5:53",
+                            "referencedDeclaration": 46038,
+                            "src": "3803:5:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_MinPQ_$15254_storage_ptr",
+                                "typeIdentifier": "t_struct$_MinPQ_$46038_storage_ptr",
                                 "typeString": "struct MinPQ"
                             }
                         },
@@ -1382,34 +1382,34 @@
                     },
                     {
                         "constant": false,
-                        "id": 16305,
+                        "id": 47089,
                         "mutability": "mutable",
                         "name": "waitingValidators",
-                        "nameLocation": "3910:17:53",
+                        "nameLocation": "3910:17:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16306,
-                        "src": "3904:23:53",
+                        "scope": 47090,
+                        "src": "3904:23:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_MaxPQ_$14636_storage_ptr",
+                            "typeIdentifier": "t_struct$_MaxPQ_$45420_storage_ptr",
                             "typeString": "struct MaxPQ"
                         },
                         "typeName": {
-                            "id": 16304,
+                            "id": 47088,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16303,
+                                "id": 47087,
                                 "name": "MaxPQ",
-                                "nameLocations": ["3904:5:53"],
+                                "nameLocations": ["3904:5:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 14636,
-                                "src": "3904:5:53"
+                                "referencedDeclaration": 45420,
+                                "src": "3904:5:73"
                             },
-                            "referencedDeclaration": 14636,
-                            "src": "3904:5:53",
+                            "referencedDeclaration": 45420,
+                            "src": "3904:5:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_MaxPQ_$14636_storage_ptr",
+                                "typeIdentifier": "t_struct$_MaxPQ_$45420_storage_ptr",
                                 "typeString": "struct MaxPQ"
                             }
                         },
@@ -1417,47 +1417,47 @@
                     }
                 ],
                 "name": "ValidatorSet",
-                "nameLocation": "3439:12:53",
-                "scope": 16335,
+                "nameLocation": "3439:12:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16313,
+                "id": 47097,
                 "nodeType": "StructDefinition",
-                "src": "4000:93:53",
+                "src": "4000:93:73",
                 "nodes": [],
                 "canonicalName": "ParentValidatorsTracker",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16309,
+                        "id": 47093,
                         "mutability": "mutable",
                         "name": "validators",
-                        "nameLocation": "4050:10:53",
+                        "nameLocation": "4050:10:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16313,
-                        "src": "4037:23:53",
+                        "scope": 47097,
+                        "src": "4037:23:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_ValidatorSet_$16306_storage_ptr",
+                            "typeIdentifier": "t_struct$_ValidatorSet_$47090_storage_ptr",
                             "typeString": "struct ValidatorSet"
                         },
                         "typeName": {
-                            "id": 16308,
+                            "id": 47092,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16307,
+                                "id": 47091,
                                 "name": "ValidatorSet",
-                                "nameLocations": ["4037:12:53"],
+                                "nameLocations": ["4037:12:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 16306,
-                                "src": "4037:12:53"
+                                "referencedDeclaration": 47090,
+                                "src": "4037:12:73"
                             },
-                            "referencedDeclaration": 16306,
-                            "src": "4037:12:53",
+                            "referencedDeclaration": 47090,
+                            "src": "4037:12:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_ValidatorSet_$16306_storage_ptr",
+                                "typeIdentifier": "t_struct$_ValidatorSet_$47090_storage_ptr",
                                 "typeString": "struct ValidatorSet"
                             }
                         },
@@ -1465,34 +1465,34 @@
                     },
                     {
                         "constant": false,
-                        "id": 16312,
+                        "id": 47096,
                         "mutability": "mutable",
                         "name": "changes",
-                        "nameLocation": "4083:7:53",
+                        "nameLocation": "4083:7:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16313,
-                        "src": "4066:24:53",
+                        "scope": 47097,
+                        "src": "4066:24:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_StakingChangeLog_$16250_storage_ptr",
+                            "typeIdentifier": "t_struct$_StakingChangeLog_$47034_storage_ptr",
                             "typeString": "struct StakingChangeLog"
                         },
                         "typeName": {
-                            "id": 16311,
+                            "id": 47095,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16310,
+                                "id": 47094,
                                 "name": "StakingChangeLog",
-                                "nameLocations": ["4066:16:53"],
+                                "nameLocations": ["4066:16:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 16250,
-                                "src": "4066:16:53"
+                                "referencedDeclaration": 47034,
+                                "src": "4066:16:73"
                             },
-                            "referencedDeclaration": 16250,
-                            "src": "4066:16:53",
+                            "referencedDeclaration": 47034,
+                            "src": "4066:16:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_StakingChangeLog_$16250_storage_ptr",
+                                "typeIdentifier": "t_struct$_StakingChangeLog_$47034_storage_ptr",
                                 "typeString": "struct StakingChangeLog"
                             }
                         },
@@ -1500,47 +1500,47 @@
                     }
                 ],
                 "name": "ParentValidatorsTracker",
-                "nameLocation": "4007:23:53",
-                "scope": 16335,
+                "nameLocation": "4007:23:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16320,
+                "id": 47104,
                 "nodeType": "StructDefinition",
-                "src": "4095:71:53",
+                "src": "4095:71:73",
                 "nodes": [],
                 "canonicalName": "IPCAddress",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16316,
+                        "id": 47100,
                         "mutability": "mutable",
                         "name": "subnetId",
-                        "nameLocation": "4128:8:53",
+                        "nameLocation": "4128:8:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16320,
-                        "src": "4119:17:53",
+                        "scope": 47104,
+                        "src": "4119:17:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_SubnetID_$16202_storage_ptr",
+                            "typeIdentifier": "t_struct$_SubnetID_$46986_storage_ptr",
                             "typeString": "struct SubnetID"
                         },
                         "typeName": {
-                            "id": 16315,
+                            "id": 47099,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16314,
+                                "id": 47098,
                                 "name": "SubnetID",
-                                "nameLocations": ["4119:8:53"],
+                                "nameLocations": ["4119:8:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 16202,
-                                "src": "4119:8:53"
+                                "referencedDeclaration": 46986,
+                                "src": "4119:8:73"
                             },
-                            "referencedDeclaration": 16202,
-                            "src": "4119:8:53",
+                            "referencedDeclaration": 46986,
+                            "src": "4119:8:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_SubnetID_$16202_storage_ptr",
+                                "typeIdentifier": "t_struct$_SubnetID_$46986_storage_ptr",
                                 "typeString": "struct SubnetID"
                             }
                         },
@@ -1548,34 +1548,34 @@
                     },
                     {
                         "constant": false,
-                        "id": 16319,
+                        "id": 47103,
                         "mutability": "mutable",
                         "name": "rawAddress",
-                        "nameLocation": "4153:10:53",
+                        "nameLocation": "4153:10:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16320,
-                        "src": "4142:21:53",
+                        "scope": 47104,
+                        "src": "4142:21:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_struct$_FvmAddress_$16172_storage_ptr",
+                            "typeIdentifier": "t_struct$_FvmAddress_$46956_storage_ptr",
                             "typeString": "struct FvmAddress"
                         },
                         "typeName": {
-                            "id": 16318,
+                            "id": 47102,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 16317,
+                                "id": 47101,
                                 "name": "FvmAddress",
-                                "nameLocations": ["4142:10:53"],
+                                "nameLocations": ["4142:10:73"],
                                 "nodeType": "IdentifierPath",
-                                "referencedDeclaration": 16172,
-                                "src": "4142:10:53"
+                                "referencedDeclaration": 46956,
+                                "src": "4142:10:73"
                             },
-                            "referencedDeclaration": 16172,
-                            "src": "4142:10:53",
+                            "referencedDeclaration": 46956,
+                            "src": "4142:10:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_struct$_FvmAddress_$16172_storage_ptr",
+                                "typeIdentifier": "t_struct$_FvmAddress_$46956_storage_ptr",
                                 "typeString": "struct FvmAddress"
                             }
                         },
@@ -1583,26 +1583,26 @@
                     }
                 ],
                 "name": "IPCAddress",
-                "nameLocation": "4102:10:53",
-                "scope": 16335,
+                "nameLocation": "4102:10:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16327,
+                "id": 47111,
                 "nodeType": "StructDefinition",
-                "src": "4211:78:53",
+                "src": "4211:78:73",
                 "nodes": [],
                 "canonicalName": "Validator",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16322,
+                        "id": 47106,
                         "mutability": "mutable",
                         "name": "weight",
-                        "nameLocation": "4242:6:53",
+                        "nameLocation": "4242:6:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16327,
-                        "src": "4234:14:53",
+                        "scope": 47111,
+                        "src": "4234:14:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1610,10 +1610,10 @@
                             "typeString": "uint256"
                         },
                         "typeName": {
-                            "id": 16321,
+                            "id": 47105,
                             "name": "uint256",
                             "nodeType": "ElementaryTypeName",
-                            "src": "4234:7:53",
+                            "src": "4234:7:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint256",
                                 "typeString": "uint256"
@@ -1623,13 +1623,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16324,
+                        "id": 47108,
                         "mutability": "mutable",
                         "name": "addr",
-                        "nameLocation": "4262:4:53",
+                        "nameLocation": "4262:4:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16327,
-                        "src": "4254:12:53",
+                        "scope": 47111,
+                        "src": "4254:12:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1637,10 +1637,10 @@
                             "typeString": "address"
                         },
                         "typeName": {
-                            "id": 16323,
+                            "id": 47107,
                             "name": "address",
                             "nodeType": "ElementaryTypeName",
-                            "src": "4254:7:53",
+                            "src": "4254:7:73",
                             "stateMutability": "nonpayable",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_address",
@@ -1651,13 +1651,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16326,
+                        "id": 47110,
                         "mutability": "mutable",
                         "name": "metadata",
-                        "nameLocation": "4278:8:53",
+                        "nameLocation": "4278:8:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16327,
-                        "src": "4272:14:53",
+                        "scope": 47111,
+                        "src": "4272:14:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1665,10 +1665,10 @@
                             "typeString": "bytes"
                         },
                         "typeName": {
-                            "id": 16325,
+                            "id": 47109,
                             "name": "bytes",
                             "nodeType": "ElementaryTypeName",
-                            "src": "4272:5:53",
+                            "src": "4272:5:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_bytes_storage_ptr",
                                 "typeString": "bytes"
@@ -1678,56 +1678,56 @@
                     }
                 ],
                 "name": "Validator",
-                "nameLocation": "4218:9:53",
-                "scope": 16335,
+                "nameLocation": "4218:9:73",
+                "scope": 47119,
                 "visibility": "public"
             },
             {
-                "id": 16334,
+                "id": 47118,
                 "nodeType": "StructDefinition",
-                "src": "4339:81:53",
+                "src": "4339:81:73",
                 "nodes": [],
                 "canonicalName": "Membership",
                 "members": [
                     {
                         "constant": false,
-                        "id": 16331,
+                        "id": 47115,
                         "mutability": "mutable",
                         "name": "validators",
-                        "nameLocation": "4375:10:53",
+                        "nameLocation": "4375:10:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16334,
-                        "src": "4363:22:53",
+                        "scope": 47118,
+                        "src": "4363:22:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
-                            "typeIdentifier": "t_array$_t_struct$_Validator_$16327_storage_$dyn_storage_ptr",
+                            "typeIdentifier": "t_array$_t_struct$_Validator_$47111_storage_$dyn_storage_ptr",
                             "typeString": "struct Validator[]"
                         },
                         "typeName": {
                             "baseType": {
-                                "id": 16329,
+                                "id": 47113,
                                 "nodeType": "UserDefinedTypeName",
                                 "pathNode": {
-                                    "id": 16328,
+                                    "id": 47112,
                                     "name": "Validator",
-                                    "nameLocations": ["4363:9:53"],
+                                    "nameLocations": ["4363:9:73"],
                                     "nodeType": "IdentifierPath",
-                                    "referencedDeclaration": 16327,
-                                    "src": "4363:9:53"
+                                    "referencedDeclaration": 47111,
+                                    "src": "4363:9:73"
                                 },
-                                "referencedDeclaration": 16327,
-                                "src": "4363:9:53",
+                                "referencedDeclaration": 47111,
+                                "src": "4363:9:73",
                                 "typeDescriptions": {
-                                    "typeIdentifier": "t_struct$_Validator_$16327_storage_ptr",
+                                    "typeIdentifier": "t_struct$_Validator_$47111_storage_ptr",
                                     "typeString": "struct Validator"
                                 }
                             },
-                            "id": 16330,
+                            "id": 47114,
                             "nodeType": "ArrayTypeName",
-                            "src": "4363:11:53",
+                            "src": "4363:11:73",
                             "typeDescriptions": {
-                                "typeIdentifier": "t_array$_t_struct$_Validator_$16327_storage_$dyn_storage_ptr",
+                                "typeIdentifier": "t_array$_t_struct$_Validator_$47111_storage_$dyn_storage_ptr",
                                 "typeString": "struct Validator[]"
                             }
                         },
@@ -1735,13 +1735,13 @@
                     },
                     {
                         "constant": false,
-                        "id": 16333,
+                        "id": 47117,
                         "mutability": "mutable",
                         "name": "configurationNumber",
-                        "nameLocation": "4398:19:53",
+                        "nameLocation": "4398:19:73",
                         "nodeType": "VariableDeclaration",
-                        "scope": 16334,
-                        "src": "4391:26:53",
+                        "scope": 47118,
+                        "src": "4391:26:73",
                         "stateVariable": false,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -1749,10 +1749,10 @@
                             "typeString": "uint64"
                         },
                         "typeName": {
-                            "id": 16332,
+                            "id": 47116,
                             "name": "uint64",
                             "nodeType": "ElementaryTypeName",
-                            "src": "4391:6:53",
+                            "src": "4391:6:73",
                             "typeDescriptions": {
                                 "typeIdentifier": "t_uint64",
                                 "typeString": "uint64"
@@ -1762,12 +1762,12 @@
                     }
                 ],
                 "name": "Membership",
-                "nameLocation": "4346:10:53",
-                "scope": 16335,
+                "nameLocation": "4346:10:73",
+                "scope": 47119,
                 "visibility": "public"
             }
         ],
         "license": "MIT OR Apache-2.0"
     },
-    "id": 53
+    "id": 73
 }
