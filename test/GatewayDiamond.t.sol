@@ -794,20 +794,20 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE - 1}(
             CrossMsg({
                 message: StorableMsg({
-                from: IPCAddress({
-                subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                rawAddress: FvmAddressHelper.from(caller)
-            }),
-                to: IPCAddress({
-                subnetId: SubnetID({root: 0, route: new address[](0)}),
-                rawAddress: FvmAddressHelper.from(caller)
-            }),
-                value: 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0),
-                fee: CROSS_MSG_FEE
-            }),
+                    from: IPCAddress({
+                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
+                    value: 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
+                }),
                 wrapped: false
             })
         );
@@ -816,20 +816,20 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
-                from: IPCAddress({
-                subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                rawAddress: FvmAddressHelper.from(caller)
-            }),
-                to: IPCAddress({
-                subnetId: SubnetID({root: 0, route: new address[](0)}),
-                rawAddress: FvmAddressHelper.from(caller)
-            }),
-                value: 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0),
-                fee: CROSS_MSG_FEE - 1
-            }),
+                    from: IPCAddress({
+                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
+                    value: 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE - 1
+                }),
                 wrapped: false
             })
         );
@@ -847,20 +847,20 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwMessenger.sendCrossMessage{value: fee - 1}(
             CrossMsg({
                 message: StorableMsg({
-                from: IPCAddress({
-                subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-                rawAddress: FvmAddressHelper.from(caller)
-            }),
-                to: IPCAddress({
-                subnetId: SubnetID({root: 0, route: new address[](0)}),
-                rawAddress: FvmAddressHelper.from(caller)
-            }),
-                value: 1,
-                nonce: 0,
-                method: METHOD_SEND,
-                params: new bytes(0),
-                fee: CROSS_MSG_FEE
-            }),
+                    from: IPCAddress({
+                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
+                    to: IPCAddress({
+                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        rawAddress: FvmAddressHelper.from(caller)
+                    }),
+                    value: 1,
+                    nonce: 0,
+                    method: METHOD_SEND,
+                    params: new bytes(0),
+                    fee: CROSS_MSG_FEE
+                }),
                 wrapped: false
             })
         );
@@ -883,20 +883,20 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_Fund_Kill_Fail_CircSupplyMoreThanZero() public {
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
 
-         _join(validatorAddress, publicKey);
+        _join(validatorAddress, publicKey);
 
-         address funderAddress = address(101);
-         uint256 fundAmount = 1 ether;
+        address funderAddress = address(101);
+        uint256 fundAmount = 1 ether;
 
-         vm.deal(funderAddress, fundAmount + 1);
+        vm.deal(funderAddress, fundAmount + 1);
 
-         vm.startPrank(funderAddress);
-         fund(funderAddress, fundAmount);
-         vm.stopPrank();
+        vm.startPrank(funderAddress);
+        fund(funderAddress, fundAmount);
+        vm.stopPrank();
 
-         vm.startPrank(address(saManager));
-         vm.expectRevert(NotEmptySubnetCircSupply.selector);
-         gwManager.kill();
+        vm.startPrank(address(saManager));
+        vm.expectRevert(NotEmptySubnetCircSupply.selector);
+        gwManager.kill();
     }
 
     function testGatewayDiamond_Fund_Revert_OnZeroValue() public {
@@ -905,7 +905,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         address funderAddress = address(101);
 
-        (SubnetID memory subnetId, ,,,,) = getSubnet(address(saManager));
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
 
         vm.expectRevert(InvalidCrossMsgValue.selector);
         gwManager.fund{value: 0}(subnetId, FvmAddressHelper.from(funderAddress));
@@ -938,16 +938,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
         _join(validatorAddress, publicKey);
 
-         vm.deal(funderAddress, amount);
+        vm.deal(funderAddress, amount);
 
-         (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
         vm.prank(funderAddress);
-         gwManager.fund{value: amount}(subnetId, FvmAddressHelper.from(msg.sender));
+        gwManager.fund{value: amount}(subnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function testGatewayDiamond_Fund_Fails_NotRegistered() public {
-         address funderAddress = address(101);
-         uint256 fundAmount = 1 ether;
+        address funderAddress = address(101);
+        uint256 fundAmount = 1 ether;
 
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
         _join(validatorAddress, publicKey);
@@ -964,10 +964,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         vm.startPrank(funderAddress);
 
-         SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
+        SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
 
-         vm.expectRevert(NotRegisteredSubnet.selector);
-         gwManager.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
+        vm.expectRevert(NotRegisteredSubnet.selector);
+        gwManager.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
 
         vm.expectRevert(NotRegisteredSubnet.selector);
         gwManager.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
@@ -977,30 +977,29 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
         _join(validatorAddress, publicKey);
 
-         uint256 fundAmount = 1 ether;
+        uint256 fundAmount = 1 ether;
         vm.deal(BLS_ACCOUNT_ADDREESS, fundAmount + 1);
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
 
-         fund(BLS_ACCOUNT_ADDREESS, fundAmount);
+        fund(BLS_ACCOUNT_ADDREESS, fundAmount);
     }
 
     function testGatewayDiamond_Fund_Works_ReactivatedSubnet() public {
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
         _join(validatorAddress, publicKey);
 
-         vm.prank(validatorAddress);
-         saManager.leave();
+        vm.prank(validatorAddress);
+        saManager.leave();
 
         _join(validatorAddress, publicKey);
 
-         address funderAddress = address(101);
-         uint256 fundAmount = 1 ether;
+        address funderAddress = address(101);
+        uint256 fundAmount = 1 ether;
 
         vm.deal(funderAddress, fundAmount + 1);
         vm.prank(funderAddress);
         fund(funderAddress, fundAmount);
     }
-
 
     function testGatewayDiamond_Release_Fails_InsufficientAmount() public {
         address[] memory path = new address[](2);
@@ -2102,7 +2101,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         gwManager.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
 
-    (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(saManager));
+        (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(saManager));
 
         require(gwGetter.getSubnetTopDownMsgsLength(subnetId) == expectedTopDownMsgsLength, "unexpected lengths");
 
