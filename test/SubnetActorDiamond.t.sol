@@ -34,7 +34,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {LibStaking} from "../src/lib/LibStaking.sol";
 import {LibDiamond} from "../src/lib/LibDiamond.sol";
 
-import {SubnetManagerTestUtil} from "./subnetActorMock/SubnetManagerTestUtil.sol";
+import {SubnetActorManagerFacetMock} from "./mocks/SubnetActor.sol";
 
 import {console} from "forge-std/console.sol";
 
@@ -67,7 +67,7 @@ contract SubnetActorDiamondTest is Test {
     bytes4[] gwMessengerSelectors;
 
     SubnetActorDiamond saDiamond;
-    SubnetManagerTestUtil saManager;
+    SubnetActorManagerFacetMock saManager;
     SubnetActorGetterFacet saGetter;
     DiamondCutFacet cutFacet;
     DiamondLoupeFacet louper;
@@ -80,7 +80,7 @@ contract SubnetActorDiamondTest is Test {
 
     constructor() {
         saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
-        saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetManagerTestUtil");
+        saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacetMock");
         cutFacetSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
         louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
 
@@ -434,7 +434,7 @@ contract SubnetActorDiamondTest is Test {
     }
 
     function testSubnetActorDiamond_Deployments_Fail_GatewayCannotBeZero() public {
-        SubnetManagerTestUtil saDupMangerFaucet = new SubnetManagerTestUtil();
+        SubnetActorManagerFacetMock saDupMangerFaucet = new SubnetActorManagerFacetMock();
         SubnetActorGetterFacet saDupGetterFaucet = new SubnetActorGetterFacet();
 
         vm.expectRevert(GatewayCannotBeZero.selector);
@@ -1281,7 +1281,7 @@ contract SubnetActorDiamondTest is Test {
     ) public {
         SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
 
-        saManager = new SubnetManagerTestUtil();
+        saManager = new SubnetActorManagerFacetMock();
         saGetter = new SubnetActorGetterFacet();
         cutFacet = new DiamondCutFacet();
         louper = new DiamondLoupeFacet();
@@ -1336,7 +1336,7 @@ contract SubnetActorDiamondTest is Test {
             })
         );
 
-        saManager = SubnetManagerTestUtil(address(saDiamond));
+        saManager = SubnetActorManagerFacetMock(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
         cutFacet = DiamondCutFacet(address(saDiamond));
         louper = DiamondLoupeFacet(address(saDiamond));
