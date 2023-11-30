@@ -34,7 +34,7 @@ contract SubnetGetterFacet {
         nonce = s.userNonces[user];
     }
 
-    /// @notice Returns the last nonce used by the owner
+    /// @notice Returns the gateway
     function getGateway() external view returns (address) {
         return s.GATEWAY;
     }
