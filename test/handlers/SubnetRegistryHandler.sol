@@ -64,6 +64,10 @@ contract SubnetRegistryHandler {
         return owners.values();
     }
 
+    function getGateway() external view returns (address) {
+        return subnetGetterFacet.getGateway();
+    }
+
     function deploySubnetActor(
         uint256 _minCollateral,
         uint64 _minValidators,
