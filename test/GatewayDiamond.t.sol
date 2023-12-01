@@ -534,7 +534,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
         vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
-        vm.expectRevert(NotEnoughFunds.selector);
+        vm.expectRevert(NotEnoughCollateral.selector);
 
         gwManager.register{value: collateral}(0);
     }
