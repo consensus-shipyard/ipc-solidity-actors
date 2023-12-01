@@ -141,17 +141,17 @@ contract SubnetRegistryInvariants is StdInvariant, Test {
     /// forge-config: default.invariant.depth = 10
     /// forge-config: default.invariant.fail-on-revert = false
     /// forge-config: default.invariant.call-override = true
-    function invariant_gateway_address_is_persistent() public view {
+    function invariant_SR_01_gateway_address_is_persistent() public view {
         assert(registryHandler.getGateway() == DEFAULT_IPC_GATEWAY_ADDR);
     }
 
     // TODO: this test has the same issue as https://github.com/foundry-rs/foundry/issues/6074
-    // We need to update the test setup when the issue is fixed.
+    // We may need to update the test setup when the issue is fixed.
     /// forge-config: default.invariant.runs = 5
     /// forge-config: default.invariant.depth = 20
     /// forge-config: default.invariant.fail-on-revert = false
     /// forge-config: default.invariant.call-override = true
-    function invariant_deployment() public view {
+    function invariant_SR_02_subnet_address_can_be_retrieved() public view {
         address[] memory owners = registryHandler.getOwners();
         if (owners.length == 0) {
             return;
