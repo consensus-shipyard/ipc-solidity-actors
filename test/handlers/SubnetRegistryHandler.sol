@@ -1,29 +1,31 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {ConsensusType} from "../../src/enums/ConsensusType.sol";
-
 import "forge-std/console.sol";
+import "forge-std/StdUtils.sol";
+import "forge-std/StdCheats.sol";
+import {CommonBase} from "forge-std/Base.sol";
 
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
-import {TestUtils} from "../TestUtils.sol";
 import {IERC165} from "../../src/interfaces/IERC165.sol";
 import {IDiamond} from "../../src/interfaces/IDiamond.sol";
 import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
 import {IDiamondLoupe} from "../../src/interfaces/IDiamondLoupe.sol";
-
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
-import {SubnetID} from "../../src/structs/Subnet.sol";
-import {SubnetRegistryDiamond} from "../../src/SubnetRegistryDiamond.sol";
-
+import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
+import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
 import {RegisterSubnetFacet} from "../../src/subnetregistry/RegisterSubnetFacet.sol";
 import {SubnetGetterFacet} from "../../src/subnetregistry/SubnetGetterFacet.sol";
-import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
+import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
+import {SubnetRegistryDiamond} from "../../src/SubnetRegistryDiamond.sol";
+
+import {ConsensusType} from "../../src/enums/ConsensusType.sol";
+import {SubnetID} from "../../src/structs/Subnet.sol";
+import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
+
+import {TestUtils} from "../TestUtils.sol";
 
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
-contract SubnetRegistryHandler {
+contract SubnetRegistryHandler is CommonBase, StdCheats, StdUtils {
     using EnumerableSet for EnumerableSet.AddressSet;
 
     address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
@@ -36,36 +38,46 @@ contract SubnetRegistryHandler {
     uint16 private constant DEFAULT_ACTIVE_VALIDATORS = 50;
     uint256 private constant CROSS_MSG_FEE = 10 gwei;
 
-    EnumerableSet.AddressSet private owners;
+    EnumerableSet.AddressSet private ghost_owners;
     RegisterSubnetFacet private registerSubnetFacet;
-    SubnetGetterFacet private subnetGetterFacet;
+    SubnetGetterFacet private registerGetterFacet;
 
     address private registerSubnetFacetAddr;
     address private subnetGetterFacetAddr;
 
-    constructor(address _subnetGetterFacetAddr, address _registerSubnetFacetAddr) {
-        registerSubnetFacet = RegisterSubnetFacet(_registerSubnetFacetAddr);
-        subnetGetterFacet = SubnetGetterFacet(_subnetGetterFacetAddr);
+    constructor(SubnetRegistryDiamond _registry) {
+        registerSubnetFacet = RegisterSubnetFacet(address(_registry));
+        registerGetterFacet = SubnetGetterFacet(address(_registry));
     }
 
     function getSubnetDeployedBy(address owner) external view returns (address subnet) {
-        return subnetGetterFacet.latestSubnetDeployed(owner);
+        return registerGetterFacet.latestSubnetDeployed(owner);
     }
 
     function getSubnetDeployedWithNonce(address owner, uint64 nonce) external view returns (address subnet) {
-        return subnetGetterFacet.getSubnetDeployedByNonce(owner, nonce);
+        return registerGetterFacet.getSubnetDeployedByNonce(owner, nonce);
     }
 
     function getUserLastNonce(address user) external view returns (uint64 nonce) {
-        return subnetGetterFacet.getUserLastNonce(user);
+        return registerGetterFacet.getUserLastNonce(user);
+    }
+
+    /// getRandomOldAddressOrNewOne returns a new random address
+    function getRandomOldAddressOrNewOne(uint256 seed) internal view returns (address) {
+        uint256 lenght = ghost_owners.length();
+        if (lenght == 0 || seed % 4 == 0) {
+            return msg.sender;
+        } else {
+            return ghost_owners.values()[seed % lenght];
+        }
     }
 
     function getOwners() external view returns (address[] memory) {
-        return owners.values();
+        return ghost_owners.values();
     }
 
     function getGateway() external view returns (address) {
-        return subnetGetterFacet.getGateway();
+        return registerGetterFacet.getGateway();
     }
 
     function deploySubnetActor(
@@ -76,7 +88,8 @@ contract SubnetRegistryHandler {
         uint8 _majorityPercentage,
         uint256 _minCrossMsgFee,
         uint8 _pathSize,
-        int8 _powerScale
+        int8 _powerScale,
+        uint256 seed
     ) public {
         if (_minCollateral > DEFAULT_MIN_VALIDATOR_STAKE || _minCollateral == 0) {
             _minCollateral = DEFAULT_MIN_VALIDATOR_STAKE;
@@ -110,7 +123,7 @@ contract SubnetRegistryHandler {
 
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: path}),
-            ipcGatewayAddr: subnetGetterFacet.getGateway(),
+            ipcGatewayAddr: registerGetterFacet.getGateway(),
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: _minCollateral,
             minValidators: _minValidators,
@@ -121,9 +134,9 @@ contract SubnetRegistryHandler {
             minCrossMsgFee: _minCrossMsgFee
         });
 
+        address owner = getRandomOldAddressOrNewOne(seed);
+        vm.prank(owner);
         registerSubnetFacet.newSubnetActor(params);
-        if (!owners.contains(msg.sender)) {
-            owners.add(msg.sender);
-        }
+        ghost_owners.add(owner);
     }
 }

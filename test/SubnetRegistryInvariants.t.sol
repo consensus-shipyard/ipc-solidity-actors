@@ -21,7 +21,6 @@ import {SubnetID} from "../src/structs/Subnet.sol";
 import {SubnetRegistryDiamond} from "../src/SubnetRegistryDiamond.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 
-//facets
 import {RegisterSubnetFacet} from "../src/subnetregistry/RegisterSubnetFacet.sol";
 import {SubnetGetterFacet} from "../src/subnetregistry/SubnetGetterFacet.sol";
 import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
@@ -127,41 +126,47 @@ contract SubnetRegistryInvariants is StdInvariant, Test {
         );
 
         registry = new SubnetRegistryDiamond(gwDiamondCut, params);
-        louperFacet = DiamondLoupeFacet(address(registry));
-        cutFacet = DiamondCutFacet(address(registry));
-        registerSubnetFacet = RegisterSubnetFacet(address(registry));
-        subnetGetterFacet = SubnetGetterFacet(address(registry));
+        registryHandler = new SubnetRegistryHandler(registry);
 
-        registryHandler = new SubnetRegistryHandler(address(subnetGetterFacet), address(registerSubnetFacet));
+        bytes4[] memory selectors = new bytes4[](1);
+        selectors[0] = SubnetRegistryHandler.deploySubnetActor.selector;
 
+        targetSelector(FuzzSelector({addr: address(registryHandler), selectors: selectors}));
         targetContract(address(registryHandler));
     }
 
+    /// @notice The Gateway address is not changed.
     /// forge-config: default.invariant.runs = 5
     /// forge-config: default.invariant.depth = 10
     /// forge-config: default.invariant.fail-on-revert = false
     /// forge-config: default.invariant.call-override = true
-    function invariant_SR_01_gateway_address_is_persistent() public view {
-        assert(registryHandler.getGateway() == DEFAULT_IPC_GATEWAY_ADDR);
+    function invariant_SR_01_gateway_address_is_persistent() public {
+        assertEq(registryHandler.getGateway(), DEFAULT_IPC_GATEWAY_ADDR);
     }
 
-    // TODO: this test has the same issue as https://github.com/foundry-rs/foundry/issues/6074
-    // We may need to update the test setup when the issue is fixed.
+    /// @notice If a subnet was created then it's address can be retrieved.
+    /// TODO: this test has the same issue as https://github.com/foundry-rs/foundry/issues/6074
+    /// We may need to update the test setup when the issue is fixed.
+    ///
     /// forge-config: default.invariant.runs = 5
     /// forge-config: default.invariant.depth = 20
     /// forge-config: default.invariant.fail-on-revert = false
     /// forge-config: default.invariant.call-override = true
-    function invariant_SR_02_subnet_address_can_be_retrieved() public view {
+    function invariant_SR_02_subnet_address_can_be_retrieved() public {
         address[] memory owners = registryHandler.getOwners();
-        if (owners.length == 0) {
+        uint256 length = owners.length;
+        if (length == 0) {
             return;
         }
-        address owner = address(registryHandler);
-        uint64 nonce = registryHandler.getUserLastNonce(owner);
+        for (uint256 i; i < length; ++i) {
+            address owner = owners[i];
+            uint64 nonce = registryHandler.getUserLastNonce(owner);
 
-        assert(nonce > 0);
-        assert(
-            registryHandler.getSubnetDeployedBy(owner) == registryHandler.getSubnetDeployedWithNonce(owner, nonce - 1)
-        );
+            assertNotEq(nonce, 0);
+            assertEq(
+                registryHandler.getSubnetDeployedBy(owner),
+                registryHandler.getSubnetDeployedWithNonce(owner, nonce - 1)
+            );
+        }
     }
 }
