@@ -6,12 +6,6 @@ import "forge-std/StdUtils.sol";
 import "forge-std/StdCheats.sol";
 import {CommonBase} from "forge-std/Base.sol";
 
-import {IERC165} from "../../src/interfaces/IERC165.sol";
-import {IDiamond} from "../../src/interfaces/IDiamond.sol";
-import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "../../src/interfaces/IDiamondLoupe.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
-import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
 import {RegisterSubnetFacet} from "../../src/subnetregistry/RegisterSubnetFacet.sol";
 import {SubnetGetterFacet} from "../../src/subnetregistry/SubnetGetterFacet.sol";
 import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";

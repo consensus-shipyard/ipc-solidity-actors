@@ -6,13 +6,6 @@ import "forge-std/StdUtils.sol";
 import "forge-std/StdCheats.sol";
 import {CommonBase} from "forge-std/Base.sol";
 
-import {IERC165} from "../../src/interfaces/IERC165.sol";
-import {IDiamond} from "../../src/interfaces/IDiamond.sol";
-import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "../../src/interfaces/IDiamondLoupe.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
-import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
-import {SubnetGetterFacet} from "../../src/subnetregistry/SubnetGetterFacet.sol";
 import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
 import {SubnetActorManagerFacet} from "../../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.sol";
@@ -29,22 +22,12 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
     using EnumerableSet for EnumerableSet.AddressSet;
 
-    address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
-    uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
-    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
-    int8 private constant DEFAULT_POWER_SCALE = 18;
-    uint64 private constant ROOTNET_CHAINID = 123;
-    uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
-    uint16 private constant DEFAULT_ACTIVE_VALIDATORS = 50;
-    uint256 private constant CROSS_MSG_FEE = 10 gwei;
-
-    SubnetActorManagerFacet saManager;
-    SubnetActorGetterFacet saGetter;
+    SubnetActorManagerFacet managerFacet;
+    SubnetActorGetterFacet getterFacet;
 
     constructor(SubnetActorDiamond _subnetActor) {
-        saManager = SubnetActorManagerFacet(address(_subnetActor));
-        saGetter = SubnetActorGetterFacet(address(_subnetActor));
+        managerFacet = SubnetActorManagerFacet(address(_subnetActor));
+        getterFacet = SubnetActorGetterFacet(address(_subnetActor));
     }
 
     function test() public {}
