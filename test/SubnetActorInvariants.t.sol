@@ -26,7 +26,7 @@ import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
 import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
-import {SubnetActorHandler} from "./handlers/SubnetActorHandler.sol";
+import {SubnetActorHandler, ETH_SUPPLY} from "./handlers/SubnetActorHandler.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
@@ -123,21 +123,31 @@ contract SubnetActorInvariants is StdInvariant, Test {
         );
 
         subnetActorHandler = new SubnetActorHandler(saDiamond);
+        subnetActorHandler.init();
 
         bytes4[] memory fuzzSelectors = new bytes4[](1);
-        fuzzSelectors[0] = SubnetActorHandler.test.selector;
+        fuzzSelectors[0] = SubnetActorHandler.join.selector;
+        //fuzzSelectors[1] = SubnetActorHandler.leave.selector;
+        //fuzzSelectors[2] = SubnetActorHandler.stake.selector;
+        //fuzzSelectors[3] = SubnetActorHandler.claim.selector;
 
         targetSelector(FuzzSelector({addr: address(subnetActorHandler), selectors: fuzzSelectors}));
         targetContract(address(subnetActorHandler));
     }
 
-    /// @notice .....
-    /// forge-config: default.invariant.runs = 5
-    /// forge-config: default.invariant.depth = 10
-    /// forge-config: default.invariant.fail-on-revert = false
-    /// forge-config: default.invariant.call-override = true
-    function invariant_SA_01_poc() public {
-        assertEq(true, true);
+    /// @notice The number of joined validators is equal to the number of total validators.
+    function invariant_SA_01_validators_number_is_correct() public {
+        assertEq(saGetter.getTotalValidators(), subnetActorHandler.joinedValidatorsNumber());
+    }
+
+    /// @notice The sum of the Subnet Actor Handler's ETH balance plus the total staked sum should equal the total ETH_SUPPLY.
+    function invariant_SA_02_conservationOfETH() public {
+        assertEq(ETH_SUPPLY, address(subnetActorHandler).balance + subnetActorHandler.ghost_stakedSum());
+    }
+
+    /// @notice The sum of the validator stakes is equal to the total confirmed collateral.
+    function invariant_SA_03_conservationOfETH() public {
+        assertEq(saGetter.getTotalConfirmedCollateral(), subnetActorHandler.ghost_stakedSum());
     }
 
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {

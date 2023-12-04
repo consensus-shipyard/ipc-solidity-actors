@@ -19,3 +19,11 @@ List of identified and checked invariants of the IPC protocol following the cate
 | -------- | ---------------------------------------------------------- | -------------------- | ------ |
 | SR-01    | The Gateway address is not changed                         | Variable Transitions | ✅     |
 | SR-02    | If a subnet was created then it's address can be retrieved | High Level           | ✅     |
+
+## Subnet Actor
+
+| Property | Description                                                                                                    | Category             | Tested |
+| -------- | -------------------------------------------------------------------------------------------------------------- | -------------------- | ------ |
+| SA-01    | The number of joined validators is equal to the number of total validators.                                    | Variable Transitions | ✅     |
+| SA-02    | The sum of the Subnet Actor Handler's ETH balance plus the total staked sum should equal the total ETH_SUPPLY. | Unit Test            | ✅     |
+| SA-03    | The sum of the validator stakes is equal to the total confirmed collateral.                                    | Valid State          | ✅     |
