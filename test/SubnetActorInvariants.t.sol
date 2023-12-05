@@ -125,11 +125,11 @@ contract SubnetActorInvariants is StdInvariant, Test {
         subnetActorHandler = new SubnetActorHandler(saDiamond);
         subnetActorHandler.init();
 
-        bytes4[] memory fuzzSelectors = new bytes4[](1);
+        bytes4[] memory fuzzSelectors = new bytes4[](4);
         fuzzSelectors[0] = SubnetActorHandler.join.selector;
-        //fuzzSelectors[1] = SubnetActorHandler.leave.selector;
-        //fuzzSelectors[2] = SubnetActorHandler.stake.selector;
-        //fuzzSelectors[3] = SubnetActorHandler.claim.selector;
+        fuzzSelectors[1] = SubnetActorHandler.leave.selector;
+        fuzzSelectors[2] = SubnetActorHandler.stake.selector;
+        fuzzSelectors[3] = SubnetActorHandler.unstake.selector;
 
         targetSelector(FuzzSelector({addr: address(subnetActorHandler), selectors: fuzzSelectors}));
         targetContract(address(subnetActorHandler));
@@ -146,8 +146,33 @@ contract SubnetActorInvariants is StdInvariant, Test {
     }
 
     /// @notice The sum of the validator stakes is equal to the total confirmed collateral.
-    function invariant_SA_03_conservationOfETH() public {
-        assertEq(saGetter.getTotalConfirmedCollateral(), subnetActorHandler.ghost_stakedSum());
+    function invariant_SA_03_sum_of_stake_equals_collateral() public {
+        assertEq(
+            saGetter.getTotalConfirmedCollateral(),
+            subnetActorHandler.ghost_stakedSum() - subnetActorHandler.ghost_unstakedSum()
+        );
+    }
+
+    /// @notice Validator can withdraw all ETHs that it staked after leaving.
+    function invariant_SA_04_validator_can_claim_collateral() public {
+        address validator = subnetActorHandler.getRandomValidatorFromSet();
+        if (validator == address(0)) {
+            return;
+        }
+        uint256 stake = subnetActorHandler.ghost_validators_staked(validator);
+        assertNotEq(stake, 0, "validator did not stake");
+
+        vm.prank(validator);
+        subnetActorHandler.leave(validator);
+        saManager.confirmNextChange();
+
+        uint256 balanceBefore = validator.balance;
+        vm.prank(validator);
+        saManager.claim();
+        saManager.confirmNextChange();
+        uint256 balanceAfter = validator.balance;
+
+        assertEq(balanceAfter - balanceBefore, stake, "unexpected claim amount");
     }
 
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {

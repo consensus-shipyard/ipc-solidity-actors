@@ -8,4 +8,9 @@ contract SubnetActorManagerFacetMock is SubnetActorManagerFacet {
     function confirmChange(uint64 _configurationNumber) external {
         LibStaking.confirmChange(_configurationNumber);
     }
+
+    function confirmNextChange() external {
+        (uint64 nextConfigNum, ) = LibStaking.getConfigurationNumbers();
+        LibStaking.confirmChange(nextConfigNum - 1);
+    }
 }

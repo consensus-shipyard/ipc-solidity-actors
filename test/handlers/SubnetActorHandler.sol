@@ -34,7 +34,8 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
     EnumerableSet.AddressSet private ghost_validators;
     uint256 public ghost_stakedSum;
     uint256 public ghost_unstakedSum;
-    mapping(address => uint256) public ghost_staked;
+    mapping(address => uint256) public ghost_validators_staked;
+    mapping(address => uint256) public ghost_validators_unstaked;
 
     constructor(SubnetActorDiamond _subnetActor) {
         managerFacet = SubnetActorManagerFacetMock(address(_subnetActor));
@@ -44,13 +45,26 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
     }
 
     /// getRandomValidator returns a validator address
-    function getRandomValidator(uint8 seed) internal view returns (address) {
-        uint256 lenght = ghost_validators.length();
-        if (lenght == 0 || seed % 4 == 0) {
+    function getRandomValidator(address addr) internal view returns (address) {
+        if (ghost_validators.contains(addr)) {
+            return addr;
+        }
+        uint256 length = ghost_validators.length();
+        uint256 seed = uint8(uint160(addr));
+        if (length == 0 || seed % 4 == 0) {
             return msg.sender;
         } else {
-            return ghost_validators.values()[seed % lenght];
+            return ghost_validators.values()[seed % length];
         }
+    }
+
+    function getRandomValidatorFromSet() public view returns (address) {
+        uint256 seed = ghost_stakedSum;
+        uint256 length = ghost_validators.length();
+        if (length == 0) {
+            return address(0);
+        }
+        return ghost_validators.values()[seed % length];
     }
 
     function joinedValidatorsNumber() public view returns (uint256) {
@@ -69,76 +83,64 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
 
         ghost_validators.add(validator);
         ghost_stakedSum += amount;
-        ghost_staked[validator] += amount;
+        ghost_validators_staked[validator] += amount;
     }
 
-    function join(uint8 id) public {
+    function join(uint8 id, uint256 amount) public {
         if (id == 0) {
             return;
         }
-        uint256 amount = DEFAULT_MIN_VALIDATOR_STAKE;
+        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
 
         (address validator, bytes memory publicKey) = TestUtils.deriveValidatorAddress(id);
-        console.log(validator);
 
         _pay(validator, amount);
         vm.prank(validator);
         managerFacet.join{value: amount}(publicKey);
-
-        // Because joining requires two operations: deposit and setMetadata
-        _configurationNumber += 2;
-        managerFacet.confirmChange(_configurationNumber);
+        managerFacet.confirmNextChange();
 
         ghost_stakedSum += amount;
-        ghost_staked[validator] += amount;
-
-        // join can be called by the same validator twice.
-        // Because of that we do not need to add the validator into ghost_validators, but we must change staked sum.
-        if (ghost_validators.contains(validator)) {
-            return;
-        }
-
+        ghost_validators_staked[validator] += amount;
         ghost_validators.add(validator);
     }
 
-    function leave(uint8 seed) public {
-        address validator = getRandomValidator(seed);
-        vm.prank(validator);
-
-        managerFacet.leave();
-        ghost_validators.remove(validator);
-
-        ghost_unstakedSum += ghost_staked[validator];
-        ghost_staked[validator] = 0;
-    }
-
-    function stake(uint8 seed, uint256 amount) public {
-        amount = bound(amount, 0, 10 * DEFAULT_MIN_VALIDATOR_STAKE);
+    function stake(address seed, uint256 amount) public {
+        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
         address validator = getRandomValidator(seed);
         _pay(validator, amount);
 
         vm.prank(validator);
         managerFacet.stake{value: amount}();
+        managerFacet.confirmNextChange();
 
         ghost_stakedSum += amount;
-        ghost_staked[validator] += amount;
+        ghost_validators_staked[validator] += amount;
     }
 
-    function unstake(uint8 seed, uint256 amount) public {
-        amount = bound(amount, 0, address(this).balance);
+    function leave(address seed) public {
+        address validator = getRandomValidator(seed);
+
+        uint256 amount = getterFacet.getTotalValidatorCollateral(validator);
+
+        vm.prank(validator);
+        managerFacet.leave();
+        managerFacet.confirmNextChange();
+
+        ghost_validators.remove(validator);
+        ghost_validators_unstaked[validator] = amount;
+        ghost_unstakedSum += amount;
+    }
+
+    function unstake(address seed, uint256 amount) public {
+        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
         address validator = getRandomValidator(seed);
 
         vm.prank(validator);
         managerFacet.unstake(amount);
+        managerFacet.confirmNextChange();
 
         ghost_unstakedSum += amount;
-        ghost_staked[validator] -= amount;
-    }
-
-    function claim(uint8 seed) public {
-        address validator = getRandomValidator(seed);
-        vm.prank(validator);
-        managerFacet.leave();
+        ghost_validators_unstaked[validator] += amount;
     }
 
     function _pay(address to, uint256 amount) internal {

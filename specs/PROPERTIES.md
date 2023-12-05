@@ -27,3 +27,4 @@ List of identified and checked invariants of the IPC protocol following the cate
 | SA-01    | The number of joined validators is equal to the number of total validators.                                    | Variable Transitions | ✅     |
 | SA-02    | The sum of the Subnet Actor Handler's ETH balance plus the total staked sum should equal the total ETH_SUPPLY. | Unit Test            | ✅     |
 | SA-03    | The sum of the validator stakes is equal to the total confirmed collateral.                                    | Valid State          | ✅     |
+| SA-04    | After leving the subnet, a validator can withdraw all ETHs that were staked.                                   | High Level           | ✅     |
