@@ -57,7 +57,7 @@ This repository's contracts use the Diamond pattern for upgradability, allowing 
 
 When you run an upgrade command, the repository's scripts handle several tasks:
 
-1. **Bytecode Verification**: The scripts fetch the bytecode of the currently deployed contracts from the FEVM network using the details stored in local JSON files. They compare this with the bytecode generated after applying the intended changes on a temporary Ganache network.
+1. **Bytecode Verification**: The scripts fetch the bytecode of the currently deployed contracts from the FEVM network using the details stored in local JSON files in the root directory of the github repository. They compare this with the bytecode generated after applying the intended changes on a temporary Ganache network.
 
 2. **Conditional Upgrades**: If the bytecode verification process detects changes that align with the intended upgrades, the `make` command conditionally triggers other scripts to perform the actual upgrade on the network.
 
