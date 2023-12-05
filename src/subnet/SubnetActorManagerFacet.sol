@@ -244,7 +244,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         // This means that initial validators won't be able to recover
         // their collateral ever (worth noting in the docs if this ends
         // up sticking around for a while).
-        if (s.permissioned) {
+        if (s.bootstrapped && s.permissioned) {
             revert MethodNotAllowed();
         }
 
