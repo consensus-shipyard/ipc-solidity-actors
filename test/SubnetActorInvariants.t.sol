@@ -140,12 +140,31 @@ contract SubnetActorInvariants is StdInvariant, Test {
         assertEq(saGetter.getTotalValidators(), subnetActorHandler.joinedValidatorsNumber());
     }
 
-    /// @notice The sum of the Subnet Actor Handler's ETH balance plus the total staked sum should equal the total ETH_SUPPLY.
+    /// @notice The stake of the subnet is the same from the GatewayActor and SubnetActor perspective.
     function invariant_SA_02_conservationOfETH() public {
-        assertEq(ETH_SUPPLY, address(subnetActorHandler).balance + subnetActorHandler.ghost_stakedSum());
+        SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(address(saDiamond));
+        Subnet memory subnet = gwGetter.subnets(subnetId.toHash());
+
+        assertEq(
+            ETH_SUPPLY,
+            address(subnetActorHandler).balance + subnetActorHandler.ghost_stakedSum(),
+            "subnet actor handler: unexpected stake"
+        );
+        assertEq(
+            ETH_SUPPLY,
+            address(subnetActorHandler).balance +
+                saGetter.getTotalConfirmedCollateral() +
+                subnetActorHandler.ghost_unstakedSum(),
+            "subnet actor: unexpected stake"
+        );
+        assertEq(
+            subnetActorHandler.ghost_stakedSum() - subnetActorHandler.ghost_unstakedSum(),
+            subnet.stake,
+            "gateway actor: unexpected stake"
+        );
     }
 
-    /// @notice The sum of the validator stakes is equal to the total confirmed collateral.
+    /// @notice The value resulting from all stake and unstake operations is equal to the total confirmed collateral.
     function invariant_SA_03_sum_of_stake_equals_collateral() public {
         assertEq(
             saGetter.getTotalConfirmedCollateral(),

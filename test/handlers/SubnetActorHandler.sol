@@ -19,7 +19,7 @@ import {TestUtils} from "../TestUtils.sol";
 
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
-uint256 constant ETH_SUPPLY = 120_500_000 ether;
+uint256 constant ETH_SUPPLY = 129_590_000 ether;
 
 contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
     using EnumerableSet for EnumerableSet.AddressSet;
@@ -28,7 +28,6 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
     SubnetActorGetterFacet private getterFacet;
 
     uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
-    uint64 private _configurationNumber = 1;
 
     // Ghost variables.
     EnumerableSet.AddressSet private ghost_validators;
@@ -79,7 +78,6 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         _pay(validator, amount);
         vm.prank(validator);
         managerFacet.join{value: amount}(publicKey);
-        _configurationNumber = 0;
 
         ghost_validators.add(validator);
         ghost_stakedSum += amount;
@@ -117,6 +115,18 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         ghost_validators_staked[validator] += amount;
     }
 
+    function unstake(address seed, uint256 amount) public {
+        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
+        address validator = getRandomValidator(seed);
+
+        vm.prank(validator);
+        managerFacet.unstake(amount);
+        managerFacet.confirmNextChange();
+
+        ghost_unstakedSum += amount;
+        ghost_validators_unstaked[validator] += amount;
+    }
+
     function leave(address seed) public {
         address validator = getRandomValidator(seed);
 
@@ -129,18 +139,6 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         ghost_validators.remove(validator);
         ghost_validators_unstaked[validator] = amount;
         ghost_unstakedSum += amount;
-    }
-
-    function unstake(address seed, uint256 amount) public {
-        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
-        address validator = getRandomValidator(seed);
-
-        vm.prank(validator);
-        managerFacet.unstake(amount);
-        managerFacet.confirmNextChange();
-
-        ghost_unstakedSum += amount;
-        ghost_validators_unstaked[validator] += amount;
     }
 
     function _pay(address to, uint256 amount) internal {

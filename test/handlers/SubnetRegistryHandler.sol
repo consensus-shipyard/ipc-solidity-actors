@@ -74,7 +74,7 @@ contract SubnetRegistryHandler is CommonBase, StdCheats, StdUtils {
         return registerGetterFacet.getGateway();
     }
 
-    function deploySubnetActor(
+    function deploySubnetActorFromRegistry(
         uint256 _minCollateral,
         uint64 _minValidators,
         uint64 _bottomUpCheckPeriod,

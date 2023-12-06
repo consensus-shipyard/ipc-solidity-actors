@@ -126,7 +126,7 @@ contract SubnetRegistryInvariants is StdInvariant, Test {
         registryHandler = new SubnetRegistryHandler(registry);
 
         bytes4[] memory fuzzSelectors = new bytes4[](1);
-        fuzzSelectors[0] = SubnetRegistryHandler.deploySubnetActor.selector;
+        fuzzSelectors[0] = SubnetRegistryHandler.deploySubnetActorFromRegistry.selector;
 
         targetSelector(FuzzSelector({addr: address(registryHandler), selectors: fuzzSelectors}));
         targetContract(address(registryHandler));
