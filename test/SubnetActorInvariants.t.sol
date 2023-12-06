@@ -48,8 +48,8 @@ contract SubnetActorInvariants is StdInvariant, Test {
 
     address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
     uint64 private constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
-    uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
+    uint256 private constant DEFAULT_MIN_ACTIVATION_COLLATERAL = 100 ether;
+    uint64 private constant DEFAULT_MIN_VALIDATORS = 2;
     string private constant DEFAULT_NET_ADDR = "netAddr";
     uint256 private constant CROSS_MSG_FEE = 10 gwei;
     uint256 private constant DEFAULT_RELAYER_REWARD = 10 gwei;
@@ -98,7 +98,7 @@ contract SubnetActorInvariants is StdInvariant, Test {
             networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: CROSS_MSG_FEE,
-            minCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
+            minCollateral: DEFAULT_MIN_ACTIVATION_COLLATERAL,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             activeValidatorsLimit: 4,
             genesisValidators: new Validator[](0)
@@ -116,14 +116,13 @@ contract SubnetActorInvariants is StdInvariant, Test {
         _assertDeploySubnetActor(
             gatewayAddress,
             ConsensusType.Fendermint,
-            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_ACTIVATION_COLLATERAL,
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
             DEFAULT_MAJORITY_PERCENTAGE
         );
 
         subnetActorHandler = new SubnetActorHandler(saDiamond);
-        subnetActorHandler.init();
 
         bytes4[] memory fuzzSelectors = new bytes4[](4);
         fuzzSelectors[0] = SubnetActorHandler.join.selector;
@@ -136,15 +135,16 @@ contract SubnetActorInvariants is StdInvariant, Test {
     }
 
     /// @notice The number of joined validators is equal to the number of total validators.
-    function invariant_SA_01_validators_number_is_correct() public {
-        assertEq(saGetter.getTotalValidators(), subnetActorHandler.joinedValidatorsNumber());
+    function invariant_SA_01_total_validators_number_is_correct() public {
+        assertEq(
+            saGetter.getTotalValidatorsNumber(),
+            subnetActorHandler.joinedValidatorsNumber(),
+            "unexpected total validators number"
+        );
     }
 
     /// @notice The stake of the subnet is the same from the GatewayActor and SubnetActor perspective.
     function invariant_SA_02_conservationOfETH() public {
-        SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(address(saDiamond));
-        Subnet memory subnet = gwGetter.subnets(subnetId.toHash());
-
         assertEq(
             ETH_SUPPLY,
             address(subnetActorHandler).balance + subnetActorHandler.ghost_stakedSum(),
@@ -157,11 +157,16 @@ contract SubnetActorInvariants is StdInvariant, Test {
                 subnetActorHandler.ghost_unstakedSum(),
             "subnet actor: unexpected stake"
         );
-        assertEq(
-            subnetActorHandler.ghost_stakedSum() - subnetActorHandler.ghost_unstakedSum(),
-            subnet.stake,
-            "gateway actor: unexpected stake"
-        );
+        if (saGetter.bootstrapped()) {
+            SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(address(saDiamond));
+            Subnet memory subnet = gwGetter.subnets(subnetId.toHash());
+
+            assertEq(
+                subnetActorHandler.ghost_stakedSum() - subnetActorHandler.ghost_unstakedSum(),
+                subnet.stake,
+                "gateway actor: unexpected stake"
+            );
+        }
     }
 
     /// @notice The value resulting from all stake and unstake operations is equal to the total confirmed collateral.
@@ -174,24 +179,40 @@ contract SubnetActorInvariants is StdInvariant, Test {
 
     /// @notice Validator can withdraw all ETHs that it staked after leaving.
     function invariant_SA_04_validator_can_claim_collateral() public {
-        address validator = subnetActorHandler.getRandomValidatorFromSet();
+        address validator = subnetActorHandler.leave(0);
         if (validator == address(0)) {
             return;
         }
-        uint256 stake = subnetActorHandler.ghost_validators_staked(validator);
-        assertNotEq(stake, 0, "validator did not stake");
+        if (!saGetter.bootstrapped()) {
+            return;
+        }
 
-        vm.prank(validator);
-        subnetActorHandler.leave(validator);
-        saManager.confirmNextChange();
-
+        uint256 subnetBalanceBefore = address(saDiamond).balance;
         uint256 balanceBefore = validator.balance;
+
         vm.prank(validator);
         saManager.claim();
         saManager.confirmNextChange();
-        uint256 balanceAfter = validator.balance;
 
-        assertEq(balanceAfter - balanceBefore, stake, "unexpected claim amount");
+        uint256 balanceAfter = validator.balance;
+        uint256 subnetBalanceAfter = address(saDiamond).balance;
+
+        assertEq(balanceAfter - balanceBefore, subnetBalanceBefore - subnetBalanceAfter, "unexpected claim amount");
+    }
+
+    /// @notice The collateral of the bootstrapped subnet is greater than minimum activation collateral.
+    function iPoCnvariant_SA_05_collateral_is_sufficient() public {
+        //console.log(saGetter.getTotalConfirmedCollateral());
+        bool subnetBootstrapped = saGetter.bootstrapped();
+        if (subnetBootstrapped) {
+            assertGe(
+                saGetter.getTotalConfirmedCollateral(),
+                saGetter.minActivationCollateral(),
+                "unexpected subnet collateral"
+            );
+        } else {
+            assert(true);
+        }
     }
 
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {

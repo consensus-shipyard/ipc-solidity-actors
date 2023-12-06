@@ -27,14 +27,18 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
     SubnetActorManagerFacetMock private managerFacet;
     SubnetActorGetterFacet private getterFacet;
 
-    uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
+    uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 10 ether;
 
     // Ghost variables.
+
+    // All validators: waiting and active.
+    // A validator is added, if it is called `join` successfully.
     EnumerableSet.AddressSet private ghost_validators;
-    uint256 public ghost_stakedSum;
-    uint256 public ghost_unstakedSum;
     mapping(address => uint256) public ghost_validators_staked;
     mapping(address => uint256) public ghost_validators_unstaked;
+
+    uint256 public ghost_stakedSum;
+    uint256 public ghost_unstakedSum;
 
     constructor(SubnetActorDiamond _subnetActor) {
         managerFacet = SubnetActorManagerFacetMock(address(_subnetActor));
@@ -43,22 +47,23 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         deal(address(this), ETH_SUPPLY);
     }
 
-    /// getRandomValidator returns a validator address
-    function getRandomValidator(address addr) internal view returns (address) {
-        if (ghost_validators.contains(addr)) {
-            return addr;
-        }
-        uint256 length = ghost_validators.length();
-        uint256 seed = uint8(uint160(addr));
-        if (length == 0 || seed % 4 == 0) {
-            return msg.sender;
+    /// getRandomValidator returns a validator from the known validators if id % 2 == 0,
+    /// otherwise it returns a random validator address generated from id.
+    /// It can't return address(0);
+    function getRandomValidator(uint8 id) public view returns (address) {
+        address addr;
+        if (id % 2 == 0) {
+            addr = getRandomValidatorFromSetOrZero(id);
         } else {
-            return ghost_validators.values()[seed % length];
+            (addr, ) = TestUtils.deriveValidatorAddress(id);
         }
+        if (addr == address(0)) {
+            return msg.sender;
+        }
+        return addr;
     }
 
-    function getRandomValidatorFromSet() public view returns (address) {
-        uint256 seed = ghost_stakedSum;
+    function getRandomValidatorFromSetOrZero(uint8 seed) public view returns (address) {
         uint256 length = ghost_validators.length();
         if (length == 0) {
             return address(0);
@@ -70,25 +75,11 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         return ghost_validators.values().length;
     }
 
-    // init adds an initial validator into the subnet.
-    function init() external {
-        uint256 amount = DEFAULT_MIN_VALIDATOR_STAKE;
-
-        (address validator, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        _pay(validator, amount);
-        vm.prank(validator);
-        managerFacet.join{value: amount}(publicKey);
-
-        ghost_validators.add(validator);
-        ghost_stakedSum += amount;
-        ghost_validators_staked[validator] += amount;
-    }
-
     function join(uint8 id, uint256 amount) public {
         if (id == 0) {
             return;
         }
-        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
+        amount = bound(amount, 0, 3 * DEFAULT_MIN_VALIDATOR_STAKE);
 
         (address validator, bytes memory publicKey) = TestUtils.deriveValidatorAddress(id);
 
@@ -102,9 +93,9 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         ghost_validators.add(validator);
     }
 
-    function stake(address seed, uint256 amount) public {
-        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
-        address validator = getRandomValidator(seed);
+    function stake(uint8 id, uint256 amount) public {
+        amount = bound(amount, 0, 3 * DEFAULT_MIN_VALIDATOR_STAKE);
+        address validator = getRandomValidator(id);
         _pay(validator, amount);
 
         vm.prank(validator);
@@ -115,9 +106,9 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         ghost_validators_staked[validator] += amount;
     }
 
-    function unstake(address seed, uint256 amount) public {
-        amount = bound(amount, 0, 2 * DEFAULT_MIN_VALIDATOR_STAKE);
-        address validator = getRandomValidator(seed);
+    function unstake(uint8 id, uint256 amount) public {
+        amount = bound(amount, 0, 3 * DEFAULT_MIN_VALIDATOR_STAKE);
+        address validator = getRandomValidator(id);
 
         vm.prank(validator);
         managerFacet.unstake(amount);
@@ -127,8 +118,11 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         ghost_validators_unstaked[validator] += amount;
     }
 
-    function leave(address seed) public {
-        address validator = getRandomValidator(seed);
+    function leave(uint8 id) public returns (address) {
+        address validator = getRandomValidatorFromSetOrZero(id);
+        if (validator == address(0)) {
+            return validator;
+        }
 
         uint256 amount = getterFacet.getTotalValidatorCollateral(validator);
 
@@ -139,6 +133,8 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         ghost_validators.remove(validator);
         ghost_validators_unstaked[validator] = amount;
         ghost_unstakedSum += amount;
+
+        return validator;
     }
 
     function _pay(address to, uint256 amount) internal {

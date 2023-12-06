@@ -102,9 +102,14 @@ contract SubnetActorGetterFacet {
         validator = s.validatorSet.validators[validatorAddress];
     }
 
-    /// @notice Get the information of a validator
-    function getTotalValidators() external view returns (uint16) {
+    /// @notice Get the total number of validators (active and waiting).
+    function getTotalValidatorsNumber() external view returns (uint16) {
         return LibStaking.totalValidators();
+    }
+
+    /// @notice Get the number of active validators.
+    function getActiveValidatorsNumber() external view returns (uint16) {
+        return LibStaking.totalActiveValidators();
     }
 
     function getTotalConfirmedCollateral() external view returns (uint256) {
