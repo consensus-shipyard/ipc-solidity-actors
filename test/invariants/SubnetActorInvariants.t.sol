@@ -336,6 +336,7 @@ contract SubnetActorInvariants is StdInvariant, Test {
                 majorityPercentage: _majorityPercentage,
                 activeValidatorsLimit: 100,
                 powerScale: 12,
+                permissioned: false,
                 minCrossMsgFee: CROSS_MSG_FEE
             })
         );
