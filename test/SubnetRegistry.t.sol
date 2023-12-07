@@ -356,6 +356,7 @@ contract SubnetRegistryTest is Test {
             majorityPercentage: _majorityPercentage,
             activeValidatorsLimit: _activeValidatorsLimit,
             powerScale: _powerScale,
+            permissioned: false,
             minCrossMsgFee: _minCrossMsgFee
         });
 
