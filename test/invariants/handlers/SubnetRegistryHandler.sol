@@ -6,16 +6,16 @@ import "forge-std/StdUtils.sol";
 import "forge-std/StdCheats.sol";
 import {CommonBase} from "forge-std/Base.sol";
 
-import {RegisterSubnetFacet} from "../../src/subnetregistry/RegisterSubnetFacet.sol";
-import {SubnetGetterFacet} from "../../src/subnetregistry/SubnetGetterFacet.sol";
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
-import {SubnetRegistryDiamond} from "../../src/SubnetRegistryDiamond.sol";
+import {RegisterSubnetFacet} from "../../../src/subnetregistry/RegisterSubnetFacet.sol";
+import {SubnetGetterFacet} from "../../../src/subnetregistry/SubnetGetterFacet.sol";
+import {SubnetActorDiamond} from "../../../src/SubnetActorDiamond.sol";
+import {SubnetRegistryDiamond} from "../../../src/SubnetRegistryDiamond.sol";
 
-import {ConsensusType} from "../../src/enums/ConsensusType.sol";
-import {SubnetID} from "../../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
+import {ConsensusType} from "../../../src/enums/ConsensusType.sol";
+import {SubnetID} from "../../../src/structs/Subnet.sol";
+import {SubnetIDHelper} from "../../../src/lib/SubnetIDHelper.sol";
 
-import {TestUtils} from "../TestUtils.sol";
+import {TestUtils} from "../../TestUtils.sol";
 
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 

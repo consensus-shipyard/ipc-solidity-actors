@@ -1,41 +1,41 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import "../src/errors/IPCErrors.sol";
+import "../../src/errors/IPCErrors.sol";
 import {StdInvariant, Test} from "forge-std/Test.sol";
-import {TestUtils} from "./TestUtils.sol";
-import {NumberContractFacetSeven, NumberContractFacetEight} from "./NumberContract.sol";
-import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
-import {ConsensusType} from "../src/enums/ConsensusType.sol";
-import {Status} from "../src/enums/Status.sol";
-import {CrossMsg, BottomUpCheckpoint, StorableMsg} from "../src/structs/Checkpoint.sol";
-import {FvmAddress} from "../src/structs/FvmAddress.sol";
-import {SubnetID, IPCAddress, Subnet, ValidatorInfo, Validator} from "../src/structs/Subnet.sol";
-import {StorableMsg} from "../src/structs/Checkpoint.sol";
-import {IERC165} from "../src/interfaces/IERC165.sol";
-import {IGateway} from "../src/interfaces/IGateway.sol";
-import {IDiamond} from "../src/interfaces/IDiamond.sol";
-import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
-import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
-import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
-import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
-import {SubnetActorDiamond, FunctionNotFound} from "../src/SubnetActorDiamond.sol";
-import {GatewayDiamond} from "../src/GatewayDiamond.sol";
-import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
-import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
-import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
-import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
+import {TestUtils} from "../TestUtils.sol";
+import {NumberContractFacetSeven, NumberContractFacetEight} from "../NumberContract.sol";
+import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../../src/constants/Constants.sol";
+import {ConsensusType} from "../../src/enums/ConsensusType.sol";
+import {Status} from "../../src/enums/Status.sol";
+import {CrossMsg, BottomUpCheckpoint, StorableMsg} from "../../src/structs/Checkpoint.sol";
+import {FvmAddress} from "../../src/structs/FvmAddress.sol";
+import {SubnetID, IPCAddress, Subnet, ValidatorInfo, Validator} from "../../src/structs/Subnet.sol";
+import {StorableMsg} from "../../src/structs/Checkpoint.sol";
+import {IERC165} from "../../src/interfaces/IERC165.sol";
+import {IGateway} from "../../src/interfaces/IGateway.sol";
+import {IDiamond} from "../../src/interfaces/IDiamond.sol";
+import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
+import {IDiamondLoupe} from "../../src/interfaces/IDiamondLoupe.sol";
+import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
+import {StorableMsgHelper} from "../../src/lib/StorableMsgHelper.sol";
+import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
+import {SubnetActorDiamond, FunctionNotFound} from "../../src/SubnetActorDiamond.sol";
+import {GatewayDiamond} from "../../src/GatewayDiamond.sol";
+import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
+import {GatewayMessengerFacet} from "../../src/gateway/GatewayMessengerFacet.sol";
+import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
+import {GatewayRouterFacet} from "../../src/gateway/GatewayRouterFacet.sol";
 import {SubnetActorHandler, ETH_SUPPLY} from "./handlers/SubnetActorHandler.sol";
-import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
-import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
-import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
+import {SubnetActorManagerFacet} from "../../src/subnet/SubnetActorManagerFacet.sol";
+import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.sol";
+import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
+import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {LibStaking} from "../src/lib/LibStaking.sol";
-import {LibDiamond} from "../src/lib/LibDiamond.sol";
+import {LibStaking} from "../../src/lib/LibStaking.sol";
+import {LibDiamond} from "../../src/lib/LibDiamond.sol";
 
-import {SubnetActorManagerFacetMock} from "./mocks/SubnetActor.sol";
+import {SubnetActorManagerFacetMock} from "../mocks/SubnetActor.sol";
 
 import {console} from "forge-std/console.sol";
 
@@ -134,7 +134,7 @@ contract SubnetActorInvariants is StdInvariant, Test {
         targetContract(address(subnetActorHandler));
     }
 
-    /// @notice The number of joined validators is equal to the number of total validators.
+    /// @notice The number of validators called `join` is equal to the number of total validators.
     function invariant_SA_01_total_validators_number_is_correct() public {
         assertEq(
             saGetter.getTotalValidatorsNumber(),
@@ -157,6 +157,7 @@ contract SubnetActorInvariants is StdInvariant, Test {
                 subnetActorHandler.ghost_unstakedSum(),
             "subnet actor: unexpected stake"
         );
+
         if (saGetter.bootstrapped()) {
             SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(address(saDiamond));
             Subnet memory subnet = gwGetter.subnets(subnetId.toHash());
@@ -198,6 +199,20 @@ contract SubnetActorInvariants is StdInvariant, Test {
         uint256 subnetBalanceAfter = address(saDiamond).balance;
 
         assertEq(balanceAfter - balanceBefore, subnetBalanceBefore - subnetBalanceAfter, "unexpected claim amount");
+    }
+
+    /// @notice Total confirmed collateral equals sum of validator collaterals.
+    function invariant_SA_05_total_collateral_equals_sum_of_validator_collaterals() public {
+        uint256 sumOfCollaterals;
+        address[] memory validators = subnetActorHandler.joinedValidators();
+        uint256 n = validators.length;
+        for (uint256 i; i < n; ++i) {
+            sumOfCollaterals += saGetter.getTotalValidatorCollateral(validators[i]);
+        }
+
+        uint256 totalCollateral = saGetter.getTotalConfirmedCollateral();
+
+        assertEq(sumOfCollaterals, totalCollateral, "unexpected sum of validators collateral");
     }
 
     /// @notice The collateral of the bootstrapped subnet is greater than minimum activation collateral.

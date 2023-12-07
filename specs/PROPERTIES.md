@@ -28,3 +28,4 @@ List of identified and checked invariants of the IPC protocol following the cate
 | SA-02    | The stake of the subnet is the same from the GatewayActor and SubnetActor perspective.                | Unit Test            | ✅     |
 | SA-03    | The value resulting from all stake and unstake operations is equal to the total confirmed collateral. | Valid State          | ✅     |
 | SA-04    | After leaving the subnet, a validator can claim their collateral.                                     | High Level           | ✅     |
+| SA-05    | Total confirmed collateral equals sum of validator collaterals.                                       | Valid State          | ✅     |

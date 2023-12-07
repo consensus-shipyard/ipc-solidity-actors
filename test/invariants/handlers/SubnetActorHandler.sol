@@ -6,16 +6,16 @@ import "forge-std/StdUtils.sol";
 import "forge-std/StdCheats.sol";
 import {CommonBase} from "forge-std/Base.sol";
 
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
-import {SubnetActorManagerFacet} from "../../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.sol";
-import {SubnetActorManagerFacetMock} from "../mocks/SubnetActor.sol";
+import {SubnetActorDiamond} from "../../../src/SubnetActorDiamond.sol";
+import {SubnetActorManagerFacet} from "../../../src/subnet/SubnetActorManagerFacet.sol";
+import {SubnetActorGetterFacet} from "../../../src/subnet/SubnetActorGetterFacet.sol";
+import {SubnetActorManagerFacetMock} from "../../mocks/SubnetActor.sol";
 
-import {ConsensusType} from "../../src/enums/ConsensusType.sol";
-import {SubnetID} from "../../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
+import {ConsensusType} from "../../../src/enums/ConsensusType.sol";
+import {SubnetID} from "../../../src/structs/Subnet.sol";
+import {SubnetIDHelper} from "../../../src/lib/SubnetIDHelper.sol";
 
-import {TestUtils} from "../TestUtils.sol";
+import {TestUtils} from "../../TestUtils.sol";
 
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
@@ -73,6 +73,10 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
 
     function joinedValidatorsNumber() public view returns (uint256) {
         return ghost_validators.values().length;
+    }
+
+    function joinedValidators() public view returns (address[] memory) {
+        return ghost_validators.values();
     }
 
     function join(uint8 id, uint256 amount) public {
