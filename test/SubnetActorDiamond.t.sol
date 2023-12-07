@@ -199,6 +199,7 @@ contract SubnetActorDiamondTest is Test {
         require(louper.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
     }
 
+    /// @notice Testing the basic join, stake, leave lifecycle of validators
     function testSubnetActorDiamond_BasicLifeCycle() public {
         (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
         (address validator2, bytes memory publicKey2) = TestUtils.deriveValidatorAddress(101);
@@ -442,6 +443,7 @@ contract SubnetActorDiamondTest is Test {
                 majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
                 activeValidatorsLimit: 100,
                 powerScale: 12,
+                permissioned: false,
                 minCrossMsgFee: CROSS_MSG_FEE
             }),
             address(saDupGetterFaucet),
@@ -1125,6 +1127,7 @@ contract SubnetActorDiamondTest is Test {
                 majorityPercentage: _majorityPercentage,
                 activeValidatorsLimit: 100,
                 powerScale: 12,
+                permissioned: false,
                 minCrossMsgFee: CROSS_MSG_FEE
             })
         );

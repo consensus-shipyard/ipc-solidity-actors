@@ -266,6 +266,7 @@ contract SubnetRegistryTest is Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             activeValidatorsLimit: 100,
             powerScale: DEFAULT_POWER_SCALE,
+            permissioned: false,
             minCrossMsgFee: CROSS_MSG_FEE
         });
         vm.expectRevert(WrongGateway.selector);
@@ -284,6 +285,7 @@ contract SubnetRegistryTest is Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             activeValidatorsLimit: 100,
             powerScale: DEFAULT_POWER_SCALE,
+            permissioned: false,
             minCrossMsgFee: CROSS_MSG_FEE
         });
         registerSubnetFacet.newSubnetActor(params);
@@ -303,6 +305,7 @@ contract SubnetRegistryTest is Test {
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             activeValidatorsLimit: 100,
             powerScale: DEFAULT_POWER_SCALE,
+            permissioned: false,
             minCrossMsgFee: CROSS_MSG_FEE
         });
         registerSubnetFacet.newSubnetActor(params);
@@ -379,6 +382,7 @@ contract SubnetRegistryTest is Test {
             majorityPercentage: _majorityPercentage,
             activeValidatorsLimit: 100,
             powerScale: _powerScale,
+            permissioned: false,
             minCrossMsgFee: CROSS_MSG_FEE
         });
         registerSubnetFacet.newSubnetActor(params);

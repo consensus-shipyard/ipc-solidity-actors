@@ -125,6 +125,7 @@ contract SubnetRegistryHandler is CommonBase, StdCheats, StdUtils {
             majorityPercentage: _majorityPercentage,
             activeValidatorsLimit: _activeValidatorsLimit,
             powerScale: _powerScale,
+            permissioned: false,
             minCrossMsgFee: _minCrossMsgFee
         });
 
