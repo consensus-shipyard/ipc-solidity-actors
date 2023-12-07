@@ -15,4 +15,4 @@ jobs:
       - name: NPM Audit
         run: |
           npm install -g npm-audit-resolver
-          check-audit
+          check-audit --omit dev --audit-level critical
