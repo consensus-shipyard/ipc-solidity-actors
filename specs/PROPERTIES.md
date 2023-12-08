@@ -15,9 +15,9 @@ List of identified and checked invariants of the IPC protocol following the cate
 
 ## Subnet Registry
 
-| Property | Description                                                | Category             | Tested |
-| -------- | ---------------------------------------------------------- | -------------------- | ------ |
-| SR-01    | The Gateway address is not changed                         | Variable Transitions | ✅     |
+| Property | Description                                               | Category             | Tested |
+| -------- | --------------------------------------------------------- | -------------------- | ------ |
+| SR-01    | The Gateway address is not changed                        | Variable Transitions | ✅     |
 | SR-02    | If a subnet was created then its address can be retrieved | High Level           | ✅     |
 
 ## Subnet Actor
