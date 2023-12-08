@@ -36,6 +36,12 @@ jobs:
       - name: Install Node dependencies
         run: npm i --unsafe-perm
 
+      - name: Install Rust
+        uses: dtolnay/rust-toolchain@master
+        with:
+          toolchain: nightly
+          components: rustfmt
+
       - name: Install aderyn
         run: cargo install aderyn
 
