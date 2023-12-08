@@ -27,22 +27,18 @@ jobs:
         with:
           submodules: recursive
 
+      # We remove this file because Aderyn can choose hardhat for compilation if that config file exists.
+      # Currently, it is not possible to configure Aderyn to use foundry by default.
       - name: delete hardhat config
         run: rm -rf ./hardhat.config.ts
-
-      - name: Install Rust
-        uses: dtolnay/rust-toolchain@master
-        with:
-          toolchain: nightly
-          components: rustfmt
-
-      - name: Install aderyn
-        run: cargo install aderyn
 
       - name: Install Foundry
         uses: foundry-rs/foundry-toolchain@v1
         with:
           cache: false
+
+      - name: Install aderyn
+        run: cargo install aderyn
 
       - name: Run aderyn
         run: aderyn ./
