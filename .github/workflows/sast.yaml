@@ -19,6 +19,23 @@ jobs:
         with:
           fail-on: low
 
+  aderyn:
+    name: Aderyn check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: recursive
+
+      - name: Install aderyn
+        run: cargo install aderyn
+
+      - name: Run aderyn
+        run: aderyn ./
+
+      - name: Check results
+        run: grep -e "Critical\s*|\s*0" ./report.md
+
   solhint:
     name: Solhint check
     runs-on: ubuntu-latest
