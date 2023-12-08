@@ -529,7 +529,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
         vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
-        vm.expectRevert(NotEnoughFunds.selector);
+        vm.expectRevert(NotEnoughCollateral.selector);
 
         gwManager.register{value: collateral}(0);
     }
@@ -862,7 +862,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_Single_Funding() public {
-        (address validatorAddress, uint256 privKey, bytes memory publicKey) = TestUtils.newValidator(100);
+        (address validatorAddress, , bytes memory publicKey) = TestUtils.newValidator(100);
 
         _join(validatorAddress, publicKey);
 
@@ -2107,7 +2107,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function test_second_validator_can_join() public {
         (address validatorAddress1, uint256 privKey1, bytes memory publicKey1) = TestUtils.newValidator(101);
-        (address validatorAddress2, uint256 privKey2, bytes memory publicKey2) = TestUtils.newValidator(102);
+        (address validatorAddress2, , bytes memory publicKey2) = TestUtils.newValidator(102);
 
         _join(validatorAddress1, publicKey1);
 

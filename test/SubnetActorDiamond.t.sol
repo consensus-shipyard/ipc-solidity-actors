@@ -66,6 +66,7 @@ contract SubnetActorDiamondTest is Test {
 
     SubnetActorDiamond saDiamond;
     SubnetActorManagerFacet saManager;
+
     SubnetActorGetterFacet saGetter;
     DiamondCutFacet cutFacet;
     DiamondLoupeFacet louper;
@@ -79,6 +80,7 @@ contract SubnetActorDiamondTest is Test {
     constructor() {
         saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
         saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacet");
+
         cutFacetSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
         louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
 
@@ -428,6 +430,7 @@ contract SubnetActorDiamondTest is Test {
 
     function testSubnetActorDiamond_Deployments_Fail_GatewayCannotBeZero() public {
         SubnetActorManagerFacet saDupMangerFaucet = new SubnetActorManagerFacet();
+
         SubnetActorGetterFacet saDupGetterFaucet = new SubnetActorGetterFacet();
 
         vm.expectRevert(GatewayCannotBeZero.selector);
@@ -972,7 +975,7 @@ contract SubnetActorDiamondTest is Test {
         );
     }
 
-    function testSubnetActorDiamondReal_PreFundRelease_works() public {
+    function testSubnetActorDiamond_PreFundRelease_works() public {
         (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
         address preFunder = address(102);
         address preReleaser = address(103);
@@ -1052,7 +1055,7 @@ contract SubnetActorDiamondTest is Test {
         vm.stopPrank();
     }
 
-    function testSubnetActorDiamondReal_PreFundAndLeave_works() public {
+    function testSubnetActorDiamond_PreFundAndLeave_works() public {
         (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
 
         // total collateral in the gateway
@@ -1346,9 +1349,7 @@ contract SubnetActorDiamondTest is Test {
     function testSubnetActorDiamond_NotBootstrapped_LessThanActivation() public {
         uint256 n = 10;
 
-        (address[] memory validators, uint256[] memory privKeys, bytes[] memory publicKeys) = TestUtils.newValidators(
-            n
-        );
+        (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(n);
 
         for (uint i = 0; i < n; i++) {
             vm.deal(validators[i], 1);
