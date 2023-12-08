@@ -27,14 +27,8 @@ jobs:
         with:
           submodules: recursive
 
-      - name: Setup Node 16
-        uses: actions/setup-node@v3
-        with:
-          node-version: '18.x'
-          cache: 'npm'
-
-      - name: Install Node dependencies
-        run: npm i --unsafe-perm
+      - name: delete hardhat config
+        run: rm -rf ./hardhat.config.ts
 
       - name: Install Rust
         uses: dtolnay/rust-toolchain@master
