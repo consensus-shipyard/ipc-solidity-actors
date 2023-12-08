@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
+import {InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
@@ -12,6 +12,7 @@ import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {SubnetActorModifiers} from "../lib/LibSubnetActorStorage.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {LibValidatorSet, LibStaking} from "../lib/LibStaking.sol";
+import {LibDiamond} from "../lib/LibDiamond.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
@@ -25,6 +26,13 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event SubnetBootstrapped(Validator[]);
+
+    modifier onlyOwner() {
+        if (msg.sender != LibDiamond.contractOwner()) {
+            revert LibDiamond.NotOwner();
+        }
+        _;
+    }
 
     /** @notice submit a checkpoint for execution.
      *  @dev It triggers the commitment of the checkpoint and the execution of related cross-net messages,
@@ -131,6 +139,21 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         }
 
         payable(msg.sender).sendValue(amount);
+    }
+
+    /// @notice method that allows the contract owner to set the validators' federated power
+    function setFederatedPowers(address[] calldata validators, uint256[] calldata powers) external onlyOwner notKilled {
+        if (validators.length != powers.length) {
+            revert InvalidFederationPayload();
+        }
+
+        for (uint i = 0; i < validators.length; ) {
+            LibStaking.setFederatedPower(validators[i], powers[i]);
+
+            unchecked {
+                i++;
+            }
+        }
     }
 
     /// @notice method that allows a validator to join the subnet
@@ -353,8 +376,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         bytes[] memory signatures
     ) public view {
         // This call reverts if at least one of the signatories (validator) is not in the active validator set.
-        uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
-        uint256 activeCollateral = s.validatorSet.getActiveCollateral();
+        uint256[] memory collaterals = s.validatorSet.getTotalPowerOfValidators(signatories);
+        uint256 activeCollateral = s.validatorSet.getTotalActivePower();
 
         uint256 threshold = (activeCollateral * s.majorityPercentage) / 100;
 
