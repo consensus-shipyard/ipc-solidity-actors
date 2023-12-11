@@ -12,7 +12,7 @@ import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Subnet.sol";
 import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
-import {NotEnoughBalance, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
+import {NotEnoughBalance, InvalidSubnetActor, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
@@ -40,10 +40,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     event QuorumReached(uint64 height, bytes32 checkpoint, uint256 quorumWeight);
     event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
 
-    /// @notice submit a verified checkpoint in the gateway to trigger side-effects and apply cross-messages.
+    /// @notice submit a verified checkpoint in the gateway to trigger side-effects.
     /// @dev this method is called by the corresponding subnet actor.
     /// Called from a subnet actor if the checkpoint is cryptographically valid.
-    function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint, CrossMsg[] calldata messages) external {
+    function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint) external {
         // checkpoint is used to implement access control
         if (checkpoint.subnetID.getActor() != msg.sender) {
             revert InvalidCheckpointSource();
@@ -55,6 +55,30 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (!checkpoint.subnetID.equals(subnet.id)) {
             revert InvalidSubnet();
         }
+        // only active subnets can commit checkpoints
+        if (subnet.status != Status.Active) {
+            revert SubnetNotActive();
+        }
+
+        // TODO: Optionally reward for the commitment of a checkpoint. If this is not needed here,
+        // we don't need this function in the gateway anymore.
+        // slither-disable-next-line unused-return
+        // Address.functionCallWithValue({
+        //     target: msg.sender,
+        //     data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (checkpoint.blockHeight, 0)),
+        //     value: 0
+        // });
+    }
+
+    /// @notice submit a batch of cross-net messages for execution.
+    /// @dev this method is called by the corresponding subnet actor.
+    /// Called from a subnet actor if the checkpoint is cryptographically valid.
+    function applyBatchBottomUpMessages(CrossMsg[] calldata messages) external {
+        (bool subnetExists, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
+        if (!subnetExists) {
+            revert SubnetNotFound();
+        }
+        // cross-net messages can't be executed in inactive subnets.
         if (subnet.status != Status.Active) {
             revert SubnetNotActive();
         }
@@ -79,15 +103,15 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         subnet.circSupply -= totalAmount;
 
         // execute cross-messages
-        _applyMessages(checkpoint.subnetID, messages);
+        _applyMessages(subnet.id, messages);
 
-        // reward relayers in the subnet for committing the previous checkpoint
+        // TODO: Optionally reward relayers for the execution of cross-net messages
         // slither-disable-next-line unused-return
-        Address.functionCallWithValue({
-            target: msg.sender,
-            data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (checkpoint.blockHeight, totalFee)),
-            value: totalFee
-        });
+        // Address.functionCallWithValue({
+        //     target: msg.sender,
+        //     data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (checkpoint.blockHeight, totalFee)),
+        //     value: totalFee
+        // });
     }
 
     /// @notice commit the ipc parent finality into storage and returns the previous committed finality

@@ -30,13 +30,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
      *  @dev It triggers the commitment of the checkpoint and the execution of related cross-net messages,
      *       and any other side-effects that need to be triggered by the checkpoint such as relayer reward book keeping.
      * @param checkpoint The executed bottom-up checkpoint
-     * @param messages The list of executed cross-messages
      * @param signatories The addresses of the signatories
      * @param signatures The collected checkpoint signatures
      */
     function submitCheckpoint(
         BottomUpCheckpoint calldata checkpoint,
-        CrossMsg[] calldata messages,
         address[] calldata signatories,
         bytes[] calldata signatures
     ) external {
@@ -47,9 +45,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             checkpoint.blockHeight != s.lastBottomUpCheckpointHeight
         ) {
             revert InvalidCheckpointEpoch();
-        }
-        if (keccak256(abi.encode(messages)) != checkpoint.crossMessagesHash) {
-            revert InvalidCheckpointMessagesHash();
         }
         bytes32 checkpointHash = keccak256(abi.encode(checkpoint));
 
