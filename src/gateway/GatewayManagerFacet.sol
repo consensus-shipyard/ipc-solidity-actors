@@ -15,6 +15,8 @@ import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 
+string constant ERR_CHILD_SUBNET_NOT_ALLOWED = "Subnet does not allow child subnets";
+
 contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
@@ -23,10 +25,10 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     /// @dev The subnet can optionally pass a genesis circulating supply that would be pre-allocated in the
     /// subnet from genesis (without having to wait for the subnet to be spawned to propagate the funds).
     function register(uint256 genesisCircSupply) external payable {
-        // If L2+ support is not enable, only allow the registration of new
+        // If L2+ support is not enabled, only allow the registration of new
         // subnets in the root
-        if (!s.l2PlusSupport && !s.networkName.isRoot()) {
-            revert MethodNotAllowed();
+        if (s.networkName.route.length + 1 >= s.maxTreeDepth) {
+            revert MethodNotAllowed(ERR_CHILD_SUBNET_NOT_ALLOWED);
         }
 
         if (msg.value < genesisCircSupply) {

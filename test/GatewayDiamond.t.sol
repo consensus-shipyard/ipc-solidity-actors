@@ -27,7 +27,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {GatewayDiamond, FunctionNotFound} from "../src/GatewayDiamond.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
-import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
+import {GatewayMessengerFacet, ERR_GENERAL_CROSS_MSG_DISABLED, ERR_MULTILEVEL_CROSS_MSG_DISABLED} from "../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
@@ -794,8 +794,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         // vm.expectRevert(NotEnoughFunds.selector);
 
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE - 1}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE - 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -818,8 +818,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // vm.expectRevert(NotEnoughFee.selector);
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -850,7 +850,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert();
-        gwMessenger.sendCrossMessage{value: fee - 1}(
+        gwMessenger.sendUserXnetMessage{value: fee - 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1140,8 +1140,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1172,8 +1172,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // vm.expectRevert(CannotSendCrossMsgToItself.selector);
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1201,8 +1201,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // vm.expectRevert(InvalidCrossMsgValue.selector);
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1232,8 +1232,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         // vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
 
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1261,8 +1261,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // vm.expectRevert(InvalidCrossMsgFromSubnet.selector);
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1290,8 +1290,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // vm.expectRevert(NotEnoughFee.selector);
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: CROSS_MSG_FEE}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1319,8 +1319,8 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // vm.expectRevert(NotEnoughFunds.selector);
         // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
-        gwMessenger.sendCrossMessage{value: 0}(
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
+        gwMessenger.sendUserXnetMessage{value: 0}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1351,13 +1351,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         vm.deal(caller, 1 ether);
 
-        // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_MULTILEVEL_CROSS_MSG_DISABLED));
         // vm.expectCall(caller, 1 ether - gwGetter.crossMsgFee(), new bytes(0), 1);
-
         vm.prank(caller);
         gwMessenger.propagate{value: 1 ether}(postboxId);
-
         // require(caller.balance == 1 ether - gwGetter.crossMsgFee(), "unexpected balance");
     }
 
@@ -1372,8 +1369,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.deal(caller, fee);
         vm.prank(caller);
 
-        // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_MULTILEVEL_CROSS_MSG_DISABLED));
         // vm.expectCall(caller, 0, EMPTY_BYTES, 0);
 
         gwMessenger.propagate{value: fee}(postboxId);
@@ -1385,8 +1381,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.deal(caller, 1 ether);
 
         // vm.expectRevert(NotEnoughFee.selector);
-        // General-purpose cross-net messages are currenlty disabled.
-        vm.expectRevert(MethodNotAllowed.selector);
+        vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_MULTILEVEL_CROSS_MSG_DISABLED));
         gwMessenger.propagate(bytes32(""));
     }
 

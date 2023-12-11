@@ -12,21 +12,24 @@ import {LibGateway} from "../lib/LibGateway.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
+string constant ERR_GENERAL_CROSS_MSG_DISABLED = "Support for general-purpose cross-net messages is disabled";
+string constant ERR_MULTILEVEL_CROSS_MSG_DISABLED = "Support for general-purpose cross-net messages is disabled";
+
 contract GatewayMessengerFacet is GatewayActorModifiers {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
     using StorableMsgHelper for StorableMsg;
 
     /**
-     * @dev sends an arbitrary cross-message from the local subnet to the destination subnet.
+     * @dev sends a general-purpose cross-message from the local subnet to the destination subnet.
      *
      * IMPORTANT: `msg.value` is expected to equal to the value sent in `crossMsg.value` plus the cross-messaging fee.
      *
      * @param crossMsg - a cross-message to send
      */
-    function sendCrossMessage(CrossMsg calldata crossMsg) external payable {
-        if (!s.l2PlusSupport) {
-            revert MethodNotAllowed();
+    function sendUserXnetMessage(CrossMsg calldata crossMsg) external payable {
+        if (!s.generalPurposeCrossMsg) {
+            revert MethodNotAllowed(ERR_GENERAL_CROSS_MSG_DISABLED);
         }
 
         if (crossMsg.message.value != msg.value - crossMsg.message.fee) {
@@ -50,8 +53,8 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
      * @param msgCid - the cid of the cross-net message
      */
     function propagate(bytes32 msgCid) external payable {
-        if (!s.l2PlusSupport) {
-            revert MethodNotAllowed();
+        if (!s.multiLevelCrossMsg) {
+            revert MethodNotAllowed(ERR_MULTILEVEL_CROSS_MSG_DISABLED);
         }
 
         CrossMsg storage crossMsg = s.postbox[msgCid];
