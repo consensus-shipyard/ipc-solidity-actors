@@ -160,7 +160,7 @@ library LibValidatorSet {
         }
     }
 
-    /// @notice Get the confirmed collaterals of the validators.
+    /// @notice Get the total power of the validators.
     /// The function reverts if at least one validator is not in the active validator set.
     function getTotalPowerOfValidators(
         ValidatorSet storage validators,
@@ -468,7 +468,7 @@ library LibStaking {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         s.changeSet.federatedPowerRequest(validator, amount);
     }
-    
+
     /// @notice Set the validator metadata
     function setValidatorMetadata(address validator, bytes calldata metadata) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();

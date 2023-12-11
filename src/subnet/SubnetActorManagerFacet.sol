@@ -147,11 +147,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert InvalidFederationPayload();
         }
 
-        for (uint i = 0; i < validators.length; ) {
+        for (uint256 i = 0; i < validators.length; ) {
             LibStaking.setFederatedPower(validators[i], powers[i]);
 
             unchecked {
-                i++;
+                ++i;
             }
         }
     }
