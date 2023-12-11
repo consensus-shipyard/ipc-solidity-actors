@@ -10,6 +10,9 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 struct GatewayActorStorage {
+    /// @notice Flag to determine if multi-level cross-net primitives
+    /// are enabled in for the IPC instance.
+    bool l2PlusSupport;
     /// @notice List of subnets
     /// SubnetID => Subnet
     mapping(bytes32 => Subnet) subnets;
@@ -101,11 +104,6 @@ contract GatewayActorModifiers {
 
     modifier systemActorOnly() {
         _systemActorOnly();
-        _;
-    }
-
-    modifier validFee(uint256 fee) {
-        validateFee(fee);
         _;
     }
 }

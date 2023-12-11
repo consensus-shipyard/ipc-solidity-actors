@@ -51,6 +51,9 @@ contract GatewayDiamond {
         ds.supportedInterfaces[type(IDiamondCut).interfaceId] = true;
         ds.supportedInterfaces[type(IDiamondLoupe).interfaceId] = true;
 
+        // Disable always L2+ cross-net interactions (for now).
+        s.l2PlusSupport = false;
+
         s.networkName = params.networkName;
         s.minStake = params.minCollateral;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
