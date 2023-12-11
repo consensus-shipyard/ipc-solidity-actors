@@ -176,6 +176,15 @@ pub mod gateway_messenger_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("MethodNotAllowed"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("MethodNotAllowed"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("NotEnoughFee"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -358,6 +367,19 @@ pub mod gateway_messenger_facet {
     )]
     #[etherror(name = "InvalidCrossMsgValue", abi = "InvalidCrossMsgValue()")]
     pub struct InvalidCrossMsgValue;
+    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed()` and selector `0x83f171d6`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed()")]
+    pub struct MethodNotAllowed;
     ///Custom Error type `NotEnoughFee` with signature `NotEnoughFee()` and selector `0x688e55ae`
     #[derive(
         Clone,
@@ -406,6 +428,7 @@ pub mod gateway_messenger_facet {
         InvalidCrossMsgDstSubnet(InvalidCrossMsgDstSubnet),
         InvalidCrossMsgFromSubnet(InvalidCrossMsgFromSubnet),
         InvalidCrossMsgValue(InvalidCrossMsgValue),
+        MethodNotAllowed(MethodNotAllowed),
         NotEnoughFee(NotEnoughFee),
         NotEnoughFunds(NotEnoughFunds),
         NotRegisteredSubnet(NotRegisteredSubnet),
@@ -453,6 +476,11 @@ pub mod gateway_messenger_facet {
             ) {
                 return Ok(Self::InvalidCrossMsgValue(decoded));
             }
+            if let Ok(decoded) = <MethodNotAllowed as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::MethodNotAllowed(decoded));
+            }
             if let Ok(decoded) = <NotEnoughFee as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
@@ -490,6 +518,9 @@ pub mod gateway_messenger_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InvalidCrossMsgValue(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::MethodNotAllowed(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NotEnoughFee(element) => {
@@ -532,6 +563,10 @@ pub mod gateway_messenger_facet {
                     true
                 }
                 _ if selector
+                    == <MethodNotAllowed as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
                     == <NotEnoughFee as ::ethers::contract::EthError>::selector() => true,
                 _ if selector
                     == <NotEnoughFunds as ::ethers::contract::EthError>::selector() => {
@@ -562,6 +597,7 @@ pub mod gateway_messenger_facet {
                 Self::InvalidCrossMsgValue(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::MethodNotAllowed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotEnoughFee(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotEnoughFunds(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotRegisteredSubnet(element) => {
@@ -607,6 +643,11 @@ pub mod gateway_messenger_facet {
     impl ::core::convert::From<InvalidCrossMsgValue> for GatewayMessengerFacetErrors {
         fn from(value: InvalidCrossMsgValue) -> Self {
             Self::InvalidCrossMsgValue(value)
+        }
+    }
+    impl ::core::convert::From<MethodNotAllowed> for GatewayMessengerFacetErrors {
+        fn from(value: MethodNotAllowed) -> Self {
+            Self::MethodNotAllowed(value)
         }
     }
     impl ::core::convert::From<NotEnoughFee> for GatewayMessengerFacetErrors {
