@@ -567,18 +567,6 @@ contract SubnetActorDiamondTest is Test {
         require(!saGetter.isActiveValidator(validator1), "validator 1 is active");
         require(saGetter.isActiveValidator(validator2), "validator 2 is not active");
         require(saGetter.isActiveValidator(validator3), "validator 3 is not active");
-
-        // TODO:
-        // if https://github.com/consensus-shipyard/ipc-solidity-actors/issues/311 is resolved
-        // then implement a test for Kill and finish this one
-        /*
-        vm.prank(validator2);
-        saManager.leave();
-
-        // anyone can kill a subnet
-        vm.startPrank(vm.addr(300));
-        saManager.kill();
-        */
     }
 
     function testSubnetActorDiamond_Stake() public {
