@@ -21,7 +21,7 @@ contract GatewayDiamond {
 
     struct ConstructorParams {
         SubnetID networkName;
-        uint64 bottomUpCheckPeriod;
+        uint256 bottomUpCheckPeriod;
         uint256 minCollateral;
         // deprecated (for now): no `msgFee` currenlty charged for cross-net messages
         uint256 msgFee;
@@ -56,13 +56,15 @@ contract GatewayDiamond {
         s.maxTreeDepth = 2;
         s.generalPurposeCrossMsg = false;
         s.multiLevelCrossMsg = false;
+        s.checkpointRelayerRewards = false;
+        s.crossMsgRelayerRewards = false;
 
         s.networkName = params.networkName;
         s.minStake = params.minCollateral;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.minCrossMsgFee = params.msgFee;
         s.majorityPercentage = params.majorityPercentage;
-        s.bottomUpCheckpointRetentionHeight = 1;
+        s.checkpointQuorumMap.retentionHeight = 1;
 
         s.validatorsTracker.validators.activeLimit = params.activeValidatorsLimit;
         // Start the next configuration number from 1, 0 is reserved for no change and the genesis membership

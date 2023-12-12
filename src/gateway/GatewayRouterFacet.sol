@@ -4,18 +4,19 @@ pragma solidity 0.8.19;
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
 import {EMPTY_HASH, METHOD_SEND} from "../constants/Constants.sol";
-import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, CheckpointInfo} from "../structs/Checkpoint.sol";
+import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint} from "../structs/Checkpoint.sol";
 import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet, Validator, ValidatorInfo, ValidatorSet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Subnet.sol";
-import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
-import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
+import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteQuorum} from "../errors/IPCErrors.sol";
+import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, QuorumAlreadyProcessed, FailedAddIncompleteQuorum, FailedAddSignatory} from "../errors/IPCErrors.sol";
 import {NotEnoughBalance, InvalidSubnetActor, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
+import {LibQuorum} from "../lib/LibQuorum.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
@@ -32,18 +33,13 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
-    using EnumerableSet for EnumerableSet.UintSet;
-    using EnumerableSet for EnumerableSet.AddressSet;
     using LibValidatorTracking for ParentValidatorsTracker;
     using LibValidatorSet for ValidatorSet;
-
-    event QuorumReached(uint64 height, bytes32 checkpoint, uint256 quorumWeight);
-    event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
 
     /// @notice submit a verified checkpoint in the gateway to trigger side-effects.
     /// @dev this method is called by the corresponding subnet actor.
     /// Called from a subnet actor if the checkpoint is cryptographically valid.
-    function commitBottomUpCheckpoint(BottomUpCheckpoint calldata checkpoint) external {
+    function commitCheckpoint(BottomUpCheckpoint calldata checkpoint) external {
         // checkpoint is used to implement access control
         if (checkpoint.subnetID.getActor() != msg.sender) {
             revert InvalidCheckpointSource();
@@ -60,14 +56,14 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert SubnetNotActive();
         }
 
-        // TODO: Optionally reward for the commitment of a checkpoint. If this is not needed here,
-        // we don't need this function in the gateway anymore.
         // slither-disable-next-line unused-return
-        // Address.functionCallWithValue({
-        //     target: msg.sender,
-        //     data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (checkpoint.blockHeight, 0)),
-        //     value: 0
-        // });
+        if (s.checkpointRelayerRewards) {
+            Address.functionCallWithValue({
+                target: msg.sender,
+                data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (checkpoint.blockHeight, 0)),
+                value: 0
+            });
+        }
     }
 
     /// @notice submit a batch of cross-net messages for execution.
@@ -105,13 +101,14 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         // execute cross-messages
         _applyMessages(subnet.id, messages);
 
-        // TODO: Optionally reward relayers for the execution of cross-net messages
         // slither-disable-next-line unused-return
-        // Address.functionCallWithValue({
-        //     target: msg.sender,
-        //     data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (checkpoint.blockHeight, totalFee)),
-        //     value: totalFee
-        // });
+        if (s.crossMsgRelayerRewards) {
+            Address.functionCallWithValue({
+                target: msg.sender,
+                data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (block.number, totalFee)),
+                value: totalFee
+            });
+        }
     }
 
     /// @notice commit the ipc parent finality into storage and returns the previous committed finality
@@ -239,71 +236,20 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param weight - the weight of the validator
     /// @param signature - the signature of the checkpoint
     function addCheckpointSignature(
-        uint64 height,
+        uint256 height,
         bytes32[] memory membershipProof,
         uint256 weight,
         bytes memory signature
     ) external {
-        if (height < s.bottomUpCheckpointRetentionHeight) {
-            revert CheckpointAlreadyProcessed();
-        }
+        // check if the checkpoint was already pruned before getting checkpoint
+        // and triggering the signature
+        LibQuorum.isHeightAlreadyProcessed(s.checkpointQuorumMap, height);
 
-        (bool exists, BottomUpCheckpoint storage checkpoint, CheckpointInfo storage checkpointInfo) = LibGateway
-            .getBottomUpCheckpointWithInfo(height);
+        (bool exists, ) = LibGateway.getBottomUpCheckpoint(height);
         if (!exists) {
             revert CheckpointNotCreated();
         }
-
-        // slither-disable-next-line unused-return
-        (address recoveredSignatory, ECDSA.RecoverError err, ) = ECDSA.tryRecover(checkpointInfo.hash, signature);
-        if (err != ECDSA.RecoverError.NoError) {
-            revert InvalidSignature();
-        }
-
-        // Check whether the validator has already sent a valid signature
-        if (s.bottomUpSignatureSenders[height].contains(recoveredSignatory)) {
-            revert SignatureReplay();
-        }
-
-        // The validator is allowed to send a signature if it was in the membership at the target height
-        // Constructing leaf: https://github.com/OpenZeppelin/merkle-tree#leaf-hash
-        bytes32 validatorLeaf = keccak256(bytes.concat(keccak256(abi.encode(recoveredSignatory, weight))));
-        bool valid = MerkleProof.verify({proof: membershipProof, root: checkpointInfo.rootHash, leaf: validatorLeaf});
-        if (!valid) {
-            revert NotAuthorized(recoveredSignatory);
-        }
-
-        // All checks passed.
-        // Adding signature and emitting events.
-
-        bool ok = s.bottomUpSignatureSenders[height].add(recoveredSignatory);
-        if (!ok) {
-            revert FailedAddSignatory();
-        }
-        s.bottomUpSignatures[height][recoveredSignatory] = signature;
-        checkpointInfo.currentWeight += weight;
-
-        if (checkpointInfo.currentWeight >= checkpointInfo.threshold) {
-            if (!checkpointInfo.reached) {
-                checkpointInfo.reached = true;
-                // checkpoint is completed since the threshold has been reached
-                ok = s.incompleteCheckpoints.remove(checkpoint.blockHeight);
-                if (!ok) {
-                    revert FailedRemoveIncompleteCheckpoint();
-                }
-                emit QuorumReached({
-                    height: height,
-                    checkpoint: checkpointInfo.hash,
-                    quorumWeight: checkpointInfo.currentWeight
-                });
-            } else {
-                emit QuorumWeightUpdated({
-                    height: height,
-                    checkpoint: checkpointInfo.hash,
-                    newWeight: checkpointInfo.currentWeight
-                });
-            }
-        }
+        LibQuorum.addQuorumSignature(s.checkpointQuorumMap, height, membershipProof, weight, signature);
     }
 
     /// @notice creates a new bottom-up checkpoint
@@ -315,70 +261,37 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         bytes32 membershipRootHash,
         uint256 membershipWeight
     ) external systemActorOnly {
-        if (checkpoint.blockHeight < s.bottomUpCheckpointRetentionHeight) {
-            revert CheckpointAlreadyProcessed();
-        }
         if (checkpoint.blockHeight % s.bottomUpCheckPeriod != 0) {
             revert InvalidCheckpointEpoch();
         }
         if (LibGateway.bottomUpCheckpointExists(checkpoint.blockHeight)) {
             revert CheckpointAlreadyExists();
         }
-
-        if (membershipWeight == 0) {
-            revert ZeroMembershipWeight();
-        }
-
-        uint256 threshold = LibGateway.weightNeeded(membershipWeight, s.majorityPercentage);
-
-        // process the checkpoint
-        bool ok = s.incompleteCheckpoints.add(checkpoint.blockHeight);
-        if (!ok) {
-            revert FailedAddIncompleteCheckpoint();
-        }
-
-        CheckpointInfo memory info = CheckpointInfo({
-            hash: keccak256(abi.encode(checkpoint)),
-            rootHash: membershipRootHash,
-            threshold: threshold,
-            currentWeight: 0,
-            reached: false
-        });
-        LibGateway.storeBottomUpCheckpointWithInfo(checkpoint, info);
+        LibQuorum.createQuorumInfo(
+            s.checkpointQuorumMap,
+            checkpoint.blockHeight,
+            keccak256(abi.encode(checkpoint)),
+            membershipRootHash,
+            membershipWeight,
+            s.majorityPercentage
+        );
+        LibGateway.storeBottomUpCheckpoint(checkpoint);
     }
 
     /// @notice Set a new checkpoint retention height and garbage collect all checkpoints in range [`retentionHeight`, `newRetentionHeight`)
     /// @dev `retentionHeight` is the height of the first incomplete checkpointswe must keep to implement checkpointing.
     /// All checkpoints with a height less than `retentionHeight` are removed from the history, assuming they are committed to the parent.
     /// @param newRetentionHeight - the height of the oldest checkpoint to keep
-    function pruneBottomUpCheckpoints(uint64 newRetentionHeight) external systemActorOnly {
-        uint64 oldRetentionHeight = s.bottomUpCheckpointRetentionHeight;
-
-        if (newRetentionHeight <= oldRetentionHeight) {
-            revert InvalidRetentionHeight();
-        }
-
-        for (uint64 h = oldRetentionHeight; h < newRetentionHeight; ) {
+    function pruneBottomUpCheckpoints(uint256 newRetentionHeight) external systemActorOnly {
+        // we need to clean manually the checkpoints because Solidity does not support passing
+        // a storage variable as an interface (so we can iterate and remove directly inside pruneQuorums)
+        for (uint256 h = s.checkpointQuorumMap.retentionHeight; h < newRetentionHeight; ) {
             delete s.bottomUpCheckpoints[h];
-            delete s.bottomUpCheckpointInfo[h];
-            delete s.bottomUpSignatureSenders[h];
-            delete s.bottomUpMessages[h];
-
-            address[] memory validators = s.bottomUpSignatureSenders[h].values();
-            uint256 n = validators.length;
-
-            for (uint256 i; i < n; ) {
-                delete s.bottomUpSignatures[h][validators[i]];
-                unchecked {
-                    ++i;
-                }
-            }
-
             unchecked {
                 ++h;
             }
         }
 
-        s.bottomUpCheckpointRetentionHeight = newRetentionHeight;
+        LibQuorum.pruneQuorums(s.checkpointQuorumMap, newRetentionHeight);
     }
 }

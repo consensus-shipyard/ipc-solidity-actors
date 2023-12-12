@@ -11,7 +11,7 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 
 struct SubnetActorStorage {
     /// @notice contains all committed bottom-up checkpoint at specific epoch
-    mapping(uint64 => BottomUpCheckpoint) committedCheckpoints;
+    mapping(uint256 => BottomUpCheckpoint) committedCheckpoints;
     /// @notice initial set of validators joining in genesis
     Validator[] genesisValidators;
     /// @notice initial circulating supply provided by genesis validators to use when bootstrapping
@@ -22,11 +22,11 @@ struct SubnetActorStorage {
     /// @notice genesis balance addresses
     address[] genesisBalanceKeys;
     /// @notice The height of the last committed bottom-up checkpoint.
-    uint64 lastBottomUpCheckpointHeight;
+    uint256 lastBottomUpCheckpointHeight;
     /// @notice Minimal activation collateral
     uint256 minActivationCollateral;
     /// @notice number of blocks in a bottom-up epoch
-    uint64 bottomUpCheckPeriod;
+    uint256 bottomUpCheckPeriod;
     /// @notice Minimal number of validators required for the subnet to be able to validate new blocks.
     uint64 minValidators;
     // @notice Hash of the current subnet id
@@ -61,7 +61,7 @@ struct SubnetActorStorage {
     /// @notice relayers rewards
     mapping(address => uint256) relayerRewards;
     /// @notice The addresses of the relayers sent the checkpoint at height `h`.
-    mapping(uint64 => EnumerableSet.AddressSet) rewardedRelayers;
+    mapping(uint256 => EnumerableSet.AddressSet) rewardedRelayers;
     /// =============
     /// mapping of bootstrap owner to its bootstrap node address
     mapping(address => string) bootstrapNodes;

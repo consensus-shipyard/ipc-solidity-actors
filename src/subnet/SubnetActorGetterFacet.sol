@@ -69,11 +69,11 @@ contract SubnetActorGetterFacet {
         return (addresses, balances);
     }
 
-    function bottomUpCheckPeriod() external view returns (uint64) {
+    function bottomUpCheckPeriod() external view returns (uint256) {
         return s.bottomUpCheckPeriod;
     }
 
-    function lastBottomUpCheckpointHeight() external view returns (uint64) {
+    function lastBottomUpCheckpointHeight() external view returns (uint256) {
         return s.lastBottomUpCheckpointHeight;
     }
 
@@ -131,7 +131,7 @@ contract SubnetActorGetterFacet {
     }
 
     function hasSubmittedInLastBottomUpCheckpointHeight(address validator) external view returns (bool) {
-        uint64 height = s.lastBottomUpCheckpointHeight;
+        uint256 height = s.lastBottomUpCheckpointHeight;
         return s.rewardedRelayers[height].contains(validator);
     }
 
@@ -140,7 +140,7 @@ contract SubnetActorGetterFacet {
     /// @return exists - whether the checkpoint exists
     /// @return checkpoint - the checkpoint struct
     function bottomUpCheckpointAtEpoch(
-        uint64 epoch
+        uint256 epoch
     ) public view returns (bool exists, BottomUpCheckpoint memory checkpoint) {
         checkpoint = s.committedCheckpoints[epoch];
         exists = !checkpoint.subnetID.isEmpty();
@@ -151,7 +151,7 @@ contract SubnetActorGetterFacet {
     /// @param epoch - the epoch to check
     /// @return exists - whether the checkpoint exists
     /// @return hash - the hash of the checkpoint
-    function bottomUpCheckpointHashAtEpoch(uint64 epoch) external view returns (bool, bytes32) {
+    function bottomUpCheckpointHashAtEpoch(uint256 epoch) external view returns (bool, bytes32) {
         (bool exists, BottomUpCheckpoint memory checkpoint) = bottomUpCheckpointAtEpoch(epoch);
         return (exists, keccak256(abi.encode(checkpoint)));
     }

@@ -48,7 +48,8 @@ contract SubnetActorDiamondTest is Test {
     uint256 private constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
     uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
     string private constant DEFAULT_NET_ADDR = "netAddr";
-    uint256 private constant CROSS_MSG_FEE = 10 gwei;
+    // NOTE: Set cross-msg fee to zero for now. Rewards are disabled.
+    uint256 private constant CROSS_MSG_FEE = 0 gwei;
     uint256 private constant DEFAULT_RELAYER_REWARD = 10 gwei;
     uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 private constant ROOTNET_CHAINID = 123;
@@ -658,24 +659,14 @@ contract SubnetActorDiamondTest is Test {
             subnetID: saGetter.getParent().createSubnetId(address(saDiamond)),
             blockHeight: saGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 0,
-            crossMessagesHash: keccak256(abi.encode(msgs))
+            nextConfigurationNumber: 0
         });
 
         BottomUpCheckpoint memory checkpointWithIncorrectHeight = BottomUpCheckpoint({
             subnetID: saGetter.getParent(),
             blockHeight: 1,
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 0,
-            crossMessagesHash: keccak256(abi.encode(msgs))
-        });
-
-        BottomUpCheckpoint memory checkpointWithIncorrectHash = BottomUpCheckpoint({
-            subnetID: saGetter.getParent(),
-            blockHeight: saGetter.bottomUpCheckPeriod(),
-            blockHash: keccak256("block1"),
-            nextConfigurationNumber: 0,
-            crossMessagesHash: keccak256(abi.encode("1"))
+            nextConfigurationNumber: 0
         });
 
         vm.deal(address(saDiamond), 100 ether);
@@ -691,15 +682,11 @@ contract SubnetActorDiamondTest is Test {
 
         vm.expectRevert(InvalidCheckpointEpoch.selector);
         vm.prank(validators[0]);
-        saManager.submitCheckpoint(checkpointWithIncorrectHeight, msgs, validators, signatures);
+        saManager.submitCheckpoint(checkpointWithIncorrectHeight, validators, signatures);
 
-        vm.expectRevert(InvalidCheckpointMessagesHash.selector);
+        vm.expectCall(gatewayAddress, abi.encodeCall(IGateway.commitCheckpoint, (checkpoint)), 1);
         vm.prank(validators[0]);
-        saManager.submitCheckpoint(checkpointWithIncorrectHash, msgs, validators, signatures);
-
-        vm.expectCall(gatewayAddress, abi.encodeCall(IGateway.commitBottomUpCheckpoint, (checkpoint, msgs)), 1);
-        vm.prank(validators[0]);
-        saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
+        saManager.submitCheckpoint(checkpoint, validators, signatures);
 
         require(saGetter.hasSubmittedInLastBottomUpCheckpointHeight(validators[0]), "validator rewarded");
         require(
@@ -708,7 +695,7 @@ contract SubnetActorDiamondTest is Test {
         );
 
         vm.prank(validators[0]);
-        saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
+        saManager.submitCheckpoint(checkpoint, validators, signatures);
         require(saGetter.hasSubmittedInLastBottomUpCheckpointHeight(validators[0]), "validator rewarded");
         require(
             saGetter.lastBottomUpCheckpointHeight() == saGetter.bottomUpCheckPeriod(),
@@ -762,8 +749,7 @@ contract SubnetActorDiamondTest is Test {
             subnetID: saGetter.getParent().createSubnetId(address(saDiamond)),
             blockHeight: saGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 0,
-            crossMessagesHash: keccak256(abi.encode(msgs))
+            nextConfigurationNumber: 0
         });
 
         vm.deal(address(saDiamond), 100 ether);
@@ -777,9 +763,9 @@ contract SubnetActorDiamondTest is Test {
             signatures[i] = abi.encodePacked(r, s, v);
         }
 
-        vm.expectCall(gatewayAddress, abi.encodeCall(IGateway.commitBottomUpCheckpoint, (checkpoint, msgs)), 1);
+        vm.expectCall(gatewayAddress, abi.encodeCall(IGateway.commitCheckpoint, (checkpoint)), 1);
         vm.prank(validators[0]);
-        saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
+        saManager.submitCheckpoint(checkpoint, validators, signatures);
 
         require(saGetter.hasSubmittedInLastBottomUpCheckpointHeight(validators[0]), "validator rewarded");
         require(
@@ -811,8 +797,7 @@ contract SubnetActorDiamondTest is Test {
             subnetID: saGetter.getParent().createSubnetId(address(saDiamond)),
             blockHeight: 2 * saGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block2"),
-            nextConfigurationNumber: 0,
-            crossMessagesHash: keccak256(abi.encode(msgs))
+            nextConfigurationNumber: 0
         });
 
         hash = keccak256(abi.encode(checkpoint));
@@ -823,7 +808,7 @@ contract SubnetActorDiamondTest is Test {
         }
 
         vm.prank(validators[0]);
-        saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
+        saManager.submitCheckpoint(checkpoint, validators, signatures);
 
         require(saGetter.getRelayerReward(validators[1]) == 0, "unexpected reward");
         require(saGetter.getRelayerReward(validators[2]) == 0, "unexpected reward");
@@ -831,10 +816,13 @@ contract SubnetActorDiamondTest is Test {
         require(validator0Reward == CROSS_MSG_FEE, "there is no reward for validator");
 
         uint256 b1 = validators[0].balance;
-        vm.startPrank(validators[0]);
-        saManager.claimRewardForRelayer();
-        uint256 b2 = validators[0].balance;
-        require(b2 - b1 == validator0Reward, "reward received");
+        // disable the claim of rewards if the fee is zero
+        if (CROSS_MSG_FEE != 0) {
+            vm.startPrank(validators[0]);
+            saManager.claimRewardForRelayer();
+            uint256 b2 = validators[0].balance;
+            require(b2 - b1 == validator0Reward, "reward received");
+        }
     }
 
     function testSubnetActorDiamond_DiamondCut() public {

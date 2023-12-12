@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
+import {SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
@@ -24,8 +24,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     using Address for address payable;
 
     event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter);
-    event BottomUpCheckpointExecuted(uint64 epoch, address submitter);
-    event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
+    event BottomUpCheckpointExecuted(uint256 epoch, address submitter);
+    event NextBottomUpCheckpointExecuted(uint256 epoch, address submitter);
     event SubnetBootstrapped(Validator[]);
 
     /** @notice submit a checkpoint for execution.
@@ -64,7 +64,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
 
             // Execute messages.
-            IGateway(s.ipcGatewayAddr).commitBottomUpCheckpoint(checkpoint, messages);
+            IGateway(s.ipcGatewayAddr).commitCheckpoint(checkpoint);
 
             // confirming the changes in membership in the child
             LibStaking.confirmChange(checkpoint.nextConfigurationNumber);
@@ -309,11 +309,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @dev The reward includes the fixed relayer reward and accumulated cross-message fees received from the gateway.
     /// @param height height of the checkpoint the relayers are rewarded for
     /// @param reward The sum of cross-message fees in the checkpoint
-    function distributeRewardToRelayers(uint64 height, uint256 reward) external payable onlyGateway {
+    function distributeRewardToRelayers(uint256 height, uint256 reward) external payable onlyGateway {
         if (reward == 0) {
             return;
         }
-        uint64 previousHeight = height - s.bottomUpCheckPeriod;
+        uint256 previousHeight = height - s.bottomUpCheckPeriod;
         address[] memory relayers = s.rewardedRelayers[previousHeight].values();
         uint256 relayersLength = relayers.length;
         if (relayersLength == 0) {

@@ -4,7 +4,8 @@ pragma solidity 0.8.19;
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {CrossMsg, BottomUpCheckpoint, ParentFinality, CheckpointInfo} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
+import {QuorumInfo} from "../structs/Quorum.sol";
 import {Membership, Validator} from "../structs/Subnet.sol";
 import {OldConfigurationNumber, NotRegisteredSubnet, InvalidActorAddress, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
@@ -32,7 +33,7 @@ library LibGateway {
     function getCurrentBottomUpCheckpoint()
         internal
         view
-        returns (bool exists, uint64 epoch, BottomUpCheckpoint memory checkpoint)
+        returns (bool exists, uint256 epoch, BottomUpCheckpoint memory checkpoint)
     {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         epoch = LibGateway.getNextEpoch(block.number, s.bottomUpCheckPeriod);
@@ -40,37 +41,32 @@ library LibGateway {
         exists = !checkpoint.subnetID.isEmpty();
     }
 
-    /// @notice returns the bottom-up checkpoint and its info at the target epoch
-    function getBottomUpCheckpointWithInfo(
-        uint64 epoch
+    /// @notice returns the bottom-up checkpoint
+    function getBottomUpCheckpoint(
+        uint256 epoch
     )
         internal
         view
-        returns (bool exists, BottomUpCheckpoint storage checkpoint, CheckpointInfo storage checkpointInfo)
+        returns (bool exists, BottomUpCheckpoint storage checkpoint)
     {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
 
         checkpoint = s.bottomUpCheckpoints[epoch];
-        checkpointInfo = s.bottomUpCheckpointInfo[epoch];
-
         exists = checkpoint.blockHeight != 0;
     }
 
     /// @notice checks if the bottom-up checkpoint already exists at the target epoch
-    function bottomUpCheckpointExists(uint64 epoch) internal view returns (bool) {
+    function bottomUpCheckpointExists(uint256 epoch) internal view returns (bool) {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         return s.bottomUpCheckpoints[epoch].blockHeight != 0;
     }
 
-    /// @notice stores checkpoint and its info to storage.
-    function storeBottomUpCheckpointWithInfo(
-        BottomUpCheckpoint memory checkpoint,
-        CheckpointInfo memory checkpointInfo
+    /// @notice stores checkpoint
+    function storeBottomUpCheckpoint(
+        BottomUpCheckpoint memory checkpoint
     ) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
-        s.bottomUpCheckpointInfo[checkpoint.blockHeight] = checkpointInfo;
     }
 
     /// @notice obtain the ipc parent finality at certain block number
@@ -210,7 +206,7 @@ library LibGateway {
     /// @param crossMessage - the cross message to be committed
     function commitBottomUpMsg(CrossMsg memory crossMessage) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        uint64 epoch = getNextEpoch(block.number, s.bottomUpCheckPeriod);
+        uint256 epoch = getNextEpoch(block.number, s.bottomUpCheckPeriod);
 
         crossMessage.message.nonce = s.bottomUpNonce;
 
@@ -242,15 +238,9 @@ library LibGateway {
         found = !subnet.id.isEmpty();
     }
 
-    /// @notice returns the needed weight value corresponding to the majority percentage
-    /// @dev `majorityPercentage` must be a valid number
-    function weightNeeded(uint256 weight, uint256 majorityPercentage) internal pure returns (uint256) {
-        return (weight * majorityPercentage) / 100;
-    }
-
     /// @notice method that gives the epoch for a given block number and checkpoint period
     /// @return epoch - the epoch for the given block number and checkpoint period
-    function getNextEpoch(uint256 blockNumber, uint64 checkPeriod) internal pure returns (uint64) {
+    function getNextEpoch(uint256 blockNumber, uint256 checkPeriod) internal pure returns (uint256) {
         return ((uint64(blockNumber) / checkPeriod) + 1) * checkPeriod;
     }
 }

@@ -15,7 +15,7 @@ import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
-import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
+import {QuorumInfo} from "../src/structs/Quorum.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
@@ -1560,16 +1560,14 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 0,
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages1")
+            nextConfigurationNumber: 1
         });
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages1")
+            nextConfigurationNumber: 1
         });
 
         // failed to create a checkpoint with zero membership weight
@@ -1580,7 +1578,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // failed create a processed checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        vm.expectRevert(CheckpointAlreadyProcessed.selector);
+        vm.expectRevert(QuorumAlreadyProcessed.selector);
         gwRouter.createBottomUpCheckpoint(old, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
@@ -1592,18 +1590,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         BottomUpCheckpoint memory recv = gwGetter.bottomUpCheckpoint(gwGetter.bottomUpCheckPeriod());
         require(recv.nextConfigurationNumber == 1, "nextConfigurationNumber incorrect");
         require(recv.blockHash == keccak256("block1"), "block hash incorrect");
-        require(recv.crossMessagesHash == keccak256("messages1"), "received cross messages incorrect");
         require(gwGetter.bottomUpMessages(gwGetter.bottomUpCheckPeriod()).length == 0, "there are messages");
 
-        uint64 d = gwGetter.bottomUpCheckPeriod();
+        uint256 d = gwGetter.bottomUpCheckPeriod();
 
         // failed to create a checkpoint with the same height
         checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: d,
             blockHash: keccak256("block"),
-            nextConfigurationNumber: 2,
-            crossMessagesHash: keccak256("newmessages")
+            nextConfigurationNumber: 2
         });
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -1616,8 +1612,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: d + d / 2,
             blockHash: keccak256("block2"),
-            nextConfigurationNumber: 2,
-            crossMessagesHash: keccak256("newmessages")
+            nextConfigurationNumber: 2
         });
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -1625,27 +1620,24 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
-        (bool ok, uint64 e, ) = gwGetter.getCurrentBottomUpCheckpoint();
+        (bool ok, uint256 e, ) = gwGetter.getCurrentBottomUpCheckpoint();
         require(ok, "checkpoint not exist");
         require(e == d, "out height incorrect");
     }
 
-    function testGatewayDiamond_commitBottomUpCheckpoint_InvalidCheckpointSource() public {
-        CrossMsg[] memory msgs = new CrossMsg[](0);
-
+    function testGatewayDiamond_commitCheckpoint_InvalidCheckpointSource() public {
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256(abi.encode(msgs))
+            nextConfigurationNumber: 1
         });
 
         vm.expectRevert(InvalidCheckpointSource.selector);
-        gwRouter.commitBottomUpCheckpoint(checkpoint, msgs);
+        gwRouter.commitCheckpoint(checkpoint);
     }
 
-    function testGatewayDiamond_commitBottomUpCheckpoint_Works_NoMessages() public {
+    function testGatewayDiamond_commitCheckpoint_Works_NoMessages() public {
         address caller = address(saDiamond);
         vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
@@ -1654,74 +1646,15 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
 
-        CrossMsg[] memory msgs = new CrossMsg[](0);
-
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: subnetId,
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256(abi.encode(msgs))
+            nextConfigurationNumber: 1
         });
 
         vm.prank(caller);
-        gwRouter.commitBottomUpCheckpoint(checkpoint, msgs);
-    }
-
-    function testGatewayDiamond_commitBottomUpCheckpoint_Works_WithMessages() public {
-        address caller = address(saDiamond);
-        vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
-        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
-        vm.stopPrank();
-
-        (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
-        (bool exist, Subnet memory subnetInfo) = gwGetter.getSubnet(subnetId);
-        require(exist, "subnet does not exist");
-        require(subnetInfo.circSupply == 0, "unexpected initial circulation supply");
-
-        gwManager.fund{value: DEFAULT_COLLATERAL_AMOUNT}(subnetId, FvmAddressHelper.from(address(caller)));
-        (, subnetInfo) = gwGetter.getSubnet(subnetId);
-        require(subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT, "unexpected circulation supply after funding");
-
-        CrossMsg[] memory msgs = new CrossMsg[](10);
-        for (uint64 i = 0; i < 10; i++) {
-            msgs[i] = CrossMsg({
-                message: StorableMsg({
-                    from: IPCAddress({
-                        subnetId: gwGetter.getNetworkName(),
-                        rawAddress: FvmAddressHelper.from(address(this))
-                    }),
-                    to: IPCAddress({
-                        subnetId: gwGetter.getNetworkName(),
-                        rawAddress: FvmAddressHelper.from(address(this))
-                    }),
-                    value: 0,
-                    nonce: i,
-                    method: this.callback.selector,
-                    params: EMPTY_BYTES,
-                    fee: CROSS_MSG_FEE
-                }),
-                wrapped: false
-            });
-        }
-
-        BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
-            subnetID: subnetId,
-            blockHeight: gwGetter.bottomUpCheckPeriod(),
-            blockHash: keccak256("block1"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256(abi.encode(msgs))
-        });
-
-        vm.prank(caller);
-        gwRouter.commitBottomUpCheckpoint(checkpoint, msgs);
-
-        (, subnetInfo) = gwGetter.getSubnet(subnetId);
-        require(
-            subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT - 10 * CROSS_MSG_FEE,
-            "unexpected circulation supply"
-        );
+        gwRouter.commitCheckpoint(checkpoint);
     }
 
     function testGatewayDiamond_listIncompleteCheckpoints() public {
@@ -1733,16 +1666,14 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block1"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages1")
+            nextConfigurationNumber: 1
         });
 
         BottomUpCheckpoint memory checkpoint2 = BottomUpCheckpoint({
             subnetID: gwGetter.getNetworkName(),
             blockHeight: 2 * gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block2"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages2")
+            nextConfigurationNumber: 1
         });
 
         // create a checkpoint
@@ -1757,7 +1688,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         require(heights[0] == gwGetter.bottomUpCheckPeriod(), "heights[0] == period");
         require(heights[1] == 2 * gwGetter.bottomUpCheckPeriod(), "heights[1] == 2*period");
 
-        CheckpointInfo memory info = gwGetter.getCheckpointInfo(gwGetter.bottomUpCheckPeriod());
+        QuorumInfo memory info = gwGetter.getCheckpointInfo(gwGetter.bottomUpCheckPeriod());
         require(info.rootHash == membershipRoot, "info.rootHash == membershipRoot");
         require(
             info.threshold == gwGetter.getQuorumThreshold(weights[0] + weights[1] + weights[2]),
@@ -1789,8 +1720,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            nextConfigurationNumber: 1
         });
 
         // create a checkpoint
@@ -1821,7 +1751,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         (
             BottomUpCheckpoint memory ch,
-            CheckpointInfo memory info,
+            QuorumInfo memory info,
             address[] memory signatories,
             bytes[] memory signatures
         ) = gwGetter.getSignatureBundle(gwGetter.bottomUpCheckPeriod());
@@ -1841,8 +1771,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            nextConfigurationNumber: 1
         });
 
         // create a checkpoint
@@ -1866,7 +1795,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             vm.stopPrank();
         }
 
-        CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
+        QuorumInfo memory info = gwGetter.getCheckpointInfo(1);
         require(!info.reached, "not reached");
         require(gwGetter.getIncompleteCheckpointHeights().length == 1, "unexpected size");
 
@@ -1905,8 +1834,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            nextConfigurationNumber: 1
         });
 
         // create a checkpoint
@@ -1922,7 +1850,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         (v, r, s) = vm.sign(privKeys[0], keccak256(abi.encode(checkpoint)));
         signature = abi.encodePacked(r, s, v);
 
-        uint64 h = gwGetter.bottomUpCheckPeriod();
+        uint256 h = gwGetter.bottomUpCheckPeriod();
         vm.startPrank(vm.addr(privKeys[1]));
         vm.expectRevert(abi.encodeWithSelector(NotAuthorized.selector, vm.addr(privKeys[0])));
         gwRouter.addCheckpointSignature(h, membershipProofs[2], weights[2], signature);
@@ -1939,8 +1867,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            nextConfigurationNumber: 1
         });
 
         // create a checkpoint
@@ -1956,7 +1883,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         (v, r, s) = vm.sign(privKeys[0], keccak256(abi.encode(checkpoint)));
         signature = abi.encodePacked(r, s, v);
 
-        uint64 h = gwGetter.bottomUpCheckPeriod();
+        uint256 h = gwGetter.bottomUpCheckPeriod();
         vm.startPrank(vm.addr(privKeys[0]));
 
         // send incorrect signature
@@ -1983,8 +1910,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             subnetID: gwGetter.getNetworkName(),
             blockHeight: gwGetter.bottomUpCheckPeriod(),
             blockHash: keccak256("block"),
-            nextConfigurationNumber: 1,
-            crossMessagesHash: keccak256("messages")
+            nextConfigurationNumber: 1
         });
 
         // create a checkpoint
@@ -2003,7 +1929,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.startPrank(vm.addr(privKeys[0]));
 
         // send correct signature for incorrect height
-        vm.expectRevert(CheckpointAlreadyProcessed.selector);
+        vm.expectRevert(QuorumAlreadyProcessed.selector);
         gwRouter.addCheckpointSignature(0, membershipProofs[0], weights[0], signature);
 
         // send correct signature for incorrect height
@@ -2018,7 +1944,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
 
-        uint64 index = gwGetter.getBottomUpRetentionHeight();
+        uint256 index = gwGetter.getBottomUpRetentionHeight();
         require(index == 1, "unexpected height");
 
         BottomUpCheckpoint memory checkpoint;
@@ -2031,8 +1957,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
                 subnetID: gwGetter.getNetworkName(),
                 blockHeight: i * gwGetter.bottomUpCheckPeriod(),
                 blockHash: keccak256("block"),
-                nextConfigurationNumber: 1,
-                crossMessagesHash: keccak256("messages")
+                nextConfigurationNumber: 1
             });
 
             gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);

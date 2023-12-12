@@ -16,26 +16,13 @@ struct BottomUpCheckpoint {
     SubnetID subnetID;
     /// @dev The height of the child subnet at which this checkpoint was cut.
     /// Has to follow the previous checkpoint by checkpoint period.
-    uint64 blockHeight;
+    uint256 blockHeight;
     /// @dev The hash of the block.
     bytes32 blockHash;
     /// @dev The number of the membership (validator set) which is going to sign the next checkpoint.
     /// This one expected to be signed by the validators from the membership reported in the previous checkpoint.
     /// 0 could mean "no change".
     uint64 nextConfigurationNumber;
-}
-
-struct CheckpointInfo {
-    /// @dev The hash of the corresponding bottom-up checkpoint.
-    bytes32 hash;
-    /// @dev The root hash of the Merkle tree built from the validator public keys and their weight.
-    bytes32 rootHash;
-    /// @dev The target weight that must be reached to accept the checkpoint.
-    uint256 threshold;
-    /// @dev The current weight of the checkpoint.
-    uint256 currentWeight;
-    /// @dev Whether the quorum has already been reached.
-    bool reached;
 }
 
 /**
