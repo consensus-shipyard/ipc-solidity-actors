@@ -1171,9 +1171,10 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         uint256 n = 1;
         (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(n);
 
-        vm.startPrank(validators[0]);
+        vm.prank(validators[0]);
+        vm.deal(validators[0], 20);
         vm.expectRevert(Pausable.AlreadyPaused.selector);
-        saManager.join{value: 10}(publicKeys[1]);
+        saManager.join{value: 10}(publicKeys[0]);
     }
 
     function testSubnetActorDiamond_Pausable_NotOwner() public {
