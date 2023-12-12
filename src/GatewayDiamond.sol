@@ -23,6 +23,7 @@ contract GatewayDiamond {
         SubnetID networkName;
         uint64 bottomUpCheckPeriod;
         uint256 minCollateral;
+        // deprecated (for now): no `msgFee` currenlty charged for cross-net messages
         uint256 msgFee;
         uint8 majorityPercentage;
         Validator[] genesisValidators;
