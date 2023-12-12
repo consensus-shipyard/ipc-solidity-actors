@@ -56,8 +56,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert SubnetNotActive();
         }
 
-        // slither-disable-next-line unused-return
         if (s.checkpointRelayerRewards) {
+            // slither-disable-next-line unused-return
             Address.functionCallWithValue({
                 target: msg.sender,
                 data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (checkpoint.blockHeight, 0)),
@@ -101,8 +101,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         // execute cross-messages
         _applyMessages(subnet.id, messages);
 
-        // slither-disable-next-line unused-return
         if (s.crossMsgRelayerRewards) {
+            // slither-disable-next-line unused-return
             Address.functionCallWithValue({
                 target: msg.sender,
                 data: abi.encodeCall(ISubnetActor.distributeRewardToRelayers, (block.number, totalFee)),
@@ -245,6 +245,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         // and triggering the signature
         LibQuorum.isHeightAlreadyProcessed(s.checkpointQuorumMap, height);
 
+        // slither-disable-next-line unused-return
         (bool exists, ) = LibGateway.getBottomUpCheckpoint(height);
         if (!exists) {
             revert CheckpointNotCreated();
