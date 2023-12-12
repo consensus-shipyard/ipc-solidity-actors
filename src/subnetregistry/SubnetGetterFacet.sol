@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
-import {CannotFindSubnet} from "../errors/IPCErrors.sol";
+import {CannotFindSubnet, FacetCannotBeZero} from "../errors/IPCErrors.sol";
 import {LibDiamond} from "../lib/LibDiamond.sol";
 
 contract SubnetGetterFacet {
@@ -71,12 +71,12 @@ contract SubnetGetterFacet {
         LibDiamond.enforceIsContractOwner();
 
         // Validate addresses are not zero
-        require(newGetterFacet != address(0), "Invalid getterFacet address");
-        require(newManagerFacet != address(0), "Invalid managerFacet address");
-
-        // Validate selectors are not empty
-        require(newSubnetGetterSelectors.length > 0, "SubnetGetterSelectors cannot be empty");
-        require(newSubnetManagerSelectors.length > 0, "SubnetManagerSelectors cannot be empty");
+        if (newGetterFacet == address(0)) {
+            revert FacetCannotBeZero();
+        }
+        if (newManagerFacet == address(0)) {
+            revert FacetCannotBeZero();
+        }
 
         // Update the storage variables
         s.SUBNET_GETTER_FACET = newGetterFacet;
