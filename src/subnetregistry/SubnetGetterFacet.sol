@@ -2,6 +2,7 @@
 pragma solidity 0.8.19;
 import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
 import {CannotFindSubnet} from "../errors/IPCErrors.sol";
+import {LibDiamond} from "../lib/LibDiamond.sol";
 
 contract SubnetGetterFacet {
     // slither-disable-next-line uninitialized-state
@@ -37,5 +38,50 @@ contract SubnetGetterFacet {
     /// @notice Returns the gateway
     function getGateway() external view returns (address) {
         return s.GATEWAY;
+    }
+
+    /// @notice Returns the address of the SUBNET_GETTER_FACET
+    function getSubnetGetterFacet() external view returns (address) {
+        return s.SUBNET_GETTER_FACET;
+    }
+
+    /// @notice Returns the address of the SUBNET_MANAGER_FACET
+    function getSubnetManagerFacet() external view returns (address) {
+        return s.SUBNET_MANAGER_FACET;
+    }
+
+    /// @notice Returns the subnet getter selectors
+    function getSubnetGetterSelectors() external view returns (bytes4[] memory) {
+        return s.subnetGetterSelectors;
+    }
+
+    /// @notice Returns the subnet manager selectors
+    function getSubnetManagerSelectors() external view returns (bytes4[] memory) {
+        return s.subnetManagerSelectors;
+    }
+
+    /// @notice Updates references to the subnet contract components
+    /// Only callable by the contract owner
+    function updateReferenceSubnetContract(
+        address newGetterFacet,
+        address newManagerFacet,
+        bytes4[] calldata newSubnetGetterSelectors,
+        bytes4[] calldata newSubnetManagerSelectors
+    ) external {
+        LibDiamond.enforceIsContractOwner();
+
+        // Validate addresses are not zero
+        require(newGetterFacet != address(0), "Invalid getterFacet address");
+        require(newManagerFacet != address(0), "Invalid managerFacet address");
+
+        // Validate selectors are not empty
+        require(newSubnetGetterSelectors.length > 0, "SubnetGetterSelectors cannot be empty");
+        require(newSubnetManagerSelectors.length > 0, "SubnetManagerSelectors cannot be empty");
+
+        // Update the storage variables
+        s.SUBNET_GETTER_FACET = newGetterFacet;
+        s.SUBNET_MANAGER_FACET = newManagerFacet;
+        s.subnetGetterSelectors = newSubnetGetterSelectors;
+        s.subnetManagerSelectors = newSubnetManagerSelectors;
     }
 }
