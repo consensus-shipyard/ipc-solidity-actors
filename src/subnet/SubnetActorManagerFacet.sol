@@ -15,6 +15,8 @@ import {LibValidatorSet, LibStaking} from "../lib/LibStaking.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
+string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
+
 contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
@@ -135,7 +137,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         // after the subnet has been bootstrapped. We will increase the
         // functionality in the future to support explicit permissioning.
         if (s.bootstrapped && s.permissioned) {
-            revert MethodNotAllowed();
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
         }
         if (msg.value == 0) {
             revert CollateralIsZero();
@@ -184,7 +186,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         // disbling validator changes for permissioned subnets (at least for now
         // until a more complex mechanism is implemented).
         if (s.permissioned) {
-            revert MethodNotAllowed();
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
         }
         if (msg.value == 0) {
             revert CollateralIsZero();
@@ -208,7 +210,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         // disbling validator changes for permissioned subnets (at least for now
         // until a more complex mechanism is implemented).
         if (s.permissioned) {
-            revert MethodNotAllowed();
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
         }
         if (amount == 0) {
             revert CannotReleaseZero();
@@ -240,7 +242,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         // their collateral ever (worth noting in the docs if this ends
         // up sticking around for a while).
         if (s.bootstrapped && s.permissioned) {
-            revert MethodNotAllowed();
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
         }
 
         // remove bootstrap nodes added by this validator

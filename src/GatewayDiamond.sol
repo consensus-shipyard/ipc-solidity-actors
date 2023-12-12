@@ -23,6 +23,7 @@ contract GatewayDiamond {
         SubnetID networkName;
         uint64 bottomUpCheckPeriod;
         uint256 minCollateral;
+        // deprecated (for now): no `msgFee` currenlty charged for cross-net messages
         uint256 msgFee;
         uint8 majorityPercentage;
         Validator[] genesisValidators;
@@ -51,8 +52,10 @@ contract GatewayDiamond {
         ds.supportedInterfaces[type(IDiamondCut).interfaceId] = true;
         ds.supportedInterfaces[type(IDiamondLoupe).interfaceId] = true;
 
-        // Disable always L2+ cross-net interactions (for now).
-        s.l2PlusSupport = false;
+        // Feature flags
+        s.maxTreeDepth = 2;
+        s.generalPurposeCrossMsg = false;
+        s.multiLevelCrossMsg = false;
 
         s.networkName = params.networkName;
         s.minStake = params.minCollateral;

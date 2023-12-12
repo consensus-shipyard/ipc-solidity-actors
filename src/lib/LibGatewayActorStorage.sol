@@ -10,9 +10,6 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 struct GatewayActorStorage {
-    /// @notice Flag to determine if multi-level cross-net primitives
-    /// are enabled in for the IPC instance.
-    bool l2PlusSupport;
     /// @notice List of subnets
     /// SubnetID => Subnet
     mapping(bytes32 => Subnet) subnets;
@@ -69,6 +66,17 @@ struct GatewayActorStorage {
     uint64 bottomUpCheckPeriod;
     /// Tracking validator changes from parent in child subnet
     ParentValidatorsTracker validatorsTracker;
+    //
+    // == Feature flags ==
+    /// @notice Determines the maximum depth that this instance of the gateway
+    /// will enforce. Bear in mind that the deployment is decentralized,
+    /// and a subnet could choose not to change this code and not enforce
+    /// this as a maximum depth in its own subnet.
+    uint8 maxTreeDepth;
+    /// @notice Determines if general purpose cros-net messages are supported
+    bool generalPurposeCrossMsg;
+    /// @notice Determines if multi-level cross-net messages are enbaled.
+    bool multiLevelCrossMsg;
 }
 
 library LibGatewayActorStorage {
