@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, BottomUpMsgBatch, CrossMsg} from "../structs/Checkpoint.sol";
 import {SubnetID, Validator, ValidatorSet} from "../structs/Subnet.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {MultisignatureChecker} from "../lib/LibMultisignatureChecker.sol";
@@ -28,9 +28,9 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event NextBottomUpCheckpointExecuted(uint256 epoch, address submitter);
     event SubnetBootstrapped(Validator[]);
 
-    /** @notice submit a checkpoint for execution.
-     *  @dev It triggers the commitment of the checkpoint and the execution of related cross-net messages,
-     *       and any other side-effects that need to be triggered by the checkpoint such as relayer reward book keeping.
+    /** @notice submit a checkpoint commitment.
+     *  @dev It triggers the commitment of the checkpoint and any other side-effects that
+     *  need to be triggered by the checkpoint such as relayer reward book keeping.
      * @param checkpoint The executed bottom-up checkpoint
      * @param signatories The addresses of the signatories
      * @param signatures The collected checkpoint signatures
@@ -69,6 +69,63 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             // confirming the changes in membership in the child
             LibStaking.confirmChange(checkpoint.nextConfigurationNumber);
         } else if (checkpoint.blockHeight == s.lastBottomUpCheckpointHeight) {
+            // If the checkpoint height is equal to the last checkpoint height, then this is a repeated submission.
+            // We should store the relayer, but not to execute checkpoint again.
+            // In this case, we do not verify the signatures for this checkpoint again,
+            // but we add the relayer to the list of all relayers for this checkpoint to be rewarded later.
+            // The reason for comparing hashes instead of verifying signatures is the following:
+            // once the checkpoint is executed, the active validator set changes
+            // and can only be used to validate the next checkpoint, not another instance of the last one.
+            bytes32 lastCheckpointHash = keccak256(abi.encode(s.committedCheckpoints[checkpoint.blockHeight]));
+            if (checkpointHash == lastCheckpointHash) {
+                // slither-disable-next-line unused-return
+                s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+            }
+        }
+    }
+
+    /** @notice submit a bottom-up message batch for execution.
+     *  @dev It triggers the execution of a cross-net message batch
+     * @param checkpoint The executed bottom-up checkpoint
+     * @param signatories The addresses of the signatories
+     * @param signatures The collected checkpoint signatures
+     */
+    // TODO: De-duplicate redundant code.
+    function submitBottomUpMsgBatch(
+        BottomUpMsgBatch calldata batch,
+        address[] calldata signatories,
+        bytes[] calldata signatures
+    ) external {
+        // TODO: Check that the height is over the last height
+        // (the nonce should be checking in-order execution implicitly)
+        // the checkpoint height must be equal to the last bottom-up checkpoint height or
+        // the next one
+        // if (
+        //     checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod &&
+        //     checkpoint.blockHeight != s.lastBottomUpCheckpointHeight
+        // ) {
+        //     revert InvalidCheckpointEpoch();
+        // }
+        bytes32 batchHash = keccak256(abi.encode(batch));
+
+        if (batch.blockHeight == s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod) {
+            // validate signatures and quorum threshold, revert if validation fails
+            validateActiveQuorumSignatures({signatories: signatories, hash: batchHash, signatures: signatures});
+
+            // If the checkpoint height is the next expected height then this is a new checkpoint which must be executed
+            // in the Gateway Actor, the checkpoint and the relayer must be stored, last bottom-up checkpoint updated.
+            s.committedCheckpoints[batch.blockHeight] = batch;
+
+            // slither-disable-next-line unused-return
+            s.rewardedRelayers[batch.blockHeight].add(msg.sender);
+
+            // TODO: Make lastBottomUpCheckpointHeight part of checkpoint info?
+            s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
+
+            // Execute messages.
+            // TODO:
+            IGateway(s.ipcGatewayAddr).execBottomUpMsgBatch(batch);
+        } else if (batch.blockHeight == s.lastBottomUpCheckpointHeight) {
             // If the checkpoint height is equal to the last checkpoint height, then this is a repeated submission.
             // We should store the relayer, but not to execute checkpoint again.
             // In this case, we do not verify the signatures for this checkpoint again,

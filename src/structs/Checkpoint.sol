@@ -25,6 +25,11 @@ struct BottomUpCheckpoint {
     uint64 nextConfigurationNumber;
 }
 
+/// @notice A batch of bottom-up messages for execution
+struct BottomUpMsgBatch {
+    CrossMsg[] msgs;
+}
+
 /**
  * @dev The goal of `wrapped` flag is to signal that a cross-net message should be sent as-is without changes to the destination.
  *
