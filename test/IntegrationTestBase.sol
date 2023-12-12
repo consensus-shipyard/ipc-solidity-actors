@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 import "forge-std/StdInvariant.sol";
 
 import "../src/errors/IPCErrors.sol";
-import {NumberContractFacetSeven, NumberContractFacetEight} from "./NumberContract.sol";
+import {NumberContractFacetSeven, NumberContractFacetEight} from "./helpers/NumberContract.sol";
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
@@ -34,9 +34,9 @@ import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../src/lib/LibDiamond.sol";
-import {MerkleTreeHelper} from "./MerkleTreeHelper.sol";
+import {MerkleTreeHelper} from "./helpers/MerkleTreeHelper.sol";
 
-import {TestUtils} from "./TestUtils.sol";
+import {TestUtils} from "./helpers/TestUtils.sol";
 
 contract IntegrationTestBase is Test {
     using SubnetIDHelper for SubnetID;
