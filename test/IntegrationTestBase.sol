@@ -47,6 +47,7 @@ contract IntegrationTestBase is Test {
     uint64 constant MAX_NONCE = type(uint64).max;
     address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
     uint64 constant DEFAULT_MIN_VALIDATORS = 1;
+    uint256 constant DEFAULT_MIN_VALIDATOR_STAKE = 1 ether;
     uint8 constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 constant DEFAULT_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
@@ -90,6 +91,8 @@ contract IntegrationTestBase is Test {
     SubnetActorDiamond saDiamond;
     SubnetActorManagerFacet saManager;
     SubnetActorGetterFacet saGetter;
+    DiamondCutFacet saCutFacet;
+    DiamondLoupeFacet saLouper;
 
     function setUp() public virtual {
         saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
@@ -238,7 +241,7 @@ contract IntegrationTestBase is Test {
         addValidator(TOPDOWN_VALIDATOR_1, 100);
     }
 
-    function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
+    function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         GatewayRouterFacet router = new GatewayRouterFacet();
         GatewayManagerFacet manager = new GatewayManagerFacet();
         GatewayGetterFacet getter = new GatewayGetterFacet();
@@ -290,6 +293,123 @@ contract IntegrationTestBase is Test {
         gatewayDiamond = new GatewayDiamond(diamondCut, params);
 
         return gatewayDiamond;
+    }
+
+    function createSubnetActorDiamondWithFaucets(
+        SubnetActorDiamond.ConstructorParams memory params,
+        address getterFaucet,
+        address managerFaucet
+    ) public returns (SubnetActorDiamond) {
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](2);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: getterFaucet,
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saGetterSelectors
+            })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+                facetAddress: managerFaucet,
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saManagerSelectors
+            })
+        );
+
+        saDiamond = new SubnetActorDiamond(diamondCut, params);
+        return saDiamond;
+    }
+
+    function deploySubnetActor(
+        address _ipcGatewayAddr,
+        ConsensusType _consensus,
+        uint256 _minActivationCollateral,
+        uint64 _minValidators,
+        uint64 _checkPeriod,
+        uint8 _majorityPercentage
+    ) public {
+        SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
+
+        saManager = new SubnetActorManagerFacet();
+        saGetter = new SubnetActorGetterFacet();
+        saCutFacet = new DiamondCutFacet();
+        saLouper = new DiamondLoupeFacet();
+
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](4);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: address(saManager),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saManagerSelectors
+            })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+                facetAddress: address(saGetter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saGetterSelectors
+            })
+        );
+
+        diamondCut[2] = (
+            IDiamond.FacetCut({
+                facetAddress: address(saCutFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: cutFacetSelectors
+            })
+        );
+
+        diamondCut[3] = (
+            IDiamond.FacetCut({
+                facetAddress: address(saLouper),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: louperSelectors
+            })
+        );
+
+        saDiamond = new SubnetActorDiamond(
+            diamondCut,
+            SubnetActorDiamond.ConstructorParams({
+                parentId: _parentId,
+                ipcGatewayAddr: _ipcGatewayAddr,
+                consensus: _consensus,
+                minActivationCollateral: _minActivationCollateral,
+                minValidators: _minValidators,
+                bottomUpCheckPeriod: _checkPeriod,
+                majorityPercentage: _majorityPercentage,
+                activeValidatorsLimit: 100,
+                powerScale: 12,
+                permissioned: false,
+                minCrossMsgFee: CROSS_MSG_FEE
+            })
+        );
+
+        saManager = SubnetActorManagerFacet(address(saDiamond));
+        saGetter = SubnetActorGetterFacet(address(saDiamond));
+        saCutFacet = DiamondCutFacet(address(saDiamond));
+        saLouper = DiamondLoupeFacet(address(saDiamond));
+
+        require(saGetter.ipcGatewayAddr() == _ipcGatewayAddr, "saGetter.ipcGatewayAddr() == _ipcGatewayAddr");
+        require(
+            saGetter.minActivationCollateral() == _minActivationCollateral,
+            "saGetter.minActivationCollateral() == _minActivationCollateral"
+        );
+        require(saGetter.minValidators() == _minValidators, "saGetter.minValidators() == _minValidators");
+        require(saGetter.consensus() == _consensus, "consensus");
+        require(saGetter.getParent().equals(_parentId), "parent");
+        require(saGetter.activeValidatorsLimit() == 100, "activeValidatorsLimit");
+        require(saGetter.powerScale() == 12, "powerscale");
+        require(saGetter.minCrossMsgFee() == CROSS_MSG_FEE, "cross-msg fee");
+        require(saGetter.bottomUpCheckPeriod() == _checkPeriod, "bottom-up period");
+        require(saGetter.majorityPercentage() == _majorityPercentage, "majority percentage");
+        require(
+            saGetter.getParent().toHash() == _parentId.toHash(),
+            "parent.toHash() == SubnetID({root: ROOTNET_CHAINID, route: path}).toHash()"
+        );
     }
 
     function totalWeight(uint256[] memory weights) public pure returns (uint256 sum) {
@@ -411,7 +531,7 @@ contract IntegrationTestBase is Test {
         saManager.join{value: DEFAULT_COLLATERAL_AMOUNT}(pubkey);
     }
 
-    function confirmChange(address validator, uint256 privKey) public {
+    function confirmChange(address validator, uint256 privKey) internal {
         address[] memory validators = new address[](1);
         validators[0] = validator;
 
@@ -421,7 +541,40 @@ contract IntegrationTestBase is Test {
         confirmChange(validators, privKeys);
     }
 
-    function confirmChange(address[] memory validators, uint256[] memory privKey) public {
+    function confirmChange(address validator1, uint256 privKey1, address validator2, uint256 privKey2) internal {
+        address[] memory validators = new address[](2);
+        validators[0] = validator1;
+        validators[1] = validator2;
+
+        uint256[] memory privKeys = new uint256[](2);
+        privKeys[0] = privKey1;
+        privKeys[1] = privKey2;
+
+        confirmChange(validators, privKeys);
+    }
+
+    function confirmChange(
+        address validator1,
+        uint256 privKey1,
+        address validator2,
+        uint256 privKey2,
+        address validator3,
+        uint256 privKey3
+    ) internal {
+        address[] memory validators = new address[](3);
+        validators[0] = validator1;
+        validators[1] = validator2;
+        validators[2] = validator3;
+
+        uint256[] memory privKeys = new uint256[](3);
+        privKeys[0] = privKey1;
+        privKeys[1] = privKey2;
+        privKeys[2] = privKey3;
+
+        confirmChange(validators, privKeys);
+    }
+
+    function confirmChange(address[] memory validators, uint256[] memory privKeys) internal {
         uint256 n = validators.length;
 
         bytes[] memory signatures = new bytes[](n);
@@ -429,6 +582,7 @@ contract IntegrationTestBase is Test {
         CrossMsg[] memory msgs = new CrossMsg[](0);
 
         (uint64 nextConfigNum, ) = saGetter.getConfigurationNumbers();
+
         uint64 h = saGetter.lastBottomUpCheckpointHeight() + saGetter.bottomUpCheckPeriod();
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
@@ -444,7 +598,7 @@ contract IntegrationTestBase is Test {
         bytes32 hash = keccak256(abi.encode(checkpoint));
 
         for (uint256 i = 0; i < n; i++) {
-            (uint8 v, bytes32 r, bytes32 s) = vm.sign(privKey[i], hash);
+            (uint8 v, bytes32 r, bytes32 s) = vm.sign(privKeys[i], hash);
             signatures[i] = abi.encodePacked(r, s, v);
         }
 

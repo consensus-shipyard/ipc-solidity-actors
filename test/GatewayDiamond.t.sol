@@ -155,7 +155,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             activeValidatorsLimit: 100
         });
 
-        dep = createDiamond(constructorParams);
+        dep = createGatewayDiamond(constructorParams);
         depGetter = GatewayGetterFacet(address(dep));
         depManager = GatewayManagerFacet(address(dep));
         depRouter = GatewayRouterFacet(address(dep));
@@ -759,7 +759,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        gatewayDiamond = createDiamond(constructorParams);
+        gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
@@ -791,7 +791,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        gatewayDiamond = createDiamond(constructorParams);
+        gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
@@ -822,7 +822,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        gatewayDiamond = createDiamond(constructorParams);
+        gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
@@ -854,7 +854,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        gatewayDiamond = createDiamond(constructorParams);
+        gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
