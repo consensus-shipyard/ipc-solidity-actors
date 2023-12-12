@@ -53,12 +53,14 @@ contract IntegrationTestBase is Test {
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
     string constant DEFAULT_NET_ADDR = "netAddr";
     bytes constant GENESIS = EMPTY_BYTES;
-    uint256 constant CROSS_MSG_FEE = 10 gwei;
+    uint256 constant DEFAULT_CROSS_MSG_FEE = 10 gwei;
     uint256 constant DEFAULT_RELAYER_REWARD = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
     address constant CHILD_NETWORK_ADDRESS_2 = address(11);
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
     uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
+    uint16 constant DEFAULT_ACTIVE_VALIDATORS_LIMIT = 100;
+    int8 constant DEFAULT_POWER_SCALE = 12;
 
     uint64 constant ROOTNET_CHAINID = 123;
     address constant ROOTNET_ADDRESS = address(1);
@@ -79,12 +81,6 @@ contract IntegrationTestBase is Test {
     GatewayMessengerFacet gwMessenger;
     DiamondCutFacet gwCutFacet;
     DiamondLoupeFacet gwLouper;
-
-    GatewayDiamond gatewayDiamond2;
-    GatewayManagerFacet gwManager2;
-    GatewayGetterFacet gwGetter2;
-    GatewayRouterFacet gwRouter2;
-    GatewayMessengerFacet gwMessenger2;
 
     bytes4[] saGetterSelectors;
     bytes4[] saManagerSelectors;
@@ -112,76 +108,10 @@ contract IntegrationTestBase is Test {
         path2[0] = CHILD_NETWORK_ADDRESS;
         path2[1] = CHILD_NETWORK_ADDRESS_2;
 
-        // create a gateway actor.
+        // create the root gateway actor.
 
-        GatewayDiamond.ConstructorParams memory gwConstructorParams = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            msgFee: CROSS_MSG_FEE,
-            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
-            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            genesisValidators: new Validator[](0),
-            activeValidatorsLimit: 100
-        });
-
-        gwRouter = new GatewayRouterFacet();
-        gwManager = new GatewayManagerFacet();
-        gwGetter = new GatewayGetterFacet();
-        gwMessenger = new GatewayMessengerFacet();
-        gwLouper = new DiamondLoupeFacet();
-        gwCutFacet = new DiamondCutFacet();
-
-        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](6);
-
-        gwDiamondCut[0] = (
-            IDiamond.FacetCut({
-                facetAddress: address(gwRouter),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwRouterSelectors
-            })
-        );
-
-        gwDiamondCut[1] = (
-            IDiamond.FacetCut({
-                facetAddress: address(gwManager),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwManagerSelectors
-            })
-        );
-
-        gwDiamondCut[2] = (
-            IDiamond.FacetCut({
-                facetAddress: address(gwGetter),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwGetterSelectors
-            })
-        );
-
-        gwDiamondCut[3] = (
-            IDiamond.FacetCut({
-                facetAddress: address(gwMessenger),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwMessengerSelectors
-            })
-        );
-
-        gwDiamondCut[4] = (
-            IDiamond.FacetCut({
-                facetAddress: address(gwLouper),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: louperSelectors
-            })
-        );
-
-        gwDiamondCut[5] = (
-            IDiamond.FacetCut({
-                facetAddress: address(gwCutFacet),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: cutFacetSelectors
-            })
-        );
-
-        gatewayDiamond = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
+        GatewayDiamond.ConstructorParams memory gwConstructorParams = defaultGatewayParams();
+        gatewayDiamond = createGatewayDiamond(gwConstructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
@@ -189,56 +119,64 @@ contract IntegrationTestBase is Test {
         gwLouper = DiamondLoupeFacet(address(gatewayDiamond));
         gwCutFacet = DiamondCutFacet(address(gatewayDiamond));
 
-        gwConstructorParams.networkName = SubnetID({root: ROOTNET_CHAINID, route: path2});
+        // create a subnet actor in the root network.
 
-        gatewayDiamond2 = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
-        gwGetter2 = GatewayGetterFacet(address(gatewayDiamond2));
-        gwManager2 = GatewayManagerFacet(address(gatewayDiamond2));
-        gwRouter2 = GatewayRouterFacet(address(gatewayDiamond2));
-        gwMessenger2 = GatewayMessengerFacet(address(gatewayDiamond2));
+        SubnetActorDiamond.ConstructorParams memory saConstructorParams = defaultSubnetActorParamsWithGateway(
+            address(gatewayDiamond)
+        );
 
-        // create a subnet actor.
+        saDiamond = createSubnetActor(saConstructorParams);
+        saManager = SubnetActorManagerFacet(address(saDiamond));
+        saGetter = SubnetActorGetterFacet(address(saDiamond));
+        saLouper = DiamondLoupeFacet(address(saDiamond));
+        saCutFacet = DiamondCutFacet(address(saDiamond));
 
-        SubnetActorDiamond.ConstructorParams memory saConstructorParams = SubnetActorDiamond.ConstructorParams({
+        addValidator(TOPDOWN_VALIDATOR_1, 100);
+    }
+
+    function defaultSubnetActorParamsWithGateway(
+        address gw
+    ) internal pure returns (SubnetActorDiamond.ConstructorParams memory) {
+        SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
-            ipcGatewayAddr: address(gatewayDiamond),
+            ipcGatewayAddr: gw,
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: DEFAULT_COLLATERAL_AMOUNT,
             minValidators: DEFAULT_MIN_VALIDATORS,
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-            activeValidatorsLimit: 100,
-            powerScale: 12,
-            minCrossMsgFee: CROSS_MSG_FEE,
+            activeValidatorsLimit: DEFAULT_ACTIVE_VALIDATORS_LIMIT,
+            powerScale: DEFAULT_POWER_SCALE,
+            minCrossMsgFee: DEFAULT_CROSS_MSG_FEE,
             permissioned: false
         });
 
-        saManager = new SubnetActorManagerFacet();
-        saGetter = new SubnetActorGetterFacet();
+        return params;
+    }
 
-        IDiamond.FacetCut[] memory saDiamondCut = new IDiamond.FacetCut[](2);
-
-        saDiamondCut[0] = (
-            IDiamond.FacetCut({
-                facetAddress: address(saGetter),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: saGetterSelectors
-            })
+    function defaultSubnetActorParamsWithRootGateway()
+        internal
+        view
+        returns (SubnetActorDiamond.ConstructorParams memory)
+    {
+        SubnetActorDiamond.ConstructorParams memory params = defaultSubnetActorParamsWithGateway(
+            address(gatewayDiamond)
         );
+        return params;
+    }
 
-        saDiamondCut[1] = (
-            IDiamond.FacetCut({
-                facetAddress: address(saManager),
-                action: IDiamond.FacetCutAction.Add,
-                functionSelectors: saManagerSelectors
-            })
-        );
+    function defaultGatewayParams() internal pure returns (GatewayDiamond.ConstructorParams memory) {
+        GatewayDiamond.ConstructorParams memory params = GatewayDiamond.ConstructorParams({
+            networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
+            msgFee: DEFAULT_CROSS_MSG_FEE,
+            minCollateral: DEFAULT_COLLATERAL_AMOUNT,
+            majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
+            genesisValidators: new Validator[](0),
+            activeValidatorsLimit: DEFAULT_ACTIVE_VALIDATORS_LIMIT
+        });
 
-        saDiamond = new SubnetActorDiamond(saDiamondCut, saConstructorParams);
-        saManager = SubnetActorManagerFacet(address(saDiamond));
-        saGetter = SubnetActorGetterFacet(address(saDiamond));
-
-        addValidator(TOPDOWN_VALIDATOR_1, 100);
+        return params;
     }
 
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
@@ -247,10 +185,11 @@ contract IntegrationTestBase is Test {
         GatewayGetterFacet getter = new GatewayGetterFacet();
         GatewayMessengerFacet messenger = new GatewayMessengerFacet();
         DiamondCutFacet cutter = new DiamondCutFacet();
+        DiamondLoupeFacet louper = new DiamondLoupeFacet();
 
-        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](5);
+        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](6);
 
-        diamondCut[0] = (
+        gwDiamondCut[0] = (
             IDiamond.FacetCut({
                 facetAddress: address(router),
                 action: IDiamond.FacetCutAction.Add,
@@ -258,7 +197,7 @@ contract IntegrationTestBase is Test {
             })
         );
 
-        diamondCut[1] = (
+        gwDiamondCut[1] = (
             IDiamond.FacetCut({
                 facetAddress: address(manager),
                 action: IDiamond.FacetCutAction.Add,
@@ -266,7 +205,7 @@ contract IntegrationTestBase is Test {
             })
         );
 
-        diamondCut[2] = (
+        gwDiamondCut[2] = (
             IDiamond.FacetCut({
                 facetAddress: address(getter),
                 action: IDiamond.FacetCutAction.Add,
@@ -274,7 +213,7 @@ contract IntegrationTestBase is Test {
             })
         );
 
-        diamondCut[3] = (
+        gwDiamondCut[3] = (
             IDiamond.FacetCut({
                 facetAddress: address(messenger),
                 action: IDiamond.FacetCutAction.Add,
@@ -282,7 +221,15 @@ contract IntegrationTestBase is Test {
             })
         );
 
-        diamondCut[4] = (
+        gwDiamondCut[4] = (
+            IDiamond.FacetCut({
+                facetAddress: address(louper),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: louperSelectors
+            })
+        );
+
+        gwDiamondCut[5] = (
             IDiamond.FacetCut({
                 facetAddress: address(cutter),
                 action: IDiamond.FacetCutAction.Add,
@@ -290,7 +237,7 @@ contract IntegrationTestBase is Test {
             })
         );
 
-        gatewayDiamond = new GatewayDiamond(diamondCut, params);
+        gatewayDiamond = new GatewayDiamond(gwDiamondCut, params);
 
         return gatewayDiamond;
     }
@@ -322,7 +269,52 @@ contract IntegrationTestBase is Test {
         return saDiamond;
     }
 
-    function deploySubnetActor(
+    function createSubnetActor(SubnetActorDiamond.ConstructorParams memory params) public returns (SubnetActorDiamond) {
+        SubnetActorManagerFacet manager = new SubnetActorManagerFacet();
+        SubnetActorGetterFacet getter = new SubnetActorGetterFacet();
+        DiamondLoupeFacet louper = new DiamondLoupeFacet();
+        DiamondCutFacet cutter = new DiamondCutFacet();
+
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](4);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: address(manager),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saManagerSelectors
+            })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+                facetAddress: address(getter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: saGetterSelectors
+            })
+        );
+
+        diamondCut[2] = (
+            IDiamond.FacetCut({
+                facetAddress: address(cutter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: cutFacetSelectors
+            })
+        );
+
+        diamondCut[3] = (
+            IDiamond.FacetCut({
+                facetAddress: address(louper),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: louperSelectors
+            })
+        );
+
+        SubnetActorDiamond diamond = new SubnetActorDiamond(diamondCut, params);
+
+        return diamond;
+    }
+
+    function createSubnetActor(
         address _ipcGatewayAddr,
         ConsensusType _consensus,
         uint256 _minActivationCollateral,
@@ -384,7 +376,7 @@ contract IntegrationTestBase is Test {
                 activeValidatorsLimit: 100,
                 powerScale: 12,
                 permissioned: false,
-                minCrossMsgFee: CROSS_MSG_FEE
+                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
             })
         );
 
@@ -392,24 +384,6 @@ contract IntegrationTestBase is Test {
         saGetter = SubnetActorGetterFacet(address(saDiamond));
         saCutFacet = DiamondCutFacet(address(saDiamond));
         saLouper = DiamondLoupeFacet(address(saDiamond));
-
-        require(saGetter.ipcGatewayAddr() == _ipcGatewayAddr, "saGetter.ipcGatewayAddr() == _ipcGatewayAddr");
-        require(
-            saGetter.minActivationCollateral() == _minActivationCollateral,
-            "saGetter.minActivationCollateral() == _minActivationCollateral"
-        );
-        require(saGetter.minValidators() == _minValidators, "saGetter.minValidators() == _minValidators");
-        require(saGetter.consensus() == _consensus, "consensus");
-        require(saGetter.getParent().equals(_parentId), "parent");
-        require(saGetter.activeValidatorsLimit() == 100, "activeValidatorsLimit");
-        require(saGetter.powerScale() == 12, "powerscale");
-        require(saGetter.minCrossMsgFee() == CROSS_MSG_FEE, "cross-msg fee");
-        require(saGetter.bottomUpCheckPeriod() == _checkPeriod, "bottom-up period");
-        require(saGetter.majorityPercentage() == _majorityPercentage, "majority percentage");
-        require(
-            saGetter.getParent().toHash() == _parentId.toHash(),
-            "parent.toHash() == SubnetID({root: ROOTNET_CHAINID, route: path}).toHash()"
-        );
     }
 
     function totalWeight(uint256[] memory weights) public pure returns (uint256 sum) {
@@ -460,11 +434,11 @@ contract IntegrationTestBase is Test {
                     subnetId: gwGetter.getNetworkName().createSubnetId(src),
                     rawAddress: FvmAddressHelper.from(src)
                 }),
-                value: CROSS_MSG_FEE + 1,
+                value: DEFAULT_CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
                 params: new bytes(0),
-                fee: CROSS_MSG_FEE
+                fee: DEFAULT_CROSS_MSG_FEE
             }),
             wrapped: false
         });

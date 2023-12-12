@@ -43,21 +43,27 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
 
     address gatewayAddress;
 
-    uint8 constant MAJORITY_PERCENTAGE = 60;
-
     function setUp() public override {
         super.setUp();
 
         gatewayAddress = address(gatewayDiamond);
+    }
 
-        deploySubnetActor(
-            gatewayAddress,
-            ConsensusType.Fendermint,
-            DEFAULT_MIN_VALIDATOR_STAKE,
-            DEFAULT_MIN_VALIDATORS,
-            DEFAULT_CHECKPOINT_PERIOD,
-            MAJORITY_PERCENTAGE
-        );
+    function testSubnetActorDiamond_NewSubnetActorWithDefaultParams() public view {
+        SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
+        SubnetActorDiamond.ConstructorParams memory params = defaultSubnetActorParamsWithRootGateway();
+
+        require(saGetter.ipcGatewayAddr() == params.ipcGatewayAddr, "unexpected gateway");
+        require(saGetter.minActivationCollateral() == params.minActivationCollateral, "unexpected collateral");
+        require(saGetter.minValidators() == params.minValidators, "unexpected minValidators");
+        require(saGetter.consensus() == params.consensus, "unexpected consensus");
+        require(saGetter.getParent().equals(_parentId), "unexpected parent");
+        require(saGetter.activeValidatorsLimit() == 100, "unexpected activeValidatorsLimit");
+        require(saGetter.powerScale() == params.powerScale, "unexpected powerscale");
+        require(saGetter.minCrossMsgFee() == DEFAULT_CROSS_MSG_FEE, "unexpected cross-msg fee");
+        require(saGetter.bottomUpCheckPeriod() == params.bottomUpCheckPeriod, "unexpected bottom-up period");
+        require(saGetter.majorityPercentage() == params.majorityPercentage, "unexpected majority percentage");
+        require(saGetter.getParent().toHash() == _parentId.toHash(), "unexpected parent subnetID hash");
     }
 
     function testSubnetActorDiamondReal_LoupeFunction() public view {
@@ -274,7 +280,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         vm.assume(_majorityPercentage <= 100);
         vm.assume(_ipcGatewayAddr != address(0));
 
-        deploySubnetActor(
+        createSubnetActor(
             _ipcGatewayAddr,
             ConsensusType.Fendermint,
             _minActivationCollateral,
@@ -307,7 +313,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
                 activeValidatorsLimit: 100,
                 powerScale: 12,
                 permissioned: false,
-                minCrossMsgFee: CROSS_MSG_FEE
+                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
             }),
             address(saDupGetterFaucet),
             address(saDupMangerFaucet)
@@ -384,7 +390,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         (address validator, , ) = TestUtils.newValidator(100);
 
         // non-empty subnet can't be killed
-        vm.startPrank(validator);
+        vm.prank(validator);
         vm.expectRevert(abi.encodeWithSelector(NotValidator.selector, validator));
         saManager.leave();
     }
@@ -395,14 +401,14 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         (address validator3, uint256 privKey3, bytes memory publicKey3) = TestUtils.newValidator(102);
 
         vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
-        vm.deal(validator2, DEFAULT_MIN_VALIDATOR_STAKE);
+        vm.deal(validator2, 3 * DEFAULT_MIN_VALIDATOR_STAKE);
         vm.deal(validator3, DEFAULT_MIN_VALIDATOR_STAKE);
 
         vm.prank(validator1);
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
 
         vm.prank(validator2);
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey2);
+        saManager.join{value: 3 * DEFAULT_MIN_VALIDATOR_STAKE}(publicKey2);
 
         vm.prank(validator3);
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey3);
@@ -455,11 +461,11 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
             message: StorableMsg({
                 from: IPCAddress({subnetId: saGetter.getParent(), rawAddress: FvmAddressHelper.from(address(this))}),
                 to: IPCAddress({subnetId: saGetter.getParent(), rawAddress: FvmAddressHelper.from(address(this))}),
-                value: CROSS_MSG_FEE + 1,
+                value: DEFAULT_CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
                 params: new bytes(0),
-                fee: CROSS_MSG_FEE
+                fee: DEFAULT_CROSS_MSG_FEE
             }),
             wrapped: false
         });
@@ -526,11 +532,11 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
                     rawAddress: FvmAddressHelper.from(address(saDiamond))
                 }),
                 to: IPCAddress({subnetId: saGetter.getParent(), rawAddress: FvmAddressHelper.from(address(saDiamond))}),
-                value: CROSS_MSG_FEE + 1,
+                value: DEFAULT_CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
                 params: new bytes(0),
-                fee: CROSS_MSG_FEE
+                fee: DEFAULT_CROSS_MSG_FEE
             }),
             wrapped: false
         });
@@ -563,7 +569,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
 
         vm.deal(address(saDiamond), 100 ether);
         vm.prank(address(saDiamond));
-        gwManager.register{value: DEFAULT_MIN_VALIDATOR_STAKE + 3 * CROSS_MSG_FEE}(3 * CROSS_MSG_FEE);
+        gwManager.register{value: DEFAULT_MIN_VALIDATOR_STAKE + 3 * DEFAULT_CROSS_MSG_FEE}(3 * DEFAULT_CROSS_MSG_FEE);
 
         bytes32 hash = keccak256(abi.encode(checkpoint));
 
@@ -630,11 +636,11 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
                     rawAddress: FvmAddressHelper.from(address(saDiamond))
                 }),
                 to: IPCAddress({subnetId: saGetter.getParent(), rawAddress: FvmAddressHelper.from(address(saDiamond))}),
-                value: CROSS_MSG_FEE + 1,
+                value: DEFAULT_CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
                 params: new bytes(0),
-                fee: CROSS_MSG_FEE
+                fee: DEFAULT_CROSS_MSG_FEE
             }),
             wrapped: false
         });
@@ -651,7 +657,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
 
         vm.deal(address(saDiamond), 100 ether);
         vm.prank(address(saDiamond));
-        gwManager.register{value: DEFAULT_MIN_VALIDATOR_STAKE + 6 * CROSS_MSG_FEE}(6 * CROSS_MSG_FEE);
+        gwManager.register{value: DEFAULT_MIN_VALIDATOR_STAKE + 6 * DEFAULT_CROSS_MSG_FEE}(6 * DEFAULT_CROSS_MSG_FEE);
 
         bytes32 hash = keccak256(abi.encode(checkpoint));
 
@@ -680,11 +686,11 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
                     rawAddress: FvmAddressHelper.from(address(saDiamond))
                 }),
                 to: IPCAddress({subnetId: saGetter.getParent(), rawAddress: FvmAddressHelper.from(address(saDiamond))}),
-                value: CROSS_MSG_FEE + 1,
+                value: DEFAULT_CROSS_MSG_FEE + 1,
                 nonce: 1,
                 method: METHOD_SEND,
                 params: new bytes(0),
-                fee: CROSS_MSG_FEE
+                fee: DEFAULT_CROSS_MSG_FEE
             }),
             wrapped: false
         });
@@ -711,10 +717,10 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         require(saGetter.getRelayerReward(validators[1]) == 0, "unexpected reward");
         require(saGetter.getRelayerReward(validators[2]) == 0, "unexpected reward");
         uint256 validator0Reward = saGetter.getRelayerReward(validators[0]);
-        require(validator0Reward == CROSS_MSG_FEE, "there is no reward for validator");
+        require(validator0Reward == DEFAULT_CROSS_MSG_FEE, "there is no reward for validator");
 
         uint256 b1 = validators[0].balance;
-        vm.startPrank(validators[0]);
+        vm.prank(validators[0]);
         saManager.claimRewardForRelayer();
         uint256 b2 = validators[0].balance;
         require(b2 - b1 == validator0Reward, "reward received");
@@ -855,20 +861,25 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         (genesisAddrs, ) = saGetter.genesisBalances();
         require(saGetter.genesisCircSupply() == 0, "genesis circ supply not correct");
         require(genesisAddrs.length == 0, "not zero genesis addresses");
+        vm.stopPrank();
 
         // pre-fund from validator and from pre-funder
         vm.startPrank(validator1);
         vm.deal(validator1, fundAmount);
         saManager.preFund{value: fundAmount}();
+        vm.stopPrank();
+
         vm.startPrank(preFunder);
         vm.deal(preFunder, fundAmount);
         saManager.preFund{value: fundAmount}();
+        vm.stopPrank();
 
         // initial validator joins
         vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
 
         vm.startPrank(validator1);
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+        vm.stopPrank();
         collateral = DEFAULT_MIN_VALIDATOR_STAKE;
 
         require(
@@ -900,7 +911,6 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         vm.expectRevert(SubnetAlreadyBootstrapped.selector);
         vm.deal(preFunder, fundAmount);
         saManager.preFund{value: fundAmount}();
-
         vm.stopPrank();
     }
 
@@ -915,6 +925,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         vm.startPrank(validator1);
         vm.deal(validator1, fundAmount);
         saManager.preFund{value: fundAmount}();
+        vm.stopPrank();
 
         // initial validator joins but doesn't bootstrap the subnet
         vm.deal(validator1, collateral);
@@ -934,18 +945,19 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         require(saGetter.genesisCircSupply() == 0, "genesis circ supply not zero");
         (genesisAddrs, ) = saGetter.genesisBalances();
         require(genesisAddrs.length == 0, "not zero genesis addresses");
+        vm.stopPrank();
 
         // initial validator joins to bootstrap the subnet
         vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
 
         vm.startPrank(validator1);
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+        vm.stopPrank();
 
         // pre-release not allowed with bootstrapped subnet
         vm.startPrank(validator1);
         vm.expectRevert(SubnetAlreadyBootstrapped.selector);
         saManager.preRelease(fundAmount);
-
         vm.stopPrank();
     }
 
@@ -1040,6 +1052,21 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         }
 
         require(!saGetter.bootstrapped());
+    }
+
+    function test_second_validator_can_join() public {
+        (address validatorAddress1, uint256 privKey1, bytes memory publicKey1) = TestUtils.newValidator(101);
+        (address validatorAddress2, , bytes memory publicKey2) = TestUtils.newValidator(102);
+
+        join(validatorAddress1, publicKey1);
+
+        require(saGetter.bootstrapped(), "subnet not bootstrapped");
+        require(saGetter.isActiveValidator(validatorAddress1), "validator 1 is not active");
+        require(!saGetter.isActiveValidator(validatorAddress2), "validator 2 is active");
+
+        join(validatorAddress2, publicKey2);
+        confirmChange(validatorAddress1, privKey1);
+        require(saGetter.isActiveValidator(validatorAddress2), "validator 2 is not active");
     }
 
     function callback() public view {

@@ -47,7 +47,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(gwGetter.bottomUpNonce() == 0, "unexpected bottomUpNonce");
         require(gwGetter.minStake() == DEFAULT_COLLATERAL_AMOUNT, "unexpected minStake");
 
-        require(gwGetter.crossMsgFee() == CROSS_MSG_FEE, "unexpected crossMsgFee");
+        require(gwGetter.crossMsgFee() == DEFAULT_CROSS_MSG_FEE, "unexpected crossMsgFee");
         require(gwGetter.bottomUpCheckPeriod() == DEFAULT_CHECKPOINT_PERIOD, "unexpected bottomUpCheckPeriod");
         require(
             gwGetter.getNetworkName().equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})),
@@ -59,6 +59,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         StorableMsg memory msg1;
         require(msg1.toHash() == storableMsg.toHash(), "unexpected hash");
         require(!wrapped, "unexpected wrapped message");
+    }
+
+    function testGatewayDiamond_NewGatewayWithDefaultParams() public view {
+        GatewayDiamond.ConstructorParams memory params = defaultGatewayParams();
+
+        require(gwGetter.crossMsgFee() == DEFAULT_CROSS_MSG_FEE, "unexpected cross-msg fee");
+        require(gwGetter.bottomUpCheckPeriod() == params.bottomUpCheckPeriod, "unexpected bottom-up period");
+        require(gwGetter.majorityPercentage() == params.majorityPercentage, "unexpected majority percentage");
     }
 
     function testGatewayDiamond_LoupeFunction() public view {
@@ -148,7 +156,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: checkpointPeriod,
-            msgFee: CROSS_MSG_FEE,
+            msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             genesisValidators: new Validator[](0),
@@ -186,7 +194,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: checkpointPeriod,
-            msgFee: CROSS_MSG_FEE,
+            msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: 100,
             genesisValidators: new Validator[](0),
@@ -530,11 +538,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_NoFunds() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE + 2);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert(NotEnoughFunds.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE - 1}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE - 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -549,14 +557,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: false
             })
         );
 
         vm.expectRevert(NotEnoughFee.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -571,7 +579,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE - 1
+                    fee: DEFAULT_CROSS_MSG_FEE - 1
                 }),
                 wrapped: false
             })
@@ -579,10 +587,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     }
 
     function testGatewayDiamond_SendCrossMessage_Fails_Fuzz(uint256 fee) public {
-        vm.assume(fee < CROSS_MSG_FEE);
+        vm.assume(fee < DEFAULT_CROSS_MSG_FEE);
 
         address caller = vm.addr(100);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE + 2);
         vm.prank(caller);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
@@ -602,7 +610,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: false
             })
@@ -753,7 +761,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-            msgFee: CROSS_MSG_FEE,
+            msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
             majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
             genesisValidators: new Validator[](0),
@@ -774,7 +782,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     }
 
     function testGatewayDiamond_Release_Works_BLSAccount(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(crossMsgFee >= CROSS_MSG_FEE);
+        vm.assume(crossMsgFee >= DEFAULT_CROSS_MSG_FEE);
         vm.assume(releaseAmount < type(uint256).max);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
 
@@ -805,7 +813,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     }
 
     function testGatewayDiamond_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(crossMsgFee >= CROSS_MSG_FEE);
+        vm.assume(crossMsgFee >= DEFAULT_CROSS_MSG_FEE);
         vm.assume(releaseAmount < type(uint256).max);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
 
@@ -837,7 +845,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     }
 
     function testGatewayDiamond_Release_Works_NonEmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
-        vm.assume(crossMsgFee >= CROSS_MSG_FEE);
+        vm.assume(crossMsgFee >= DEFAULT_CROSS_MSG_FEE);
         vm.assume(releaseAmount < type(uint256).max / 2);
         vm.assume(crossMsgFee > 0 && crossMsgFee < releaseAmount);
 
@@ -873,11 +881,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_NoDestination() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE + 2);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -892,7 +900,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: false
             })
@@ -902,11 +910,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_NoCurrentNetwork() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE + 2);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName();
         vm.expectRevert(CannotSendCrossMsgToItself.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -918,7 +926,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -928,11 +936,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_Failes_InvalidCrossMsgValue() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE + 2);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
         vm.expectRevert(InvalidCrossMsgValue.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -944,7 +952,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -954,14 +962,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_EmptyNetwork() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE + 2);
 
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         SubnetID memory destinationSubnet = SubnetID(0, new address[](0));
         vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
 
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -973,7 +981,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -983,11 +991,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_InvalidCrossMsgFromSubnet() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE + 2);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
         vm.expectRevert(InvalidCrossMsgFromSubnet.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -999,7 +1007,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -1009,12 +1017,12 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughFee() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
 
         vm.expectRevert(NotEnoughFee.selector);
-        gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE}(
+        gwMessenger.sendCrossMessage{value: DEFAULT_CROSS_MSG_FEE}(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
@@ -1036,7 +1044,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughFunds() public {
         address caller = vm.addr(100);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
 
@@ -1053,7 +1061,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: 0,
                     method: METHOD_SEND,
                     params: new bytes(0),
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: true
             })
@@ -1113,11 +1121,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     subnetId: gwGetter.getNetworkName().createSubnetId(address(this)),
                     rawAddress: FvmAddressHelper.from(address(this))
                 }),
-                value: CROSS_MSG_FEE + 1,
+                value: DEFAULT_CROSS_MSG_FEE + 1,
                 nonce: 0,
                 method: METHOD_SEND,
                 params: new bytes(0),
-                fee: CROSS_MSG_FEE
+                fee: DEFAULT_CROSS_MSG_FEE
             }),
             wrapped: false
         });
@@ -1249,7 +1257,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: i,
                     method: this.callback.selector,
                     params: EMPTY_BYTES,
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: false
             });
@@ -1363,7 +1371,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_commitBottomUpCheckpoint_Works_NoMessages() public {
         address caller = address(saDiamond);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         vm.stopPrank();
 
@@ -1386,7 +1394,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     function testGatewayDiamond_commitBottomUpCheckpoint_Works_WithMessages() public {
         address caller = address(saDiamond);
         vm.startPrank(caller);
-        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + DEFAULT_CROSS_MSG_FEE);
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         vm.stopPrank();
 
@@ -1415,7 +1423,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                     nonce: i,
                     method: this.callback.selector,
                     params: EMPTY_BYTES,
-                    fee: CROSS_MSG_FEE
+                    fee: DEFAULT_CROSS_MSG_FEE
                 }),
                 wrapped: false
             });
@@ -1434,7 +1442,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         (, subnetInfo) = gwGetter.getSubnet(subnetId);
         require(
-            subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT - 10 * CROSS_MSG_FEE,
+            subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT - 10 * DEFAULT_CROSS_MSG_FEE,
             "unexpected circulation supply"
         );
     }
@@ -1768,21 +1776,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(index == 4, "height was not updated");
         heights = gwGetter.getIncompleteCheckpointHeights();
         require(heights.length == n, "index is not the same");
-    }
-
-    function test_second_validator_can_join() public {
-        (address validatorAddress1, uint256 privKey1, bytes memory publicKey1) = TestUtils.newValidator(101);
-        (address validatorAddress2, , bytes memory publicKey2) = TestUtils.newValidator(102);
-
-        join(validatorAddress1, publicKey1);
-
-        require(saGetter.bootstrapped(), "subnet not bootstrapped");
-        require(saGetter.isActiveValidator(validatorAddress1), "validator 1 is not active");
-        require(!saGetter.isActiveValidator(validatorAddress2), "validator 2 is active");
-
-        join(validatorAddress2, publicKey2);
-        confirmChange(validatorAddress1, privKey1);
-        require(saGetter.isActiveValidator(validatorAddress2), "validator 2 is not active");
     }
 
     function callback() public view {}
