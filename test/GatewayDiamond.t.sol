@@ -2,18 +2,15 @@
 pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
-import "forge-std/StdInvariant.sol";
 
 import "../src/errors/IPCErrors.sol";
 import {NumberContractFacetSeven, NumberContractFacetEight} from "./NumberContract.sol";
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
-import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
 import {IERC165} from "../src/interfaces/IERC165.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
 import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
 import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
-import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
@@ -26,89 +23,23 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {GatewayDiamond, FunctionNotFound} from "../src/GatewayDiamond.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
-import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
-import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
-import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../src/lib/LibDiamond.sol";
 import {MerkleTreeHelper} from "./MerkleTreeHelper.sol";
-import {IntegrationHandler} from "./IntegrationHandler.sol";
 
 import {TestUtils} from "./TestUtils.sol";
-import {IntegrationHandler} from "./IntegrationHandler.sol";
+import {IntegrationTestBase} from "./IntegrationTestBase.sol";
 
-contract GatewayActorDiamondTest is StdInvariant, Test {
+contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
     using FvmAddressHelper for FvmAddress;
 
-    uint64 constant MAX_NONCE = type(uint64).max;
-    address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
-    uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
-    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
-    uint64 constant DEFAULT_COLLATERAL_AMOUNT = 1 ether;
-    uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    string private constant DEFAULT_NET_ADDR = "netAddr";
-    bytes private constant GENESIS = EMPTY_BYTES;
-    uint256 constant CROSS_MSG_FEE = 10 gwei;
-    uint256 constant DEFAULT_RELAYER_REWARD = 10 gwei;
-    address constant CHILD_NETWORK_ADDRESS = address(10);
-    address constant CHILD_NETWORK_ADDRESS_2 = address(11);
-    uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
-    uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
-
-    bytes4[] gwRouterSelectors;
-    bytes4[] gwManagerSelectors;
-    bytes4[] gwGetterSelectors;
-    bytes4[] gwMessengerSelectors;
-    bytes4[] cutFacetSelectors;
-    bytes4[] louperSelectors;
-
-    GatewayDiamond gatewayDiamond;
-    GatewayManagerFacet gwManager;
-    GatewayGetterFacet gwGetter;
-    GatewayRouterFacet gwRouter;
-    GatewayMessengerFacet gwMessenger;
-    DiamondCutFacet gwCutter;
-    DiamondLoupeFacet gwLouper;
-
-    GatewayDiamond gatewayDiamond2;
-    GatewayManagerFacet gwManager2;
-    GatewayGetterFacet gwGetter2;
-    GatewayRouterFacet gwRouter2;
-    GatewayMessengerFacet gwMessenger2;
-
-    IntegrationHandler ipc;
-
-    bytes4[] saGetterSelectors;
-    bytes4[] saManagerSelectors;
-    SubnetActorDiamond saDiamond;
-    SubnetActorManagerFacet saManager;
-    SubnetActorGetterFacet saGetter;
-
-    uint64 private constant ROOTNET_CHAINID = 123;
-    address public constant ROOTNET_ADDRESS = address(1);
-
-    address private constant TOPDOWN_VALIDATOR_1 = address(12);
-
-    function setUp() public {
-        ipc = new IntegrationHandler();
-
-        gatewayDiamond = ipc.getGatewayDiamond();
-        gwRouter = ipc.getGatewayRouterFacet();
-        gwManager = ipc.getGatewayManagerFacet();
-        gwGetter = ipc.getGatewayGetterFacet();
-        gwMessenger = ipc.getGatewayMessengerFacet();
-        gwLouper = ipc.getGatewayLouperFacet();
-        gwCutter = ipc.getGatewayCutFacet();
-
-        saDiamond = ipc.getSubnetActorDiamond();
-        saGetter = ipc.getSubnetActorGetter();
-        saManager = ipc.getSubnetManagerFacet();
+    function setUp() public override {
+        super.setUp();
     }
 
     function testGatewayDiamond_Constructor() public view {
@@ -224,7 +155,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             activeValidatorsLimit: 100
         });
 
-        dep = ipc.createDiamond(constructorParams);
+        dep = createDiamond(constructorParams);
         depGetter = GatewayGetterFacet(address(dep));
         depManager = GatewayManagerFacet(address(dep));
         depRouter = GatewayRouterFacet(address(dep));
@@ -247,6 +178,11 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         path[0] = address(0);
         path[1] = address(1);
 
+        GatewayDiamond dep;
+        GatewayManagerFacet depManager = new GatewayManagerFacet();
+        GatewayGetterFacet depGetter = new GatewayGetterFacet();
+        GatewayRouterFacet depRouter = new GatewayRouterFacet();
+
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
             bottomUpCheckPeriod: checkpointPeriod,
@@ -257,8 +193,37 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             activeValidatorsLimit: 100
         });
 
-        GatewayDiamond dep = ipc.createDiamond(constructorParams);
-        GatewayGetterFacet depGetter = GatewayGetterFacet(address(dep));
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](3);
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: address(depRouter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: gwRouterSelectors
+            })
+        );
+
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+                facetAddress: address(depManager),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: gwManagerSelectors
+            })
+        );
+
+        diamondCut[2] = (
+            IDiamond.FacetCut({
+                facetAddress: address(depGetter),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: gwGetterSelectors
+            })
+        );
+
+        dep = new GatewayDiamond(diamondCut, constructorParams);
+
+        depGetter = GatewayGetterFacet(address(dep));
+        depManager = GatewayManagerFacet(address(dep));
+        depRouter = GatewayRouterFacet(address(dep));
 
         SubnetID memory networkName = depGetter.getNetworkName();
 
@@ -271,12 +236,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_Register_Works_SingleSubnet(uint256 subnetCollateral) public {
         vm.assume(subnetCollateral >= DEFAULT_COLLATERAL_AMOUNT && subnetCollateral < type(uint64).max);
         address subnetAddress = vm.addr(100);
-
+        vm.prank(subnetAddress);
         vm.deal(subnetAddress, subnetCollateral);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(subnetCollateral, subnetAddress);
-
+        registerSubnet(subnetCollateral, subnetAddress);
         require(gwGetter.totalSubnets() == 1, "unexpected totalSubnets");
         Subnet[] memory subnets = gwGetter.listSubnets();
         require(subnets.length == 1, "unexpected subnets length");
@@ -287,7 +250,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         require(ok, "subnet not found");
 
-        (SubnetID memory id, uint256 stake, , , , Status status) = ipc.getSubnet(subnetAddress);
+        (SubnetID memory id, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
         require(targetSubnet.status == Status.Active, "unexpected status");
         require(targetSubnet.status == status, "unexpected status value");
@@ -304,7 +267,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             vm.prank(subnetAddress);
             vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-            ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+            registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
         }
 
         require(gwGetter.totalSubnets() == numberOfSubnets, "unexpected total subnets");
@@ -315,11 +278,12 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
         vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
         vm.expectRevert(NotEnoughCollateral.selector);
+
         gwManager.register{value: collateral}(0);
     }
 
     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert(AlreadyRegisteredSubnet.selector);
 
@@ -333,13 +297,13 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         uint256 totalAmount = stakeAmount + registerAmount;
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, totalAmount);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(registerAmount, subnetAddress);
-        ipc.addStake(stakeAmount, subnetAddress);
+        registerSubnet(registerAmount, subnetAddress);
+        addStake(stakeAmount, subnetAddress);
 
-        (, uint256 totalStaked, , , , ) = ipc.getSubnet(subnetAddress);
+        (, uint256 totalStaked, , , , ) = getSubnet(subnetAddress);
 
         require(totalStaked == totalAmount, "unexpected staked amount");
     }
@@ -349,24 +313,19 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
         uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT;
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, registerAmount);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(registerAmount, subnetAddress);
-
-        vm.prank(subnetAddress);
+        registerSubnet(registerAmount, subnetAddress);
         gwManager.releaseStake(registerAmount);
 
-        (, , , , , Status statusInactive) = ipc.getSubnet(subnetAddress);
+        (, , , , , Status statusInactive) = getSubnet(subnetAddress);
         require(statusInactive == Status.Inactive, "unexpected status");
 
         vm.deal(subnetAddress, stakeAmount);
+        addStake(stakeAmount, subnetAddress);
 
-        vm.prank(subnetAddress);
-        ipc.addStake(stakeAmount, subnetAddress);
-
-        //vm.prank(subnetAddress);
-        (, uint256 staked, , , , Status statusActive) = ipc.getSubnet(subnetAddress);
+        (, uint256 staked, , , , Status statusActive) = getSubnet(subnetAddress);
 
         require(staked == stakeAmount, "unexpected amount");
         require(statusActive == Status.Active, "not active status");
@@ -377,20 +336,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
         uint256 stakeAmount = DEFAULT_COLLATERAL_AMOUNT - 1;
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, registerAmount);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(registerAmount, subnetAddress);
-
-        vm.prank(subnetAddress);
+        registerSubnet(registerAmount, subnetAddress);
         gwManager.releaseStake(registerAmount);
 
         vm.deal(subnetAddress, stakeAmount);
+        addStake(stakeAmount, subnetAddress);
 
-        vm.prank(subnetAddress);
-        ipc.addStake(stakeAmount, subnetAddress);
-
-        (, uint256 staked, , , , Status status) = ipc.getSubnet(subnetAddress);
+        (, uint256 staked, , , , Status status) = getSubnet(subnetAddress);
 
         require(staked == stakeAmount, "unexpected amount");
         require(status == Status.Inactive, "unexpected inactive status");
@@ -399,27 +354,29 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_AddStake_Works_MultipleStakings(uint8 numberOfStakes) public {
         vm.assume(numberOfStakes > 0);
 
-        address subnetAddress = address(this);
+        address subnetAddress = vm.addr(100);
         uint256 singleStakeAmount = 1 ether;
         uint256 registerAmount = DEFAULT_COLLATERAL_AMOUNT;
         uint256 expectedStakedAmount = registerAmount;
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, registerAmount + singleStakeAmount * numberOfStakes);
 
-        ipc.registerSubnet(registerAmount, subnetAddress);
+        registerSubnet(registerAmount, subnetAddress);
 
         for (uint256 i = 0; i < numberOfStakes; i++) {
-            ipc.addStake(singleStakeAmount, subnetAddress);
+            addStake(singleStakeAmount, subnetAddress);
+
             expectedStakedAmount += singleStakeAmount;
         }
 
-        (, uint256 totalStake, , , , ) = ipc.getSubnet(subnetAddress);
+        (, uint256 totalStake, , , , ) = getSubnet(subnetAddress);
 
         require(totalStake == expectedStakedAmount, "unexpected stake");
     }
 
     function testGatewayDiamond_AddStake_Fail_ZeroAmount() public {
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert(NotEnoughFunds.selector);
 
@@ -440,18 +397,15 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         uint256 fullAmount = stakeAmount + registerAmount;
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, fullAmount);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(registerAmount, subnetAddress);
+        registerSubnet(registerAmount, subnetAddress);
+        addStake(stakeAmount, subnetAddress);
 
-        vm.prank(subnetAddress);
-        ipc.addStake(stakeAmount, subnetAddress);
-
-        vm.prank(subnetAddress);
         gwManager.releaseStake(fullAmount);
 
-        (, uint256 stake, , , , Status status) = ipc.getSubnet(subnetAddress);
+        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
         require(stake == 0, "unexpected stake");
         require(status == Status.Inactive, "unexpected status");
@@ -459,15 +413,14 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_ReleaseStake_Works_SubnetInactive() public {
-        address subnetAddress = address(this);
-
+        address subnetAddress = vm.addr(100);
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        vm.prank(subnetAddress);
         gwManager.releaseStake(DEFAULT_COLLATERAL_AMOUNT / 2);
 
-        (, uint256 stake, , , , Status status) = ipc.getSubnet(subnetAddress);
+        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
         require(stake == DEFAULT_COLLATERAL_AMOUNT / 2, "unexpected stake");
         require(status == Status.Inactive, "unexpected status");
     }
@@ -480,16 +433,15 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         uint256 totalAmount = partialAmount + registerAmount;
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, totalAmount);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(registerAmount, subnetAddress);
-        vm.prank(subnetAddress);
-        ipc.addStake(partialAmount, subnetAddress);
-        vm.prank(subnetAddress);
+        registerSubnet(registerAmount, subnetAddress);
+        addStake(partialAmount, subnetAddress);
+
         gwManager.releaseStake(partialAmount);
 
-        (, uint256 stake, , , , Status status) = ipc.getSubnet(subnetAddress);
+        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
         require(stake == registerAmount, "unexpected stake");
         require(status == Status.Active, "unexpected status");
@@ -497,7 +449,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_ReleaseStake_Fail_ZeroAmount() public {
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 
         vm.expectRevert(CannotReleaseZero.selector);
 
@@ -512,13 +464,13 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.assume(releaseAmount > subnetBalance && releaseAmount < type(uint256).max - subnetBalance);
 
         address subnetAddress = vm.addr(100);
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, releaseAmount);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(subnetBalance, subnetAddress);
+        registerSubnet(subnetBalance, subnetAddress);
 
         vm.expectRevert(NotEnoughFundsToRelease.selector);
-        vm.prank(subnetAddress);
+
         gwManager.releaseStake(releaseAmount);
     }
 
@@ -531,15 +483,14 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_ReleaseStake_Works_TransitionToInactive() public {
         address subnetAddress = vm.addr(100);
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
-        vm.prank(subnetAddress);
         gwManager.releaseStake(10);
 
-        (, uint256 stake, , , , Status status) = ipc.getSubnet(subnetAddress);
+        (, uint256 stake, , , , Status status) = getSubnet(subnetAddress);
 
         require(stake == DEFAULT_COLLATERAL_AMOUNT - 10, "unexpected stake");
         require(status == Status.Inactive, "unexpected status");
@@ -548,17 +499,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_Kill_Works() public {
         address subnetAddress = CHILD_NETWORK_ADDRESS;
 
+        vm.startPrank(subnetAddress);
         vm.deal(subnetAddress, DEFAULT_COLLATERAL_AMOUNT);
 
-        vm.prank(subnetAddress);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, subnetAddress);
 
         require(subnetAddress.balance == 0, "unexpected balance");
 
-        vm.prank(subnetAddress);
         gwManager.kill();
 
-        (SubnetID memory id, uint256 stake, uint256 nonce, , uint256 circSupply, Status status) = ipc.getSubnet(
+        (SubnetID memory id, uint256 stake, uint256 nonce, , uint256 circSupply, Status status) = getSubnet(
             subnetAddress
         );
 
@@ -573,15 +523,15 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_Kill_Fail_SubnetNotExists() public {
         vm.expectRevert(NotRegisteredSubnet.selector);
+
         gwManager.kill();
     }
 
     function testGatewayDiamond_SendCrossMessage_Fails_NoFunds() public {
         address caller = vm.addr(100);
-
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert(NotEnoughFunds.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE - 1}(
@@ -634,7 +584,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         address caller = vm.addr(100);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
         vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert();
         gwMessenger.sendCrossMessage{value: fee - 1}(
@@ -662,7 +612,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     function testGatewayDiamond_Single_Funding() public {
         (address validatorAddress, , bytes memory publicKey) = TestUtils.newValidator(100);
 
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         address funderAddress = address(101);
         uint256 fundAmount = 1 ether;
@@ -670,34 +620,35 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.deal(funderAddress, fundAmount + 1);
 
         vm.prank(funderAddress);
-        ipc.fund(funderAddress, fundAmount);
+        fund(funderAddress, fundAmount);
     }
 
     function testGatewayDiamond_Fund_Kill_Fail_CircSupplyMoreThanZero() public {
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
 
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         address funderAddress = address(101);
         uint256 fundAmount = 1 ether;
 
         vm.deal(funderAddress, fundAmount + 1);
 
-        vm.prank(funderAddress);
-        ipc.fund(funderAddress, fundAmount);
+        vm.startPrank(funderAddress);
+        fund(funderAddress, fundAmount);
+        vm.stopPrank();
 
-        vm.prank(address(saManager));
+        vm.startPrank(address(saManager));
         vm.expectRevert(NotEmptySubnetCircSupply.selector);
         gwManager.kill();
     }
 
     function testGatewayDiamond_Fund_Revert_OnZeroValue() public {
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         address funderAddress = address(101);
 
-        (SubnetID memory subnetId, , , , , ) = ipc.getSubnet(address(saManager));
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
 
         vm.expectRevert(InvalidCrossMsgValue.selector);
         gwManager.fund{value: 0}(subnetId, FvmAddressHelper.from(funderAddress));
@@ -712,12 +663,12 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         address funderAddress = address(101);
 
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
-        vm.prank(funderAddress);
+        vm.startPrank(funderAddress);
         for (uint256 i = 0; i < numberOfFunds; i++) {
             vm.deal(funderAddress, fundAmount + 1);
-            ipc.fund(funderAddress, fundAmount);
+            fund(funderAddress, fundAmount);
         }
     }
 
@@ -728,11 +679,11 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         address funderAddress = address(101);
 
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         vm.deal(funderAddress, amount);
 
-        (SubnetID memory subnetId, , , , , ) = ipc.getSubnet(address(saManager));
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
         vm.prank(funderAddress);
         gwManager.fund{value: amount}(subnetId, FvmAddressHelper.from(msg.sender));
     }
@@ -742,7 +693,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         uint256 fundAmount = 1 ether;
 
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         address[] memory wrongSubnetPath = new address[](2);
         wrongSubnetPath[0] = vm.addr(102);
@@ -754,44 +705,44 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         vm.deal(funderAddress, fundAmount + 1);
 
+        vm.startPrank(funderAddress);
+
         SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
 
         vm.expectRevert(NotRegisteredSubnet.selector);
-        vm.prank(funderAddress);
         gwManager.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
 
         vm.expectRevert(NotRegisteredSubnet.selector);
-        vm.prank(funderAddress);
         gwManager.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
     }
 
     function testGatewayDiamond_Fund_Works_BLSAccountSingleFunding() public {
         (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         uint256 fundAmount = 1 ether;
         vm.deal(BLS_ACCOUNT_ADDREESS, fundAmount + 1);
+        vm.startPrank(BLS_ACCOUNT_ADDREESS);
 
-        vm.prank(BLS_ACCOUNT_ADDREESS);
-        ipc.fund(BLS_ACCOUNT_ADDREESS, fundAmount);
+        fund(BLS_ACCOUNT_ADDREESS, fundAmount);
     }
 
     function testGatewayDiamond_Fund_Works_ReactivatedSubnet() public {
         (address validatorAddress, uint256 privKey, bytes memory publicKey) = TestUtils.newValidator(100);
         assert(validatorAddress == vm.addr(privKey));
 
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         vm.prank(validatorAddress);
         saManager.leave();
 
-        ipc.join(validatorAddress, publicKey);
+        join(validatorAddress, publicKey);
 
         address funderAddress = address(101);
         uint256 fundAmount = 1 ether;
 
         vm.deal(funderAddress, fundAmount + 1);
-        ipc.fund(funderAddress, fundAmount);
+        fund(funderAddress, fundAmount);
     }
 
     function testGatewayDiamond_Release_Fails_InsufficientAmount() public {
@@ -808,17 +759,17 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        gatewayDiamond = ipc.createDiamond(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
+        vm.startPrank(callerAddress);
         vm.deal(callerAddress, 1 ether);
         vm.expectRevert(NotEnoughFee.selector);
 
-        vm.prank(callerAddress);
         gwManager.release{value: 0 ether}(FvmAddressHelper.from(msg.sender), 0);
     }
 
@@ -840,17 +791,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        gatewayDiamond = ipc.createDiamond(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         vm.roll(0);
         vm.warp(0);
+        vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
-        uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
-        vm.prank(BLS_ACCOUNT_ADDREESS);
-        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender), crossMsgFee);
-        require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
+        release(releaseAmount, crossMsgFee);
         require(gwGetter.bottomUpMessages(gwGetter.bottomUpCheckPeriod()).length == 1, "no messages");
     }
 
@@ -872,21 +822,18 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        GatewayDiamond gatewayDiamond = ipc.createDiamond(constructorParams);
-        GatewayGetterFacet gwGetter = GatewayGetterFacet(address(gatewayDiamond));
-        GatewayManagerFacet gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gatewayDiamond = createDiamond(constructorParams);
+        gwGetter = GatewayGetterFacet(address(gatewayDiamond));
+        gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
         vm.roll(0);
         vm.warp(0);
+        vm.startPrank(callerAddress);
         vm.deal(callerAddress, releaseAmount + 1);
-
-        uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
-
-        vm.prank(callerAddress);
-        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender), crossMsgFee);
-        require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
+        release(releaseAmount, crossMsgFee);
     }
 
     function testGatewayDiamond_Release_Works_NonEmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -907,32 +854,27 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             genesisValidators: new Validator[](0),
             activeValidatorsLimit: 100
         });
-        gatewayDiamond = ipc.createDiamond(constructorParams);
+        gatewayDiamond = createDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
+        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
         vm.roll(0);
         vm.warp(0);
+        vm.startPrank(callerAddress);
         vm.deal(callerAddress, 2 * releaseAmount + 1);
 
-        uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
-        vm.prank(callerAddress);
-        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender), crossMsgFee);
-        require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
-
-        expectedNonce += 1;
-        vm.prank(callerAddress);
-        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender), crossMsgFee);
-        require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
+        release(releaseAmount, crossMsgFee);
+        release(releaseAmount, crossMsgFee);
     }
 
     function testGatewayDiamond_SendCrossMessage_Fails_NoDestination() public {
         address caller = vm.addr(100);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
@@ -959,9 +901,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_SendCrossMessage_Fails_NoCurrentNetwork() public {
         address caller = vm.addr(100);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName();
         vm.expectRevert(CannotSendCrossMsgToItself.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
@@ -985,9 +927,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_SendCrossMessage_Fails_Failes_InvalidCrossMsgValue() public {
         address caller = vm.addr(100);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
         vm.expectRevert(InvalidCrossMsgValue.selector);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
@@ -1011,15 +953,14 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_SendCrossMessage_Fails_EmptyNetwork() public {
         address caller = vm.addr(100);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
 
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         SubnetID memory destinationSubnet = SubnetID(0, new address[](0));
         vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
 
-        vm.prank(caller);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
@@ -1041,13 +982,11 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_SendCrossMessage_Fails_InvalidCrossMsgFromSubnet() public {
         address caller = vm.addr(100);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE + 2);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
-
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
         vm.expectRevert(InvalidCrossMsgFromSubnet.selector);
-        vm.prank(caller);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE + 1}(
             CrossMsg({
                 message: StorableMsg({
@@ -1069,14 +1008,12 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughFee() public {
         address caller = vm.addr(100);
-
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
 
         vm.expectRevert(NotEnoughFee.selector);
-        vm.prank(caller);
         gwMessenger.sendCrossMessage{value: CROSS_MSG_FEE}(
             CrossMsg({
                 message: StorableMsg({
@@ -1098,13 +1035,12 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_SendCrossMessage_Fails_NotEnoughFunds() public {
         address caller = vm.addr(100);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
         SubnetID memory destinationSubnet = gwGetter.getNetworkName().createSubnetId(caller);
 
         vm.expectRevert(NotEnoughFunds.selector);
-        vm.prank(caller);
         gwMessenger.sendCrossMessage{value: 0}(
             CrossMsg({
                 message: StorableMsg({
@@ -1125,10 +1061,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_Propagate_Works_WithFeeRemainder() external {
-        (, address[] memory validators) = ipc.setupValidators();
+        (, address[] memory validators) = setupValidators();
         address caller = validators[0];
 
-        bytes32 postboxId = ipc.setupWhiteListMethod(caller, address(this));
+        bytes32 postboxId = setupWhiteListMethod(caller);
 
         vm.deal(caller, 1 ether);
         vm.expectCall(caller, 1 ether - gwGetter.crossMsgFee(), new bytes(0), 1);
@@ -1140,18 +1076,19 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     }
 
     function testGatewayDiamond_Propagate_Works_NoFeeReminder() external {
-        (, address[] memory validators) = ipc.setupValidators();
+        (, address[] memory validators) = setupValidators();
         address caller = validators[0];
 
         uint256 fee = gwGetter.crossMsgFee();
 
-        bytes32 postboxId = ipc.setupWhiteListMethod(caller, address(this));
+        bytes32 postboxId = setupWhiteListMethod(caller);
 
         vm.deal(caller, fee);
-        vm.expectCall(caller, 0, EMPTY_BYTES, 0);
         vm.prank(caller);
-        gwMessenger.propagate{value: fee}(postboxId);
 
+        vm.expectCall(caller, 0, EMPTY_BYTES, 0);
+
+        gwMessenger.propagate{value: fee}(postboxId);
         require(caller.balance == 0, "unexpected balance");
     }
 
@@ -1163,6 +1100,40 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwMessenger.propagate(bytes32(""));
     }
 
+    function setupWhiteListMethod(address caller) internal returns (bytes32) {
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: gwGetter.getNetworkName().createSubnetId(caller),
+                    rawAddress: FvmAddressHelper.from(caller)
+                }),
+                to: IPCAddress({
+                    subnetId: gwGetter.getNetworkName().createSubnetId(address(this)),
+                    rawAddress: FvmAddressHelper.from(address(this))
+                }),
+                value: CROSS_MSG_FEE + 1,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: new bytes(0),
+                fee: CROSS_MSG_FEE
+            }),
+            wrapped: false
+        });
+        CrossMsg[] memory msgs = new CrossMsg[](1);
+        msgs[0] = crossMsg;
+
+        // we add a validator with 10 times as much weight as the default validator.
+        // This way we have 10/11 votes and we reach majority, setting the message in postbox
+        // addValidator(caller, 1000);
+
+        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.applyCrossMessages(msgs);
+
+        return crossMsg.toHash();
+    }
+
     function testGatewayDiamond_CommitParentFinality_Fails_NotSystemActor() public {
         address caller = vm.addr(100);
 
@@ -1171,11 +1142,11 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         uint256[] memory weights = new uint256[](1);
         weights[0] = 100;
 
+        vm.prank(caller);
         vm.expectRevert(NotSystemActor.selector);
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        vm.prank(caller);
         gwRouter.commitParentFinality(finality);
     }
 
@@ -1195,15 +1166,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             change: StakingChange({validator: val2, op: StakingOperation.Deposit, payload: abi.encode(amount)})
         });
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.storeValidatorChanges(changes);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.storeValidatorChanges(changes);
         uint64 configNumber = gwRouter.applyFinalityChanges();
         require(configNumber == 2, "wrong config number after applying finality");
         require(gwGetter.getCurrentMembership().validators.length == 2, "current membership should be 2");
         require(gwGetter.getCurrentConfigurationNumber() == 2, "unexpected config number");
         require(gwGetter.getLastConfigurationNumber() == 0, "unexpected last config number");
+
+        vm.stopPrank();
 
         // new change with a validator leaving
         changes = new StakingChangeRequest[](1);
@@ -1213,10 +1185,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             change: StakingChange({validator: val1, op: StakingOperation.Withdraw, payload: abi.encode(amount)})
         });
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.storeValidatorChanges(changes);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        gwRouter.storeValidatorChanges(changes);
         configNumber = gwRouter.applyFinalityChanges();
         require(configNumber == 3, "wrong config number after applying finality");
         require(gwGetter.getLastConfigurationNumber() == 2, "apply result: unexpected last config number");
@@ -1225,13 +1196,14 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         require(gwGetter.getLastMembership().validators.length == 2, "last membership should be 2");
 
         // no changes
-        vm.prank(FilAddress.SYSTEM_ACTOR);
         configNumber = gwRouter.applyFinalityChanges();
         require(configNumber == 0, "wrong config number after applying finality");
         require(gwGetter.getLastConfigurationNumber() == 2, "no changes: unexpected last config number");
         require(gwGetter.getCurrentConfigurationNumber() == 3, "no changes: unexpected config number");
         require(gwGetter.getCurrentMembership().validators.length == 1, "current membership should be 1");
         require(gwGetter.getLastMembership().validators.length == 2, "last membership should be 2");
+
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_CommitParentFinality_Works_WithQuery() public {
@@ -1242,15 +1214,18 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         weights[0] = 100;
         weights[1] = 150;
 
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.commitParentFinality(finality);
         ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
 
         require(committedFinality.height == finality.height, "heights are not equal");
         require(committedFinality.blockHash == finality.blockHash, "blockHash is not equal");
         require(gwGetter.getLatestParentFinality().height == block.number, "finality height not equal");
+
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_CommitParentFinality_BigNumberOfMessages() public {
@@ -1280,11 +1255,15 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             });
         }
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+
         gwRouter.applyCrossMessages(topDownMsgs);
         require(gwGetter.getSubnetTopDownMsgsLength(id) == 0, "unexpected top-down message");
         (bool ok, uint64 tdn) = gwGetter.getAppliedTopDownNonce(id);
+        console.log(tdn);
         require(!ok && tdn == 0, "unexpected nonce");
+
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_createBottomUpCheckpoint() public {
@@ -1309,18 +1288,21 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         });
 
         // failed to create a checkpoint with zero membership weight
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(ZeroMembershipWeight.selector);
-        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 0);
+        vm.stopPrank();
 
         // failed create a processed checkpoint
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(CheckpointAlreadyProcessed.selector);
-        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(old, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
 
         // create a checkpoint
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
 
         BottomUpCheckpoint memory recv = gwGetter.bottomUpCheckpoint(gwGetter.bottomUpCheckPeriod());
         require(recv.nextConfigurationNumber == 1, "nextConfigurationNumber incorrect");
@@ -1339,9 +1321,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             crossMessagesHash: keccak256("newmessages")
         });
 
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(CheckpointAlreadyExists.selector);
-        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
 
         // failed to create a checkpoint with the height not multiple to checkpoint period
         checkpoint = BottomUpCheckpoint({
@@ -1352,9 +1335,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             crossMessagesHash: keccak256("newmessages")
         });
 
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(InvalidCheckpointEpoch.selector);
-        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
 
         (bool ok, uint64 e, ) = gwGetter.getCurrentBottomUpCheckpoint();
         require(ok, "checkpoint not exist");
@@ -1378,11 +1362,12 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_commitBottomUpCheckpoint_Works_NoMessages() public {
         address caller = address(saDiamond);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        vm.stopPrank();
 
-        (SubnetID memory subnetId, , , , , ) = ipc.getSubnet(address(caller));
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
 
         CrossMsg[] memory msgs = new CrossMsg[](0);
 
@@ -1400,20 +1385,17 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
     function testGatewayDiamond_commitBottomUpCheckpoint_Works_WithMessages() public {
         address caller = address(saDiamond);
+        vm.startPrank(caller);
         vm.deal(caller, DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        vm.stopPrank();
 
-        vm.prank(caller);
-        ipc.registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
-
-        (SubnetID memory subnetId, , , , , ) = ipc.getSubnet(address(caller));
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
         (bool exist, Subnet memory subnetInfo) = gwGetter.getSubnet(subnetId);
         require(exist, "subnet does not exist");
         require(subnetInfo.circSupply == 0, "unexpected initial circulation supply");
 
-        vm.prank(address(this));
         gwManager.fund{value: DEFAULT_COLLATERAL_AMOUNT}(subnetId, FvmAddressHelper.from(address(caller)));
-
-        vm.prank(caller);
         (, subnetInfo) = gwGetter.getSubnet(subnetId);
         require(subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT, "unexpected circulation supply after funding");
 
@@ -1479,10 +1461,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         });
 
         // create a checkpoint
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint1, membershipRoot, weights[0] + weights[1] + weights[2]);
-        vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint2, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
 
         uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
 
@@ -1527,8 +1509,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         });
 
         // create a checkpoint
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
 
         // adds signatures
 
@@ -1541,12 +1524,13 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             (v, r, s) = vm.sign(privKeys[i], keccak256(abi.encode(checkpoint)));
             signature = abi.encodePacked(r, s, v);
 
-            vm.prank(vm.addr(privKeys[i]));
+            vm.startPrank(vm.addr(privKeys[i]));
             gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[i], weights[i], signature);
+            vm.stopPrank();
         }
 
         require(
-            gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == ipc.totalWeight(weights),
+            gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == totalWeight(weights),
             "checkpoint weight was not updated"
         );
 
@@ -1577,8 +1561,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         });
 
         // create a checkpoint
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
 
         // adds signatures
 
@@ -1591,8 +1576,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             (v, r, s) = vm.sign(privKeys[i], keccak256(abi.encode(checkpoint)));
             signature = abi.encodePacked(r, s, v);
 
-            vm.prank(vm.addr(privKeys[i]));
+            vm.startPrank(vm.addr(privKeys[i]));
             gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[i], weights[i], signature);
+            vm.stopPrank();
         }
 
         CheckpointInfo memory info = gwGetter.getCheckpointInfo(1);
@@ -1604,22 +1590,24 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         (v, r, s) = vm.sign(privKeys[2], keccak256(abi.encode(checkpoint)));
         signature = abi.encodePacked(r, s, v);
 
-        vm.prank(vm.addr(privKeys[2]));
+        vm.startPrank(vm.addr(privKeys[2]));
         gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[2], weights[2], signature);
+        vm.stopPrank();
 
         info = gwGetter.getCheckpointInfo(checkpoint.blockHeight);
         require(info.reached, "not reached");
         require(gwGetter.getIncompleteCheckpointHeights().length == 0, "unexpected size");
 
         require(
-            gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == ipc.totalWeight(weights),
+            gwGetter.getCheckpointCurrentWeight(checkpoint.blockHeight) == totalWeight(weights),
             "checkpoint weight was not updated"
         );
         (v, r, s) = vm.sign(privKeys[3], keccak256(abi.encode(checkpoint)));
         signature = abi.encodePacked(r, s, v);
 
-        vm.prank(vm.addr(privKeys[3]));
+        vm.startPrank(vm.addr(privKeys[3]));
         gwRouter.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[3], weights[3], signature);
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_addCheckpointSignature_notAuthorized() public {
@@ -1637,8 +1625,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         });
 
         // create a checkpoint
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
 
         uint8 v;
         bytes32 r;
@@ -1649,9 +1638,10 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         signature = abi.encodePacked(r, s, v);
 
         uint64 h = gwGetter.bottomUpCheckPeriod();
-        vm.prank(vm.addr(privKeys[1]));
+        vm.startPrank(vm.addr(privKeys[1]));
         vm.expectRevert(abi.encodeWithSelector(NotAuthorized.selector, vm.addr(privKeys[0])));
         gwRouter.addCheckpointSignature(h, membershipProofs[2], weights[2], signature);
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_addCheckpointSignature_invalidSignature_replayedSignature() public {
@@ -1669,8 +1659,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         });
 
         // create a checkpoint
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
 
         uint8 v;
         bytes32 r;
@@ -1681,20 +1672,20 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         signature = abi.encodePacked(r, s, v);
 
         uint64 h = gwGetter.bottomUpCheckPeriod();
+        vm.startPrank(vm.addr(privKeys[0]));
 
         // send incorrect signature
         vm.expectRevert(InvalidSignature.selector);
-        vm.prank(vm.addr(privKeys[0]));
         gwRouter.addCheckpointSignature(h, membershipProofs[0], weights[0], new bytes(0));
 
         // send correct signature
-        vm.prank(vm.addr(privKeys[0]));
         gwRouter.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
 
         // replay the previous signature
         vm.expectRevert(SignatureReplay.selector);
-        vm.prank(vm.addr(privKeys[0]));
         gwRouter.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
+
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_addCheckpointSignature_incorrectCheckpoint() public {
@@ -1712,8 +1703,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         });
 
         // create a checkpoint
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        vm.stopPrank();
 
         uint8 v;
         bytes32 r;
@@ -1723,15 +1715,17 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         (v, r, s) = vm.sign(privKeys[0], keccak256(abi.encode(checkpoint)));
         signature = abi.encodePacked(r, s, v);
 
+        vm.startPrank(vm.addr(privKeys[0]));
+
         // send correct signature for incorrect height
         vm.expectRevert(CheckpointAlreadyProcessed.selector);
-        vm.prank(vm.addr(privKeys[0]));
         gwRouter.addCheckpointSignature(0, membershipProofs[0], weights[0], signature);
 
         // send correct signature for incorrect height
         vm.expectRevert(CheckpointNotCreated.selector);
-        vm.prank(vm.addr(privKeys[0]));
         gwRouter.addCheckpointSignature(100, membershipProofs[0], weights[0], signature);
+
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_garbage_collect_bottomUpCheckpoints() public {
@@ -1746,7 +1740,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // create a checkpoint
         uint64 n = 10;
-
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         for (uint64 i = 1; i <= n; i++) {
             checkpoint = BottomUpCheckpoint({
                 subnetID: gwGetter.getNetworkName(),
@@ -1756,9 +1750,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
                 crossMessagesHash: keccak256("messages")
             });
 
-            vm.prank(FilAddress.SYSTEM_ACTOR);
             gwRouter.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
         }
+        vm.stopPrank();
 
         index = gwGetter.getBottomUpRetentionHeight();
         require(index == 1, "retention height is not 1");
@@ -1766,8 +1760,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
         require(heights.length == n, "heights.len is not n");
 
-        vm.prank(FilAddress.SYSTEM_ACTOR);
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
         gwRouter.pruneBottomUpCheckpoints(4);
+        vm.stopPrank();
 
         index = gwGetter.getBottomUpRetentionHeight();
         require(index == 4, "height was not updated");
@@ -1779,18 +1774,16 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         (address validatorAddress1, uint256 privKey1, bytes memory publicKey1) = TestUtils.newValidator(101);
         (address validatorAddress2, , bytes memory publicKey2) = TestUtils.newValidator(102);
 
-        ipc.join(validatorAddress1, publicKey1);
+        join(validatorAddress1, publicKey1);
 
         require(saGetter.bootstrapped(), "subnet not bootstrapped");
         require(saGetter.isActiveValidator(validatorAddress1), "validator 1 is not active");
         require(!saGetter.isActiveValidator(validatorAddress2), "validator 2 is active");
 
-        ipc.join(validatorAddress2, publicKey2);
-        ipc.confirmChange(validatorAddress1, privKey1);
+        join(validatorAddress2, publicKey2);
+        confirmChange(validatorAddress1, privKey1);
         require(saGetter.isActiveValidator(validatorAddress2), "validator 2 is not active");
     }
 
     function callback() public view {}
-
-    fallback() external payable {}
 }

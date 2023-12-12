@@ -38,7 +38,7 @@ import {MerkleTreeHelper} from "./MerkleTreeHelper.sol";
 
 import {TestUtils} from "./TestUtils.sol";
 
-contract IntegrationHandler is StdInvariant, Test {
+contract IntegrationTestBase is Test {
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
@@ -46,18 +46,23 @@ contract IntegrationHandler is StdInvariant, Test {
 
     uint64 constant MAX_NONCE = type(uint64).max;
     address constant BLS_ACCOUNT_ADDREESS = address(0xfF000000000000000000000000000000bEefbEEf);
-    uint64 private constant DEFAULT_MIN_VALIDATORS = 1;
-    uint8 private constant DEFAULT_MAJORITY_PERCENTAGE = 70;
+    uint64 constant DEFAULT_MIN_VALIDATORS = 1;
+    uint8 constant DEFAULT_MAJORITY_PERCENTAGE = 70;
     uint64 constant DEFAULT_COLLATERAL_AMOUNT = 1 ether;
     uint64 constant DEFAULT_CHECKPOINT_PERIOD = 10;
-    string private constant DEFAULT_NET_ADDR = "netAddr";
-    bytes private constant GENESIS = EMPTY_BYTES;
+    string constant DEFAULT_NET_ADDR = "netAddr";
+    bytes constant GENESIS = EMPTY_BYTES;
     uint256 constant CROSS_MSG_FEE = 10 gwei;
     uint256 constant DEFAULT_RELAYER_REWARD = 10 gwei;
     address constant CHILD_NETWORK_ADDRESS = address(10);
     address constant CHILD_NETWORK_ADDRESS_2 = address(11);
     uint64 constant EPOCH_ONE = 1 * DEFAULT_CHECKPOINT_PERIOD;
     uint256 constant INITIAL_VALIDATOR_FUNDS = 1 ether;
+
+    uint64 constant ROOTNET_CHAINID = 123;
+    address constant ROOTNET_ADDRESS = address(1);
+
+    address constant TOPDOWN_VALIDATOR_1 = address(12);
 
     bytes4[] gwRouterSelectors;
     bytes4[] gwManagerSelectors;
@@ -86,12 +91,7 @@ contract IntegrationHandler is StdInvariant, Test {
     SubnetActorManagerFacet saManager;
     SubnetActorGetterFacet saGetter;
 
-    uint64 private constant ROOTNET_CHAINID = 123;
-    address public constant ROOTNET_ADDRESS = address(1);
-
-    address private constant TOPDOWN_VALIDATOR_1 = address(12);
-
-    constructor() {
+    function setUp() public virtual {
         saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
         saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacet");
 
@@ -178,7 +178,6 @@ contract IntegrationHandler is StdInvariant, Test {
             })
         );
 
-        vm.prank(msg.sender);
         gatewayDiamond = new GatewayDiamond(gwDiamondCut, gwConstructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
@@ -239,58 +238,18 @@ contract IntegrationHandler is StdInvariant, Test {
         addValidator(TOPDOWN_VALIDATOR_1, 100);
     }
 
-    function getGatewayDiamond() external returns (GatewayDiamond) {
-        return gatewayDiamond;
-    }
-
-    function getGatewayGetterFacet() external returns (GatewayGetterFacet) {
-        return gwGetter;
-    }
-
-    function getGatewayManagerFacet() external returns (GatewayManagerFacet) {
-        return gwManager;
-    }
-
-    function getGatewayMessengerFacet() external returns (GatewayMessengerFacet) {
-        return gwMessenger;
-    }
-
-    function getGatewayRouterFacet() external returns (GatewayRouterFacet) {
-        return gwRouter;
-    }
-
-    function getSubnetActorDiamond() external returns (SubnetActorDiamond) {
-        return saDiamond;
-    }
-
-    function getSubnetActorGetter() external returns (SubnetActorGetterFacet) {
-        return saGetter;
-    }
-
-    function getSubnetManagerFacet() external returns (SubnetActorManagerFacet) {
-        return saManager;
-    }
-
-    function getGatewayCutFacet() external returns (DiamondCutFacet) {
-        return gwCutFacet;
-    }
-
-    function getGatewayLouperFacet() external returns (DiamondLoupeFacet) {
-        return gwLouper;
-    }
-
     function createDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
-        GatewayRouterFacet gwRouter = new GatewayRouterFacet();
-        GatewayManagerFacet gwManager = new GatewayManagerFacet();
-        GatewayGetterFacet gwGetter = new GatewayGetterFacet();
-        GatewayMessengerFacet gwMessenger = new GatewayMessengerFacet();
-        DiamondCutFacet cutFacet = new DiamondCutFacet();
+        GatewayRouterFacet router = new GatewayRouterFacet();
+        GatewayManagerFacet manager = new GatewayManagerFacet();
+        GatewayGetterFacet getter = new GatewayGetterFacet();
+        GatewayMessengerFacet messenger = new GatewayMessengerFacet();
+        DiamondCutFacet cutter = new DiamondCutFacet();
 
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](5);
 
         diamondCut[0] = (
             IDiamond.FacetCut({
-                facetAddress: address(gwRouter),
+                facetAddress: address(router),
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: gwRouterSelectors
             })
@@ -298,7 +257,7 @@ contract IntegrationHandler is StdInvariant, Test {
 
         diamondCut[1] = (
             IDiamond.FacetCut({
-                facetAddress: address(gwManager),
+                facetAddress: address(manager),
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: gwManagerSelectors
             })
@@ -306,7 +265,7 @@ contract IntegrationHandler is StdInvariant, Test {
 
         diamondCut[2] = (
             IDiamond.FacetCut({
-                facetAddress: address(gwGetter),
+                facetAddress: address(getter),
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: gwGetterSelectors
             })
@@ -314,7 +273,7 @@ contract IntegrationHandler is StdInvariant, Test {
 
         diamondCut[3] = (
             IDiamond.FacetCut({
-                facetAddress: address(gwMessenger),
+                facetAddress: address(messenger),
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: gwMessengerSelectors
             })
@@ -322,7 +281,7 @@ contract IntegrationHandler is StdInvariant, Test {
 
         diamondCut[4] = (
             IDiamond.FacetCut({
-                facetAddress: address(cutFacet),
+                facetAddress: address(cutter),
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: cutFacetSelectors
             })
@@ -436,7 +395,6 @@ contract IntegrationHandler is StdInvariant, Test {
 
         require(gwGetter.crossMsgFee() > 0, "crossMsgFee is 0");
 
-        vm.prank(msg.sender);
         gwManager.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(saManager));
@@ -496,12 +454,17 @@ contract IntegrationHandler is StdInvariant, Test {
         }
     }
 
+    function release(uint256 releaseAmount, uint256 fee) public {
+        uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
+        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender), fee);
+        require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
+    }
+
     function addStake(uint256 stakeAmount, address subnetAddress) public {
         uint256 balanceBefore = subnetAddress.balance;
 
         (, uint256 stakedBefore, , , , ) = getSubnet(subnetAddress);
 
-        vm.prank(subnetAddress);
         gwManager.addStake{value: stakeAmount}();
 
         uint256 balanceAfter = subnetAddress.balance;
@@ -512,12 +475,9 @@ contract IntegrationHandler is StdInvariant, Test {
     }
 
     function registerSubnetGW(uint256 collateral, address subnetAddress, GatewayDiamond gw) public {
-        GatewayRouterFacet gwRouter = GatewayRouterFacet(address(gw));
-        GatewayManagerFacet gwManager = GatewayManagerFacet(address(gw));
-        GatewayGetterFacet gwGetter = GatewayGetterFacet(address(gw));
+        GatewayManagerFacet manager = GatewayManagerFacet(address(gw));
 
-        vm.prank(msg.sender);
-        gwManager.register{value: collateral}(0);
+        manager.register{value: collateral}(0);
 
         (SubnetID memory id, uint256 stake, uint256 topDownNonce, , uint256 circSupply, Status status) = getSubnetGW(
             subnetAddress,
@@ -548,7 +508,6 @@ contract IntegrationHandler is StdInvariant, Test {
         gwManager = GatewayManagerFacet(address(gw));
         gwGetter = GatewayGetterFacet(address(gw));
 
-        vm.prank(subnetAddress);
         SubnetID memory subnetId = gwGetter.getNetworkName().createSubnetId(subnetAddress);
 
         Subnet memory subnet = gwGetter.subnets(subnetId.toHash());
