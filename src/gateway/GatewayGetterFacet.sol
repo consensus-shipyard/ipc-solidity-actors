@@ -142,11 +142,6 @@ contract GatewayGetterFacet {
         return s.checkpointQuorumMap.quorumInfo[h];
     }
 
-    /// @notice gets checkpoint whose quorum is being populated in gateway
-    function getCheckpoint(uint256 height) external view returns (bool, BottomUpCheckpoint memory) {
-        return LibGateway.getBottomUpCheckpoint(height);
-    }
-
     /// @notice get the checkpoint current weight corresponding to the block height
     function getCheckpointCurrentWeight(uint256 h) external view returns (uint256) {
         return s.checkpointQuorumMap.quorumInfo[h].currentWeight;
