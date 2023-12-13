@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-pragma solidity 0.8.19;
+pragma solidity 0.8.22;
 
 import {METHOD_SEND, EMPTY_BYTES} from "../constants/Constants.sol";
 import {StorableMsg, CrossMsg} from "../structs/Checkpoint.sol";
