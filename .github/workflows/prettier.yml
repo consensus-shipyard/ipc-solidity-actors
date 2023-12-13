@@ -31,8 +31,12 @@ jobs:
         run: npx prettier --write '**/*.sol'
       - name: Debugging - Show changed files
         run: git restore package-lock.json && git status && git diff --name-only
-      - name: Commit changes
-        uses: stefanzweifel/git-auto-commit-action@v5
-        with:
-          commit_message: Apply Prettier formatting
-          branch: ${{ github.head_ref }}
+      - name: Check diff clean
+        run: |
+          git --no-pager diff --quiet
+
+#      - name: Commit changes
+#        uses: stefanzweifel/git-auto-commit-action@v5
+#        with:
+#          commit_message: Apply Prettier formatting
+#          branch: ${{ github.head_ref }}
