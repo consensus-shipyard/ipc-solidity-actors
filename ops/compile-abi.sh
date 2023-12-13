@@ -10,5 +10,6 @@ fi
 
 OUTPUT=$1
 
+echo -e "\033[0;36mTo aid build reproducibility, ensure you have recursively checked out all submodules: git submodule update --init --recursive\033[0m"
 echo "[*] Compiling contracts and output core contracts ABI in $OUTPUT" 
 forge build -C ./src/ -R $(jq '.remappings | join(",")' remappings.json) --lib-paths lib/ --via-ir --sizes --skip test --out=$OUTPUT
