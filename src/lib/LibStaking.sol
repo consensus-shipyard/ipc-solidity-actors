@@ -168,18 +168,18 @@ library LibValidatorSet {
         address[] memory addresses
     ) internal view returns (uint256[] memory) {
         uint256 size = addresses.length;
-        uint256[] memory activePowers = new uint256[](size);
+        uint256[] memory activePowerTable = new uint256[](size);
 
         for (uint256 i; i < size; ) {
             if (!isActiveValidator(validators, addresses[i])) {
                 revert NotValidator(addresses[i]);
             }
-            activePowers[i] = getPower(validators, addresses[i]);
+            activePowerTable[i] = getPower(validators, addresses[i]);
             unchecked {
                 ++i;
             }
         }
-        return activePowers;
+        return activePowerTable;
     }
 
     function isActiveValidator(ValidatorSet storage self, address validator) internal view returns (bool) {
