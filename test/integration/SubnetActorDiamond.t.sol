@@ -31,9 +31,9 @@ import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.so
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
 import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {LibStaking} from "../src/lib/LibStaking.sol";
-import {LibDiamond} from "../src/lib/LibDiamond.sol";
-import {Pausable} from "../src/lib/LibPausable.sol";
+import {LibStaking} from "../../src/lib/LibStaking.sol";
+import {LibDiamond} from "../../src/lib/LibDiamond.sol";
+import {Pausable} from "../../src/lib/LibPausable.sol";
 
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
 
