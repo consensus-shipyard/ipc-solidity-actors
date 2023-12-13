@@ -1077,12 +1077,12 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         gatewayAddress = address(gatewayDiamond);
 
         createSubnetActor(
-            _ipcGatewayAddr,
+            gatewayDiamond,
             ConsensusType.Fendermint,
-            _minActivationCollateral,
-            _minValidators,
-            _checkPeriod,
-            _majorityPercentage,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
             true,
             2
         );
@@ -1100,12 +1100,12 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         gatewayAddress = address(gatewayDiamond);
 
         createSubnetActor(
-            _ipcGatewayAddr,
+            gatewayDiamond,
             ConsensusType.Fendermint,
-            _minActivationCollateral,
-            _minValidators,
-            _checkPeriod,
-            _majorityPercentage,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
             true,
             2
         );
