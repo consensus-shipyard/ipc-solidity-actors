@@ -1166,14 +1166,14 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         require(!saManager.paused());
     }
 
-    function testSubnetActorDiamond_Pausable_ExpectedPause() public {
+    function testSubnetActorDiamond_Pausable_EnforcedPause() public {
         saManager.pause();
         uint256 n = 1;
         (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(n);
 
         vm.prank(validators[0]);
         vm.deal(validators[0], 20);
-        vm.expectRevert(Pausable.ExpectedPause.selector);
+        vm.expectRevert(Pausable.EnforcedPause.selector);
         saManager.join{value: 10}(publicKeys[0]);
     }
 
