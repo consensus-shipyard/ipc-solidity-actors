@@ -6,7 +6,11 @@
             "label": "s",
             "offset": 0,
             "slot": "0",
+<<<<<<< HEAD
             "type": "t_struct(SubnetActorStorage)13150_storage"
+=======
+            "type": "t_struct(SubnetActorStorage)12988_storage"
+>>>>>>> dabfda74 (merge with dev)
         }
     ],
     "types": {
@@ -27,8 +31,13 @@
             "label": "bytes32[]",
             "numberOfBytes": "32"
         },
+<<<<<<< HEAD
         "t_array(t_struct(Validator)15682_storage)dyn_storage": {
             "base": "t_struct(Validator)15682_storage",
+=======
+        "t_array(t_struct(Validator)15483_storage)dyn_storage": {
+            "base": "t_struct(Validator)15483_storage",
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "dynamic_array",
             "label": "struct Validator[]",
             "numberOfBytes": "32"
@@ -53,12 +62,16 @@
             "label": "enum ConsensusType",
             "numberOfBytes": "1"
         },
+<<<<<<< HEAD
         "t_enum(PermissionMode)15636": {
             "encoding": "inplace",
             "label": "enum PermissionMode",
             "numberOfBytes": "1"
         },
         "t_enum(StakingOperation)15568": {
+=======
+        "t_enum(StakingOperation)15379": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "enum StakingOperation",
             "numberOfBytes": "1"
@@ -75,19 +88,33 @@
             "numberOfBytes": "32",
             "value": "t_string_storage"
         },
+<<<<<<< HEAD
         "t_mapping(t_address,t_struct(AddressStakingReleases)15612_storage)": {
+=======
+        "t_mapping(t_address,t_struct(AddressStakingReleases)15423_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_address",
             "label": "mapping(address => struct AddressStakingReleases)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(AddressStakingReleases)15612_storage"
         },
         "t_mapping(t_address,t_struct(ValidatorInfo)15633_storage)": {
+=======
+            "value": "t_struct(AddressStakingReleases)15423_storage"
+        },
+        "t_mapping(t_address,t_struct(ValidatorInfo)15441_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_address",
             "label": "mapping(address => struct ValidatorInfo)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(ValidatorInfo)15633_storage"
+=======
+            "value": "t_struct(ValidatorInfo)15441_storage"
+>>>>>>> dabfda74 (merge with dev)
         },
         "t_mapping(t_address,t_uint16)": {
             "encoding": "mapping",
@@ -117,12 +144,20 @@
             "numberOfBytes": "32",
             "value": "t_address"
         },
+<<<<<<< HEAD
         "t_mapping(t_uint16,t_struct(StakingRelease)15602_storage)": {
+=======
+        "t_mapping(t_uint16,t_struct(StakingRelease)15413_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint16",
             "label": "mapping(uint16 => struct StakingRelease)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(StakingRelease)15602_storage"
+=======
+            "value": "t_struct(StakingRelease)15413_storage"
+>>>>>>> dabfda74 (merge with dev)
         },
         "t_mapping(t_uint64,t_struct(AddressSet)3351_storage)": {
             "encoding": "mapping",
@@ -131,19 +166,33 @@
             "numberOfBytes": "32",
             "value": "t_struct(AddressSet)3351_storage"
         },
+<<<<<<< HEAD
         "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15470_storage)": {
+=======
+        "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15282_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint64",
             "label": "mapping(uint64 => struct BottomUpCheckpoint)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(BottomUpCheckpoint)15470_storage"
         },
         "t_mapping(t_uint64,t_struct(StakingChange)15576_storage)": {
+=======
+            "value": "t_struct(BottomUpCheckpoint)15282_storage"
+        },
+        "t_mapping(t_uint64,t_struct(StakingChange)15387_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint64",
             "label": "mapping(uint64 => struct StakingChange)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(StakingChange)15576_storage"
+=======
+            "value": "t_struct(StakingChange)15387_storage"
+>>>>>>> dabfda74 (merge with dev)
         },
         "t_string_storage": {
             "encoding": "bytes",
@@ -165,12 +214,20 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(AddressStakingReleases)15612_storage": {
+=======
+        "t_struct(AddressStakingReleases)15423_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct AddressStakingReleases",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15604,
+=======
+                    "astId": 15415,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "length",
                     "offset": 0,
@@ -178,7 +235,11 @@
                     "type": "t_uint16"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15606,
+=======
+                    "astId": 15417,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "startIdx",
                     "offset": 2,
@@ -186,30 +247,53 @@
                     "type": "t_uint16"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15611,
+=======
+                    "astId": 15422,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "releases",
                     "offset": 0,
                     "slot": "1",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint16,t_struct(StakingRelease)15602_storage)"
+=======
+                    "type": "t_mapping(t_uint16,t_struct(StakingRelease)15413_storage)"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(BottomUpCheckpoint)15470_storage": {
+=======
+        "t_struct(BottomUpCheckpoint)15282_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct BottomUpCheckpoint",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15457,
+=======
+                    "astId": 15269,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "subnetID",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(SubnetID)15546_storage"
                 },
                 {
                     "astId": 15460,
+=======
+                    "type": "t_struct(SubnetID)15358_storage"
+                },
+                {
+                    "astId": 15272,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "blockHeight",
                     "offset": 0,
@@ -217,7 +301,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15463,
+=======
+                    "astId": 15275,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "blockHash",
                     "offset": 0,
@@ -225,7 +313,11 @@
                     "type": "t_bytes32"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15466,
+=======
+                    "astId": 15278,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "nextConfigurationNumber",
                     "offset": 0,
@@ -233,7 +325,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15469,
+=======
+                    "astId": 15281,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "crossMessagesHash",
                     "offset": 0,
@@ -243,42 +339,74 @@
             ],
             "numberOfBytes": "192"
         },
+<<<<<<< HEAD
         "t_struct(MaxPQ)13954_storage": {
+=======
+        "t_struct(MaxPQ)13792_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct MaxPQ",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 13953,
+=======
+                    "astId": 13791,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "inner",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(PQ)15201_storage"
+=======
+                    "type": "t_struct(PQ)15039_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(MinPQ)14572_storage": {
+=======
+        "t_struct(MinPQ)14410_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct MinPQ",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 14571,
+=======
+                    "astId": 14409,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "inner",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(PQ)15201_storage"
+=======
+                    "type": "t_struct(PQ)15039_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(PQ)15201_storage": {
+=======
+        "t_struct(PQ)15039_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct PQ",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15190,
+=======
+                    "astId": 15028,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "size",
                     "offset": 0,
@@ -286,7 +414,11 @@
                     "type": "t_uint16"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15195,
+=======
+                    "astId": 15033,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "addressToPos",
                     "offset": 0,
@@ -294,7 +426,11 @@
                     "type": "t_mapping(t_address,t_uint16)"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15200,
+=======
+                    "astId": 15038,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "posToAddress",
                     "offset": 0,
@@ -327,20 +463,35 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(StakingChange)15576_storage": {
+=======
+        "t_struct(StakingChange)15387_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct StakingChange",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15571,
+=======
+                    "astId": 15382,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "op",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_enum(StakingOperation)15568"
                 },
                 {
                     "astId": 15573,
+=======
+                    "type": "t_enum(StakingOperation)15379"
+                },
+                {
+                    "astId": 15384,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "payload",
                     "offset": 0,
@@ -348,7 +499,11 @@
                     "type": "t_bytes_storage"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15575,
+=======
+                    "astId": 15386,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "validator",
                     "offset": 0,
@@ -358,12 +513,20 @@
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(StakingChangeLog)15595_storage": {
+=======
+        "t_struct(StakingChangeLog)15406_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct StakingChangeLog",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15585,
+=======
+                    "astId": 15396,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "nextConfigurationNumber",
                     "offset": 0,
@@ -371,7 +534,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15588,
+=======
+                    "astId": 15399,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "startConfigurationNumber",
                     "offset": 8,
@@ -379,22 +546,38 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15594,
+=======
+                    "astId": 15405,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "changes",
                     "offset": 0,
                     "slot": "1",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint64,t_struct(StakingChange)15576_storage)"
+=======
+                    "type": "t_mapping(t_uint64,t_struct(StakingChange)15387_storage)"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(StakingRelease)15602_storage": {
+=======
+        "t_struct(StakingRelease)15413_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct StakingRelease",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15598,
+=======
+                    "astId": 15409,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "releaseAt",
                     "offset": 0,
@@ -402,7 +585,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15601,
+=======
+                    "astId": 15412,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "amount",
                     "offset": 0,
@@ -412,12 +599,20 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(StakingReleaseQueue)15622_storage": {
+=======
+        "t_struct(StakingReleaseQueue)15433_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct StakingReleaseQueue",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15615,
+=======
+                    "astId": 15426,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "lockingDuration",
                     "offset": 0,
@@ -425,38 +620,68 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15621,
+=======
+                    "astId": 15432,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "releases",
                     "offset": 0,
                     "slot": "1",
+<<<<<<< HEAD
                     "type": "t_mapping(t_address,t_struct(AddressStakingReleases)15612_storage)"
+=======
+                    "type": "t_mapping(t_address,t_struct(AddressStakingReleases)15423_storage)"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(SubnetActorStorage)13150_storage": {
+=======
+        "t_struct(SubnetActorStorage)12988_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct SubnetActorStorage",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 13060,
+=======
+                    "astId": 12895,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "committedCheckpoints",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15470_storage)"
                 },
                 {
                     "astId": 13065,
+=======
+                    "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15282_storage)"
+                },
+                {
+                    "astId": 12900,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "genesisValidators",
                     "offset": 0,
                     "slot": "1",
+<<<<<<< HEAD
                     "type": "t_array(t_struct(Validator)15682_storage)dyn_storage"
                 },
                 {
                     "astId": 13068,
+=======
+                    "type": "t_array(t_struct(Validator)15483_storage)dyn_storage"
+                },
+                {
+                    "astId": 12903,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "genesisCircSupply",
                     "offset": 0,
@@ -464,7 +689,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13073,
+=======
+                    "astId": 12908,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "genesisBalance",
                     "offset": 0,
@@ -472,7 +701,11 @@
                     "type": "t_mapping(t_address,t_uint256)"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13077,
+=======
+                    "astId": 12912,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "genesisBalanceKeys",
                     "offset": 0,
@@ -480,7 +713,11 @@
                     "type": "t_array(t_address)dyn_storage"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13080,
+=======
+                    "astId": 12915,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "lastBottomUpCheckpointHeight",
                     "offset": 0,
@@ -488,7 +725,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13083,
+=======
+                    "astId": 12918,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "minActivationCollateral",
                     "offset": 0,
@@ -496,7 +737,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13086,
+=======
+                    "astId": 12921,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "bottomUpCheckPeriod",
                     "offset": 0,
@@ -504,7 +749,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13089,
+=======
+                    "astId": 12924,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "minValidators",
                     "offset": 8,
@@ -512,7 +761,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13091,
+=======
+                    "astId": 12926,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "currentSubnetHash",
                     "offset": 0,
@@ -520,7 +773,11 @@
                     "type": "t_bytes32"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13094,
+=======
+                    "astId": 12929,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "ipcGatewayAddr",
                     "offset": 0,
@@ -528,7 +785,11 @@
                     "type": "t_address"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13097,
+=======
+                    "astId": 12932,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "majorityPercentage",
                     "offset": 20,
@@ -536,7 +797,11 @@
                     "type": "t_uint8"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13100,
+=======
+                    "astId": 12935,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "minCrossMsgFee",
                     "offset": 0,
@@ -544,15 +809,26 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13104,
+=======
+                    "astId": 12939,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "parentId",
                     "offset": 0,
                     "slot": "11",
+<<<<<<< HEAD
                     "type": "t_struct(SubnetID)15546_storage"
                 },
                 {
                     "astId": 13108,
+=======
+                    "type": "t_struct(SubnetID)15358_storage"
+                },
+                {
+                    "astId": 12943,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "consensus",
                     "offset": 0,
@@ -560,7 +836,11 @@
                     "type": "t_enum(ConsensusType)5086"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13111,
+=======
+                    "astId": 12946,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "bootstrapped",
                     "offset": 1,
@@ -568,7 +848,11 @@
                     "type": "t_bool"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13114,
+=======
+                    "astId": 12949,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "killed",
                     "offset": 2,
@@ -576,31 +860,64 @@
                     "type": "t_bool"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13118,
+=======
+                    "astId": 12952,
+                    "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
+                    "label": "killed",
+                    "offset": 3,
+                    "slot": "13",
+                    "type": "t_bool"
+                },
+                {
+                    "astId": 12956,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "validatorSet",
                     "offset": 0,
                     "slot": "14",
+<<<<<<< HEAD
                     "type": "t_struct(ValidatorSet)15661_storage"
                 },
                 {
                     "astId": 13122,
+=======
+                    "type": "t_struct(ValidatorSet)15462_storage"
+                },
+                {
+                    "astId": 12960,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "changeSet",
                     "offset": 0,
                     "slot": "23",
+<<<<<<< HEAD
                     "type": "t_struct(StakingChangeLog)15595_storage"
                 },
                 {
                     "astId": 13126,
+=======
+                    "type": "t_struct(StakingChangeLog)15406_storage"
+                },
+                {
+                    "astId": 12964,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "releaseQueue",
                     "offset": 0,
                     "slot": "25",
+<<<<<<< HEAD
                     "type": "t_struct(StakingReleaseQueue)15622_storage"
                 },
                 {
                     "astId": 13129,
+=======
+                    "type": "t_struct(StakingReleaseQueue)15433_storage"
+                },
+                {
+                    "astId": 12967,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "powerScale",
                     "offset": 0,
@@ -608,7 +925,11 @@
                     "type": "t_int8"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13134,
+=======
+                    "astId": 12972,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "relayerRewards",
                     "offset": 0,
@@ -616,7 +937,11 @@
                     "type": "t_mapping(t_address,t_uint256)"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13140,
+=======
+                    "astId": 12978,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "rewardedRelayers",
                     "offset": 0,
@@ -624,7 +949,11 @@
                     "type": "t_mapping(t_uint64,t_struct(AddressSet)3351_storage)"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13145,
+=======
+                    "astId": 12983,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "bootstrapNodes",
                     "offset": 0,
@@ -632,7 +961,11 @@
                     "type": "t_mapping(t_address,t_string_storage)"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 13149,
+=======
+                    "astId": 12987,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "bootstrapOwners",
                     "offset": 0,
@@ -642,12 +975,20 @@
             ],
             "numberOfBytes": "1056"
         },
+<<<<<<< HEAD
         "t_struct(SubnetID)15546_storage": {
+=======
+        "t_struct(SubnetID)15358_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct SubnetID",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15541,
+=======
+                    "astId": 15353,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "root",
                     "offset": 0,
@@ -655,7 +996,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15545,
+=======
+                    "astId": 15357,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "route",
                     "offset": 0,
@@ -665,12 +1010,20 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(Validator)15682_storage": {
+=======
+        "t_struct(Validator)15483_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct Validator",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15677,
+=======
+                    "astId": 15478,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "weight",
                     "offset": 0,
@@ -678,7 +1031,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15679,
+=======
+                    "astId": 15480,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "addr",
                     "offset": 0,
@@ -686,7 +1043,11 @@
                     "type": "t_address"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15681,
+=======
+                    "astId": 15482,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "metadata",
                     "offset": 0,
@@ -696,12 +1057,20 @@
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(ValidatorInfo)15633_storage": {
+=======
+        "t_struct(ValidatorInfo)15441_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct ValidatorInfo",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15625,
+=======
+                    "astId": 15435,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "federatedPower",
                     "offset": 0,
@@ -709,7 +1078,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15627,
+=======
+                    "astId": 15437,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "confirmedCollateral",
                     "offset": 0,
@@ -717,6 +1090,7 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15629,
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "totalCollateral",
@@ -726,6 +1100,9 @@
                 },
                 {
                     "astId": 15632,
+=======
+                    "astId": 15440,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "metadata",
                     "offset": 0,
@@ -735,11 +1112,16 @@
             ],
             "numberOfBytes": "128"
         },
+<<<<<<< HEAD
         "t_struct(ValidatorSet)15661_storage": {
+=======
+        "t_struct(ValidatorSet)15462_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct ValidatorSet",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15640,
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "permissionMode",
@@ -749,6 +1131,9 @@
                 },
                 {
                     "astId": 15643,
+=======
+                    "astId": 15444,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "activeLimit",
                     "offset": 1,
@@ -756,7 +1141,11 @@
                     "type": "t_uint16"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15646,
+=======
+                    "astId": 15447,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "totalConfirmedCollateral",
                     "offset": 0,
@@ -764,28 +1153,50 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15652,
+=======
+                    "astId": 15453,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "validators",
                     "offset": 0,
                     "slot": "2",
+<<<<<<< HEAD
                     "type": "t_mapping(t_address,t_struct(ValidatorInfo)15633_storage)"
                 },
                 {
                     "astId": 15656,
+=======
+                    "type": "t_mapping(t_address,t_struct(ValidatorInfo)15441_storage)"
+                },
+                {
+                    "astId": 15457,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "activeValidators",
                     "offset": 0,
                     "slot": "3",
+<<<<<<< HEAD
                     "type": "t_struct(MinPQ)14572_storage"
                 },
                 {
                     "astId": 15660,
+=======
+                    "type": "t_struct(MinPQ)14410_storage"
+                },
+                {
+                    "astId": 15461,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/SubnetActorDiamond.sol:SubnetActorDiamond",
                     "label": "waitingValidators",
                     "offset": 0,
                     "slot": "6",
+<<<<<<< HEAD
                     "type": "t_struct(MaxPQ)13954_storage"
+=======
+                    "type": "t_struct(MaxPQ)13792_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "288"

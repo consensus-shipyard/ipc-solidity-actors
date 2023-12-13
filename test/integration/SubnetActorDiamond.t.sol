@@ -31,8 +31,9 @@ import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.so
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
 import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {LibStaking} from "../../src/lib/LibStaking.sol";
-import {LibDiamond} from "../../src/lib/LibDiamond.sol";
+import {LibStaking} from "../src/lib/LibStaking.sol";
+import {LibDiamond} from "../src/lib/LibDiamond.sol";
+import {Pausable} from "../src/lib/LibPausable.sol";
 
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
 
@@ -1155,5 +1156,29 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         require(saGetter.isActiveValidator(validators[0]), "not active validator 0");
         require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
         require(!saGetter.isActiveValidator(validators[2]), "2 should not be active validator");
+    }
+    
+    function testSubnetActorDiamond_Pausable_SetPaused() public {
+        saManager.pause();
+        require(saManager.isPausabled());
+
+        saManager.unpause();
+        require(!saManager.isPausabled());
+    }
+
+    function testSubnetActorDiamond_Pausable_AlreadyPaused() public {
+        saManager.pause();
+        uint256 n = 1;
+        (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(n);
+
+        vm.startPrank(validators[0]);
+        vm.expectRevert(Pausable.AlreadyPaused.selector);
+        saManager.join{value: 10}(publicKeys[1]);
+    }
+
+    function testSubnetActorDiamond_Pausable_NotOwner() public {
+        vm.startPrank(address(1));
+        vm.expectRevert(LibDiamond.NotOwner.selector);
+        saManager.pause();
     }
 }

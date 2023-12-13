@@ -6,7 +6,11 @@
             "label": "s",
             "offset": 0,
             "slot": "0",
+<<<<<<< HEAD
             "type": "t_struct(GatewayActorStorage)10212_storage"
+=======
+            "type": "t_struct(GatewayActorStorage)10193_storage"
+>>>>>>> dabfda74 (merge with dev)
         }
     ],
     "types": {
@@ -27,14 +31,24 @@
             "label": "bytes32[]",
             "numberOfBytes": "32"
         },
+<<<<<<< HEAD
         "t_array(t_struct(CrossMsg)15492_storage)dyn_storage": {
             "base": "t_struct(CrossMsg)15492_storage",
+=======
+        "t_array(t_struct(CrossMsg)15304_storage)dyn_storage": {
+            "base": "t_struct(CrossMsg)15304_storage",
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "dynamic_array",
             "label": "struct CrossMsg[]",
             "numberOfBytes": "32"
         },
+<<<<<<< HEAD
         "t_array(t_struct(Validator)15682_storage)dyn_storage": {
             "base": "t_struct(Validator)15682_storage",
+=======
+        "t_array(t_struct(Validator)15483_storage)dyn_storage": {
+            "base": "t_struct(Validator)15483_storage",
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "dynamic_array",
             "label": "struct Validator[]",
             "numberOfBytes": "32"
@@ -59,12 +73,16 @@
             "label": "bytes",
             "numberOfBytes": "32"
         },
+<<<<<<< HEAD
         "t_enum(PermissionMode)15636": {
             "encoding": "inplace",
             "label": "enum PermissionMode",
             "numberOfBytes": "1"
         },
         "t_enum(StakingOperation)15568": {
+=======
+        "t_enum(StakingOperation)15379": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "enum StakingOperation",
             "numberOfBytes": "1"
@@ -81,12 +99,20 @@
             "numberOfBytes": "32",
             "value": "t_bytes_storage"
         },
+<<<<<<< HEAD
         "t_mapping(t_address,t_struct(ValidatorInfo)15633_storage)": {
+=======
+        "t_mapping(t_address,t_struct(ValidatorInfo)15441_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_address",
             "label": "mapping(address => struct ValidatorInfo)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(ValidatorInfo)15633_storage"
+=======
+            "value": "t_struct(ValidatorInfo)15441_storage"
+>>>>>>> dabfda74 (merge with dev)
         },
         "t_mapping(t_address,t_uint16)": {
             "encoding": "mapping",
@@ -95,19 +121,33 @@
             "numberOfBytes": "32",
             "value": "t_uint16"
         },
+<<<<<<< HEAD
         "t_mapping(t_bytes32,t_struct(CrossMsg)15492_storage)": {
+=======
+        "t_mapping(t_bytes32,t_struct(CrossMsg)15304_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_bytes32",
             "label": "mapping(bytes32 => struct CrossMsg)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(CrossMsg)15492_storage"
         },
         "t_mapping(t_bytes32,t_struct(Subnet)15563_storage)": {
+=======
+            "value": "t_struct(CrossMsg)15304_storage"
+        },
+        "t_mapping(t_bytes32,t_struct(Subnet)15375_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_bytes32",
             "label": "mapping(bytes32 => struct Subnet)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(Subnet)15563_storage"
+=======
+            "value": "t_struct(Subnet)15375_storage"
+>>>>>>> dabfda74 (merge with dev)
         },
         "t_mapping(t_bytes32,t_uint256)": {
             "encoding": "mapping",
@@ -123,19 +163,33 @@
             "numberOfBytes": "32",
             "value": "t_address"
         },
+<<<<<<< HEAD
         "t_mapping(t_uint256,t_struct(ParentFinality)15453_storage)": {
+=======
+        "t_mapping(t_uint256,t_struct(ParentFinality)15265_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint256",
             "label": "mapping(uint256 => struct ParentFinality)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(ParentFinality)15453_storage"
         },
         "t_mapping(t_uint64,t_array(t_struct(CrossMsg)15492_storage)dyn_storage)": {
+=======
+            "value": "t_struct(ParentFinality)15265_storage"
+        },
+        "t_mapping(t_uint64,t_array(t_struct(CrossMsg)15304_storage)dyn_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint64",
             "label": "mapping(uint64 => struct CrossMsg[])",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_array(t_struct(CrossMsg)15492_storage)dyn_storage"
+=======
+            "value": "t_array(t_struct(CrossMsg)15304_storage)dyn_storage"
+>>>>>>> dabfda74 (merge with dev)
         },
         "t_mapping(t_uint64,t_mapping(t_address,t_bytes_storage))": {
             "encoding": "mapping",
@@ -151,26 +205,46 @@
             "numberOfBytes": "32",
             "value": "t_struct(AddressSet)3351_storage"
         },
+<<<<<<< HEAD
         "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15470_storage)": {
+=======
+        "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15282_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint64",
             "label": "mapping(uint64 => struct BottomUpCheckpoint)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(BottomUpCheckpoint)15470_storage"
         },
         "t_mapping(t_uint64,t_struct(CheckpointInfo)15486_storage)": {
+=======
+            "value": "t_struct(BottomUpCheckpoint)15282_storage"
+        },
+        "t_mapping(t_uint64,t_struct(CheckpointInfo)15298_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint64",
             "label": "mapping(uint64 => struct CheckpointInfo)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(CheckpointInfo)15486_storage"
         },
         "t_mapping(t_uint64,t_struct(StakingChange)15576_storage)": {
+=======
+            "value": "t_struct(CheckpointInfo)15298_storage"
+        },
+        "t_mapping(t_uint64,t_struct(StakingChange)15387_storage)": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "mapping",
             "key": "t_uint64",
             "label": "mapping(uint64 => struct StakingChange)",
             "numberOfBytes": "32",
+<<<<<<< HEAD
             "value": "t_struct(StakingChange)15576_storage"
+=======
+            "value": "t_struct(StakingChange)15387_storage"
+>>>>>>> dabfda74 (merge with dev)
         },
         "t_struct(AddressSet)3351_storage": {
             "encoding": "inplace",
@@ -187,20 +261,35 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(BottomUpCheckpoint)15470_storage": {
+=======
+        "t_struct(BottomUpCheckpoint)15282_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct BottomUpCheckpoint",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15457,
+=======
+                    "astId": 15269,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnetID",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(SubnetID)15546_storage"
                 },
                 {
                     "astId": 15460,
+=======
+                    "type": "t_struct(SubnetID)15358_storage"
+                },
+                {
+                    "astId": 15272,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "blockHeight",
                     "offset": 0,
@@ -208,7 +297,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15463,
+=======
+                    "astId": 15275,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "blockHash",
                     "offset": 0,
@@ -216,7 +309,11 @@
                     "type": "t_bytes32"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15466,
+=======
+                    "astId": 15278,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "nextConfigurationNumber",
                     "offset": 0,
@@ -224,7 +321,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15469,
+=======
+                    "astId": 15281,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "crossMessagesHash",
                     "offset": 0,
@@ -234,12 +335,20 @@
             ],
             "numberOfBytes": "192"
         },
+<<<<<<< HEAD
         "t_struct(CheckpointInfo)15486_storage": {
+=======
+        "t_struct(CheckpointInfo)15298_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct CheckpointInfo",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15473,
+=======
+                    "astId": 15285,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "hash",
                     "offset": 0,
@@ -247,7 +356,11 @@
                     "type": "t_bytes32"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15476,
+=======
+                    "astId": 15288,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "rootHash",
                     "offset": 0,
@@ -255,7 +368,11 @@
                     "type": "t_bytes32"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15479,
+=======
+                    "astId": 15291,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "threshold",
                     "offset": 0,
@@ -263,7 +380,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15482,
+=======
+                    "astId": 15294,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "currentWeight",
                     "offset": 0,
@@ -271,7 +392,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15485,
+=======
+                    "astId": 15297,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "reached",
                     "offset": 0,
@@ -281,20 +406,35 @@
             ],
             "numberOfBytes": "160"
         },
+<<<<<<< HEAD
         "t_struct(CrossMsg)15492_storage": {
+=======
+        "t_struct(CrossMsg)15304_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct CrossMsg",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15489,
+=======
+                    "astId": 15301,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "message",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(StorableMsg)15509_storage"
                 },
                 {
                     "astId": 15491,
+=======
+                    "type": "t_struct(StorableMsg)15321_storage"
+                },
+                {
+                    "astId": 15303,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "wrapped",
                     "offset": 0,
@@ -304,12 +444,20 @@
             ],
             "numberOfBytes": "416"
         },
+<<<<<<< HEAD
         "t_struct(FvmAddress)15516_storage": {
+=======
+        "t_struct(FvmAddress)15328_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct FvmAddress",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15513,
+=======
+                    "astId": 15325,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "addrType",
                     "offset": 0,
@@ -317,7 +465,11 @@
                     "type": "t_uint8"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15515,
+=======
+                    "astId": 15327,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "payload",
                     "offset": 0,
@@ -327,28 +479,50 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(GatewayActorStorage)10212_storage": {
+=======
+        "t_struct(GatewayActorStorage)10193_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct GatewayActorStorage",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 10117,
+=======
+                    "astId": 10098,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnets",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_mapping(t_bytes32,t_struct(Subnet)15563_storage)"
                 },
                 {
                     "astId": 10123,
+=======
+                    "type": "t_mapping(t_bytes32,t_struct(Subnet)15375_storage)"
+                },
+                {
+                    "astId": 10104,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "finalitiesMap",
                     "offset": 0,
                     "slot": "1",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint256,t_struct(ParentFinality)15453_storage)"
                 },
                 {
                     "astId": 10126,
+=======
+                    "type": "t_mapping(t_uint256,t_struct(ParentFinality)15265_storage)"
+                },
+                {
+                    "astId": 10107,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "latestParentHeight",
                     "offset": 0,
@@ -356,11 +530,16 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10132,
+=======
+                    "astId": 10113,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "postbox",
                     "offset": 0,
                     "slot": "3",
+<<<<<<< HEAD
                     "type": "t_mapping(t_bytes32,t_struct(CrossMsg)15492_storage)"
                 },
                 {
@@ -378,33 +557,73 @@
                     "offset": 0,
                     "slot": "6",
                     "type": "t_struct(Membership)15689_storage"
+=======
+                    "type": "t_mapping(t_bytes32,t_struct(CrossMsg)15304_storage)"
+>>>>>>> dabfda74 (merge with dev)
                 },
                 {
                     "astId": 10146,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
+                    "label": "currentMembership",
+                    "offset": 0,
+                    "slot": "4",
+                    "type": "t_struct(Membership)15490_storage"
+                },
+                {
+                    "astId": 10121,
+                    "contract": "src/GatewayDiamond.sol:GatewayDiamond",
+                    "label": "lastMembership",
+                    "offset": 0,
+                    "slot": "6",
+                    "type": "t_struct(Membership)15490_storage"
+                },
+                {
+                    "astId": 10127,
+                    "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpCheckpoints",
                     "offset": 0,
                     "slot": "8",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15470_storage)"
                 },
                 {
                     "astId": 10152,
+=======
+                    "type": "t_mapping(t_uint64,t_struct(BottomUpCheckpoint)15282_storage)"
+                },
+                {
+                    "astId": 10133,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpCheckpointInfo",
                     "offset": 0,
                     "slot": "9",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)15486_storage)"
                 },
                 {
                     "astId": 10159,
+=======
+                    "type": "t_mapping(t_uint64,t_struct(CheckpointInfo)15298_storage)"
+                },
+                {
+                    "astId": 10140,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpMessages",
                     "offset": 0,
                     "slot": "10",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)15492_storage)dyn_storage)"
                 },
                 {
                     "astId": 10162,
+=======
+                    "type": "t_mapping(t_uint64,t_array(t_struct(CrossMsg)15304_storage)dyn_storage)"
+                },
+                {
+                    "astId": 10143,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpCheckpointRetentionHeight",
                     "offset": 0,
@@ -412,7 +631,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10166,
+=======
+                    "astId": 10147,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "incompleteCheckpoints",
                     "offset": 0,
@@ -420,7 +643,11 @@
                     "type": "t_struct(UintSet)3508_storage"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10172,
+=======
+                    "astId": 10153,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpSignatureSenders",
                     "offset": 0,
@@ -428,7 +655,11 @@
                     "type": "t_mapping(t_uint64,t_struct(AddressSet)3351_storage)"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10179,
+=======
+                    "astId": 10160,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpSignatures",
                     "offset": 0,
@@ -436,7 +667,11 @@
                     "type": "t_mapping(t_uint64,t_mapping(t_address,t_bytes_storage))"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10183,
+=======
+                    "astId": 10164,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnetKeys",
                     "offset": 0,
@@ -444,15 +679,26 @@
                     "type": "t_array(t_bytes32)dyn_storage"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10187,
+=======
+                    "astId": 10168,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "networkName",
                     "offset": 0,
                     "slot": "17",
+<<<<<<< HEAD
                     "type": "t_struct(SubnetID)15546_storage"
                 },
                 {
                     "astId": 10190,
+=======
+                    "type": "t_struct(SubnetID)15358_storage"
+                },
+                {
+                    "astId": 10171,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "minStake",
                     "offset": 0,
@@ -460,7 +706,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10193,
+=======
+                    "astId": 10174,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "minCrossMsgFee",
                     "offset": 0,
@@ -468,7 +718,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10196,
+=======
+                    "astId": 10177,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "majorityPercentage",
                     "offset": 0,
@@ -476,7 +730,11 @@
                     "type": "t_uint8"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10199,
+=======
+                    "astId": 10180,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpNonce",
                     "offset": 1,
@@ -484,7 +742,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10202,
+=======
+                    "astId": 10183,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "appliedTopDownNonce",
                     "offset": 9,
@@ -492,7 +754,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10205,
+=======
+                    "astId": 10186,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "totalSubnets",
                     "offset": 17,
@@ -500,7 +766,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10207,
+=======
+                    "astId": 10188,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpCheckPeriod",
                     "offset": 0,
@@ -508,68 +778,122 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 10211,
+=======
+                    "astId": 10192,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validatorsTracker",
                     "offset": 0,
                     "slot": "23",
+<<<<<<< HEAD
                     "type": "t_struct(ParentValidatorsTracker)15668_storage"
+=======
+                    "type": "t_struct(ParentValidatorsTracker)15469_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "1088"
         },
+<<<<<<< HEAD
         "t_struct(IPCAddress)15675_storage": {
+=======
+        "t_struct(IPCAddress)15476_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct IPCAddress",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15671,
+=======
+                    "astId": 15472,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnetId",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(SubnetID)15546_storage"
                 },
                 {
                     "astId": 15674,
+=======
+                    "type": "t_struct(SubnetID)15358_storage"
+                },
+                {
+                    "astId": 15475,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "rawAddress",
                     "offset": 0,
                     "slot": "2",
+<<<<<<< HEAD
                     "type": "t_struct(FvmAddress)15516_storage"
+=======
+                    "type": "t_struct(FvmAddress)15328_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "128"
         },
+<<<<<<< HEAD
         "t_struct(MaxPQ)13954_storage": {
+=======
+        "t_struct(MaxPQ)13792_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct MaxPQ",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 13953,
+=======
+                    "astId": 13791,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "inner",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(PQ)15201_storage"
+=======
+                    "type": "t_struct(PQ)15039_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(Membership)15689_storage": {
+=======
+        "t_struct(Membership)15490_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct Membership",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15686,
+=======
+                    "astId": 15487,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validators",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_array(t_struct(Validator)15682_storage)dyn_storage"
                 },
                 {
                     "astId": 15688,
+=======
+                    "type": "t_array(t_struct(Validator)15483_storage)dyn_storage"
+                },
+                {
+                    "astId": 15489,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "configurationNumber",
                     "offset": 0,
@@ -579,27 +903,47 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(MinPQ)14572_storage": {
+=======
+        "t_struct(MinPQ)14410_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct MinPQ",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 14571,
+=======
+                    "astId": 14409,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "inner",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(PQ)15201_storage"
+=======
+                    "type": "t_struct(PQ)15039_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(PQ)15201_storage": {
+=======
+        "t_struct(PQ)15039_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct PQ",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15190,
+=======
+                    "astId": 15028,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "size",
                     "offset": 0,
@@ -607,7 +951,11 @@
                     "type": "t_uint16"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15195,
+=======
+                    "astId": 15033,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "addressToPos",
                     "offset": 0,
@@ -615,7 +963,11 @@
                     "type": "t_mapping(t_address,t_uint16)"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15200,
+=======
+                    "astId": 15038,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "posToAddress",
                     "offset": 0,
@@ -625,12 +977,20 @@
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(ParentFinality)15453_storage": {
+=======
+        "t_struct(ParentFinality)15265_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct ParentFinality",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15450,
+=======
+                    "astId": 15262,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "height",
                     "offset": 0,
@@ -638,7 +998,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15452,
+=======
+                    "astId": 15264,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "blockHash",
                     "offset": 0,
@@ -648,25 +1012,44 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(ParentValidatorsTracker)15668_storage": {
+=======
+        "t_struct(ParentValidatorsTracker)15469_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct ParentValidatorsTracker",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15664,
+=======
+                    "astId": 15465,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validators",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(ValidatorSet)15661_storage"
                 },
                 {
                     "astId": 15667,
+=======
+                    "type": "t_struct(ValidatorSet)15462_storage"
+                },
+                {
+                    "astId": 15468,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "changes",
                     "offset": 0,
                     "slot": "9",
+<<<<<<< HEAD
                     "type": "t_struct(StakingChangeLog)15595_storage"
+=======
+                    "type": "t_struct(StakingChangeLog)15406_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "352"
@@ -694,20 +1077,35 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(StakingChange)15576_storage": {
+=======
+        "t_struct(StakingChange)15387_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct StakingChange",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15571,
+=======
+                    "astId": 15382,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "op",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_enum(StakingOperation)15568"
                 },
                 {
                     "astId": 15573,
+=======
+                    "type": "t_enum(StakingOperation)15379"
+                },
+                {
+                    "astId": 15384,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "payload",
                     "offset": 0,
@@ -715,7 +1113,11 @@
                     "type": "t_bytes_storage"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15575,
+=======
+                    "astId": 15386,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validator",
                     "offset": 0,
@@ -725,12 +1127,20 @@
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(StakingChangeLog)15595_storage": {
+=======
+        "t_struct(StakingChangeLog)15406_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct StakingChangeLog",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15585,
+=======
+                    "astId": 15396,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "nextConfigurationNumber",
                     "offset": 0,
@@ -738,7 +1148,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15588,
+=======
+                    "astId": 15399,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "startConfigurationNumber",
                     "offset": 8,
@@ -746,38 +1160,68 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15594,
+=======
+                    "astId": 15405,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "changes",
                     "offset": 0,
                     "slot": "1",
+<<<<<<< HEAD
                     "type": "t_mapping(t_uint64,t_struct(StakingChange)15576_storage)"
+=======
+                    "type": "t_mapping(t_uint64,t_struct(StakingChange)15387_storage)"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(StorableMsg)15509_storage": {
+=======
+        "t_struct(StorableMsg)15321_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct StorableMsg",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15495,
+=======
+                    "astId": 15307,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "from",
                     "offset": 0,
                     "slot": "0",
+<<<<<<< HEAD
                     "type": "t_struct(IPCAddress)15675_storage"
                 },
                 {
                     "astId": 15498,
+=======
+                    "type": "t_struct(IPCAddress)15476_storage"
+                },
+                {
+                    "astId": 15310,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "to",
                     "offset": 0,
                     "slot": "4",
+<<<<<<< HEAD
                     "type": "t_struct(IPCAddress)15675_storage"
                 },
                 {
                     "astId": 15500,
+=======
+                    "type": "t_struct(IPCAddress)15476_storage"
+                },
+                {
+                    "astId": 15312,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "value",
                     "offset": 0,
@@ -785,7 +1229,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15502,
+=======
+                    "astId": 15314,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "nonce",
                     "offset": 0,
@@ -793,7 +1241,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15504,
+=======
+                    "astId": 15316,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "method",
                     "offset": 8,
@@ -801,7 +1253,11 @@
                     "type": "t_bytes4"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15506,
+=======
+                    "astId": 15318,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "params",
                     "offset": 0,
@@ -809,7 +1265,11 @@
                     "type": "t_bytes_storage"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15508,
+=======
+                    "astId": 15320,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "fee",
                     "offset": 0,
@@ -819,12 +1279,20 @@
             ],
             "numberOfBytes": "384"
         },
+<<<<<<< HEAD
         "t_struct(Subnet)15563_storage": {
+=======
+        "t_struct(Subnet)15375_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct Subnet",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15548,
+=======
+                    "astId": 15360,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "stake",
                     "offset": 0,
@@ -832,7 +1300,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15550,
+=======
+                    "astId": 15362,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "genesisEpoch",
                     "offset": 0,
@@ -840,7 +1312,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15552,
+=======
+                    "astId": 15364,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "circSupply",
                     "offset": 0,
@@ -848,7 +1324,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15554,
+=======
+                    "astId": 15366,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "topDownNonce",
                     "offset": 0,
@@ -856,7 +1336,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15556,
+=======
+                    "astId": 15368,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "appliedBottomUpNonce",
                     "offset": 8,
@@ -864,7 +1348,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15559,
+=======
+                    "astId": 15371,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "status",
                     "offset": 16,
@@ -872,22 +1360,38 @@
                     "type": "t_enum(Status)5100"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15562,
+=======
+                    "astId": 15374,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "id",
                     "offset": 0,
                     "slot": "4",
+<<<<<<< HEAD
                     "type": "t_struct(SubnetID)15546_storage"
+=======
+                    "type": "t_struct(SubnetID)15358_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "192"
         },
+<<<<<<< HEAD
         "t_struct(SubnetID)15546_storage": {
+=======
+        "t_struct(SubnetID)15358_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct SubnetID",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15541,
+=======
+                    "astId": 15353,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "root",
                     "offset": 0,
@@ -895,7 +1399,11 @@
                     "type": "t_uint64"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15545,
+=======
+                    "astId": 15357,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "route",
                     "offset": 0,
@@ -920,12 +1428,20 @@
             ],
             "numberOfBytes": "64"
         },
+<<<<<<< HEAD
         "t_struct(Validator)15682_storage": {
+=======
+        "t_struct(Validator)15483_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct Validator",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15677,
+=======
+                    "astId": 15478,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "weight",
                     "offset": 0,
@@ -933,7 +1449,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15679,
+=======
+                    "astId": 15480,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "addr",
                     "offset": 0,
@@ -941,7 +1461,11 @@
                     "type": "t_address"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15681,
+=======
+                    "astId": 15482,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "metadata",
                     "offset": 0,
@@ -951,12 +1475,20 @@
             ],
             "numberOfBytes": "96"
         },
+<<<<<<< HEAD
         "t_struct(ValidatorInfo)15633_storage": {
+=======
+        "t_struct(ValidatorInfo)15441_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct ValidatorInfo",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15625,
+=======
+                    "astId": 15435,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "federatedPower",
                     "offset": 0,
@@ -964,7 +1496,11 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15627,
+=======
+                    "astId": 15437,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "confirmedCollateral",
                     "offset": 0,
@@ -972,6 +1508,7 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15629,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "totalCollateral",
@@ -981,6 +1518,9 @@
                 },
                 {
                     "astId": 15632,
+=======
+                    "astId": 15440,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "metadata",
                     "offset": 0,
@@ -990,11 +1530,16 @@
             ],
             "numberOfBytes": "128"
         },
+<<<<<<< HEAD
         "t_struct(ValidatorSet)15661_storage": {
+=======
+        "t_struct(ValidatorSet)15462_storage": {
+>>>>>>> dabfda74 (merge with dev)
             "encoding": "inplace",
             "label": "struct ValidatorSet",
             "members": [
                 {
+<<<<<<< HEAD
                     "astId": 15640,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "permissionMode",
@@ -1004,6 +1549,9 @@
                 },
                 {
                     "astId": 15643,
+=======
+                    "astId": 15444,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "activeLimit",
                     "offset": 1,
@@ -1011,7 +1559,11 @@
                     "type": "t_uint16"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15646,
+=======
+                    "astId": 15447,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "totalConfirmedCollateral",
                     "offset": 0,
@@ -1019,28 +1571,50 @@
                     "type": "t_uint256"
                 },
                 {
+<<<<<<< HEAD
                     "astId": 15652,
+=======
+                    "astId": 15453,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validators",
                     "offset": 0,
                     "slot": "2",
+<<<<<<< HEAD
                     "type": "t_mapping(t_address,t_struct(ValidatorInfo)15633_storage)"
                 },
                 {
                     "astId": 15656,
+=======
+                    "type": "t_mapping(t_address,t_struct(ValidatorInfo)15441_storage)"
+                },
+                {
+                    "astId": 15457,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "activeValidators",
                     "offset": 0,
                     "slot": "3",
+<<<<<<< HEAD
                     "type": "t_struct(MinPQ)14572_storage"
                 },
                 {
                     "astId": 15660,
+=======
+                    "type": "t_struct(MinPQ)14410_storage"
+                },
+                {
+                    "astId": 15461,
+>>>>>>> dabfda74 (merge with dev)
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "waitingValidators",
                     "offset": 0,
                     "slot": "6",
+<<<<<<< HEAD
                     "type": "t_struct(MaxPQ)13954_storage"
+=======
+                    "type": "t_struct(MaxPQ)13792_storage"
+>>>>>>> dabfda74 (merge with dev)
                 }
             ],
             "numberOfBytes": "288"
