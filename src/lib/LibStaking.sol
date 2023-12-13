@@ -482,13 +482,13 @@ library LibStaking {
     /// @notice method that allows a relayer to withdraw it's accumulated rewards using pull-based transfer
     function claimRewardForRelayer(address relayer) external {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        uint256 amount = s.relayerRewards[relayer];
+        uint256 amount = s.relayerRewards.rewards[relayer];
 
         if (amount == 0) {
             revert NoRewardToWithdraw();
         }
 
-        s.relayerRewards[relayer] = 0;
+        s.relayerRewards.rewards[relayer] = 0;
         IGateway(s.ipcGatewayAddr).releaseRewardForRelayer(amount);
 
         payable(relayer).sendValue(amount);

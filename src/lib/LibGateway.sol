@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActorStorage.sol";
 import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {CrossMsg, BottomUpCheckpoint, ParentFinality} from "../structs/Checkpoint.sol";
+import {CrossMsg, BottomUpMsgBatch, BottomUpMsgBatch, BottomUpCheckpoint, ParentFinality} from "../structs/CrossNet.sol";
 import {QuorumInfo} from "../structs/Quorum.sol";
 import {Membership, Validator} from "../structs/Subnet.sol";
 import {OldConfigurationNumber, NotRegisteredSubnet, InvalidActorAddress, ParentFinalityAlreadyCommitted} from "../errors/IPCErrors.sol";
@@ -25,6 +25,8 @@ library LibGateway {
     event MembershipUpdated(Membership);
     /// @dev subnet refers to the next "down" subnet that the `CrossMsg.message.to` should be forwarded to.
     event NewTopDownMessage(address indexed subnet, CrossMsg message);
+    /// @dev event emitted when there is a new bottom-up message batch to be signed.
+    event NewBottomUpMsgBatch(uint256 indexed epoch, BottomUpMsgBatch batch);
 
     /// @notice returns the current bottom-up checkpoint
     /// @return exists - whether the checkpoint exists
@@ -55,10 +57,30 @@ library LibGateway {
         exists = checkpoint.blockHeight != 0;
     }
 
+    /// @notice returns the bottom-up batch
+    function getBottomUpMsgBatch(
+        uint256 epoch
+    )
+        internal
+        view
+        returns (bool exists, BottomUpMsgBatch storage batch)
+    {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+
+        batch = s.bottomUpMsgBatches[epoch];
+        exists = batch.blockHeight != 0;
+    }
+
     /// @notice checks if the bottom-up checkpoint already exists at the target epoch
     function bottomUpCheckpointExists(uint256 epoch) internal view returns (bool) {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         return s.bottomUpCheckpoints[epoch].blockHeight != 0;
+    }
+
+    /// @notice checks if the bottom-up checkpoint already exists at the target epoch
+    function bottomUpBatchMsgsExists(uint256 epoch) internal view returns (bool) {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        return s.bottomUpMsgBatches[epoch].blockHeight != 0;
     }
 
     /// @notice stores checkpoint
@@ -67,6 +89,14 @@ library LibGateway {
     ) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
         s.bottomUpCheckpoints[checkpoint.blockHeight] = checkpoint;
+    }
+
+    /// @notice stores bottom-up batch
+    function storeBottomUpMsgBatch(
+        BottomUpMsgBatch memory batch
+    ) internal {
+        GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
+        s.bottomUpMsgBatches[batch.blockHeight] = batch;
     }
 
     /// @notice obtain the ipc parent finality at certain block number
@@ -202,16 +232,54 @@ library LibGateway {
         emit NewTopDownMessage({subnet: subnetId.getAddress(), message: crossMessage});
     }
 
-    /// @notice commit bottom-up messages for their execution in the subnet. Adds the message to the checkpoint for future execution
+    /// @notice Commits a new cross-net message to a message batch for execution
     /// @param crossMessage - the cross message to be committed
     function commitBottomUpMsg(CrossMsg memory crossMessage) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        uint256 epoch = getNextEpoch(block.number, s.bottomUpCheckPeriod);
+        uint256 epoch = getNextEpoch(block.number, s.bottomUpMsgsBatchPeriod);
 
+        // assign nonce to the message.
         crossMessage.message.nonce = s.bottomUpNonce;
-
-        s.bottomUpMessages[epoch].push(crossMessage);
         s.bottomUpNonce += 1;
+
+        // populate the batch for that epoch
+        (bool exists, BottomUpMsgBatch storage batch) = LibGateway.getBottomUpMsgBatch(epoch);
+        if (!exists) {
+            batch.subnetID = s.networkName;
+            batch.blockHeight = epoch;
+            batch.msgs = new CrossMsg[](1);
+            batch.msgs[0] = crossMessage;
+        } else {
+            // if the maximum size was already achieved emit already the event
+            // and re-assign the batch to the current epoch.
+            if (batch.msgs.length == s.maxMsgsPerBottomUpBatch){
+                // copy the batch with max messages into the new cut.
+                uint256 epochCut = block.number;
+                BottomUpMsgBatch memory newBatch = BottomUpMsgBatch({
+                    subnetID: s.networkName,
+                    blockHeight: epochCut,
+                    msgs: new CrossMsg[](batch.msgs.length)
+                });
+                for (uint i = 0; i < batch.msgs.length;) {
+                    newBatch.msgs[i] = batch.msgs[i];
+                    unchecked {
+                        ++i;
+                    }
+                }
+                // emit event with the next batch ready to sign quorum over.
+                emit NewBottomUpMsgBatch(epochCut,newBatch);
+
+                // Empty the messages of existing batch with epoch and start populating with the new message.
+                batch.msgs = new CrossMsg[](1);
+                batch.msgs[0] = crossMessage;
+
+                LibGateway.storeBottomUpMsgBatch(newBatch);
+            } else {
+                // we append the new message normally, and wait for the batch period
+                // to trigger the cutting of the batch.
+                batch.msgs.push(crossMessage);
+            }
+        }
     }
 
     /// @notice returns the subnet created by a validator

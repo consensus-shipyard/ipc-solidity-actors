@@ -13,6 +13,7 @@ import {LibDiamond} from "./lib/LibDiamond.sol";
 import {LibGateway} from "./lib/LibGateway.sol";
 import {SubnetID} from "./structs/Subnet.sol";
 import {LibStaking} from "./lib/LibStaking.sol";
+import {BATCH_PERIOD, MAX_MSGS_PER_BATCH} from "./structs/CrossNet.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
@@ -65,6 +66,13 @@ contract GatewayDiamond {
         s.minCrossMsgFee = params.msgFee;
         s.majorityPercentage = params.majorityPercentage;
         s.checkpointQuorumMap.retentionHeight = 1;
+        s.bottomUpMsgBatchQuorumMap.retentionHeight = 1;
+
+        // BottomUpMsgsBatch config parameters.
+        // NOTE: Let's fix them for now, but we could make them configurable
+        // through the gateay constructor in the future.
+        s.bottomUpMsgsBatchPeriod = BATCH_PERIOD;
+        s.maxMsgsPerBottomUpBatch = MAX_MSGS_PER_BATCH;
 
         s.validatorsTracker.validators.activeLimit = params.activeValidatorsLimit;
         // Start the next configuration number from 1, 0 is reserved for no change and the genesis membership

@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {METHOD_SEND, EMPTY_BYTES} from "../constants/Constants.sol";
-import {StorableMsg, CrossMsg} from "../structs/Checkpoint.sol";
+import {StorableMsg, CrossMsg} from "../structs/CrossNet.sol";
 import {SubnetID, IPCAddress} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";

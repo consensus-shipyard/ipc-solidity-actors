@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {NotGateway, SubnetAlreadyKilled} from "../errors/IPCErrors.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {BottomUpCheckpoint} from "../structs/Checkpoint.sol";
+import {RelayerRewardsInfo, BottomUpCheckpoint, BottomUpMsgBatchInfo} from "../structs/CrossNet.sol";
 import {SubnetID, ValidatorSet, StakingChangeLog, StakingReleaseQueue, Validator} from "../structs/Subnet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
@@ -23,6 +23,12 @@ struct SubnetActorStorage {
     address[] genesisBalanceKeys;
     /// @notice The height of the last committed bottom-up checkpoint.
     uint256 lastBottomUpCheckpointHeight;
+    /// @notice Info of the last executed bottom-up batch.
+    BottomUpMsgBatchInfo lastBottomUpBatch;
+    /// @notice bottom-up message batch period in number of epochs for the subnet
+    uint256 bottomUpMsgsBatchPeriod;
+    /// @notice Maximum number of messages per batch
+    uint64 maxMsgsPerBottomUpBatch;
     /// @notice Minimal activation collateral
     uint256 minActivationCollateral;
     /// @notice number of blocks in a bottom-up epoch
@@ -59,9 +65,7 @@ struct SubnetActorStorage {
     /// We allow negative values to also allow 10 FIL = 1 unit of power for power_scale = -1.
     int8 powerScale;
     /// @notice relayers rewards
-    mapping(address => uint256) relayerRewards;
-    /// @notice The addresses of the relayers sent the checkpoint at height `h`.
-    mapping(uint256 => EnumerableSet.AddressSet) rewardedRelayers;
+    RelayerRewardsInfo relayerRewards;
     /// =============
     /// mapping of bootstrap owner to its bootstrap node address
     mapping(address => string) bootstrapNodes;

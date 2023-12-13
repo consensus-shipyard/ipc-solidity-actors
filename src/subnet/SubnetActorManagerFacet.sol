@@ -1,11 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
+import {SubnetAlreadyBootstrapped, MaxMsgsPerBatchExceeded, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidBatchEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {BottomUpCheckpoint, BottomUpMsgBatch, CrossMsg} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, BottomUpMsgBatch, BottomUpMsgBatchInfo, CrossMsg} from "../structs/CrossNet.sol";
 import {SubnetID, Validator, ValidatorSet} from "../structs/Subnet.sol";
+import {QuorumObjKind} from "../structs/Quorum.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {MultisignatureChecker} from "../lib/LibMultisignatureChecker.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
@@ -59,7 +60,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             s.committedCheckpoints[checkpoint.blockHeight] = checkpoint;
 
             // slither-disable-next-line unused-return
-            s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+            s.relayerRewards.checkpointRewarded[checkpoint.blockHeight].add(msg.sender);
 
             s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
 
@@ -79,65 +80,54 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             bytes32 lastCheckpointHash = keccak256(abi.encode(s.committedCheckpoints[checkpoint.blockHeight]));
             if (checkpointHash == lastCheckpointHash) {
                 // slither-disable-next-line unused-return
-                s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
+                s.relayerRewards.checkpointRewarded[checkpoint.blockHeight].add(msg.sender);
             }
         }
     }
 
     /** @notice submit a bottom-up message batch for execution.
      *  @dev It triggers the execution of a cross-net message batch
-     * @param checkpoint The executed bottom-up checkpoint
+     * @param batch The executed bottom-up checkpoint
      * @param signatories The addresses of the signatories
      * @param signatures The collected checkpoint signatures
      */
-    // TODO: De-duplicate redundant code.
     function submitBottomUpMsgBatch(
         BottomUpMsgBatch calldata batch,
         address[] calldata signatories,
         bytes[] calldata signatures
     ) external {
-        // TODO: Check that the height is over the last height
-        // (the nonce should be checking in-order execution implicitly)
-        // the checkpoint height must be equal to the last bottom-up checkpoint height or
-        // the next one
-        // if (
-        //     checkpoint.blockHeight != s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod &&
-        //     checkpoint.blockHeight != s.lastBottomUpCheckpointHeight
-        // ) {
-        //     revert InvalidCheckpointEpoch();
-        // }
+        // forbid the submission of batches from the past
+        if (batch.blockHeight < s.lastBottomUpBatch.blockHeight) {
+            revert InvalidBatchEpoch();
+        }
+        if (batch.msgs.length > s.maxMsgsPerBottomUpBatch) {
+            revert MaxMsgsPerBatchExceeded();
+        }
+
         bytes32 batchHash = keccak256(abi.encode(batch));
 
-        if (batch.blockHeight == s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod) {
+        if (batch.blockHeight == s.lastBottomUpBatch.blockHeight) {
+            // If the batch info is equal to the last batch info, then this is a repeated submission.
+            // We should store the relayer, but not to execute batch again following the same reward logic
+            // used for checkpoints.
+            if (batchHash == s.lastBottomUpBatch.hash) {
+                // slither-disable-next-line unused-return
+                s.relayerRewards.batchRewarded[batch.blockHeight].add(msg.sender);
+            }
+        } else {
             // validate signatures and quorum threshold, revert if validation fails
             validateActiveQuorumSignatures({signatories: signatories, hash: batchHash, signatures: signatures});
 
-            // If the checkpoint height is the next expected height then this is a new checkpoint which must be executed
-            // in the Gateway Actor, the checkpoint and the relayer must be stored, last bottom-up checkpoint updated.
-            s.committedCheckpoints[batch.blockHeight] = batch;
+            // If the checkpoint height is the next expected height then this is a new batch,
+            // and should be forwarded to the gateway for execution.
+            s.lastBottomUpBatch = BottomUpMsgBatchInfo({blockHeight: batch.blockHeight, hash: batchHash});
 
             // slither-disable-next-line unused-return
-            s.rewardedRelayers[batch.blockHeight].add(msg.sender);
-
-            // TODO: Make lastBottomUpCheckpointHeight part of checkpoint info?
-            s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
+            s.relayerRewards.batchRewarded[batch.blockHeight].add(msg.sender);
 
             // Execute messages.
             // TODO:
             IGateway(s.ipcGatewayAddr).execBottomUpMsgBatch(batch);
-        } else if (batch.blockHeight == s.lastBottomUpCheckpointHeight) {
-            // If the checkpoint height is equal to the last checkpoint height, then this is a repeated submission.
-            // We should store the relayer, but not to execute checkpoint again.
-            // In this case, we do not verify the signatures for this checkpoint again,
-            // but we add the relayer to the list of all relayers for this checkpoint to be rewarded later.
-            // The reason for comparing hashes instead of verifying signatures is the following:
-            // once the checkpoint is executed, the active validator set changes
-            // and can only be used to validate the next checkpoint, not another instance of the last one.
-            bytes32 lastCheckpointHash = keccak256(abi.encode(s.committedCheckpoints[checkpoint.blockHeight]));
-            if (checkpointHash == lastCheckpointHash) {
-                // slither-disable-next-line unused-return
-                s.rewardedRelayers[checkpoint.blockHeight].add(msg.sender);
-            }
         }
     }
 
@@ -362,34 +352,56 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         s.bootstrapOwners.add(msg.sender);
     }
 
-    /// @notice reward the relayers for of the previous checkpoint after processing the one at height `height`.
+    /// @notice reward the relayers for the previous checkpoint after processing the one at height `height`.
     /// @dev The reward includes the fixed relayer reward and accumulated cross-message fees received from the gateway.
     /// @param height height of the checkpoint the relayers are rewarded for
-    /// @param reward The sum of cross-message fees in the checkpoint
-    function distributeRewardToRelayers(uint256 height, uint256 reward) external payable onlyGateway {
+    /// @param reward The sum of the reward
+    function distributeRewardToRelayers(
+        uint256 height,
+        uint256 reward,
+        QuorumObjKind kind
+    ) external payable onlyGateway {
         if (reward == 0) {
             return;
         }
-        uint256 previousHeight = height - s.bottomUpCheckPeriod;
-        address[] memory relayers = s.rewardedRelayers[previousHeight].values();
+
+        // get rewarded addresses
+        address[] memory relayers = new address[](0);
+        if (kind == QuorumObjKind.Checkpoint) {
+            relayers = checkpointRewardedAddrs(height);
+        } else if (kind == QuorumObjKind.BottomUpMsgBatch) {
+            // FIXME: The distribution of rewards for batches can't be done
+            // as for checkpoints (due to how they are submitted). As
+            // we are running out of time, we'll defer this for the future.
+            revert MethodNotAllowed("rewards not defined for batches");
+        } else {
+            revert MethodNotAllowed("rewards not defined for object kind");
+        }
+
+        // comupte reward
+        // we are not distributing equally, this logic should be decoupled
+        // into different reward policies.
         uint256 relayersLength = relayers.length;
         if (relayersLength == 0) {
             return;
         }
         if (reward < relayersLength) {
-            // Reverting here would mean a single message with 1 atto reward
-            // relayed by 2 validators would mean the checkpoint cannot be
-            // submitted.
             return;
         }
         uint256 relayerReward = reward / relayersLength;
 
+        // distribute reward
         for (uint256 i; i < relayersLength; ) {
-            s.relayerRewards[relayers[i]] += relayerReward;
+            s.relayerRewards.rewards[relayers[i]] += relayerReward;
             unchecked {
                 ++i;
             }
         }
+    }
+
+    function checkpointRewardedAddrs(uint256 height) internal view returns (address[] memory relayers) {
+        uint256 previousHeight = height - s.bottomUpCheckPeriod;
+        relayers = s.relayerRewards.checkpointRewarded[previousHeight].values();
     }
 
     /**

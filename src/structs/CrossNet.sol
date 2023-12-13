@@ -2,6 +2,10 @@
 pragma solidity 0.8.19;
 
 import {SubnetID, IPCAddress} from "./Subnet.sol";
+import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+
+uint64 constant MAX_MSGS_PER_BATCH = 10;
+uint256 constant BATCH_PERIOD = 100;
 
 /// @notice The parent finality for IPC parent at certain height.
 struct ParentFinality {
@@ -27,7 +31,28 @@ struct BottomUpCheckpoint {
 
 /// @notice A batch of bottom-up messages for execution
 struct BottomUpMsgBatch {
+    /// @dev Child subnet ID, for replay protection from other subnets where the exact same validators operate.
+    SubnetID subnetID;
+    /// @dev The height of the child subnet at which the batch was cut.
+    uint256 blockHeight;
+    /// @dev Batch of messages to execute.
     CrossMsg[] msgs;
+}
+
+/// @notice Tracks information about the last batch executed
+struct BottomUpMsgBatchInfo {
+    uint256 blockHeight;
+    bytes32 hash;
+}
+
+/// @notice Tracks information about relayer rewards
+struct RelayerRewardsInfo {
+    /// @dev user rewards
+    mapping(address => uint256) rewards;
+    /// @dev tracks the addresses rewarded for checkpoint submission on a specific epoch
+    mapping(uint256 => EnumerableSet.AddressSet) checkpointRewarded;
+    /// @dev tracks the addresses rewarded for batch submission on a specific epoch
+    mapping(uint256 => EnumerableSet.AddressSet) batchRewarded;
 }
 
 /**

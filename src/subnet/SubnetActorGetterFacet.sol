@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {ConsensusType} from "../enums/ConsensusType.sol";
-import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, CrossMsg} from "../structs/CrossNet.sol";
 import {SubnetID} from "../structs/Subnet.sol";
 import {SubnetID, ValidatorInfo, Validator} from "../structs/Subnet.sol";
 import {SubnetActorStorage} from "../lib/LibSubnetActorStorage.sol";
@@ -130,9 +130,14 @@ contract SubnetActorGetterFacet {
         return LibStaking.isWaitingValidator(validator);
     }
 
+    function hasSubmittedInLastBottomUpMsgBatchHeight(address validator) external view returns (bool) {
+        uint256 height = s.lastBottomUpBatch.blockHeight;
+        return s.relayerRewards.batchRewarded[height].contains(validator);
+    }
+
     function hasSubmittedInLastBottomUpCheckpointHeight(address validator) external view returns (bool) {
         uint256 height = s.lastBottomUpCheckpointHeight;
-        return s.rewardedRelayers[height].contains(validator);
+        return s.relayerRewards.checkpointRewarded[height].contains(validator);
     }
 
     /// @notice returns the committed bottom-up checkpoint at specific epoch
@@ -187,6 +192,6 @@ contract SubnetActorGetterFacet {
     /// @notice Returns the current reward for the relayer
     /// @param relayer - relayer address
     function getRelayerReward(address relayer) external view returns (uint256) {
-        return s.relayerRewards[relayer];
+        return s.relayerRewards.rewards[relayer];
     }
 }

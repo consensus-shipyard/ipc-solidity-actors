@@ -16,7 +16,7 @@ import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
 import {IPCMsgType} from "../src/enums/IPCMsgType.sol";
 import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {QuorumInfo} from "../src/structs/Quorum.sol";
-import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/CrossNet.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
@@ -1063,7 +1063,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.startPrank(BLS_ACCOUNT_ADDREESS);
         vm.deal(BLS_ACCOUNT_ADDREESS, releaseAmount + 1);
         release(releaseAmount);
-        require(gwGetter.bottomUpMessages(gwGetter.bottomUpCheckPeriod()).length == 1, "no messages");
+        require(gwGetter.bottomUpMsgsBatch(gwGetter.bottomUpMsgsBatchPeriod()).msgs.length == 1, "no messages");
     }
 
     function testGatewayDiamond_Release_Works_EmptyCrossMsgMeta(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -1590,8 +1590,6 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         BottomUpCheckpoint memory recv = gwGetter.bottomUpCheckpoint(gwGetter.bottomUpCheckPeriod());
         require(recv.nextConfigurationNumber == 1, "nextConfigurationNumber incorrect");
         require(recv.blockHash == keccak256("block1"), "block hash incorrect");
-        require(gwGetter.bottomUpMessages(gwGetter.bottomUpCheckPeriod()).length == 0, "there are messages");
-
         uint256 d = gwGetter.bottomUpCheckPeriod();
 
         // failed to create a checkpoint with the same height
@@ -1754,7 +1752,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
             QuorumInfo memory info,
             address[] memory signatories,
             bytes[] memory signatures
-        ) = gwGetter.getSignatureBundle(gwGetter.bottomUpCheckPeriod());
+        ) = gwGetter.getCheckpointSignatureBundle(gwGetter.bottomUpCheckPeriod());
         require(ch.blockHash == keccak256("block"), "unexpected block hash");
         require(info.hash == keccak256(abi.encode(checkpoint)), "unexpected checkpoint hash");
         require(signatories.length == 3, "unexpected signatories length");
@@ -1944,7 +1942,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         (bytes32 membershipRoot, ) = MerkleTreeHelper.createMerkleProofsForValidators(addrs, weights);
 
-        uint256 index = gwGetter.getBottomUpRetentionHeight();
+        uint256 index = gwGetter.getCheckpointRetentionHeight();
         require(index == 1, "unexpected height");
 
         BottomUpCheckpoint memory checkpoint;
@@ -1964,7 +1962,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         }
         vm.stopPrank();
 
-        index = gwGetter.getBottomUpRetentionHeight();
+        index = gwGetter.getCheckpointRetentionHeight();
         require(index == 1, "retention height is not 1");
 
         uint256[] memory heights = gwGetter.getIncompleteCheckpointHeights();
@@ -1974,7 +1972,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         gwRouter.pruneBottomUpCheckpoints(4);
         vm.stopPrank();
 
-        index = gwGetter.getBottomUpRetentionHeight();
+        index = gwGetter.getCheckpointRetentionHeight();
         require(index == 4, "height was not updated");
         heights = gwGetter.getIncompleteCheckpointHeights();
         require(heights.length == n, "index is not the same");
