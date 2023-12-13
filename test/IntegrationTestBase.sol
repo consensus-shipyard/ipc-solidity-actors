@@ -320,6 +320,28 @@ contract IntegrationTestBase is Test {
         uint64 _checkPeriod,
         uint8 _majorityPercentage
     ) public {
+        createSubnetActor(
+            _ipcGatewayAddr,
+            _consensus,
+            _minActivationCollateral,
+            _minValidators,
+            _checkPeriod,
+            _majorityPercentage,
+            false,
+            100
+        );
+    }
+
+    function createSubnetActor(
+        address _ipcGatewayAddr,
+        ConsensusType _consensus,
+        uint256 _minActivationCollateral,
+        uint64 _minValidators,
+        uint64 _checkPeriod,
+        uint8 _majorityPercentage,
+        bool _permissioned,
+        uint16 _activeValidatorsLimit
+    ) public {
         SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
 
         saManager = new SubnetActorManagerFacet();
@@ -371,9 +393,9 @@ contract IntegrationTestBase is Test {
                 minValidators: _minValidators,
                 bottomUpCheckPeriod: _checkPeriod,
                 majorityPercentage: _majorityPercentage,
-                activeValidatorsLimit: 100,
+                activeValidatorsLimit: _activeValidatorsLimit,
                 powerScale: 12,
-                permissioned: false,
+                permissioned: _permissioned,
                 minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
             })
         );

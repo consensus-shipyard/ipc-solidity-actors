@@ -1077,19 +1077,14 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         gatewayAddress = address(gatewayDiamond);
 
         createSubnetActor(
-            SubnetActorDiamond.ConstructorParams({
-                parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
-                ipcGatewayAddr: address(gatewayAddress),
-                consensus: ConsensusType.Fendermint,
-                minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
-                minValidators: DEFAULT_MIN_VALIDATORS,
-                bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-                activeValidatorsLimit: 100,
-                powerScale: 12,
-                permissioned: true,
-                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
-            })
+            _ipcGatewayAddr,
+            ConsensusType.Fendermint,
+            _minActivationCollateral,
+            _minValidators,
+            _checkPeriod,
+            _majorityPercentage,
+            true,
+            2
         );
 
         (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
@@ -1105,19 +1100,14 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         gatewayAddress = address(gatewayDiamond);
 
         createSubnetActor(
-            SubnetActorDiamond.ConstructorParams({
-                parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
-                ipcGatewayAddr: address(gatewayAddress),
-                consensus: ConsensusType.Fendermint,
-                minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
-                minValidators: DEFAULT_MIN_VALIDATORS,
-                bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
-                majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
-                activeValidatorsLimit: 2,
-                powerScale: 12,
-                permissioned: true,
-                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
-            })
+            _ipcGatewayAddr,
+            ConsensusType.Fendermint,
+            _minActivationCollateral,
+            _minValidators,
+            _checkPeriod,
+            _majorityPercentage,
+            true,
+            2
         );
 
         (address[] memory validators, uint256[] memory privKeys, bytes[] memory publicKeys) = TestUtils.newValidators(
