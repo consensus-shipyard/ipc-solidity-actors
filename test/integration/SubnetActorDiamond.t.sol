@@ -1122,7 +1122,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
     //     vm.stopPrank();
     // }
 
-    function test_FederatedValidation_cannotJoin() public {
+    function testSubnetActorDiamond_FederatedValidation_cannotJoin() public {
         gatewayAddress = address(gatewayDiamond);
 
         _assertDeploySubnetActor(
@@ -1135,11 +1135,34 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
             true
         );
 
+        (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
+        vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE * 2);
+        vm.startPrank(validator1);
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+
         vm.expectRevert(MethodNotAllowed.selector);
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+    }
+
+    function testSubnetActorDiamond_FederatedValidation_works() public {
+        gatewayAddress = address(gatewayDiamond);
+
+        _assertDeploySubnetActor(
+            gatewayAddress,
+            ConsensusType.Fendermint,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
+            true
+        );
 
         (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
-        vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
+        vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE * 2);
         vm.startPrank(validator1);
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+        vm.stopPrank();
+
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
     }
 }
