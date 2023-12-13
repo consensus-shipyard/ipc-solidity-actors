@@ -241,7 +241,15 @@ pub mod gateway_manager_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("MethodNotAllowed"),
-                            inputs: ::std::vec![],
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("reason"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("string"),
+                                    ),
+                                },
+                            ],
                         },
                     ],
                 ),
@@ -498,7 +506,7 @@ pub mod gateway_manager_facet {
     )]
     #[etherror(name = "InvalidCrossMsgValue", abi = "InvalidCrossMsgValue()")]
     pub struct InvalidCrossMsgValue;
-    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed()` and selector `0x83f171d6`
+    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed(string)` and selector `0x015538b1`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -509,8 +517,10 @@ pub mod gateway_manager_facet {
         Eq,
         Hash
     )]
-    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed()")]
-    pub struct MethodNotAllowed;
+    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed(string)")]
+    pub struct MethodNotAllowed {
+        pub reason: ::std::string::String,
+    }
     ///Custom Error type `NotEmptySubnetCircSupply` with signature `NotEmptySubnetCircSupply()` and selector `0xf8cf8e02`
     #[derive(
         Clone,
