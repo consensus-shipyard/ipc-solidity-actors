@@ -1077,7 +1077,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         gatewayAddress = address(gatewayDiamond);
 
         createSubnetActor(
-            gatewayDiamond,
+            gatewayAddress,
             ConsensusType.Fendermint,
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
@@ -1100,7 +1100,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         gatewayAddress = address(gatewayDiamond);
 
         createSubnetActor(
-            gatewayDiamond,
+            gatewayAddress,
             ConsensusType.Fendermint,
             DEFAULT_MIN_VALIDATOR_STAKE,
             DEFAULT_MIN_VALIDATORS,
@@ -1113,7 +1113,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         (address[] memory validators, uint256[] memory privKeys, bytes[] memory publicKeys) = TestUtils.newValidators(
             3
         );
-        uint256[] memory powers = new uint256[](2);
+        uint256[] memory powers = new uint256[](3);
         powers[0] = 10000;
         powers[1] = 20000;
         powers[2] = 5000; // we only have 2 active validators, validator 2 does not have enough power

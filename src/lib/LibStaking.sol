@@ -214,6 +214,8 @@ library LibValidatorSet {
     /// @notice Validator's federated power was updated by admin
     function confirmFederatedPower(ValidatorSet storage self, address validator, uint256 power) internal {
         uint256 existingPower = self.validators[validator].federatedPower;
+        self.validators[validator].federatedPower = power;
+
         if (existingPower == power) {
             return;
         } else if (existingPower < power) {
@@ -221,7 +223,6 @@ library LibValidatorSet {
         } else {
             reduceReshuffle({self: self, validator: validator, newPower: power});
         }
-        self.validators[validator].federatedPower = power;
     }
 
     function confirmDeposit(ValidatorSet storage self, address validator, uint256 amount) internal {
@@ -548,7 +549,8 @@ library LibStaking {
             if (change.op == StakingOperation.SetMetadata) {
                 s.validatorSet.validators[validator].metadata = change.payload;
             } else if (change.op == StakingOperation.SetFederatedPower) {
-                uint256 power = abi.decode(change.payload, (uint256));
+                (bytes memory metadata, uint256 power) = abi.decode(change.payload, (bytes, uint256));
+                s.validatorSet.validators[validator].metadata = metadata;
                 s.validatorSet.confirmFederatedPower(validator, power);
             } else {
                 uint256 amount = abi.decode(change.payload, (uint256));
