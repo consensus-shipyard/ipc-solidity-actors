@@ -94,6 +94,14 @@ struct ValidatorInfo {
     bytes metadata;
 }
 
+/// Determines the permission mode for validators.
+enum PermissionMode {
+    /// Validator power is determined by the collateral staked
+    Collateral,
+    /// Validator power is assigned by the owner of the subnet
+    Federated
+}
+
 /// Keeping track of the list of validators. There are two types of validators:
 ///     - Active
 ///     - Waiting
@@ -106,6 +114,8 @@ struct ValidatorInfo {
 /// With each validator staking change, waiting validators can be promoted to active validators
 /// and active validators can be knocked off.
 struct ValidatorSet {
+    /// The permission mode for validators
+    PermissionMode permissionMode;
     /// The total number of active validators allowed.
     uint16 activeLimit;
     /// The total collateral confirmed.

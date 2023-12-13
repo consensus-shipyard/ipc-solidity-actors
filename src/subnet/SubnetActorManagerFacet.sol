@@ -143,6 +143,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that allows the contract owner to set the validators' federated power
     function setFederatedPowers(address[] calldata validators, uint256[] calldata powers) external onlyOwner notKilled {
+        if (!s.permissioned) {
+            revert MethodNotAllowed();
+        }
+
         if (validators.length != powers.length) {
             revert InvalidFederationPayload();
         }

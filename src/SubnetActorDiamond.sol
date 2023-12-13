@@ -9,7 +9,7 @@ import {IDiamondLoupe} from "./interfaces/IDiamondLoupe.sol";
 import {IERC165} from "./interfaces/IERC165.sol";
 import {GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod, InvalidCollateral, InvalidMajorityPercentage, InvalidPowerScale} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
-import {SubnetID} from "./structs/Subnet.sol";
+import {SubnetID, PermissionMode} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 import {LibStaking} from "./lib/LibStaking.sol";
 
@@ -73,6 +73,11 @@ contract SubnetActorDiamond {
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
         s.permissioned = params.permissioned;
 
+        if (params.permissioned) {
+            s.validatorSet.permissionMode = PermissionMode.Federated;
+        } else {
+            s.validatorSet.permissionMode = PermissionMode.Collateral;
+        }
         s.validatorSet.activeLimit = params.activeValidatorsLimit;
         // Start the next configuration number from 1, 0 is reserved for no change and the genesis membership
         s.changeSet.nextConfigurationNumber = LibStaking.INITIAL_CONFIGURATION_NUMBER;
