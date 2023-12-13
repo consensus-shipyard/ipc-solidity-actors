@@ -227,21 +227,6 @@ contract SubnetActorInvariants is StdInvariant, Test {
         assertEq(sumOfCollaterals, totalCollateral, "unexpected sum of validators collateral");
     }
 
-    /// @notice The collateral of the bootstrapped subnet is greater than minimum activation collateral.
-    function iPoCnvariant_SA_05_collateral_is_sufficient() public {
-        //console.log(saGetter.getTotalConfirmedCollateral());
-        bool subnetBootstrapped = saGetter.bootstrapped();
-        if (subnetBootstrapped) {
-            assertGe(
-                saGetter.getTotalConfirmedCollateral(),
-                saGetter.minActivationCollateral(),
-                "unexpected subnet collateral"
-            );
-        } else {
-            assert(true);
-        }
-    }
-
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         gwRouter = new GatewayRouterFacet();
         gwManager = new GatewayManagerFacet();
