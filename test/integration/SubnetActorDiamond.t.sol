@@ -1164,14 +1164,16 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         powers[0] = 10000;
         powers[1] = 20000;
 
-        vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE * 2);
+        vm.deal(validators[0], DEFAULT_MIN_VALIDATOR_STAKE * 2);
         vm.startPrank(validators[0]);
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKeys[0]);
         vm.stopPrank();
 
         saManager.setFederatedPowers(validators, publicKeys, powers);
 
-        _confirmChange(validators, privKeys);
+        require(!saGetter.isActiveValidator(validators[1]), "should not be active validator");
+
+        _confirmChange(validators[0], privKeys[0]);
 
         require(saGetter.isActiveValidator(validators[0]), "not active validator 0");
         require(saGetter.isActiveValidator(validators[1]), "not active validator 1");

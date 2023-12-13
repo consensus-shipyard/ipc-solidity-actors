@@ -171,6 +171,55 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+<<<<<<< HEAD
+=======
+                    ::std::borrow::ToOwned::to_owned("setFederatedPowers"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("setFederatedPowers"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("validators"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address[]"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("publicKeys"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes[]"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("powers"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256[]"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
+>>>>>>> 7b19786 (update bindings)
                     ::std::borrow::ToOwned::to_owned("stake"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -905,6 +954,20 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([102, 120, 60, 155], amount)
                 .expect("method not found (this should never happen)")
         }
+<<<<<<< HEAD
+=======
+        ///Calls the contract's `setFederatedPowers` (0x2af05ff6) function
+        pub fn set_federated_powers(
+            &self,
+            validators: ::std::vec::Vec<::ethers::core::types::Address>,
+            public_keys: ::std::vec::Vec<::ethers::core::types::Bytes>,
+            powers: ::std::vec::Vec<::ethers::core::types::U256>,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([42, 240, 95, 246], (validators, public_keys, powers))
+                .expect("method not found (this should never happen)")
+        }
+>>>>>>> 7b19786 (update bindings)
         ///Calls the contract's `stake` (0x3a4b66f1) function
         pub fn stake(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
@@ -2240,6 +2303,29 @@ pub mod subnet_actor_manager_facet {
     pub struct PreReleaseCall {
         pub amount: ::ethers::core::types::U256,
     }
+<<<<<<< HEAD
+=======
+    ///Container type for all input parameters for the `setFederatedPowers` function with signature `setFederatedPowers(address[],bytes[],uint256[])` and selector `0x2af05ff6`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "setFederatedPowers",
+        abi = "setFederatedPowers(address[],bytes[],uint256[])"
+    )]
+    pub struct SetFederatedPowersCall {
+        pub validators: ::std::vec::Vec<::ethers::core::types::Address>,
+        pub public_keys: ::std::vec::Vec<::ethers::core::types::Bytes>,
+        pub powers: ::std::vec::Vec<::ethers::core::types::U256>,
+    }
+>>>>>>> 7b19786 (update bindings)
     ///Container type for all input parameters for the `stake` function with signature `stake()` and selector `0x3a4b66f1`
     #[derive(
         Clone,
