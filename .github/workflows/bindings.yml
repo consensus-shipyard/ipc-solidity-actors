@@ -27,10 +27,10 @@ jobs:
           components: rustfmt
 
         # for prettier (compile-abi calls the formatter first)
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
+      - name: Set up node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: '14'
+          node-version: '21'
 
       - name: Create binding
         run: make compile-abi && make rust-binding
