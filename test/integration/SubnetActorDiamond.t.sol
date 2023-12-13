@@ -1079,7 +1079,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         createSubnetActor(
             SubnetActorDiamond.ConstructorParams({
                 parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
-                ipcGatewayAddr: address(0),
+                ipcGatewayAddr: address(gatewayAddress),
                 consensus: ConsensusType.Fendermint,
                 minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
                 minValidators: DEFAULT_MIN_VALIDATORS,
@@ -1107,7 +1107,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         createSubnetActor(
             SubnetActorDiamond.ConstructorParams({
                 parentId: SubnetID(ROOTNET_CHAINID, new address[](0)),
-                ipcGatewayAddr: address(0),
+                ipcGatewayAddr: address(gatewayAddress),
                 consensus: ConsensusType.Fendermint,
                 minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
                 minValidators: DEFAULT_MIN_VALIDATORS,
