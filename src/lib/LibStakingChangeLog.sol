@@ -28,9 +28,10 @@ library LibStakingChangeLog {
     function federatedPowerRequest(
         StakingChangeLog storage changes,
         address validator,
+        bytes calldata metadata,
         uint256 power
     ) internal {
-        bytes memory payload = abi.encode(power);
+        bytes memory payload = abi.encode(metadata, power);
 
         uint64 configurationNumber = recordChange({
             changes: changes,

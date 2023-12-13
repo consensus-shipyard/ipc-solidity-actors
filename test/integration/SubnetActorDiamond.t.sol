@@ -1157,12 +1157,23 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
             true
         );
 
-        (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
+        (address[] memory validators, uint256[] memory privKeys, bytes[] memory publicKeys) = TestUtils.newValidators(
+            2
+        );
+        uint256[] memory powers = new uint256[](2);
+        powers[0] = 10000;
+        powers[1] = 20000;
+
         vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE * 2);
-        vm.startPrank(validator1);
+        vm.startPrank(validators[0]);
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
         vm.stopPrank();
 
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+        saManager.setFederatedPowers(validators, publicKeys, powers);
+
+        _confirmChange(validators, privKeys);
+
+        require(saGetter.isActiveValidator(validators[0]), "not active validator 0");
+        require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
     }
 }

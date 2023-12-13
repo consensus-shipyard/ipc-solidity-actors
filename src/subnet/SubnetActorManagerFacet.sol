@@ -142,7 +142,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice method that allows the contract owner to set the validators' federated power
-    function setFederatedPowers(address[] calldata validators, uint256[] calldata powers) external onlyOwner notKilled {
+    function setFederatedPowers(
+        address[] calldata validators,
+        bytes[] calldata publicKeys,
+        uint256[] calldata powers
+    ) external onlyOwner notKilled {
         if (!s.permissioned) {
             revert MethodNotAllowed();
         }
@@ -151,9 +155,19 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             revert InvalidFederationPayload();
         }
 
+        if (validators.length != publicKeys.length) {
+            revert InvalidFederationPayload();
+        }
+
         uint256 length = validators.length;
         for (uint256 i; i < length; ) {
-            LibStaking.setFederatedPower(validators[i], powers[i]);
+            // check addresses
+            address convertedAddress = publicKeyToAddress(publicKeys[i]);
+            if (convertedAddress != validators[i]) {
+                revert NotOwnerOfPublicKey();
+            }
+
+            LibStaking.setFederatedPower(validators[i], publicKeys[i], powers[i]);
 
             unchecked {
                 ++i;

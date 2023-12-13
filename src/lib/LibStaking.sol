@@ -466,9 +466,9 @@ library LibStaking {
 
     // ================= Operations that are queued ==============
     /// @notice Set the federated power of the validator
-    function setFederatedPower(address validator, uint256 amount) internal {
+    function setFederatedPower(address validator, bytes calldata metadata, uint256 amount) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        s.changeSet.federatedPowerRequest(validator, amount);
+        s.changeSet.federatedPowerRequest(validator, metadata, amount);
     }
 
     /// @notice Set the validator metadata
