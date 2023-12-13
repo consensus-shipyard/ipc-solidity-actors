@@ -46,13 +46,13 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
     /// @notice Pause all methods with `whenNotPaused` modifier
     function pause() external {
         LibDiamond.enforceIsContractOwner();
-        setPausable(true);
+        _pause();
     }
 
     /// @notice Unpause all methods with `whenNotPaused` modifier
     function unpause() external {
         LibDiamond.enforceIsContractOwner();
-        setPausable(false);
+        _unpause();
     }
 
     /** @notice submit a checkpoint for execution.
@@ -198,7 +198,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
 
     /// @notice method that allows a validator to join the subnet
     /// @param publicKey The off-chain 65 byte public key that should be associated with the validator
-    function join(bytes calldata publicKey) external payable whenNotPaused nonReentrant notKilled {
+    function join(bytes calldata publicKey) external payable nonReentrant whenNotPaused notKilled {
         // adding this check to prevent new validators from joining
         // after the subnet has been bootstrapped. We will increase the
         // functionality in the future to support explicit permissioning.
@@ -299,7 +299,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
     /// @notice method that allows a validator to leave the subnet
     /// @dev it also return the validators initial balance if the
     /// subnet was not yet bootstrapped.
-    function leave() external whenNotPaused nonReentrant notKilled {
+    function leave() external nonReentrant whenNotPaused notKilled {
         // disbling validator changes for permissioned subnets (at least for now
         // until a more complex mechanism is implemented).
         // This means that initial validators won't be able to recover
@@ -347,12 +347,12 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
     }
 
     /// @notice Validator claims their released collateral
-    function claim() external whenNotPaused nonReentrant {
+    function claim() external nonReentrant whenNotPaused {
         LibStaking.claimCollateral(msg.sender);
     }
 
     /// @notice Relayer claims its reward
-    function claimRewardForRelayer() external whenNotPaused nonReentrant {
+    function claimRewardForRelayer() external nonReentrant whenNotPaused {
         LibStaking.claimRewardForRelayer(msg.sender);
     }
 
