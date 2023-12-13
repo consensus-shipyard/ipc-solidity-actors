@@ -96,7 +96,19 @@ library LibGateway {
         BottomUpMsgBatch memory batch
     ) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        s.bottomUpMsgBatches[batch.blockHeight] = batch;
+        BottomUpMsgBatch storage b = s.bottomUpMsgBatches[batch.blockHeight];
+        b.subnetID = batch.subnetID;
+        b.blockHeight = batch.blockHeight;
+
+        for (uint i = 0; i < batch.msgs.length;) {
+            // We need to push because initializing an array with a static
+            // length will cause a copy from memory to storage, making
+            // the compiler unhappy.
+            b.msgs.push(batch.msgs[i]);
+            unchecked {
+                ++i;
+            }
+        }
     }
 
     /// @notice obtain the ipc parent finality at certain block number
@@ -247,8 +259,8 @@ library LibGateway {
         if (!exists) {
             batch.subnetID = s.networkName;
             batch.blockHeight = epoch;
-            batch.msgs = new CrossMsg[](1);
-            batch.msgs[0] = crossMessage;
+            // we need to use push here to initialize the array.
+            batch.msgs.push(crossMessage);
         } else {
             // if the maximum size was already achieved emit already the event
             // and re-assign the batch to the current epoch.
@@ -270,8 +282,9 @@ library LibGateway {
                 emit NewBottomUpMsgBatch(epochCut,newBatch);
 
                 // Empty the messages of existing batch with epoch and start populating with the new message.
-                batch.msgs = new CrossMsg[](1);
-                batch.msgs[0] = crossMessage;
+                delete batch.msgs;
+                // need to push here to avoid a copy from memory to storage
+                batch.msgs.push(crossMessage);
 
                 LibGateway.storeBottomUpMsgBatch(newBatch);
             } else {
