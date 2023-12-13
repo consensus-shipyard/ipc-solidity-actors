@@ -26,6 +26,12 @@ jobs:
           toolchain: nightly
           components: rustfmt
 
+        # for prettier (compile-abi calls the formatter first)
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Create binding
         run: make compile-abi && make rust-binding
 

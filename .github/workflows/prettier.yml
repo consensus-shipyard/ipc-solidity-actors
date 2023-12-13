@@ -23,16 +23,13 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '14'
-      - name: Install Prettier and Prettier Solidity Plugin
-        run: npm install --save-dev prettier prettier-plugin-solidity
-      - name: Run Prettier on JavaScript/TypeScript/JSON/CSS/MD
-        run: npx prettier --write '**/*.{js,jsx,ts,tsx,json,css,md}'
-      - name: Run Prettier on Solidity Files
-        run: npx prettier --write '**/*.sol'
-      - name: Debugging - Show changed files
-        run: git restore package-lock.json && git status && git diff --name-only
+      - name: Run formatter
+        run: make fmt
       - name: Check diff clean
         run: |
+          git restore package-lock.json
+          git status
+          git diff --name-only
           git --no-pager diff --quiet
 
 #      - name: Commit changes

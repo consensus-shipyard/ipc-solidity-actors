@@ -41,7 +41,8 @@ lint:
 	solhint 'src/**/*.sol'
 
 fmt:
-	npx prettier --check -w 'src/**/**/*.sol' 'test/**/**/*.sol' 'test/**/**/*.t.sol'
+	npm install --silent --save-dev prettier prettier-plugin-solidity
+	npx prettier --check -w 'src/**/**/*.sol' 'test/**/**/*.sol' 'test/**/**/*.t.sol' '**/*.{js,jsx,ts,tsx,json,css,md}'
 
 build: | forge
 	forge build
