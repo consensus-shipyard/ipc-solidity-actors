@@ -286,7 +286,8 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
             _minActivationCollateral,
             _minValidators,
             _checkPeriod,
-            _majorityPercentage
+            _majorityPercentage,
+            false
         );
 
         SubnetID memory parent = saGetter.getParent();
@@ -1071,5 +1072,74 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
 
     function callback() public view {
         // console.log("callback called");
+    }
+
+    // function _assertJoin(address validator, uint256 amount) internal {
+    //     vm.startPrank(validator);
+    //     vm.deal(validator, amount + 1);
+
+    //     uint256 balanceBefore = validator.balance;
+    //     uint256 stakeBefore = saGetter.stake(validator);
+    //     uint256 totalStakeBefore = saGetter.totalStake();
+
+    //     saManager.join{value: amount}(DEFAULT_NET_ADDR, FvmAddress({addrType: 1, payload: new bytes(20)}));
+
+    //     require(saGetter.stake(validator) == stakeBefore + amount);
+    //     require(saGetter.totalStake() == totalStakeBefore + amount);
+    //     require(validator.balance == balanceBefore - amount);
+
+    //     vm.stopPrank();
+    // }
+
+    // function _assertLeave(address validator, uint256 amount) internal {
+    //     uint256 validatorBalanceBefore = validator.balance;
+    //     uint256 validatorsCountBefore = saGetter.validatorCount();
+    //     uint256 totalStakeBefore = saGetter.totalStake();
+
+    //     vm.prank(validator);
+    //     vm.expectCall(gatewayAddress, abi.encodeWithSelector(gwManager.releaseStake.selector, amount));
+    //     vm.expectCall(validator, amount, EMPTY_BYTES);
+
+    //     saManager.leave();
+
+    //     require(saGetter.stake(validator) == 0);
+    //     require(saGetter.totalStake() == totalStakeBefore - amount);
+    //     require(saGetter.validatorCount() == validatorsCountBefore - 1);
+    //     require(validator.balance == validatorBalanceBefore + amount);
+    // }
+
+    // function _assertKill(address validator) internal {
+    //     vm.startPrank(validator);
+    //     vm.deal(validator, 1 ether);
+    //     vm.expectCall(gatewayAddress, abi.encodeWithSelector(gwManager.kill.selector));
+
+    //     saManager.kill();
+
+    //     require(saGetter.totalStake() == 0);
+    //     require(saGetter.validatorCount() == 0);
+    //     require(saGetter.status() == Status.Killed);
+
+    //     vm.stopPrank();
+    // }
+
+    function test_FederatedValidation_cannotJoin() public {
+        gatewayAddress = address(gatewayDiamond);
+
+        _assertDeploySubnetActor(
+            gatewayAddress,
+            ConsensusType.Fendermint,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
+            true
+        );
+
+        vm.expectRevert(MethodNotAllowed.selector);
+
+        (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
+        vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE);
+        vm.startPrank(validator1);
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
     }
 }
