@@ -16,11 +16,11 @@ upgrade-sa-diamond:
 upgrade-sr-diamond:
 	./ops/upgrade-sr-diamond.sh $(NETWORK)
 
-compile-abi: | forge
+compile-abi: | forge fmt
 	./ops/compile-abi.sh $(OUTPUT)
 
 rust-binding:
-	BUILD_BINDINGS=1 cargo build --release --manifest-path ./binding/Cargo.toml -p ipc_actors_abis
+	BUILD_BINDINGS=1 cargo build --locked --release --manifest-path ./binding/Cargo.toml -p ipc_actors_abis
 
 # ==============================================================================
 # Running security checks within the local computer
