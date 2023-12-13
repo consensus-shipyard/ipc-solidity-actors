@@ -71,7 +71,6 @@ contract SubnetActorDiamond {
         s.powerScale = params.powerScale;
         s.minCrossMsgFee = params.minCrossMsgFee;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
-        s.permissioned = params.permissioned;
 
         if (params.permissioned) {
             s.validatorSet.permissionMode = PermissionMode.Federated;

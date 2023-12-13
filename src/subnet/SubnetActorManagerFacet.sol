@@ -5,7 +5,7 @@ import {InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, Col
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
-import {SubnetID, Validator, ValidatorSet} from "../structs/Subnet.sol";
+import {SubnetID, Validator, ValidatorSet, PermissionMode} from "../structs/Subnet.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {MultisignatureChecker} from "../lib/LibMultisignatureChecker.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
@@ -27,11 +27,18 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event NextBottomUpCheckpointExecuted(uint64 epoch, address submitter);
     event SubnetBootstrapped(Validator[]);
 
-    modifier onlyOwner() {
-        if (msg.sender != LibDiamond.contractOwner()) {
-            revert LibDiamond.NotOwner();
+    function enforceFederatedValidation() internal view {
+        if (s.validatorSet.permissionMode != PermissionMode.Federated) {
+            revert MethodNotAllowed();
         }
-        _;
+        return;
+    }
+
+    function enforceCollateralValidation() internal view {
+        if (s.validatorSet.permissionMode != PermissionMode.Collateral) {
+            revert MethodNotAllowed();
+        }
+        return;
     }
 
     /** @notice submit a checkpoint for execution.
@@ -146,10 +153,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         address[] calldata validators,
         bytes[] calldata publicKeys,
         uint256[] calldata powers
-    ) external onlyOwner notKilled {
-        if (!s.permissioned) {
-            revert MethodNotAllowed();
-        }
+    ) external notKilled {
+        LibDiamond.enforceIsContractOwner();
+
+        enforceFederatedValidation();
 
         if (validators.length != powers.length) {
             revert InvalidFederationPayload();
@@ -181,8 +188,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         // adding this check to prevent new validators from joining
         // after the subnet has been bootstrapped. We will increase the
         // functionality in the future to support explicit permissioning.
-        if (s.bootstrapped && s.permissioned) {
-            revert MethodNotAllowed();
+        if (s.bootstrapped) {
+            enforceCollateralValidation();
         }
         if (msg.value == 0) {
             revert CollateralIsZero();
@@ -228,11 +235,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that allows a validator to increase its stake
     function stake() external payable notKilled {
-        // disbling validator changes for permissioned subnets (at least for now
+        // disbling validator changes for federated validation subnets (at least for now
         // until a more complex mechanism is implemented).
-        if (s.permissioned) {
-            revert MethodNotAllowed();
-        }
+        enforceCollateralValidation();
+
         if (msg.value == 0) {
             revert CollateralIsZero();
         }
@@ -252,11 +258,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @notice method that allows a validator to unstake a part of its collateral from a subnet
     /// @dev `leave` must be used to unstake the entire stake.
     function unstake(uint256 amount) external notKilled {
-        // disbling validator changes for permissioned subnets (at least for now
+        // disbling validator changes for federated validation subnets (at least for now
         // until a more complex mechanism is implemented).
-        if (s.permissioned) {
-            revert MethodNotAllowed();
-        }
+        enforceCollateralValidation();
+
         if (amount == 0) {
             revert CannotReleaseZero();
         }
@@ -281,13 +286,13 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @dev it also return the validators initial balance if the
     /// subnet was not yet bootstrapped.
     function leave() external nonReentrant notKilled {
-        // disbling validator changes for permissioned subnets (at least for now
+        // disbling validator changes for federated validation subnets (at least for now
         // until a more complex mechanism is implemented).
         // This means that initial validators won't be able to recover
         // their collateral ever (worth noting in the docs if this ends
         // up sticking around for a while).
-        if (s.bootstrapped && s.permissioned) {
-            revert MethodNotAllowed();
+        if (s.bootstrapped) {
+            enforceCollateralValidation();
         }
 
         // remove bootstrap nodes added by this validator

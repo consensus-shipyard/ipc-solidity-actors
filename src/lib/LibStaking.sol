@@ -213,8 +213,15 @@ library LibValidatorSet {
 
     /// @notice Validator's federated power was updated by admin
     function confirmFederatedPower(ValidatorSet storage self, address validator, uint256 power) internal {
+        uint256 existingPower = self.validators[validator].federatedPower;
+        if (existingPower == power) {
+            return;
+        } else if (existingPower < power) {
+            increaseReshuffle({self: self, maybeActive: validator, newPower: power});
+        } else {
+            reduceReshuffle({self: self, validator: validator, newPower: power});
+        }
         self.validators[validator].federatedPower = power;
-        depositReshuffle({self: self, maybeActive: validator, newPower: power});
     }
 
     function confirmDeposit(ValidatorSet storage self, address validator, uint256 amount) internal {
@@ -223,7 +230,7 @@ library LibValidatorSet {
 
         self.totalConfirmedCollateral += amount;
 
-        depositReshuffle({self: self, maybeActive: validator, newPower: newCollateral});
+        increaseReshuffle({self: self, maybeActive: validator, newPower: newCollateral});
     }
 
     function confirmWithdraw(ValidatorSet storage self, address validator, uint256 amount) internal {
@@ -236,13 +243,13 @@ library LibValidatorSet {
             self.validators[validator].confirmedCollateral = newCollateral;
         }
 
-        withdrawReshuffle({self: self, validator: validator, newPower: newCollateral});
+        reduceReshuffle({self: self, validator: validator, newPower: newCollateral});
 
         self.totalConfirmedCollateral -= amount;
     }
 
-    /// @notice Reshuffles the active and waiting validators when a deposit is confirmed
-    function depositReshuffle(ValidatorSet storage self, address maybeActive, uint256 newPower) internal {
+    /// @notice Reshuffles the active and waiting validators when an increase in power is confirmed
+    function increaseReshuffle(ValidatorSet storage self, address maybeActive, uint256 newPower) internal {
         if (self.activeValidators.contains(maybeActive)) {
             self.activeValidators.increaseReheapify(self, maybeActive);
             emit ActiveValidatorCollateralUpdated(maybeActive, newPower);
@@ -293,8 +300,8 @@ library LibValidatorSet {
         emit NewWaitingValidator(maybeActive, newPower);
     }
 
-    /// @notice Reshuffles the active and waiting validators when a withdraw is confirmed
-    function withdrawReshuffle(ValidatorSet storage self, address validator, uint256 newPower) internal {
+    /// @notice Reshuffles the active and waiting validators when a power reduction is confirmed
+    function reduceReshuffle(ValidatorSet storage self, address validator, uint256 newPower) internal {
         if (self.waitingValidators.contains(validator)) {
             if (newPower == 0) {
                 self.waitingValidators.deleteReheapify(self, validator);
