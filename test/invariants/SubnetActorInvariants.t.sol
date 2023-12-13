@@ -134,7 +134,8 @@ contract SubnetActorInvariants is StdInvariant, Test {
         targetContract(address(subnetActorHandler));
     }
 
-    /// @notice The number of validators called `join` is equal to the number of total validators.
+    /// @notice The number of validators called `join` is equal to the number of total validators,
+    /// if confirmations are executed immediately.
     function invariant_SA_01_total_validators_number_is_correct() public {
         assertEq(
             saGetter.getTotalValidatorsNumber(),
@@ -143,12 +144,23 @@ contract SubnetActorInvariants is StdInvariant, Test {
         );
     }
 
-    /// @notice The stake of the subnet is the same from the GatewayActor and SubnetActor perspective.
+    /// @notice The stake of the subnet is the same from the SubnetActor and SubnetActorHandler perspectives.
+    /// @dev Confirmations are executed immediately via the mocked manager facet.
+    /// forge-config: default.invariant.runs = 50
+    /// forge-config: default.invariant.depth = 100
+    /// forge-config: default.invariant.fail-on-revert = false
     function invariant_SA_02_conservationOfETH() public {
         assertEq(
             ETH_SUPPLY,
             address(subnetActorHandler).balance + subnetActorHandler.ghost_stakedSum(),
             "subnet actor handler: unexpected stake"
+        );
+        assertEq(
+            ETH_SUPPLY,
+            address(subnetActorHandler).balance +
+                saGetter.getTotalCollateral() +
+                subnetActorHandler.ghost_unstakedSum(),
+            "subnet actor: unexpected stake"
         );
         assertEq(
             ETH_SUPPLY,
