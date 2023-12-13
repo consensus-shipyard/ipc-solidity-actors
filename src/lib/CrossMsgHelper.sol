@@ -105,7 +105,7 @@ library CrossMsgHelper {
     function isSorted(CrossMsg[] calldata crossMsgs) external pure returns (bool) {
         uint256 prevNonce;
         uint256 length = crossMsgs.length;
-        for (uint256 i; i < length; ) {
+        for (uint256 i; i < length; ++i ) {
             uint256 nonce = crossMsgs[i].message.nonce;
 
             if (prevNonce >= nonce) {
@@ -116,9 +116,6 @@ library CrossMsgHelper {
             }
 
             prevNonce = nonce;
-            unchecked {
-                ++i;
-            }
         }
 
         return true;

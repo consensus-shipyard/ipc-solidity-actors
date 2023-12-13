@@ -47,7 +47,7 @@ library MultisignatureChecker {
             return (!valid, Error.InvalidArrayLength);
         }
 
-        for (uint256 i; i < signaturesNumber; ) {
+        for (uint256 i; i < signaturesNumber; ++i) {
             (address recovered, ECDSA.RecoverError ecdsaErr, ) = ECDSA.tryRecover({
                 hash: hash,
                 signature: signatures[i]
@@ -59,9 +59,6 @@ library MultisignatureChecker {
                 return (!valid, Error.InvalidSignatory);
             }
             weight = weight + weights[i];
-            unchecked {
-                ++i;
-            }
         }
         if (weight >= threshold) {
             return (valid, Error.Nil);

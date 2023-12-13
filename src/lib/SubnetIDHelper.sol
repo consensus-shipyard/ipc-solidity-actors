@@ -31,11 +31,8 @@ library SubnetIDHelper {
 
         address[] memory route = new address[](subnet.route.length - 1);
         uint256 routeLength = route.length;
-        for (uint256 i; i < routeLength; ) {
+        for (uint256 i; i < routeLength; ++i) {
             route[i] = subnet.route[i];
-            unchecked {
-                ++i;
-            }
         }
 
         return SubnetID({root: subnet.root, route: route});
@@ -44,12 +41,9 @@ library SubnetIDHelper {
     function toString(SubnetID calldata subnet) external pure returns (string memory) {
         string memory route = string.concat("/r", Strings.toString(subnet.root));
         uint256 subnetLength = subnet.route.length;
-        for (uint256 i; i < subnetLength; ) {
+        for (uint256 i; i < subnetLength;  ++i) {
             route = string.concat(route, "/");
             route = string.concat(route, subnet.route[i].toHexString());
-            unchecked {
-                ++i;
-            }
         }
 
         return route;
@@ -63,11 +57,8 @@ library SubnetIDHelper {
         newSubnet.root = subnet.root;
         newSubnet.route = new address[](subnet.route.length + 1);
         uint256 routeLength = subnet.route.length;
-        for (uint256 i; i < routeLength; ) {
+        for (uint256 i; i < routeLength; ++i ) {
             newSubnet.route[i] = subnet.route[i];
-            unchecked {
-                ++i;
-            }
         }
 
         newSubnet.route[newSubnet.route.length - 1] = actor;
@@ -117,11 +108,8 @@ library SubnetIDHelper {
         }
 
         address[] memory route = new address[](i);
-        for (uint256 j; j < i; ) {
+        for (uint256 j; j < i;  ++j) {
             route[j] = subnet1.route[j];
-            unchecked {
-                ++j;
-            }
         }
 
         return SubnetID({root: subnet1.root, route: route});
@@ -152,11 +140,8 @@ library SubnetIDHelper {
 
         address[] memory route = new address[](i);
 
-        for (uint256 j; j < i; ) {
+        for (uint256 j; j < i; ++j ) {
             route[j] = subnet1.route[j];
-            unchecked {
-                ++j;
-            }
         }
 
         return SubnetID({root: subnet1.root, route: route});

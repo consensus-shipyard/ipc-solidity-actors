@@ -57,14 +57,10 @@ contract SubnetActorGetterFacet {
         address[] memory addresses = new address[](numAddresses);
         uint256[] memory balances = new uint256[](numAddresses);
 
-        for (uint256 i; i < numAddresses; ) {
+        for (uint256 i; i < numAddresses; ++i) {
             address addr = s.genesisBalanceKeys[i];
             addresses[i] = addr;
             balances[i] = s.genesisBalance[addr];
-
-            unchecked {
-                ++i;
-            }
         }
         return (addresses, balances);
     }
@@ -169,11 +165,8 @@ contract SubnetActorGetterFacet {
             return nodes;
         }
         address[] memory owners = s.bootstrapOwners.values();
-        for (uint256 i; i < n; ) {
+        for (uint256 i; i < n; ++i) {
             nodes[i] = s.bootstrapNodes[owners[i]];
-            unchecked {
-                ++i;
-            }
         }
         return nodes;
     }

@@ -62,12 +62,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         uint256 totalValue;
         uint256 totalFee;
         uint256 crossMsgLength = messages.length;
-        for (uint256 i; i < crossMsgLength; ) {
+        for (uint256 i; i < crossMsgLength; ++i) {
             totalValue += messages[i].message.value;
             totalFee += messages[i].message.fee;
-            unchecked {
-                ++i;
-            }
         }
 
         uint256 totalAmount = totalFee + totalValue;
@@ -126,13 +123,10 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         address[] memory validators = s.validatorsTracker.validators.listActiveValidators();
         uint256 vLength = validators.length;
         Validator[] memory vs = new Validator[](vLength);
-        for (uint256 i; i < vLength; ) {
+        for (uint256 i; i < vLength; ++i) {
             address addr = validators[i];
             ValidatorInfo storage info = s.validatorsTracker.validators.validators[addr];
             vs[i] = Validator({weight: info.confirmedCollateral, addr: addr, metadata: info.metadata});
-            unchecked {
-                ++i;
-            }
         }
 
         // update membership with the applied changes
@@ -200,11 +194,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param crossMsgs - the cross-net messages to apply
     function _applyMessages(SubnetID memory forwarder, CrossMsg[] memory crossMsgs) internal {
         uint256 crossMsgsLength = crossMsgs.length;
-        for (uint256 i; i < crossMsgsLength; ) {
+        for (uint256 i; i < crossMsgsLength; ++i) {
             _applyMsg(forwarder, crossMsgs[i]);
-            unchecked {
-                ++i;
-            }
         }
     }
 
@@ -334,7 +325,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert InvalidRetentionHeight();
         }
 
-        for (uint64 h = oldRetentionHeight; h < newRetentionHeight; ) {
+        for (uint64 h = oldRetentionHeight; h < newRetentionHeight; ++h) {
             delete s.bottomUpCheckpoints[h];
             delete s.bottomUpCheckpointInfo[h];
             delete s.bottomUpSignatureSenders[h];
@@ -343,15 +334,8 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             address[] memory validators = s.bottomUpSignatureSenders[h].values();
             uint256 n = validators.length;
 
-            for (uint256 i; i < n; ) {
+            for (uint256 i; i < n; ++i) {
                 delete s.bottomUpSignatures[h][validators[i]];
-                unchecked {
-                    ++i;
-                }
-            }
-
-            unchecked {
-                ++h;
             }
         }
 

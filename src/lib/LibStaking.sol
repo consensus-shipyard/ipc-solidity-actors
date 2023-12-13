@@ -46,10 +46,8 @@ library LibAddressStakingReleases {
             amount += release.amount;
             delete self.releases[i];
 
-            unchecked {
                 ++i;
                 --newLength;
-            }
         }
 
         self.startIdx = i;
@@ -128,11 +126,8 @@ library LibValidatorSet {
     function listActiveValidators(ValidatorSet storage validators) internal view returns (address[] memory addresses) {
         uint16 size = validators.activeValidators.getSize();
         addresses = new address[](size);
-        for (uint16 i = 1; i <= size; ) {
+        for (uint16 i = 1; i <= size;  ++i) {
             addresses[i - 1] = validators.activeValidators.getAddress(i);
-            unchecked {
-                ++i;
-            }
         }
         return addresses;
     }
@@ -140,12 +135,9 @@ library LibValidatorSet {
     /// @notice Get the total collateral of *active* validators.
     function getActiveCollateral(ValidatorSet storage validators) internal view returns (uint256 collateral) {
         uint16 size = validators.activeValidators.getSize();
-        for (uint16 i = 1; i <= size; ) {
+        for (uint16 i = 1; i <= size;  ++i) {
             address validator = validators.activeValidators.getAddress(i);
             collateral += getConfirmedCollateral(validators, validator);
-            unchecked {
-                ++i;
-            }
         }
     }
 
@@ -158,14 +150,11 @@ library LibValidatorSet {
         uint256 size = addresses.length;
         uint256[] memory activeCollaterals = new uint256[](size);
 
-        for (uint256 i; i < size; ) {
+        for (uint256 i; i < size; ++i ) {
             if (!isActiveValidator(validators, addresses[i])) {
                 revert NotValidator(addresses[i]);
             }
             activeCollaterals[i] = validators.validators[addresses[i]].confirmedCollateral;
-            unchecked {
-                ++i;
-            }
         }
         return activeCollaterals;
     }
@@ -410,13 +399,10 @@ library LibStaking {
             // is a genesis validator.
             bool alreadyValidator;
             uint256 length = s.genesisValidators.length;
-            for (uint256 i; i < length; ) {
+            for (uint256 i; i < length;  ++i) {
                 if (s.genesisValidators[i].addr == validator) {
                     alreadyValidator = true;
                     break;
-                }
-                unchecked {
-                    ++i;
                 }
             }
             if (!alreadyValidator) {
@@ -511,7 +497,7 @@ library LibStaking {
         }
 
         uint64 start = changeSet.startConfigurationNumber;
-        for (uint64 i = start; i <= configurationNumber; ) {
+        for (uint64 i = start; i <= configurationNumber; ++i) {
             StakingChange storage change = changeSet.getChange(i);
             address validator = change.validator;
 
@@ -531,9 +517,6 @@ library LibStaking {
             }
 
             changeSet.purgeChange(i);
-            unchecked {
-                ++i;
-            }
         }
 
         changeSet.startConfigurationNumber = configurationNumber + 1;
@@ -569,11 +552,8 @@ library LibValidatorTracking {
             return;
         }
 
-        for (uint256 i; i < length; ) {
+        for (uint256 i; i < length; ++i ) {
             storeChange(self, changeRequests[i]);
-            unchecked {
-                ++i;
-            }
         }
     }
 
@@ -587,7 +567,7 @@ library LibValidatorTracking {
 
         uint64 start = self.changes.startConfigurationNumber;
 
-        for (uint64 i = start; i <= configurationNumber; ) {
+        for (uint64 i = start; i <= configurationNumber; ++i ) {
             StakingChange storage change = self.changes.getChange(i);
             address validator = change.validator;
 
@@ -604,9 +584,6 @@ library LibValidatorTracking {
             }
 
             self.changes.purgeChange(i);
-            unchecked {
-                ++i;
-            }
         }
         self.changes.startConfigurationNumber = configurationNumber + 1;
     }

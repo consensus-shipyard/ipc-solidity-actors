@@ -105,12 +105,9 @@ contract GatewayGetterFacet {
     function listSubnets() external view returns (Subnet[] memory) {
         uint256 size = s.subnetKeys.length;
         Subnet[] memory out = new Subnet[](size);
-        for (uint256 i; i < size; ) {
+        for (uint256 i; i < size; ++i) {
             bytes32 key = s.subnetKeys[i];
             out[i] = s.subnets[key];
-            unchecked {
-                ++i;
-            }
         }
         return out;
     }
@@ -156,11 +153,8 @@ contract GatewayGetterFacet {
         uint256 size = heights.length;
 
         BottomUpCheckpoint[] memory checkpoints = new BottomUpCheckpoint[](size);
-        for (uint64 i; i < size; ) {
+        for (uint64 i; i < size; ++i) {
             checkpoints[i] = s.bottomUpCheckpoints[uint64(heights[i])];
-            unchecked {
-                ++i;
-            }
         }
         return checkpoints;
     }
@@ -196,11 +190,8 @@ contract GatewayGetterFacet {
 
         signatures = new bytes[](n);
 
-        for (uint256 i; i < n; ) {
+        for (uint256 i; i < n; ++i) {
             signatures[i] = s.bottomUpSignatures[h][signatories[i]];
-            unchecked {
-                ++i;
-            }
         }
 
         return (ch, info, signatories, signatures);

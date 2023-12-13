@@ -132,25 +132,19 @@ library LibGateway {
         uint256 storeLength = s.currentMembership.validators.length;
         // memory arrays can't be copied directly from memory into storage,
         // we need to explicitly increase the size of the array in storage.
-        for (uint256 i; i < inputLength; ) {
+        for (uint256 i; i < inputLength; ++i ) {
             if (i < storeLength) {
                 s.currentMembership.validators[i] = membership.validators[i];
             } else {
                 s.currentMembership.validators.push(membership.validators[i]);
-            }
-            unchecked {
-                ++i;
             }
         }
         s.currentMembership.configurationNumber = membership.configurationNumber;
         // finally we need to remove any outstanding membership from
         // storage.
         if (storeLength > inputLength) {
-            for (uint256 i = inputLength; i < storeLength; ) {
+            for (uint256 i = inputLength; i < storeLength; ++i ) {
                 s.currentMembership.validators.pop();
-                unchecked {
-                    ++i;
-                }
             }
         }
     }
@@ -159,11 +153,8 @@ library LibGateway {
     function membershipTotalWeight(Membership memory self) internal pure returns (uint256) {
         uint256 len = self.validators.length;
         uint256 totalValidatorsWeight;
-        for (uint256 i; i < len; ) {
+        for (uint256 i; i < len; ++i ) {
             totalValidatorsWeight += self.validators[i].weight;
-            unchecked {
-                ++i;
-            }
         }
         return totalValidatorsWeight;
     }
