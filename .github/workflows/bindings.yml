@@ -9,17 +9,17 @@ on:
       - main
       - dev
   pull_request:
-    # types:
-    #   - closed
+    types:
+      - closed
 
 jobs:
   bindings:
     name: "Code Generation"
     runs-on: ubuntu-latest
-    # if: >-
-    #   github.event.pull_request.merged == true ||
-    #   github.ref == 'refs/heads/main' ||
-    #   github.ref == 'refs/heads/dev'
+    if: >-
+      github.event.pull_request.merged == true ||
+      github.ref == 'refs/heads/main' ||
+      github.ref == 'refs/heads/dev'
     permissions:
       # Give the default GITHUB_TOKEN write permission to commit and push the
       # added or changed files to the repository.
