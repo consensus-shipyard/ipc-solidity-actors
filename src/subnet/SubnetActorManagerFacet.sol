@@ -18,10 +18,9 @@ import {LibDiamond} from "../lib/LibDiamond.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
-contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable, ReentrancyGuard {
-    string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED =
-        "Method not allowed if permissioned is enabled and subnet bootstrapped";
+string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
 
+contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
     using LibValidatorSet for ValidatorSet;
