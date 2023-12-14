@@ -10,17 +10,17 @@
   },
   "ast": {
     "absolutePath": "src/lib/LibSubnetRegistryStorage.sol",
-    "id": 44952,
+    "id": 44983,
     "exportedSymbols": {
       "SubnetRegistryActorStorage": [
-        44951
+        44982
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:939:65",
     "nodes": [
       {
-        "id": 44923,
+        "id": 44954,
         "nodeType": "PragmaDirective",
         "src": "46:23:65",
         "nodes": [],
@@ -31,7 +31,7 @@
         ]
       },
       {
-        "id": 44951,
+        "id": 44982,
         "nodeType": "StructDefinition",
         "src": "71:913:65",
         "nodes": [],
@@ -39,12 +39,12 @@
         "members": [
           {
             "constant": false,
-            "id": 44925,
+            "id": 44956,
             "mutability": "mutable",
             "name": "GATEWAY",
             "nameLocation": "171:7:65",
             "nodeType": "VariableDeclaration",
-            "scope": 44951,
+            "scope": 44982,
             "src": "163:15:65",
             "stateVariable": false,
             "storageLocation": "default",
@@ -53,7 +53,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 44924,
+              "id": 44955,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "163:7:65",
@@ -67,12 +67,12 @@
           },
           {
             "constant": false,
-            "id": 44928,
+            "id": 44959,
             "mutability": "mutable",
             "name": "SUBNET_GETTER_FACET",
             "nameLocation": "299:19:65",
             "nodeType": "VariableDeclaration",
-            "scope": 44951,
+            "scope": 44982,
             "src": "291:27:65",
             "stateVariable": false,
             "storageLocation": "default",
@@ -81,7 +81,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 44927,
+              "id": 44958,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "291:7:65",
@@ -95,12 +95,12 @@
           },
           {
             "constant": false,
-            "id": 44930,
+            "id": 44961,
             "mutability": "mutable",
             "name": "SUBNET_MANAGER_FACET",
             "nameLocation": "384:20:65",
             "nodeType": "VariableDeclaration",
-            "scope": 44951,
+            "scope": 44982,
             "src": "376:28:65",
             "stateVariable": false,
             "storageLocation": "default",
@@ -109,7 +109,7 @@
               "typeString": "address"
             },
             "typeName": {
-              "id": 44929,
+              "id": 44960,
               "name": "address",
               "nodeType": "ElementaryTypeName",
               "src": "376:7:65",
@@ -123,12 +123,12 @@
           },
           {
             "constant": false,
-            "id": 44934,
+            "id": 44965,
             "mutability": "mutable",
             "name": "subnetGetterSelectors",
             "nameLocation": "471:21:65",
             "nodeType": "VariableDeclaration",
-            "scope": 44951,
+            "scope": 44982,
             "src": "462:30:65",
             "stateVariable": false,
             "storageLocation": "default",
@@ -138,7 +138,7 @@
             },
             "typeName": {
               "baseType": {
-                "id": 44932,
+                "id": 44963,
                 "name": "bytes4",
                 "nodeType": "ElementaryTypeName",
                 "src": "462:6:65",
@@ -147,7 +147,7 @@
                   "typeString": "bytes4"
                 }
               },
-              "id": 44933,
+              "id": 44964,
               "nodeType": "ArrayTypeName",
               "src": "462:8:65",
               "typeDescriptions": {
@@ -159,12 +159,12 @@
           },
           {
             "constant": false,
-            "id": 44938,
+            "id": 44969,
             "mutability": "mutable",
             "name": "subnetManagerSelectors",
             "nameLocation": "560:22:65",
             "nodeType": "VariableDeclaration",
-            "scope": 44951,
+            "scope": 44982,
             "src": "551:31:65",
             "stateVariable": false,
             "storageLocation": "default",
@@ -174,7 +174,7 @@
             },
             "typeName": {
               "baseType": {
-                "id": 44936,
+                "id": 44967,
                 "name": "bytes4",
                 "nodeType": "ElementaryTypeName",
                 "src": "551:6:65",
@@ -183,7 +183,7 @@
                   "typeString": "bytes4"
                 }
               },
-              "id": 44937,
+              "id": 44968,
               "nodeType": "ArrayTypeName",
               "src": "551:8:65",
               "typeDescriptions": {
@@ -195,12 +195,12 @@
           },
           {
             "constant": false,
-            "id": 44945,
+            "id": 44976,
             "mutability": "mutable",
             "name": "subnets",
             "nameLocation": "809:7:65",
             "nodeType": "VariableDeclaration",
-            "scope": 44951,
+            "scope": 44982,
             "src": "762:54:65",
             "stateVariable": false,
             "storageLocation": "default",
@@ -209,11 +209,11 @@
               "typeString": "mapping(address => mapping(uint64 => address))"
             },
             "typeName": {
-              "id": 44944,
+              "id": 44975,
               "keyName": "",
               "keyNameLocation": "-1:-1:-1",
               "keyType": {
-                "id": 44940,
+                "id": 44971,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "770:7:65",
@@ -231,11 +231,11 @@
               "valueName": "",
               "valueNameLocation": "-1:-1:-1",
               "valueType": {
-                "id": 44943,
+                "id": 44974,
                 "keyName": "",
                 "keyNameLocation": "-1:-1:-1",
                 "keyType": {
-                  "id": 44941,
+                  "id": 44972,
                   "name": "uint64",
                   "nodeType": "ElementaryTypeName",
                   "src": "789:6:65",
@@ -253,7 +253,7 @@
                 "valueName": "",
                 "valueNameLocation": "-1:-1:-1",
                 "valueType": {
-                  "id": 44942,
+                  "id": 44973,
                   "name": "address",
                   "nodeType": "ElementaryTypeName",
                   "src": "799:7:65",
@@ -269,12 +269,12 @@
           },
           {
             "constant": false,
-            "id": 44950,
+            "id": 44981,
             "mutability": "mutable",
             "name": "userNonces",
             "nameLocation": "971:10:65",
             "nodeType": "VariableDeclaration",
-            "scope": 44951,
+            "scope": 44982,
             "src": "944:37:65",
             "stateVariable": false,
             "storageLocation": "default",
@@ -283,11 +283,11 @@
               "typeString": "mapping(address => uint64)"
             },
             "typeName": {
-              "id": 44949,
+              "id": 44980,
               "keyName": "",
               "keyNameLocation": "-1:-1:-1",
               "keyType": {
-                "id": 44947,
+                "id": 44978,
                 "name": "address",
                 "nodeType": "ElementaryTypeName",
                 "src": "952:7:65",
@@ -305,7 +305,7 @@
               "valueName": "",
               "valueNameLocation": "-1:-1:-1",
               "valueType": {
-                "id": 44948,
+                "id": 44979,
                 "name": "uint64",
                 "nodeType": "ElementaryTypeName",
                 "src": "963:6:65",
@@ -320,7 +320,7 @@
         ],
         "name": "SubnetRegistryActorStorage",
         "nameLocation": "78:26:65",
-        "scope": 44952,
+        "scope": 44983,
         "visibility": "public"
       }
     ],

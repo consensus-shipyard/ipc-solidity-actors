@@ -10,20 +10,20 @@
   },
   "ast": {
     "absolutePath": "src/structs/FvmAddress.sol",
-    "id": 47241,
+    "id": 47272,
     "exportedSymbols": {
       "DelegatedAddress": [
-        47240
+        47271
       ],
       "FvmAddress": [
-        47233
+        47264
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:489:72",
     "nodes": [
       {
-        "id": 47228,
+        "id": 47259,
         "nodeType": "PragmaDirective",
         "src": "46:23:72",
         "nodes": [],
@@ -34,7 +34,7 @@
         ]
       },
       {
-        "id": 47233,
+        "id": 47264,
         "nodeType": "StructDefinition",
         "src": "320:60:72",
         "nodes": [],
@@ -42,12 +42,12 @@
         "members": [
           {
             "constant": false,
-            "id": 47230,
+            "id": 47261,
             "mutability": "mutable",
             "name": "addrType",
             "nameLocation": "350:8:72",
             "nodeType": "VariableDeclaration",
-            "scope": 47233,
+            "scope": 47264,
             "src": "344:14:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -56,7 +56,7 @@
               "typeString": "uint8"
             },
             "typeName": {
-              "id": 47229,
+              "id": 47260,
               "name": "uint8",
               "nodeType": "ElementaryTypeName",
               "src": "344:5:72",
@@ -69,12 +69,12 @@
           },
           {
             "constant": false,
-            "id": 47232,
+            "id": 47263,
             "mutability": "mutable",
             "name": "payload",
             "nameLocation": "370:7:72",
             "nodeType": "VariableDeclaration",
-            "scope": 47233,
+            "scope": 47264,
             "src": "364:13:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -83,7 +83,7 @@
               "typeString": "bytes"
             },
             "typeName": {
-              "id": 47231,
+              "id": 47262,
               "name": "bytes",
               "nodeType": "ElementaryTypeName",
               "src": "364:5:72",
@@ -97,11 +97,11 @@
         ],
         "name": "FvmAddress",
         "nameLocation": "327:10:72",
-        "scope": 47241,
+        "scope": 47272,
         "visibility": "public"
       },
       {
-        "id": 47240,
+        "id": 47271,
         "nodeType": "StructDefinition",
         "src": "447:87:72",
         "nodes": [],
@@ -109,12 +109,12 @@
         "members": [
           {
             "constant": false,
-            "id": 47235,
+            "id": 47266,
             "mutability": "mutable",
             "name": "namespace",
             "nameLocation": "484:9:72",
             "nodeType": "VariableDeclaration",
-            "scope": 47240,
+            "scope": 47271,
             "src": "477:16:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -123,7 +123,7 @@
               "typeString": "uint64"
             },
             "typeName": {
-              "id": 47234,
+              "id": 47265,
               "name": "uint64",
               "nodeType": "ElementaryTypeName",
               "src": "477:6:72",
@@ -136,12 +136,12 @@
           },
           {
             "constant": false,
-            "id": 47237,
+            "id": 47268,
             "mutability": "mutable",
             "name": "length",
             "nameLocation": "507:6:72",
             "nodeType": "VariableDeclaration",
-            "scope": 47240,
+            "scope": 47271,
             "src": "499:14:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -150,7 +150,7 @@
               "typeString": "uint128"
             },
             "typeName": {
-              "id": 47236,
+              "id": 47267,
               "name": "uint128",
               "nodeType": "ElementaryTypeName",
               "src": "499:7:72",
@@ -163,12 +163,12 @@
           },
           {
             "constant": false,
-            "id": 47239,
+            "id": 47270,
             "mutability": "mutable",
             "name": "buffer",
             "nameLocation": "525:6:72",
             "nodeType": "VariableDeclaration",
-            "scope": 47240,
+            "scope": 47271,
             "src": "519:12:72",
             "stateVariable": false,
             "storageLocation": "default",
@@ -177,7 +177,7 @@
               "typeString": "bytes"
             },
             "typeName": {
-              "id": 47238,
+              "id": 47269,
               "name": "bytes",
               "nodeType": "ElementaryTypeName",
               "src": "519:5:72",
@@ -191,7 +191,7 @@
         ],
         "name": "DelegatedAddress",
         "nameLocation": "454:16:72",
-        "scope": 47241,
+        "scope": 47272,
         "visibility": "public"
       }
     ],
