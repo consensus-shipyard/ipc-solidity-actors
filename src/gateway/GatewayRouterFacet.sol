@@ -263,7 +263,13 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (!exists) {
             revert CheckpointNotCreated();
         }
-        LibQuorum.addQuorumSignature(s.checkpointQuorumMap, height, membershipProof, weight, signature);
+        LibQuorum.addQuorumSignature({
+            self: s.checkpointQuorumMap,
+            height: height,
+            membershipProof: membershipProof,
+            weight: weight,
+            signature: signature
+        });
     }
 
     /// @notice creates a new bottom-up checkpoint
@@ -281,14 +287,15 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (LibGateway.bottomUpCheckpointExists(checkpoint.blockHeight)) {
             revert CheckpointAlreadyExists();
         }
-        LibQuorum.createQuorumInfo(
-            s.checkpointQuorumMap,
-            checkpoint.blockHeight,
-            keccak256(abi.encode(checkpoint)),
-            membershipRootHash,
-            membershipWeight,
-            s.majorityPercentage
-        );
+
+        LibQuorum.createQuorumInfo({
+            self: s.checkpointQuorumMap,
+            objHeight: checkpoint.blockHeight,
+            objHash: keccak256(abi.encode(checkpoint)),
+            membershipRootHash: membershipRootHash,
+            membershipWeight: membershipWeight,
+            majorityPercentage: s.majorityPercentage
+        });
         LibGateway.storeBottomUpCheckpoint(checkpoint);
     }
 
@@ -327,7 +334,13 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (!exists) {
             revert BatchNotCreated();
         }
-        LibQuorum.addQuorumSignature(s.bottomUpMsgBatchQuorumMap, height, membershipProof, weight, signature);
+        LibQuorum.addQuorumSignature({
+            self: s.bottomUpMsgBatchQuorumMap,
+            height: height,
+            membershipProof: membershipProof,
+            weight: weight,
+            signature: signature
+        });
     }
 
     /// @notice cuts a new message batch if the batch period is reached without
@@ -353,14 +366,14 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert BatchAlreadyExists();
         }
 
-        LibQuorum.createQuorumInfo(
-            s.bottomUpMsgBatchQuorumMap,
-            batch.blockHeight,
-            keccak256(abi.encode(batch)),
-            membershipRootHash,
-            membershipWeight,
-            s.majorityPercentage
-        );
+        LibQuorum.createQuorumInfo({
+            self: s.bottomUpMsgBatchQuorumMap,
+            objHeight: batch.blockHeight,
+            objHash: keccak256(abi.encode(batch)),
+            membershipRootHash: membershipRootHash,
+            membershipWeight: membershipWeight,
+            majorityPercentage: s.majorityPercentage
+        });
         LibGateway.storeBottomUpMsgBatch(batch);
     }
 
