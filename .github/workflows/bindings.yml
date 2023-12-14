@@ -1,12 +1,18 @@
 name: Bindings
 
+# https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-your-pull_request-workflow-when-a-pull-request-merges
 on:
+  # Run it *after* successful merges
+  pull_request:
+    types:
+      - closed
+  # Run it in case someone pushes to `dev` directly
   push:
     branches: [ main, dev ]
-  pull_request:
 
 jobs:
   bindings:
+    if: ${{ github.event.pull_request.merged }} || ${{ github.ref == 'refs/heads/main' }} || ${{ github.ref == 'refs/heads/dev' }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -31,7 +37,7 @@ jobs:
         with:
           workspaces: "binding"
 
-        # for prettier (compile-abi calls the formatter first)
+      # for prettier (compile-abi calls the formatter first)
       - name: Set up node.js
         uses: actions/setup-node@v4
         with:
@@ -40,20 +46,15 @@ jobs:
       - name: Create binding
         run: make compile-abi && make rust-binding
 
-      - name: Check diff clean
-        run: |
-          git --no-pager diff
-          git --no-pager diff --quiet
+     - name: Git Config
+       run: |
+         git config --global user.name 'auto-commit'
+         git config --global user.email 'auto-commit@users.noreply.github.com'
 
-#      - name: Git Config
-#        run: |
-#          git config --global user.name 'auto-commit'
-#          git config --global user.email 'auto-commit@users.noreply.github.com'
-#
-#      - name: Commit bindings
-#        run: |
-#          make commit-rust-binding
-#
-#      - name: Commit ABI
-#        run: |
-#          make commit-abi
+     - name: Commit bindings
+       run: |
+         make commit-rust-binding
+
+     - name: Commit ABI
+       run: |
+         make commit-abi

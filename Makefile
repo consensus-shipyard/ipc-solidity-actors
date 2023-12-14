@@ -2,7 +2,7 @@
 # Deployment
 
 NETWORK ?= auto
-OUTPUT ?= ./out
+OUTPUT ?= .abi
 
 deploy-ipc:
 	./ops/deploy.sh $(NETWORK)
@@ -16,13 +16,28 @@ upgrade-sa-diamond:
 upgrade-sr-diamond:
 	./ops/upgrade-sr-diamond.sh $(NETWORK)
 
+# ==============================================================================
+# Code generation on CI
+
 gen: compile-abi rust-binding
 
 compile-abi: | forge fmt
+	mkdir -p $(OUTPUT)
 	./ops/compile-abi.sh $(OUTPUT)
+
+commit-abi:
+	./ops/commit-abi.sh $(OUTPUT)
 
 rust-binding:
 	BUILD_BINDINGS=1 cargo build --locked --release --manifest-path ./binding/Cargo.toml -p ipc_actors_abis
+
+commit-rust-binding:
+	./ops/commit-rust-binding.sh
+
+check-rust-binding:
+	cargo fmt --manifest-path ./binding/Cargo.toml && \
+	cargo clippy --manifest-path ./binding/Cargo.toml && \
+	./ops/check-rust-binding.sh
 
 # ==============================================================================
 # Running security checks within the local computer
@@ -59,17 +74,6 @@ install-npm-package:
 
 install-eth-abi:
 	curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py && rm get-pip.py && python3 -m pip install eth_abi
-
-check-rust-binding:
-	cargo fmt --manifest-path ./binding/Cargo.toml && \
-	cargo clippy --manifest-path ./binding/Cargo.toml && \
-	./ops/check-rust-binding.sh
-
-commit-rust-binding:
-	./ops/commit-rust-binding.sh
-
-commit-abi:
-	./ops/commit-abi.sh
 
 storage:
 	rm -rf ./cache
