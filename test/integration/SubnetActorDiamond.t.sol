@@ -1157,7 +1157,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
         require(!saGetter.isActiveValidator(validators[2]), "2 should not be active validator");
     }
-    
+
     function testSubnetActorDiamond_Pausable_SetPaused() public {
         saManager.pause();
         require(saManager.paused());

@@ -42,7 +42,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
         }
         return;
     }
-    
+
     /// @notice Pause all methods with `whenNotPaused` modifier
     function pause() external {
         LibDiamond.enforceIsContractOwner();
