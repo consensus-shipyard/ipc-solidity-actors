@@ -102,6 +102,7 @@ contract IntegrationTestBase is Test {
         gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
         gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
         gwMessengerSelectors = TestUtils.generateSelectors(vm, "GatewayMessengerFacet");
+
         cutFacetSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
         louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
     }
@@ -110,12 +111,7 @@ contract IntegrationTestBase is Test {
         address[] memory path = new address[](1);
         path[0] = ROOTNET_ADDRESS;
 
-        address[] memory path2 = new address[](2);
-        path2[0] = CHILD_NETWORK_ADDRESS;
-        path2[1] = CHILD_NETWORK_ADDRESS_2;
-
         // create the root gateway actor.
-
         GatewayDiamond.ConstructorParams memory gwConstructorParams = defaultGatewayParams();
         gatewayDiamond = createGatewayDiamond(gwConstructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
@@ -126,7 +122,6 @@ contract IntegrationTestBase is Test {
         gwCutFacet = DiamondCutFacet(address(gatewayDiamond));
 
         // create a subnet actor in the root network.
-
         SubnetActorDiamond.ConstructorParams memory saConstructorParams = defaultSubnetActorParamsWithGateway(
             address(gatewayDiamond)
         );
@@ -142,7 +137,7 @@ contract IntegrationTestBase is Test {
 
     function defaultSubnetActorParamsWithGateway(
         address gw
-    ) internal pure returns (SubnetActorDiamond.ConstructorParams memory) {
+    ) internal pure virtual returns (SubnetActorDiamond.ConstructorParams memory) {
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             ipcGatewayAddr: gw,
@@ -163,6 +158,7 @@ contract IntegrationTestBase is Test {
     function defaultSubnetActorParamsWithRootGateway()
         internal
         view
+        virtual
         returns (SubnetActorDiamond.ConstructorParams memory)
     {
         SubnetActorDiamond.ConstructorParams memory params = defaultSubnetActorParamsWithGateway(
@@ -171,7 +167,7 @@ contract IntegrationTestBase is Test {
         return params;
     }
 
-    function defaultGatewayParams() internal pure returns (GatewayDiamond.ConstructorParams memory) {
+    function defaultGatewayParams() internal pure virtual returns (GatewayDiamond.ConstructorParams memory) {
         GatewayDiamond.ConstructorParams memory params = GatewayDiamond.ConstructorParams({
             networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
@@ -449,7 +445,6 @@ contract IntegrationTestBase is Test {
         weights[1] = 100;
         weights[2] = 100;
 
-        // uint64 n = gwGetter.getLastConfigurationNumber() + 1;
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
