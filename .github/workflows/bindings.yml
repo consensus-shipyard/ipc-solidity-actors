@@ -2,21 +2,21 @@ name: Bindings
 
 # https://docs.github.com/en/actions/using-workflows/events-that-trigger-workflows#running-your-pull_request-workflow-when-a-pull-request-merges
 on:
+  # Run it in case someone pushes to `dev` directly
+  push:
+    branches: [ main, dev ]
   # Run it *after* successful merges
   pull_request:
     types:
       - closed
-  # Run it in case someone pushes to `dev` directly
-  push:
-    branches: [ main, dev ]
 
 jobs:
   bindings:
+    runs-on: ubuntu-latest
     if: >-
-      github.event.pull_request.merged ||
+      github.event.pull_request.merged == true ||
       github.ref == 'refs/heads/main' ||
       github.ref == 'refs/heads/dev'
-    runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v3
@@ -54,10 +54,10 @@ jobs:
          git config --global user.name 'auto-commit'
          git config --global user.email 'auto-commit@users.noreply.github.com'
 
-    #  - name: Commit bindings
-    #    run: |
-    #      make commit-rust-binding
+     - name: Commit bindings
+       run: |
+         make commit-rust-binding
 
-    #  - name: Commit ABI
-    #    run: |
-    #      make commit-abi
+     - name: Commit ABI
+       run: |
+         make commit-abi
