@@ -383,20 +383,20 @@ contract SubnetRegistryTest is Test {
 
         // Validate the updates
         require(
-            address(subnetGetterFacet.getSubnetGetterFacet()) == newGetterFacet,
+            address(subnetGetterFacet.getSubnetActorGetterFacet()) == newGetterFacet,
             "Getter facet address not updated correctly"
         );
         require(
-            address(subnetGetterFacet.getSubnetManagerFacet()) == newManagerFacet,
+            address(subnetGetterFacet.getSubnetActorManagerFacet()) == newManagerFacet,
             "Manager facet address not updated correctly"
         );
 
         // Validate the updates for subnetGetterSelectors
-        bytes4[] memory currentSubnetGetterSelectors = subnetGetterFacet.getSubnetGetterSelectors();
+        bytes4[] memory currentSubnetGetterSelectors = subnetGetterFacet.getSubnetActorGetterSelectors();
         validateBytes4Array(currentSubnetGetterSelectors, newSubnetGetterSelectors, "SubnetGetterSelectors mismatch");
 
         // Validate the updates for subnetManagerSelectors
-        bytes4[] memory currentSubnetManagerSelectors = subnetGetterFacet.getSubnetManagerSelectors();
+        bytes4[] memory currentSubnetManagerSelectors = subnetGetterFacet.getSubnetActorManagerSelectors();
         validateBytes4Array(
             currentSubnetManagerSelectors,
             newSubnetManagerSelectors,
