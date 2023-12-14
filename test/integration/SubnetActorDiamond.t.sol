@@ -1123,7 +1123,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKeys[0]);
         vm.stopPrank();
 
-        saManager.setFederatedPowers(validators, publicKeys, powers);
+        saManager.setFederatedPower(validators, publicKeys, powers);
 
         require(!saGetter.isActiveValidator(validators[1]), "1 should not be active validator");
         require(!saGetter.isActiveValidator(validators[2]), "2 should not be active validator");
@@ -1137,7 +1137,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         // change in validator power
         powers[2] = 10001;
 
-        saManager.setFederatedPowers(validators, publicKeys, powers);
+        saManager.setFederatedPower(validators, publicKeys, powers);
 
         confirmChange(validators[0], privKeys[0], validators[1], privKeys[1]);
 
@@ -1148,7 +1148,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         /// reduce validator 2 power
         powers[2] = 5000;
 
-        saManager.setFederatedPowers(validators, publicKeys, powers);
+        saManager.setFederatedPower(validators, publicKeys, powers);
 
         confirmChange(validators[2], privKeys[2], validators[1], privKeys[1]);
 
