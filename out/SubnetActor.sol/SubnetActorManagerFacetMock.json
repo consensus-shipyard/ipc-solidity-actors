@@ -1751,23 +1751,23 @@
   },
   "ast": {
     "absolutePath": "test/mocks/SubnetActor.sol",
-    "id": 53871,
+    "id": 53865,
     "exportedSymbols": {
       "LibStaking": [
-        44294
+        44281
       ],
       "SubnetActorManagerFacet": [
-        49207
+        49194
       ],
       "SubnetActorManagerFacetMock": [
-        53870
+        53864
       ]
     },
     "nodeType": "SourceUnit",
     "src": "46:543:86",
     "nodes": [
       {
-        "id": 53833,
+        "id": 53827,
         "nodeType": "PragmaDirective",
         "src": "46:23:86",
         "nodes": [],
@@ -1778,23 +1778,23 @@
         ]
       },
       {
-        "id": 53835,
+        "id": 53829,
         "nodeType": "ImportDirective",
         "src": "71:85:86",
         "nodes": [],
         "absolutePath": "src/subnet/SubnetActorManagerFacet.sol",
         "file": "../../src/subnet/SubnetActorManagerFacet.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 53871,
-        "sourceUnit": 49208,
+        "scope": 53865,
+        "sourceUnit": 49195,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 53834,
+              "id": 53828,
               "name": "SubnetActorManagerFacet",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 49207,
+              "referencedDeclaration": 49194,
               "src": "79:23:86",
               "typeDescriptions": {}
             },
@@ -1804,23 +1804,23 @@
         "unitAlias": ""
       },
       {
-        "id": 53837,
+        "id": 53831,
         "nodeType": "ImportDirective",
         "src": "157:56:86",
         "nodes": [],
         "absolutePath": "src/lib/LibStaking.sol",
         "file": "../../src/lib/LibStaking.sol",
         "nameLocation": "-1:-1:-1",
-        "scope": 53871,
-        "sourceUnit": 44544,
+        "scope": 53865,
+        "sourceUnit": 44531,
         "symbolAliases": [
           {
             "foreign": {
-              "id": 53836,
+              "id": 53830,
               "name": "LibStaking",
               "nodeType": "Identifier",
               "overloadedDeclarations": [],
-              "referencedDeclaration": 44294,
+              "referencedDeclaration": 44281,
               "src": "165:10:86",
               "typeDescriptions": {}
             },
@@ -1830,17 +1830,17 @@
         "unitAlias": ""
       },
       {
-        "id": 53870,
+        "id": 53864,
         "nodeType": "ContractDefinition",
         "src": "215:373:86",
         "nodes": [
           {
-            "id": 53851,
+            "id": 53845,
             "nodeType": "FunctionDefinition",
             "src": "285:124:86",
             "nodes": [],
             "body": {
-              "id": 53850,
+              "id": 53844,
               "nodeType": "Block",
               "src": "346:63:86",
               "nodes": [],
@@ -1849,11 +1849,11 @@
                   "expression": {
                     "arguments": [
                       {
-                        "id": 53847,
+                        "id": 53841,
                         "name": "_configurationNumber",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 53841,
+                        "referencedDeclaration": 53835,
                         "src": "381:20:86",
                         "typeDescriptions": {
                           "typeIdentifier": "t_uint64",
@@ -1869,18 +1869,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 53844,
+                        "id": 53838,
                         "name": "LibStaking",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44294,
+                        "referencedDeclaration": 44281,
                         "src": "356:10:86",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44294_$",
+                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44281_$",
                           "typeString": "type(library LibStaking)"
                         }
                       },
-                      "id": 53846,
+                      "id": 53840,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -1888,14 +1888,14 @@
                       "memberLocation": "367:13:86",
                       "memberName": "confirmChange",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 44293,
+                      "referencedDeclaration": 44280,
                       "src": "356:24:86",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint64_$returns$__$",
                         "typeString": "function (uint64)"
                       }
                     },
-                    "id": 53848,
+                    "id": 53842,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -1911,7 +1911,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 53849,
+                  "id": 53843,
                   "nodeType": "ExpressionStatement",
                   "src": "356:46:86"
                 }
@@ -1924,17 +1924,17 @@
             "name": "confirmChange",
             "nameLocation": "294:13:86",
             "parameters": {
-              "id": 53842,
+              "id": 53836,
               "nodeType": "ParameterList",
               "parameters": [
                 {
                   "constant": false,
-                  "id": 53841,
+                  "id": 53835,
                   "mutability": "mutable",
                   "name": "_configurationNumber",
                   "nameLocation": "315:20:86",
                   "nodeType": "VariableDeclaration",
-                  "scope": 53851,
+                  "scope": 53845,
                   "src": "308:27:86",
                   "stateVariable": false,
                   "storageLocation": "default",
@@ -1943,7 +1943,7 @@
                     "typeString": "uint64"
                   },
                   "typeName": {
-                    "id": 53840,
+                    "id": 53834,
                     "name": "uint64",
                     "nodeType": "ElementaryTypeName",
                     "src": "308:6:86",
@@ -1958,41 +1958,41 @@
               "src": "307:29:86"
             },
             "returnParameters": {
-              "id": 53843,
+              "id": 53837,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "346:0:86"
             },
-            "scope": 53870,
+            "scope": 53864,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
           },
           {
-            "id": 53869,
+            "id": 53863,
             "nodeType": "FunctionDefinition",
             "src": "415:171:86",
             "nodes": [],
             "body": {
-              "id": 53868,
+              "id": 53862,
               "nodeType": "Block",
               "src": "453:133:86",
               "nodes": [],
               "statements": [
                 {
                   "assignments": [
-                    53855,
+                    53849,
                     null
                   ],
                   "declarations": [
                     {
                       "constant": false,
-                      "id": 53855,
+                      "id": 53849,
                       "mutability": "mutable",
                       "name": "nextConfigNum",
                       "nameLocation": "471:13:86",
                       "nodeType": "VariableDeclaration",
-                      "scope": 53868,
+                      "scope": 53862,
                       "src": "464:20:86",
                       "stateVariable": false,
                       "storageLocation": "default",
@@ -2001,7 +2001,7 @@
                         "typeString": "uint64"
                       },
                       "typeName": {
-                        "id": 53854,
+                        "id": 53848,
                         "name": "uint64",
                         "nodeType": "ElementaryTypeName",
                         "src": "464:6:86",
@@ -2014,24 +2014,24 @@
                     },
                     null
                   ],
-                  "id": 53859,
+                  "id": 53853,
                   "initialValue": {
                     "arguments": [],
                     "expression": {
                       "argumentTypes": [],
                       "expression": {
-                        "id": 53856,
+                        "id": 53850,
                         "name": "LibStaking",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44294,
+                        "referencedDeclaration": 44281,
                         "src": "490:10:86",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44294_$",
+                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44281_$",
                           "typeString": "type(library LibStaking)"
                         }
                       },
-                      "id": 53857,
+                      "id": 53851,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2039,14 +2039,14 @@
                       "memberLocation": "501:23:86",
                       "memberName": "getConfigurationNumbers",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 44083,
+                      "referencedDeclaration": 44070,
                       "src": "490:34:86",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_view$__$returns$_t_uint64_$_t_uint64_$",
                         "typeString": "function () view returns (uint64,uint64)"
                       }
                     },
-                    "id": 53858,
+                    "id": 53852,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2073,17 +2073,17 @@
                           "typeIdentifier": "t_uint64",
                           "typeString": "uint64"
                         },
-                        "id": 53865,
+                        "id": 53859,
                         "isConstant": false,
                         "isLValue": false,
                         "isPure": false,
                         "lValueRequested": false,
                         "leftExpression": {
-                          "id": 53863,
+                          "id": 53857,
                           "name": "nextConfigNum",
                           "nodeType": "Identifier",
                           "overloadedDeclarations": [],
-                          "referencedDeclaration": 53855,
+                          "referencedDeclaration": 53849,
                           "src": "561:13:86",
                           "typeDescriptions": {
                             "typeIdentifier": "t_uint64",
@@ -2094,7 +2094,7 @@
                         "operator": "-",
                         "rightExpression": {
                           "hexValue": "31",
-                          "id": 53864,
+                          "id": 53858,
                           "isConstant": false,
                           "isLValue": false,
                           "isPure": true,
@@ -2123,18 +2123,18 @@
                         }
                       ],
                       "expression": {
-                        "id": 53860,
+                        "id": 53854,
                         "name": "LibStaking",
                         "nodeType": "Identifier",
                         "overloadedDeclarations": [],
-                        "referencedDeclaration": 44294,
+                        "referencedDeclaration": 44281,
                         "src": "536:10:86",
                         "typeDescriptions": {
-                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44294_$",
+                          "typeIdentifier": "t_type$_t_contract$_LibStaking_$44281_$",
                           "typeString": "type(library LibStaking)"
                         }
                       },
-                      "id": 53862,
+                      "id": 53856,
                       "isConstant": false,
                       "isLValue": false,
                       "isPure": false,
@@ -2142,14 +2142,14 @@
                       "memberLocation": "547:13:86",
                       "memberName": "confirmChange",
                       "nodeType": "MemberAccess",
-                      "referencedDeclaration": 44293,
+                      "referencedDeclaration": 44280,
                       "src": "536:24:86",
                       "typeDescriptions": {
                         "typeIdentifier": "t_function_internal_nonpayable$_t_uint64_$returns$__$",
                         "typeString": "function (uint64)"
                       }
                     },
-                    "id": 53866,
+                    "id": 53860,
                     "isConstant": false,
                     "isLValue": false,
                     "isPure": false,
@@ -2165,7 +2165,7 @@
                       "typeString": "tuple()"
                     }
                   },
-                  "id": 53867,
+                  "id": 53861,
                   "nodeType": "ExpressionStatement",
                   "src": "536:43:86"
                 }
@@ -2178,18 +2178,18 @@
             "name": "confirmNextChange",
             "nameLocation": "424:17:86",
             "parameters": {
-              "id": 53852,
+              "id": 53846,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "441:2:86"
             },
             "returnParameters": {
-              "id": 53853,
+              "id": 53847,
               "nodeType": "ParameterList",
               "parameters": [],
               "src": "453:0:86"
             },
-            "scope": 53870,
+            "scope": 53864,
             "stateMutability": "nonpayable",
             "virtual": false,
             "visibility": "external"
@@ -2199,16 +2199,16 @@
         "baseContracts": [
           {
             "baseName": {
-              "id": 53838,
+              "id": 53832,
               "name": "SubnetActorManagerFacet",
               "nameLocations": [
                 "255:23:86"
               ],
               "nodeType": "IdentifierPath",
-              "referencedDeclaration": 49207,
+              "referencedDeclaration": 49194,
               "src": "255:23:86"
             },
-            "id": 53839,
+            "id": 53833,
             "nodeType": "InheritanceSpecifier",
             "src": "255:23:86"
           }
@@ -2218,45 +2218,45 @@
         "contractKind": "contract",
         "fullyImplemented": true,
         "linearizedBaseContracts": [
-          53870,
-          49207,
-          42259,
-          44952,
-          39732
+          53864,
+          49194,
+          42246,
+          44939,
+          39719
         ],
         "name": "SubnetActorManagerFacetMock",
         "nameLocation": "224:27:86",
-        "scope": 53871,
+        "scope": 53865,
         "usedErrors": [
           32032,
           32040,
-          36852,
-          36856,
-          36858,
-          36870,
-          36872,
-          36884,
-          36886,
-          36912,
-          36916,
-          36922,
-          36928,
-          36936,
-          36940,
-          36944,
-          36952,
-          36954,
-          36958,
-          36964,
-          36968,
-          36970,
-          36978,
-          36984,
-          36988,
-          36998,
-          37000,
-          40306,
-          42207
+          36839,
+          36843,
+          36845,
+          36857,
+          36859,
+          36871,
+          36873,
+          36899,
+          36903,
+          36909,
+          36915,
+          36923,
+          36927,
+          36931,
+          36939,
+          36941,
+          36945,
+          36951,
+          36955,
+          36957,
+          36965,
+          36971,
+          36975,
+          36985,
+          36987,
+          40293,
+          42194
         ]
       }
     ],

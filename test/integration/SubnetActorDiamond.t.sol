@@ -10,7 +10,7 @@ import {ConsensusType} from "../../src/enums/ConsensusType.sol";
 import {Status} from "../../src/enums/Status.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg} from "../../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {SubnetID, IPCAddress, Subnet, ValidatorInfo, Validator} from "../../src/structs/Subnet.sol";
+import {SubnetID, PermissionMode, IPCAddress, Subnet, ValidatorInfo, Validator} from "../../src/structs/Subnet.sol";
 import {StorableMsg} from "../../src/structs/Checkpoint.sol";
 import {IERC165} from "../../src/interfaces/IERC165.sol";
 import {IGateway} from "../../src/interfaces/IGateway.sol";
@@ -312,7 +312,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
                 majorityPercentage: DEFAULT_MAJORITY_PERCENTAGE,
                 activeValidatorsLimit: 100,
                 powerScale: 12,
-                permissioned: false,
+                permissionMode: PermissionMode.Collateral,
                 minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
             }),
             address(saDupGetterFaucet),
@@ -1083,7 +1083,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
             DEFAULT_MAJORITY_PERCENTAGE,
-            true,
+            PermissionMode.Federated,
             2
         );
 
@@ -1106,7 +1106,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
             DEFAULT_MIN_VALIDATORS,
             DEFAULT_CHECKPOINT_PERIOD,
             DEFAULT_MAJORITY_PERCENTAGE,
-            true,
+            PermissionMode.Federated,
             2
         );
 

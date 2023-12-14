@@ -1,1 +1,1948 @@
-{"abi":[],"bytecode":{"object":"0x","linkReferences":{}},"deployedBytecode":{"object":"0x","linkReferences":{}},"ast":{"absolutePath":"src/structs/Subnet.sol","id":47438,"exportedSymbols":{"AddressStakingReleases":[47360],"BottomUpCheckpoint":[47218],"CrossMsg":[47240],"FvmAddress":[47264],"IPCAddress":[47423],"MaxPQ":[45702],"Membership":[47437],"MinPQ":[46320],"ParentValidatorsTracker":[47416],"PermissionMode":[47384],"StakingChange":[47324],"StakingChangeLog":[47343],"StakingChangeRequest":[47330],"StakingOperation":[47316],"StakingRelease":[47350],"StakingReleaseQueue":[47370],"Status":[36848],"Subnet":[47311],"SubnetID":[47294],"Validator":[47430],"ValidatorInfo":[47381],"ValidatorSet":[47409]},"nodeType":"SourceUnit","src":"46:4776:73","nodes":[{"id":47273,"nodeType":"PragmaDirective","src":"46:23:73","nodes":[],"literals":["solidity","0.8",".19"]},{"id":47275,"nodeType":"ImportDirective","src":"71:38:73","nodes":[],"absolutePath":"src/structs/Subnet.sol","file":"./Subnet.sol","nameLocation":"-1:-1:-1","scope":47438,"sourceUnit":47438,"symbolAliases":[{"foreign":{"id":47274,"name":"SubnetID","nodeType":"Identifier","overloadedDeclarations":[],"referencedDeclaration":47294,"src":"79:8:73","typeDescriptions":{}},"nameLocation":"-1:-1:-1"}],"unitAlias":""},{"id":47277,"nodeType":"ImportDirective","src":"110:44:73","nodes":[],"absolutePath":"src/structs/FvmAddress.sol","file":"./FvmAddress.sol","nameLocation":"-1:-1:-1","scope":47438,"sourceUnit":47272,"symbolAliases":[{"foreign":{"id":47276,"name":"FvmAddress","nodeType":"Identifier","overloadedDeclarations":[],"referencedDeclaration":47264,"src":"118:10:73","typeDescriptions":{}},"nameLocation":"-1:-1:-1"}],"unitAlias":""},{"id":47280,"nodeType":"ImportDirective","src":"155:62:73","nodes":[],"absolutePath":"src/structs/Checkpoint.sol","file":"./Checkpoint.sol","nameLocation":"-1:-1:-1","scope":47438,"sourceUnit":47258,"symbolAliases":[{"foreign":{"id":47278,"name":"BottomUpCheckpoint","nodeType":"Identifier","overloadedDeclarations":[],"referencedDeclaration":47218,"src":"163:18:73","typeDescriptions":{}},"nameLocation":"-1:-1:-1"},{"foreign":{"id":47279,"name":"CrossMsg","nodeType":"Identifier","overloadedDeclarations":[],"referencedDeclaration":47240,"src":"183:8:73","typeDescriptions":{}},"nameLocation":"-1:-1:-1"}],"unitAlias":""},{"id":47282,"nodeType":"ImportDirective","src":"218:43:73","nodes":[],"absolutePath":"src/enums/Status.sol","file":"../enums/Status.sol","nameLocation":"-1:-1:-1","scope":47438,"sourceUnit":36849,"symbolAliases":[{"foreign":{"id":47281,"name":"Status","nodeType":"Identifier","overloadedDeclarations":[],"referencedDeclaration":36848,"src":"226:6:73","typeDescriptions":{}},"nameLocation":"-1:-1:-1"}],"unitAlias":""},{"id":47284,"nodeType":"ImportDirective","src":"262:51:73","nodes":[],"absolutePath":"src/lib/priority/LibMaxPQ.sol","file":"../lib/priority/LibMaxPQ.sol","nameLocation":"-1:-1:-1","scope":47438,"sourceUnit":46308,"symbolAliases":[{"foreign":{"id":47283,"name":"MaxPQ","nodeType":"Identifier","overloadedDeclarations":[],"referencedDeclaration":45702,"src":"270:5:73","typeDescriptions":{}},"nameLocation":"-1:-1:-1"}],"unitAlias":""},{"id":47286,"nodeType":"ImportDirective","src":"314:51:73","nodes":[],"absolutePath":"src/lib/priority/LibMinPQ.sol","file":"../lib/priority/LibMinPQ.sol","nameLocation":"-1:-1:-1","scope":47438,"sourceUnit":46927,"symbolAliases":[{"foreign":{"id":47285,"name":"MinPQ","nodeType":"Identifier","overloadedDeclarations":[],"referencedDeclaration":46320,"src":"322:5:73","typeDescriptions":{}},"nameLocation":"-1:-1:-1"}],"unitAlias":""},{"id":47294,"nodeType":"StructDefinition","src":"367:142:73","nodes":[],"canonicalName":"SubnetID","members":[{"constant":false,"id":47289,"mutability":"mutable","name":"root","nameLocation":"439:4:73","nodeType":"VariableDeclaration","scope":47294,"src":"432:11:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"},"typeName":{"id":47288,"name":"uint64","nodeType":"ElementaryTypeName","src":"432:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"visibility":"internal"},{"constant":false,"id":47293,"mutability":"mutable","name":"route","nameLocation":"501:5:73","nodeType":"VariableDeclaration","scope":47294,"src":"491:15:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_array$_t_address_$dyn_storage_ptr","typeString":"address[]"},"typeName":{"baseType":{"id":47291,"name":"address","nodeType":"ElementaryTypeName","src":"491:7:73","stateMutability":"nonpayable","typeDescriptions":{"typeIdentifier":"t_address","typeString":"address"}},"id":47292,"nodeType":"ArrayTypeName","src":"491:9:73","typeDescriptions":{"typeIdentifier":"t_array$_t_address_$dyn_storage_ptr","typeString":"address[]"}},"visibility":"internal"}],"name":"SubnetID","nameLocation":"374:8:73","scope":47438,"visibility":"public"},{"id":47311,"nodeType":"StructDefinition","src":"511:180:73","nodes":[],"canonicalName":"Subnet","members":[{"constant":false,"id":47296,"mutability":"mutable","name":"stake","nameLocation":"539:5:73","nodeType":"VariableDeclaration","scope":47311,"src":"531:13:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47295,"name":"uint256","nodeType":"ElementaryTypeName","src":"531:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47298,"mutability":"mutable","name":"genesisEpoch","nameLocation":"558:12:73","nodeType":"VariableDeclaration","scope":47311,"src":"550:20:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47297,"name":"uint256","nodeType":"ElementaryTypeName","src":"550:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47300,"mutability":"mutable","name":"circSupply","nameLocation":"584:10:73","nodeType":"VariableDeclaration","scope":47311,"src":"576:18:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47299,"name":"uint256","nodeType":"ElementaryTypeName","src":"576:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47302,"mutability":"mutable","name":"topDownNonce","nameLocation":"607:12:73","nodeType":"VariableDeclaration","scope":47311,"src":"600:19:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"},"typeName":{"id":47301,"name":"uint64","nodeType":"ElementaryTypeName","src":"600:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"visibility":"internal"},{"constant":false,"id":47304,"mutability":"mutable","name":"appliedBottomUpNonce","nameLocation":"632:20:73","nodeType":"VariableDeclaration","scope":47311,"src":"625:27:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"},"typeName":{"id":47303,"name":"uint64","nodeType":"ElementaryTypeName","src":"625:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"visibility":"internal"},{"constant":false,"id":47307,"mutability":"mutable","name":"status","nameLocation":"665:6:73","nodeType":"VariableDeclaration","scope":47311,"src":"658:13:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_enum$_Status_$36848","typeString":"enumStatus"},"typeName":{"id":47306,"nodeType":"UserDefinedTypeName","pathNode":{"id":47305,"name":"Status","nameLocations":["658:6:73"],"nodeType":"IdentifierPath","referencedDeclaration":36848,"src":"658:6:73"},"referencedDeclaration":36848,"src":"658:6:73","typeDescriptions":{"typeIdentifier":"t_enum$_Status_$36848","typeString":"enumStatus"}},"visibility":"internal"},{"constant":false,"id":47310,"mutability":"mutable","name":"id","nameLocation":"686:2:73","nodeType":"VariableDeclaration","scope":47311,"src":"677:11:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_SubnetID_$47294_storage_ptr","typeString":"structSubnetID"},"typeName":{"id":47309,"nodeType":"UserDefinedTypeName","pathNode":{"id":47308,"name":"SubnetID","nameLocations":["677:8:73"],"nodeType":"IdentifierPath","referencedDeclaration":47294,"src":"677:8:73"},"referencedDeclaration":47294,"src":"677:8:73","typeDescriptions":{"typeIdentifier":"t_struct$_SubnetID_$47294_storage_ptr","typeString":"structSubnetID"}},"visibility":"internal"}],"name":"Subnet","nameLocation":"518:6:73","scope":47438,"visibility":"public"},{"id":47316,"nodeType":"EnumDefinition","src":"728:91:73","nodes":[],"canonicalName":"StakingOperation","members":[{"id":47312,"name":"Deposit","nameLocation":"756:7:73","nodeType":"EnumValue","src":"756:7:73"},{"id":47313,"name":"Withdraw","nameLocation":"769:8:73","nodeType":"EnumValue","src":"769:8:73"},{"id":47314,"name":"SetMetadata","nameLocation":"783:11:73","nodeType":"EnumValue","src":"783:11:73"},{"id":47315,"name":"SetFederatedPower","nameLocation":"800:17:73","nodeType":"EnumValue","src":"800:17:73"}],"name":"StakingOperation","nameLocation":"733:16:73"},{"id":47324,"nodeType":"StructDefinition","src":"865:91:73","nodes":[],"canonicalName":"StakingChange","members":[{"constant":false,"id":47319,"mutability":"mutable","name":"op","nameLocation":"909:2:73","nodeType":"VariableDeclaration","scope":47324,"src":"892:19:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_enum$_StakingOperation_$47316","typeString":"enumStakingOperation"},"typeName":{"id":47318,"nodeType":"UserDefinedTypeName","pathNode":{"id":47317,"name":"StakingOperation","nameLocations":["892:16:73"],"nodeType":"IdentifierPath","referencedDeclaration":47316,"src":"892:16:73"},"referencedDeclaration":47316,"src":"892:16:73","typeDescriptions":{"typeIdentifier":"t_enum$_StakingOperation_$47316","typeString":"enumStakingOperation"}},"visibility":"internal"},{"constant":false,"id":47321,"mutability":"mutable","name":"payload","nameLocation":"923:7:73","nodeType":"VariableDeclaration","scope":47324,"src":"917:13:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_bytes_storage_ptr","typeString":"bytes"},"typeName":{"id":47320,"name":"bytes","nodeType":"ElementaryTypeName","src":"917:5:73","typeDescriptions":{"typeIdentifier":"t_bytes_storage_ptr","typeString":"bytes"}},"visibility":"internal"},{"constant":false,"id":47323,"mutability":"mutable","name":"validator","nameLocation":"944:9:73","nodeType":"VariableDeclaration","scope":47324,"src":"936:17:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_address","typeString":"address"},"typeName":{"id":47322,"name":"address","nodeType":"ElementaryTypeName","src":"936:7:73","stateMutability":"nonpayable","typeDescriptions":{"typeIdentifier":"t_address","typeString":"address"}},"visibility":"internal"}],"name":"StakingChange","nameLocation":"872:13:73","scope":47438,"visibility":"public"},{"id":47330,"nodeType":"StructDefinition","src":"1028:89:73","nodes":[],"canonicalName":"StakingChangeRequest","members":[{"constant":false,"id":47327,"mutability":"mutable","name":"change","nameLocation":"1076:6:73","nodeType":"VariableDeclaration","scope":47330,"src":"1062:20:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_StakingChange_$47324_storage_ptr","typeString":"structStakingChange"},"typeName":{"id":47326,"nodeType":"UserDefinedTypeName","pathNode":{"id":47325,"name":"StakingChange","nameLocations":["1062:13:73"],"nodeType":"IdentifierPath","referencedDeclaration":47324,"src":"1062:13:73"},"referencedDeclaration":47324,"src":"1062:13:73","typeDescriptions":{"typeIdentifier":"t_struct$_StakingChange_$47324_storage_ptr","typeString":"structStakingChange"}},"visibility":"internal"},{"constant":false,"id":47329,"mutability":"mutable","name":"configurationNumber","nameLocation":"1095:19:73","nodeType":"VariableDeclaration","scope":47330,"src":"1088:26:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"},"typeName":{"id":47328,"name":"uint64","nodeType":"ElementaryTypeName","src":"1088:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"visibility":"internal"}],"name":"StakingChangeRequest","nameLocation":"1035:20:73","scope":47438,"visibility":"public"},{"id":47343,"nodeType":"StructDefinition","src":"1157:356:73","nodes":[],"canonicalName":"StakingChangeLog","members":[{"constant":false,"id":47333,"mutability":"mutable","name":"nextConfigurationNumber","nameLocation":"1266:23:73","nodeType":"VariableDeclaration","scope":47343,"src":"1259:30:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"},"typeName":{"id":47332,"name":"uint64","nodeType":"ElementaryTypeName","src":"1259:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"visibility":"internal"},{"constant":false,"id":47336,"mutability":"mutable","name":"startConfigurationNumber","nameLocation":"1360:24:73","nodeType":"VariableDeclaration","scope":47343,"src":"1353:31:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"},"typeName":{"id":47335,"name":"uint64","nodeType":"ElementaryTypeName","src":"1353:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"visibility":"internal"},{"constant":false,"id":47342,"mutability":"mutable","name":"changes","nameLocation":"1503:7:73","nodeType":"VariableDeclaration","scope":47343,"src":"1470:40:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_mapping$_t_uint64_$_t_struct$_StakingChange_$47324_storage_$","typeString":"mapping(uint64=>structStakingChange)"},"typeName":{"id":47341,"keyName":"","keyNameLocation":"-1:-1:-1","keyType":{"id":47338,"name":"uint64","nodeType":"ElementaryTypeName","src":"1478:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"nodeType":"Mapping","src":"1470:32:73","typeDescriptions":{"typeIdentifier":"t_mapping$_t_uint64_$_t_struct$_StakingChange_$47324_storage_$","typeString":"mapping(uint64=>structStakingChange)"},"valueName":"","valueNameLocation":"-1:-1:-1","valueType":{"id":47340,"nodeType":"UserDefinedTypeName","pathNode":{"id":47339,"name":"StakingChange","nameLocations":["1488:13:73"],"nodeType":"IdentifierPath","referencedDeclaration":47324,"src":"1488:13:73"},"referencedDeclaration":47324,"src":"1488:13:73","typeDescriptions":{"typeIdentifier":"t_struct$_StakingChange_$47324_storage_ptr","typeString":"structStakingChange"}}},"visibility":"internal"}],"name":"StakingChangeLog","nameLocation":"1164:16:73","scope":47438,"visibility":"public"},{"id":47350,"nodeType":"StructDefinition","src":"1556:189:73","nodes":[],"canonicalName":"StakingRelease","members":[{"constant":false,"id":47346,"mutability":"mutable","name":"releaseAt","nameLocation":"1656:9:73","nodeType":"VariableDeclaration","scope":47350,"src":"1648:17:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47345,"name":"uint256","nodeType":"ElementaryTypeName","src":"1648:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47349,"mutability":"mutable","name":"amount","nameLocation":"1736:6:73","nodeType":"VariableDeclaration","scope":47350,"src":"1728:14:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47348,"name":"uint256","nodeType":"ElementaryTypeName","src":"1728:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"}],"name":"StakingRelease","nameLocation":"1563:14:73","scope":47438,"visibility":"public"},{"id":47360,"nodeType":"StructDefinition","src":"1890:121:73","nodes":[],"canonicalName":"AddressStakingReleases","members":[{"constant":false,"id":47352,"mutability":"mutable","name":"length","nameLocation":"1933:6:73","nodeType":"VariableDeclaration","scope":47360,"src":"1926:13:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint16","typeString":"uint16"},"typeName":{"id":47351,"name":"uint16","nodeType":"ElementaryTypeName","src":"1926:6:73","typeDescriptions":{"typeIdentifier":"t_uint16","typeString":"uint16"}},"visibility":"internal"},{"constant":false,"id":47354,"mutability":"mutable","name":"startIdx","nameLocation":"1952:8:73","nodeType":"VariableDeclaration","scope":47360,"src":"1945:15:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint16","typeString":"uint16"},"typeName":{"id":47353,"name":"uint16","nodeType":"ElementaryTypeName","src":"1945:6:73","typeDescriptions":{"typeIdentifier":"t_uint16","typeString":"uint16"}},"visibility":"internal"},{"constant":false,"id":47359,"mutability":"mutable","name":"releases","nameLocation":"2000:8:73","nodeType":"VariableDeclaration","scope":47360,"src":"1966:42:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_mapping$_t_uint16_$_t_struct$_StakingRelease_$47350_storage_$","typeString":"mapping(uint16=>structStakingRelease)"},"typeName":{"id":47358,"keyName":"","keyNameLocation":"-1:-1:-1","keyType":{"id":47355,"name":"uint16","nodeType":"ElementaryTypeName","src":"1974:6:73","typeDescriptions":{"typeIdentifier":"t_uint16","typeString":"uint16"}},"nodeType":"Mapping","src":"1966:33:73","typeDescriptions":{"typeIdentifier":"t_mapping$_t_uint16_$_t_struct$_StakingRelease_$47350_storage_$","typeString":"mapping(uint16=>structStakingRelease)"},"valueName":"","valueNameLocation":"-1:-1:-1","valueType":{"id":47357,"nodeType":"UserDefinedTypeName","pathNode":{"id":47356,"name":"StakingRelease","nameLocations":["1984:14:73"],"nodeType":"IdentifierPath","referencedDeclaration":47350,"src":"1984:14:73"},"referencedDeclaration":47350,"src":"1984:14:73","typeDescriptions":{"typeIdentifier":"t_struct$_StakingRelease_$47350_storage_ptr","typeString":"structStakingRelease"}}},"visibility":"internal"}],"name":"AddressStakingReleases","nameLocation":"1897:22:73","scope":47438,"visibility":"public"},{"id":47370,"nodeType":"StructDefinition","src":"2051:246:73","nodes":[],"canonicalName":"StakingReleaseQueue","members":[{"constant":false,"id":47363,"mutability":"mutable","name":"lockingDuration","nameLocation":"2156:15:73","nodeType":"VariableDeclaration","scope":47370,"src":"2148:23:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47362,"name":"uint256","nodeType":"ElementaryTypeName","src":"2148:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47369,"mutability":"mutable","name":"releases","nameLocation":"2286:8:73","nodeType":"VariableDeclaration","scope":47370,"src":"2243:51:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$47360_storage_$","typeString":"mapping(address=>structAddressStakingReleases)"},"typeName":{"id":47368,"keyName":"","keyNameLocation":"-1:-1:-1","keyType":{"id":47365,"name":"address","nodeType":"ElementaryTypeName","src":"2251:7:73","typeDescriptions":{"typeIdentifier":"t_address","typeString":"address"}},"nodeType":"Mapping","src":"2243:42:73","typeDescriptions":{"typeIdentifier":"t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$47360_storage_$","typeString":"mapping(address=>structAddressStakingReleases)"},"valueName":"","valueNameLocation":"-1:-1:-1","valueType":{"id":47367,"nodeType":"UserDefinedTypeName","pathNode":{"id":47366,"name":"AddressStakingReleases","nameLocations":["2262:22:73"],"nodeType":"IdentifierPath","referencedDeclaration":47360,"src":"2262:22:73"},"referencedDeclaration":47360,"src":"2262:22:73","typeDescriptions":{"typeIdentifier":"t_struct$_AddressStakingReleases_$47360_storage_ptr","typeString":"structAddressStakingReleases"}}},"visibility":"internal"}],"name":"StakingReleaseQueue","nameLocation":"2058:19:73","scope":47438,"visibility":"public"},{"id":47381,"nodeType":"StructDefinition","src":"2583:381:73","nodes":[],"canonicalName":"ValidatorInfo","members":[{"constant":false,"id":47373,"mutability":"mutable","name":"federatedPower","nameLocation":"2658:14:73","nodeType":"VariableDeclaration","scope":47381,"src":"2650:22:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47372,"name":"uint256","nodeType":"ElementaryTypeName","src":"2650:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47375,"mutability":"mutable","name":"confirmedCollateral","nameLocation":"2686:19:73","nodeType":"VariableDeclaration","scope":47381,"src":"2678:27:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47374,"name":"uint256","nodeType":"ElementaryTypeName","src":"2678:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47377,"mutability":"mutable","name":"totalCollateral","nameLocation":"2719:15:73","nodeType":"VariableDeclaration","scope":47381,"src":"2711:23:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47376,"name":"uint256","nodeType":"ElementaryTypeName","src":"2711:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47380,"mutability":"mutable","name":"metadata","nameLocation":"2953:8:73","nodeType":"VariableDeclaration","scope":47381,"src":"2947:14:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_bytes_storage_ptr","typeString":"bytes"},"typeName":{"id":47379,"name":"bytes","nodeType":"ElementaryTypeName","src":"2947:5:73","typeDescriptions":{"typeIdentifier":"t_bytes_storage_ptr","typeString":"bytes"}},"visibility":"internal"}],"name":"ValidatorInfo","nameLocation":"2590:13:73","scope":47438,"visibility":"public"},{"id":47384,"nodeType":"EnumDefinition","src":"3017:179:73","nodes":[],"canonicalName":"PermissionMode","members":[{"id":47382,"name":"Collateral","nameLocation":"3106:10:73","nodeType":"EnumValue","src":"3106:10:73"},{"id":47383,"name":"Federated","nameLocation":"3185:9:73","nodeType":"EnumValue","src":"3185:9:73"}],"name":"PermissionMode","nameLocation":"3022:14:73"},{"id":47409,"nodeType":"StructDefinition","src":"3755:576:73","nodes":[],"canonicalName":"ValidatorSet","members":[{"constant":false,"id":47388,"mutability":"mutable","name":"permissionMode","nameLocation":"3839:14:73","nodeType":"VariableDeclaration","scope":47409,"src":"3824:29:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_enum$_PermissionMode_$47384","typeString":"enumPermissionMode"},"typeName":{"id":47387,"nodeType":"UserDefinedTypeName","pathNode":{"id":47386,"name":"PermissionMode","nameLocations":["3824:14:73"],"nodeType":"IdentifierPath","referencedDeclaration":47384,"src":"3824:14:73"},"referencedDeclaration":47384,"src":"3824:14:73","typeDescriptions":{"typeIdentifier":"t_enum$_PermissionMode_$47384","typeString":"enumPermissionMode"}},"visibility":"internal"},{"constant":false,"id":47391,"mutability":"mutable","name":"activeLimit","nameLocation":"3921:11:73","nodeType":"VariableDeclaration","scope":47409,"src":"3914:18:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint16","typeString":"uint16"},"typeName":{"id":47390,"name":"uint16","nodeType":"ElementaryTypeName","src":"3914:6:73","typeDescriptions":{"typeIdentifier":"t_uint16","typeString":"uint16"}},"visibility":"internal"},{"constant":false,"id":47394,"mutability":"mutable","name":"totalConfirmedCollateral","nameLocation":"3986:24:73","nodeType":"VariableDeclaration","scope":47409,"src":"3978:32:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47393,"name":"uint256","nodeType":"ElementaryTypeName","src":"3978:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47400,"mutability":"mutable","name":"validators","nameLocation":"4116:10:73","nodeType":"VariableDeclaration","scope":47409,"src":"4082:44:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_mapping$_t_address_$_t_struct$_ValidatorInfo_$47381_storage_$","typeString":"mapping(address=>structValidatorInfo)"},"typeName":{"id":47399,"keyName":"","keyNameLocation":"-1:-1:-1","keyType":{"id":47396,"name":"address","nodeType":"ElementaryTypeName","src":"4090:7:73","typeDescriptions":{"typeIdentifier":"t_address","typeString":"address"}},"nodeType":"Mapping","src":"4082:33:73","typeDescriptions":{"typeIdentifier":"t_mapping$_t_address_$_t_struct$_ValidatorInfo_$47381_storage_$","typeString":"mapping(address=>structValidatorInfo)"},"valueName":"","valueNameLocation":"-1:-1:-1","valueType":{"id":47398,"nodeType":"UserDefinedTypeName","pathNode":{"id":47397,"name":"ValidatorInfo","nameLocations":["4101:13:73"],"nodeType":"IdentifierPath","referencedDeclaration":47381,"src":"4101:13:73"},"referencedDeclaration":47381,"src":"4101:13:73","typeDescriptions":{"typeIdentifier":"t_struct$_ValidatorInfo_$47381_storage_ptr","typeString":"structValidatorInfo"}}},"visibility":"internal"},{"constant":false,"id":47404,"mutability":"mutable","name":"activeValidators","nameLocation":"4210:16:73","nodeType":"VariableDeclaration","scope":47409,"src":"4204:22:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_MinPQ_$46320_storage_ptr","typeString":"structMinPQ"},"typeName":{"id":47403,"nodeType":"UserDefinedTypeName","pathNode":{"id":47402,"name":"MinPQ","nameLocations":["4204:5:73"],"nodeType":"IdentifierPath","referencedDeclaration":46320,"src":"4204:5:73"},"referencedDeclaration":46320,"src":"4204:5:73","typeDescriptions":{"typeIdentifier":"t_struct$_MinPQ_$46320_storage_ptr","typeString":"structMinPQ"}},"visibility":"internal"},{"constant":false,"id":47408,"mutability":"mutable","name":"waitingValidators","nameLocation":"4311:17:73","nodeType":"VariableDeclaration","scope":47409,"src":"4305:23:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_MaxPQ_$45702_storage_ptr","typeString":"structMaxPQ"},"typeName":{"id":47407,"nodeType":"UserDefinedTypeName","pathNode":{"id":47406,"name":"MaxPQ","nameLocations":["4305:5:73"],"nodeType":"IdentifierPath","referencedDeclaration":45702,"src":"4305:5:73"},"referencedDeclaration":45702,"src":"4305:5:73","typeDescriptions":{"typeIdentifier":"t_struct$_MaxPQ_$45702_storage_ptr","typeString":"structMaxPQ"}},"visibility":"internal"}],"name":"ValidatorSet","nameLocation":"3762:12:73","scope":47438,"visibility":"public"},{"id":47416,"nodeType":"StructDefinition","src":"4401:93:73","nodes":[],"canonicalName":"ParentValidatorsTracker","members":[{"constant":false,"id":47412,"mutability":"mutable","name":"validators","nameLocation":"4451:10:73","nodeType":"VariableDeclaration","scope":47416,"src":"4438:23:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_ValidatorSet_$47409_storage_ptr","typeString":"structValidatorSet"},"typeName":{"id":47411,"nodeType":"UserDefinedTypeName","pathNode":{"id":47410,"name":"ValidatorSet","nameLocations":["4438:12:73"],"nodeType":"IdentifierPath","referencedDeclaration":47409,"src":"4438:12:73"},"referencedDeclaration":47409,"src":"4438:12:73","typeDescriptions":{"typeIdentifier":"t_struct$_ValidatorSet_$47409_storage_ptr","typeString":"structValidatorSet"}},"visibility":"internal"},{"constant":false,"id":47415,"mutability":"mutable","name":"changes","nameLocation":"4484:7:73","nodeType":"VariableDeclaration","scope":47416,"src":"4467:24:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_StakingChangeLog_$47343_storage_ptr","typeString":"structStakingChangeLog"},"typeName":{"id":47414,"nodeType":"UserDefinedTypeName","pathNode":{"id":47413,"name":"StakingChangeLog","nameLocations":["4467:16:73"],"nodeType":"IdentifierPath","referencedDeclaration":47343,"src":"4467:16:73"},"referencedDeclaration":47343,"src":"4467:16:73","typeDescriptions":{"typeIdentifier":"t_struct$_StakingChangeLog_$47343_storage_ptr","typeString":"structStakingChangeLog"}},"visibility":"internal"}],"name":"ParentValidatorsTracker","nameLocation":"4408:23:73","scope":47438,"visibility":"public"},{"id":47423,"nodeType":"StructDefinition","src":"4496:71:73","nodes":[],"canonicalName":"IPCAddress","members":[{"constant":false,"id":47419,"mutability":"mutable","name":"subnetId","nameLocation":"4529:8:73","nodeType":"VariableDeclaration","scope":47423,"src":"4520:17:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_SubnetID_$47294_storage_ptr","typeString":"structSubnetID"},"typeName":{"id":47418,"nodeType":"UserDefinedTypeName","pathNode":{"id":47417,"name":"SubnetID","nameLocations":["4520:8:73"],"nodeType":"IdentifierPath","referencedDeclaration":47294,"src":"4520:8:73"},"referencedDeclaration":47294,"src":"4520:8:73","typeDescriptions":{"typeIdentifier":"t_struct$_SubnetID_$47294_storage_ptr","typeString":"structSubnetID"}},"visibility":"internal"},{"constant":false,"id":47422,"mutability":"mutable","name":"rawAddress","nameLocation":"4554:10:73","nodeType":"VariableDeclaration","scope":47423,"src":"4543:21:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_struct$_FvmAddress_$47264_storage_ptr","typeString":"structFvmAddress"},"typeName":{"id":47421,"nodeType":"UserDefinedTypeName","pathNode":{"id":47420,"name":"FvmAddress","nameLocations":["4543:10:73"],"nodeType":"IdentifierPath","referencedDeclaration":47264,"src":"4543:10:73"},"referencedDeclaration":47264,"src":"4543:10:73","typeDescriptions":{"typeIdentifier":"t_struct$_FvmAddress_$47264_storage_ptr","typeString":"structFvmAddress"}},"visibility":"internal"}],"name":"IPCAddress","nameLocation":"4503:10:73","scope":47438,"visibility":"public"},{"id":47430,"nodeType":"StructDefinition","src":"4612:78:73","nodes":[],"canonicalName":"Validator","members":[{"constant":false,"id":47425,"mutability":"mutable","name":"weight","nameLocation":"4643:6:73","nodeType":"VariableDeclaration","scope":47430,"src":"4635:14:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"},"typeName":{"id":47424,"name":"uint256","nodeType":"ElementaryTypeName","src":"4635:7:73","typeDescriptions":{"typeIdentifier":"t_uint256","typeString":"uint256"}},"visibility":"internal"},{"constant":false,"id":47427,"mutability":"mutable","name":"addr","nameLocation":"4663:4:73","nodeType":"VariableDeclaration","scope":47430,"src":"4655:12:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_address","typeString":"address"},"typeName":{"id":47426,"name":"address","nodeType":"ElementaryTypeName","src":"4655:7:73","stateMutability":"nonpayable","typeDescriptions":{"typeIdentifier":"t_address","typeString":"address"}},"visibility":"internal"},{"constant":false,"id":47429,"mutability":"mutable","name":"metadata","nameLocation":"4679:8:73","nodeType":"VariableDeclaration","scope":47430,"src":"4673:14:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_bytes_storage_ptr","typeString":"bytes"},"typeName":{"id":47428,"name":"bytes","nodeType":"ElementaryTypeName","src":"4673:5:73","typeDescriptions":{"typeIdentifier":"t_bytes_storage_ptr","typeString":"bytes"}},"visibility":"internal"}],"name":"Validator","nameLocation":"4619:9:73","scope":47438,"visibility":"public"},{"id":47437,"nodeType":"StructDefinition","src":"4740:81:73","nodes":[],"canonicalName":"Membership","members":[{"constant":false,"id":47434,"mutability":"mutable","name":"validators","nameLocation":"4776:10:73","nodeType":"VariableDeclaration","scope":47437,"src":"4764:22:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_array$_t_struct$_Validator_$47430_storage_$dyn_storage_ptr","typeString":"structValidator[]"},"typeName":{"baseType":{"id":47432,"nodeType":"UserDefinedTypeName","pathNode":{"id":47431,"name":"Validator","nameLocations":["4764:9:73"],"nodeType":"IdentifierPath","referencedDeclaration":47430,"src":"4764:9:73"},"referencedDeclaration":47430,"src":"4764:9:73","typeDescriptions":{"typeIdentifier":"t_struct$_Validator_$47430_storage_ptr","typeString":"structValidator"}},"id":47433,"nodeType":"ArrayTypeName","src":"4764:11:73","typeDescriptions":{"typeIdentifier":"t_array$_t_struct$_Validator_$47430_storage_$dyn_storage_ptr","typeString":"structValidator[]"}},"visibility":"internal"},{"constant":false,"id":47436,"mutability":"mutable","name":"configurationNumber","nameLocation":"4799:19:73","nodeType":"VariableDeclaration","scope":47437,"src":"4792:26:73","stateVariable":false,"storageLocation":"default","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"},"typeName":{"id":47435,"name":"uint64","nodeType":"ElementaryTypeName","src":"4792:6:73","typeDescriptions":{"typeIdentifier":"t_uint64","typeString":"uint64"}},"visibility":"internal"}],"name":"Membership","nameLocation":"4747:10:73","scope":47438,"visibility":"public"}],"license":"MITORApache-2.0"},"id":73}
+{
+  "abi": [],
+  "bytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "deployedBytecode": {
+    "object": "0x",
+    "linkReferences": {}
+  },
+  "ast": {
+    "absolutePath": "src/structs/Subnet.sol",
+    "id": 47425,
+    "exportedSymbols": {
+      "AddressStakingReleases": [
+        47347
+      ],
+      "BottomUpCheckpoint": [
+        47205
+      ],
+      "CrossMsg": [
+        47227
+      ],
+      "FvmAddress": [
+        47251
+      ],
+      "IPCAddress": [
+        47410
+      ],
+      "MaxPQ": [
+        45689
+      ],
+      "Membership": [
+        47424
+      ],
+      "MinPQ": [
+        46307
+      ],
+      "ParentValidatorsTracker": [
+        47403
+      ],
+      "PermissionMode": [
+        47371
+      ],
+      "StakingChange": [
+        47311
+      ],
+      "StakingChangeLog": [
+        47330
+      ],
+      "StakingChangeRequest": [
+        47317
+      ],
+      "StakingOperation": [
+        47303
+      ],
+      "StakingRelease": [
+        47337
+      ],
+      "StakingReleaseQueue": [
+        47357
+      ],
+      "Status": [
+        36835
+      ],
+      "Subnet": [
+        47298
+      ],
+      "SubnetID": [
+        47281
+      ],
+      "Validator": [
+        47417
+      ],
+      "ValidatorInfo": [
+        47368
+      ],
+      "ValidatorSet": [
+        47396
+      ]
+    },
+    "nodeType": "SourceUnit",
+    "src": "46:4776:73",
+    "nodes": [
+      {
+        "id": 47260,
+        "nodeType": "PragmaDirective",
+        "src": "46:23:73",
+        "nodes": [],
+        "literals": [
+          "solidity",
+          "0.8",
+          ".19"
+        ]
+      },
+      {
+        "id": 47262,
+        "nodeType": "ImportDirective",
+        "src": "71:38:73",
+        "nodes": [],
+        "absolutePath": "src/structs/Subnet.sol",
+        "file": "./Subnet.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 47425,
+        "sourceUnit": 47425,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 47261,
+              "name": "SubnetID",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 47281,
+              "src": "79:8:73",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 47264,
+        "nodeType": "ImportDirective",
+        "src": "110:44:73",
+        "nodes": [],
+        "absolutePath": "src/structs/FvmAddress.sol",
+        "file": "./FvmAddress.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 47425,
+        "sourceUnit": 47259,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 47263,
+              "name": "FvmAddress",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 47251,
+              "src": "118:10:73",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 47267,
+        "nodeType": "ImportDirective",
+        "src": "155:62:73",
+        "nodes": [],
+        "absolutePath": "src/structs/Checkpoint.sol",
+        "file": "./Checkpoint.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 47425,
+        "sourceUnit": 47245,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 47265,
+              "name": "BottomUpCheckpoint",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 47205,
+              "src": "163:18:73",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          },
+          {
+            "foreign": {
+              "id": 47266,
+              "name": "CrossMsg",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 47227,
+              "src": "183:8:73",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 47269,
+        "nodeType": "ImportDirective",
+        "src": "218:43:73",
+        "nodes": [],
+        "absolutePath": "src/enums/Status.sol",
+        "file": "../enums/Status.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 47425,
+        "sourceUnit": 36836,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 47268,
+              "name": "Status",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 36835,
+              "src": "226:6:73",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 47271,
+        "nodeType": "ImportDirective",
+        "src": "262:51:73",
+        "nodes": [],
+        "absolutePath": "src/lib/priority/LibMaxPQ.sol",
+        "file": "../lib/priority/LibMaxPQ.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 47425,
+        "sourceUnit": 46295,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 47270,
+              "name": "MaxPQ",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 45689,
+              "src": "270:5:73",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 47273,
+        "nodeType": "ImportDirective",
+        "src": "314:51:73",
+        "nodes": [],
+        "absolutePath": "src/lib/priority/LibMinPQ.sol",
+        "file": "../lib/priority/LibMinPQ.sol",
+        "nameLocation": "-1:-1:-1",
+        "scope": 47425,
+        "sourceUnit": 46914,
+        "symbolAliases": [
+          {
+            "foreign": {
+              "id": 47272,
+              "name": "MinPQ",
+              "nodeType": "Identifier",
+              "overloadedDeclarations": [],
+              "referencedDeclaration": 46307,
+              "src": "322:5:73",
+              "typeDescriptions": {}
+            },
+            "nameLocation": "-1:-1:-1"
+          }
+        ],
+        "unitAlias": ""
+      },
+      {
+        "id": 47281,
+        "nodeType": "StructDefinition",
+        "src": "367:142:73",
+        "nodes": [],
+        "canonicalName": "SubnetID",
+        "members": [
+          {
+            "constant": false,
+            "id": 47276,
+            "mutability": "mutable",
+            "name": "root",
+            "nameLocation": "439:4:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47281,
+            "src": "432:11:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint64",
+              "typeString": "uint64"
+            },
+            "typeName": {
+              "id": 47275,
+              "name": "uint64",
+              "nodeType": "ElementaryTypeName",
+              "src": "432:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint64",
+                "typeString": "uint64"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47280,
+            "mutability": "mutable",
+            "name": "route",
+            "nameLocation": "501:5:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47281,
+            "src": "491:15:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+              "typeString": "address[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 47278,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "491:7:73",
+                "stateMutability": "nonpayable",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "id": 47279,
+              "nodeType": "ArrayTypeName",
+              "src": "491:9:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_address_$dyn_storage_ptr",
+                "typeString": "address[]"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "SubnetID",
+        "nameLocation": "374:8:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47298,
+        "nodeType": "StructDefinition",
+        "src": "511:180:73",
+        "nodes": [],
+        "canonicalName": "Subnet",
+        "members": [
+          {
+            "constant": false,
+            "id": 47283,
+            "mutability": "mutable",
+            "name": "stake",
+            "nameLocation": "539:5:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47298,
+            "src": "531:13:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47282,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "531:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47285,
+            "mutability": "mutable",
+            "name": "genesisEpoch",
+            "nameLocation": "558:12:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47298,
+            "src": "550:20:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47284,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "550:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47287,
+            "mutability": "mutable",
+            "name": "circSupply",
+            "nameLocation": "584:10:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47298,
+            "src": "576:18:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47286,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "576:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47289,
+            "mutability": "mutable",
+            "name": "topDownNonce",
+            "nameLocation": "607:12:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47298,
+            "src": "600:19:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint64",
+              "typeString": "uint64"
+            },
+            "typeName": {
+              "id": 47288,
+              "name": "uint64",
+              "nodeType": "ElementaryTypeName",
+              "src": "600:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint64",
+                "typeString": "uint64"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47291,
+            "mutability": "mutable",
+            "name": "appliedBottomUpNonce",
+            "nameLocation": "632:20:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47298,
+            "src": "625:27:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint64",
+              "typeString": "uint64"
+            },
+            "typeName": {
+              "id": 47290,
+              "name": "uint64",
+              "nodeType": "ElementaryTypeName",
+              "src": "625:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint64",
+                "typeString": "uint64"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47294,
+            "mutability": "mutable",
+            "name": "status",
+            "nameLocation": "665:6:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47298,
+            "src": "658:13:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_enum$_Status_$36835",
+              "typeString": "enum Status"
+            },
+            "typeName": {
+              "id": 47293,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47292,
+                "name": "Status",
+                "nameLocations": [
+                  "658:6:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 36835,
+                "src": "658:6:73"
+              },
+              "referencedDeclaration": 36835,
+              "src": "658:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_enum$_Status_$36835",
+                "typeString": "enum Status"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47297,
+            "mutability": "mutable",
+            "name": "id",
+            "nameLocation": "686:2:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47298,
+            "src": "677:11:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_SubnetID_$47281_storage_ptr",
+              "typeString": "struct SubnetID"
+            },
+            "typeName": {
+              "id": 47296,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47295,
+                "name": "SubnetID",
+                "nameLocations": [
+                  "677:8:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47281,
+                "src": "677:8:73"
+              },
+              "referencedDeclaration": 47281,
+              "src": "677:8:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_SubnetID_$47281_storage_ptr",
+                "typeString": "struct SubnetID"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "Subnet",
+        "nameLocation": "518:6:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47303,
+        "nodeType": "EnumDefinition",
+        "src": "728:91:73",
+        "nodes": [],
+        "canonicalName": "StakingOperation",
+        "members": [
+          {
+            "id": 47299,
+            "name": "Deposit",
+            "nameLocation": "756:7:73",
+            "nodeType": "EnumValue",
+            "src": "756:7:73"
+          },
+          {
+            "id": 47300,
+            "name": "Withdraw",
+            "nameLocation": "769:8:73",
+            "nodeType": "EnumValue",
+            "src": "769:8:73"
+          },
+          {
+            "id": 47301,
+            "name": "SetMetadata",
+            "nameLocation": "783:11:73",
+            "nodeType": "EnumValue",
+            "src": "783:11:73"
+          },
+          {
+            "id": 47302,
+            "name": "SetFederatedPower",
+            "nameLocation": "800:17:73",
+            "nodeType": "EnumValue",
+            "src": "800:17:73"
+          }
+        ],
+        "name": "StakingOperation",
+        "nameLocation": "733:16:73"
+      },
+      {
+        "id": 47311,
+        "nodeType": "StructDefinition",
+        "src": "865:91:73",
+        "nodes": [],
+        "canonicalName": "StakingChange",
+        "members": [
+          {
+            "constant": false,
+            "id": 47306,
+            "mutability": "mutable",
+            "name": "op",
+            "nameLocation": "909:2:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47311,
+            "src": "892:19:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_enum$_StakingOperation_$47303",
+              "typeString": "enum StakingOperation"
+            },
+            "typeName": {
+              "id": 47305,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47304,
+                "name": "StakingOperation",
+                "nameLocations": [
+                  "892:16:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47303,
+                "src": "892:16:73"
+              },
+              "referencedDeclaration": 47303,
+              "src": "892:16:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_enum$_StakingOperation_$47303",
+                "typeString": "enum StakingOperation"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47308,
+            "mutability": "mutable",
+            "name": "payload",
+            "nameLocation": "923:7:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47311,
+            "src": "917:13:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes_storage_ptr",
+              "typeString": "bytes"
+            },
+            "typeName": {
+              "id": 47307,
+              "name": "bytes",
+              "nodeType": "ElementaryTypeName",
+              "src": "917:5:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes_storage_ptr",
+                "typeString": "bytes"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47310,
+            "mutability": "mutable",
+            "name": "validator",
+            "nameLocation": "944:9:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47311,
+            "src": "936:17:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 47309,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "936:7:73",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "StakingChange",
+        "nameLocation": "872:13:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47317,
+        "nodeType": "StructDefinition",
+        "src": "1028:89:73",
+        "nodes": [],
+        "canonicalName": "StakingChangeRequest",
+        "members": [
+          {
+            "constant": false,
+            "id": 47314,
+            "mutability": "mutable",
+            "name": "change",
+            "nameLocation": "1076:6:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47317,
+            "src": "1062:20:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_StakingChange_$47311_storage_ptr",
+              "typeString": "struct StakingChange"
+            },
+            "typeName": {
+              "id": 47313,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47312,
+                "name": "StakingChange",
+                "nameLocations": [
+                  "1062:13:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47311,
+                "src": "1062:13:73"
+              },
+              "referencedDeclaration": 47311,
+              "src": "1062:13:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_StakingChange_$47311_storage_ptr",
+                "typeString": "struct StakingChange"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47316,
+            "mutability": "mutable",
+            "name": "configurationNumber",
+            "nameLocation": "1095:19:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47317,
+            "src": "1088:26:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint64",
+              "typeString": "uint64"
+            },
+            "typeName": {
+              "id": 47315,
+              "name": "uint64",
+              "nodeType": "ElementaryTypeName",
+              "src": "1088:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint64",
+                "typeString": "uint64"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "StakingChangeRequest",
+        "nameLocation": "1035:20:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47330,
+        "nodeType": "StructDefinition",
+        "src": "1157:356:73",
+        "nodes": [],
+        "canonicalName": "StakingChangeLog",
+        "members": [
+          {
+            "constant": false,
+            "id": 47320,
+            "mutability": "mutable",
+            "name": "nextConfigurationNumber",
+            "nameLocation": "1266:23:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47330,
+            "src": "1259:30:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint64",
+              "typeString": "uint64"
+            },
+            "typeName": {
+              "id": 47319,
+              "name": "uint64",
+              "nodeType": "ElementaryTypeName",
+              "src": "1259:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint64",
+                "typeString": "uint64"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47323,
+            "mutability": "mutable",
+            "name": "startConfigurationNumber",
+            "nameLocation": "1360:24:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47330,
+            "src": "1353:31:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint64",
+              "typeString": "uint64"
+            },
+            "typeName": {
+              "id": 47322,
+              "name": "uint64",
+              "nodeType": "ElementaryTypeName",
+              "src": "1353:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint64",
+                "typeString": "uint64"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47329,
+            "mutability": "mutable",
+            "name": "changes",
+            "nameLocation": "1503:7:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47330,
+            "src": "1470:40:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$47311_storage_$",
+              "typeString": "mapping(uint64 => struct StakingChange)"
+            },
+            "typeName": {
+              "id": 47328,
+              "keyName": "",
+              "keyNameLocation": "-1:-1:-1",
+              "keyType": {
+                "id": 47325,
+                "name": "uint64",
+                "nodeType": "ElementaryTypeName",
+                "src": "1478:6:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint64",
+                  "typeString": "uint64"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1470:32:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint64_$_t_struct$_StakingChange_$47311_storage_$",
+                "typeString": "mapping(uint64 => struct StakingChange)"
+              },
+              "valueName": "",
+              "valueNameLocation": "-1:-1:-1",
+              "valueType": {
+                "id": 47327,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 47326,
+                  "name": "StakingChange",
+                  "nameLocations": [
+                    "1488:13:73"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 47311,
+                  "src": "1488:13:73"
+                },
+                "referencedDeclaration": 47311,
+                "src": "1488:13:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_StakingChange_$47311_storage_ptr",
+                  "typeString": "struct StakingChange"
+                }
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "StakingChangeLog",
+        "nameLocation": "1164:16:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47337,
+        "nodeType": "StructDefinition",
+        "src": "1556:189:73",
+        "nodes": [],
+        "canonicalName": "StakingRelease",
+        "members": [
+          {
+            "constant": false,
+            "id": 47333,
+            "mutability": "mutable",
+            "name": "releaseAt",
+            "nameLocation": "1656:9:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47337,
+            "src": "1648:17:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47332,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1648:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47336,
+            "mutability": "mutable",
+            "name": "amount",
+            "nameLocation": "1736:6:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47337,
+            "src": "1728:14:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47335,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "1728:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "StakingRelease",
+        "nameLocation": "1563:14:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47347,
+        "nodeType": "StructDefinition",
+        "src": "1890:121:73",
+        "nodes": [],
+        "canonicalName": "AddressStakingReleases",
+        "members": [
+          {
+            "constant": false,
+            "id": 47339,
+            "mutability": "mutable",
+            "name": "length",
+            "nameLocation": "1933:6:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47347,
+            "src": "1926:13:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint16",
+              "typeString": "uint16"
+            },
+            "typeName": {
+              "id": 47338,
+              "name": "uint16",
+              "nodeType": "ElementaryTypeName",
+              "src": "1926:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint16",
+                "typeString": "uint16"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47341,
+            "mutability": "mutable",
+            "name": "startIdx",
+            "nameLocation": "1952:8:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47347,
+            "src": "1945:15:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint16",
+              "typeString": "uint16"
+            },
+            "typeName": {
+              "id": 47340,
+              "name": "uint16",
+              "nodeType": "ElementaryTypeName",
+              "src": "1945:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint16",
+                "typeString": "uint16"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47346,
+            "mutability": "mutable",
+            "name": "releases",
+            "nameLocation": "2000:8:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47347,
+            "src": "1966:42:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_uint16_$_t_struct$_StakingRelease_$47337_storage_$",
+              "typeString": "mapping(uint16 => struct StakingRelease)"
+            },
+            "typeName": {
+              "id": 47345,
+              "keyName": "",
+              "keyNameLocation": "-1:-1:-1",
+              "keyType": {
+                "id": 47342,
+                "name": "uint16",
+                "nodeType": "ElementaryTypeName",
+                "src": "1974:6:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_uint16",
+                  "typeString": "uint16"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "1966:33:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_uint16_$_t_struct$_StakingRelease_$47337_storage_$",
+                "typeString": "mapping(uint16 => struct StakingRelease)"
+              },
+              "valueName": "",
+              "valueNameLocation": "-1:-1:-1",
+              "valueType": {
+                "id": 47344,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 47343,
+                  "name": "StakingRelease",
+                  "nameLocations": [
+                    "1984:14:73"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 47337,
+                  "src": "1984:14:73"
+                },
+                "referencedDeclaration": 47337,
+                "src": "1984:14:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_StakingRelease_$47337_storage_ptr",
+                  "typeString": "struct StakingRelease"
+                }
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "AddressStakingReleases",
+        "nameLocation": "1897:22:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47357,
+        "nodeType": "StructDefinition",
+        "src": "2051:246:73",
+        "nodes": [],
+        "canonicalName": "StakingReleaseQueue",
+        "members": [
+          {
+            "constant": false,
+            "id": 47350,
+            "mutability": "mutable",
+            "name": "lockingDuration",
+            "nameLocation": "2156:15:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47357,
+            "src": "2148:23:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47349,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "2148:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47356,
+            "mutability": "mutable",
+            "name": "releases",
+            "nameLocation": "2286:8:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47357,
+            "src": "2243:51:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$47347_storage_$",
+              "typeString": "mapping(address => struct AddressStakingReleases)"
+            },
+            "typeName": {
+              "id": 47355,
+              "keyName": "",
+              "keyNameLocation": "-1:-1:-1",
+              "keyType": {
+                "id": 47352,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "2251:7:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "2243:42:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_AddressStakingReleases_$47347_storage_$",
+                "typeString": "mapping(address => struct AddressStakingReleases)"
+              },
+              "valueName": "",
+              "valueNameLocation": "-1:-1:-1",
+              "valueType": {
+                "id": 47354,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 47353,
+                  "name": "AddressStakingReleases",
+                  "nameLocations": [
+                    "2262:22:73"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 47347,
+                  "src": "2262:22:73"
+                },
+                "referencedDeclaration": 47347,
+                "src": "2262:22:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_AddressStakingReleases_$47347_storage_ptr",
+                  "typeString": "struct AddressStakingReleases"
+                }
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "StakingReleaseQueue",
+        "nameLocation": "2058:19:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47368,
+        "nodeType": "StructDefinition",
+        "src": "2583:381:73",
+        "nodes": [],
+        "canonicalName": "ValidatorInfo",
+        "members": [
+          {
+            "constant": false,
+            "id": 47360,
+            "mutability": "mutable",
+            "name": "federatedPower",
+            "nameLocation": "2658:14:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47368,
+            "src": "2650:22:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47359,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "2650:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47362,
+            "mutability": "mutable",
+            "name": "confirmedCollateral",
+            "nameLocation": "2686:19:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47368,
+            "src": "2678:27:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47361,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "2678:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47364,
+            "mutability": "mutable",
+            "name": "totalCollateral",
+            "nameLocation": "2719:15:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47368,
+            "src": "2711:23:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47363,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "2711:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47367,
+            "mutability": "mutable",
+            "name": "metadata",
+            "nameLocation": "2953:8:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47368,
+            "src": "2947:14:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes_storage_ptr",
+              "typeString": "bytes"
+            },
+            "typeName": {
+              "id": 47366,
+              "name": "bytes",
+              "nodeType": "ElementaryTypeName",
+              "src": "2947:5:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes_storage_ptr",
+                "typeString": "bytes"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "ValidatorInfo",
+        "nameLocation": "2590:13:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47371,
+        "nodeType": "EnumDefinition",
+        "src": "3017:179:73",
+        "nodes": [],
+        "canonicalName": "PermissionMode",
+        "members": [
+          {
+            "id": 47369,
+            "name": "Collateral",
+            "nameLocation": "3106:10:73",
+            "nodeType": "EnumValue",
+            "src": "3106:10:73"
+          },
+          {
+            "id": 47370,
+            "name": "Federated",
+            "nameLocation": "3185:9:73",
+            "nodeType": "EnumValue",
+            "src": "3185:9:73"
+          }
+        ],
+        "name": "PermissionMode",
+        "nameLocation": "3022:14:73"
+      },
+      {
+        "id": 47396,
+        "nodeType": "StructDefinition",
+        "src": "3755:576:73",
+        "nodes": [],
+        "canonicalName": "ValidatorSet",
+        "members": [
+          {
+            "constant": false,
+            "id": 47375,
+            "mutability": "mutable",
+            "name": "permissionMode",
+            "nameLocation": "3839:14:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47396,
+            "src": "3824:29:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_enum$_PermissionMode_$47371",
+              "typeString": "enum PermissionMode"
+            },
+            "typeName": {
+              "id": 47374,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47373,
+                "name": "PermissionMode",
+                "nameLocations": [
+                  "3824:14:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47371,
+                "src": "3824:14:73"
+              },
+              "referencedDeclaration": 47371,
+              "src": "3824:14:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_enum$_PermissionMode_$47371",
+                "typeString": "enum PermissionMode"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47378,
+            "mutability": "mutable",
+            "name": "activeLimit",
+            "nameLocation": "3921:11:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47396,
+            "src": "3914:18:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint16",
+              "typeString": "uint16"
+            },
+            "typeName": {
+              "id": 47377,
+              "name": "uint16",
+              "nodeType": "ElementaryTypeName",
+              "src": "3914:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint16",
+                "typeString": "uint16"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47381,
+            "mutability": "mutable",
+            "name": "totalConfirmedCollateral",
+            "nameLocation": "3986:24:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47396,
+            "src": "3978:32:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47380,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "3978:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47387,
+            "mutability": "mutable",
+            "name": "validators",
+            "nameLocation": "4116:10:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47396,
+            "src": "4082:44:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_address_$_t_struct$_ValidatorInfo_$47368_storage_$",
+              "typeString": "mapping(address => struct ValidatorInfo)"
+            },
+            "typeName": {
+              "id": 47386,
+              "keyName": "",
+              "keyNameLocation": "-1:-1:-1",
+              "keyType": {
+                "id": 47383,
+                "name": "address",
+                "nodeType": "ElementaryTypeName",
+                "src": "4090:7:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_address",
+                  "typeString": "address"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "4082:33:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_address_$_t_struct$_ValidatorInfo_$47368_storage_$",
+                "typeString": "mapping(address => struct ValidatorInfo)"
+              },
+              "valueName": "",
+              "valueNameLocation": "-1:-1:-1",
+              "valueType": {
+                "id": 47385,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 47384,
+                  "name": "ValidatorInfo",
+                  "nameLocations": [
+                    "4101:13:73"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 47368,
+                  "src": "4101:13:73"
+                },
+                "referencedDeclaration": 47368,
+                "src": "4101:13:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_ValidatorInfo_$47368_storage_ptr",
+                  "typeString": "struct ValidatorInfo"
+                }
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47391,
+            "mutability": "mutable",
+            "name": "activeValidators",
+            "nameLocation": "4210:16:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47396,
+            "src": "4204:22:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_MinPQ_$46307_storage_ptr",
+              "typeString": "struct MinPQ"
+            },
+            "typeName": {
+              "id": 47390,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47389,
+                "name": "MinPQ",
+                "nameLocations": [
+                  "4204:5:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 46307,
+                "src": "4204:5:73"
+              },
+              "referencedDeclaration": 46307,
+              "src": "4204:5:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_MinPQ_$46307_storage_ptr",
+                "typeString": "struct MinPQ"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47395,
+            "mutability": "mutable",
+            "name": "waitingValidators",
+            "nameLocation": "4311:17:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47396,
+            "src": "4305:23:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_MaxPQ_$45689_storage_ptr",
+              "typeString": "struct MaxPQ"
+            },
+            "typeName": {
+              "id": 47394,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47393,
+                "name": "MaxPQ",
+                "nameLocations": [
+                  "4305:5:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 45689,
+                "src": "4305:5:73"
+              },
+              "referencedDeclaration": 45689,
+              "src": "4305:5:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_MaxPQ_$45689_storage_ptr",
+                "typeString": "struct MaxPQ"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "ValidatorSet",
+        "nameLocation": "3762:12:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47403,
+        "nodeType": "StructDefinition",
+        "src": "4401:93:73",
+        "nodes": [],
+        "canonicalName": "ParentValidatorsTracker",
+        "members": [
+          {
+            "constant": false,
+            "id": 47399,
+            "mutability": "mutable",
+            "name": "validators",
+            "nameLocation": "4451:10:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47403,
+            "src": "4438:23:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_ValidatorSet_$47396_storage_ptr",
+              "typeString": "struct ValidatorSet"
+            },
+            "typeName": {
+              "id": 47398,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47397,
+                "name": "ValidatorSet",
+                "nameLocations": [
+                  "4438:12:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47396,
+                "src": "4438:12:73"
+              },
+              "referencedDeclaration": 47396,
+              "src": "4438:12:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_ValidatorSet_$47396_storage_ptr",
+                "typeString": "struct ValidatorSet"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47402,
+            "mutability": "mutable",
+            "name": "changes",
+            "nameLocation": "4484:7:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47403,
+            "src": "4467:24:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_StakingChangeLog_$47330_storage_ptr",
+              "typeString": "struct StakingChangeLog"
+            },
+            "typeName": {
+              "id": 47401,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47400,
+                "name": "StakingChangeLog",
+                "nameLocations": [
+                  "4467:16:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47330,
+                "src": "4467:16:73"
+              },
+              "referencedDeclaration": 47330,
+              "src": "4467:16:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_StakingChangeLog_$47330_storage_ptr",
+                "typeString": "struct StakingChangeLog"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "ParentValidatorsTracker",
+        "nameLocation": "4408:23:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47410,
+        "nodeType": "StructDefinition",
+        "src": "4496:71:73",
+        "nodes": [],
+        "canonicalName": "IPCAddress",
+        "members": [
+          {
+            "constant": false,
+            "id": 47406,
+            "mutability": "mutable",
+            "name": "subnetId",
+            "nameLocation": "4529:8:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47410,
+            "src": "4520:17:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_SubnetID_$47281_storage_ptr",
+              "typeString": "struct SubnetID"
+            },
+            "typeName": {
+              "id": 47405,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47404,
+                "name": "SubnetID",
+                "nameLocations": [
+                  "4520:8:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47281,
+                "src": "4520:8:73"
+              },
+              "referencedDeclaration": 47281,
+              "src": "4520:8:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_SubnetID_$47281_storage_ptr",
+                "typeString": "struct SubnetID"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47409,
+            "mutability": "mutable",
+            "name": "rawAddress",
+            "nameLocation": "4554:10:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47410,
+            "src": "4543:21:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_struct$_FvmAddress_$47251_storage_ptr",
+              "typeString": "struct FvmAddress"
+            },
+            "typeName": {
+              "id": 47408,
+              "nodeType": "UserDefinedTypeName",
+              "pathNode": {
+                "id": 47407,
+                "name": "FvmAddress",
+                "nameLocations": [
+                  "4543:10:73"
+                ],
+                "nodeType": "IdentifierPath",
+                "referencedDeclaration": 47251,
+                "src": "4543:10:73"
+              },
+              "referencedDeclaration": 47251,
+              "src": "4543:10:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_struct$_FvmAddress_$47251_storage_ptr",
+                "typeString": "struct FvmAddress"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "IPCAddress",
+        "nameLocation": "4503:10:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47417,
+        "nodeType": "StructDefinition",
+        "src": "4612:78:73",
+        "nodes": [],
+        "canonicalName": "Validator",
+        "members": [
+          {
+            "constant": false,
+            "id": 47412,
+            "mutability": "mutable",
+            "name": "weight",
+            "nameLocation": "4643:6:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47417,
+            "src": "4635:14:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint256",
+              "typeString": "uint256"
+            },
+            "typeName": {
+              "id": 47411,
+              "name": "uint256",
+              "nodeType": "ElementaryTypeName",
+              "src": "4635:7:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint256",
+                "typeString": "uint256"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47414,
+            "mutability": "mutable",
+            "name": "addr",
+            "nameLocation": "4663:4:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47417,
+            "src": "4655:12:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 47413,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "4655:7:73",
+              "stateMutability": "nonpayable",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47416,
+            "mutability": "mutable",
+            "name": "metadata",
+            "nameLocation": "4679:8:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47417,
+            "src": "4673:14:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_bytes_storage_ptr",
+              "typeString": "bytes"
+            },
+            "typeName": {
+              "id": 47415,
+              "name": "bytes",
+              "nodeType": "ElementaryTypeName",
+              "src": "4673:5:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_bytes_storage_ptr",
+                "typeString": "bytes"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "Validator",
+        "nameLocation": "4619:9:73",
+        "scope": 47425,
+        "visibility": "public"
+      },
+      {
+        "id": 47424,
+        "nodeType": "StructDefinition",
+        "src": "4740:81:73",
+        "nodes": [],
+        "canonicalName": "Membership",
+        "members": [
+          {
+            "constant": false,
+            "id": 47421,
+            "mutability": "mutable",
+            "name": "validators",
+            "nameLocation": "4776:10:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47424,
+            "src": "4764:22:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_array$_t_struct$_Validator_$47417_storage_$dyn_storage_ptr",
+              "typeString": "struct Validator[]"
+            },
+            "typeName": {
+              "baseType": {
+                "id": 47419,
+                "nodeType": "UserDefinedTypeName",
+                "pathNode": {
+                  "id": 47418,
+                  "name": "Validator",
+                  "nameLocations": [
+                    "4764:9:73"
+                  ],
+                  "nodeType": "IdentifierPath",
+                  "referencedDeclaration": 47417,
+                  "src": "4764:9:73"
+                },
+                "referencedDeclaration": 47417,
+                "src": "4764:9:73",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Validator_$47417_storage_ptr",
+                  "typeString": "struct Validator"
+                }
+              },
+              "id": 47420,
+              "nodeType": "ArrayTypeName",
+              "src": "4764:11:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_array$_t_struct$_Validator_$47417_storage_$dyn_storage_ptr",
+                "typeString": "struct Validator[]"
+              }
+            },
+            "visibility": "internal"
+          },
+          {
+            "constant": false,
+            "id": 47423,
+            "mutability": "mutable",
+            "name": "configurationNumber",
+            "nameLocation": "4799:19:73",
+            "nodeType": "VariableDeclaration",
+            "scope": 47424,
+            "src": "4792:26:73",
+            "stateVariable": false,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_uint64",
+              "typeString": "uint64"
+            },
+            "typeName": {
+              "id": 47422,
+              "name": "uint64",
+              "nodeType": "ElementaryTypeName",
+              "src": "4792:6:73",
+              "typeDescriptions": {
+                "typeIdentifier": "t_uint64",
+                "typeString": "uint64"
+              }
+            },
+            "visibility": "internal"
+          }
+        ],
+        "name": "Membership",
+        "nameLocation": "4747:10:73",
+        "scope": 47425,
+        "visibility": "public"
+      }
+    ],
+    "license": "MIT OR Apache-2.0"
+  },
+  "id": 73
+}

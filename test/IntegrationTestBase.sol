@@ -17,7 +17,7 @@ import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
-import {SubnetID, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
+import {SubnetID, PermissionMode, PermissionMode, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
@@ -145,7 +145,7 @@ contract IntegrationTestBase is Test {
             activeValidatorsLimit: DEFAULT_ACTIVE_VALIDATORS_LIMIT,
             powerScale: DEFAULT_POWER_SCALE,
             minCrossMsgFee: DEFAULT_CROSS_MSG_FEE,
-            permissioned: false
+            permissionMode: PermissionMode.Collateral
         });
 
         return params;
@@ -327,7 +327,7 @@ contract IntegrationTestBase is Test {
             _minValidators,
             _checkPeriod,
             _majorityPercentage,
-            false,
+            PermissionMode.Collateral,
             100
         );
     }
@@ -339,7 +339,7 @@ contract IntegrationTestBase is Test {
         uint64 _minValidators,
         uint64 _checkPeriod,
         uint8 _majorityPercentage,
-        bool _permissioned,
+        PermissionMode _permissionMode,
         uint16 _activeValidatorsLimit
     ) public {
         SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
@@ -395,7 +395,7 @@ contract IntegrationTestBase is Test {
                 majorityPercentage: _majorityPercentage,
                 activeValidatorsLimit: _activeValidatorsLimit,
                 powerScale: 12,
-                permissioned: _permissioned,
+                permissionMode: _permissionMode,
                 minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
             })
         );

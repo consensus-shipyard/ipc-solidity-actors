@@ -31,7 +31,7 @@ contract SubnetActorDiamond {
         uint16 activeValidatorsLimit;
         uint256 minCrossMsgFee;
         int8 powerScale;
-        bool permissioned;
+        PermissionMode permissionMode;
     }
 
     constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
@@ -71,12 +71,7 @@ contract SubnetActorDiamond {
         s.powerScale = params.powerScale;
         s.minCrossMsgFee = params.minCrossMsgFee;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
-
-        if (params.permissioned) {
-            s.validatorSet.permissionMode = PermissionMode.Federated;
-        } else {
-            s.validatorSet.permissionMode = PermissionMode.Collateral;
-        }
+        s.validatorSet.permissionMode = params.permissionMode;
         s.validatorSet.activeLimit = params.activeValidatorsLimit;
         // Start the next configuration number from 1, 0 is reserved for no change and the genesis membership
         s.changeSet.nextConfigurationNumber = LibStaking.INITIAL_CONFIGURATION_NUMBER;
