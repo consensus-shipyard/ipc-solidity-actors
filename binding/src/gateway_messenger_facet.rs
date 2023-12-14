@@ -38,10 +38,12 @@ pub mod gateway_messenger_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("sendCrossMessage"),
+                    ::std::borrow::ToOwned::to_owned("sendUserXnetMessage"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("sendCrossMessage"),
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "sendUserXnetMessage",
+                            ),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("crossMsg"),
@@ -180,7 +182,15 @@ pub mod gateway_messenger_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("MethodNotAllowed"),
-                            inputs: ::std::vec![],
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("reason"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("string"),
+                                    ),
+                                },
+                            ],
                         },
                     ],
                 ),
@@ -270,13 +280,13 @@ pub mod gateway_messenger_facet {
                 .method_hash([37, 191, 13, 182], msg_cid)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `sendCrossMessage` (0xc13175ef) function
-        pub fn send_cross_message(
+        ///Calls the contract's `sendUserXnetMessage` (0x210b944e) function
+        pub fn send_user_xnet_message(
             &self,
             cross_msg: CrossMsg,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([193, 49, 117, 239], (cross_msg,))
+                .method_hash([33, 11, 148, 78], (cross_msg,))
                 .expect("method not found (this should never happen)")
         }
     }
@@ -367,7 +377,7 @@ pub mod gateway_messenger_facet {
     )]
     #[etherror(name = "InvalidCrossMsgValue", abi = "InvalidCrossMsgValue()")]
     pub struct InvalidCrossMsgValue;
-    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed()` and selector `0x83f171d6`
+    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed(string)` and selector `0x015538b1`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -378,8 +388,10 @@ pub mod gateway_messenger_facet {
         Eq,
         Hash
     )]
-    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed()")]
-    pub struct MethodNotAllowed;
+    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed(string)")]
+    pub struct MethodNotAllowed {
+        pub reason: ::std::string::String,
+    }
     ///Custom Error type `NotEnoughFee` with signature `NotEnoughFee()` and selector `0x688e55ae`
     #[derive(
         Clone,
@@ -680,7 +692,7 @@ pub mod gateway_messenger_facet {
     pub struct PropagateCall {
         pub msg_cid: [u8; 32],
     }
-    ///Container type for all input parameters for the `sendCrossMessage` function with signature `sendCrossMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))` and selector `0xc13175ef`
+    ///Container type for all input parameters for the `sendUserXnetMessage` function with signature `sendUserXnetMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))` and selector `0x210b944e`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -692,17 +704,17 @@ pub mod gateway_messenger_facet {
         Hash
     )]
     #[ethcall(
-        name = "sendCrossMessage",
-        abi = "sendCrossMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
+        name = "sendUserXnetMessage",
+        abi = "sendUserXnetMessage(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
     )]
-    pub struct SendCrossMessageCall {
+    pub struct SendUserXnetMessageCall {
         pub cross_msg: CrossMsg,
     }
     ///Container type for all of the contract's call
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayMessengerFacetCalls {
         Propagate(PropagateCall),
-        SendCrossMessage(SendCrossMessageCall),
+        SendUserXnetMessage(SendUserXnetMessageCall),
     }
     impl ::ethers::core::abi::AbiDecode for GatewayMessengerFacetCalls {
         fn decode(
@@ -714,10 +726,10 @@ pub mod gateway_messenger_facet {
             ) {
                 return Ok(Self::Propagate(decoded));
             }
-            if let Ok(decoded) = <SendCrossMessageCall as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <SendUserXnetMessageCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::SendCrossMessage(decoded));
+                return Ok(Self::SendUserXnetMessage(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData.into())
         }
@@ -728,7 +740,7 @@ pub mod gateway_messenger_facet {
                 Self::Propagate(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::SendCrossMessage(element) => {
+                Self::SendUserXnetMessage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
             }
@@ -738,7 +750,9 @@ pub mod gateway_messenger_facet {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
                 Self::Propagate(element) => ::core::fmt::Display::fmt(element, f),
-                Self::SendCrossMessage(element) => ::core::fmt::Display::fmt(element, f),
+                Self::SendUserXnetMessage(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
         }
     }
@@ -747,9 +761,9 @@ pub mod gateway_messenger_facet {
             Self::Propagate(value)
         }
     }
-    impl ::core::convert::From<SendCrossMessageCall> for GatewayMessengerFacetCalls {
-        fn from(value: SendCrossMessageCall) -> Self {
-            Self::SendCrossMessage(value)
+    impl ::core::convert::From<SendUserXnetMessageCall> for GatewayMessengerFacetCalls {
+        fn from(value: SendUserXnetMessageCall) -> Self {
+            Self::SendUserXnetMessage(value)
         }
     }
     ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)`

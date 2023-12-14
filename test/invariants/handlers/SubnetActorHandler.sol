@@ -15,7 +15,7 @@ import {ConsensusType} from "../../../src/enums/ConsensusType.sol";
 import {SubnetID} from "../../../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../../../src/lib/SubnetIDHelper.sol";
 
-import {TestUtils} from "../../TestUtils.sol";
+import {TestUtils} from "../../helpers/TestUtils.sol";
 
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
@@ -47,12 +47,12 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         deal(address(this), ETH_SUPPLY);
     }
 
-    /// getRandomValidator returns a validator from the known validators if id % 2 == 0,
+    /// getRandomValidator returns a validator from the known validators with probability about 20 %,
     /// otherwise it returns a random validator address generated from id.
     /// It can't return address(0);
     function getRandomValidator(uint8 id) public view returns (address) {
         address addr;
-        if (id % 2 == 0) {
+        if (id < 200) {
             addr = getRandomValidatorFromSetOrZero(id);
         } else {
             (addr, ) = TestUtils.deriveValidatorAddress(id);

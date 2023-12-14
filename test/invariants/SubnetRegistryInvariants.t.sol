@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {StdInvariant, Test} from "forge-std/Test.sol";
 import "forge-std/console.sol";
 
-import {TestUtils} from "../TestUtils.sol";
+import {TestUtils} from "../helpers/TestUtils.sol";
 import {ConsensusType} from "../../src/enums/ConsensusType.sol";
 import {IDiamond} from "../../src/interfaces/IDiamond.sol";
 import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
@@ -136,7 +136,6 @@ contract SubnetRegistryInvariants is StdInvariant, Test {
     /// forge-config: default.invariant.runs = 5
     /// forge-config: default.invariant.depth = 10
     /// forge-config: default.invariant.fail-on-revert = false
-    /// forge-config: default.invariant.call-override = true
     function invariant_SR_01_gateway_address_is_persistent() public {
         assertEq(registryHandler.getGateway(), DEFAULT_IPC_GATEWAY_ADDR);
     }
@@ -145,10 +144,9 @@ contract SubnetRegistryInvariants is StdInvariant, Test {
     /// TODO: this test has the same issue as https://github.com/foundry-rs/foundry/issues/6074
     /// We may need to update the test setup when the issue is fixed.
     ///
-    /// forge-config: default.invariant.runs = 5
-    /// forge-config: default.invariant.depth = 20
+    /// forge-config: default.invariant.runs = 50
+    /// forge-config: default.invariant.depth = 10
     /// forge-config: default.invariant.fail-on-revert = false
-    /// forge-config: default.invariant.call-override = true
     function invariant_SR_02_subnet_address_can_be_retrieved() public {
         address[] memory owners = registryHandler.getOwners();
         uint256 length = owners.length;
