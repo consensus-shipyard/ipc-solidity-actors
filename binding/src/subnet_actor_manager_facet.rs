@@ -203,10 +203,10 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("setFederatedPowers"),
+                    ::std::borrow::ToOwned::to_owned("setFederatedPower"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("setFederatedPowers"),
+                            name: ::std::borrow::ToOwned::to_owned("setFederatedPower"),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("validators"),
@@ -735,7 +735,15 @@ pub mod subnet_actor_manager_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("MethodNotAllowed"),
-                            inputs: ::std::vec![],
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("reason"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("string"),
+                                    ),
+                                },
+                            ],
                         },
                     ],
                 ),
@@ -1038,15 +1046,15 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([102, 120, 60, 155], amount)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `setFederatedPowers` (0x2af05ff6) function
-        pub fn set_federated_powers(
+        ///Calls the contract's `setFederatedPower` (0xda5d09ee) function
+        pub fn set_federated_power(
             &self,
             validators: ::std::vec::Vec<::ethers::core::types::Address>,
             public_keys: ::std::vec::Vec<::ethers::core::types::Bytes>,
             powers: ::std::vec::Vec<::ethers::core::types::U256>,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([42, 240, 95, 246], (validators, public_keys, powers))
+                .method_hash([218, 93, 9, 238], (validators, public_keys, powers))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `stake` (0x3a4b66f1) function
@@ -1333,7 +1341,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "InvalidSignatureErr", abi = "InvalidSignatureErr(uint8)")]
     pub struct InvalidSignatureErr(pub u8);
-    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed()` and selector `0x83f171d6`
+    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed(string)` and selector `0x015538b1`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1344,8 +1352,10 @@ pub mod subnet_actor_manager_facet {
         Eq,
         Hash
     )]
-    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed()")]
-    pub struct MethodNotAllowed;
+    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed(string)")]
+    pub struct MethodNotAllowed {
+        pub reason: ::std::string::String,
+    }
     ///Custom Error type `NoCollateralToWithdraw` with signature `NoCollateralToWithdraw()` and selector `0x64b0557f`
     #[derive(
         Clone,
@@ -2513,7 +2523,7 @@ pub mod subnet_actor_manager_facet {
     pub struct PreReleaseCall {
         pub amount: ::ethers::core::types::U256,
     }
-    ///Container type for all input parameters for the `setFederatedPowers` function with signature `setFederatedPowers(address[],bytes[],uint256[])` and selector `0x2af05ff6`
+    ///Container type for all input parameters for the `setFederatedPower` function with signature `setFederatedPower(address[],bytes[],uint256[])` and selector `0xda5d09ee`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -2525,10 +2535,10 @@ pub mod subnet_actor_manager_facet {
         Hash
     )]
     #[ethcall(
-        name = "setFederatedPowers",
-        abi = "setFederatedPowers(address[],bytes[],uint256[])"
+        name = "setFederatedPower",
+        abi = "setFederatedPower(address[],bytes[],uint256[])"
     )]
-    pub struct SetFederatedPowersCall {
+    pub struct SetFederatedPowerCall {
         pub validators: ::std::vec::Vec<::ethers::core::types::Address>,
         pub public_keys: ::std::vec::Vec<::ethers::core::types::Bytes>,
         pub powers: ::std::vec::Vec<::ethers::core::types::U256>,
@@ -2629,7 +2639,7 @@ pub mod subnet_actor_manager_facet {
         Pause(PauseCall),
         PreFund(PreFundCall),
         PreRelease(PreReleaseCall),
-        SetFederatedPowers(SetFederatedPowersCall),
+        SetFederatedPower(SetFederatedPowerCall),
         Stake(StakeCall),
         SubmitCheckpoint(SubmitCheckpointCall),
         Unpause(UnpauseCall),
@@ -2696,10 +2706,10 @@ pub mod subnet_actor_manager_facet {
             ) {
                 return Ok(Self::PreRelease(decoded));
             }
-            if let Ok(decoded) = <SetFederatedPowersCall as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <SetFederatedPowerCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::SetFederatedPowers(decoded));
+                return Ok(Self::SetFederatedPower(decoded));
             }
             if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2753,7 +2763,7 @@ pub mod subnet_actor_manager_facet {
                 Self::PreRelease(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::SetFederatedPowers(element) => {
+                Self::SetFederatedPower(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::Stake(element) => ::ethers::core::abi::AbiEncode::encode(element),
@@ -2786,9 +2796,7 @@ pub mod subnet_actor_manager_facet {
                 Self::Pause(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PreFund(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PreRelease(element) => ::core::fmt::Display::fmt(element, f),
-                Self::SetFederatedPowers(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
+                Self::SetFederatedPower(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubmitCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Unpause(element) => ::core::fmt::Display::fmt(element, f),
@@ -2856,9 +2864,9 @@ pub mod subnet_actor_manager_facet {
             Self::PreRelease(value)
         }
     }
-    impl ::core::convert::From<SetFederatedPowersCall> for SubnetActorManagerFacetCalls {
-        fn from(value: SetFederatedPowersCall) -> Self {
-            Self::SetFederatedPowers(value)
+    impl ::core::convert::From<SetFederatedPowerCall> for SubnetActorManagerFacetCalls {
+        fn from(value: SetFederatedPowerCall) -> Self {
+            Self::SetFederatedPower(value)
         }
     }
     impl ::core::convert::From<StakeCall> for SubnetActorManagerFacetCalls {

@@ -19,6 +19,9 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable, ReentrancyGuard {
+    string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED =
+        "Method not allowed if permissioned is enabled and subnet bootstrapped";
+
     using EnumerableSet for EnumerableSet.AddressSet;
     using SubnetIDHelper for SubnetID;
     using LibValidatorSet for ValidatorSet;
@@ -31,14 +34,14 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
 
     function enforceFederatedValidation() internal view {
         if (s.validatorSet.permissionMode != PermissionMode.Federated) {
-            revert MethodNotAllowed();
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
         }
         return;
     }
 
     function enforceCollateralValidation() internal view {
         if (s.validatorSet.permissionMode != PermissionMode.Collateral) {
-            revert MethodNotAllowed();
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
         }
         return;
     }
