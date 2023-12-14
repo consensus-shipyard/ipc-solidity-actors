@@ -149,7 +149,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice method that allows the contract owner to set the validators' federated power
-    function setFederatedPowers(
+    function setFederatedPower(
         address[] calldata validators,
         bytes[] calldata publicKeys,
         uint256[] calldata powers
