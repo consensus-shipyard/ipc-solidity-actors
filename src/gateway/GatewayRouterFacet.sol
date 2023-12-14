@@ -12,7 +12,7 @@ import {SubnetID, Subnet, Validator, ValidatorInfo, ValidatorSet} from "../struc
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {Membership} from "../structs/Subnet.sol";
 import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidBatchEpoch, MaxMsgsPerBatchExceeded, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteQuorum} from "../errors/IPCErrors.sol";
-import {InvalidCheckpointSource, InvalidBatchSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, QuorumAlreadyProcessed, FailedAddIncompleteQuorum, FailedAddSignatory} from "../errors/IPCErrors.sol";
+import {BatchWithNoMessages, InvalidCheckpointSource, InvalidBatchSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, QuorumAlreadyProcessed, FailedAddIncompleteQuorum, FailedAddSignatory} from "../errors/IPCErrors.sol";
 import {NotEnoughBalance, InvalidSubnetActor, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, BatchNotCreated, BatchAlreadyExists, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
@@ -77,6 +77,9 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         if (batch.subnetID.getActor() != msg.sender) {
             revert InvalidBatchSource();
         }
+
+        _checkMsgLength(batch);
+
         (bool subnetExists, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
         if (!subnetExists) {
             revert SubnetNotFound();
@@ -311,7 +314,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     /// @param membershipProof - a Merkle proof that the validator was in the membership at height `height` with weight `weight`
     /// @param weight - the weight of the validator
     /// @param signature - the signature of the checkpoint
-    function addBatchSignature(
+    function addBottomUpMsgBatchSignature(
         uint256 height,
         bytes32[] memory membershipProof,
         uint256 weight,
@@ -337,13 +340,12 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         bytes32 membershipRootHash,
         uint256 membershipWeight
     ) external systemActorOnly {
-        if (batch.msgs.length > s.maxMsgsPerBottomUpBatch) {
-            revert MaxMsgsPerBatchExceeded();
-        }
-
+        _checkMsgLength(batch);
         // We only externally trigger new batches if the maximum number
-        // of messages for the batch hasn't been reached
-        if (batch.blockHeight % s.bottomUpMsgsBatchPeriod != 0) {
+        // of messages for the batch hasn't been reached.
+        // We also check that we are not trying to create a batch from
+        // the future
+        if (batch.blockHeight % s.bottomUpMsgBatchPeriod != 0 || block.number <= batch.blockHeight) {
             revert InvalidBatchEpoch();
         }
 
@@ -373,5 +375,14 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         LibQuorum.pruneQuorums(s.bottomUpMsgBatchQuorumMap, newRetentionHeight);
+    }
+
+    function _checkMsgLength(BottomUpMsgBatch memory batch) internal view {
+        if (batch.msgs.length > s.maxMsgsPerBottomUpBatch) {
+            revert MaxMsgsPerBatchExceeded();
+        }
+        if (batch.msgs.length == 0) {
+            revert BatchWithNoMessages();
+        }
     }
 }

@@ -248,7 +248,7 @@ library LibGateway {
     /// @param crossMessage - the cross message to be committed
     function commitBottomUpMsg(CrossMsg memory crossMessage) internal {
         GatewayActorStorage storage s = LibGatewayActorStorage.appStorage();
-        uint256 epoch = getNextEpoch(block.number, s.bottomUpMsgsBatchPeriod);
+        uint256 epoch = getNextEpoch(block.number, s.bottomUpMsgBatchPeriod);
 
         // assign nonce to the message.
         crossMessage.message.nonce = s.bottomUpNonce;

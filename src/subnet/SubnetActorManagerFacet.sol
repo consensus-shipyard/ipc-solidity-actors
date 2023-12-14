@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {SubnetAlreadyBootstrapped, MaxMsgsPerBatchExceeded, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidBatchEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
+import {BatchWithNoMessages, SubnetAlreadyBootstrapped, MaxMsgsPerBatchExceeded, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidBatchEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {BottomUpCheckpoint, BottomUpMsgBatch, BottomUpMsgBatchInfo, CrossMsg} from "../structs/CrossNet.sol";
@@ -64,7 +64,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
             s.lastBottomUpCheckpointHeight = checkpoint.blockHeight;
 
-            // Execute messages.
+            // Commit in gateway to distribute rewards
             IGateway(s.ipcGatewayAddr).commitCheckpoint(checkpoint);
 
             // confirming the changes in membership in the child
@@ -103,6 +103,9 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (batch.msgs.length > s.maxMsgsPerBottomUpBatch) {
             revert MaxMsgsPerBatchExceeded();
         }
+        if (batch.msgs.length == 0) {
+            revert BatchWithNoMessages();
+        }
 
         bytes32 batchHash = keccak256(abi.encode(batch));
 
@@ -126,7 +129,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
             s.relayerRewards.batchRewarded[batch.blockHeight].add(msg.sender);
 
             // Execute messages.
-            // TODO:
             IGateway(s.ipcGatewayAddr).execBottomUpMsgBatch(batch);
         }
     }

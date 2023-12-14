@@ -39,8 +39,8 @@ contract GatewayGetterFacet {
         return s.maxMsgsPerBottomUpBatch;
     }
 
-    function bottomUpMsgsBatchPeriod() external view returns (uint256) {
-        return s.bottomUpMsgsBatchPeriod;
+    function bottomUpMsgBatchPeriod() external view returns (uint256) {
+        return s.bottomUpMsgBatchPeriod;
     }
 
     function bottomUpCheckPeriod() external view returns (uint256) {
@@ -55,7 +55,7 @@ contract GatewayGetterFacet {
         return s.bottomUpCheckpoints[e];
     }
 
-    function bottomUpMsgsBatch(uint256 e) external view returns (BottomUpMsgBatch memory) {
+    function bottomUpMsgBatch(uint256 e) external view returns (BottomUpMsgBatch memory) {
         return s.bottomUpMsgBatches[e];
     }
 
@@ -150,9 +150,18 @@ contract GatewayGetterFacet {
         return s.checkpointQuorumMap.quorumInfo[h];
     }
 
+    function getBottomUpMsgBatchInfo(uint256 h) external view returns (QuorumInfo memory) {
+        return s.bottomUpMsgBatchQuorumMap.quorumInfo[h];
+    }
+
     /// @notice get the checkpoint current weight corresponding to the block height
     function getCheckpointCurrentWeight(uint256 h) external view returns (uint256) {
         return s.checkpointQuorumMap.quorumInfo[h].currentWeight;
+    }
+
+    /// @notice get the batch current weight corresponding to the block height
+    function getBottomUpMsgBatchCurrentWeight(uint256 h) external view returns (uint256) {
+        return s.bottomUpMsgBatchQuorumMap.quorumInfo[h].currentWeight;
     }
 
     /// @notice get the incomplete checkpoint heights
@@ -175,8 +184,8 @@ contract GatewayGetterFacet {
         return checkpoints;
     }
 
-    /// @notice get the incomplete checkpoints
-    function getIncompleteBatchMsgs() external view returns (BottomUpMsgBatch[] memory) {
+    /// @notice get the incomplete batches of messages
+    function getIncompleteMsgBatches() external view returns (BottomUpMsgBatch[] memory) {
         uint256[] memory heights = s.bottomUpMsgBatchQuorumMap.incompleteQuorums.values();
         uint256 size = heights.length;
 
@@ -190,13 +199,18 @@ contract GatewayGetterFacet {
         return batches;
     }
 
+    /// @notice get the incomplete msd batches heights
+    function getIncompleteMsgBatchHeights() external view returns (uint256[] memory) {
+        return s.bottomUpMsgBatchQuorumMap.incompleteQuorums.values();
+    }
+
     /// @notice get the bottom-up checkpoint retention index
     function getCheckpointRetentionHeight() external view returns (uint256) {
         return s.checkpointQuorumMap.retentionHeight;
     }
 
     /// @notice get the bottom-up batch retention index
-    function getBatchMsgsRetentionHeight() external view returns (uint256) {
+    function getBottomUpMsgRetentionHeight() external view returns (uint256) {
         return s.bottomUpMsgBatchQuorumMap.retentionHeight;
     }
 
@@ -226,7 +240,7 @@ contract GatewayGetterFacet {
     }
 
     /// @notice get the bottom-up msg batch signature bundle
-    function getBatchMsgsSignatureBundle(
+    function getBottomUpMsgBatchSignatureBundle(
         uint256 h
     )
         external

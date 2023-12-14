@@ -26,7 +26,7 @@ struct SubnetActorStorage {
     /// @notice Info of the last executed bottom-up batch.
     BottomUpMsgBatchInfo lastBottomUpBatch;
     /// @notice bottom-up message batch period in number of epochs for the subnet
-    uint256 bottomUpMsgsBatchPeriod;
+    uint256 bottomUpMsgBatchPeriod;
     /// @notice Maximum number of messages per batch
     uint64 maxMsgsPerBottomUpBatch;
     /// @notice Minimal activation collateral
