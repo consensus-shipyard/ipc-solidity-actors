@@ -180,6 +180,30 @@ pub mod subnet_actor_getter_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("bottomUpMsgBatchPeriod"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "bottomUpMsgBatchPeriod",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("consensus"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -804,6 +828,30 @@ pub mod subnet_actor_getter_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("lastBottomUpMsgBatchHeight"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "lastBottomUpMsgBatchHeight",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("majorityPercentage"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -1001,6 +1049,14 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([75, 6, 148, 226], epoch)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `bottomUpMsgBatchPeriod` (0x69e737fd) function
+        pub fn bottom_up_msg_batch_period(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([105, 231, 55, 253], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `consensus` (0x8ef3f761) function
         pub fn consensus(&self) -> ::ethers::contract::builders::ContractCall<M, u8> {
             self.0
@@ -1185,6 +1241,14 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([114, 208, 160, 224], ())
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `lastBottomUpMsgBatchHeight` (0x28d5551d) function
+        pub fn last_bottom_up_msg_batch_height(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([40, 213, 85, 29], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `majorityPercentage` (0x599c7bd1) function
         pub fn majority_percentage(
             &self,
@@ -1305,6 +1369,19 @@ pub mod subnet_actor_getter_facet {
     pub struct BottomUpCheckpointHashAtEpochCall {
         pub epoch: ::ethers::core::types::U256,
     }
+    ///Container type for all input parameters for the `bottomUpMsgBatchPeriod` function with signature `bottomUpMsgBatchPeriod()` and selector `0x69e737fd`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "bottomUpMsgBatchPeriod", abi = "bottomUpMsgBatchPeriod()")]
+    pub struct BottomUpMsgBatchPeriodCall;
     ///Container type for all input parameters for the `consensus` function with signature `consensus()` and selector `0x8ef3f761`
     #[derive(
         Clone,
@@ -1612,6 +1689,19 @@ pub mod subnet_actor_getter_facet {
         abi = "lastBottomUpCheckpointHeight()"
     )]
     pub struct LastBottomUpCheckpointHeightCall;
+    ///Container type for all input parameters for the `lastBottomUpMsgBatchHeight` function with signature `lastBottomUpMsgBatchHeight()` and selector `0x28d5551d`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "lastBottomUpMsgBatchHeight", abi = "lastBottomUpMsgBatchHeight()")]
+    pub struct LastBottomUpMsgBatchHeightCall;
     ///Container type for all input parameters for the `majorityPercentage` function with signature `majorityPercentage()` and selector `0x599c7bd1`
     #[derive(
         Clone,
@@ -1685,6 +1775,7 @@ pub mod subnet_actor_getter_facet {
         BottomUpCheckPeriod(BottomUpCheckPeriodCall),
         BottomUpCheckpointAtEpoch(BottomUpCheckpointAtEpochCall),
         BottomUpCheckpointHashAtEpoch(BottomUpCheckpointHashAtEpochCall),
+        BottomUpMsgBatchPeriod(BottomUpMsgBatchPeriodCall),
         Consensus(ConsensusCall),
         CrossMsgsHash(CrossMsgsHashCall),
         GenesisBalances(GenesisBalancesCall),
@@ -1710,6 +1801,7 @@ pub mod subnet_actor_getter_facet {
         IsWaitingValidator(IsWaitingValidatorCall),
         Killed(KilledCall),
         LastBottomUpCheckpointHeight(LastBottomUpCheckpointHeightCall),
+        LastBottomUpMsgBatchHeight(LastBottomUpMsgBatchHeightCall),
         MajorityPercentage(MajorityPercentageCall),
         MinActivationCollateral(MinActivationCollateralCall),
         MinCrossMsgFee(MinCrossMsgFeeCall),
@@ -1745,6 +1837,11 @@ pub mod subnet_actor_getter_facet {
                 data,
             ) {
                 return Ok(Self::BottomUpCheckpointHashAtEpoch(decoded));
+            }
+            if let Ok(decoded) = <BottomUpMsgBatchPeriodCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BottomUpMsgBatchPeriod(decoded));
             }
             if let Ok(decoded) = <ConsensusCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -1851,6 +1948,11 @@ pub mod subnet_actor_getter_facet {
             ) {
                 return Ok(Self::LastBottomUpCheckpointHeight(decoded));
             }
+            if let Ok(decoded) = <LastBottomUpMsgBatchHeightCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::LastBottomUpMsgBatchHeight(decoded));
+            }
             if let Ok(decoded) = <MajorityPercentageCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
@@ -1895,6 +1997,9 @@ pub mod subnet_actor_getter_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::BottomUpMsgBatchPeriod(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::Consensus(element) => {
@@ -1958,6 +2063,9 @@ pub mod subnet_actor_getter_facet {
                 Self::LastBottomUpCheckpointHeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::LastBottomUpMsgBatchHeight(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::MajorityPercentage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1990,6 +2098,9 @@ pub mod subnet_actor_getter_facet {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BottomUpMsgBatchPeriod(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::Consensus(element) => ::core::fmt::Display::fmt(element, f),
@@ -2031,6 +2142,9 @@ pub mod subnet_actor_getter_facet {
                 Self::LastBottomUpCheckpointHeight(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::LastBottomUpMsgBatchHeight(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::MajorityPercentage(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -2069,6 +2183,12 @@ pub mod subnet_actor_getter_facet {
     for SubnetActorGetterFacetCalls {
         fn from(value: BottomUpCheckpointHashAtEpochCall) -> Self {
             Self::BottomUpCheckpointHashAtEpoch(value)
+        }
+    }
+    impl ::core::convert::From<BottomUpMsgBatchPeriodCall>
+    for SubnetActorGetterFacetCalls {
+        fn from(value: BottomUpMsgBatchPeriodCall) -> Self {
+            Self::BottomUpMsgBatchPeriod(value)
         }
     }
     impl ::core::convert::From<ConsensusCall> for SubnetActorGetterFacetCalls {
@@ -2184,6 +2304,12 @@ pub mod subnet_actor_getter_facet {
             Self::LastBottomUpCheckpointHeight(value)
         }
     }
+    impl ::core::convert::From<LastBottomUpMsgBatchHeightCall>
+    for SubnetActorGetterFacetCalls {
+        fn from(value: LastBottomUpMsgBatchHeightCall) -> Self {
+            Self::LastBottomUpMsgBatchHeight(value)
+        }
+    }
     impl ::core::convert::From<MajorityPercentageCall> for SubnetActorGetterFacetCalls {
         fn from(value: MajorityPercentageCall) -> Self {
             Self::MajorityPercentage(value)
@@ -2273,6 +2399,18 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct BottomUpCheckpointHashAtEpochReturn(pub bool, pub [u8; 32]);
+    ///Container type for all return fields from the `bottomUpMsgBatchPeriod` function with signature `bottomUpMsgBatchPeriod()` and selector `0x69e737fd`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct BottomUpMsgBatchPeriodReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `consensus` function with signature `consensus()` and selector `0x8ef3f761`
     #[derive(
         Clone,
@@ -2530,6 +2668,18 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct LastBottomUpCheckpointHeightReturn(pub ::ethers::core::types::U256);
+    ///Container type for all return fields from the `lastBottomUpMsgBatchHeight` function with signature `lastBottomUpMsgBatchHeight()` and selector `0x28d5551d`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct LastBottomUpMsgBatchHeightReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `majorityPercentage` function with signature `majorityPercentage()` and selector `0x599c7bd1`
     #[derive(
         Clone,
