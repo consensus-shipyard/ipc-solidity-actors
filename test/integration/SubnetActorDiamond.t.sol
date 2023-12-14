@@ -1182,4 +1182,18 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         vm.expectRevert(LibDiamond.NotOwner.selector);
         saManager.pause();
     }
+
+    function testSubnetActorDiamond_Pausable_CannotPauseAgain() public {
+        vm.startPrank(address(1));
+        saManager.pause();
+
+        vm.expectRevert(Pausable.EnforcedPause.selector);
+        saManager.pause();
+    }
+
+    function testSubnetActorDiamond_Pausable_CannotUnpauseAgain() public {
+        vm.startPrank(address(1));
+        vm.expectRevert(Pausable.ExpectedPause.selector);
+        saManager.unpause();
+    }
 }
