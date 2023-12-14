@@ -158,37 +158,45 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             revert InvalidCrossMsgDstSubnet();
         }
 
-        IPCMsgType applyType = crossMsg.message.applyType(s.networkName);
-
-        // If the crossnet destination is the current network (network where the gateway is running).
-        if (crossMsg.message.to.subnetId.equals(s.networkName)) {
-            if (applyType == IPCMsgType.BottomUp) {
-                // Load the subnet this message is coming from. Ensure that it exists and that the nonce expectation is met.
-                (bool registered, Subnet storage subnet) = LibGateway.getSubnet(arrivingFrom);
-                if (!registered) {
-                    revert NotRegisteredSubnet();
-                }
-                if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
-                    revert InvalidCrossMsgNonce();
-                }
-                subnet.appliedBottomUpNonce += 1;
-            } else if (applyType == IPCMsgType.TopDown) {
-                // There is no need to load the subnet, as a top-down application means that _we_ are the subnet.
-                if (s.appliedTopDownNonce != crossMsg.message.nonce) {
-                    revert InvalidCrossMsgNonce();
-                }
-                s.appliedTopDownNonce += 1;
-            }
-
-            // slither-disable-next-line unused-return
-            crossMsg.execute(supplySource);
+        // If the crossnet destination is NOT the current network (network where the gateway is running),
+        // we add it to the postbox for further propagation.
+        if (!crossMsg.message.to.subnetId.equals(s.networkName)) {
+            bytes32 cid = crossMsg.toHash();
+            s.postbox[cid] = crossMsg;
             return;
         }
 
-        // when the destination is not the current network we add it to the postbox for further propagation
-        bytes32 cid = crossMsg.toHash();
+        // Now, let's find out the directionality of this message and act accordingly.
+        SupplySource memory supplySource;
+        IPCMsgType applyType = crossMsg.message.applyType(s.networkName);
+        if (applyType == IPCMsgType.BottomUp) {
+            // Load the subnet this message is coming from. Ensure that it exists and that the nonce expectation is met.
+            (bool registered, Subnet storage subnet) = LibGateway.getSubnet(arrivingFrom);
+            if (!registered) {
+                revert NotRegisteredSubnet();
+            }
+            if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
+                revert InvalidCrossMsgNonce();
+            }
+            subnet.appliedBottomUpNonce += 1;
 
-        s.postbox[cid] = crossMsg;
+            // The value carried in bottom-up messages needs to be treated according to the supply source
+            // configuration of the subnet.
+            supplySource = SubnetActorGetterFacet(subnet.id.getActor()).supplySource();
+        } else if (applyType == IPCMsgType.TopDown) {
+            // Note: there is no need to load the subnet, as a top-down application means that _we_ are the subnet.
+            if (s.appliedTopDownNonce != crossMsg.message.nonce) {
+                revert InvalidCrossMsgNonce();
+            }
+            s.appliedTopDownNonce += 1;
+
+            // The value carried in top-down messages locally maps to the native coin, so we pass over the
+            // native supply source.
+            supplySource = SupplySourceHelper.native();
+        }
+
+        // slither-disable-next-line unused-return
+        crossMsg.execute(supplySource);
     }
 
     /// @notice applies a cross-net messages coming from some other subnet.
