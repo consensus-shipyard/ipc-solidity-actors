@@ -68,9 +68,11 @@ pub mod subnet_actor_getter_facet {
                             outputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                             ],
@@ -89,9 +91,11 @@ pub mod subnet_actor_getter_facet {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("epoch"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                             ],
@@ -117,10 +121,9 @@ pub mod subnet_actor_getter_facet {
                                                     ),
                                                 ],
                                             ),
-                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                         ],
                                     ),
                                     internal_type: ::core::option::Option::Some(
@@ -145,9 +148,11 @@ pub mod subnet_actor_getter_facet {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("epoch"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                             ],
@@ -503,6 +508,28 @@ pub mod subnet_actor_getter_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("getTotalCollateral"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("getTotalCollateral"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("getTotalConfirmedCollateral"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -599,6 +626,7 @@ pub mod subnet_actor_getter_facet {
                                     name: ::std::borrow::ToOwned::to_owned("validator"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
                                         ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::Bytes,
@@ -753,9 +781,11 @@ pub mod subnet_actor_getter_facet {
                             outputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                             ],
@@ -939,27 +969,27 @@ pub mod subnet_actor_getter_facet {
         ///Calls the contract's `bottomUpCheckPeriod` (0x06c46853) function
         pub fn bottom_up_check_period(
             &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
             self.0
                 .method_hash([6, 196, 104, 83], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `bottomUpCheckpointAtEpoch` (0x6cb2ecee) function
+        ///Calls the contract's `bottomUpCheckpointAtEpoch` (0x4b27aa72) function
         pub fn bottom_up_checkpoint_at_epoch(
             &self,
-            epoch: u64,
+            epoch: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, (bool, BottomUpCheckpoint)> {
             self.0
-                .method_hash([108, 178, 236, 238], epoch)
+                .method_hash([75, 39, 170, 114], epoch)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `bottomUpCheckpointHashAtEpoch` (0x133f74ea) function
+        ///Calls the contract's `bottomUpCheckpointHashAtEpoch` (0x4b0694e2) function
         pub fn bottom_up_checkpoint_hash_at_epoch(
             &self,
-            epoch: u64,
+            epoch: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, (bool, [u8; 32])> {
             self.0
-                .method_hash([19, 63, 116, 234], epoch)
+                .method_hash([75, 6, 148, 226], epoch)
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `consensus` (0x8ef3f761) function
@@ -1051,6 +1081,14 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([178, 189, 41, 94], relayer)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `getTotalCollateral` (0xd6eb5910) function
+        pub fn get_total_collateral(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([214, 235, 89, 16], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `getTotalConfirmedCollateral` (0x332a5ac9) function
         pub fn get_total_confirmed_collateral(
             &self,
@@ -1132,7 +1170,7 @@ pub mod subnet_actor_getter_facet {
         ///Calls the contract's `lastBottomUpCheckpointHeight` (0x72d0a0e0) function
         pub fn last_bottom_up_checkpoint_height(
             &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
             self.0
                 .method_hash([114, 208, 160, 224], ())
                 .expect("method not found (this should never happen)")
@@ -1221,7 +1259,7 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "bottomUpCheckPeriod", abi = "bottomUpCheckPeriod()")]
     pub struct BottomUpCheckPeriodCall;
-    ///Container type for all input parameters for the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint64)` and selector `0x6cb2ecee`
+    ///Container type for all input parameters for the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint256)` and selector `0x4b27aa72`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1234,12 +1272,12 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(
         name = "bottomUpCheckpointAtEpoch",
-        abi = "bottomUpCheckpointAtEpoch(uint64)"
+        abi = "bottomUpCheckpointAtEpoch(uint256)"
     )]
     pub struct BottomUpCheckpointAtEpochCall {
-        pub epoch: u64,
+        pub epoch: ::ethers::core::types::U256,
     }
-    ///Container type for all input parameters for the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint64)` and selector `0x133f74ea`
+    ///Container type for all input parameters for the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint256)` and selector `0x4b0694e2`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1252,10 +1290,10 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(
         name = "bottomUpCheckpointHashAtEpoch",
-        abi = "bottomUpCheckpointHashAtEpoch(uint64)"
+        abi = "bottomUpCheckpointHashAtEpoch(uint256)"
     )]
     pub struct BottomUpCheckpointHashAtEpochCall {
-        pub epoch: u64,
+        pub epoch: ::ethers::core::types::U256,
     }
     ///Container type for all input parameters for the `consensus` function with signature `consensus()` and selector `0x8ef3f761`
     #[derive(
@@ -1394,6 +1432,19 @@ pub mod subnet_actor_getter_facet {
     pub struct GetRelayerRewardCall {
         pub relayer: ::ethers::core::types::Address,
     }
+    ///Container type for all input parameters for the `getTotalCollateral` function with signature `getTotalCollateral()` and selector `0xd6eb5910`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "getTotalCollateral", abi = "getTotalCollateral()")]
+    pub struct GetTotalCollateralCall;
     ///Container type for all input parameters for the `getTotalConfirmedCollateral` function with signature `getTotalConfirmedCollateral()` and selector `0x332a5ac9`
     #[derive(
         Clone,
@@ -1629,6 +1680,7 @@ pub mod subnet_actor_getter_facet {
         GetConfigurationNumbers(GetConfigurationNumbersCall),
         GetParent(GetParentCall),
         GetRelayerReward(GetRelayerRewardCall),
+        GetTotalCollateral(GetTotalCollateralCall),
         GetTotalConfirmedCollateral(GetTotalConfirmedCollateralCall),
         GetTotalValidatorCollateral(GetTotalValidatorCollateralCall),
         GetTotalValidatorsNumber(GetTotalValidatorsNumberCall),
@@ -1726,6 +1778,11 @@ pub mod subnet_actor_getter_facet {
                 data,
             ) {
                 return Ok(Self::GetRelayerReward(decoded));
+            }
+            if let Ok(decoded) = <GetTotalCollateralCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetTotalCollateral(decoded));
             }
             if let Ok(decoded) = <GetTotalConfirmedCollateralCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -1853,6 +1910,9 @@ pub mod subnet_actor_getter_facet {
                 Self::GetRelayerReward(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::GetTotalCollateral(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::GetTotalConfirmedCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1929,6 +1989,9 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::GetParent(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetRelayerReward(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetTotalCollateral(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::GetTotalConfirmedCollateral(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -2041,6 +2104,11 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<GetRelayerRewardCall> for SubnetActorGetterFacetCalls {
         fn from(value: GetRelayerRewardCall) -> Self {
             Self::GetRelayerReward(value)
+        }
+    }
+    impl ::core::convert::From<GetTotalCollateralCall> for SubnetActorGetterFacetCalls {
+        fn from(value: GetTotalCollateralCall) -> Self {
+            Self::GetTotalCollateral(value)
         }
     }
     impl ::core::convert::From<GetTotalConfirmedCollateralCall>
@@ -2159,8 +2227,8 @@ pub mod subnet_actor_getter_facet {
         Eq,
         Hash
     )]
-    pub struct BottomUpCheckPeriodReturn(pub u64);
-    ///Container type for all return fields from the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint64)` and selector `0x6cb2ecee`
+    pub struct BottomUpCheckPeriodReturn(pub ::ethers::core::types::U256);
+    ///Container type for all return fields from the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint256)` and selector `0x4b27aa72`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2175,7 +2243,7 @@ pub mod subnet_actor_getter_facet {
         pub exists: bool,
         pub checkpoint: BottomUpCheckpoint,
     }
-    ///Container type for all return fields from the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint64)` and selector `0x133f74ea`
+    ///Container type for all return fields from the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint256)` and selector `0x4b0694e2`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2310,6 +2378,18 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct GetRelayerRewardReturn(pub ::ethers::core::types::U256);
+    ///Container type for all return fields from the `getTotalCollateral` function with signature `getTotalCollateral()` and selector `0xd6eb5910`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetTotalCollateralReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `getTotalConfirmedCollateral` function with signature `getTotalConfirmedCollateral()` and selector `0x332a5ac9`
     #[derive(
         Clone,
@@ -2431,7 +2511,7 @@ pub mod subnet_actor_getter_facet {
         Eq,
         Hash
     )]
-    pub struct LastBottomUpCheckpointHeightReturn(pub u64);
+    pub struct LastBottomUpCheckpointHeightReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `majorityPercentage` function with signature `majorityPercentage()` and selector `0x599c7bd1`
     #[derive(
         Clone,
@@ -2492,7 +2572,7 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct PowerScaleReturn(pub i8);
-    ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
+    ///`BottomUpCheckpoint((uint64,address[]),uint256,bytes32,uint64)`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2505,10 +2585,9 @@ pub mod subnet_actor_getter_facet {
     )]
     pub struct BottomUpCheckpoint {
         pub subnet_id: SubnetID,
-        pub block_height: u64,
+        pub block_height: ::ethers::core::types::U256,
         pub block_hash: [u8; 32],
         pub next_configuration_number: u64,
-        pub cross_messages_hash: [u8; 32],
     }
     ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)`
     #[derive(
@@ -2606,7 +2685,7 @@ pub mod subnet_actor_getter_facet {
         pub addr: ::ethers::core::types::Address,
         pub metadata: ::ethers::core::types::Bytes,
     }
-    ///`ValidatorInfo(uint256,uint256,bytes)`
+    ///`ValidatorInfo(uint256,uint256,uint256,bytes)`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2618,6 +2697,7 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct ValidatorInfo {
+        pub federated_power: ::ethers::core::types::U256,
         pub confirmed_collateral: ::ethers::core::types::U256,
         pub total_collateral: ::ethers::core::types::U256,
         pub metadata: ::ethers::core::types::Bytes,

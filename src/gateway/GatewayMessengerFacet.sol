@@ -13,7 +13,7 @@ import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 
 string constant ERR_GENERAL_CROSS_MSG_DISABLED = "Support for general-purpose cross-net messages is disabled";
-string constant ERR_MULTILEVEL_CROSS_MSG_DISABLED = "Support for general-purpose cross-net messages is disabled";
+string constant ERR_MULTILEVEL_CROSS_MSG_DISABLED = "Support for multi-level cross-net messages is disabled";
 
 contract GatewayMessengerFacet is GatewayActorModifiers {
     using FilAddress for address payable;

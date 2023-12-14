@@ -71,9 +71,11 @@ pub mod subnet_actor_manager_facet {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("height"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint64"),
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                                 ::ethers::core::abi::ethabi::Param {
@@ -171,6 +173,52 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("setFederatedPower"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("setFederatedPower"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("validators"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("address[]"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("publicKeys"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes[]"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("powers"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256[]"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("stake"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -202,80 +250,15 @@ pub mod subnet_actor_manager_facet {
                                                     ),
                                                 ],
                                             ),
-                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                         ],
                                     ),
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned(
                                             "struct BottomUpCheckpoint",
                                         ),
-                                    ),
-                                },
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("messages"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
-                                        ::std::boxed::Box::new(
-                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                ::std::vec![
-                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                        ::std::vec![
-                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                ::std::vec![
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                                ::std::boxed::Box::new(
-                                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                                ),
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                                                        ],
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                ::std::vec![
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                                ::std::boxed::Box::new(
-                                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                                ),
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                                                        ],
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
-                                                        ],
-                                                    ),
-                                                    ::ethers::core::abi::ethabi::ParamType::Bool,
-                                                ],
-                                            ),
-                                        ),
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("struct CrossMsg[]"),
                                     ),
                                 },
                                 ::ethers::core::abi::ethabi::Param {
@@ -387,7 +370,9 @@ pub mod subnet_actor_manager_facet {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::EventParam {
                                     name: ::std::borrow::ToOwned::to_owned("epoch"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
                                     indexed: false,
                                 },
                                 ::ethers::core::abi::ethabi::EventParam {
@@ -422,10 +407,9 @@ pub mod subnet_actor_manager_facet {
                                                     ),
                                                 ],
                                             ),
-                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                         ],
                                     ),
                                     indexed: false,
@@ -450,7 +434,9 @@ pub mod subnet_actor_manager_facet {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::EventParam {
                                     name: ::std::borrow::ToOwned::to_owned("epoch"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
                                     indexed: false,
                                 },
                                 ::ethers::core::abi::ethabi::EventParam {
@@ -580,11 +566,11 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("InvalidCheckpointMessagesHash"),
+                    ::std::borrow::ToOwned::to_owned("InvalidFederationPayload"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "InvalidCheckpointMessagesHash",
+                                "InvalidFederationPayload",
                             ),
                             inputs: ::std::vec![],
                         },
@@ -625,7 +611,15 @@ pub mod subnet_actor_manager_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("MethodNotAllowed"),
-                            inputs: ::std::vec![],
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("reason"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::String,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("string"),
+                                    ),
+                                },
+                            ],
                         },
                     ],
                 ),
@@ -685,6 +679,15 @@ pub mod subnet_actor_manager_facet {
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
                             name: ::std::borrow::ToOwned::to_owned("NotGateway"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NotOwner"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("NotOwner"),
                             inputs: ::std::vec![],
                         },
                     ],
@@ -859,14 +862,14 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([237, 124, 77, 161], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `distributeRewardToRelayers` (0xf9002bb1) function
+        ///Calls the contract's `distributeRewardToRelayers` (0x50fd8969) function
         pub fn distribute_reward_to_relayers(
             &self,
-            height: u64,
+            height: ::ethers::core::types::U256,
             reward: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash([249, 0, 43, 177], (height, reward))
+                .method_hash([80, 253, 137, 105], (height, reward))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `join` (0x6170b162) function
@@ -905,25 +908,32 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([102, 120, 60, 155], amount)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `setFederatedPower` (0xda5d09ee) function
+        pub fn set_federated_power(
+            &self,
+            validators: ::std::vec::Vec<::ethers::core::types::Address>,
+            public_keys: ::std::vec::Vec<::ethers::core::types::Bytes>,
+            powers: ::std::vec::Vec<::ethers::core::types::U256>,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([218, 93, 9, 238], (validators, public_keys, powers))
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `stake` (0x3a4b66f1) function
         pub fn stake(&self) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([58, 75, 102, 241], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `submitCheckpoint` (0xa8284de3) function
+        ///Calls the contract's `submitCheckpoint` (0xb9ee2bb9) function
         pub fn submit_checkpoint(
             &self,
             checkpoint: BottomUpCheckpoint,
-            messages: ::std::vec::Vec<CrossMsg>,
             signatories: ::std::vec::Vec<::ethers::core::types::Address>,
             signatures: ::std::vec::Vec<::ethers::core::types::Bytes>,
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
-                .method_hash(
-                    [168, 40, 77, 227],
-                    (checkpoint, messages, signatories, signatures),
-                )
+                .method_hash([185, 238, 43, 185], (checkpoint, signatories, signatures))
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `unstake` (0x2e17de78) function
@@ -1115,7 +1125,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "InvalidCheckpointEpoch", abi = "InvalidCheckpointEpoch()")]
     pub struct InvalidCheckpointEpoch;
-    ///Custom Error type `InvalidCheckpointMessagesHash` with signature `InvalidCheckpointMessagesHash()` and selector `0xb5fdd40c`
+    ///Custom Error type `InvalidFederationPayload` with signature `InvalidFederationPayload()` and selector `0x7e659359`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1126,11 +1136,8 @@ pub mod subnet_actor_manager_facet {
         Eq,
         Hash
     )]
-    #[etherror(
-        name = "InvalidCheckpointMessagesHash",
-        abi = "InvalidCheckpointMessagesHash()"
-    )]
-    pub struct InvalidCheckpointMessagesHash;
+    #[etherror(name = "InvalidFederationPayload", abi = "InvalidFederationPayload()")]
+    pub struct InvalidFederationPayload;
     ///Custom Error type `InvalidPublicKeyLength` with signature `InvalidPublicKeyLength()` and selector `0x637297a4`
     #[derive(
         Clone,
@@ -1157,7 +1164,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "InvalidSignatureErr", abi = "InvalidSignatureErr(uint8)")]
     pub struct InvalidSignatureErr(pub u8);
-    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed()` and selector `0x83f171d6`
+    ///Custom Error type `MethodNotAllowed` with signature `MethodNotAllowed(string)` and selector `0x015538b1`
     #[derive(
         Clone,
         ::ethers::contract::EthError,
@@ -1168,8 +1175,10 @@ pub mod subnet_actor_manager_facet {
         Eq,
         Hash
     )]
-    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed()")]
-    pub struct MethodNotAllowed;
+    #[etherror(name = "MethodNotAllowed", abi = "MethodNotAllowed(string)")]
+    pub struct MethodNotAllowed {
+        pub reason: ::std::string::String,
+    }
     ///Custom Error type `NoCollateralToWithdraw` with signature `NoCollateralToWithdraw()` and selector `0x64b0557f`
     #[derive(
         Clone,
@@ -1248,6 +1257,19 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "NotGateway", abi = "NotGateway()")]
     pub struct NotGateway;
+    ///Custom Error type `NotOwner` with signature `NotOwner()` and selector `0x30cd7471`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "NotOwner", abi = "NotOwner()")]
+    pub struct NotOwner;
     ///Custom Error type `NotOwnerOfPublicKey` with signature `NotOwnerOfPublicKey()` and selector `0x97d24a3a`
     #[derive(
         Clone,
@@ -1379,7 +1401,7 @@ pub mod subnet_actor_manager_facet {
         EmptyAddress(EmptyAddress),
         FailedInnerCall(FailedInnerCall),
         InvalidCheckpointEpoch(InvalidCheckpointEpoch),
-        InvalidCheckpointMessagesHash(InvalidCheckpointMessagesHash),
+        InvalidFederationPayload(InvalidFederationPayload),
         InvalidPublicKeyLength(InvalidPublicKeyLength),
         InvalidSignatureErr(InvalidSignatureErr),
         MethodNotAllowed(MethodNotAllowed),
@@ -1389,6 +1411,7 @@ pub mod subnet_actor_manager_facet {
         NotEnoughCollateral(NotEnoughCollateral),
         NotEnoughFunds(NotEnoughFunds),
         NotGateway(NotGateway),
+        NotOwner(NotOwner),
         NotOwnerOfPublicKey(NotOwnerOfPublicKey),
         NotStakedBefore(NotStakedBefore),
         NotValidator(NotValidator),
@@ -1452,10 +1475,10 @@ pub mod subnet_actor_manager_facet {
             ) {
                 return Ok(Self::InvalidCheckpointEpoch(decoded));
             }
-            if let Ok(decoded) = <InvalidCheckpointMessagesHash as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <InvalidFederationPayload as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::InvalidCheckpointMessagesHash(decoded));
+                return Ok(Self::InvalidFederationPayload(decoded));
             }
             if let Ok(decoded) = <InvalidPublicKeyLength as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -1501,6 +1524,11 @@ pub mod subnet_actor_manager_facet {
                 data,
             ) {
                 return Ok(Self::NotGateway(decoded));
+            }
+            if let Ok(decoded) = <NotOwner as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NotOwner(decoded));
             }
             if let Ok(decoded) = <NotOwnerOfPublicKey as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -1577,7 +1605,7 @@ pub mod subnet_actor_manager_facet {
                 Self::InvalidCheckpointEpoch(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::InvalidCheckpointMessagesHash(element) => {
+                Self::InvalidFederationPayload(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InvalidPublicKeyLength(element) => {
@@ -1605,6 +1633,9 @@ pub mod subnet_actor_manager_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NotGateway(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::NotOwner(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NotOwnerOfPublicKey(element) => {
@@ -1671,7 +1702,7 @@ pub mod subnet_actor_manager_facet {
                     true
                 }
                 _ if selector
-                    == <InvalidCheckpointMessagesHash as ::ethers::contract::EthError>::selector() => {
+                    == <InvalidFederationPayload as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1708,6 +1739,8 @@ pub mod subnet_actor_manager_facet {
                 }
                 _ if selector
                     == <NotGateway as ::ethers::contract::EthError>::selector() => true,
+                _ if selector
+                    == <NotOwner as ::ethers::contract::EthError>::selector() => true,
                 _ if selector
                     == <NotOwnerOfPublicKey as ::ethers::contract::EthError>::selector() => {
                     true
@@ -1763,7 +1796,7 @@ pub mod subnet_actor_manager_facet {
                 Self::InvalidCheckpointEpoch(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::InvalidCheckpointMessagesHash(element) => {
+                Self::InvalidFederationPayload(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::InvalidPublicKeyLength(element) => {
@@ -1785,6 +1818,7 @@ pub mod subnet_actor_manager_facet {
                 }
                 Self::NotEnoughFunds(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotGateway(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotOwner(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotOwnerOfPublicKey(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1857,10 +1891,10 @@ pub mod subnet_actor_manager_facet {
             Self::InvalidCheckpointEpoch(value)
         }
     }
-    impl ::core::convert::From<InvalidCheckpointMessagesHash>
+    impl ::core::convert::From<InvalidFederationPayload>
     for SubnetActorManagerFacetErrors {
-        fn from(value: InvalidCheckpointMessagesHash) -> Self {
-            Self::InvalidCheckpointMessagesHash(value)
+        fn from(value: InvalidFederationPayload) -> Self {
+            Self::InvalidFederationPayload(value)
         }
     }
     impl ::core::convert::From<InvalidPublicKeyLength>
@@ -1909,6 +1943,11 @@ pub mod subnet_actor_manager_facet {
     impl ::core::convert::From<NotGateway> for SubnetActorManagerFacetErrors {
         fn from(value: NotGateway) -> Self {
             Self::NotGateway(value)
+        }
+    }
+    impl ::core::convert::From<NotOwner> for SubnetActorManagerFacetErrors {
+        fn from(value: NotOwner) -> Self {
+            Self::NotOwner(value)
         }
     }
     impl ::core::convert::From<NotOwnerOfPublicKey> for SubnetActorManagerFacetErrors {
@@ -1971,10 +2010,10 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethevent(
         name = "BottomUpCheckpointExecuted",
-        abi = "BottomUpCheckpointExecuted(uint64,address)"
+        abi = "BottomUpCheckpointExecuted(uint256,address)"
     )]
     pub struct BottomUpCheckpointExecutedFilter {
-        pub epoch: u64,
+        pub epoch: ::ethers::core::types::U256,
         pub submitter: ::ethers::core::types::Address,
     }
     #[derive(
@@ -1989,7 +2028,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethevent(
         name = "BottomUpCheckpointSubmitted",
-        abi = "BottomUpCheckpointSubmitted(((uint64,address[]),uint64,bytes32,uint64,bytes32),address)"
+        abi = "BottomUpCheckpointSubmitted(((uint64,address[]),uint256,bytes32,uint64),address)"
     )]
     pub struct BottomUpCheckpointSubmittedFilter {
         pub checkpoint: BottomUpCheckpoint,
@@ -2007,10 +2046,10 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethevent(
         name = "NextBottomUpCheckpointExecuted",
-        abi = "NextBottomUpCheckpointExecuted(uint64,address)"
+        abi = "NextBottomUpCheckpointExecuted(uint256,address)"
     )]
     pub struct NextBottomUpCheckpointExecutedFilter {
-        pub epoch: u64,
+        pub epoch: ::ethers::core::types::U256,
         pub submitter: ::ethers::core::types::Address,
     }
     #[derive(
@@ -2152,7 +2191,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethcall(name = "claimRewardForRelayer", abi = "claimRewardForRelayer()")]
     pub struct ClaimRewardForRelayerCall;
-    ///Container type for all input parameters for the `distributeRewardToRelayers` function with signature `distributeRewardToRelayers(uint64,uint256)` and selector `0xf9002bb1`
+    ///Container type for all input parameters for the `distributeRewardToRelayers` function with signature `distributeRewardToRelayers(uint256,uint256)` and selector `0x50fd8969`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -2165,10 +2204,10 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethcall(
         name = "distributeRewardToRelayers",
-        abi = "distributeRewardToRelayers(uint64,uint256)"
+        abi = "distributeRewardToRelayers(uint256,uint256)"
     )]
     pub struct DistributeRewardToRelayersCall {
-        pub height: u64,
+        pub height: ::ethers::core::types::U256,
         pub reward: ::ethers::core::types::U256,
     }
     ///Container type for all input parameters for the `join` function with signature `join(bytes)` and selector `0x6170b162`
@@ -2240,6 +2279,26 @@ pub mod subnet_actor_manager_facet {
     pub struct PreReleaseCall {
         pub amount: ::ethers::core::types::U256,
     }
+    ///Container type for all input parameters for the `setFederatedPower` function with signature `setFederatedPower(address[],bytes[],uint256[])` and selector `0xda5d09ee`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "setFederatedPower",
+        abi = "setFederatedPower(address[],bytes[],uint256[])"
+    )]
+    pub struct SetFederatedPowerCall {
+        pub validators: ::std::vec::Vec<::ethers::core::types::Address>,
+        pub public_keys: ::std::vec::Vec<::ethers::core::types::Bytes>,
+        pub powers: ::std::vec::Vec<::ethers::core::types::U256>,
+    }
     ///Container type for all input parameters for the `stake` function with signature `stake()` and selector `0x3a4b66f1`
     #[derive(
         Clone,
@@ -2253,7 +2312,7 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethcall(name = "stake", abi = "stake()")]
     pub struct StakeCall;
-    ///Container type for all input parameters for the `submitCheckpoint` function with signature `submitCheckpoint(((uint64,address[]),uint64,bytes32,uint64,bytes32),((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[],address[],bytes[])` and selector `0xa8284de3`
+    ///Container type for all input parameters for the `submitCheckpoint` function with signature `submitCheckpoint(((uint64,address[]),uint256,bytes32,uint64),address[],bytes[])` and selector `0xb9ee2bb9`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -2266,11 +2325,10 @@ pub mod subnet_actor_manager_facet {
     )]
     #[ethcall(
         name = "submitCheckpoint",
-        abi = "submitCheckpoint(((uint64,address[]),uint64,bytes32,uint64,bytes32),((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[],address[],bytes[])"
+        abi = "submitCheckpoint(((uint64,address[]),uint256,bytes32,uint64),address[],bytes[])"
     )]
     pub struct SubmitCheckpointCall {
         pub checkpoint: BottomUpCheckpoint,
-        pub messages: ::std::vec::Vec<CrossMsg>,
         pub signatories: ::std::vec::Vec<::ethers::core::types::Address>,
         pub signatures: ::std::vec::Vec<::ethers::core::types::Bytes>,
     }
@@ -2321,6 +2379,7 @@ pub mod subnet_actor_manager_facet {
         Leave(LeaveCall),
         PreFund(PreFundCall),
         PreRelease(PreReleaseCall),
+        SetFederatedPower(SetFederatedPowerCall),
         Stake(StakeCall),
         SubmitCheckpoint(SubmitCheckpointCall),
         Unstake(UnstakeCall),
@@ -2376,6 +2435,11 @@ pub mod subnet_actor_manager_facet {
             ) {
                 return Ok(Self::PreRelease(decoded));
             }
+            if let Ok(decoded) = <SetFederatedPowerCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::SetFederatedPower(decoded));
+            }
             if let Ok(decoded) = <StakeCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
@@ -2419,6 +2483,9 @@ pub mod subnet_actor_manager_facet {
                 Self::PreRelease(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::SetFederatedPower(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::Stake(element) => ::ethers::core::abi::AbiEncode::encode(element),
                 Self::SubmitCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
@@ -2446,6 +2513,7 @@ pub mod subnet_actor_manager_facet {
                 Self::Leave(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PreFund(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PreRelease(element) => ::core::fmt::Display::fmt(element, f),
+                Self::SetFederatedPower(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Stake(element) => ::core::fmt::Display::fmt(element, f),
                 Self::SubmitCheckpoint(element) => ::core::fmt::Display::fmt(element, f),
                 Self::Unstake(element) => ::core::fmt::Display::fmt(element, f),
@@ -2502,6 +2570,11 @@ pub mod subnet_actor_manager_facet {
             Self::PreRelease(value)
         }
     }
+    impl ::core::convert::From<SetFederatedPowerCall> for SubnetActorManagerFacetCalls {
+        fn from(value: SetFederatedPowerCall) -> Self {
+            Self::SetFederatedPower(value)
+        }
+    }
     impl ::core::convert::From<StakeCall> for SubnetActorManagerFacetCalls {
         fn from(value: StakeCall) -> Self {
             Self::Stake(value)
@@ -2523,7 +2596,7 @@ pub mod subnet_actor_manager_facet {
             Self::ValidateActiveQuorumSignatures(value)
         }
     }
-    ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
+    ///`BottomUpCheckpoint((uint64,address[]),uint256,bytes32,uint64)`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2536,75 +2609,9 @@ pub mod subnet_actor_manager_facet {
     )]
     pub struct BottomUpCheckpoint {
         pub subnet_id: SubnetID,
-        pub block_height: u64,
+        pub block_height: ::ethers::core::types::U256,
         pub block_hash: [u8; 32],
         pub next_configuration_number: u64,
-        pub cross_messages_hash: [u8; 32],
-    }
-    ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct CrossMsg {
-        pub message: StorableMsg,
-        pub wrapped: bool,
-    }
-    ///`FvmAddress(uint8,bytes)`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct FvmAddress {
-        pub addr_type: u8,
-        pub payload: ::ethers::core::types::Bytes,
-    }
-    ///`Ipcaddress((uint64,address[]),(uint8,bytes))`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct Ipcaddress {
-        pub subnet_id: SubnetID,
-        pub raw_address: FvmAddress,
-    }
-    ///`StorableMsg(((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256)`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct StorableMsg {
-        pub from: Ipcaddress,
-        pub to: Ipcaddress,
-        pub value: ::ethers::core::types::U256,
-        pub nonce: u64,
-        pub method: [u8; 4],
-        pub params: ::ethers::core::types::Bytes,
-        pub fee: ::ethers::core::types::U256,
     }
     ///`SubnetID(uint64,address[])`
     #[derive(
