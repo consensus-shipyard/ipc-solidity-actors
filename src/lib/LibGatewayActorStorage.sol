@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {NotEnoughFee, NotSystemActor, NotEnoughFunds} from "../errors/IPCErrors.sol";
 import {QuorumMap} from "../structs/Quorum.sol";
-import {BottomUpCheckpoint, CrossMsg, ParentFinality} from "../structs/Checkpoint.sol";
+import {BottomUpCheckpoint, BottomUpMsgBatch, CrossMsg, ParentFinality} from "../structs/CrossNet.sol";
 import {SubnetID, Subnet, ParentValidatorsTracker} from "../structs/Subnet.sol";
 import {Membership} from "../structs/Subnet.sol";
 import {AccountHelper} from "../lib/AccountHelper.sol";
@@ -31,7 +31,7 @@ struct GatewayActorStorage {
     mapping(uint256 => BottomUpCheckpoint) bottomUpCheckpoints;
     /// @notice A mapping of block numbers to bottom-up cross-messages
     // slither-disable-next-line uninitialized-state
-    mapping(uint256 => CrossMsg[]) bottomUpMessages;
+    mapping(uint256 => BottomUpMsgBatch) bottomUpMsgBatches;
     /// @notice Quorum information for checkpoints
     QuorumMap checkpointQuorumMap;
     /// @notice Quorum information for bottom-up msg batches
@@ -53,8 +53,12 @@ struct GatewayActorStorage {
     uint64 appliedTopDownNonce;
     /// @notice Number of active subnets spawned from this one
     uint64 totalSubnets;
-    // @notice bottom-up period in number of epochs for the subnet
+    /// @notice bottom-up period in number of epochs for the subnet
     uint256 bottomUpCheckPeriod;
+    /// @notice bottom-up message batch period in number of epochs for the subnet
+    uint256 bottomUpMsgBatchPeriod;
+    /// @notice Maximum number of messages per batch
+    uint64 maxMsgsPerBottomUpBatch;
     /// Tracking validator changes from parent in child subnet
     ParentValidatorsTracker validatorsTracker;
     //

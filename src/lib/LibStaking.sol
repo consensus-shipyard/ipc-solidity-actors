@@ -7,7 +7,7 @@ import {GatewayActorStorage, LibGatewayActorStorage} from "../lib/LibGatewayActo
 import {LibMaxPQ, MaxPQ} from "./priority/LibMaxPQ.sol";
 import {LibMinPQ, MinPQ} from "./priority/LibMinPQ.sol";
 import {LibStakingChangeLog} from "./LibStakingChangeLog.sol";
-import {PermissionMode, StakingReleaseQueue, StakingChangeLog, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker, Validator} from "../structs/Subnet.sol";
+import {StakingReleaseQueue, StakingChangeLog, StakingChange, StakingChangeRequest, StakingOperation, StakingRelease, ValidatorSet, AddressStakingReleases, ParentValidatorsTracker, Validator} from "../structs/Subnet.sol";
 import {NoRewardToWithdraw, WithdrawExceedingCollateral, NotValidator, CannotConfirmFutureChanges, NoCollateralToWithdraw, AddressShouldBeValidator, InvalidConfigurationNumber} from "../errors/IPCErrors.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
@@ -99,25 +99,13 @@ library LibValidatorSet {
     using LibMinPQ for MinPQ;
     using LibMaxPQ for MaxPQ;
 
-    event ActiveValidatorCollateralUpdated(address validator, uint256 newPower);
-    event WaitingValidatorCollateralUpdated(address validator, uint256 newPower);
-    event NewActiveValidator(address validator, uint256 power);
-    event NewWaitingValidator(address validator, uint256 power);
+    event ActiveValidatorCollateralUpdated(address validator, uint256 newCollateral);
+    event WaitingValidatorCollateralUpdated(address validator, uint256 newCollateral);
+    event NewActiveValidator(address validator, uint256 collateral);
+    event NewWaitingValidator(address validator, uint256 collateral);
     event ActiveValidatorReplaced(address oldValidator, address newValidator);
     event ActiveValidatorLeft(address validator);
     event WaitingValidatorLeft(address validator);
-
-    /// @notice Get the total voting power for the validator
-    function getPower(
-        ValidatorSet storage validators,
-        address validator
-    ) internal view returns(uint256 power) {
-        if (validators.permissionMode == PermissionMode.Federated) {
-            power = validators.validators[validator].federatedPower;
-        } else {
-            power = validators.validators[validator].confirmedCollateral;
-        }
-    }
 
     /// @notice Get the total confirmed collateral of the validators.
     function getTotalConfirmedCollateral(ValidatorSet storage validators) internal view returns (uint256 collateral) {
@@ -150,49 +138,36 @@ library LibValidatorSet {
     }
 
     /// @notice Get the total collateral of *active* validators.
-    function getTotalActivePower(ValidatorSet storage validators) internal view returns (uint256 collateral) {
+    function getActiveCollateral(ValidatorSet storage validators) internal view returns (uint256 collateral) {
         uint16 size = validators.activeValidators.getSize();
         for (uint16 i = 1; i <= size; ) {
             address validator = validators.activeValidators.getAddress(i);
-            collateral += getPower(validators, validator);
-            unchecked {
-                ++i;
-            }
-        }
-    }
-
-    /// @notice Get the total collateral of the *waiting* and *active* validators.
-    function getTotalCollateral(ValidatorSet storage validators) internal view returns (uint256 collateral) {
-        uint16 size = validators.waitingValidators.getSize();
-        for (uint16 i = 1; i <= size; ) {
-            address validator = validators.waitingValidators.getAddress(i);
             collateral += getConfirmedCollateral(validators, validator);
             unchecked {
                 ++i;
             }
         }
-        collateral += getTotalConfirmedCollateral(validators);
     }
 
-    /// @notice Get the total power of the validators.
+    /// @notice Get the confirmed collaterals of the validators.
     /// The function reverts if at least one validator is not in the active validator set.
-    function getTotalPowerOfValidators(
+    function getConfirmedCollaterals(
         ValidatorSet storage validators,
         address[] memory addresses
     ) internal view returns (uint256[] memory) {
         uint256 size = addresses.length;
-        uint256[] memory activePowerTable = new uint256[](size);
+        uint256[] memory activeCollaterals = new uint256[](size);
 
         for (uint256 i; i < size; ) {
             if (!isActiveValidator(validators, addresses[i])) {
                 revert NotValidator(addresses[i]);
             }
-            activePowerTable[i] = getPower(validators, addresses[i]);
+            activeCollaterals[i] = validators.validators[addresses[i]].confirmedCollateral;
             unchecked {
                 ++i;
             }
         }
-        return activePowerTable;
+        return activeCollaterals;
     }
 
     function isActiveValidator(ValidatorSet storage self, address validator) internal view returns (bool) {
@@ -224,27 +199,13 @@ library LibValidatorSet {
         validators.validators[validator].totalCollateral = total;
     }
 
-    /// @notice Validator's federated power was updated by admin
-    function confirmFederatedPower(ValidatorSet storage self, address validator, uint256 power) internal {
-        uint256 existingPower = self.validators[validator].federatedPower;
-        self.validators[validator].federatedPower = power;
-
-        if (existingPower == power) {
-            return;
-        } else if (existingPower < power) {
-            increaseReshuffle({self: self, maybeActive: validator, newPower: power});
-        } else {
-            reduceReshuffle({self: self, validator: validator, newPower: power});
-        }
-    }
-
     function confirmDeposit(ValidatorSet storage self, address validator, uint256 amount) internal {
         uint256 newCollateral = self.validators[validator].confirmedCollateral + amount;
         self.validators[validator].confirmedCollateral = newCollateral;
 
         self.totalConfirmedCollateral += amount;
 
-        increaseReshuffle({self: self, maybeActive: validator, newPower: newCollateral});
+        depositReshuffle({self: self, maybeActive: validator, newCollateral: newCollateral});
     }
 
     function confirmWithdraw(ValidatorSet storage self, address validator, uint256 amount) internal {
@@ -257,16 +218,16 @@ library LibValidatorSet {
             self.validators[validator].confirmedCollateral = newCollateral;
         }
 
-        reduceReshuffle({self: self, validator: validator, newPower: newCollateral});
+        withdrawReshuffle({self: self, validator: validator, newCollateral: newCollateral});
 
         self.totalConfirmedCollateral -= amount;
     }
 
-    /// @notice Reshuffles the active and waiting validators when an increase in power is confirmed
-    function increaseReshuffle(ValidatorSet storage self, address maybeActive, uint256 newPower) internal {
+    /// @notice Reshuffles the active and waiting validators when a deposit is confirmed
+    function depositReshuffle(ValidatorSet storage self, address maybeActive, uint256 newCollateral) internal {
         if (self.activeValidators.contains(maybeActive)) {
             self.activeValidators.increaseReheapify(self, maybeActive);
-            emit ActiveValidatorCollateralUpdated(maybeActive, newPower);
+            emit ActiveValidatorCollateralUpdated(maybeActive, newCollateral);
             return;
         }
 
@@ -276,7 +237,7 @@ library LibValidatorSet {
         if (activeLimit > activeSize) {
             // we can still take more active validators, just insert to the pq.
             self.activeValidators.insert(self, maybeActive);
-            emit NewActiveValidator(maybeActive, newPower);
+            emit NewActiveValidator(maybeActive, newCollateral);
             return;
         }
 
@@ -289,8 +250,8 @@ library LibValidatorSet {
         //        - insert popped validator into waiting validators
         //     - no:
         //        - insert the incoming validator into waiting validators
-        (address minAddress, uint256 minActivePower) = self.activeValidators.min(self);
-        if (minActivePower < newPower) {
+        (address minAddress, uint256 minActiveCollateral) = self.activeValidators.min(self);
+        if (minActiveCollateral < newCollateral) {
             self.activeValidators.pop(self);
 
             if (self.waitingValidators.contains(maybeActive)) {
@@ -306,24 +267,24 @@ library LibValidatorSet {
 
         if (self.waitingValidators.contains(maybeActive)) {
             self.waitingValidators.increaseReheapify(self, maybeActive);
-            emit WaitingValidatorCollateralUpdated(maybeActive, newPower);
+            emit WaitingValidatorCollateralUpdated(maybeActive, newCollateral);
             return;
         }
 
         self.waitingValidators.insert(self, maybeActive);
-        emit NewWaitingValidator(maybeActive, newPower);
+        emit NewWaitingValidator(maybeActive, newCollateral);
     }
 
-    /// @notice Reshuffles the active and waiting validators when a power reduction is confirmed
-    function reduceReshuffle(ValidatorSet storage self, address validator, uint256 newPower) internal {
+    /// @notice Reshuffles the active and waiting validators when a withdraw is confirmed
+    function withdrawReshuffle(ValidatorSet storage self, address validator, uint256 newCollateral) internal {
         if (self.waitingValidators.contains(validator)) {
-            if (newPower == 0) {
+            if (newCollateral == 0) {
                 self.waitingValidators.deleteReheapify(self, validator);
                 emit WaitingValidatorLeft(validator);
                 return;
             }
             self.waitingValidators.decreaseReheapify(self, validator);
-            emit WaitingValidatorCollateralUpdated(validator, newPower);
+            emit WaitingValidatorCollateralUpdated(validator, newCollateral);
             return;
         }
 
@@ -334,15 +295,15 @@ library LibValidatorSet {
 
         // the validator is an active validator!
 
-        if (newPower == 0) {
+        if (newCollateral == 0) {
             self.activeValidators.deleteReheapify(self, validator);
             emit ActiveValidatorLeft(validator);
 
             if (self.waitingValidators.getSize() != 0) {
-                (address toBePromoted, uint256 power) = self.waitingValidators.max(self);
+                (address toBePromoted, uint256 collateral) = self.waitingValidators.max(self);
                 self.waitingValidators.pop(self);
                 self.activeValidators.insert(self, toBePromoted);
-                emit NewActiveValidator(toBePromoted, power);
+                emit NewActiveValidator(toBePromoted, collateral);
             }
 
             return;
@@ -354,9 +315,9 @@ library LibValidatorSet {
             return;
         }
 
-        (address mayBeDemoted, uint256 minActivePower) = self.activeValidators.min(self);
-        (address mayBePromoted, uint256 maxWaitingPower) = self.waitingValidators.max(self);
-        if (minActivePower < maxWaitingPower) {
+        (address mayBeDemoted, uint256 minActiveCollateral) = self.activeValidators.min(self);
+        (address mayBePromoted, uint256 maxWaitingCollateral) = self.waitingValidators.max(self);
+        if (minActiveCollateral < maxWaitingCollateral) {
             self.activeValidators.pop(self);
             self.waitingValidators.pop(self);
             self.activeValidators.insert(self, mayBePromoted);
@@ -366,7 +327,7 @@ library LibValidatorSet {
             return;
         }
 
-        emit ActiveValidatorCollateralUpdated(validator, newPower);
+        emit ActiveValidatorCollateralUpdated(validator, newCollateral);
     }
 }
 
@@ -417,11 +378,6 @@ library LibStaking {
     }
 
     function getTotalConfirmedCollateral() internal view returns (uint256) {
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        return s.validatorSet.getTotalConfirmedCollateral();
-    }
-
-    function getTotalCollateral() internal view returns (uint256) {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
         return s.validatorSet.getTotalConfirmedCollateral();
     }
@@ -491,11 +447,6 @@ library LibStaking {
     }
 
     // ================= Operations that are queued ==============
-    /// @notice Set the federated power of the validator
-    function setFederatedPower(address validator, bytes calldata metadata, uint256 amount) internal {
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        s.changeSet.federatedPowerRequest(validator, metadata, amount);
-    }
 
     /// @notice Set the validator metadata
     function setValidatorMetadata(address validator, bytes calldata metadata) internal {
@@ -531,13 +482,13 @@ library LibStaking {
     /// @notice method that allows a relayer to withdraw it's accumulated rewards using pull-based transfer
     function claimRewardForRelayer(address relayer) external {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        uint256 amount = s.relayerRewards[relayer];
+        uint256 amount = s.relayerRewards.rewards[relayer];
 
         if (amount == 0) {
             revert NoRewardToWithdraw();
         }
 
-        s.relayerRewards[relayer] = 0;
+        s.relayerRewards.rewards[relayer] = 0;
         IGateway(s.ipcGatewayAddr).releaseRewardForRelayer(amount);
 
         payable(relayer).sendValue(amount);
@@ -566,10 +517,6 @@ library LibStaking {
 
             if (change.op == StakingOperation.SetMetadata) {
                 s.validatorSet.validators[validator].metadata = change.payload;
-            } else if (change.op == StakingOperation.SetFederatedPower) {
-                (bytes memory metadata, uint256 power) = abi.decode(change.payload, (bytes, uint256));
-                s.validatorSet.validators[validator].metadata = metadata;
-                s.validatorSet.confirmFederatedPower(validator, power);
             } else {
                 uint256 amount = abi.decode(change.payload, (uint256));
 
@@ -646,9 +593,6 @@ library LibValidatorTracking {
 
             if (change.op == StakingOperation.SetMetadata) {
                 self.validators.validators[validator].metadata = change.payload;
-            } else if (change.op == StakingOperation.SetFederatedPower) {
-                uint256 power = abi.decode(change.payload, (uint256));
-                self.validators.confirmFederatedPower(validator, power);
             } else {
                 uint256 amount = abi.decode(change.payload, (uint256));
 

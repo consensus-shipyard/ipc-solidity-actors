@@ -2,10 +2,7 @@
 # Deployment
 
 NETWORK ?= auto
-
-# Output for generated Solidity artifacts. Generation and commit is done in the `bindings.yaml` workflow.
-# Do not edit locally, it's separate from `out` to avoid any merge conflicts due to formatting differences.
-OUTPUT ?= .out
+OUTPUT ?= ./out
 
 deploy-ipc:
 	./ops/deploy.sh $(NETWORK)
@@ -19,29 +16,11 @@ upgrade-sa-diamond:
 upgrade-sr-diamond:
 	./ops/upgrade-sr-diamond.sh $(NETWORK)
 
-# ==============================================================================
-# Code generation on CI
-
-gen: compile-abi rust-binding
-
 compile-abi: | forge
-	rm -rf $(OUTPUT)
-	mkdir -p $(OUTPUT)
 	./ops/compile-abi.sh $(OUTPUT)
 
-commit-abi:
-	./ops/commit-abi.sh $(OUTPUT)
-
 rust-binding:
-	OUTPUT=$(OUTPUT) BUILD_BINDINGS=1 cargo build --locked --release --manifest-path ./binding/Cargo.toml -p ipc_actors_abis
-
-commit-rust-binding:
-	./ops/commit-rust-binding.sh
-
-check-rust-binding:
-	cargo fmt --manifest-path ./binding/Cargo.toml && \
-	cargo clippy --manifest-path ./binding/Cargo.toml && \
-	./ops/check-rust-binding.sh
+	BUILD_BINDINGS=1 cargo build --release --manifest-path ./binding/Cargo.toml -p ipc_actors_abis
 
 # ==============================================================================
 # Running security checks within the local computer
@@ -62,8 +41,7 @@ lint:
 	solhint 'src/**/*.sol'
 
 fmt:
-	npm install --silent --no-save
-	npx prettier --check -w 'src/**/**/*.sol' 'test/**/**/*.sol' 'test/**/**/*.t.sol' '**/*.{js,jsx,ts,tsx,json,css,md}'
+	npx prettier --check -w 'src/**/**/*.sol' 'test/**/**/*.sol'
 
 build: | forge
 	forge build
@@ -78,6 +56,17 @@ install-npm-package:
 
 install-eth-abi:
 	curl -sSL https://bootstrap.pypa.io/get-pip.py -o get-pip.py && python3 get-pip.py && rm get-pip.py && python3 -m pip install eth_abi
+
+check-rust-binding:
+	cargo fmt --manifest-path ./binding/Cargo.toml && \
+	cargo clippy --manifest-path ./binding/Cargo.toml && \
+	./ops/check-rust-binding.sh
+
+commit-rust-binding:
+	./ops/commit-rust-binding.sh
+
+commit-abi:
+	./ops/commit-abi.sh
 
 storage:
 	rm -rf ./cache

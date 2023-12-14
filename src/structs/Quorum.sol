@@ -5,7 +5,7 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 
 enum QuorumObjKind {
     Checkpoint,
-    BottomupMsgBatch
+    BottomUpMsgBatch
 }
 
 struct QuorumInfo {

@@ -16,11 +16,11 @@ pub mod gateway_router_facet {
             constructor: ::core::option::Option::None,
             functions: ::core::convert::From::from([
                 (
-                    ::std::borrow::ToOwned::to_owned("addCheckpointSignature"),
+                    ::std::borrow::ToOwned::to_owned("addBottomUpMsgBatchSignature"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "addCheckpointSignature",
+                                "addBottomUpMsgBatchSignature",
                             ),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
@@ -67,75 +67,47 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("applyBatchBottomUpMessages"),
+                    ::std::borrow::ToOwned::to_owned("addCheckpointSignature"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "applyBatchBottomUpMessages",
+                                "addCheckpointSignature",
                             ),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("messages"),
+                                    name: ::std::borrow::ToOwned::to_owned("height"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("membershipProof"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::Array(
                                         ::std::boxed::Box::new(
-                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                ::std::vec![
-                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                        ::std::vec![
-                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                ::std::vec![
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                                ::std::boxed::Box::new(
-                                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                                ),
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                                                        ],
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                ::std::vec![
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                                ::std::boxed::Box::new(
-                                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                                ),
-                                                                            ),
-                                                                        ],
-                                                                    ),
-                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                                        ::std::vec![
-                                                                            ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
-                                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                                                        ],
-                                                                    ),
-                                                                ],
-                                                            ),
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
-                                                        ],
-                                                    ),
-                                                    ::ethers::core::abi::ethabi::ParamType::Bool,
-                                                ],
-                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                         ),
                                     ),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("struct CrossMsg[]"),
+                                        ::std::borrow::ToOwned::to_owned("bytes32[]"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("weight"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("signature"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes"),
                                     ),
                                 },
                             ],
@@ -392,11 +364,245 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("createBottomUpMsgBatch"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "createBottomUpMsgBatch",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("batch"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                        ::std::boxed::Box::new(
+                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                ::std::boxed::Box::new(
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                        ::std::boxed::Box::new(
+                                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                        ),
+                                                                                    ),
+                                                                                ],
+                                                                            ),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                                ],
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                        ::std::boxed::Box::new(
+                                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                        ),
+                                                                                    ),
+                                                                                ],
+                                                                            ),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                                ],
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Bool,
+                                                        ],
+                                                    ),
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct BottomUpMsgBatch"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned(
+                                        "membershipRootHash",
+                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::FixedBytes(
+                                        32usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("bytes32"),
+                                    ),
+                                },
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("membershipWeight"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("execBottomUpMsgBatch"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "execBottomUpMsgBatch",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("batch"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                        ::std::boxed::Box::new(
+                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                ::std::boxed::Box::new(
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                        ::std::boxed::Box::new(
+                                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                        ),
+                                                                                    ),
+                                                                                ],
+                                                                            ),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                                ],
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                        ::std::vec![
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                                        ::std::boxed::Box::new(
+                                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                                        ),
+                                                                                    ),
+                                                                                ],
+                                                                            ),
+                                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                                ::std::vec![
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                                ],
+                                                                            ),
+                                                                        ],
+                                                                    ),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Bool,
+                                                        ],
+                                                    ),
+                                                ),
+                                            ),
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct BottomUpMsgBatch"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("pruneBottomUpCheckpoints"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
                                 "pruneBottomUpCheckpoints",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned(
+                                        "newRetentionHeight",
+                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::NonPayable,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("pruneBottomUpMsgBatches"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "pruneBottomUpMsgBatches",
                             ),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
@@ -507,6 +713,35 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("BatchAlreadyExists"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("BatchAlreadyExists"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("BatchNotCreated"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("BatchNotCreated"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("BatchWithNoMessages"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "BatchWithNoMessages",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("CannotConfirmFutureChanges"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -586,6 +821,24 @@ pub mod gateway_router_facet {
                             name: ::std::borrow::ToOwned::to_owned(
                                 "InvalidActorAddress",
                             ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidBatchEpoch"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("InvalidBatchEpoch"),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("InvalidBatchSource"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("InvalidBatchSource"),
                             inputs: ::std::vec![],
                         },
                     ],
@@ -675,6 +928,17 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("MaxMsgsPerBatchExceeded"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "MaxMsgsPerBatchExceeded",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("NotAuthorized"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -688,6 +952,15 @@ pub mod gateway_router_facet {
                                     ),
                                 },
                             ],
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NotEnoughBalance"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned("NotEnoughBalance"),
+                            inputs: ::std::vec![],
                         },
                     ],
                 ),
@@ -861,6 +1134,21 @@ pub mod gateway_router_facet {
                 ),
             )
         }
+        ///Calls the contract's `addBottomUpMsgBatchSignature` (0x0db0f77c) function
+        pub fn add_bottom_up_msg_batch_signature(
+            &self,
+            height: ::ethers::core::types::U256,
+            membership_proof: ::std::vec::Vec<[u8; 32]>,
+            weight: ::ethers::core::types::U256,
+            signature: ::ethers::core::types::Bytes,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash(
+                    [13, 176, 247, 124],
+                    (height, membership_proof, weight, signature),
+                )
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `addCheckpointSignature` (0x53b4e7bf) function
         pub fn add_checkpoint_signature(
             &self,
@@ -874,15 +1162,6 @@ pub mod gateway_router_facet {
                     [83, 180, 231, 191],
                     (height, membership_proof, weight, signature),
                 )
-                .expect("method not found (this should never happen)")
-        }
-        ///Calls the contract's `applyBatchBottomUpMessages` (0xeb242ac2) function
-        pub fn apply_batch_bottom_up_messages(
-            &self,
-            messages: ::std::vec::Vec<CrossMsg>,
-        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
-            self.0
-                .method_hash([235, 36, 42, 194], messages)
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `applyCrossMessages` (0xc62eb4d5) function
@@ -934,6 +1213,29 @@ pub mod gateway_router_facet {
                 )
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `createBottomUpMsgBatch` (0x32e7661f) function
+        pub fn create_bottom_up_msg_batch(
+            &self,
+            batch: BottomUpMsgBatch,
+            membership_root_hash: [u8; 32],
+            membership_weight: ::ethers::core::types::U256,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash(
+                    [50, 231, 102, 31],
+                    (batch, membership_root_hash, membership_weight),
+                )
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `execBottomUpMsgBatch` (0x0bed7615) function
+        pub fn exec_bottom_up_msg_batch(
+            &self,
+            batch: BottomUpMsgBatch,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([11, 237, 118, 21], (batch,))
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `pruneBottomUpCheckpoints` (0xac818379) function
         pub fn prune_bottom_up_checkpoints(
             &self,
@@ -941,6 +1243,15 @@ pub mod gateway_router_facet {
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash([172, 129, 131, 121], new_retention_height)
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `pruneBottomUpMsgBatches` (0xbacc656d) function
+        pub fn prune_bottom_up_msg_batches(
+            &self,
+            new_retention_height: ::ethers::core::types::U256,
+        ) -> ::ethers::contract::builders::ContractCall<M, ()> {
+            self.0
+                .method_hash([186, 204, 101, 109], new_retention_height)
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `storeValidatorChanges` (0xe49a547d) function
@@ -1005,6 +1316,45 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "AddressShouldBeValidator", abi = "AddressShouldBeValidator()")]
     pub struct AddressShouldBeValidator;
+    ///Custom Error type `BatchAlreadyExists` with signature `BatchAlreadyExists()` and selector `0xd15f973b`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "BatchAlreadyExists", abi = "BatchAlreadyExists()")]
+    pub struct BatchAlreadyExists;
+    ///Custom Error type `BatchNotCreated` with signature `BatchNotCreated()` and selector `0xa88f96f1`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "BatchNotCreated", abi = "BatchNotCreated()")]
+    pub struct BatchNotCreated;
+    ///Custom Error type `BatchWithNoMessages` with signature `BatchWithNoMessages()` and selector `0x38d2307f`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "BatchWithNoMessages", abi = "BatchWithNoMessages()")]
+    pub struct BatchWithNoMessages;
     ///Custom Error type `CannotConfirmFutureChanges` with signature `CannotConfirmFutureChanges()` and selector `0x0815540a`
     #[derive(
         Clone,
@@ -1115,6 +1465,32 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "InvalidActorAddress", abi = "InvalidActorAddress()")]
     pub struct InvalidActorAddress;
+    ///Custom Error type `InvalidBatchEpoch` with signature `InvalidBatchEpoch()` and selector `0x80314bdc`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "InvalidBatchEpoch", abi = "InvalidBatchEpoch()")]
+    pub struct InvalidBatchEpoch;
+    ///Custom Error type `InvalidBatchSource` with signature `InvalidBatchSource()` and selector `0xff949b40`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "InvalidBatchSource", abi = "InvalidBatchSource()")]
+    pub struct InvalidBatchSource;
     ///Custom Error type `InvalidCheckpointEpoch` with signature `InvalidCheckpointEpoch()` and selector `0xfae4eadb`
     #[derive(
         Clone,
@@ -1222,6 +1598,19 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "InvalidSubnet", abi = "InvalidSubnet()")]
     pub struct InvalidSubnet;
+    ///Custom Error type `MaxMsgsPerBatchExceeded` with signature `MaxMsgsPerBatchExceeded()` and selector `0x351c7007`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "MaxMsgsPerBatchExceeded", abi = "MaxMsgsPerBatchExceeded()")]
+    pub struct MaxMsgsPerBatchExceeded;
     ///Custom Error type `NotAuthorized` with signature `NotAuthorized(address)` and selector `0x4a0bfec1`
     #[derive(
         Clone,
@@ -1235,6 +1624,19 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "NotAuthorized", abi = "NotAuthorized(address)")]
     pub struct NotAuthorized(pub ::ethers::core::types::Address);
+    ///Custom Error type `NotEnoughBalance` with signature `NotEnoughBalance()` and selector `0xad3a8b9e`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "NotEnoughBalance", abi = "NotEnoughBalance()")]
+    pub struct NotEnoughBalance;
     ///Custom Error type `NotEnoughSubnetCircSupply` with signature `NotEnoughSubnetCircSupply()` and selector `0x74db2854`
     #[derive(
         Clone,
@@ -1400,6 +1802,9 @@ pub mod gateway_router_facet {
         AddressEmptyCode(AddressEmptyCode),
         AddressInsufficientBalance(AddressInsufficientBalance),
         AddressShouldBeValidator(AddressShouldBeValidator),
+        BatchAlreadyExists(BatchAlreadyExists),
+        BatchNotCreated(BatchNotCreated),
+        BatchWithNoMessages(BatchWithNoMessages),
         CannotConfirmFutureChanges(CannotConfirmFutureChanges),
         CheckpointAlreadyExists(CheckpointAlreadyExists),
         CheckpointNotCreated(CheckpointNotCreated),
@@ -1408,6 +1813,8 @@ pub mod gateway_router_facet {
         FailedInnerCall(FailedInnerCall),
         FailedRemoveIncompleteQuorum(FailedRemoveIncompleteQuorum),
         InvalidActorAddress(InvalidActorAddress),
+        InvalidBatchEpoch(InvalidBatchEpoch),
+        InvalidBatchSource(InvalidBatchSource),
         InvalidCheckpointEpoch(InvalidCheckpointEpoch),
         InvalidCheckpointSource(InvalidCheckpointSource),
         InvalidConfigurationNumber(InvalidConfigurationNumber),
@@ -1416,7 +1823,9 @@ pub mod gateway_router_facet {
         InvalidRetentionHeight(InvalidRetentionHeight),
         InvalidSignature(InvalidSignature),
         InvalidSubnet(InvalidSubnet),
+        MaxMsgsPerBatchExceeded(MaxMsgsPerBatchExceeded),
         NotAuthorized(NotAuthorized),
+        NotEnoughBalance(NotEnoughBalance),
         NotEnoughSubnetCircSupply(NotEnoughSubnetCircSupply),
         NotRegisteredSubnet(NotRegisteredSubnet),
         NotSystemActor(NotSystemActor),
@@ -1458,6 +1867,21 @@ pub mod gateway_router_facet {
             ) {
                 return Ok(Self::AddressShouldBeValidator(decoded));
             }
+            if let Ok(decoded) = <BatchAlreadyExists as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BatchAlreadyExists(decoded));
+            }
+            if let Ok(decoded) = <BatchNotCreated as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BatchNotCreated(decoded));
+            }
+            if let Ok(decoded) = <BatchWithNoMessages as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BatchWithNoMessages(decoded));
+            }
             if let Ok(decoded) = <CannotConfirmFutureChanges as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
@@ -1497,6 +1921,16 @@ pub mod gateway_router_facet {
                 data,
             ) {
                 return Ok(Self::InvalidActorAddress(decoded));
+            }
+            if let Ok(decoded) = <InvalidBatchEpoch as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidBatchEpoch(decoded));
+            }
+            if let Ok(decoded) = <InvalidBatchSource as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::InvalidBatchSource(decoded));
             }
             if let Ok(decoded) = <InvalidCheckpointEpoch as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -1538,10 +1972,20 @@ pub mod gateway_router_facet {
             ) {
                 return Ok(Self::InvalidSubnet(decoded));
             }
+            if let Ok(decoded) = <MaxMsgsPerBatchExceeded as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::MaxMsgsPerBatchExceeded(decoded));
+            }
             if let Ok(decoded) = <NotAuthorized as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
                 return Ok(Self::NotAuthorized(decoded));
+            }
+            if let Ok(decoded) = <NotEnoughBalance as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::NotEnoughBalance(decoded));
             }
             if let Ok(decoded) = <NotEnoughSubnetCircSupply as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -1618,6 +2062,15 @@ pub mod gateway_router_facet {
                 Self::AddressShouldBeValidator(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::BatchAlreadyExists(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::BatchNotCreated(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::BatchWithNoMessages(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::CannotConfirmFutureChanges(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1640,6 +2093,12 @@ pub mod gateway_router_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InvalidActorAddress(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::InvalidBatchEpoch(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::InvalidBatchSource(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::InvalidCheckpointEpoch(element) => {
@@ -1666,7 +2125,13 @@ pub mod gateway_router_facet {
                 Self::InvalidSubnet(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::MaxMsgsPerBatchExceeded(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::NotAuthorized(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::NotEnoughBalance(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::NotEnoughSubnetCircSupply(element) => {
@@ -1724,6 +2189,18 @@ pub mod gateway_router_facet {
                     true
                 }
                 _ if selector
+                    == <BatchAlreadyExists as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <BatchNotCreated as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <BatchWithNoMessages as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
                     == <CannotConfirmFutureChanges as ::ethers::contract::EthError>::selector() => {
                     true
                 }
@@ -1753,6 +2230,14 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <InvalidActorAddress as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <InvalidBatchEpoch as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <InvalidBatchSource as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1788,7 +2273,15 @@ pub mod gateway_router_facet {
                     true
                 }
                 _ if selector
+                    == <MaxMsgsPerBatchExceeded as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
                     == <NotAuthorized as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <NotEnoughBalance as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1851,6 +2344,13 @@ pub mod gateway_router_facet {
                 Self::AddressShouldBeValidator(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::BatchAlreadyExists(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::BatchNotCreated(element) => ::core::fmt::Display::fmt(element, f),
+                Self::BatchWithNoMessages(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::CannotConfirmFutureChanges(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1873,6 +2373,10 @@ pub mod gateway_router_facet {
                 Self::InvalidActorAddress(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::InvalidBatchEpoch(element) => ::core::fmt::Display::fmt(element, f),
+                Self::InvalidBatchSource(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::InvalidCheckpointEpoch(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1893,7 +2397,11 @@ pub mod gateway_router_facet {
                 }
                 Self::InvalidSignature(element) => ::core::fmt::Display::fmt(element, f),
                 Self::InvalidSubnet(element) => ::core::fmt::Display::fmt(element, f),
+                Self::MaxMsgsPerBatchExceeded(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::NotAuthorized(element) => ::core::fmt::Display::fmt(element, f),
+                Self::NotEnoughBalance(element) => ::core::fmt::Display::fmt(element, f),
                 Self::NotEnoughSubnetCircSupply(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1944,6 +2452,21 @@ pub mod gateway_router_facet {
             Self::AddressShouldBeValidator(value)
         }
     }
+    impl ::core::convert::From<BatchAlreadyExists> for GatewayRouterFacetErrors {
+        fn from(value: BatchAlreadyExists) -> Self {
+            Self::BatchAlreadyExists(value)
+        }
+    }
+    impl ::core::convert::From<BatchNotCreated> for GatewayRouterFacetErrors {
+        fn from(value: BatchNotCreated) -> Self {
+            Self::BatchNotCreated(value)
+        }
+    }
+    impl ::core::convert::From<BatchWithNoMessages> for GatewayRouterFacetErrors {
+        fn from(value: BatchWithNoMessages) -> Self {
+            Self::BatchWithNoMessages(value)
+        }
+    }
     impl ::core::convert::From<CannotConfirmFutureChanges> for GatewayRouterFacetErrors {
         fn from(value: CannotConfirmFutureChanges) -> Self {
             Self::CannotConfirmFutureChanges(value)
@@ -1983,6 +2506,16 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<InvalidActorAddress> for GatewayRouterFacetErrors {
         fn from(value: InvalidActorAddress) -> Self {
             Self::InvalidActorAddress(value)
+        }
+    }
+    impl ::core::convert::From<InvalidBatchEpoch> for GatewayRouterFacetErrors {
+        fn from(value: InvalidBatchEpoch) -> Self {
+            Self::InvalidBatchEpoch(value)
+        }
+    }
+    impl ::core::convert::From<InvalidBatchSource> for GatewayRouterFacetErrors {
+        fn from(value: InvalidBatchSource) -> Self {
+            Self::InvalidBatchSource(value)
         }
     }
     impl ::core::convert::From<InvalidCheckpointEpoch> for GatewayRouterFacetErrors {
@@ -2025,9 +2558,19 @@ pub mod gateway_router_facet {
             Self::InvalidSubnet(value)
         }
     }
+    impl ::core::convert::From<MaxMsgsPerBatchExceeded> for GatewayRouterFacetErrors {
+        fn from(value: MaxMsgsPerBatchExceeded) -> Self {
+            Self::MaxMsgsPerBatchExceeded(value)
+        }
+    }
     impl ::core::convert::From<NotAuthorized> for GatewayRouterFacetErrors {
         fn from(value: NotAuthorized) -> Self {
             Self::NotAuthorized(value)
+        }
+    }
+    impl ::core::convert::From<NotEnoughBalance> for GatewayRouterFacetErrors {
+        fn from(value: NotEnoughBalance) -> Self {
+            Self::NotEnoughBalance(value)
         }
     }
     impl ::core::convert::From<NotEnoughSubnetCircSupply> for GatewayRouterFacetErrors {
@@ -2091,6 +2634,27 @@ pub mod gateway_router_facet {
             Self::ZeroMembershipWeight(value)
         }
     }
+    ///Container type for all input parameters for the `addBottomUpMsgBatchSignature` function with signature `addBottomUpMsgBatchSignature(uint256,bytes32[],uint256,bytes)` and selector `0x0db0f77c`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "addBottomUpMsgBatchSignature",
+        abi = "addBottomUpMsgBatchSignature(uint256,bytes32[],uint256,bytes)"
+    )]
+    pub struct AddBottomUpMsgBatchSignatureCall {
+        pub height: ::ethers::core::types::U256,
+        pub membership_proof: ::std::vec::Vec<[u8; 32]>,
+        pub weight: ::ethers::core::types::U256,
+        pub signature: ::ethers::core::types::Bytes,
+    }
     ///Container type for all input parameters for the `addCheckpointSignature` function with signature `addCheckpointSignature(uint256,bytes32[],uint256,bytes)` and selector `0x53b4e7bf`
     #[derive(
         Clone,
@@ -2111,24 +2675,6 @@ pub mod gateway_router_facet {
         pub membership_proof: ::std::vec::Vec<[u8; 32]>,
         pub weight: ::ethers::core::types::U256,
         pub signature: ::ethers::core::types::Bytes,
-    }
-    ///Container type for all input parameters for the `applyBatchBottomUpMessages` function with signature `applyBatchBottomUpMessages(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[])` and selector `0xeb242ac2`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    #[ethcall(
-        name = "applyBatchBottomUpMessages",
-        abi = "applyBatchBottomUpMessages(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[])"
-    )]
-    pub struct ApplyBatchBottomUpMessagesCall {
-        pub messages: ::std::vec::Vec<CrossMsg>,
     }
     ///Container type for all input parameters for the `applyCrossMessages` function with signature `applyCrossMessages(((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[])` and selector `0xc62eb4d5`
     #[derive(
@@ -2217,6 +2763,44 @@ pub mod gateway_router_facet {
         pub membership_root_hash: [u8; 32],
         pub membership_weight: ::ethers::core::types::U256,
     }
+    ///Container type for all input parameters for the `createBottomUpMsgBatch` function with signature `createBottomUpMsgBatch(((uint64,address[]),uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[]),bytes32,uint256)` and selector `0x32e7661f`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "createBottomUpMsgBatch",
+        abi = "createBottomUpMsgBatch(((uint64,address[]),uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[]),bytes32,uint256)"
+    )]
+    pub struct CreateBottomUpMsgBatchCall {
+        pub batch: BottomUpMsgBatch,
+        pub membership_root_hash: [u8; 32],
+        pub membership_weight: ::ethers::core::types::U256,
+    }
+    ///Container type for all input parameters for the `execBottomUpMsgBatch` function with signature `execBottomUpMsgBatch(((uint64,address[]),uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[]))` and selector `0x0bed7615`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "execBottomUpMsgBatch",
+        abi = "execBottomUpMsgBatch(((uint64,address[]),uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[]))"
+    )]
+    pub struct ExecBottomUpMsgBatchCall {
+        pub batch: BottomUpMsgBatch,
+    }
     ///Container type for all input parameters for the `pruneBottomUpCheckpoints` function with signature `pruneBottomUpCheckpoints(uint256)` and selector `0xac818379`
     #[derive(
         Clone,
@@ -2233,6 +2817,24 @@ pub mod gateway_router_facet {
         abi = "pruneBottomUpCheckpoints(uint256)"
     )]
     pub struct PruneBottomUpCheckpointsCall {
+        pub new_retention_height: ::ethers::core::types::U256,
+    }
+    ///Container type for all input parameters for the `pruneBottomUpMsgBatches` function with signature `pruneBottomUpMsgBatches(uint256)` and selector `0xbacc656d`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "pruneBottomUpMsgBatches",
+        abi = "pruneBottomUpMsgBatches(uint256)"
+    )]
+    pub struct PruneBottomUpMsgBatchesCall {
         pub new_retention_height: ::ethers::core::types::U256,
     }
     ///Container type for all input parameters for the `storeValidatorChanges` function with signature `storeValidatorChanges(((uint8,bytes,address),uint64)[])` and selector `0xe49a547d`
@@ -2256,14 +2858,17 @@ pub mod gateway_router_facet {
     ///Container type for all of the contract's call
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayRouterFacetCalls {
+        AddBottomUpMsgBatchSignature(AddBottomUpMsgBatchSignatureCall),
         AddCheckpointSignature(AddCheckpointSignatureCall),
-        ApplyBatchBottomUpMessages(ApplyBatchBottomUpMessagesCall),
         ApplyCrossMessages(ApplyCrossMessagesCall),
         ApplyFinalityChanges(ApplyFinalityChangesCall),
         CommitCheckpoint(CommitCheckpointCall),
         CommitParentFinality(CommitParentFinalityCall),
         CreateBottomUpCheckpoint(CreateBottomUpCheckpointCall),
+        CreateBottomUpMsgBatch(CreateBottomUpMsgBatchCall),
+        ExecBottomUpMsgBatch(ExecBottomUpMsgBatchCall),
         PruneBottomUpCheckpoints(PruneBottomUpCheckpointsCall),
+        PruneBottomUpMsgBatches(PruneBottomUpMsgBatchesCall),
         StoreValidatorChanges(StoreValidatorChangesCall),
     }
     impl ::ethers::core::abi::AbiDecode for GatewayRouterFacetCalls {
@@ -2271,15 +2876,15 @@ pub mod gateway_router_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
+            if let Ok(decoded) = <AddBottomUpMsgBatchSignatureCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::AddBottomUpMsgBatchSignature(decoded));
+            }
             if let Ok(decoded) = <AddCheckpointSignatureCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
                 return Ok(Self::AddCheckpointSignature(decoded));
-            }
-            if let Ok(decoded) = <ApplyBatchBottomUpMessagesCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
-                return Ok(Self::ApplyBatchBottomUpMessages(decoded));
             }
             if let Ok(decoded) = <ApplyCrossMessagesCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2306,10 +2911,25 @@ pub mod gateway_router_facet {
             ) {
                 return Ok(Self::CreateBottomUpCheckpoint(decoded));
             }
+            if let Ok(decoded) = <CreateBottomUpMsgBatchCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::CreateBottomUpMsgBatch(decoded));
+            }
+            if let Ok(decoded) = <ExecBottomUpMsgBatchCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::ExecBottomUpMsgBatch(decoded));
+            }
             if let Ok(decoded) = <PruneBottomUpCheckpointsCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
                 return Ok(Self::PruneBottomUpCheckpoints(decoded));
+            }
+            if let Ok(decoded) = <PruneBottomUpMsgBatchesCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::PruneBottomUpMsgBatches(decoded));
             }
             if let Ok(decoded) = <StoreValidatorChangesCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2322,10 +2942,10 @@ pub mod gateway_router_facet {
     impl ::ethers::core::abi::AbiEncode for GatewayRouterFacetCalls {
         fn encode(self) -> Vec<u8> {
             match self {
-                Self::AddCheckpointSignature(element) => {
+                Self::AddBottomUpMsgBatchSignature(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::ApplyBatchBottomUpMessages(element) => {
+                Self::AddCheckpointSignature(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::ApplyCrossMessages(element) => {
@@ -2343,7 +2963,16 @@ pub mod gateway_router_facet {
                 Self::CreateBottomUpCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::CreateBottomUpMsgBatch(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::ExecBottomUpMsgBatch(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::PruneBottomUpCheckpoints(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::PruneBottomUpMsgBatches(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::StoreValidatorChanges(element) => {
@@ -2355,10 +2984,10 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::AddCheckpointSignature(element) => {
+                Self::AddBottomUpMsgBatchSignature(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::ApplyBatchBottomUpMessages(element) => {
+                Self::AddCheckpointSignature(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::ApplyCrossMessages(element) => {
@@ -2374,7 +3003,16 @@ pub mod gateway_router_facet {
                 Self::CreateBottomUpCheckpoint(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::CreateBottomUpMsgBatch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ExecBottomUpMsgBatch(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::PruneBottomUpCheckpoints(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::PruneBottomUpMsgBatches(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::StoreValidatorChanges(element) => {
@@ -2383,15 +3021,15 @@ pub mod gateway_router_facet {
             }
         }
     }
+    impl ::core::convert::From<AddBottomUpMsgBatchSignatureCall>
+    for GatewayRouterFacetCalls {
+        fn from(value: AddBottomUpMsgBatchSignatureCall) -> Self {
+            Self::AddBottomUpMsgBatchSignature(value)
+        }
+    }
     impl ::core::convert::From<AddCheckpointSignatureCall> for GatewayRouterFacetCalls {
         fn from(value: AddCheckpointSignatureCall) -> Self {
             Self::AddCheckpointSignature(value)
-        }
-    }
-    impl ::core::convert::From<ApplyBatchBottomUpMessagesCall>
-    for GatewayRouterFacetCalls {
-        fn from(value: ApplyBatchBottomUpMessagesCall) -> Self {
-            Self::ApplyBatchBottomUpMessages(value)
         }
     }
     impl ::core::convert::From<ApplyCrossMessagesCall> for GatewayRouterFacetCalls {
@@ -2420,10 +3058,25 @@ pub mod gateway_router_facet {
             Self::CreateBottomUpCheckpoint(value)
         }
     }
+    impl ::core::convert::From<CreateBottomUpMsgBatchCall> for GatewayRouterFacetCalls {
+        fn from(value: CreateBottomUpMsgBatchCall) -> Self {
+            Self::CreateBottomUpMsgBatch(value)
+        }
+    }
+    impl ::core::convert::From<ExecBottomUpMsgBatchCall> for GatewayRouterFacetCalls {
+        fn from(value: ExecBottomUpMsgBatchCall) -> Self {
+            Self::ExecBottomUpMsgBatch(value)
+        }
+    }
     impl ::core::convert::From<PruneBottomUpCheckpointsCall>
     for GatewayRouterFacetCalls {
         fn from(value: PruneBottomUpCheckpointsCall) -> Self {
             Self::PruneBottomUpCheckpoints(value)
+        }
+    }
+    impl ::core::convert::From<PruneBottomUpMsgBatchesCall> for GatewayRouterFacetCalls {
+        fn from(value: PruneBottomUpMsgBatchesCall) -> Self {
+            Self::PruneBottomUpMsgBatches(value)
         }
     }
     impl ::core::convert::From<StoreValidatorChangesCall> for GatewayRouterFacetCalls {
@@ -2474,6 +3127,22 @@ pub mod gateway_router_facet {
         pub block_height: ::ethers::core::types::U256,
         pub block_hash: [u8; 32],
         pub next_configuration_number: u64,
+    }
+    ///`BottomUpMsgBatch((uint64,address[]),uint256,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)[])`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct BottomUpMsgBatch {
+        pub subnet_id: SubnetID,
+        pub block_height: ::ethers::core::types::U256,
+        pub msgs: ::std::vec::Vec<CrossMsg>,
     }
     ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)`
     #[derive(
