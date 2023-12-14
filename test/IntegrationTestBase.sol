@@ -17,7 +17,7 @@ import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
-import {SubnetID, PermissionMode, PermissionMode, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
+import {SubnetID, PermissionMode, PermissionMode, Subnet, SupplySource, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
@@ -36,11 +36,12 @@ import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../src/lib/LibDiamond.sol";
 import {MerkleTreeHelper} from "./helpers/MerkleTreeHelper.sol";
-
+import {SupplySourceHelper} from "../src/lib/SupplySourceHelper.sol";
 import {TestUtils} from "./helpers/TestUtils.sol";
 
 contract IntegrationTestBase is Test {
     using SubnetIDHelper for SubnetID;
+    using SupplySourceHelper for SupplySource;
     using CrossMsgHelper for CrossMsg;
     using StorableMsgHelper for StorableMsg;
     using FvmAddressHelper for FvmAddress;
@@ -138,6 +139,7 @@ contract IntegrationTestBase is Test {
     function defaultSubnetActorParamsWithGateway(
         address gw
     ) internal pure virtual returns (SubnetActorDiamond.ConstructorParams memory) {
+        SupplySource memory native = SupplySourceHelper.native();
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
             parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
             ipcGatewayAddr: gw,
@@ -149,7 +151,8 @@ contract IntegrationTestBase is Test {
             activeValidatorsLimit: DEFAULT_ACTIVE_VALIDATORS_LIMIT,
             powerScale: DEFAULT_POWER_SCALE,
             minCrossMsgFee: DEFAULT_CROSS_MSG_FEE,
-            permissionMode: PermissionMode.Collateral
+            permissionMode: PermissionMode.Collateral,
+            supplySource: native
         });
 
         return params;
@@ -400,7 +403,8 @@ contract IntegrationTestBase is Test {
                 activeValidatorsLimit: _activeValidatorsLimit,
                 powerScale: 12,
                 permissionMode: _permissionMode,
-                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
+                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE,
+                supplySource: SupplySourceHelper.native()
             })
         );
 

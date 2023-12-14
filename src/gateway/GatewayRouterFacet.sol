@@ -9,7 +9,7 @@ import {Status} from "../enums/Status.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
 import {SubnetID, Subnet, Validator, ValidatorInfo, ValidatorSet} from "../structs/Subnet.sol";
 import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {Membership} from "../structs/Subnet.sol";
+import {Membership, SupplySource} from "../structs/Subnet.sol";
 import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
 import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointInfoAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
 import {NotEnoughBalance, NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
@@ -26,6 +26,8 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {StakingChangeRequest, ParentValidatorsTracker} from "../structs/Subnet.sol";
 import {LibValidatorTracking, LibValidatorSet} from "../lib/LibStaking.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import {SubnetActorGetterFacet} from "../subnet/SubnetActorGetterFacet.sol";
+import {SupplySourceHelper} from "../lib/SupplySourceHelper.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
@@ -36,6 +38,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
     using EnumerableSet for EnumerableSet.AddressSet;
     using LibValidatorTracking for ParentValidatorsTracker;
     using LibValidatorSet for ValidatorSet;
+    using SupplySourceHelper for SupplySource;
 
     event QuorumReached(uint64 height, bytes32 checkpoint, uint256 quorumWeight);
     event QuorumWeightUpdated(uint64 height, bytes32 checkpoint, uint256 newWeight);
@@ -178,7 +181,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
             }
 
             // slither-disable-next-line unused-return
-            crossMsg.execute();
+            crossMsg.execute(supplySource);
             return;
         }
 

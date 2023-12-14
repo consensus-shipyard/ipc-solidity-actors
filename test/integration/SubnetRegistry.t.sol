@@ -25,6 +25,7 @@ import {RegisterSubnetFacet} from "../../src/subnetregistry/RegisterSubnetFacet.
 import {SubnetGetterFacet} from "../../src/subnetregistry/SubnetGetterFacet.sol";
 import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
+import {SupplySourceHelper} from "../../src/lib/SupplySourceHelper.sol";
 
 contract SubnetRegistryTest is Test {
     using SubnetIDHelper for SubnetID;
@@ -268,7 +269,8 @@ contract SubnetRegistryTest is Test {
             activeValidatorsLimit: 100,
             powerScale: DEFAULT_POWER_SCALE,
             permissionMode: PermissionMode.Collateral,
-            minCrossMsgFee: CROSS_MSG_FEE
+            minCrossMsgFee: CROSS_MSG_FEE,
+            supplySource: SupplySourceHelper.native()
         });
         vm.expectRevert(WrongGateway.selector);
         registerSubnetFacet.newSubnetActor(params);
@@ -287,7 +289,8 @@ contract SubnetRegistryTest is Test {
             activeValidatorsLimit: 100,
             powerScale: DEFAULT_POWER_SCALE,
             permissionMode: PermissionMode.Collateral,
-            minCrossMsgFee: CROSS_MSG_FEE
+            minCrossMsgFee: CROSS_MSG_FEE,
+            supplySource: SupplySourceHelper.native()
         });
         registerSubnetFacet.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -307,7 +310,8 @@ contract SubnetRegistryTest is Test {
             activeValidatorsLimit: 100,
             powerScale: DEFAULT_POWER_SCALE,
             permissionMode: PermissionMode.Collateral,
-            minCrossMsgFee: CROSS_MSG_FEE
+            minCrossMsgFee: CROSS_MSG_FEE,
+            supplySource: SupplySourceHelper.native()
         });
         registerSubnetFacet.newSubnetActor(params);
         vm.expectRevert(CannotFindSubnet.selector);
@@ -358,7 +362,8 @@ contract SubnetRegistryTest is Test {
             activeValidatorsLimit: _activeValidatorsLimit,
             powerScale: _powerScale,
             permissionMode: PermissionMode.Collateral,
-            minCrossMsgFee: _minCrossMsgFee
+            minCrossMsgFee: _minCrossMsgFee,
+            supplySource: SupplySourceHelper.native()
         });
 
         registerSubnetFacet.newSubnetActor(params);
@@ -447,7 +452,8 @@ contract SubnetRegistryTest is Test {
             activeValidatorsLimit: 100,
             powerScale: _powerScale,
             permissionMode: PermissionMode.Collateral,
-            minCrossMsgFee: CROSS_MSG_FEE
+            minCrossMsgFee: CROSS_MSG_FEE,
+            supplySource: SupplySourceHelper.native()
         });
         registerSubnetFacet.newSubnetActor(params);
         require(subnetGetterFacet.latestSubnetDeployed(DEFAULT_SENDER) != address(0));

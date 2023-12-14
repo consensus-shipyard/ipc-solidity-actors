@@ -10,7 +10,7 @@ import {ConsensusType} from "../../src/enums/ConsensusType.sol";
 import {Status} from "../../src/enums/Status.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg} from "../../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {SubnetID, PermissionMode, IPCAddress, Subnet, ValidatorInfo, Validator} from "../../src/structs/Subnet.sol";
+import {SubnetID, PermissionMode, IPCAddress, Subnet, SupplySource, ValidatorInfo, Validator} from "../../src/structs/Subnet.sol";
 import {StorableMsg} from "../../src/structs/Checkpoint.sol";
 import {IERC165} from "../../src/interfaces/IERC165.sol";
 import {IGateway} from "../../src/interfaces/IGateway.sol";
@@ -33,6 +33,7 @@ import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {LibStaking} from "../../src/lib/LibStaking.sol";
 import {LibDiamond} from "../../src/lib/LibDiamond.sol";
+import {SupplySourceHelper} from "../../src/lib/SupplySourceHelper.sol";
 
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
 
@@ -299,6 +300,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         SubnetActorManagerFacet saDupMangerFaucet = new SubnetActorManagerFacet();
 
         SubnetActorGetterFacet saDupGetterFaucet = new SubnetActorGetterFacet();
+        SupplySource memory native = SupplySourceHelper.native();
 
         vm.expectRevert(GatewayCannotBeZero.selector);
         createSubnetActorDiamondWithFaucets(
@@ -313,7 +315,8 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
                 activeValidatorsLimit: 100,
                 powerScale: 12,
                 permissionMode: PermissionMode.Collateral,
-                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
+                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE,
+                supplySource: native
             }),
             address(saDupGetterFaucet),
             address(saDupMangerFaucet)

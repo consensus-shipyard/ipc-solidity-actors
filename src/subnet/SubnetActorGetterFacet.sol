@@ -3,7 +3,7 @@ pragma solidity 0.8.19;
 
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
-import {SubnetID} from "../structs/Subnet.sol";
+import {SubnetID, SupplySource} from "../structs/Subnet.sol";
 import {SubnetID, ValidatorInfo, Validator} from "../structs/Subnet.sol";
 import {SubnetActorStorage} from "../lib/LibSubnetActorStorage.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
@@ -192,5 +192,10 @@ contract SubnetActorGetterFacet {
     /// @param relayer - relayer address
     function getRelayerReward(address relayer) external view returns (uint256) {
         return s.relayerRewards[relayer];
+    }
+
+    /// @notice Returns the supply strategy for the subnet.
+    function supplySource() external view returns (SupplySource memory supply) {
+        return s.supplySource;
     }
 }

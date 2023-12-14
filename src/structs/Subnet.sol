@@ -151,3 +151,14 @@ struct Membership {
     Validator[] validators;
     uint64 configurationNumber;
 }
+
+struct SupplySource {
+    SupplyKind kind;
+    address tokenAddress;
+}
+
+/// @title Determines the type of supply used by the subnet.
+enum SupplyKind {
+    Native,
+    ERC20
+}

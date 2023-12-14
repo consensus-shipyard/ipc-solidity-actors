@@ -28,7 +28,6 @@ import {GatewayRouterFacet} from "../../src/gateway/GatewayRouterFacet.sol";
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../../src/lib/LibDiamond.sol";
 import {MerkleTreeHelper} from "../helpers/MerkleTreeHelper.sol";
-
 import {TestUtils} from "../helpers/TestUtils.sol";
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
 
@@ -1287,6 +1286,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         vm.stopPrank();
 
         (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
+
         (bool exist, Subnet memory subnetInfo) = gwGetter.getSubnet(subnetId);
         require(exist, "subnet does not exist");
         require(subnetInfo.circSupply == 0, "unexpected initial circulation supply");

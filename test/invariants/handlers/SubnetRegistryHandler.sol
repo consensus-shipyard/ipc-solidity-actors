@@ -14,6 +14,7 @@ import {SubnetRegistryDiamond} from "../../../src/SubnetRegistryDiamond.sol";
 import {ConsensusType} from "../../../src/enums/ConsensusType.sol";
 import {SubnetID, PermissionMode} from "../../../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../../../src/lib/SubnetIDHelper.sol";
+import {SupplySourceHelper} from "../../../src/lib/SupplySourceHelper.sol";
 
 import {TestUtils} from "../../helpers/TestUtils.sol";
 
@@ -126,7 +127,8 @@ contract SubnetRegistryHandler is CommonBase, StdCheats, StdUtils {
             activeValidatorsLimit: _activeValidatorsLimit,
             powerScale: _powerScale,
             permissionMode: PermissionMode.Collateral,
-            minCrossMsgFee: _minCrossMsgFee
+            minCrossMsgFee: _minCrossMsgFee,
+            supplySource: SupplySourceHelper.native()
         });
 
         address owner = getRandomOldAddressOrNewOne(seed);
