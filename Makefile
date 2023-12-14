@@ -22,6 +22,7 @@ upgrade-sr-diamond:
 gen: compile-abi rust-binding
 
 compile-abi: | forge fmt
+	rm -rf $(OUTPUT)
 	mkdir -p $(OUTPUT)
 	./ops/compile-abi.sh $(OUTPUT)
 
