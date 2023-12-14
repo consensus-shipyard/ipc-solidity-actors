@@ -147,6 +147,10 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
             // prevent spamming if there's no value to fund.
             revert InvalidCrossMsgValue();
         }
+        (bool registered, ) = LibGateway.getSubnet(subnetId);
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
 
         // Validate that the supply strategy is native.
         SupplySource memory supplySource = SubnetActorGetterFacet(subnetId.getActor()).supplySource();
