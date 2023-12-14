@@ -46,7 +46,7 @@ contract SubnetGetterFacet {
     }
 
     /// @notice Returns the address of the SUBNET_MANAGER_FACET
-    function getSubnetManagerFacet() external view returns (address) {
+    function getSubnetActorManagerFacet() external view returns (address) {
         return s.SUBNET_MANAGER_FACET;
     }
 
