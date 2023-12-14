@@ -2,7 +2,10 @@
 # Deployment
 
 NETWORK ?= auto
-OUTPUT ?= .abi
+
+# Output for generated Solidity artifacts. Generation and commit is done in the `bindings.yaml` workflow.
+# Do not edit locally, it's separate from `out` to avoid any merge conflicts due to formatting differences.
+OUTPUT ?= .out
 
 deploy-ipc:
 	./ops/deploy.sh $(NETWORK)
