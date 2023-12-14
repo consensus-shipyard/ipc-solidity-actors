@@ -585,6 +585,17 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("BatchWithNoMessages"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "BatchWithNoMessages",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("CannotConfirmFutureChanges"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -1122,6 +1133,19 @@ pub mod subnet_actor_manager_facet {
     )]
     #[etherror(name = "AddressShouldBeValidator", abi = "AddressShouldBeValidator()")]
     pub struct AddressShouldBeValidator;
+    ///Custom Error type `BatchWithNoMessages` with signature `BatchWithNoMessages()` and selector `0x38d2307f`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "BatchWithNoMessages", abi = "BatchWithNoMessages()")]
+    pub struct BatchWithNoMessages;
     ///Custom Error type `CannotConfirmFutureChanges` with signature `CannotConfirmFutureChanges()` and selector `0x0815540a`
     #[derive(
         Clone,
@@ -1473,6 +1497,7 @@ pub mod subnet_actor_manager_facet {
     pub enum SubnetActorManagerFacetErrors {
         AddressInsufficientBalance(AddressInsufficientBalance),
         AddressShouldBeValidator(AddressShouldBeValidator),
+        BatchWithNoMessages(BatchWithNoMessages),
         CannotConfirmFutureChanges(CannotConfirmFutureChanges),
         CannotReleaseZero(CannotReleaseZero),
         CollateralIsZero(CollateralIsZero),
@@ -1522,6 +1547,11 @@ pub mod subnet_actor_manager_facet {
                 data,
             ) {
                 return Ok(Self::AddressShouldBeValidator(decoded));
+            }
+            if let Ok(decoded) = <BatchWithNoMessages as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BatchWithNoMessages(decoded));
             }
             if let Ok(decoded) = <CannotConfirmFutureChanges as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -1665,6 +1695,9 @@ pub mod subnet_actor_manager_facet {
                 Self::AddressShouldBeValidator(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::BatchWithNoMessages(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::CannotConfirmFutureChanges(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -1755,6 +1788,10 @@ pub mod subnet_actor_manager_facet {
                 }
                 _ if selector
                     == <AddressShouldBeValidator as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <BatchWithNoMessages as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -1866,6 +1903,9 @@ pub mod subnet_actor_manager_facet {
                 Self::AddressShouldBeValidator(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::BatchWithNoMessages(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::CannotConfirmFutureChanges(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -1937,6 +1977,11 @@ pub mod subnet_actor_manager_facet {
     for SubnetActorManagerFacetErrors {
         fn from(value: AddressShouldBeValidator) -> Self {
             Self::AddressShouldBeValidator(value)
+        }
+    }
+    impl ::core::convert::From<BatchWithNoMessages> for SubnetActorManagerFacetErrors {
+        fn from(value: BatchWithNoMessages) -> Self {
+            Self::BatchWithNoMessages(value)
         }
     }
     impl ::core::convert::From<CannotConfirmFutureChanges>

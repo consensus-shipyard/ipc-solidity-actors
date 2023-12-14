@@ -16,10 +16,12 @@ pub mod gateway_router_facet {
             constructor: ::core::option::Option::None,
             functions: ::core::convert::From::from([
                 (
-                    ::std::borrow::ToOwned::to_owned("addBatchSignature"),
+                    ::std::borrow::ToOwned::to_owned("addBottomUpMsgBatchSignature"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("addBatchSignature"),
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "addBottomUpMsgBatchSignature",
+                            ),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("height"),
@@ -729,6 +731,17 @@ pub mod gateway_router_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("BatchWithNoMessages"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::AbiError {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "BatchWithNoMessages",
+                            ),
+                            inputs: ::std::vec![],
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("CannotConfirmFutureChanges"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::AbiError {
@@ -1121,8 +1134,8 @@ pub mod gateway_router_facet {
                 ),
             )
         }
-        ///Calls the contract's `addBatchSignature` (0xfa0fe184) function
-        pub fn add_batch_signature(
+        ///Calls the contract's `addBottomUpMsgBatchSignature` (0x0db0f77c) function
+        pub fn add_bottom_up_msg_batch_signature(
             &self,
             height: ::ethers::core::types::U256,
             membership_proof: ::std::vec::Vec<[u8; 32]>,
@@ -1131,7 +1144,7 @@ pub mod gateway_router_facet {
         ) -> ::ethers::contract::builders::ContractCall<M, ()> {
             self.0
                 .method_hash(
-                    [250, 15, 225, 132],
+                    [13, 176, 247, 124],
                     (height, membership_proof, weight, signature),
                 )
                 .expect("method not found (this should never happen)")
@@ -1329,6 +1342,19 @@ pub mod gateway_router_facet {
     )]
     #[etherror(name = "BatchNotCreated", abi = "BatchNotCreated()")]
     pub struct BatchNotCreated;
+    ///Custom Error type `BatchWithNoMessages` with signature `BatchWithNoMessages()` and selector `0x38d2307f`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthError,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[etherror(name = "BatchWithNoMessages", abi = "BatchWithNoMessages()")]
+    pub struct BatchWithNoMessages;
     ///Custom Error type `CannotConfirmFutureChanges` with signature `CannotConfirmFutureChanges()` and selector `0x0815540a`
     #[derive(
         Clone,
@@ -1778,6 +1804,7 @@ pub mod gateway_router_facet {
         AddressShouldBeValidator(AddressShouldBeValidator),
         BatchAlreadyExists(BatchAlreadyExists),
         BatchNotCreated(BatchNotCreated),
+        BatchWithNoMessages(BatchWithNoMessages),
         CannotConfirmFutureChanges(CannotConfirmFutureChanges),
         CheckpointAlreadyExists(CheckpointAlreadyExists),
         CheckpointNotCreated(CheckpointNotCreated),
@@ -1849,6 +1876,11 @@ pub mod gateway_router_facet {
                 data,
             ) {
                 return Ok(Self::BatchNotCreated(decoded));
+            }
+            if let Ok(decoded) = <BatchWithNoMessages as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::BatchWithNoMessages(decoded));
             }
             if let Ok(decoded) = <CannotConfirmFutureChanges as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2036,6 +2068,9 @@ pub mod gateway_router_facet {
                 Self::BatchNotCreated(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::BatchWithNoMessages(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::CannotConfirmFutureChanges(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2159,6 +2194,10 @@ pub mod gateway_router_facet {
                 }
                 _ if selector
                     == <BatchNotCreated as ::ethers::contract::EthError>::selector() => {
+                    true
+                }
+                _ if selector
+                    == <BatchWithNoMessages as ::ethers::contract::EthError>::selector() => {
                     true
                 }
                 _ if selector
@@ -2309,6 +2348,9 @@ pub mod gateway_router_facet {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::BatchNotCreated(element) => ::core::fmt::Display::fmt(element, f),
+                Self::BatchWithNoMessages(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::CannotConfirmFutureChanges(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -2418,6 +2460,11 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<BatchNotCreated> for GatewayRouterFacetErrors {
         fn from(value: BatchNotCreated) -> Self {
             Self::BatchNotCreated(value)
+        }
+    }
+    impl ::core::convert::From<BatchWithNoMessages> for GatewayRouterFacetErrors {
+        fn from(value: BatchWithNoMessages) -> Self {
+            Self::BatchWithNoMessages(value)
         }
     }
     impl ::core::convert::From<CannotConfirmFutureChanges> for GatewayRouterFacetErrors {
@@ -2587,7 +2634,7 @@ pub mod gateway_router_facet {
             Self::ZeroMembershipWeight(value)
         }
     }
-    ///Container type for all input parameters for the `addBatchSignature` function with signature `addBatchSignature(uint256,bytes32[],uint256,bytes)` and selector `0xfa0fe184`
+    ///Container type for all input parameters for the `addBottomUpMsgBatchSignature` function with signature `addBottomUpMsgBatchSignature(uint256,bytes32[],uint256,bytes)` and selector `0x0db0f77c`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -2599,10 +2646,10 @@ pub mod gateway_router_facet {
         Hash
     )]
     #[ethcall(
-        name = "addBatchSignature",
-        abi = "addBatchSignature(uint256,bytes32[],uint256,bytes)"
+        name = "addBottomUpMsgBatchSignature",
+        abi = "addBottomUpMsgBatchSignature(uint256,bytes32[],uint256,bytes)"
     )]
-    pub struct AddBatchSignatureCall {
+    pub struct AddBottomUpMsgBatchSignatureCall {
         pub height: ::ethers::core::types::U256,
         pub membership_proof: ::std::vec::Vec<[u8; 32]>,
         pub weight: ::ethers::core::types::U256,
@@ -2811,7 +2858,7 @@ pub mod gateway_router_facet {
     ///Container type for all of the contract's call
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayRouterFacetCalls {
-        AddBatchSignature(AddBatchSignatureCall),
+        AddBottomUpMsgBatchSignature(AddBottomUpMsgBatchSignatureCall),
         AddCheckpointSignature(AddCheckpointSignatureCall),
         ApplyCrossMessages(ApplyCrossMessagesCall),
         ApplyFinalityChanges(ApplyFinalityChangesCall),
@@ -2829,10 +2876,10 @@ pub mod gateway_router_facet {
             data: impl AsRef<[u8]>,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::AbiError> {
             let data = data.as_ref();
-            if let Ok(decoded) = <AddBatchSignatureCall as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <AddBottomUpMsgBatchSignatureCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::AddBatchSignature(decoded));
+                return Ok(Self::AddBottomUpMsgBatchSignature(decoded));
             }
             if let Ok(decoded) = <AddCheckpointSignatureCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2895,7 +2942,7 @@ pub mod gateway_router_facet {
     impl ::ethers::core::abi::AbiEncode for GatewayRouterFacetCalls {
         fn encode(self) -> Vec<u8> {
             match self {
-                Self::AddBatchSignature(element) => {
+                Self::AddBottomUpMsgBatchSignature(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::AddCheckpointSignature(element) => {
@@ -2937,7 +2984,9 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetCalls {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
-                Self::AddBatchSignature(element) => ::core::fmt::Display::fmt(element, f),
+                Self::AddBottomUpMsgBatchSignature(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::AddCheckpointSignature(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -2972,9 +3021,10 @@ pub mod gateway_router_facet {
             }
         }
     }
-    impl ::core::convert::From<AddBatchSignatureCall> for GatewayRouterFacetCalls {
-        fn from(value: AddBatchSignatureCall) -> Self {
-            Self::AddBatchSignature(value)
+    impl ::core::convert::From<AddBottomUpMsgBatchSignatureCall>
+    for GatewayRouterFacetCalls {
+        fn from(value: AddBottomUpMsgBatchSignatureCall) -> Self {
+            Self::AddBottomUpMsgBatchSignature(value)
         }
     }
     impl ::core::convert::From<AddCheckpointSignatureCall> for GatewayRouterFacetCalls {
