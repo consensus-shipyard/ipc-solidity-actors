@@ -2013,6 +2013,18 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         vm.expectRevert(BatchWithNoMessages.selector);
         gwRouter.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
+
+        // failed to create a batch with too many messages
+        batch = BottomUpMsgBatch({
+            subnetID: gwGetter.getNetworkName(),
+            blockHeight: 2 * d,
+            msgs: newListOfMessages(gwGetter.maxMsgsPerBottomUpBatch() + 1)
+        });
+
+        vm.startPrank(FilAddress.SYSTEM_ACTOR);
+        vm.expectRevert(MaxMsgsPerBatchExceeded.selector);
+        gwRouter.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
+        vm.stopPrank();
     }
 
     function testGatewayDiamond_commitBatch_InvalidCheckpointSource() public {
@@ -2370,6 +2382,110 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
         require(heights.length == n, "index is not the same");
     }
 
+    function testGatewayDiamond_execMsgBatch_WithMessages() public {
+        address caller = address(saDiamond);
+        address from = address(100);
+        vm.startPrank(caller);
+        vm.deal(caller, 2 * DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        vm.stopPrank();
+
+        uint256 amount = 1;
+
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
+        (bool exist, Subnet memory subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(exist, "subnet does not exist");
+        require(subnetInfo.circSupply == 0, "unexpected initial circulation supply");
+
+        gwManager.fund{value: DEFAULT_COLLATERAL_AMOUNT}(subnetId, FvmAddressHelper.from(address(caller)));
+        (, subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT, "unexpected circulation supply after funding");
+
+        CrossMsg[] memory msgs = new CrossMsg[](10);
+        for (uint64 i = 0; i < 10; i++) {
+            msgs[i] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({subnetId: subnetId, rawAddress: FvmAddressHelper.from(from)}),
+                    to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(from)}),
+                    value: amount,
+                    nonce: i,
+                    method: METHOD_SEND,
+                    params: EMPTY_BYTES,
+                    fee: CROSS_MSG_FEE
+                }),
+                wrapped: false
+            });
+        }
+
+        uint256 d = gwGetter.bottomUpMsgBatchPeriod();
+        vm.roll(d + 1);
+        BottomUpMsgBatch memory batch = BottomUpMsgBatch({subnetID: subnetId, blockHeight: d, msgs: msgs});
+
+        vm.prank(caller);
+        gwRouter.execBottomUpMsgBatch(batch);
+
+        (, subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(
+            subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT - 10 * CROSS_MSG_FEE - 10 * amount,
+            "unexpected circulation supply"
+        );
+        vm.stopPrank();
+    }
+
+    function testGatewayDiamond_execMsgBatch_Fails_WrongNumberMessages() public {
+        address caller = address(saDiamond);
+        address from = address(100);
+        vm.startPrank(caller);
+        vm.deal(caller, 2 * DEFAULT_COLLATERAL_AMOUNT + CROSS_MSG_FEE);
+        registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
+        vm.stopPrank();
+
+        uint256 amount = 1;
+
+        (SubnetID memory subnetId, , , , , ) = getSubnet(address(caller));
+        (bool exist, Subnet memory subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(exist, "subnet does not exist");
+        require(subnetInfo.circSupply == 0, "unexpected initial circulation supply");
+
+        gwManager.fund{value: DEFAULT_COLLATERAL_AMOUNT}(subnetId, FvmAddressHelper.from(address(caller)));
+        (, subnetInfo) = gwGetter.getSubnet(subnetId);
+        require(subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT, "unexpected circulation supply after funding");
+
+        uint64 size = gwGetter.maxMsgsPerBottomUpBatch() + 1;
+        CrossMsg[] memory msgs = new CrossMsg[](size);
+        for (uint64 i = 0; i < size; i++) {
+            msgs[i] = CrossMsg({
+                message: StorableMsg({
+                    from: IPCAddress({subnetId: subnetId, rawAddress: FvmAddressHelper.from(from)}),
+                    to: IPCAddress({subnetId: gwGetter.getNetworkName(), rawAddress: FvmAddressHelper.from(from)}),
+                    value: amount,
+                    nonce: i,
+                    method: METHOD_SEND,
+                    params: EMPTY_BYTES,
+                    fee: CROSS_MSG_FEE
+                }),
+                wrapped: false
+            });
+        }
+
+        // fail with exceeded messages
+        uint256 d = gwGetter.bottomUpMsgBatchPeriod();
+        vm.roll(d + 1);
+        BottomUpMsgBatch memory batch = BottomUpMsgBatch({subnetID: subnetId, blockHeight: d, msgs: msgs});
+
+        vm.prank(caller);
+        vm.expectRevert(MaxMsgsPerBatchExceeded.selector);
+        gwRouter.execBottomUpMsgBatch(batch);
+
+        // fail with no messages
+        batch = BottomUpMsgBatch({subnetID: subnetId, blockHeight: d, msgs: new CrossMsg[](0)});
+
+        vm.prank(caller);
+        vm.expectRevert(BatchWithNoMessages.selector);
+        gwRouter.execBottomUpMsgBatch(batch);
+        vm.stopPrank();
+    }
+
     function totalWeight(uint256[] memory weights) internal pure returns (uint256 sum) {
         for (uint64 i = 0; i < 3; i++) {
             sum += weights[i];
@@ -2464,7 +2580,7 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
     }
 
     function newListOfMessages(uint64 size) internal view returns (CrossMsg[] memory msgs) {
-        msgs = new CrossMsg[](10);
+        msgs = new CrossMsg[](size);
         for (uint64 i = 0; i < size; i++) {
             msgs[i] = CrossMsg({
                 message: StorableMsg({
