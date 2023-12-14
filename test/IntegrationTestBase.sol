@@ -17,7 +17,7 @@ import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
 import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
 import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
-import {SubnetID, PermissionMode, PermissionMode, Subnet, SupplySource, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
+import {SubnetID, SupplyKind, PermissionMode, PermissionMode, Subnet, SupplySource, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
@@ -535,6 +535,10 @@ contract IntegrationTestBase is Test {
     }
 
     function fund(address funderAddress, uint256 fundAmount) public {
+        fund(funderAddress, fundAmount, SupplyKind.Native);
+    }
+
+    function fund(address funderAddress, uint256 fundAmount, SupplyKind mode) public {
         // funding subnets is free, we do not need cross msg fee
         (SubnetID memory subnetId, , uint256 nonceBefore, , uint256 circSupplyBefore, ) = getSubnet(address(saManager));
         console.log(circSupplyBefore);
@@ -545,7 +549,11 @@ contract IntegrationTestBase is Test {
 
         require(gwGetter.crossMsgFee() > 0, "crossMsgFee is 0");
 
-        gwManager.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
+        if (mode == SupplyKind.Native) {
+            gwManager.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
+        } else if (mode == SupplyKind.ERC20) {
+            gwManager.fundWithToken(subnetId, FvmAddressHelper.from(funderAddress), fundAmount);
+        }
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(saManager));
 
