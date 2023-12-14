@@ -103,6 +103,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         if (batch.msgs.length > s.maxMsgsPerBottomUpBatch) {
             revert MaxMsgsPerBatchExceeded();
         }
+        // if the batch height is not max, we only supoprt batch submission in period epochs
+        if (batch.msgs.length != s.maxMsgsPerBottomUpBatch && batch.blockHeight % s.bottomUpMsgBatchPeriod != 0) {
+            revert InvalidBatchEpoch();
+        }
         if (batch.msgs.length == 0) {
             revert BatchWithNoMessages();
         }

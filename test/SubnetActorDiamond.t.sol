@@ -8,7 +8,7 @@ import {NumberContractFacetSeven, NumberContractFacetEight} from "./NumberContra
 import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
-import {CrossMsg, BottomUpCheckpoint, StorableMsg} from "../src/structs/CrossNet.sol";
+import {CrossMsg, BottomUpMsgBatch, BottomUpCheckpoint, StorableMsg} from "../src/structs/CrossNet.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
 import {SubnetID, IPCAddress, Subnet, ValidatorInfo, Validator} from "../src/structs/Subnet.sol";
 import {StorableMsg} from "../src/structs/CrossNet.sol";
@@ -823,6 +823,85 @@ contract SubnetActorDiamondTest is Test {
             uint256 b2 = validators[0].balance;
             require(b2 - b1 == validator0Reward, "reward received");
         }
+    }
+
+    function testSubnetActorDiamond_submitBottomUpMsgBatch_basic() public {
+        (uint256[] memory keys, address[] memory validators, ) = TestUtils.getThreeValidators(vm);
+        bytes[] memory pubKeys = new bytes[](3);
+        bytes[] memory signatures = new bytes[](3);
+        uint256 amount = 1;
+
+        for (uint256 i = 0; i < 3; i++) {
+            vm.deal(validators[i], 10 gwei);
+            pubKeys[i] = TestUtils.deriveValidatorPubKeyBytes(keys[i]);
+            vm.prank(validators[i]);
+            saManager.join{value: 10}(pubKeys[i]);
+        }
+
+        CrossMsg memory crossMsg = CrossMsg({
+            message: StorableMsg({
+                from: IPCAddress({
+                    subnetId: saGetter.getParent(),
+                    rawAddress: FvmAddressHelper.from(address(saDiamond))
+                }),
+                to: IPCAddress({subnetId: saGetter.getParent(), rawAddress: FvmAddressHelper.from(address(saDiamond))}),
+                value: CROSS_MSG_FEE + amount,
+                nonce: 0,
+                method: METHOD_SEND,
+                params: new bytes(0),
+                fee: CROSS_MSG_FEE
+            }),
+            wrapped: false
+        });
+        CrossMsg[] memory msgs = new CrossMsg[](1);
+        msgs[0] = crossMsg;
+
+        BottomUpMsgBatch memory batch = BottomUpMsgBatch({
+            subnetID: saGetter.getParent().createSubnetId(address(saDiamond)),
+            blockHeight: saGetter.bottomUpMsgBatchPeriod(),
+            msgs: msgs
+        });
+
+        BottomUpMsgBatch memory batchIncorrectHeight = BottomUpMsgBatch({
+            subnetID: saGetter.getParent().createSubnetId(address(saDiamond)),
+            blockHeight: 1,
+            msgs: msgs
+        });
+
+        vm.deal(address(saDiamond), 100 ether);
+        vm.prank(address(saDiamond));
+        // register with circulating supply
+        gwManager.register{value: 3 * DEFAULT_MIN_VALIDATOR_STAKE + 3 * CROSS_MSG_FEE}(3 * amount);
+
+        bytes32 hash = keccak256(abi.encode(batch));
+
+        for (uint256 i = 0; i < 3; i++) {
+            (uint8 v, bytes32 r, bytes32 s) = vm.sign(keys[i], hash);
+            signatures[i] = abi.encodePacked(r, s, v);
+        }
+
+        vm.expectRevert(InvalidBatchEpoch.selector);
+        vm.prank(validators[0]);
+        saManager.submitBottomUpMsgBatch(batchIncorrectHeight, validators, signatures);
+
+        vm.prank(validators[0]);
+        batchIncorrectHeight.msgs = new CrossMsg[](0);
+        batchIncorrectHeight.blockHeight = saGetter.bottomUpMsgBatchPeriod();
+        vm.expectRevert(BatchWithNoMessages.selector);
+        saManager.submitBottomUpMsgBatch(batchIncorrectHeight, validators, signatures);
+
+        // total collateral in the gateway
+        vm.expectCall(gatewayAddress, abi.encodeCall(IGateway.execBottomUpMsgBatch, (batch)), 1);
+        vm.prank(validators[0]);
+        saManager.submitBottomUpMsgBatch(batch, validators, signatures);
+
+        require(saGetter.hasSubmittedInLastBottomUpMsgBatchHeight(validators[0]), "validator rewarded");
+        require(saGetter.lastBottomUpMsgBatchHeight() == saGetter.bottomUpMsgBatchPeriod(), " batch height correct");
+
+        vm.prank(validators[1]);
+        saManager.submitBottomUpMsgBatch(batch, validators, signatures);
+        require(saGetter.hasSubmittedInLastBottomUpMsgBatchHeight(validators[0]), "validator rewarded");
+        require(saGetter.lastBottomUpMsgBatchHeight() == saGetter.bottomUpMsgBatchPeriod(), " batch height correct");
     }
 
     function testSubnetActorDiamond_DiamondCut() public {
