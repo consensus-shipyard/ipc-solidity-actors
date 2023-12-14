@@ -19,6 +19,7 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
+uint256 constant PUBLIC_KEY_LENGTH = 65;
 
 contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
@@ -211,7 +212,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
             revert CollateralIsZero();
         }
 
-        if (publicKey.length != 65) {
+        if (publicKey.length != PUBLIC_KEY_LENGTH) {
             // Taking 65 bytes because the FVM libraries have some assertions checking it, it's more convenient.
             revert InvalidPublicKeyLength();
         }
@@ -438,7 +439,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
      * @notice Hash a 65 byte public key and return the corresponding address.
      */
     function publicKeyToAddress(bytes calldata publicKey) internal pure returns (address) {
-        assert(publicKey.length == 65);
+        assert(publicKey.length == PUBLIC_KEY_LENGTH);
         bytes32 hashed = keccak256(publicKey[1:]);
         return address(uint160(uint256(hashed)));
     }
