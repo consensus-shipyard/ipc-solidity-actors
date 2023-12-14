@@ -183,7 +183,82 @@ pub mod gateway_manager_facet {
                     ],
                 ),
             ]),
-            events: ::std::collections::BTreeMap::new(),
+            events: ::core::convert::From::from([
+                (
+                    ::std::borrow::ToOwned::to_owned("NewTopDownMessage"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned("NewTopDownMessage"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("subnet"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: true,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("message"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                        ::std::boxed::Box::new(
+                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                ],
+                                                            ),
+                                                        ],
+                                                    ),
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                        ::std::boxed::Box::new(
+                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                ],
+                                                            ),
+                                                        ],
+                                                    ),
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                ],
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Bool,
+                                        ],
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+            ]),
             errors: ::core::convert::From::from([
                 (
                     ::std::borrow::ToOwned::to_owned("AlreadyRegisteredSubnet"),
@@ -422,6 +497,26 @@ pub mod gateway_manager_facet {
             self.0
                 .method_hash([69, 245, 68, 133], amount)
                 .expect("method not found (this should never happen)")
+        }
+        ///Gets the contract's `NewTopDownMessage` event
+        pub fn new_top_down_message_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewTopDownMessageFilter,
+        > {
+            self.0.event()
+        }
+        /// Returns an `Event` builder for all the events of this contract.
+        pub fn events(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewTopDownMessageFilter,
+        > {
+            self.0.event_with_filter(::core::default::Default::default())
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
@@ -903,6 +998,25 @@ pub mod gateway_manager_facet {
             Self::ReentrancyError(value)
         }
     }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "NewTopDownMessage",
+        abi = "NewTopDownMessage(address,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
+    )]
+    pub struct NewTopDownMessageFilter {
+        #[ethevent(indexed)]
+        pub subnet: ::ethers::core::types::Address,
+        pub message: CrossMsg,
+    }
     ///Container type for all input parameters for the `addStake` function with signature `addStake()` and selector `0x5a627dbc`
     #[derive(
         Clone,
@@ -1135,6 +1249,21 @@ pub mod gateway_manager_facet {
             Self::ReleaseStake(value)
         }
     }
+    ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct CrossMsg {
+        pub message: StorableMsg,
+        pub wrapped: bool,
+    }
     ///`FvmAddress(uint8,bytes)`
     #[derive(
         Clone,
@@ -1149,6 +1278,41 @@ pub mod gateway_manager_facet {
     pub struct FvmAddress {
         pub addr_type: u8,
         pub payload: ::ethers::core::types::Bytes,
+    }
+    ///`Ipcaddress((uint64,address[]),(uint8,bytes))`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct Ipcaddress {
+        pub subnet_id: SubnetID,
+        pub raw_address: FvmAddress,
+    }
+    ///`StorableMsg(((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256)`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct StorableMsg {
+        pub from: Ipcaddress,
+        pub to: Ipcaddress,
+        pub value: ::ethers::core::types::U256,
+        pub nonce: u64,
+        pub method: [u8; 4],
+        pub params: ::ethers::core::types::Bytes,
+        pub fee: ::ethers::core::types::U256,
     }
     ///`SubnetID(uint64,address[])`
     #[derive(

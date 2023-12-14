@@ -444,6 +444,151 @@ pub mod gateway_router_facet {
             ]),
             events: ::core::convert::From::from([
                 (
+                    ::std::borrow::ToOwned::to_owned("ActiveValidatorCollateralUpdated"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "ActiveValidatorCollateralUpdated",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("newCollateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("ActiveValidatorLeft"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "ActiveValidatorLeft",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("ActiveValidatorReplaced"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "ActiveValidatorReplaced",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("oldValidator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("newValidator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("MembershipUpdated"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned("MembershipUpdated"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                ::std::boxed::Box::new(
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                            ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                        ],
+                                                    ),
+                                                ),
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                        ],
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NewActiveValidator"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned("NewActiveValidator"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("collateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NewWaitingValidator"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "NewWaitingValidator",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("collateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("QuorumReached"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Event {
@@ -498,6 +643,51 @@ pub mod gateway_router_facet {
                                     kind: ::ethers::core::abi::ethabi::ParamType::Uint(
                                         256usize,
                                     ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned(
+                        "WaitingValidatorCollateralUpdated",
+                    ),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "WaitingValidatorCollateralUpdated",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("newCollateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("WaitingValidatorLeft"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "WaitingValidatorLeft",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
                                     indexed: false,
                                 },
                             ],
@@ -1001,6 +1191,66 @@ pub mod gateway_router_facet {
                 .method_hash([228, 154, 84, 125], change_requests)
                 .expect("method not found (this should never happen)")
         }
+        ///Gets the contract's `ActiveValidatorCollateralUpdated` event
+        pub fn active_validator_collateral_updated_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            ActiveValidatorCollateralUpdatedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `ActiveValidatorLeft` event
+        pub fn active_validator_left_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            ActiveValidatorLeftFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `ActiveValidatorReplaced` event
+        pub fn active_validator_replaced_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            ActiveValidatorReplacedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `MembershipUpdated` event
+        pub fn membership_updated_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            MembershipUpdatedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `NewActiveValidator` event
+        pub fn new_active_validator_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewActiveValidatorFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `NewWaitingValidator` event
+        pub fn new_waiting_validator_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewWaitingValidatorFilter,
+        > {
+            self.0.event()
+        }
         ///Gets the contract's `QuorumReached` event
         pub fn quorum_reached_filter(
             &self,
@@ -1018,6 +1268,26 @@ pub mod gateway_router_facet {
             ::std::sync::Arc<M>,
             M,
             QuorumWeightUpdatedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `WaitingValidatorCollateralUpdated` event
+        pub fn waiting_validator_collateral_updated_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            WaitingValidatorCollateralUpdatedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `WaitingValidatorLeft` event
+        pub fn waiting_validator_left_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            WaitingValidatorLeftFilter,
         > {
             self.0.event()
         }
@@ -2219,6 +2489,104 @@ pub mod gateway_router_facet {
         Eq,
         Hash
     )]
+    #[ethevent(
+        name = "ActiveValidatorCollateralUpdated",
+        abi = "ActiveValidatorCollateralUpdated(address,uint256)"
+    )]
+    pub struct ActiveValidatorCollateralUpdatedFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub new_collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(name = "ActiveValidatorLeft", abi = "ActiveValidatorLeft(address)")]
+    pub struct ActiveValidatorLeftFilter {
+        pub validator: ::ethers::core::types::Address,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "ActiveValidatorReplaced",
+        abi = "ActiveValidatorReplaced(address,address)"
+    )]
+    pub struct ActiveValidatorReplacedFilter {
+        pub old_validator: ::ethers::core::types::Address,
+        pub new_validator: ::ethers::core::types::Address,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "MembershipUpdated",
+        abi = "MembershipUpdated(((uint256,address,bytes)[],uint64))"
+    )]
+    pub struct MembershipUpdatedFilter(pub Membership);
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(name = "NewActiveValidator", abi = "NewActiveValidator(address,uint256)")]
+    pub struct NewActiveValidatorFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "NewWaitingValidator",
+        abi = "NewWaitingValidator(address,uint256)"
+    )]
+    pub struct NewWaitingValidatorFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
     #[ethevent(name = "QuorumReached", abi = "QuorumReached(uint64,bytes32,uint256)")]
     pub struct QuorumReachedFilter {
         pub height: u64,
@@ -2244,21 +2612,99 @@ pub mod gateway_router_facet {
         pub checkpoint: [u8; 32],
         pub new_weight: ::ethers::core::types::U256,
     }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "WaitingValidatorCollateralUpdated",
+        abi = "WaitingValidatorCollateralUpdated(address,uint256)"
+    )]
+    pub struct WaitingValidatorCollateralUpdatedFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub new_collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(name = "WaitingValidatorLeft", abi = "WaitingValidatorLeft(address)")]
+    pub struct WaitingValidatorLeftFilter {
+        pub validator: ::ethers::core::types::Address,
+    }
     ///Container type for all of the contract's events
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum GatewayRouterFacetEvents {
+        ActiveValidatorCollateralUpdatedFilter(ActiveValidatorCollateralUpdatedFilter),
+        ActiveValidatorLeftFilter(ActiveValidatorLeftFilter),
+        ActiveValidatorReplacedFilter(ActiveValidatorReplacedFilter),
+        MembershipUpdatedFilter(MembershipUpdatedFilter),
+        NewActiveValidatorFilter(NewActiveValidatorFilter),
+        NewWaitingValidatorFilter(NewWaitingValidatorFilter),
         QuorumReachedFilter(QuorumReachedFilter),
         QuorumWeightUpdatedFilter(QuorumWeightUpdatedFilter),
+        WaitingValidatorCollateralUpdatedFilter(WaitingValidatorCollateralUpdatedFilter),
+        WaitingValidatorLeftFilter(WaitingValidatorLeftFilter),
     }
     impl ::ethers::contract::EthLogDecode for GatewayRouterFacetEvents {
         fn decode_log(
             log: &::ethers::core::abi::RawLog,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::Error> {
+            if let Ok(decoded) = ActiveValidatorCollateralUpdatedFilter::decode_log(
+                log,
+            ) {
+                return Ok(
+                    GatewayRouterFacetEvents::ActiveValidatorCollateralUpdatedFilter(
+                        decoded,
+                    ),
+                );
+            }
+            if let Ok(decoded) = ActiveValidatorLeftFilter::decode_log(log) {
+                return Ok(GatewayRouterFacetEvents::ActiveValidatorLeftFilter(decoded));
+            }
+            if let Ok(decoded) = ActiveValidatorReplacedFilter::decode_log(log) {
+                return Ok(
+                    GatewayRouterFacetEvents::ActiveValidatorReplacedFilter(decoded),
+                );
+            }
+            if let Ok(decoded) = MembershipUpdatedFilter::decode_log(log) {
+                return Ok(GatewayRouterFacetEvents::MembershipUpdatedFilter(decoded));
+            }
+            if let Ok(decoded) = NewActiveValidatorFilter::decode_log(log) {
+                return Ok(GatewayRouterFacetEvents::NewActiveValidatorFilter(decoded));
+            }
+            if let Ok(decoded) = NewWaitingValidatorFilter::decode_log(log) {
+                return Ok(GatewayRouterFacetEvents::NewWaitingValidatorFilter(decoded));
+            }
             if let Ok(decoded) = QuorumReachedFilter::decode_log(log) {
                 return Ok(GatewayRouterFacetEvents::QuorumReachedFilter(decoded));
             }
             if let Ok(decoded) = QuorumWeightUpdatedFilter::decode_log(log) {
                 return Ok(GatewayRouterFacetEvents::QuorumWeightUpdatedFilter(decoded));
+            }
+            if let Ok(decoded) = WaitingValidatorCollateralUpdatedFilter::decode_log(
+                log,
+            ) {
+                return Ok(
+                    GatewayRouterFacetEvents::WaitingValidatorCollateralUpdatedFilter(
+                        decoded,
+                    ),
+                );
+            }
+            if let Ok(decoded) = WaitingValidatorLeftFilter::decode_log(log) {
+                return Ok(GatewayRouterFacetEvents::WaitingValidatorLeftFilter(decoded));
             }
             Err(::ethers::core::abi::Error::InvalidData)
         }
@@ -2266,13 +2712,69 @@ pub mod gateway_router_facet {
     impl ::core::fmt::Display for GatewayRouterFacetEvents {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+                Self::ActiveValidatorCollateralUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ActiveValidatorLeftFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ActiveValidatorReplacedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::MembershipUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NewActiveValidatorFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NewWaitingValidatorFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::QuorumReachedFilter(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::QuorumWeightUpdatedFilter(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::WaitingValidatorCollateralUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::WaitingValidatorLeftFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
+        }
+    }
+    impl ::core::convert::From<ActiveValidatorCollateralUpdatedFilter>
+    for GatewayRouterFacetEvents {
+        fn from(value: ActiveValidatorCollateralUpdatedFilter) -> Self {
+            Self::ActiveValidatorCollateralUpdatedFilter(value)
+        }
+    }
+    impl ::core::convert::From<ActiveValidatorLeftFilter> for GatewayRouterFacetEvents {
+        fn from(value: ActiveValidatorLeftFilter) -> Self {
+            Self::ActiveValidatorLeftFilter(value)
+        }
+    }
+    impl ::core::convert::From<ActiveValidatorReplacedFilter>
+    for GatewayRouterFacetEvents {
+        fn from(value: ActiveValidatorReplacedFilter) -> Self {
+            Self::ActiveValidatorReplacedFilter(value)
+        }
+    }
+    impl ::core::convert::From<MembershipUpdatedFilter> for GatewayRouterFacetEvents {
+        fn from(value: MembershipUpdatedFilter) -> Self {
+            Self::MembershipUpdatedFilter(value)
+        }
+    }
+    impl ::core::convert::From<NewActiveValidatorFilter> for GatewayRouterFacetEvents {
+        fn from(value: NewActiveValidatorFilter) -> Self {
+            Self::NewActiveValidatorFilter(value)
+        }
+    }
+    impl ::core::convert::From<NewWaitingValidatorFilter> for GatewayRouterFacetEvents {
+        fn from(value: NewWaitingValidatorFilter) -> Self {
+            Self::NewWaitingValidatorFilter(value)
         }
     }
     impl ::core::convert::From<QuorumReachedFilter> for GatewayRouterFacetEvents {
@@ -2283,6 +2785,17 @@ pub mod gateway_router_facet {
     impl ::core::convert::From<QuorumWeightUpdatedFilter> for GatewayRouterFacetEvents {
         fn from(value: QuorumWeightUpdatedFilter) -> Self {
             Self::QuorumWeightUpdatedFilter(value)
+        }
+    }
+    impl ::core::convert::From<WaitingValidatorCollateralUpdatedFilter>
+    for GatewayRouterFacetEvents {
+        fn from(value: WaitingValidatorCollateralUpdatedFilter) -> Self {
+            Self::WaitingValidatorCollateralUpdatedFilter(value)
+        }
+    }
+    impl ::core::convert::From<WaitingValidatorLeftFilter> for GatewayRouterFacetEvents {
+        fn from(value: WaitingValidatorLeftFilter) -> Self {
+            Self::WaitingValidatorLeftFilter(value)
         }
     }
     ///Container type for all input parameters for the `addCheckpointSignature` function with signature `addCheckpointSignature(uint64,bytes32[],uint256,bytes)` and selector `0x2a04f220`
@@ -2683,6 +3196,21 @@ pub mod gateway_router_facet {
         pub subnet_id: SubnetID,
         pub raw_address: FvmAddress,
     }
+    ///`Membership((uint256,address,bytes)[],uint64)`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct Membership {
+        pub validators: ::std::vec::Vec<Validator>,
+        pub configuration_number: u64,
+    }
     ///`ParentFinality(uint256,bytes32)`
     #[derive(
         Clone,
@@ -2763,5 +3291,21 @@ pub mod gateway_router_facet {
     pub struct SubnetID {
         pub root: u64,
         pub route: ::std::vec::Vec<::ethers::core::types::Address>,
+    }
+    ///`Validator(uint256,address,bytes)`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct Validator {
+        pub weight: ::ethers::core::types::U256,
+        pub addr: ::ethers::core::types::Address,
+        pub metadata: ::ethers::core::types::Bytes,
     }
 }

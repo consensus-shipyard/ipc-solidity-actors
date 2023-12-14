@@ -378,6 +378,72 @@ pub mod subnet_actor_manager_facet {
             ]),
             events: ::core::convert::From::from([
                 (
+                    ::std::borrow::ToOwned::to_owned("ActiveValidatorCollateralUpdated"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "ActiveValidatorCollateralUpdated",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("newCollateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("ActiveValidatorLeft"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "ActiveValidatorLeft",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("ActiveValidatorReplaced"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "ActiveValidatorReplaced",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("oldValidator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("newValidator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("BottomUpCheckpointExecuted"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Event {
@@ -441,6 +507,162 @@ pub mod subnet_actor_manager_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("CollateralClaimed"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned("CollateralClaimed"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("amount"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("ConfigurationNumberConfirmed"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "ConfigurationNumberConfirmed",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("number"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NewActiveValidator"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned("NewActiveValidator"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("collateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NewCollateralRelease"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "NewCollateralRelease",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("amount"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("releaseBlock"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NewStakingChangeRequest"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "NewStakingChangeRequest",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("op"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("payload"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned(
+                                        "configurationNumber",
+                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("NewWaitingValidator"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "NewWaitingValidator",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("collateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("NextBottomUpCheckpointExecuted"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Event {
@@ -482,6 +704,51 @@ pub mod subnet_actor_manager_facet {
                                             ),
                                         ),
                                     ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned(
+                        "WaitingValidatorCollateralUpdated",
+                    ),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "WaitingValidatorCollateralUpdated",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("newCollateral"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("WaitingValidatorLeft"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "WaitingValidatorLeft",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("validator"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
                                     indexed: false,
                                 },
                             ],
@@ -946,6 +1213,36 @@ pub mod subnet_actor_manager_facet {
                 .method_hash([204, 45, 194, 185], (signatories, hash, signatures))
                 .expect("method not found (this should never happen)")
         }
+        ///Gets the contract's `ActiveValidatorCollateralUpdated` event
+        pub fn active_validator_collateral_updated_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            ActiveValidatorCollateralUpdatedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `ActiveValidatorLeft` event
+        pub fn active_validator_left_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            ActiveValidatorLeftFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `ActiveValidatorReplaced` event
+        pub fn active_validator_replaced_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            ActiveValidatorReplacedFilter,
+        > {
+            self.0.event()
+        }
         ///Gets the contract's `BottomUpCheckpointExecuted` event
         pub fn bottom_up_checkpoint_executed_filter(
             &self,
@@ -966,6 +1263,66 @@ pub mod subnet_actor_manager_facet {
         > {
             self.0.event()
         }
+        ///Gets the contract's `CollateralClaimed` event
+        pub fn collateral_claimed_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            CollateralClaimedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `ConfigurationNumberConfirmed` event
+        pub fn configuration_number_confirmed_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            ConfigurationNumberConfirmedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `NewActiveValidator` event
+        pub fn new_active_validator_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewActiveValidatorFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `NewCollateralRelease` event
+        pub fn new_collateral_release_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewCollateralReleaseFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `NewStakingChangeRequest` event
+        pub fn new_staking_change_request_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewStakingChangeRequestFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `NewWaitingValidator` event
+        pub fn new_waiting_validator_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewWaitingValidatorFilter,
+        > {
+            self.0.event()
+        }
         ///Gets the contract's `NextBottomUpCheckpointExecuted` event
         pub fn next_bottom_up_checkpoint_executed_filter(
             &self,
@@ -983,6 +1340,26 @@ pub mod subnet_actor_manager_facet {
             ::std::sync::Arc<M>,
             M,
             SubnetBootstrappedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `WaitingValidatorCollateralUpdated` event
+        pub fn waiting_validator_collateral_updated_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            WaitingValidatorCollateralUpdatedFilter,
+        > {
+            self.0.event()
+        }
+        ///Gets the contract's `WaitingValidatorLeft` event
+        pub fn waiting_validator_left_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            WaitingValidatorLeftFilter,
         > {
             self.0.event()
         }
@@ -1970,6 +2347,56 @@ pub mod subnet_actor_manager_facet {
         Hash
     )]
     #[ethevent(
+        name = "ActiveValidatorCollateralUpdated",
+        abi = "ActiveValidatorCollateralUpdated(address,uint256)"
+    )]
+    pub struct ActiveValidatorCollateralUpdatedFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub new_collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(name = "ActiveValidatorLeft", abi = "ActiveValidatorLeft(address)")]
+    pub struct ActiveValidatorLeftFilter {
+        pub validator: ::ethers::core::types::Address,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "ActiveValidatorReplaced",
+        abi = "ActiveValidatorReplaced(address,address)"
+    )]
+    pub struct ActiveValidatorReplacedFilter {
+        pub old_validator: ::ethers::core::types::Address,
+        pub new_validator: ::ethers::core::types::Address,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
         name = "BottomUpCheckpointExecuted",
         abi = "BottomUpCheckpointExecuted(uint64,address)"
     )]
@@ -2005,6 +2432,110 @@ pub mod subnet_actor_manager_facet {
         Eq,
         Hash
     )]
+    #[ethevent(name = "CollateralClaimed", abi = "CollateralClaimed(address,uint256)")]
+    pub struct CollateralClaimedFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub amount: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "ConfigurationNumberConfirmed",
+        abi = "ConfigurationNumberConfirmed(uint64)"
+    )]
+    pub struct ConfigurationNumberConfirmedFilter {
+        pub number: u64,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(name = "NewActiveValidator", abi = "NewActiveValidator(address,uint256)")]
+    pub struct NewActiveValidatorFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "NewCollateralRelease",
+        abi = "NewCollateralRelease(address,uint256,uint256)"
+    )]
+    pub struct NewCollateralReleaseFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub amount: ::ethers::core::types::U256,
+        pub release_block: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "NewStakingChangeRequest",
+        abi = "NewStakingChangeRequest(uint8,address,bytes,uint64)"
+    )]
+    pub struct NewStakingChangeRequestFilter {
+        pub op: u8,
+        pub validator: ::ethers::core::types::Address,
+        pub payload: ::ethers::core::types::Bytes,
+        pub configuration_number: u64,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "NewWaitingValidator",
+        abi = "NewWaitingValidator(address,uint256)"
+    )]
+    pub struct NewWaitingValidatorFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
     #[ethevent(
         name = "NextBottomUpCheckpointExecuted",
         abi = "NextBottomUpCheckpointExecuted(uint64,address)"
@@ -2028,18 +2559,80 @@ pub mod subnet_actor_manager_facet {
         abi = "SubnetBootstrapped((uint256,address,bytes)[])"
     )]
     pub struct SubnetBootstrappedFilter(pub ::std::vec::Vec<Validator>);
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "WaitingValidatorCollateralUpdated",
+        abi = "WaitingValidatorCollateralUpdated(address,uint256)"
+    )]
+    pub struct WaitingValidatorCollateralUpdatedFilter {
+        pub validator: ::ethers::core::types::Address,
+        pub new_collateral: ::ethers::core::types::U256,
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(name = "WaitingValidatorLeft", abi = "WaitingValidatorLeft(address)")]
+    pub struct WaitingValidatorLeftFilter {
+        pub validator: ::ethers::core::types::Address,
+    }
     ///Container type for all of the contract's events
     #[derive(Clone, ::ethers::contract::EthAbiType, Debug, PartialEq, Eq, Hash)]
     pub enum SubnetActorManagerFacetEvents {
+        ActiveValidatorCollateralUpdatedFilter(ActiveValidatorCollateralUpdatedFilter),
+        ActiveValidatorLeftFilter(ActiveValidatorLeftFilter),
+        ActiveValidatorReplacedFilter(ActiveValidatorReplacedFilter),
         BottomUpCheckpointExecutedFilter(BottomUpCheckpointExecutedFilter),
         BottomUpCheckpointSubmittedFilter(BottomUpCheckpointSubmittedFilter),
+        CollateralClaimedFilter(CollateralClaimedFilter),
+        ConfigurationNumberConfirmedFilter(ConfigurationNumberConfirmedFilter),
+        NewActiveValidatorFilter(NewActiveValidatorFilter),
+        NewCollateralReleaseFilter(NewCollateralReleaseFilter),
+        NewStakingChangeRequestFilter(NewStakingChangeRequestFilter),
+        NewWaitingValidatorFilter(NewWaitingValidatorFilter),
         NextBottomUpCheckpointExecutedFilter(NextBottomUpCheckpointExecutedFilter),
         SubnetBootstrappedFilter(SubnetBootstrappedFilter),
+        WaitingValidatorCollateralUpdatedFilter(WaitingValidatorCollateralUpdatedFilter),
+        WaitingValidatorLeftFilter(WaitingValidatorLeftFilter),
     }
     impl ::ethers::contract::EthLogDecode for SubnetActorManagerFacetEvents {
         fn decode_log(
             log: &::ethers::core::abi::RawLog,
         ) -> ::core::result::Result<Self, ::ethers::core::abi::Error> {
+            if let Ok(decoded) = ActiveValidatorCollateralUpdatedFilter::decode_log(
+                log,
+            ) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::ActiveValidatorCollateralUpdatedFilter(
+                        decoded,
+                    ),
+                );
+            }
+            if let Ok(decoded) = ActiveValidatorLeftFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::ActiveValidatorLeftFilter(decoded),
+                );
+            }
+            if let Ok(decoded) = ActiveValidatorReplacedFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::ActiveValidatorReplacedFilter(decoded),
+                );
+            }
             if let Ok(decoded) = BottomUpCheckpointExecutedFilter::decode_log(log) {
                 return Ok(
                     SubnetActorManagerFacetEvents::BottomUpCheckpointExecutedFilter(
@@ -2054,6 +2647,38 @@ pub mod subnet_actor_manager_facet {
                     ),
                 );
             }
+            if let Ok(decoded) = CollateralClaimedFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::CollateralClaimedFilter(decoded),
+                );
+            }
+            if let Ok(decoded) = ConfigurationNumberConfirmedFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::ConfigurationNumberConfirmedFilter(
+                        decoded,
+                    ),
+                );
+            }
+            if let Ok(decoded) = NewActiveValidatorFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::NewActiveValidatorFilter(decoded),
+                );
+            }
+            if let Ok(decoded) = NewCollateralReleaseFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::NewCollateralReleaseFilter(decoded),
+                );
+            }
+            if let Ok(decoded) = NewStakingChangeRequestFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::NewStakingChangeRequestFilter(decoded),
+                );
+            }
+            if let Ok(decoded) = NewWaitingValidatorFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::NewWaitingValidatorFilter(decoded),
+                );
+            }
             if let Ok(decoded) = NextBottomUpCheckpointExecutedFilter::decode_log(log) {
                 return Ok(
                     SubnetActorManagerFacetEvents::NextBottomUpCheckpointExecutedFilter(
@@ -2066,16 +2691,57 @@ pub mod subnet_actor_manager_facet {
                     SubnetActorManagerFacetEvents::SubnetBootstrappedFilter(decoded),
                 );
             }
+            if let Ok(decoded) = WaitingValidatorCollateralUpdatedFilter::decode_log(
+                log,
+            ) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::WaitingValidatorCollateralUpdatedFilter(
+                        decoded,
+                    ),
+                );
+            }
+            if let Ok(decoded) = WaitingValidatorLeftFilter::decode_log(log) {
+                return Ok(
+                    SubnetActorManagerFacetEvents::WaitingValidatorLeftFilter(decoded),
+                );
+            }
             Err(::ethers::core::abi::Error::InvalidData)
         }
     }
     impl ::core::fmt::Display for SubnetActorManagerFacetEvents {
         fn fmt(&self, f: &mut ::core::fmt::Formatter<'_>) -> ::core::fmt::Result {
             match self {
+                Self::ActiveValidatorCollateralUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ActiveValidatorLeftFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ActiveValidatorReplacedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::BottomUpCheckpointExecutedFilter(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::BottomUpCheckpointSubmittedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::CollateralClaimedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::ConfigurationNumberConfirmedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NewActiveValidatorFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NewCollateralReleaseFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NewStakingChangeRequestFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::NewWaitingValidatorFilter(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::NextBottomUpCheckpointExecutedFilter(element) => {
@@ -2084,7 +2750,31 @@ pub mod subnet_actor_manager_facet {
                 Self::SubnetBootstrappedFilter(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
+                Self::WaitingValidatorCollateralUpdatedFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::WaitingValidatorLeftFilter(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
             }
+        }
+    }
+    impl ::core::convert::From<ActiveValidatorCollateralUpdatedFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: ActiveValidatorCollateralUpdatedFilter) -> Self {
+            Self::ActiveValidatorCollateralUpdatedFilter(value)
+        }
+    }
+    impl ::core::convert::From<ActiveValidatorLeftFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: ActiveValidatorLeftFilter) -> Self {
+            Self::ActiveValidatorLeftFilter(value)
+        }
+    }
+    impl ::core::convert::From<ActiveValidatorReplacedFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: ActiveValidatorReplacedFilter) -> Self {
+            Self::ActiveValidatorReplacedFilter(value)
         }
     }
     impl ::core::convert::From<BottomUpCheckpointExecutedFilter>
@@ -2099,6 +2789,42 @@ pub mod subnet_actor_manager_facet {
             Self::BottomUpCheckpointSubmittedFilter(value)
         }
     }
+    impl ::core::convert::From<CollateralClaimedFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: CollateralClaimedFilter) -> Self {
+            Self::CollateralClaimedFilter(value)
+        }
+    }
+    impl ::core::convert::From<ConfigurationNumberConfirmedFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: ConfigurationNumberConfirmedFilter) -> Self {
+            Self::ConfigurationNumberConfirmedFilter(value)
+        }
+    }
+    impl ::core::convert::From<NewActiveValidatorFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: NewActiveValidatorFilter) -> Self {
+            Self::NewActiveValidatorFilter(value)
+        }
+    }
+    impl ::core::convert::From<NewCollateralReleaseFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: NewCollateralReleaseFilter) -> Self {
+            Self::NewCollateralReleaseFilter(value)
+        }
+    }
+    impl ::core::convert::From<NewStakingChangeRequestFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: NewStakingChangeRequestFilter) -> Self {
+            Self::NewStakingChangeRequestFilter(value)
+        }
+    }
+    impl ::core::convert::From<NewWaitingValidatorFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: NewWaitingValidatorFilter) -> Self {
+            Self::NewWaitingValidatorFilter(value)
+        }
+    }
     impl ::core::convert::From<NextBottomUpCheckpointExecutedFilter>
     for SubnetActorManagerFacetEvents {
         fn from(value: NextBottomUpCheckpointExecutedFilter) -> Self {
@@ -2109,6 +2835,18 @@ pub mod subnet_actor_manager_facet {
     for SubnetActorManagerFacetEvents {
         fn from(value: SubnetBootstrappedFilter) -> Self {
             Self::SubnetBootstrappedFilter(value)
+        }
+    }
+    impl ::core::convert::From<WaitingValidatorCollateralUpdatedFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: WaitingValidatorCollateralUpdatedFilter) -> Self {
+            Self::WaitingValidatorCollateralUpdatedFilter(value)
+        }
+    }
+    impl ::core::convert::From<WaitingValidatorLeftFilter>
+    for SubnetActorManagerFacetEvents {
+        fn from(value: WaitingValidatorLeftFilter) -> Self {
+            Self::WaitingValidatorLeftFilter(value)
         }
     }
     ///Container type for all input parameters for the `addBootstrapNode` function with signature `addBootstrapNode(string)` and selector `0x10fd4261`

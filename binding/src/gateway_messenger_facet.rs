@@ -111,7 +111,82 @@ pub mod gateway_messenger_facet {
                     ],
                 ),
             ]),
-            events: ::std::collections::BTreeMap::new(),
+            events: ::core::convert::From::from([
+                (
+                    ::std::borrow::ToOwned::to_owned("NewTopDownMessage"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned("NewTopDownMessage"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("subnet"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: true,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("message"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                        ::std::boxed::Box::new(
+                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                ],
+                                                            ),
+                                                        ],
+                                                    ),
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                        ::std::boxed::Box::new(
+                                                                            ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                        ),
+                                                                    ),
+                                                                ],
+                                                            ),
+                                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                                ::std::vec![
+                                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                                ],
+                                                            ),
+                                                        ],
+                                                    ),
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                ],
+                                            ),
+                                            ::ethers::core::abi::ethabi::ParamType::Bool,
+                                        ],
+                                    ),
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+            ]),
             errors: ::core::convert::From::from([
                 (
                     ::std::borrow::ToOwned::to_owned("CallFailed"),
@@ -269,6 +344,26 @@ pub mod gateway_messenger_facet {
             self.0
                 .method_hash([193, 49, 117, 239], (cross_msg,))
                 .expect("method not found (this should never happen)")
+        }
+        ///Gets the contract's `NewTopDownMessage` event
+        pub fn new_top_down_message_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewTopDownMessageFilter,
+        > {
+            self.0.event()
+        }
+        /// Returns an `Event` builder for all the events of this contract.
+        pub fn events(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            NewTopDownMessageFilter,
+        > {
+            self.0.event_with_filter(::core::default::Default::default())
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
@@ -623,6 +718,25 @@ pub mod gateway_messenger_facet {
         fn from(value: NotRegisteredSubnet) -> Self {
             Self::NotRegisteredSubnet(value)
         }
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "NewTopDownMessage",
+        abi = "NewTopDownMessage(address,((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool))"
+    )]
+    pub struct NewTopDownMessageFilter {
+        #[ethevent(indexed)]
+        pub subnet: ::ethers::core::types::Address,
+        pub message: CrossMsg,
     }
     ///Container type for all input parameters for the `propagate` function with signature `propagate(bytes32)` and selector `0x25bf0db6`
     #[derive(

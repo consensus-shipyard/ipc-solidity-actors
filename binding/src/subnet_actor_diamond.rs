@@ -73,7 +73,48 @@ pub mod subnet_actor_diamond {
                 ],
             }),
             functions: ::std::collections::BTreeMap::new(),
-            events: ::std::collections::BTreeMap::new(),
+            events: ::core::convert::From::from([
+                (
+                    ::std::borrow::ToOwned::to_owned("DiamondCut"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Event {
+                            name: ::std::borrow::ToOwned::to_owned("DiamondCut"),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("_diamondCut"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Address,
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Array(
+                                                        ::std::boxed::Box::new(
+                                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(4usize),
+                                                        ),
+                                                    ),
+                                                ],
+                                            ),
+                                        ),
+                                    ),
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("_init"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
+                                    indexed: false,
+                                },
+                                ::ethers::core::abi::ethabi::EventParam {
+                                    name: ::std::borrow::ToOwned::to_owned("_calldata"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Bytes,
+                                    indexed: false,
+                                },
+                            ],
+                            anonymous: false,
+                        },
+                    ],
+                ),
+            ]),
             errors: ::core::convert::From::from([
                 (
                     ::std::borrow::ToOwned::to_owned(
@@ -463,7 +504,7 @@ pub mod subnet_actor_diamond {
         ::ethers::core::abi::Abi,
     > = ::ethers::contract::Lazy::new(__abi);
     #[rustfmt::skip]
-    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x91W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[c\n\x82\xDDs`\xE3\x1B`\x80R`\x01`\x01`\xE0\x1B\x03\x19\x16`\x84R`\x7F\x19`\xA4\x01`\x80\xFD[`\tT`\x01`\x01`\xA0\x1B\x03\x163\x03`\xA4W\0[c\xE7\xE6\x01\xDB`\xE0\x1B`\x80R`\x04`\x80\xFD\xFE\xA2dipfsX\"\x12 \xA1\x08i\n\xDAkU0\x01\x1A\xDF^\xBDF\\\xCF\0v\xB5z\x7F\xE5@\xE7\x0F\xFEM,\x16\x85\xFA2dsolcC\0\x08\x13\x003";
+    const __DEPLOYED_BYTECODE: &[u8] = b"`\x80`@R6\x15`\x91W`\0\x805`\x01`\x01`\xE0\x1B\x03\x19\x16\x80\x82R\x7F\x80n\x0C\xBB\x9F\xCE)k\xBC3jH\xF4+\xF1\xDB\xC6\x97\"\xD1\x8D\x90\xD6\xFEp[u\x82\xC2\xBBK\xD2` R`@\x82 T`\x01`\x01`\xA0\x1B\x03\x16\x90\x81\x15`oWP\x81\x80\x916\x82\x807\x816\x91Z\xF4=\x82\x80>\x15`kW=\x90\xF3[=\x90\xFD[c\n\x82\xDDs`\xE3\x1B`\x80R`\x01`\x01`\xE0\x1B\x03\x19\x16`\x84R`\x7F\x19`\xA4\x01`\x80\xFD[`\tT`\x01`\x01`\xA0\x1B\x03\x163\x03`\xA4W\0[c\xE7\xE6\x01\xDB`\xE0\x1B`\x80R`\x04`\x80\xFD\xFE\xA2dipfsX\"\x12 \xC6\xEC\xB9\x90]\xB3\xD3\x1C\xBD8\x1D\x1E\x81\xCF\xFB}\x98\xB9\xFE\x82t\xEB\x03\xFD\xF3 \x85+\x14\x12z(dsolcC\0\x08\x16\x003";
     /// The deployed bytecode of the contract.
     pub static SUBNETACTORDIAMOND_DEPLOYED_BYTECODE: ::ethers::core::types::Bytes = ::ethers::core::types::Bytes::from_static(
         __DEPLOYED_BYTECODE,
@@ -506,6 +547,26 @@ pub mod subnet_actor_diamond {
                     client,
                 ),
             )
+        }
+        ///Gets the contract's `DiamondCut` event
+        pub fn diamond_cut_filter(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            DiamondCutFilter,
+        > {
+            self.0.event()
+        }
+        /// Returns an `Event` builder for all the events of this contract.
+        pub fn events(
+            &self,
+        ) -> ::ethers::contract::builders::Event<
+            ::std::sync::Arc<M>,
+            M,
+            DiamondCutFilter,
+        > {
+            self.0.event_with_filter(::core::default::Default::default())
         }
     }
     impl<M: ::ethers::providers::Middleware> From<::ethers::contract::Contract<M>>
@@ -1319,5 +1380,40 @@ pub mod subnet_actor_diamond {
         fn from(value: RemoveFacetAddressMustBeZeroAddress) -> Self {
             Self::RemoveFacetAddressMustBeZeroAddress(value)
         }
+    }
+    #[derive(
+        Clone,
+        ::ethers::contract::EthEvent,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethevent(
+        name = "DiamondCut",
+        abi = "DiamondCut((address,uint8,bytes4[])[],address,bytes)"
+    )]
+    pub struct DiamondCutFilter {
+        pub diamond_cut: ::std::vec::Vec<FacetCut>,
+        pub init: ::ethers::core::types::Address,
+        pub calldata: ::ethers::core::types::Bytes,
+    }
+    ///`FacetCut(address,uint8,bytes4[])`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct FacetCut {
+        pub facet_address: ::ethers::core::types::Address,
+        pub action: u8,
+        pub function_selectors: ::std::vec::Vec<[u8; 4]>,
     }
 }

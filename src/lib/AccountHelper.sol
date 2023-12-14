@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
-pragma solidity 0.8.19;
+pragma solidity 0.8.22;
 
 import {ADDRESS_CODEHASH} from "../constants/Constants.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
