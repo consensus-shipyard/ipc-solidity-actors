@@ -12,7 +12,10 @@ on:
 
 jobs:
   bindings:
-    if: ${{ github.event.pull_request.merged }} || ${{ github.ref == 'refs/heads/main' }} || ${{ github.ref == 'refs/heads/dev' }}
+    if: >-
+      github.event.pull_request.merged ||
+      github.ref == 'refs/heads/main' ||
+      github.ref == 'refs/heads/dev'
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -51,10 +54,10 @@ jobs:
          git config --global user.name 'auto-commit'
          git config --global user.email 'auto-commit@users.noreply.github.com'
 
-     - name: Commit bindings
-       run: |
-         make commit-rust-binding
+    #  - name: Commit bindings
+    #    run: |
+    #      make commit-rust-binding
 
-     - name: Commit ABI
-       run: |
-         make commit-abi
+    #  - name: Commit ABI
+    #    run: |
+    #      make commit-abi
