@@ -100,7 +100,8 @@ library LibGateway {
         b.subnetID = batch.subnetID;
         b.blockHeight = batch.blockHeight;
 
-        for (uint i = 0; i < batch.msgs.length;) {
+        uint256 msgLength = batch.msgs.length;
+        for (uint256 i; i < msgLength;) {
             // We need to push because initializing an array with a static
             // length will cause a copy from memory to storage, making
             // the compiler unhappy.
@@ -272,7 +273,8 @@ library LibGateway {
                     blockHeight: epochCut,
                     msgs: new CrossMsg[](batch.msgs.length)
                 });
-                for (uint i = 0; i < batch.msgs.length;) {
+                uint256 msgLenght = batch.msgs.length;
+                for (uint256 i; i < msgLenght;) {
                     newBatch.msgs[i] = batch.msgs[i];
                     unchecked {
                         ++i;

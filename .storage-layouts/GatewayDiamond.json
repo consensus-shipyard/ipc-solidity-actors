@@ -1,12 +1,12 @@
 {
     "storage": [
         {
-            "astId": 3674,
+            "astId": 3677,
             "contract": "src/GatewayDiamond.sol:GatewayDiamond",
             "label": "s",
             "offset": 0,
             "slot": "0",
-            "type": "t_struct(GatewayActorStorage)9971_storage"
+            "type": "t_struct(GatewayActorStorage)10675_storage"
         }
     ],
     "types": {
@@ -27,14 +27,14 @@
             "label": "bytes32[]",
             "numberOfBytes": "32"
         },
-        "t_array(t_struct(CrossMsg)15491_storage)dyn_storage": {
-            "base": "t_struct(CrossMsg)15491_storage",
+        "t_array(t_struct(CrossMsg)16247_storage)dyn_storage": {
+            "base": "t_struct(CrossMsg)16247_storage",
             "encoding": "dynamic_array",
             "label": "struct CrossMsg[]",
             "numberOfBytes": "32"
         },
-        "t_array(t_struct(Validator)15724_storage)dyn_storage": {
-            "base": "t_struct(Validator)15724_storage",
+        "t_array(t_struct(Validator)16480_storage)dyn_storage": {
+            "base": "t_struct(Validator)16480_storage",
             "encoding": "dynamic_array",
             "label": "struct Validator[]",
             "numberOfBytes": "32"
@@ -59,17 +59,17 @@
             "label": "bytes",
             "numberOfBytes": "32"
         },
-        "t_enum(QuorumObjKind)15529": {
+        "t_enum(QuorumObjKind)16285": {
             "encoding": "inplace",
             "label": "enum QuorumObjKind",
             "numberOfBytes": "1"
         },
-        "t_enum(StakingOperation)15620": {
+        "t_enum(StakingOperation)16376": {
             "encoding": "inplace",
             "label": "enum StakingOperation",
             "numberOfBytes": "1"
         },
-        "t_enum(Status)5115": {
+        "t_enum(Status)5153": {
             "encoding": "inplace",
             "label": "enum Status",
             "numberOfBytes": "1"
@@ -81,12 +81,12 @@
             "numberOfBytes": "32",
             "value": "t_bytes_storage"
         },
-        "t_mapping(t_address,t_struct(ValidatorInfo)15682_storage)": {
+        "t_mapping(t_address,t_struct(ValidatorInfo)16438_storage)": {
             "encoding": "mapping",
             "key": "t_address",
             "label": "mapping(address => struct ValidatorInfo)",
             "numberOfBytes": "32",
-            "value": "t_struct(ValidatorInfo)15682_storage"
+            "value": "t_struct(ValidatorInfo)16438_storage"
         },
         "t_mapping(t_address,t_uint16)": {
             "encoding": "mapping",
@@ -95,19 +95,19 @@
             "numberOfBytes": "32",
             "value": "t_uint16"
         },
-        "t_mapping(t_bytes32,t_struct(CrossMsg)15491_storage)": {
+        "t_mapping(t_bytes32,t_struct(CrossMsg)16247_storage)": {
             "encoding": "mapping",
             "key": "t_bytes32",
             "label": "mapping(bytes32 => struct CrossMsg)",
             "numberOfBytes": "32",
-            "value": "t_struct(CrossMsg)15491_storage"
+            "value": "t_struct(CrossMsg)16247_storage"
         },
-        "t_mapping(t_bytes32,t_struct(Subnet)15616_storage)": {
+        "t_mapping(t_bytes32,t_struct(Subnet)16372_storage)": {
             "encoding": "mapping",
             "key": "t_bytes32",
             "label": "mapping(bytes32 => struct Subnet)",
             "numberOfBytes": "32",
-            "value": "t_struct(Subnet)15616_storage"
+            "value": "t_struct(Subnet)16372_storage"
         },
         "t_mapping(t_bytes32,t_uint256)": {
             "encoding": "mapping",
@@ -123,13 +123,6 @@
             "numberOfBytes": "32",
             "value": "t_address"
         },
-        "t_mapping(t_uint256,t_array(t_struct(CrossMsg)15491_storage)dyn_storage)": {
-            "encoding": "mapping",
-            "key": "t_uint256",
-            "label": "mapping(uint256 => struct CrossMsg[])",
-            "numberOfBytes": "32",
-            "value": "t_array(t_struct(CrossMsg)15491_storage)dyn_storage"
-        },
         "t_mapping(t_uint256,t_mapping(t_address,t_bytes_storage))": {
             "encoding": "mapping",
             "key": "t_uint256",
@@ -144,33 +137,40 @@
             "numberOfBytes": "32",
             "value": "t_struct(AddressSet)3351_storage"
         },
-        "t_mapping(t_uint256,t_struct(BottomUpCheckpoint)15485_storage)": {
+        "t_mapping(t_uint256,t_struct(BottomUpCheckpoint)16205_storage)": {
             "encoding": "mapping",
             "key": "t_uint256",
             "label": "mapping(uint256 => struct BottomUpCheckpoint)",
             "numberOfBytes": "32",
-            "value": "t_struct(BottomUpCheckpoint)15485_storage"
+            "value": "t_struct(BottomUpCheckpoint)16205_storage"
         },
-        "t_mapping(t_uint256,t_struct(ParentFinality)15471_storage)": {
+        "t_mapping(t_uint256,t_struct(BottomUpMsgBatch)16218_storage)": {
+            "encoding": "mapping",
+            "key": "t_uint256",
+            "label": "mapping(uint256 => struct BottomUpMsgBatch)",
+            "numberOfBytes": "32",
+            "value": "t_struct(BottomUpMsgBatch)16218_storage"
+        },
+        "t_mapping(t_uint256,t_struct(ParentFinality)16191_storage)": {
             "encoding": "mapping",
             "key": "t_uint256",
             "label": "mapping(uint256 => struct ParentFinality)",
             "numberOfBytes": "32",
-            "value": "t_struct(ParentFinality)15471_storage"
+            "value": "t_struct(ParentFinality)16191_storage"
         },
-        "t_mapping(t_uint256,t_struct(QuorumInfo)15545_storage)": {
+        "t_mapping(t_uint256,t_struct(QuorumInfo)16301_storage)": {
             "encoding": "mapping",
             "key": "t_uint256",
             "label": "mapping(uint256 => struct QuorumInfo)",
             "numberOfBytes": "32",
-            "value": "t_struct(QuorumInfo)15545_storage"
+            "value": "t_struct(QuorumInfo)16301_storage"
         },
-        "t_mapping(t_uint64,t_struct(StakingChange)15628_storage)": {
+        "t_mapping(t_uint64,t_struct(StakingChange)16384_storage)": {
             "encoding": "mapping",
             "key": "t_uint64",
             "label": "mapping(uint64 => struct StakingChange)",
             "numberOfBytes": "32",
-            "value": "t_struct(StakingChange)15628_storage"
+            "value": "t_struct(StakingChange)16384_storage"
         },
         "t_struct(AddressSet)3351_storage": {
             "encoding": "inplace",
@@ -187,20 +187,20 @@
             ],
             "numberOfBytes": "64"
         },
-        "t_struct(BottomUpCheckpoint)15485_storage": {
+        "t_struct(BottomUpCheckpoint)16205_storage": {
             "encoding": "inplace",
             "label": "struct BottomUpCheckpoint",
             "members": [
                 {
-                    "astId": 15475,
+                    "astId": 16195,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnetID",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_struct(SubnetID)15599_storage"
+                    "type": "t_struct(SubnetID)16355_storage"
                 },
                 {
-                    "astId": 15478,
+                    "astId": 16198,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "blockHeight",
                     "offset": 0,
@@ -208,7 +208,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15481,
+                    "astId": 16201,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "blockHash",
                     "offset": 0,
@@ -216,7 +216,7 @@
                     "type": "t_bytes32"
                 },
                 {
-                    "astId": 15484,
+                    "astId": 16204,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "nextConfigurationNumber",
                     "offset": 0,
@@ -226,20 +226,51 @@
             ],
             "numberOfBytes": "160"
         },
-        "t_struct(CrossMsg)15491_storage": {
+        "t_struct(BottomUpMsgBatch)16218_storage": {
+            "encoding": "inplace",
+            "label": "struct BottomUpMsgBatch",
+            "members": [
+                {
+                    "astId": 16209,
+                    "contract": "src/GatewayDiamond.sol:GatewayDiamond",
+                    "label": "subnetID",
+                    "offset": 0,
+                    "slot": "0",
+                    "type": "t_struct(SubnetID)16355_storage"
+                },
+                {
+                    "astId": 16212,
+                    "contract": "src/GatewayDiamond.sol:GatewayDiamond",
+                    "label": "blockHeight",
+                    "offset": 0,
+                    "slot": "2",
+                    "type": "t_uint256"
+                },
+                {
+                    "astId": 16217,
+                    "contract": "src/GatewayDiamond.sol:GatewayDiamond",
+                    "label": "msgs",
+                    "offset": 0,
+                    "slot": "3",
+                    "type": "t_array(t_struct(CrossMsg)16247_storage)dyn_storage"
+                }
+            ],
+            "numberOfBytes": "128"
+        },
+        "t_struct(CrossMsg)16247_storage": {
             "encoding": "inplace",
             "label": "struct CrossMsg",
             "members": [
                 {
-                    "astId": 15488,
+                    "astId": 16244,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "message",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_struct(StorableMsg)15508_storage"
+                    "type": "t_struct(StorableMsg)16264_storage"
                 },
                 {
-                    "astId": 15490,
+                    "astId": 16246,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "wrapped",
                     "offset": 0,
@@ -249,12 +280,12 @@
             ],
             "numberOfBytes": "416"
         },
-        "t_struct(FvmAddress)15515_storage": {
+        "t_struct(FvmAddress)16271_storage": {
             "encoding": "inplace",
             "label": "struct FvmAddress",
             "members": [
                 {
-                    "astId": 15512,
+                    "astId": 16268,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "addrType",
                     "offset": 0,
@@ -262,7 +293,7 @@
                     "type": "t_uint8"
                 },
                 {
-                    "astId": 15514,
+                    "astId": 16270,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "payload",
                     "offset": 0,
@@ -272,28 +303,28 @@
             ],
             "numberOfBytes": "64"
         },
-        "t_struct(GatewayActorStorage)9971_storage": {
+        "t_struct(GatewayActorStorage)10675_storage": {
             "encoding": "inplace",
             "label": "struct GatewayActorStorage",
             "members": [
                 {
-                    "astId": 9879,
+                    "astId": 10577,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnets",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_mapping(t_bytes32,t_struct(Subnet)15616_storage)"
+                    "type": "t_mapping(t_bytes32,t_struct(Subnet)16372_storage)"
                 },
                 {
-                    "astId": 9885,
+                    "astId": 10583,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "finalitiesMap",
                     "offset": 0,
                     "slot": "1",
-                    "type": "t_mapping(t_uint256,t_struct(ParentFinality)15471_storage)"
+                    "type": "t_mapping(t_uint256,t_struct(ParentFinality)16191_storage)"
                 },
                 {
-                    "astId": 9888,
+                    "astId": 10586,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "latestParentHeight",
                     "offset": 0,
@@ -301,63 +332,63 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 9894,
+                    "astId": 10592,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "postbox",
                     "offset": 0,
                     "slot": "3",
-                    "type": "t_mapping(t_bytes32,t_struct(CrossMsg)15491_storage)"
+                    "type": "t_mapping(t_bytes32,t_struct(CrossMsg)16247_storage)"
                 },
                 {
-                    "astId": 9898,
+                    "astId": 10596,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "currentMembership",
                     "offset": 0,
                     "slot": "4",
-                    "type": "t_struct(Membership)15731_storage"
+                    "type": "t_struct(Membership)16487_storage"
                 },
                 {
-                    "astId": 9902,
+                    "astId": 10600,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "lastMembership",
                     "offset": 0,
                     "slot": "6",
-                    "type": "t_struct(Membership)15731_storage"
+                    "type": "t_struct(Membership)16487_storage"
                 },
                 {
-                    "astId": 9908,
+                    "astId": 10606,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpCheckpoints",
                     "offset": 0,
                     "slot": "8",
-                    "type": "t_mapping(t_uint256,t_struct(BottomUpCheckpoint)15485_storage)"
+                    "type": "t_mapping(t_uint256,t_struct(BottomUpCheckpoint)16205_storage)"
                 },
                 {
-                    "astId": 9915,
+                    "astId": 10612,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
-                    "label": "bottomUpMessages",
+                    "label": "bottomUpMsgBatches",
                     "offset": 0,
                     "slot": "9",
-                    "type": "t_mapping(t_uint256,t_array(t_struct(CrossMsg)15491_storage)dyn_storage)"
+                    "type": "t_mapping(t_uint256,t_struct(BottomUpMsgBatch)16218_storage)"
                 },
                 {
-                    "astId": 9919,
+                    "astId": 10616,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "checkpointQuorumMap",
                     "offset": 0,
                     "slot": "10",
-                    "type": "t_struct(QuorumMap)15576_storage"
+                    "type": "t_struct(QuorumMap)16332_storage"
                 },
                 {
-                    "astId": 9923,
+                    "astId": 10620,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpMsgBatchQuorumMap",
                     "offset": 0,
                     "slot": "17",
-                    "type": "t_struct(QuorumMap)15576_storage"
+                    "type": "t_struct(QuorumMap)16332_storage"
                 },
                 {
-                    "astId": 9927,
+                    "astId": 10624,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnetKeys",
                     "offset": 0,
@@ -365,15 +396,15 @@
                     "type": "t_array(t_bytes32)dyn_storage"
                 },
                 {
-                    "astId": 9931,
+                    "astId": 10628,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "networkName",
                     "offset": 0,
                     "slot": "25",
-                    "type": "t_struct(SubnetID)15599_storage"
+                    "type": "t_struct(SubnetID)16355_storage"
                 },
                 {
-                    "astId": 9934,
+                    "astId": 10631,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "minStake",
                     "offset": 0,
@@ -381,7 +412,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 9937,
+                    "astId": 10634,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "minCrossMsgFee",
                     "offset": 0,
@@ -389,7 +420,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 9940,
+                    "astId": 10637,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "majorityPercentage",
                     "offset": 0,
@@ -397,7 +428,7 @@
                     "type": "t_uint8"
                 },
                 {
-                    "astId": 9943,
+                    "astId": 10640,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpNonce",
                     "offset": 1,
@@ -405,7 +436,7 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 9946,
+                    "astId": 10643,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "appliedTopDownNonce",
                     "offset": 9,
@@ -413,7 +444,7 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 9949,
+                    "astId": 10646,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "totalSubnets",
                     "offset": 17,
@@ -421,7 +452,7 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 9951,
+                    "astId": 10649,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "bottomUpCheckPeriod",
                     "offset": 0,
@@ -429,108 +460,124 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 9955,
+                    "astId": 10652,
+                    "contract": "src/GatewayDiamond.sol:GatewayDiamond",
+                    "label": "bottomUpMsgBatchPeriod",
+                    "offset": 0,
+                    "slot": "31",
+                    "type": "t_uint256"
+                },
+                {
+                    "astId": 10655,
+                    "contract": "src/GatewayDiamond.sol:GatewayDiamond",
+                    "label": "maxMsgsPerBottomUpBatch",
+                    "offset": 0,
+                    "slot": "32",
+                    "type": "t_uint64"
+                },
+                {
+                    "astId": 10659,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validatorsTracker",
                     "offset": 0,
-                    "slot": "31",
-                    "type": "t_struct(ParentValidatorsTracker)15710_storage"
+                    "slot": "33",
+                    "type": "t_struct(ParentValidatorsTracker)16466_storage"
                 },
                 {
-                    "astId": 9958,
+                    "astId": 10662,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "maxTreeDepth",
                     "offset": 0,
-                    "slot": "42",
+                    "slot": "44",
                     "type": "t_uint8"
                 },
                 {
-                    "astId": 9961,
+                    "astId": 10665,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "generalPurposeCrossMsg",
                     "offset": 1,
-                    "slot": "42",
+                    "slot": "44",
                     "type": "t_bool"
                 },
                 {
-                    "astId": 9964,
+                    "astId": 10668,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "multiLevelCrossMsg",
                     "offset": 2,
-                    "slot": "42",
+                    "slot": "44",
                     "type": "t_bool"
                 },
                 {
-                    "astId": 9967,
+                    "astId": 10671,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "checkpointRelayerRewards",
                     "offset": 3,
-                    "slot": "42",
+                    "slot": "44",
                     "type": "t_bool"
                 },
                 {
-                    "astId": 9970,
+                    "astId": 10674,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "crossMsgRelayerRewards",
                     "offset": 4,
-                    "slot": "42",
+                    "slot": "44",
                     "type": "t_bool"
                 }
             ],
-            "numberOfBytes": "1376"
+            "numberOfBytes": "1440"
         },
-        "t_struct(IPCAddress)15717_storage": {
+        "t_struct(IPCAddress)16473_storage": {
             "encoding": "inplace",
             "label": "struct IPCAddress",
             "members": [
                 {
-                    "astId": 15713,
+                    "astId": 16469,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "subnetId",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_struct(SubnetID)15599_storage"
+                    "type": "t_struct(SubnetID)16355_storage"
                 },
                 {
-                    "astId": 15716,
+                    "astId": 16472,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "rawAddress",
                     "offset": 0,
                     "slot": "2",
-                    "type": "t_struct(FvmAddress)15515_storage"
+                    "type": "t_struct(FvmAddress)16271_storage"
                 }
             ],
             "numberOfBytes": "128"
         },
-        "t_struct(MaxPQ)13998_storage": {
+        "t_struct(MaxPQ)14710_storage": {
             "encoding": "inplace",
             "label": "struct MaxPQ",
             "members": [
                 {
-                    "astId": 13997,
+                    "astId": 14709,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "inner",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_struct(PQ)15245_storage"
+                    "type": "t_struct(PQ)15957_storage"
                 }
             ],
             "numberOfBytes": "96"
         },
-        "t_struct(Membership)15731_storage": {
+        "t_struct(Membership)16487_storage": {
             "encoding": "inplace",
             "label": "struct Membership",
             "members": [
                 {
-                    "astId": 15728,
+                    "astId": 16484,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validators",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_array(t_struct(Validator)15724_storage)dyn_storage"
+                    "type": "t_array(t_struct(Validator)16480_storage)dyn_storage"
                 },
                 {
-                    "astId": 15730,
+                    "astId": 16486,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "configurationNumber",
                     "offset": 0,
@@ -540,27 +587,27 @@
             ],
             "numberOfBytes": "64"
         },
-        "t_struct(MinPQ)14616_storage": {
+        "t_struct(MinPQ)15328_storage": {
             "encoding": "inplace",
             "label": "struct MinPQ",
             "members": [
                 {
-                    "astId": 14615,
+                    "astId": 15327,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "inner",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_struct(PQ)15245_storage"
+                    "type": "t_struct(PQ)15957_storage"
                 }
             ],
             "numberOfBytes": "96"
         },
-        "t_struct(PQ)15245_storage": {
+        "t_struct(PQ)15957_storage": {
             "encoding": "inplace",
             "label": "struct PQ",
             "members": [
                 {
-                    "astId": 15234,
+                    "astId": 15946,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "size",
                     "offset": 0,
@@ -568,7 +615,7 @@
                     "type": "t_uint16"
                 },
                 {
-                    "astId": 15239,
+                    "astId": 15951,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "addressToPos",
                     "offset": 0,
@@ -576,7 +623,7 @@
                     "type": "t_mapping(t_address,t_uint16)"
                 },
                 {
-                    "astId": 15244,
+                    "astId": 15956,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "posToAddress",
                     "offset": 0,
@@ -586,12 +633,12 @@
             ],
             "numberOfBytes": "96"
         },
-        "t_struct(ParentFinality)15471_storage": {
+        "t_struct(ParentFinality)16191_storage": {
             "encoding": "inplace",
             "label": "struct ParentFinality",
             "members": [
                 {
-                    "astId": 15468,
+                    "astId": 16188,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "height",
                     "offset": 0,
@@ -599,7 +646,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15470,
+                    "astId": 16190,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "blockHash",
                     "offset": 0,
@@ -609,35 +656,35 @@
             ],
             "numberOfBytes": "64"
         },
-        "t_struct(ParentValidatorsTracker)15710_storage": {
+        "t_struct(ParentValidatorsTracker)16466_storage": {
             "encoding": "inplace",
             "label": "struct ParentValidatorsTracker",
             "members": [
                 {
-                    "astId": 15706,
+                    "astId": 16462,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validators",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_struct(ValidatorSet)15703_storage"
+                    "type": "t_struct(ValidatorSet)16459_storage"
                 },
                 {
-                    "astId": 15709,
+                    "astId": 16465,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "changes",
                     "offset": 0,
                     "slot": "9",
-                    "type": "t_struct(StakingChangeLog)15647_storage"
+                    "type": "t_struct(StakingChangeLog)16403_storage"
                 }
             ],
             "numberOfBytes": "352"
         },
-        "t_struct(QuorumInfo)15545_storage": {
+        "t_struct(QuorumInfo)16301_storage": {
             "encoding": "inplace",
             "label": "struct QuorumInfo",
             "members": [
                 {
-                    "astId": 15532,
+                    "astId": 16288,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "hash",
                     "offset": 0,
@@ -645,7 +692,7 @@
                     "type": "t_bytes32"
                 },
                 {
-                    "astId": 15535,
+                    "astId": 16291,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "rootHash",
                     "offset": 0,
@@ -653,7 +700,7 @@
                     "type": "t_bytes32"
                 },
                 {
-                    "astId": 15538,
+                    "astId": 16294,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "threshold",
                     "offset": 0,
@@ -661,7 +708,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15541,
+                    "astId": 16297,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "currentWeight",
                     "offset": 0,
@@ -669,7 +716,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15544,
+                    "astId": 16300,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "reached",
                     "offset": 0,
@@ -679,20 +726,20 @@
             ],
             "numberOfBytes": "160"
         },
-        "t_struct(QuorumMap)15576_storage": {
+        "t_struct(QuorumMap)16332_storage": {
             "encoding": "inplace",
             "label": "struct QuorumMap",
             "members": [
                 {
-                    "astId": 15549,
+                    "astId": 16305,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "quorumObjKind",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_enum(QuorumObjKind)15529"
+                    "type": "t_enum(QuorumObjKind)16285"
                 },
                 {
-                    "astId": 15552,
+                    "astId": 16308,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "retentionHeight",
                     "offset": 0,
@@ -700,15 +747,15 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15558,
+                    "astId": 16314,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "quorumInfo",
                     "offset": 0,
                     "slot": "2",
-                    "type": "t_mapping(t_uint256,t_struct(QuorumInfo)15545_storage)"
+                    "type": "t_mapping(t_uint256,t_struct(QuorumInfo)16301_storage)"
                 },
                 {
-                    "astId": 15562,
+                    "astId": 16318,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "incompleteQuorums",
                     "offset": 0,
@@ -716,7 +763,7 @@
                     "type": "t_struct(UintSet)3508_storage"
                 },
                 {
-                    "astId": 15568,
+                    "astId": 16324,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "quorumSignatureSenders",
                     "offset": 0,
@@ -724,7 +771,7 @@
                     "type": "t_mapping(t_uint256,t_struct(AddressSet)3351_storage)"
                 },
                 {
-                    "astId": 15575,
+                    "astId": 16331,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "quorumSignatures",
                     "offset": 0,
@@ -757,20 +804,20 @@
             ],
             "numberOfBytes": "64"
         },
-        "t_struct(StakingChange)15628_storage": {
+        "t_struct(StakingChange)16384_storage": {
             "encoding": "inplace",
             "label": "struct StakingChange",
             "members": [
                 {
-                    "astId": 15623,
+                    "astId": 16379,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "op",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_enum(StakingOperation)15620"
+                    "type": "t_enum(StakingOperation)16376"
                 },
                 {
-                    "astId": 15625,
+                    "astId": 16381,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "payload",
                     "offset": 0,
@@ -778,7 +825,7 @@
                     "type": "t_bytes_storage"
                 },
                 {
-                    "astId": 15627,
+                    "astId": 16383,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validator",
                     "offset": 0,
@@ -788,12 +835,12 @@
             ],
             "numberOfBytes": "96"
         },
-        "t_struct(StakingChangeLog)15647_storage": {
+        "t_struct(StakingChangeLog)16403_storage": {
             "encoding": "inplace",
             "label": "struct StakingChangeLog",
             "members": [
                 {
-                    "astId": 15637,
+                    "astId": 16393,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "nextConfigurationNumber",
                     "offset": 0,
@@ -801,7 +848,7 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 15640,
+                    "astId": 16396,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "startConfigurationNumber",
                     "offset": 8,
@@ -809,38 +856,38 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 15646,
+                    "astId": 16402,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "changes",
                     "offset": 0,
                     "slot": "1",
-                    "type": "t_mapping(t_uint64,t_struct(StakingChange)15628_storage)"
+                    "type": "t_mapping(t_uint64,t_struct(StakingChange)16384_storage)"
                 }
             ],
             "numberOfBytes": "64"
         },
-        "t_struct(StorableMsg)15508_storage": {
+        "t_struct(StorableMsg)16264_storage": {
             "encoding": "inplace",
             "label": "struct StorableMsg",
             "members": [
                 {
-                    "astId": 15494,
+                    "astId": 16250,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "from",
                     "offset": 0,
                     "slot": "0",
-                    "type": "t_struct(IPCAddress)15717_storage"
+                    "type": "t_struct(IPCAddress)16473_storage"
                 },
                 {
-                    "astId": 15497,
+                    "astId": 16253,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "to",
                     "offset": 0,
                     "slot": "4",
-                    "type": "t_struct(IPCAddress)15717_storage"
+                    "type": "t_struct(IPCAddress)16473_storage"
                 },
                 {
-                    "astId": 15499,
+                    "astId": 16255,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "value",
                     "offset": 0,
@@ -848,7 +895,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15501,
+                    "astId": 16257,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "nonce",
                     "offset": 0,
@@ -856,7 +903,7 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 15503,
+                    "astId": 16259,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "method",
                     "offset": 8,
@@ -864,7 +911,7 @@
                     "type": "t_bytes4"
                 },
                 {
-                    "astId": 15505,
+                    "astId": 16261,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "params",
                     "offset": 0,
@@ -872,7 +919,7 @@
                     "type": "t_bytes_storage"
                 },
                 {
-                    "astId": 15507,
+                    "astId": 16263,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "fee",
                     "offset": 0,
@@ -882,12 +929,12 @@
             ],
             "numberOfBytes": "384"
         },
-        "t_struct(Subnet)15616_storage": {
+        "t_struct(Subnet)16372_storage": {
             "encoding": "inplace",
             "label": "struct Subnet",
             "members": [
                 {
-                    "astId": 15601,
+                    "astId": 16357,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "stake",
                     "offset": 0,
@@ -895,7 +942,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15603,
+                    "astId": 16359,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "genesisEpoch",
                     "offset": 0,
@@ -903,7 +950,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15605,
+                    "astId": 16361,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "circSupply",
                     "offset": 0,
@@ -911,7 +958,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15607,
+                    "astId": 16363,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "topDownNonce",
                     "offset": 0,
@@ -919,7 +966,7 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 15609,
+                    "astId": 16365,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "appliedBottomUpNonce",
                     "offset": 8,
@@ -927,30 +974,30 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 15612,
+                    "astId": 16368,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "status",
                     "offset": 16,
                     "slot": "3",
-                    "type": "t_enum(Status)5115"
+                    "type": "t_enum(Status)5153"
                 },
                 {
-                    "astId": 15615,
+                    "astId": 16371,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "id",
                     "offset": 0,
                     "slot": "4",
-                    "type": "t_struct(SubnetID)15599_storage"
+                    "type": "t_struct(SubnetID)16355_storage"
                 }
             ],
             "numberOfBytes": "192"
         },
-        "t_struct(SubnetID)15599_storage": {
+        "t_struct(SubnetID)16355_storage": {
             "encoding": "inplace",
             "label": "struct SubnetID",
             "members": [
                 {
-                    "astId": 15594,
+                    "astId": 16350,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "root",
                     "offset": 0,
@@ -958,7 +1005,7 @@
                     "type": "t_uint64"
                 },
                 {
-                    "astId": 15598,
+                    "astId": 16354,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "route",
                     "offset": 0,
@@ -983,12 +1030,12 @@
             ],
             "numberOfBytes": "64"
         },
-        "t_struct(Validator)15724_storage": {
+        "t_struct(Validator)16480_storage": {
             "encoding": "inplace",
             "label": "struct Validator",
             "members": [
                 {
-                    "astId": 15719,
+                    "astId": 16475,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "weight",
                     "offset": 0,
@@ -996,7 +1043,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15721,
+                    "astId": 16477,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "addr",
                     "offset": 0,
@@ -1004,7 +1051,7 @@
                     "type": "t_address"
                 },
                 {
-                    "astId": 15723,
+                    "astId": 16479,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "metadata",
                     "offset": 0,
@@ -1014,12 +1061,12 @@
             ],
             "numberOfBytes": "96"
         },
-        "t_struct(ValidatorInfo)15682_storage": {
+        "t_struct(ValidatorInfo)16438_storage": {
             "encoding": "inplace",
             "label": "struct ValidatorInfo",
             "members": [
                 {
-                    "astId": 15676,
+                    "astId": 16432,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "confirmedCollateral",
                     "offset": 0,
@@ -1027,7 +1074,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15678,
+                    "astId": 16434,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "totalCollateral",
                     "offset": 0,
@@ -1035,7 +1082,7 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15681,
+                    "astId": 16437,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "metadata",
                     "offset": 0,
@@ -1045,12 +1092,12 @@
             ],
             "numberOfBytes": "96"
         },
-        "t_struct(ValidatorSet)15703_storage": {
+        "t_struct(ValidatorSet)16459_storage": {
             "encoding": "inplace",
             "label": "struct ValidatorSet",
             "members": [
                 {
-                    "astId": 15685,
+                    "astId": 16441,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "activeLimit",
                     "offset": 0,
@@ -1058,7 +1105,7 @@
                     "type": "t_uint16"
                 },
                 {
-                    "astId": 15688,
+                    "astId": 16444,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "totalConfirmedCollateral",
                     "offset": 0,
@@ -1066,28 +1113,28 @@
                     "type": "t_uint256"
                 },
                 {
-                    "astId": 15694,
+                    "astId": 16450,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "validators",
                     "offset": 0,
                     "slot": "2",
-                    "type": "t_mapping(t_address,t_struct(ValidatorInfo)15682_storage)"
+                    "type": "t_mapping(t_address,t_struct(ValidatorInfo)16438_storage)"
                 },
                 {
-                    "astId": 15698,
+                    "astId": 16454,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "activeValidators",
                     "offset": 0,
                     "slot": "3",
-                    "type": "t_struct(MinPQ)14616_storage"
+                    "type": "t_struct(MinPQ)15328_storage"
                 },
                 {
-                    "astId": 15702,
+                    "astId": 16458,
                     "contract": "src/GatewayDiamond.sol:GatewayDiamond",
                     "label": "waitingValidators",
                     "offset": 0,
                     "slot": "6",
-                    "type": "t_struct(MaxPQ)13998_storage"
+                    "type": "t_struct(MaxPQ)14710_storage"
                 }
             ],
             "numberOfBytes": "288"

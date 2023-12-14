@@ -110,10 +110,10 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("bottomUpMsgsBatch"),
+                    ::std::borrow::ToOwned::to_owned("bottomUpMsgBatch"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("bottomUpMsgsBatch"),
+                            name: ::std::borrow::ToOwned::to_owned("bottomUpMsgBatch"),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("e"),
@@ -212,11 +212,11 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("bottomUpMsgsBatchPeriod"),
+                    ::std::borrow::ToOwned::to_owned("bottomUpMsgBatchPeriod"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "bottomUpMsgsBatchPeriod",
+                                "bottomUpMsgBatchPeriod",
                             ),
                             inputs: ::std::vec![],
                             outputs: ::std::vec![
@@ -324,13 +324,23 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("getBatchMsgsRetentionHeight"),
+                    ::std::borrow::ToOwned::to_owned("getBottomUpMsgBatchCurrentWeight"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "getBatchMsgsRetentionHeight",
+                                "getBottomUpMsgBatchCurrentWeight",
                             ),
-                            inputs: ::std::vec![],
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("h"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
                             outputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::string::String::new(),
@@ -348,11 +358,53 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("getBatchMsgsSignatureBundle"),
+                    ::std::borrow::ToOwned::to_owned("getBottomUpMsgBatchInfo"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "getBatchMsgsSignatureBundle",
+                                "getBottomUpMsgBatchInfo",
+                            ),
+                            inputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::borrow::ToOwned::to_owned("h"),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                        ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Bool,
+                                        ],
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("struct QuorumInfo"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned(
+                        "getBottomUpMsgBatchSignatureBundle",
+                    ),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getBottomUpMsgBatchSignatureBundle",
                             ),
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
@@ -480,6 +532,30 @@ pub mod gateway_getter_facet {
                                     ),
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned("bytes[]"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getBottomUpMsgRetentionHeight"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getBottomUpMsgRetentionHeight",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                             ],
@@ -787,11 +863,107 @@ pub mod gateway_getter_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned("getIncompleteBatchMsgs"),
+                    ::std::borrow::ToOwned::to_owned("getIncompleteCheckpointHeights"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
                             name: ::std::borrow::ToOwned::to_owned(
-                                "getIncompleteBatchMsgs",
+                                "getIncompleteCheckpointHeights",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256[]"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getIncompleteCheckpoints"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getIncompleteCheckpoints",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                ::std::vec![
+                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
+                                                        ::std::vec![
+                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                            ::ethers::core::abi::ethabi::ParamType::Array(
+                                                                ::std::boxed::Box::new(
+                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
+                                                                ),
+                                                            ),
+                                                        ],
+                                                    ),
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
+                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                                ],
+                                            ),
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned(
+                                            "struct BottomUpCheckpoint[]",
+                                        ),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getIncompleteMsgBatchHeights"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getIncompleteMsgBatchHeights",
+                            ),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
+                                        ::std::boxed::Box::new(
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                        ),
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256[]"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
+                    ::std::borrow::ToOwned::to_owned("getIncompleteMsgBatches"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned(
+                                "getIncompleteMsgBatches",
                             ),
                             inputs: ::std::vec![],
                             outputs: ::std::vec![
@@ -877,76 +1049,6 @@ pub mod gateway_getter_facet {
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned(
                                             "struct BottomUpMsgBatch[]",
-                                        ),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("getIncompleteCheckpointHeights"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "getIncompleteCheckpointHeights",
-                            ),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
-                                        ::std::boxed::Box::new(
-                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
-                                        ),
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256[]"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("getIncompleteCheckpoints"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "getIncompleteCheckpoints",
-                            ),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Array(
-                                        ::std::boxed::Box::new(
-                                            ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                ::std::vec![
-                                                    ::ethers::core::abi::ethabi::ParamType::Tuple(
-                                                        ::std::vec![
-                                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                            ::ethers::core::abi::ethabi::ParamType::Array(
-                                                                ::std::boxed::Box::new(
-                                                                    ::ethers::core::abi::ethabi::ParamType::Address,
-                                                                ),
-                                                            ),
-                                                        ],
-                                                    ),
-                                                    ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
-                                                    ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
-                                                ],
-                                            ),
-                                        ),
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned(
-                                            "struct BottomUpCheckpoint[]",
                                         ),
                                     ),
                                 },
@@ -1576,21 +1678,21 @@ pub mod gateway_getter_facet {
                 .method_hash([45, 165, 121, 74], e)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `bottomUpMsgsBatch` (0x8481474e) function
-        pub fn bottom_up_msgs_batch(
+        ///Calls the contract's `bottomUpMsgBatch` (0xdd81b5cf) function
+        pub fn bottom_up_msg_batch(
             &self,
             e: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, BottomUpMsgBatch> {
             self.0
-                .method_hash([132, 129, 71, 78], e)
+                .method_hash([221, 129, 181, 207], e)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `bottomUpMsgsBatchPeriod` (0x0d4e898c) function
-        pub fn bottom_up_msgs_batch_period(
+        ///Calls the contract's `bottomUpMsgBatchPeriod` (0x69e737fd) function
+        pub fn bottom_up_msg_batch_period(
             &self,
         ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
             self.0
-                .method_hash([13, 78, 137, 140], ())
+                .method_hash([105, 231, 55, 253], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `bottomUpNonce` (0x41b6a2e8) function
@@ -1618,16 +1720,26 @@ pub mod gateway_getter_facet {
                 .method_hash([158, 83, 11, 87], (subnet_id,))
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `getBatchMsgsRetentionHeight` (0x3a5a17f7) function
-        pub fn get_batch_msgs_retention_height(
+        ///Calls the contract's `getBottomUpMsgBatchCurrentWeight` (0x6547cd64) function
+        pub fn get_bottom_up_msg_batch_current_weight(
             &self,
+            h: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
             self.0
-                .method_hash([58, 90, 23, 247], ())
+                .method_hash([101, 71, 205, 100], h)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `getBatchMsgsSignatureBundle` (0x13652d32) function
-        pub fn get_batch_msgs_signature_bundle(
+        ///Calls the contract's `getBottomUpMsgBatchInfo` (0xb9ee5842) function
+        pub fn get_bottom_up_msg_batch_info(
+            &self,
+            h: ::ethers::core::types::U256,
+        ) -> ::ethers::contract::builders::ContractCall<M, QuorumInfo> {
+            self.0
+                .method_hash([185, 238, 88, 66], h)
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `getBottomUpMsgBatchSignatureBundle` (0xa9294bdd) function
+        pub fn get_bottom_up_msg_batch_signature_bundle(
             &self,
             h: ::ethers::core::types::U256,
         ) -> ::ethers::contract::builders::ContractCall<
@@ -1640,7 +1752,15 @@ pub mod gateway_getter_facet {
             ),
         > {
             self.0
-                .method_hash([19, 101, 45, 50], h)
+                .method_hash([169, 41, 75, 221], h)
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `getBottomUpMsgRetentionHeight` (0x22180594) function
+        pub fn get_bottom_up_msg_retention_height(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([34, 24, 5, 148], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `getCheckpointCurrentWeight` (0xb3ab3f74) function
@@ -1713,17 +1833,6 @@ pub mod gateway_getter_facet {
                 .method_hash([106, 210, 27, 176], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `getIncompleteBatchMsgs` (0xd7acdd54) function
-        pub fn get_incomplete_batch_msgs(
-            &self,
-        ) -> ::ethers::contract::builders::ContractCall<
-            M,
-            ::std::vec::Vec<BottomUpMsgBatch>,
-        > {
-            self.0
-                .method_hash([215, 172, 221, 84], ())
-                .expect("method not found (this should never happen)")
-        }
         ///Calls the contract's `getIncompleteCheckpointHeights` (0xa517218f) function
         pub fn get_incomplete_checkpoint_heights(
             &self,
@@ -1744,6 +1853,28 @@ pub mod gateway_getter_facet {
         > {
             self.0
                 .method_hash([151, 4, 39, 102], ())
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `getIncompleteMsgBatchHeights` (0x767ee5f4) function
+        pub fn get_incomplete_msg_batch_heights(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::std::vec::Vec<::ethers::core::types::U256>,
+        > {
+            self.0
+                .method_hash([118, 126, 229, 244], ())
+                .expect("method not found (this should never happen)")
+        }
+        ///Calls the contract's `getIncompleteMsgBatches` (0x335eb62a) function
+        pub fn get_incomplete_msg_batches(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<
+            M,
+            ::std::vec::Vec<BottomUpMsgBatch>,
+        > {
+            self.0
+                .method_hash([51, 94, 182, 42], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `getLastConfigurationNumber` (0xb1ba49b0) function
@@ -1920,7 +2051,7 @@ pub mod gateway_getter_facet {
     pub struct BottomUpCheckpointCall {
         pub e: ::ethers::core::types::U256,
     }
-    ///Container type for all input parameters for the `bottomUpMsgsBatch` function with signature `bottomUpMsgsBatch(uint256)` and selector `0x8481474e`
+    ///Container type for all input parameters for the `bottomUpMsgBatch` function with signature `bottomUpMsgBatch(uint256)` and selector `0xdd81b5cf`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1931,11 +2062,11 @@ pub mod gateway_getter_facet {
         Eq,
         Hash
     )]
-    #[ethcall(name = "bottomUpMsgsBatch", abi = "bottomUpMsgsBatch(uint256)")]
-    pub struct BottomUpMsgsBatchCall {
+    #[ethcall(name = "bottomUpMsgBatch", abi = "bottomUpMsgBatch(uint256)")]
+    pub struct BottomUpMsgBatchCall {
         pub e: ::ethers::core::types::U256,
     }
-    ///Container type for all input parameters for the `bottomUpMsgsBatchPeriod` function with signature `bottomUpMsgsBatchPeriod()` and selector `0x0d4e898c`
+    ///Container type for all input parameters for the `bottomUpMsgBatchPeriod` function with signature `bottomUpMsgBatchPeriod()` and selector `0x69e737fd`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1946,8 +2077,8 @@ pub mod gateway_getter_facet {
         Eq,
         Hash
     )]
-    #[ethcall(name = "bottomUpMsgsBatchPeriod", abi = "bottomUpMsgsBatchPeriod()")]
-    pub struct BottomUpMsgsBatchPeriodCall;
+    #[ethcall(name = "bottomUpMsgBatchPeriod", abi = "bottomUpMsgBatchPeriod()")]
+    pub struct BottomUpMsgBatchPeriodCall;
     ///Container type for all input parameters for the `bottomUpNonce` function with signature `bottomUpNonce()` and selector `0x41b6a2e8`
     #[derive(
         Clone,
@@ -1992,7 +2123,7 @@ pub mod gateway_getter_facet {
     pub struct GetAppliedTopDownNonceCall {
         pub subnet_id: SubnetID,
     }
-    ///Container type for all input parameters for the `getBatchMsgsRetentionHeight` function with signature `getBatchMsgsRetentionHeight()` and selector `0x3a5a17f7`
+    ///Container type for all input parameters for the `getBottomUpMsgBatchCurrentWeight` function with signature `getBottomUpMsgBatchCurrentWeight(uint256)` and selector `0x6547cd64`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -2004,28 +2135,64 @@ pub mod gateway_getter_facet {
         Hash
     )]
     #[ethcall(
-        name = "getBatchMsgsRetentionHeight",
-        abi = "getBatchMsgsRetentionHeight()"
+        name = "getBottomUpMsgBatchCurrentWeight",
+        abi = "getBottomUpMsgBatchCurrentWeight(uint256)"
     )]
-    pub struct GetBatchMsgsRetentionHeightCall;
-    ///Container type for all input parameters for the `getBatchMsgsSignatureBundle` function with signature `getBatchMsgsSignatureBundle(uint256)` and selector `0x13652d32`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    #[ethcall(
-        name = "getBatchMsgsSignatureBundle",
-        abi = "getBatchMsgsSignatureBundle(uint256)"
-    )]
-    pub struct GetBatchMsgsSignatureBundleCall {
+    pub struct GetBottomUpMsgBatchCurrentWeightCall {
         pub h: ::ethers::core::types::U256,
     }
+    ///Container type for all input parameters for the `getBottomUpMsgBatchInfo` function with signature `getBottomUpMsgBatchInfo(uint256)` and selector `0xb9ee5842`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "getBottomUpMsgBatchInfo",
+        abi = "getBottomUpMsgBatchInfo(uint256)"
+    )]
+    pub struct GetBottomUpMsgBatchInfoCall {
+        pub h: ::ethers::core::types::U256,
+    }
+    ///Container type for all input parameters for the `getBottomUpMsgBatchSignatureBundle` function with signature `getBottomUpMsgBatchSignatureBundle(uint256)` and selector `0xa9294bdd`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "getBottomUpMsgBatchSignatureBundle",
+        abi = "getBottomUpMsgBatchSignatureBundle(uint256)"
+    )]
+    pub struct GetBottomUpMsgBatchSignatureBundleCall {
+        pub h: ::ethers::core::types::U256,
+    }
+    ///Container type for all input parameters for the `getBottomUpMsgRetentionHeight` function with signature `getBottomUpMsgRetentionHeight()` and selector `0x22180594`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "getBottomUpMsgRetentionHeight",
+        abi = "getBottomUpMsgRetentionHeight()"
+    )]
+    pub struct GetBottomUpMsgRetentionHeightCall;
     ///Container type for all input parameters for the `getCheckpointCurrentWeight` function with signature `getCheckpointCurrentWeight(uint256)` and selector `0xb3ab3f74`
     #[derive(
         Clone,
@@ -2138,19 +2305,6 @@ pub mod gateway_getter_facet {
     )]
     #[ethcall(name = "getCurrentMembership", abi = "getCurrentMembership()")]
     pub struct GetCurrentMembershipCall;
-    ///Container type for all input parameters for the `getIncompleteBatchMsgs` function with signature `getIncompleteBatchMsgs()` and selector `0xd7acdd54`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    #[ethcall(name = "getIncompleteBatchMsgs", abi = "getIncompleteBatchMsgs()")]
-    pub struct GetIncompleteBatchMsgsCall;
     ///Container type for all input parameters for the `getIncompleteCheckpointHeights` function with signature `getIncompleteCheckpointHeights()` and selector `0xa517218f`
     #[derive(
         Clone,
@@ -2180,6 +2334,35 @@ pub mod gateway_getter_facet {
     )]
     #[ethcall(name = "getIncompleteCheckpoints", abi = "getIncompleteCheckpoints()")]
     pub struct GetIncompleteCheckpointsCall;
+    ///Container type for all input parameters for the `getIncompleteMsgBatchHeights` function with signature `getIncompleteMsgBatchHeights()` and selector `0x767ee5f4`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(
+        name = "getIncompleteMsgBatchHeights",
+        abi = "getIncompleteMsgBatchHeights()"
+    )]
+    pub struct GetIncompleteMsgBatchHeightsCall;
+    ///Container type for all input parameters for the `getIncompleteMsgBatches` function with signature `getIncompleteMsgBatches()` and selector `0x335eb62a`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "getIncompleteMsgBatches", abi = "getIncompleteMsgBatches()")]
+    pub struct GetIncompleteMsgBatchesCall;
     ///Container type for all input parameters for the `getLastConfigurationNumber` function with signature `getLastConfigurationNumber()` and selector `0xb1ba49b0`
     #[derive(
         Clone,
@@ -2396,13 +2579,15 @@ pub mod gateway_getter_facet {
         AppliedTopDownNonce(AppliedTopDownNonceCall),
         BottomUpCheckPeriod(BottomUpCheckPeriodCall),
         BottomUpCheckpoint(BottomUpCheckpointCall),
-        BottomUpMsgsBatch(BottomUpMsgsBatchCall),
-        BottomUpMsgsBatchPeriod(BottomUpMsgsBatchPeriodCall),
+        BottomUpMsgBatch(BottomUpMsgBatchCall),
+        BottomUpMsgBatchPeriod(BottomUpMsgBatchPeriodCall),
         BottomUpNonce(BottomUpNonceCall),
         CrossMsgFee(CrossMsgFeeCall),
         GetAppliedTopDownNonce(GetAppliedTopDownNonceCall),
-        GetBatchMsgsRetentionHeight(GetBatchMsgsRetentionHeightCall),
-        GetBatchMsgsSignatureBundle(GetBatchMsgsSignatureBundleCall),
+        GetBottomUpMsgBatchCurrentWeight(GetBottomUpMsgBatchCurrentWeightCall),
+        GetBottomUpMsgBatchInfo(GetBottomUpMsgBatchInfoCall),
+        GetBottomUpMsgBatchSignatureBundle(GetBottomUpMsgBatchSignatureBundleCall),
+        GetBottomUpMsgRetentionHeight(GetBottomUpMsgRetentionHeightCall),
         GetCheckpointCurrentWeight(GetCheckpointCurrentWeightCall),
         GetCheckpointInfo(GetCheckpointInfoCall),
         GetCheckpointRetentionHeight(GetCheckpointRetentionHeightCall),
@@ -2410,9 +2595,10 @@ pub mod gateway_getter_facet {
         GetCurrentBottomUpCheckpoint(GetCurrentBottomUpCheckpointCall),
         GetCurrentConfigurationNumber(GetCurrentConfigurationNumberCall),
         GetCurrentMembership(GetCurrentMembershipCall),
-        GetIncompleteBatchMsgs(GetIncompleteBatchMsgsCall),
         GetIncompleteCheckpointHeights(GetIncompleteCheckpointHeightsCall),
         GetIncompleteCheckpoints(GetIncompleteCheckpointsCall),
+        GetIncompleteMsgBatchHeights(GetIncompleteMsgBatchHeightsCall),
+        GetIncompleteMsgBatches(GetIncompleteMsgBatchesCall),
         GetLastConfigurationNumber(GetLastConfigurationNumberCall),
         GetLastMembership(GetLastMembershipCall),
         GetLatestParentFinality(GetLatestParentFinalityCall),
@@ -2449,15 +2635,15 @@ pub mod gateway_getter_facet {
             ) {
                 return Ok(Self::BottomUpCheckpoint(decoded));
             }
-            if let Ok(decoded) = <BottomUpMsgsBatchCall as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <BottomUpMsgBatchCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::BottomUpMsgsBatch(decoded));
+                return Ok(Self::BottomUpMsgBatch(decoded));
             }
-            if let Ok(decoded) = <BottomUpMsgsBatchPeriodCall as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <BottomUpMsgBatchPeriodCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::BottomUpMsgsBatchPeriod(decoded));
+                return Ok(Self::BottomUpMsgBatchPeriod(decoded));
             }
             if let Ok(decoded) = <BottomUpNonceCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2474,15 +2660,25 @@ pub mod gateway_getter_facet {
             ) {
                 return Ok(Self::GetAppliedTopDownNonce(decoded));
             }
-            if let Ok(decoded) = <GetBatchMsgsRetentionHeightCall as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <GetBottomUpMsgBatchCurrentWeightCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::GetBatchMsgsRetentionHeight(decoded));
+                return Ok(Self::GetBottomUpMsgBatchCurrentWeight(decoded));
             }
-            if let Ok(decoded) = <GetBatchMsgsSignatureBundleCall as ::ethers::core::abi::AbiDecode>::decode(
+            if let Ok(decoded) = <GetBottomUpMsgBatchInfoCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
-                return Ok(Self::GetBatchMsgsSignatureBundle(decoded));
+                return Ok(Self::GetBottomUpMsgBatchInfo(decoded));
+            }
+            if let Ok(decoded) = <GetBottomUpMsgBatchSignatureBundleCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetBottomUpMsgBatchSignatureBundle(decoded));
+            }
+            if let Ok(decoded) = <GetBottomUpMsgRetentionHeightCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetBottomUpMsgRetentionHeight(decoded));
             }
             if let Ok(decoded) = <GetCheckpointCurrentWeightCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2519,11 +2715,6 @@ pub mod gateway_getter_facet {
             ) {
                 return Ok(Self::GetCurrentMembership(decoded));
             }
-            if let Ok(decoded) = <GetIncompleteBatchMsgsCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
-                return Ok(Self::GetIncompleteBatchMsgs(decoded));
-            }
             if let Ok(decoded) = <GetIncompleteCheckpointHeightsCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
@@ -2533,6 +2724,16 @@ pub mod gateway_getter_facet {
                 data,
             ) {
                 return Ok(Self::GetIncompleteCheckpoints(decoded));
+            }
+            if let Ok(decoded) = <GetIncompleteMsgBatchHeightsCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetIncompleteMsgBatchHeights(decoded));
+            }
+            if let Ok(decoded) = <GetIncompleteMsgBatchesCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetIncompleteMsgBatches(decoded));
             }
             if let Ok(decoded) = <GetLastConfigurationNumberCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2624,10 +2825,10 @@ pub mod gateway_getter_facet {
                 Self::BottomUpCheckpoint(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::BottomUpMsgsBatch(element) => {
+                Self::BottomUpMsgBatch(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::BottomUpMsgsBatchPeriod(element) => {
+                Self::BottomUpMsgBatchPeriod(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::BottomUpNonce(element) => {
@@ -2639,10 +2840,16 @@ pub mod gateway_getter_facet {
                 Self::GetAppliedTopDownNonce(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::GetBatchMsgsRetentionHeight(element) => {
+                Self::GetBottomUpMsgBatchCurrentWeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::GetBatchMsgsSignatureBundle(element) => {
+                Self::GetBottomUpMsgBatchInfo(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetBottomUpMsgBatchSignatureBundle(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetBottomUpMsgRetentionHeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::GetCheckpointCurrentWeight(element) => {
@@ -2666,13 +2873,16 @@ pub mod gateway_getter_facet {
                 Self::GetCurrentMembership(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::GetIncompleteBatchMsgs(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
                 Self::GetIncompleteCheckpointHeights(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::GetIncompleteCheckpoints(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetIncompleteMsgBatchHeights(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
+                Self::GetIncompleteMsgBatches(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::GetLastConfigurationNumber(element) => {
@@ -2731,8 +2941,8 @@ pub mod gateway_getter_facet {
                 Self::BottomUpCheckpoint(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::BottomUpMsgsBatch(element) => ::core::fmt::Display::fmt(element, f),
-                Self::BottomUpMsgsBatchPeriod(element) => {
+                Self::BottomUpMsgBatch(element) => ::core::fmt::Display::fmt(element, f),
+                Self::BottomUpMsgBatchPeriod(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::BottomUpNonce(element) => ::core::fmt::Display::fmt(element, f),
@@ -2740,10 +2950,16 @@ pub mod gateway_getter_facet {
                 Self::GetAppliedTopDownNonce(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::GetBatchMsgsRetentionHeight(element) => {
+                Self::GetBottomUpMsgBatchCurrentWeight(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::GetBatchMsgsSignatureBundle(element) => {
+                Self::GetBottomUpMsgBatchInfo(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetBottomUpMsgBatchSignatureBundle(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetBottomUpMsgRetentionHeight(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::GetCheckpointCurrentWeight(element) => {
@@ -2765,13 +2981,16 @@ pub mod gateway_getter_facet {
                 Self::GetCurrentMembership(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::GetIncompleteBatchMsgs(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
                 Self::GetIncompleteCheckpointHeights(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::GetIncompleteCheckpoints(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetIncompleteMsgBatchHeights(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
+                Self::GetIncompleteMsgBatches(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::GetLastConfigurationNumber(element) => {
@@ -2819,14 +3038,14 @@ pub mod gateway_getter_facet {
             Self::BottomUpCheckpoint(value)
         }
     }
-    impl ::core::convert::From<BottomUpMsgsBatchCall> for GatewayGetterFacetCalls {
-        fn from(value: BottomUpMsgsBatchCall) -> Self {
-            Self::BottomUpMsgsBatch(value)
+    impl ::core::convert::From<BottomUpMsgBatchCall> for GatewayGetterFacetCalls {
+        fn from(value: BottomUpMsgBatchCall) -> Self {
+            Self::BottomUpMsgBatch(value)
         }
     }
-    impl ::core::convert::From<BottomUpMsgsBatchPeriodCall> for GatewayGetterFacetCalls {
-        fn from(value: BottomUpMsgsBatchPeriodCall) -> Self {
-            Self::BottomUpMsgsBatchPeriod(value)
+    impl ::core::convert::From<BottomUpMsgBatchPeriodCall> for GatewayGetterFacetCalls {
+        fn from(value: BottomUpMsgBatchPeriodCall) -> Self {
+            Self::BottomUpMsgBatchPeriod(value)
         }
     }
     impl ::core::convert::From<BottomUpNonceCall> for GatewayGetterFacetCalls {
@@ -2844,16 +3063,27 @@ pub mod gateway_getter_facet {
             Self::GetAppliedTopDownNonce(value)
         }
     }
-    impl ::core::convert::From<GetBatchMsgsRetentionHeightCall>
+    impl ::core::convert::From<GetBottomUpMsgBatchCurrentWeightCall>
     for GatewayGetterFacetCalls {
-        fn from(value: GetBatchMsgsRetentionHeightCall) -> Self {
-            Self::GetBatchMsgsRetentionHeight(value)
+        fn from(value: GetBottomUpMsgBatchCurrentWeightCall) -> Self {
+            Self::GetBottomUpMsgBatchCurrentWeight(value)
         }
     }
-    impl ::core::convert::From<GetBatchMsgsSignatureBundleCall>
+    impl ::core::convert::From<GetBottomUpMsgBatchInfoCall> for GatewayGetterFacetCalls {
+        fn from(value: GetBottomUpMsgBatchInfoCall) -> Self {
+            Self::GetBottomUpMsgBatchInfo(value)
+        }
+    }
+    impl ::core::convert::From<GetBottomUpMsgBatchSignatureBundleCall>
     for GatewayGetterFacetCalls {
-        fn from(value: GetBatchMsgsSignatureBundleCall) -> Self {
-            Self::GetBatchMsgsSignatureBundle(value)
+        fn from(value: GetBottomUpMsgBatchSignatureBundleCall) -> Self {
+            Self::GetBottomUpMsgBatchSignatureBundle(value)
+        }
+    }
+    impl ::core::convert::From<GetBottomUpMsgRetentionHeightCall>
+    for GatewayGetterFacetCalls {
+        fn from(value: GetBottomUpMsgRetentionHeightCall) -> Self {
+            Self::GetBottomUpMsgRetentionHeight(value)
         }
     }
     impl ::core::convert::From<GetCheckpointCurrentWeightCall>
@@ -2896,11 +3126,6 @@ pub mod gateway_getter_facet {
             Self::GetCurrentMembership(value)
         }
     }
-    impl ::core::convert::From<GetIncompleteBatchMsgsCall> for GatewayGetterFacetCalls {
-        fn from(value: GetIncompleteBatchMsgsCall) -> Self {
-            Self::GetIncompleteBatchMsgs(value)
-        }
-    }
     impl ::core::convert::From<GetIncompleteCheckpointHeightsCall>
     for GatewayGetterFacetCalls {
         fn from(value: GetIncompleteCheckpointHeightsCall) -> Self {
@@ -2911,6 +3136,17 @@ pub mod gateway_getter_facet {
     for GatewayGetterFacetCalls {
         fn from(value: GetIncompleteCheckpointsCall) -> Self {
             Self::GetIncompleteCheckpoints(value)
+        }
+    }
+    impl ::core::convert::From<GetIncompleteMsgBatchHeightsCall>
+    for GatewayGetterFacetCalls {
+        fn from(value: GetIncompleteMsgBatchHeightsCall) -> Self {
+            Self::GetIncompleteMsgBatchHeights(value)
+        }
+    }
+    impl ::core::convert::From<GetIncompleteMsgBatchesCall> for GatewayGetterFacetCalls {
+        fn from(value: GetIncompleteMsgBatchesCall) -> Self {
+            Self::GetIncompleteMsgBatches(value)
         }
     }
     impl ::core::convert::From<GetLastConfigurationNumberCall>
@@ -3026,7 +3262,7 @@ pub mod gateway_getter_facet {
         Hash
     )]
     pub struct BottomUpCheckpointReturn(pub BottomUpCheckpoint);
-    ///Container type for all return fields from the `bottomUpMsgsBatch` function with signature `bottomUpMsgsBatch(uint256)` and selector `0x8481474e`
+    ///Container type for all return fields from the `bottomUpMsgBatch` function with signature `bottomUpMsgBatch(uint256)` and selector `0xdd81b5cf`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -3037,8 +3273,8 @@ pub mod gateway_getter_facet {
         Eq,
         Hash
     )]
-    pub struct BottomUpMsgsBatchReturn(pub BottomUpMsgBatch);
-    ///Container type for all return fields from the `bottomUpMsgsBatchPeriod` function with signature `bottomUpMsgsBatchPeriod()` and selector `0x0d4e898c`
+    pub struct BottomUpMsgBatchReturn(pub BottomUpMsgBatch);
+    ///Container type for all return fields from the `bottomUpMsgBatchPeriod` function with signature `bottomUpMsgBatchPeriod()` and selector `0x69e737fd`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -3049,7 +3285,7 @@ pub mod gateway_getter_facet {
         Eq,
         Hash
     )]
-    pub struct BottomUpMsgsBatchPeriodReturn(pub ::ethers::core::types::U256);
+    pub struct BottomUpMsgBatchPeriodReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `bottomUpNonce` function with signature `bottomUpNonce()` and selector `0x41b6a2e8`
     #[derive(
         Clone,
@@ -3086,7 +3322,7 @@ pub mod gateway_getter_facet {
         Hash
     )]
     pub struct GetAppliedTopDownNonceReturn(pub bool, pub u64);
-    ///Container type for all return fields from the `getBatchMsgsRetentionHeight` function with signature `getBatchMsgsRetentionHeight()` and selector `0x3a5a17f7`
+    ///Container type for all return fields from the `getBottomUpMsgBatchCurrentWeight` function with signature `getBottomUpMsgBatchCurrentWeight(uint256)` and selector `0x6547cd64`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -3097,8 +3333,8 @@ pub mod gateway_getter_facet {
         Eq,
         Hash
     )]
-    pub struct GetBatchMsgsRetentionHeightReturn(pub ::ethers::core::types::U256);
-    ///Container type for all return fields from the `getBatchMsgsSignatureBundle` function with signature `getBatchMsgsSignatureBundle(uint256)` and selector `0x13652d32`
+    pub struct GetBottomUpMsgBatchCurrentWeightReturn(pub ::ethers::core::types::U256);
+    ///Container type for all return fields from the `getBottomUpMsgBatchInfo` function with signature `getBottomUpMsgBatchInfo(uint256)` and selector `0xb9ee5842`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -3109,12 +3345,36 @@ pub mod gateway_getter_facet {
         Eq,
         Hash
     )]
-    pub struct GetBatchMsgsSignatureBundleReturn {
+    pub struct GetBottomUpMsgBatchInfoReturn(pub QuorumInfo);
+    ///Container type for all return fields from the `getBottomUpMsgBatchSignatureBundle` function with signature `getBottomUpMsgBatchSignatureBundle(uint256)` and selector `0xa9294bdd`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetBottomUpMsgBatchSignatureBundleReturn {
         pub batch: BottomUpMsgBatch,
         pub info: QuorumInfo,
         pub signatories: ::std::vec::Vec<::ethers::core::types::Address>,
         pub signatures: ::std::vec::Vec<::ethers::core::types::Bytes>,
     }
+    ///Container type for all return fields from the `getBottomUpMsgRetentionHeight` function with signature `getBottomUpMsgRetentionHeight()` and selector `0x22180594`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetBottomUpMsgRetentionHeightReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `getCheckpointCurrentWeight` function with signature `getCheckpointCurrentWeight(uint256)` and selector `0xb3ab3f74`
     #[derive(
         Clone,
@@ -3208,18 +3468,6 @@ pub mod gateway_getter_facet {
         Hash
     )]
     pub struct GetCurrentMembershipReturn(pub Membership);
-    ///Container type for all return fields from the `getIncompleteBatchMsgs` function with signature `getIncompleteBatchMsgs()` and selector `0xd7acdd54`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct GetIncompleteBatchMsgsReturn(pub ::std::vec::Vec<BottomUpMsgBatch>);
     ///Container type for all return fields from the `getIncompleteCheckpointHeights` function with signature `getIncompleteCheckpointHeights()` and selector `0xa517218f`
     #[derive(
         Clone,
@@ -3246,6 +3494,32 @@ pub mod gateway_getter_facet {
         Hash
     )]
     pub struct GetIncompleteCheckpointsReturn(pub ::std::vec::Vec<BottomUpCheckpoint>);
+    ///Container type for all return fields from the `getIncompleteMsgBatchHeights` function with signature `getIncompleteMsgBatchHeights()` and selector `0x767ee5f4`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetIncompleteMsgBatchHeightsReturn(
+        pub ::std::vec::Vec<::ethers::core::types::U256>,
+    );
+    ///Container type for all return fields from the `getIncompleteMsgBatches` function with signature `getIncompleteMsgBatches()` and selector `0x335eb62a`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetIncompleteMsgBatchesReturn(pub ::std::vec::Vec<BottomUpMsgBatch>);
     ///Container type for all return fields from the `getLastConfigurationNumber` function with signature `getLastConfigurationNumber()` and selector `0xb1ba49b0`
     #[derive(
         Clone,
