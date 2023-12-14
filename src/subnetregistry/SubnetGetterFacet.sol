@@ -51,7 +51,7 @@ contract SubnetGetterFacet {
     }
 
     /// @notice Returns the subnet getter selectors
-    function getSubnetGetterSelectors() external view returns (bytes4[] memory) {
+    function getSubnetActorGetterSelectors() external view returns (bytes4[] memory) {
         return s.subnetGetterSelectors;
     }
 
