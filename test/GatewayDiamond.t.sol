@@ -2335,7 +2335,9 @@ contract GatewayActorDiamondTest is StdInvariant, Test {
 
         // send correct signature for incorrect height
         vm.expectRevert(BatchNotCreated.selector);
-        gwRouter.addBottomUpMsgBatchSignature(100, membershipProofs[0], weights[0], signature);
+        gwRouter.addBottomUpMsgBatchSignature(d + 1, membershipProofs[0], weights[0], signature);
+
+        gwRouter.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], signature);
 
         vm.stopPrank();
     }
