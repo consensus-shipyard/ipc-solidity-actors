@@ -14,8 +14,13 @@
                 tabWidth: 4,
                 useTabs: false,
                 singleQuote: false,
-                bracketSpacing: false,
-            },
-        },
-    ],
+                bracketSpacing: true,
+                plugins: ["@trivago/prettier-plugin-sort-imports"],
+                importOrder: ["^openzeppelin/(.*)$","^~(.*)$", "^[./]"],
+                importOrderSeparation: true,
+                importOrderSortSpecifiers: true
+            }
+        }
+    ]
 }
+
