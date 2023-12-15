@@ -4,7 +4,7 @@ pragma solidity 0.8.19;
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {BottomUpCheckpoint, CrossMsg} from "../structs/CrossNet.sol";
 import {SubnetID} from "../structs/Subnet.sol";
-import {SubnetID, ValidatorInfo, Validator} from "../structs/Subnet.sol";
+import {SubnetID, ValidatorInfo, Validator, PermissionMode} from "../structs/Subnet.sol";
 import {SubnetActorStorage} from "../lib/LibSubnetActorStorage.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
@@ -22,6 +22,10 @@ contract SubnetActorGetterFacet {
     /// @notice get the parent subnet id
     function getParent() external view returns (SubnetID memory) {
         return s.parentId;
+    }
+
+    function permissionMode() external view returns (PermissionMode) {
+        return s.permissionMode;
     }
 
     function ipcGatewayAddr() external view returns (address) {
