@@ -10,7 +10,7 @@ import {IERC165} from "./interfaces/IERC165.sol";
 import {GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod, InvalidCollateral, InvalidMajorityPercentage, InvalidPowerScale} from "./errors/IPCErrors.sol";
 import {BATCH_PERIOD, MAX_MSGS_PER_BATCH} from "./structs/CrossNet.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
-import {SubnetID} from "./structs/Subnet.sol";
+import {SubnetID, PermissionMode} from "./structs/Subnet.sol";
 import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
 import {LibStaking} from "./lib/LibStaking.sol";
 
@@ -32,7 +32,7 @@ contract SubnetActorDiamond {
         uint16 activeValidatorsLimit;
         uint256 minCrossMsgFee;
         int8 powerScale;
-        bool permissioned;
+        PermissionMode permissionMode;
     }
 
     constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
@@ -72,7 +72,7 @@ contract SubnetActorDiamond {
         s.powerScale = params.powerScale;
         s.minCrossMsgFee = params.minCrossMsgFee;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
-        s.permissioned = params.permissioned;
+        s.permissionMode = params.permissionMode;
 
         // BottomUpMsgBatch config parameters.
         // NOTE: Let's fix them for now, but we could make them configurable

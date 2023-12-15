@@ -3,7 +3,6 @@ pragma solidity 0.8.19;
 
 import {BottomUpCheckpoint, CrossMsg} from "../structs/CrossNet.sol";
 import {QuorumObjKind} from "../structs/Quorum.sol";
-import {FvmAddress} from "../structs/FvmAddress.sol";
 
 /// @title Subnet Actor interface
 /// @author LimeChain team

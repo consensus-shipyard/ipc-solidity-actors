@@ -3,10 +3,8 @@ pragma solidity 0.8.19;
 
 import {ConsensusType} from "../enums/ConsensusType.sol";
 import {NotGateway, SubnetAlreadyKilled} from "../errors/IPCErrors.sol";
-import {FvmAddress} from "../structs/FvmAddress.sol";
 import {RelayerRewardsInfo, BottomUpCheckpoint, BottomUpMsgBatchInfo} from "../structs/CrossNet.sol";
-import {SubnetID, ValidatorSet, StakingChangeLog, StakingReleaseQueue, Validator} from "../structs/Subnet.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import {SubnetID, ValidatorSet, StakingChangeLog, StakingReleaseQueue, Validator, PermissionMode} from "../structs/Subnet.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 struct SubnetActorStorage {
@@ -50,7 +48,7 @@ struct SubnetActorStorage {
     /// @notice Determines if the subnet has been bootstrapped (i.e. it has been activated)
     bool bootstrapped;
     /// @notice Determines if the subnet is permissionless or not
-    bool permissioned;
+    PermissionMode permissionMode;
     /// @notice Determines if the subnet has been successfully killed
     bool killed;
     // =========== Staking ===========
