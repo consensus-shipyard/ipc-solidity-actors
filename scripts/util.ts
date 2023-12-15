@@ -379,7 +379,7 @@ export async function upgradeFacet(
 
         const onChainFunctionSelectors =
             onChainFacets[
-            getDeployedFacetAddressFromName(facet.name, deployments)
+                getDeployedFacetAddressFromName(facet.name, deployments)
             ]
 
         const newFacet = await upgradeFacetOnChain(
