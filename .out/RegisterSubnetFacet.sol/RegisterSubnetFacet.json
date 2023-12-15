@@ -506,11 +506,11 @@
     },
     "ast": {
         "absolutePath": "src/subnetregistry/RegisterSubnetFacet.sol",
-        "id": 49569,
+        "id": 49572,
         "exportedSymbols": {
             "IDiamond": [39490],
             "ReentrancyGuard": [42378],
-            "RegisterSubnetFacet": [49568],
+            "RegisterSubnetFacet": [49571],
             "SubnetActorDiamond": [36100],
             "SubnetRegistryActorStorage": [45163],
             "WrongGateway": [37002]
@@ -519,26 +519,26 @@
         "src": "46:1817:77",
         "nodes": [
             {
-                "id": 49442,
+                "id": 49445,
                 "nodeType": "PragmaDirective",
                 "src": "46:23:77",
                 "nodes": [],
                 "literals": ["solidity", "0.8", ".19"]
             },
             {
-                "id": 49444,
+                "id": 49447,
                 "nodeType": "ImportDirective",
                 "src": "71:52:77",
                 "nodes": [],
                 "absolutePath": "src/interfaces/IDiamond.sol",
                 "file": "../interfaces/IDiamond.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49569,
+                "scope": 49572,
                 "sourceUnit": 39491,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49443,
+                            "id": 49446,
                             "name": "IDiamond",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -552,19 +552,19 @@
                 "unitAlias": ""
             },
             {
-                "id": 49446,
+                "id": 49449,
                 "nodeType": "ImportDirective",
                 "src": "124:61:77",
                 "nodes": [],
                 "absolutePath": "src/SubnetActorDiamond.sol",
                 "file": "../SubnetActorDiamond.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49569,
+                "scope": 49572,
                 "sourceUnit": 36101,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49445,
+                            "id": 49448,
                             "name": "SubnetActorDiamond",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -578,19 +578,19 @@
                 "unitAlias": ""
             },
             {
-                "id": 49448,
+                "id": 49451,
                 "nodeType": "ImportDirective",
                 "src": "186:79:77",
                 "nodes": [],
                 "absolutePath": "src/lib/LibSubnetRegistryStorage.sol",
                 "file": "../lib/LibSubnetRegistryStorage.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49569,
+                "scope": 49572,
                 "sourceUnit": 45164,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49447,
+                            "id": 49450,
                             "name": "SubnetRegistryActorStorage",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -604,19 +604,19 @@
                 "unitAlias": ""
             },
             {
-                "id": 49450,
+                "id": 49453,
                 "nodeType": "ImportDirective",
                 "src": "267:62:77",
                 "nodes": [],
                 "absolutePath": "src/lib/LibReentrancyGuard.sol",
                 "file": "../lib/LibReentrancyGuard.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49569,
+                "scope": 49572,
                 "sourceUnit": 42379,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49449,
+                            "id": 49452,
                             "name": "ReentrancyGuard",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -630,19 +630,19 @@
                 "unitAlias": ""
             },
             {
-                "id": 49452,
+                "id": 49455,
                 "nodeType": "ImportDirective",
                 "src": "330:53:77",
                 "nodes": [],
                 "absolutePath": "src/errors/IPCErrors.sol",
                 "file": "../errors/IPCErrors.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49569,
+                "scope": 49572,
                 "sourceUnit": 37013,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49451,
+                            "id": 49454,
                             "name": "WrongGateway",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -656,12 +656,12 @@
                 "unitAlias": ""
             },
             {
-                "id": 49568,
+                "id": 49571,
                 "nodeType": "ContractDefinition",
                 "src": "385:1477:77",
                 "nodes": [
                     {
-                        "id": 49457,
+                        "id": 49460,
                         "nodeType": "VariableDeclaration",
                         "src": "439:37:77",
                         "nodes": [],
@@ -669,7 +669,7 @@
                         "mutability": "mutable",
                         "name": "s",
                         "nameLocation": "475:1:77",
-                        "scope": 49568,
+                        "scope": 49571,
                         "stateVariable": true,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -677,10 +677,10 @@
                             "typeString": "struct SubnetRegistryActorStorage"
                         },
                         "typeName": {
-                            "id": 49456,
+                            "id": 49459,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 49455,
+                                "id": 49458,
                                 "name": "SubnetRegistryActorStorage",
                                 "nameLocations": ["439:26:77"],
                                 "nodeType": "IdentifierPath",
@@ -697,13 +697,13 @@
                         "visibility": "internal"
                     },
                     {
-                        "id": 49462,
+                        "id": 49465,
                         "nodeType": "EventDefinition",
                         "src": "544:41:77",
                         "nodes": [],
                         "anonymous": false,
                         "documentation": {
-                            "id": 49458,
+                            "id": 49461,
                             "nodeType": "StructuredDocumentation",
                             "src": "483:56:77",
                             "text": "@notice Event emitted when a new subnet is deployed."
@@ -712,18 +712,18 @@
                         "name": "SubnetDeployed",
                         "nameLocation": "550:14:77",
                         "parameters": {
-                            "id": 49461,
+                            "id": 49464,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49460,
+                                    "id": 49463,
                                     "indexed": false,
                                     "mutability": "mutable",
                                     "name": "subnetAddr",
                                     "nameLocation": "573:10:77",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49462,
+                                    "scope": 49465,
                                     "src": "565:18:77",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -732,7 +732,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49459,
+                                        "id": 49462,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "565:7:77",
@@ -749,12 +749,12 @@
                         }
                     },
                     {
-                        "id": 49567,
+                        "id": 49570,
                         "nodeType": "FunctionDefinition",
                         "src": "707:1153:77",
                         "nodes": [],
                         "body": {
-                            "id": 49566,
+                            "id": 49569,
                             "nodeType": "Block",
                             "src": "851:1009:77",
                             "nodes": [],
@@ -765,25 +765,25 @@
                                             "typeIdentifier": "t_address",
                                             "typeString": "address"
                                         },
-                                        "id": 49477,
+                                        "id": 49480,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftExpression": {
                                             "expression": {
-                                                "id": 49473,
+                                                "id": 49476,
                                                 "name": "_params",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49466,
+                                                "referencedDeclaration": 49469,
                                                 "src": "865:7:77",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_struct$_ConstructorParams_$35783_calldata_ptr",
                                                     "typeString": "struct SubnetActorDiamond.ConstructorParams calldata"
                                                 }
                                             },
-                                            "id": 49474,
+                                            "id": 49477,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": false,
@@ -802,18 +802,18 @@
                                         "operator": "!=",
                                         "rightExpression": {
                                             "expression": {
-                                                "id": 49475,
+                                                "id": 49478,
                                                 "name": "s",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49457,
+                                                "referencedDeclaration": 49460,
                                                 "src": "891:1:77",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                     "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                 }
                                             },
-                                            "id": 49476,
+                                            "id": 49479,
                                             "isConstant": false,
                                             "isLValue": true,
                                             "isPure": false,
@@ -834,11 +834,11 @@
                                             "typeString": "bool"
                                         }
                                     },
-                                    "id": 49482,
+                                    "id": 49485,
                                     "nodeType": "IfStatement",
                                     "src": "861:87:77",
                                     "trueBody": {
-                                        "id": 49481,
+                                        "id": 49484,
                                         "nodeType": "Block",
                                         "src": "902:46:77",
                                         "statements": [
@@ -847,7 +847,7 @@
                                                     "arguments": [],
                                                     "expression": {
                                                         "argumentTypes": [],
-                                                        "id": 49478,
+                                                        "id": 49481,
                                                         "name": "WrongGateway",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
@@ -858,7 +858,7 @@
                                                             "typeString": "function () pure"
                                                         }
                                                     },
-                                                    "id": 49479,
+                                                    "id": 49482,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -874,7 +874,7 @@
                                                         "typeString": "tuple()"
                                                     }
                                                 },
-                                                "id": 49480,
+                                                "id": 49483,
                                                 "nodeType": "RevertStatement",
                                                 "src": "916:21:77"
                                             }
@@ -882,16 +882,16 @@
                                     }
                                 },
                                 {
-                                    "assignments": [49488],
+                                    "assignments": [49491],
                                     "declarations": [
                                         {
                                             "constant": false,
-                                            "id": 49488,
+                                            "id": 49491,
                                             "mutability": "mutable",
                                             "name": "diamondCut",
                                             "nameLocation": "985:10:77",
                                             "nodeType": "VariableDeclaration",
-                                            "scope": 49566,
+                                            "scope": 49569,
                                             "src": "958:37:77",
                                             "stateVariable": false,
                                             "storageLocation": "memory",
@@ -901,10 +901,10 @@
                                             },
                                             "typeName": {
                                                 "baseType": {
-                                                    "id": 49486,
+                                                    "id": 49489,
                                                     "nodeType": "UserDefinedTypeName",
                                                     "pathNode": {
-                                                        "id": 49485,
+                                                        "id": 49488,
                                                         "name": "IDiamond.FacetCut",
                                                         "nameLocations": [
                                                             "958:8:77",
@@ -921,7 +921,7 @@
                                                         "typeString": "struct IDiamond.FacetCut"
                                                     }
                                                 },
-                                                "id": 49487,
+                                                "id": 49490,
                                                 "nodeType": "ArrayTypeName",
                                                 "src": "958:19:77",
                                                 "typeDescriptions": {
@@ -932,12 +932,12 @@
                                             "visibility": "internal"
                                         }
                                     ],
-                                    "id": 49495,
+                                    "id": 49498,
                                     "initialValue": {
                                         "arguments": [
                                             {
                                                 "hexValue": "32",
-                                                "id": 49493,
+                                                "id": 49496,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -959,7 +959,7 @@
                                                     "typeString": "int_const 2"
                                                 }
                                             ],
-                                            "id": 49492,
+                                            "id": 49495,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": true,
@@ -972,10 +972,10 @@
                                             },
                                             "typeName": {
                                                 "baseType": {
-                                                    "id": 49490,
+                                                    "id": 49493,
                                                     "nodeType": "UserDefinedTypeName",
                                                     "pathNode": {
-                                                        "id": 49489,
+                                                        "id": 49492,
                                                         "name": "IDiamond.FacetCut",
                                                         "nameLocations": [
                                                             "1002:8:77",
@@ -992,7 +992,7 @@
                                                         "typeString": "struct IDiamond.FacetCut"
                                                     }
                                                 },
-                                                "id": 49491,
+                                                "id": 49494,
                                                 "nodeType": "ArrayTypeName",
                                                 "src": "1002:19:77",
                                                 "typeDescriptions": {
@@ -1001,7 +1001,7 @@
                                                 }
                                             }
                                         },
-                                        "id": 49494,
+                                        "id": 49497,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": true,
@@ -1022,28 +1022,28 @@
                                 },
                                 {
                                     "expression": {
-                                        "id": 49509,
+                                        "id": 49512,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
                                             "baseExpression": {
-                                                "id": 49496,
+                                                "id": 49499,
                                                 "name": "diamondCut",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49488,
+                                                "referencedDeclaration": 49491,
                                                 "src": "1084:10:77",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_array$_t_struct$_FacetCut_$39479_memory_ptr_$dyn_memory_ptr",
                                                     "typeString": "struct IDiamond.FacetCut memory[] memory"
                                                 }
                                             },
-                                            "id": 49498,
+                                            "id": 49501,
                                             "indexExpression": {
                                                 "hexValue": "30",
-                                                "id": 49497,
+                                                "id": 49500,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -1074,18 +1074,18 @@
                                             "arguments": [
                                                 {
                                                     "expression": {
-                                                        "id": 49501,
+                                                        "id": 49504,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49457,
+                                                        "referencedDeclaration": 49460,
                                                         "src": "1146:1:77",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49502,
+                                                    "id": 49505,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -1103,7 +1103,7 @@
                                                 {
                                                     "expression": {
                                                         "expression": {
-                                                            "id": 49503,
+                                                            "id": 49506,
                                                             "name": "IDiamond",
                                                             "nodeType": "Identifier",
                                                             "overloadedDeclarations": [],
@@ -1114,7 +1114,7 @@
                                                                 "typeString": "type(contract IDiamond)"
                                                             }
                                                         },
-                                                        "id": 49504,
+                                                        "id": 49507,
                                                         "isConstant": false,
                                                         "isLValue": false,
                                                         "isPure": false,
@@ -1129,7 +1129,7 @@
                                                             "typeString": "type(enum IDiamond.FacetCutAction)"
                                                         }
                                                     },
-                                                    "id": 49505,
+                                                    "id": 49508,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": true,
@@ -1146,18 +1146,18 @@
                                                 },
                                                 {
                                                     "expression": {
-                                                        "id": 49506,
+                                                        "id": 49509,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49457,
+                                                        "referencedDeclaration": 49460,
                                                         "src": "1249:1:77",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49507,
+                                                    "id": 49510,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -1189,7 +1189,7 @@
                                                     }
                                                 ],
                                                 "expression": {
-                                                    "id": 49499,
+                                                    "id": 49502,
                                                     "name": "IDiamond",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
@@ -1200,7 +1200,7 @@
                                                         "typeString": "type(contract IDiamond)"
                                                     }
                                                 },
-                                                "id": 49500,
+                                                "id": 49503,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": false,
@@ -1215,7 +1215,7 @@
                                                     "typeString": "type(struct IDiamond.FacetCut storage pointer)"
                                                 }
                                             },
-                                            "id": 49508,
+                                            "id": 49511,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": false,
@@ -1245,34 +1245,34 @@
                                             "typeString": "struct IDiamond.FacetCut memory"
                                         }
                                     },
-                                    "id": 49510,
+                                    "id": 49513,
                                     "nodeType": "ExpressionStatement",
                                     "src": "1084:199:77"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49524,
+                                        "id": 49527,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
                                             "baseExpression": {
-                                                "id": 49511,
+                                                "id": 49514,
                                                 "name": "diamondCut",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49488,
+                                                "referencedDeclaration": 49491,
                                                 "src": "1344:10:77",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_array$_t_struct$_FacetCut_$39479_memory_ptr_$dyn_memory_ptr",
                                                     "typeString": "struct IDiamond.FacetCut memory[] memory"
                                                 }
                                             },
-                                            "id": 49513,
+                                            "id": 49516,
                                             "indexExpression": {
                                                 "hexValue": "31",
-                                                "id": 49512,
+                                                "id": 49515,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -1303,18 +1303,18 @@
                                             "arguments": [
                                                 {
                                                     "expression": {
-                                                        "id": 49516,
+                                                        "id": 49519,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49457,
+                                                        "referencedDeclaration": 49460,
                                                         "src": "1406:1:77",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49517,
+                                                    "id": 49520,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -1332,7 +1332,7 @@
                                                 {
                                                     "expression": {
                                                         "expression": {
-                                                            "id": 49518,
+                                                            "id": 49521,
                                                             "name": "IDiamond",
                                                             "nodeType": "Identifier",
                                                             "overloadedDeclarations": [],
@@ -1343,7 +1343,7 @@
                                                                 "typeString": "type(contract IDiamond)"
                                                             }
                                                         },
-                                                        "id": 49519,
+                                                        "id": 49522,
                                                         "isConstant": false,
                                                         "isLValue": false,
                                                         "isPure": false,
@@ -1358,7 +1358,7 @@
                                                             "typeString": "type(enum IDiamond.FacetCutAction)"
                                                         }
                                                     },
-                                                    "id": 49520,
+                                                    "id": 49523,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": true,
@@ -1375,18 +1375,18 @@
                                                 },
                                                 {
                                                     "expression": {
-                                                        "id": 49521,
+                                                        "id": 49524,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49457,
+                                                        "referencedDeclaration": 49460,
                                                         "src": "1510:1:77",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49522,
+                                                    "id": 49525,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -1418,7 +1418,7 @@
                                                     }
                                                 ],
                                                 "expression": {
-                                                    "id": 49514,
+                                                    "id": 49517,
                                                     "name": "IDiamond",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
@@ -1429,7 +1429,7 @@
                                                         "typeString": "type(contract IDiamond)"
                                                     }
                                                 },
-                                                "id": 49515,
+                                                "id": 49518,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": false,
@@ -1444,7 +1444,7 @@
                                                     "typeString": "type(struct IDiamond.FacetCut storage pointer)"
                                                 }
                                             },
-                                            "id": 49523,
+                                            "id": 49526,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": false,
@@ -1474,23 +1474,23 @@
                                             "typeString": "struct IDiamond.FacetCut memory"
                                         }
                                     },
-                                    "id": 49525,
+                                    "id": 49528,
                                     "nodeType": "ExpressionStatement",
                                     "src": "1344:201:77"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49536,
+                                        "id": 49539,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
-                                            "id": 49526,
+                                            "id": 49529,
                                             "name": "subnetAddr",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49471,
+                                            "referencedDeclaration": 49474,
                                             "src": "1611:10:77",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -1504,11 +1504,11 @@
                                                 {
                                                     "arguments": [
                                                         {
-                                                            "id": 49532,
+                                                            "id": 49535,
                                                             "name": "diamondCut",
                                                             "nodeType": "Identifier",
                                                             "overloadedDeclarations": [],
-                                                            "referencedDeclaration": 49488,
+                                                            "referencedDeclaration": 49491,
                                                             "src": "1655:10:77",
                                                             "typeDescriptions": {
                                                                 "typeIdentifier": "t_array$_t_struct$_FacetCut_$39479_memory_ptr_$dyn_memory_ptr",
@@ -1516,11 +1516,11 @@
                                                             }
                                                         },
                                                         {
-                                                            "id": 49533,
+                                                            "id": 49536,
                                                             "name": "_params",
                                                             "nodeType": "Identifier",
                                                             "overloadedDeclarations": [],
-                                                            "referencedDeclaration": 49466,
+                                                            "referencedDeclaration": 49469,
                                                             "src": "1667:7:77",
                                                             "typeDescriptions": {
                                                                 "typeIdentifier": "t_struct$_ConstructorParams_$35783_calldata_ptr",
@@ -1539,7 +1539,7 @@
                                                                 "typeString": "struct SubnetActorDiamond.ConstructorParams calldata"
                                                             }
                                                         ],
-                                                        "id": 49531,
+                                                        "id": 49534,
                                                         "isConstant": false,
                                                         "isLValue": false,
                                                         "isPure": false,
@@ -1551,10 +1551,10 @@
                                                             "typeString": "function (struct IDiamond.FacetCut memory[] memory,struct SubnetActorDiamond.ConstructorParams memory) returns (contract SubnetActorDiamond)"
                                                         },
                                                         "typeName": {
-                                                            "id": 49530,
+                                                            "id": 49533,
                                                             "nodeType": "UserDefinedTypeName",
                                                             "pathNode": {
-                                                                "id": 49529,
+                                                                "id": 49532,
                                                                 "name": "SubnetActorDiamond",
                                                                 "nameLocations": [
                                                                     "1636:18:77"
@@ -1571,7 +1571,7 @@
                                                             }
                                                         }
                                                     },
-                                                    "id": 49534,
+                                                    "id": 49537,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -1595,7 +1595,7 @@
                                                         "typeString": "contract SubnetActorDiamond"
                                                     }
                                                 ],
-                                                "id": 49528,
+                                                "id": 49531,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -1607,14 +1607,14 @@
                                                     "typeString": "type(address)"
                                                 },
                                                 "typeName": {
-                                                    "id": 49527,
+                                                    "id": 49530,
                                                     "name": "address",
                                                     "nodeType": "ElementaryTypeName",
                                                     "src": "1624:7:77",
                                                     "typeDescriptions": {}
                                                 }
                                             },
-                                            "id": 49535,
+                                            "id": 49538,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": false,
@@ -1636,13 +1636,13 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "id": 49537,
+                                    "id": 49540,
                                     "nodeType": "ExpressionStatement",
                                     "src": "1611:65:77"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49551,
+                                        "id": 49554,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
@@ -1651,18 +1651,18 @@
                                             "baseExpression": {
                                                 "baseExpression": {
                                                     "expression": {
-                                                        "id": 49538,
+                                                        "id": 49541,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49457,
+                                                        "referencedDeclaration": 49460,
                                                         "src": "1687:1:77",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49547,
+                                                    "id": 49550,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -1677,10 +1677,10 @@
                                                         "typeString": "mapping(address => mapping(uint64 => address))"
                                                     }
                                                 },
-                                                "id": 49548,
+                                                "id": 49551,
                                                 "indexExpression": {
                                                     "expression": {
-                                                        "id": 49540,
+                                                        "id": 49543,
                                                         "name": "msg",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
@@ -1691,7 +1691,7 @@
                                                             "typeString": "msg"
                                                         }
                                                     },
-                                                    "id": 49541,
+                                                    "id": 49544,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -1716,22 +1716,22 @@
                                                     "typeString": "mapping(uint64 => address)"
                                                 }
                                             },
-                                            "id": 49549,
+                                            "id": 49552,
                                             "indexExpression": {
                                                 "baseExpression": {
                                                     "expression": {
-                                                        "id": 49542,
+                                                        "id": 49545,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49457,
+                                                        "referencedDeclaration": 49460,
                                                         "src": "1709:1:77",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49543,
+                                                    "id": 49546,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -1746,10 +1746,10 @@
                                                         "typeString": "mapping(address => uint64)"
                                                     }
                                                 },
-                                                "id": 49546,
+                                                "id": 49549,
                                                 "indexExpression": {
                                                     "expression": {
-                                                        "id": 49544,
+                                                        "id": 49547,
                                                         "name": "msg",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
@@ -1760,7 +1760,7 @@
                                                             "typeString": "msg"
                                                         }
                                                     },
-                                                    "id": 49545,
+                                                    "id": 49548,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -1799,11 +1799,11 @@
                                         "nodeType": "Assignment",
                                         "operator": "=",
                                         "rightHandSide": {
-                                            "id": 49550,
+                                            "id": 49553,
                                             "name": "subnetAddr",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49471,
+                                            "referencedDeclaration": 49474,
                                             "src": "1737:10:77",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -1816,13 +1816,13 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "id": 49552,
+                                    "id": 49555,
                                     "nodeType": "ExpressionStatement",
                                     "src": "1687:60:77"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49558,
+                                        "id": 49561,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
@@ -1834,18 +1834,18 @@
                                         "subExpression": {
                                             "baseExpression": {
                                                 "expression": {
-                                                    "id": 49553,
+                                                    "id": 49556,
                                                     "name": "s",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
-                                                    "referencedDeclaration": 49457,
+                                                    "referencedDeclaration": 49460,
                                                     "src": "1759:1:77",
                                                     "typeDescriptions": {
                                                         "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                         "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                     }
                                                 },
-                                                "id": 49554,
+                                                "id": 49557,
                                                 "isConstant": false,
                                                 "isLValue": true,
                                                 "isPure": false,
@@ -1860,10 +1860,10 @@
                                                     "typeString": "mapping(address => uint64)"
                                                 }
                                             },
-                                            "id": 49557,
+                                            "id": 49560,
                                             "indexExpression": {
                                                 "expression": {
-                                                    "id": 49555,
+                                                    "id": 49558,
                                                     "name": "msg",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
@@ -1874,7 +1874,7 @@
                                                         "typeString": "msg"
                                                     }
                                                 },
-                                                "id": 49556,
+                                                "id": 49559,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": false,
@@ -1904,7 +1904,7 @@
                                             "typeString": "uint64"
                                         }
                                     },
-                                    "id": 49559,
+                                    "id": 49562,
                                     "nodeType": "ExpressionStatement",
                                     "src": "1757:26:77"
                                 },
@@ -1912,11 +1912,11 @@
                                     "eventCall": {
                                         "arguments": [
                                             {
-                                                "id": 49561,
+                                                "id": 49564,
                                                 "name": "subnetAddr",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49471,
+                                                "referencedDeclaration": 49474,
                                                 "src": "1814:10:77",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_address",
@@ -1931,18 +1931,18 @@
                                                     "typeString": "address"
                                                 }
                                             ],
-                                            "id": 49560,
+                                            "id": 49563,
                                             "name": "SubnetDeployed",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49462,
+                                            "referencedDeclaration": 49465,
                                             "src": "1799:14:77",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_function_event_nonpayable$_t_address_$returns$__$",
                                                 "typeString": "function (address)"
                                             }
                                         },
-                                        "id": 49562,
+                                        "id": 49565,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
@@ -1958,32 +1958,32 @@
                                             "typeString": "tuple()"
                                         }
                                     },
-                                    "id": 49563,
+                                    "id": 49566,
                                     "nodeType": "EmitStatement",
                                     "src": "1794:31:77"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49564,
+                                        "id": 49567,
                                         "name": "subnetAddr",
                                         "nodeType": "Identifier",
                                         "overloadedDeclarations": [],
-                                        "referencedDeclaration": 49471,
+                                        "referencedDeclaration": 49474,
                                         "src": "1843:10:77",
                                         "typeDescriptions": {
                                             "typeIdentifier": "t_address",
                                             "typeString": "address"
                                         }
                                     },
-                                    "functionReturnParameters": 49472,
-                                    "id": 49565,
+                                    "functionReturnParameters": 49475,
+                                    "id": 49568,
                                     "nodeType": "Return",
                                     "src": "1836:17:77"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49463,
+                            "id": 49466,
                             "nodeType": "StructuredDocumentation",
                             "src": "591:111:77",
                             "text": "@notice Deploys a new subnet actor.\n @param _params The constructor params for Subnet Actor Diamond."
@@ -1993,10 +1993,10 @@
                         "kind": "function",
                         "modifiers": [
                             {
-                                "id": 49469,
+                                "id": 49472,
                                 "kind": "modifierInvocation",
                                 "modifierName": {
-                                    "id": 49468,
+                                    "id": 49471,
                                     "name": "nonReentrant",
                                     "nameLocations": ["809:12:77"],
                                     "nodeType": "IdentifierPath",
@@ -2010,17 +2010,17 @@
                         "name": "newSubnetActor",
                         "nameLocation": "716:14:77",
                         "parameters": {
-                            "id": 49467,
+                            "id": 49470,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49466,
+                                    "id": 49469,
                                     "mutability": "mutable",
                                     "name": "_params",
                                     "nameLocation": "786:7:77",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49567,
+                                    "scope": 49570,
                                     "src": "740:53:77",
                                     "stateVariable": false,
                                     "storageLocation": "calldata",
@@ -2029,10 +2029,10 @@
                                         "typeString": "struct SubnetActorDiamond.ConstructorParams"
                                     },
                                     "typeName": {
-                                        "id": 49465,
+                                        "id": 49468,
                                         "nodeType": "UserDefinedTypeName",
                                         "pathNode": {
-                                            "id": 49464,
+                                            "id": 49467,
                                             "name": "SubnetActorDiamond.ConstructorParams",
                                             "nameLocations": [
                                                 "740:18:77",
@@ -2055,17 +2055,17 @@
                             "src": "730:69:77"
                         },
                         "returnParameters": {
-                            "id": 49472,
+                            "id": 49475,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49471,
+                                    "id": 49474,
                                     "mutability": "mutable",
                                     "name": "subnetAddr",
                                     "nameLocation": "839:10:77",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49567,
+                                    "scope": 49570,
                                     "src": "831:18:77",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -2074,7 +2074,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49470,
+                                        "id": 49473,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "831:7:77",
@@ -2089,7 +2089,7 @@
                             ],
                             "src": "830:20:77"
                         },
-                        "scope": 49568,
+                        "scope": 49571,
                         "stateMutability": "nonpayable",
                         "virtual": false,
                         "visibility": "external"
@@ -2099,14 +2099,14 @@
                 "baseContracts": [
                     {
                         "baseName": {
-                            "id": 49453,
+                            "id": 49456,
                             "name": "ReentrancyGuard",
                             "nameLocations": ["417:15:77"],
                             "nodeType": "IdentifierPath",
                             "referencedDeclaration": 42378,
                             "src": "417:15:77"
                         },
-                        "id": 49454,
+                        "id": 49457,
                         "nodeType": "InheritanceSpecifier",
                         "src": "417:15:77"
                     }
@@ -2115,10 +2115,10 @@
                 "contractDependencies": [36100],
                 "contractKind": "contract",
                 "fullyImplemented": true,
-                "linearizedBaseContracts": [49568, 42378],
+                "linearizedBaseContracts": [49571, 42378],
                 "name": "RegisterSubnetFacet",
                 "nameLocation": "394:19:77",
-                "scope": 49569,
+                "scope": 49572,
                 "usedErrors": [37002, 42326]
             }
         ],

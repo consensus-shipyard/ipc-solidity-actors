@@ -419,38 +419,38 @@
     },
     "ast": {
         "absolutePath": "src/subnetregistry/SubnetGetterFacet.sol",
-        "id": 49788,
+        "id": 49791,
         "exportedSymbols": {
             "CannotFindSubnet": [37004],
             "FacetCannotBeZero": [37000],
             "LibDiamond": [41013],
-            "SubnetGetterFacet": [49787],
+            "SubnetGetterFacet": [49790],
             "SubnetRegistryActorStorage": [45163]
         },
         "nodeType": "SourceUnit",
         "src": "46:3110:78",
         "nodes": [
             {
-                "id": 49570,
+                "id": 49573,
                 "nodeType": "PragmaDirective",
                 "src": "46:23:78",
                 "nodes": [],
                 "literals": ["solidity", "0.8", ".19"]
             },
             {
-                "id": 49572,
+                "id": 49575,
                 "nodeType": "ImportDirective",
                 "src": "70:79:78",
                 "nodes": [],
                 "absolutePath": "src/lib/LibSubnetRegistryStorage.sol",
                 "file": "../lib/LibSubnetRegistryStorage.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49788,
+                "scope": 49791,
                 "sourceUnit": 45164,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49571,
+                            "id": 49574,
                             "name": "SubnetRegistryActorStorage",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -464,19 +464,19 @@
                 "unitAlias": ""
             },
             {
-                "id": 49575,
+                "id": 49578,
                 "nodeType": "ImportDirective",
                 "src": "150:76:78",
                 "nodes": [],
                 "absolutePath": "src/errors/IPCErrors.sol",
                 "file": "../errors/IPCErrors.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49788,
+                "scope": 49791,
                 "sourceUnit": 37013,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49573,
+                            "id": 49576,
                             "name": "CannotFindSubnet",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -488,7 +488,7 @@
                     },
                     {
                         "foreign": {
-                            "id": 49574,
+                            "id": 49577,
                             "name": "FacetCannotBeZero",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -502,19 +502,19 @@
                 "unitAlias": ""
             },
             {
-                "id": 49577,
+                "id": 49580,
                 "nodeType": "ImportDirective",
                 "src": "227:49:78",
                 "nodes": [],
                 "absolutePath": "src/lib/LibDiamond.sol",
                 "file": "../lib/LibDiamond.sol",
                 "nameLocation": "-1:-1:-1",
-                "scope": 49788,
+                "scope": 49791,
                 "sourceUnit": 41014,
                 "symbolAliases": [
                     {
                         "foreign": {
-                            "id": 49576,
+                            "id": 49579,
                             "name": "LibDiamond",
                             "nodeType": "Identifier",
                             "overloadedDeclarations": [],
@@ -528,12 +528,12 @@
                 "unitAlias": ""
             },
             {
-                "id": 49787,
+                "id": 49790,
                 "nodeType": "ContractDefinition",
                 "src": "278:2877:78",
                 "nodes": [
                     {
-                        "id": 49580,
+                        "id": 49583,
                         "nodeType": "VariableDeclaration",
                         "src": "364:37:78",
                         "nodes": [],
@@ -541,7 +541,7 @@
                         "mutability": "mutable",
                         "name": "s",
                         "nameLocation": "400:1:78",
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateVariable": true,
                         "storageLocation": "default",
                         "typeDescriptions": {
@@ -549,10 +549,10 @@
                             "typeString": "struct SubnetRegistryActorStorage"
                         },
                         "typeName": {
-                            "id": 49579,
+                            "id": 49582,
                             "nodeType": "UserDefinedTypeName",
                             "pathNode": {
-                                "id": 49578,
+                                "id": 49581,
                                 "name": "SubnetRegistryActorStorage",
                                 "nameLocations": ["364:26:78"],
                                 "nodeType": "IdentifierPath",
@@ -569,27 +569,27 @@
                         "visibility": "internal"
                     },
                     {
-                        "id": 49621,
+                        "id": 49624,
                         "nodeType": "FunctionDefinition",
                         "src": "490:382:78",
                         "nodes": [],
                         "body": {
-                            "id": 49620,
+                            "id": 49623,
                             "nodeType": "Block",
                             "src": "574:298:78",
                             "nodes": [],
                             "statements": [
                                 {
-                                    "assignments": [49589],
+                                    "assignments": [49592],
                                     "declarations": [
                                         {
                                             "constant": false,
-                                            "id": 49589,
+                                            "id": 49592,
                                             "mutability": "mutable",
                                             "name": "nonce",
                                             "nameLocation": "591:5:78",
                                             "nodeType": "VariableDeclaration",
-                                            "scope": 49620,
+                                            "scope": 49623,
                                             "src": "584:12:78",
                                             "stateVariable": false,
                                             "storageLocation": "default",
@@ -598,7 +598,7 @@
                                                 "typeString": "uint64"
                                             },
                                             "typeName": {
-                                                "id": 49588,
+                                                "id": 49591,
                                                 "name": "uint64",
                                                 "nodeType": "ElementaryTypeName",
                                                 "src": "584:6:78",
@@ -610,22 +610,22 @@
                                             "visibility": "internal"
                                         }
                                     ],
-                                    "id": 49594,
+                                    "id": 49597,
                                     "initialValue": {
                                         "baseExpression": {
                                             "expression": {
-                                                "id": 49590,
+                                                "id": 49593,
                                                 "name": "s",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49580,
+                                                "referencedDeclaration": 49583,
                                                 "src": "599:1:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                     "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                 }
                                             },
-                                            "id": 49591,
+                                            "id": 49594,
                                             "isConstant": false,
                                             "isLValue": true,
                                             "isPure": false,
@@ -640,13 +640,13 @@
                                                 "typeString": "mapping(address => uint64)"
                                             }
                                         },
-                                        "id": 49593,
+                                        "id": 49596,
                                         "indexExpression": {
-                                            "id": 49592,
+                                            "id": 49595,
                                             "name": "owner",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49583,
+                                            "referencedDeclaration": 49586,
                                             "src": "612:5:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -668,23 +668,23 @@
                                     "src": "584:34:78"
                                 },
                                 {
-                                    "id": 49599,
+                                    "id": 49602,
                                     "nodeType": "UncheckedBlock",
                                     "src": "693:45:78",
                                     "statements": [
                                         {
                                             "expression": {
-                                                "id": 49597,
+                                                "id": 49600,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": false,
                                                 "lValueRequested": false,
                                                 "leftHandSide": {
-                                                    "id": 49595,
+                                                    "id": 49598,
                                                     "name": "nonce",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
-                                                    "referencedDeclaration": 49589,
+                                                    "referencedDeclaration": 49592,
                                                     "src": "717:5:78",
                                                     "typeDescriptions": {
                                                         "typeIdentifier": "t_uint64",
@@ -695,7 +695,7 @@
                                                 "operator": "-=",
                                                 "rightHandSide": {
                                                     "hexValue": "31",
-                                                    "id": 49596,
+                                                    "id": 49599,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": true,
@@ -715,7 +715,7 @@
                                                     "typeString": "uint64"
                                                 }
                                             },
-                                            "id": 49598,
+                                            "id": 49601,
                                             "nodeType": "ExpressionStatement",
                                             "src": "717:10:78"
                                         }
@@ -723,17 +723,17 @@
                                 },
                                 {
                                     "expression": {
-                                        "id": 49607,
+                                        "id": 49610,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
-                                            "id": 49600,
+                                            "id": 49603,
                                             "name": "subnet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49586,
+                                            "referencedDeclaration": 49589,
                                             "src": "748:6:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -746,18 +746,18 @@
                                             "baseExpression": {
                                                 "baseExpression": {
                                                     "expression": {
-                                                        "id": 49601,
+                                                        "id": 49604,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49580,
+                                                        "referencedDeclaration": 49583,
                                                         "src": "757:1:78",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49602,
+                                                    "id": 49605,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -772,13 +772,13 @@
                                                         "typeString": "mapping(address => mapping(uint64 => address))"
                                                     }
                                                 },
-                                                "id": 49604,
+                                                "id": 49607,
                                                 "indexExpression": {
-                                                    "id": 49603,
+                                                    "id": 49606,
                                                     "name": "owner",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
-                                                    "referencedDeclaration": 49583,
+                                                    "referencedDeclaration": 49586,
                                                     "src": "767:5:78",
                                                     "typeDescriptions": {
                                                         "typeIdentifier": "t_address",
@@ -796,13 +796,13 @@
                                                     "typeString": "mapping(uint64 => address)"
                                                 }
                                             },
-                                            "id": 49606,
+                                            "id": 49609,
                                             "indexExpression": {
-                                                "id": 49605,
+                                                "id": 49608,
                                                 "name": "nonce",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49589,
+                                                "referencedDeclaration": 49592,
                                                 "src": "774:5:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_uint64",
@@ -826,7 +826,7 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "id": 49608,
+                                    "id": 49611,
                                     "nodeType": "ExpressionStatement",
                                     "src": "748:32:78"
                                 },
@@ -836,17 +836,17 @@
                                             "typeIdentifier": "t_address",
                                             "typeString": "address"
                                         },
-                                        "id": 49614,
+                                        "id": 49617,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftExpression": {
-                                            "id": 49609,
+                                            "id": 49612,
                                             "name": "subnet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49586,
+                                            "referencedDeclaration": 49589,
                                             "src": "794:6:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -859,7 +859,7 @@
                                             "arguments": [
                                                 {
                                                     "hexValue": "30",
-                                                    "id": 49612,
+                                                    "id": 49615,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": true,
@@ -881,7 +881,7 @@
                                                         "typeString": "int_const 0"
                                                     }
                                                 ],
-                                                "id": 49611,
+                                                "id": 49614,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -893,14 +893,14 @@
                                                     "typeString": "type(address)"
                                                 },
                                                 "typeName": {
-                                                    "id": 49610,
+                                                    "id": 49613,
                                                     "name": "address",
                                                     "nodeType": "ElementaryTypeName",
                                                     "src": "804:7:78",
                                                     "typeDescriptions": {}
                                                 }
                                             },
-                                            "id": 49613,
+                                            "id": 49616,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": true,
@@ -922,11 +922,11 @@
                                             "typeString": "bool"
                                         }
                                     },
-                                    "id": 49619,
+                                    "id": 49622,
                                     "nodeType": "IfStatement",
                                     "src": "790:76:78",
                                     "trueBody": {
-                                        "id": 49618,
+                                        "id": 49621,
                                         "nodeType": "Block",
                                         "src": "816:50:78",
                                         "statements": [
@@ -935,7 +935,7 @@
                                                     "arguments": [],
                                                     "expression": {
                                                         "argumentTypes": [],
-                                                        "id": 49615,
+                                                        "id": 49618,
                                                         "name": "CannotFindSubnet",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
@@ -946,7 +946,7 @@
                                                             "typeString": "function () pure"
                                                         }
                                                     },
-                                                    "id": 49616,
+                                                    "id": 49619,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -962,7 +962,7 @@
                                                         "typeString": "tuple()"
                                                     }
                                                 },
-                                                "id": 49617,
+                                                "id": 49620,
                                                 "nodeType": "RevertStatement",
                                                 "src": "830:25:78"
                                             }
@@ -972,7 +972,7 @@
                             ]
                         },
                         "documentation": {
-                            "id": 49581,
+                            "id": 49584,
                             "nodeType": "StructuredDocumentation",
                             "src": "408:77:78",
                             "text": "@notice Returns the address of the latest subnet actor deployed by a user"
@@ -984,17 +984,17 @@
                         "name": "latestSubnetDeployed",
                         "nameLocation": "499:20:78",
                         "parameters": {
-                            "id": 49584,
+                            "id": 49587,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49583,
+                                    "id": 49586,
                                     "mutability": "mutable",
                                     "name": "owner",
                                     "nameLocation": "528:5:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49621,
+                                    "scope": 49624,
                                     "src": "520:13:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1003,7 +1003,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49582,
+                                        "id": 49585,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "520:7:78",
@@ -1019,17 +1019,17 @@
                             "src": "519:15:78"
                         },
                         "returnParameters": {
-                            "id": 49587,
+                            "id": 49590,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49586,
+                                    "id": 49589,
                                     "mutability": "mutable",
                                     "name": "subnet",
                                     "nameLocation": "566:6:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49621,
+                                    "scope": 49624,
                                     "src": "558:14:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1038,7 +1038,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49585,
+                                        "id": 49588,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "558:7:78",
@@ -1053,35 +1053,35 @@
                             ],
                             "src": "557:16:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49652,
+                        "id": 49655,
                         "nodeType": "FunctionDefinition",
                         "src": "972:236:78",
                         "nodes": [],
                         "body": {
-                            "id": 49651,
+                            "id": 49654,
                             "nodeType": "Block",
                             "src": "1074:134:78",
                             "nodes": [],
                             "statements": [
                                 {
                                     "expression": {
-                                        "id": 49638,
+                                        "id": 49641,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
-                                            "id": 49631,
+                                            "id": 49634,
                                             "name": "subnet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49629,
+                                            "referencedDeclaration": 49632,
                                             "src": "1084:6:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -1094,18 +1094,18 @@
                                             "baseExpression": {
                                                 "baseExpression": {
                                                     "expression": {
-                                                        "id": 49632,
+                                                        "id": 49635,
                                                         "name": "s",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
-                                                        "referencedDeclaration": 49580,
+                                                        "referencedDeclaration": 49583,
                                                         "src": "1093:1:78",
                                                         "typeDescriptions": {
                                                             "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                             "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                         }
                                                     },
-                                                    "id": 49633,
+                                                    "id": 49636,
                                                     "isConstant": false,
                                                     "isLValue": true,
                                                     "isPure": false,
@@ -1120,13 +1120,13 @@
                                                         "typeString": "mapping(address => mapping(uint64 => address))"
                                                     }
                                                 },
-                                                "id": 49635,
+                                                "id": 49638,
                                                 "indexExpression": {
-                                                    "id": 49634,
+                                                    "id": 49637,
                                                     "name": "owner",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
-                                                    "referencedDeclaration": 49624,
+                                                    "referencedDeclaration": 49627,
                                                     "src": "1103:5:78",
                                                     "typeDescriptions": {
                                                         "typeIdentifier": "t_address",
@@ -1144,13 +1144,13 @@
                                                     "typeString": "mapping(uint64 => address)"
                                                 }
                                             },
-                                            "id": 49637,
+                                            "id": 49640,
                                             "indexExpression": {
-                                                "id": 49636,
+                                                "id": 49639,
                                                 "name": "nonce",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49626,
+                                                "referencedDeclaration": 49629,
                                                 "src": "1110:5:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_uint64",
@@ -1174,7 +1174,7 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "id": 49639,
+                                    "id": 49642,
                                     "nodeType": "ExpressionStatement",
                                     "src": "1084:32:78"
                                 },
@@ -1184,17 +1184,17 @@
                                             "typeIdentifier": "t_address",
                                             "typeString": "address"
                                         },
-                                        "id": 49645,
+                                        "id": 49648,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftExpression": {
-                                            "id": 49640,
+                                            "id": 49643,
                                             "name": "subnet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49629,
+                                            "referencedDeclaration": 49632,
                                             "src": "1130:6:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -1207,7 +1207,7 @@
                                             "arguments": [
                                                 {
                                                     "hexValue": "30",
-                                                    "id": 49643,
+                                                    "id": 49646,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": true,
@@ -1229,7 +1229,7 @@
                                                         "typeString": "int_const 0"
                                                     }
                                                 ],
-                                                "id": 49642,
+                                                "id": 49645,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -1241,14 +1241,14 @@
                                                     "typeString": "type(address)"
                                                 },
                                                 "typeName": {
-                                                    "id": 49641,
+                                                    "id": 49644,
                                                     "name": "address",
                                                     "nodeType": "ElementaryTypeName",
                                                     "src": "1140:7:78",
                                                     "typeDescriptions": {}
                                                 }
                                             },
-                                            "id": 49644,
+                                            "id": 49647,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": true,
@@ -1270,11 +1270,11 @@
                                             "typeString": "bool"
                                         }
                                     },
-                                    "id": 49650,
+                                    "id": 49653,
                                     "nodeType": "IfStatement",
                                     "src": "1126:76:78",
                                     "trueBody": {
-                                        "id": 49649,
+                                        "id": 49652,
                                         "nodeType": "Block",
                                         "src": "1152:50:78",
                                         "statements": [
@@ -1283,7 +1283,7 @@
                                                     "arguments": [],
                                                     "expression": {
                                                         "argumentTypes": [],
-                                                        "id": 49646,
+                                                        "id": 49649,
                                                         "name": "CannotFindSubnet",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
@@ -1294,7 +1294,7 @@
                                                             "typeString": "function () pure"
                                                         }
                                                     },
-                                                    "id": 49647,
+                                                    "id": 49650,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -1310,7 +1310,7 @@
                                                         "typeString": "tuple()"
                                                     }
                                                 },
-                                                "id": 49648,
+                                                "id": 49651,
                                                 "nodeType": "RevertStatement",
                                                 "src": "1166:25:78"
                                             }
@@ -1320,7 +1320,7 @@
                             ]
                         },
                         "documentation": {
-                            "id": 49622,
+                            "id": 49625,
                             "nodeType": "StructuredDocumentation",
                             "src": "878:89:78",
                             "text": "@notice Returns the address of a subnet actor deployed for a specific nonce by a user"
@@ -1332,17 +1332,17 @@
                         "name": "getSubnetDeployedByNonce",
                         "nameLocation": "981:24:78",
                         "parameters": {
-                            "id": 49627,
+                            "id": 49630,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49624,
+                                    "id": 49627,
                                     "mutability": "mutable",
                                     "name": "owner",
                                     "nameLocation": "1014:5:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49652,
+                                    "scope": 49655,
                                     "src": "1006:13:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1351,7 +1351,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49623,
+                                        "id": 49626,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1006:7:78",
@@ -1365,12 +1365,12 @@
                                 },
                                 {
                                     "constant": false,
-                                    "id": 49626,
+                                    "id": 49629,
                                     "mutability": "mutable",
                                     "name": "nonce",
                                     "nameLocation": "1028:5:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49652,
+                                    "scope": 49655,
                                     "src": "1021:12:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1379,7 +1379,7 @@
                                         "typeString": "uint64"
                                     },
                                     "typeName": {
-                                        "id": 49625,
+                                        "id": 49628,
                                         "name": "uint64",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1021:6:78",
@@ -1394,17 +1394,17 @@
                             "src": "1005:29:78"
                         },
                         "returnParameters": {
-                            "id": 49630,
+                            "id": 49633,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49629,
+                                    "id": 49632,
                                     "mutability": "mutable",
                                     "name": "subnet",
                                     "nameLocation": "1066:6:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49652,
+                                    "scope": 49655,
                                     "src": "1058:14:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1413,7 +1413,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49628,
+                                        "id": 49631,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1058:7:78",
@@ -1428,35 +1428,35 @@
                             ],
                             "src": "1057:16:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49668,
+                        "id": 49671,
                         "nodeType": "FunctionDefinition",
                         "src": "1271:120:78",
                         "nodes": [],
                         "body": {
-                            "id": 49667,
+                            "id": 49670,
                             "nodeType": "Block",
                             "src": "1348:43:78",
                             "nodes": [],
                             "statements": [
                                 {
                                     "expression": {
-                                        "id": 49665,
+                                        "id": 49668,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
-                                            "id": 49660,
+                                            "id": 49663,
                                             "name": "nonce",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49658,
+                                            "referencedDeclaration": 49661,
                                             "src": "1358:5:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_uint64",
@@ -1468,18 +1468,18 @@
                                         "rightHandSide": {
                                             "baseExpression": {
                                                 "expression": {
-                                                    "id": 49661,
+                                                    "id": 49664,
                                                     "name": "s",
                                                     "nodeType": "Identifier",
                                                     "overloadedDeclarations": [],
-                                                    "referencedDeclaration": 49580,
+                                                    "referencedDeclaration": 49583,
                                                     "src": "1366:1:78",
                                                     "typeDescriptions": {
                                                         "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                         "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                     }
                                                 },
-                                                "id": 49662,
+                                                "id": 49665,
                                                 "isConstant": false,
                                                 "isLValue": true,
                                                 "isPure": false,
@@ -1494,13 +1494,13 @@
                                                     "typeString": "mapping(address => uint64)"
                                                 }
                                             },
-                                            "id": 49664,
+                                            "id": 49667,
                                             "indexExpression": {
-                                                "id": 49663,
+                                                "id": 49666,
                                                 "name": "user",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49655,
+                                                "referencedDeclaration": 49658,
                                                 "src": "1379:4:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_address",
@@ -1524,14 +1524,14 @@
                                             "typeString": "uint64"
                                         }
                                     },
-                                    "id": 49666,
+                                    "id": 49669,
                                     "nodeType": "ExpressionStatement",
                                     "src": "1358:26:78"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49653,
+                            "id": 49656,
                             "nodeType": "StructuredDocumentation",
                             "src": "1214:52:78",
                             "text": "@notice Returns the last nonce used by the owner"
@@ -1543,17 +1543,17 @@
                         "name": "getUserLastNonce",
                         "nameLocation": "1280:16:78",
                         "parameters": {
-                            "id": 49656,
+                            "id": 49659,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49655,
+                                    "id": 49658,
                                     "mutability": "mutable",
                                     "name": "user",
                                     "nameLocation": "1305:4:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49668,
+                                    "scope": 49671,
                                     "src": "1297:12:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1562,7 +1562,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49654,
+                                        "id": 49657,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1297:7:78",
@@ -1578,17 +1578,17 @@
                             "src": "1296:14:78"
                         },
                         "returnParameters": {
-                            "id": 49659,
+                            "id": 49662,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49658,
+                                    "id": 49661,
                                     "mutability": "mutable",
                                     "name": "nonce",
                                     "nameLocation": "1341:5:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49668,
+                                    "scope": 49671,
                                     "src": "1334:12:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1597,7 +1597,7 @@
                                         "typeString": "uint64"
                                     },
                                     "typeName": {
-                                        "id": 49657,
+                                        "id": 49660,
                                         "name": "uint64",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1334:6:78",
@@ -1611,18 +1611,18 @@
                             ],
                             "src": "1333:14:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49678,
+                        "id": 49681,
                         "nodeType": "FunctionDefinition",
                         "src": "1433:87:78",
                         "nodes": [],
                         "body": {
-                            "id": 49677,
+                            "id": 49680,
                             "nodeType": "Block",
                             "src": "1487:33:78",
                             "nodes": [],
@@ -1630,18 +1630,18 @@
                                 {
                                     "expression": {
                                         "expression": {
-                                            "id": 49674,
+                                            "id": 49677,
                                             "name": "s",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49580,
+                                            "referencedDeclaration": 49583,
                                             "src": "1504:1:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                 "typeString": "struct SubnetRegistryActorStorage storage ref"
                                             }
                                         },
-                                        "id": 49675,
+                                        "id": 49678,
                                         "isConstant": false,
                                         "isLValue": true,
                                         "isPure": false,
@@ -1656,15 +1656,15 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "functionReturnParameters": 49673,
-                                    "id": 49676,
+                                    "functionReturnParameters": 49676,
+                                    "id": 49679,
                                     "nodeType": "Return",
                                     "src": "1497:16:78"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49669,
+                            "id": 49672,
                             "nodeType": "StructuredDocumentation",
                             "src": "1397:31:78",
                             "text": "@notice Returns the gateway"
@@ -1676,23 +1676,23 @@
                         "name": "getGateway",
                         "nameLocation": "1442:10:78",
                         "parameters": {
-                            "id": 49670,
+                            "id": 49673,
                             "nodeType": "ParameterList",
                             "parameters": [],
                             "src": "1452:2:78"
                         },
                         "returnParameters": {
-                            "id": 49673,
+                            "id": 49676,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49672,
+                                    "id": 49675,
                                     "mutability": "mutable",
                                     "name": "",
                                     "nameLocation": "-1:-1:-1",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49678,
+                                    "scope": 49681,
                                     "src": "1478:7:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1701,7 +1701,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49671,
+                                        "id": 49674,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1478:7:78",
@@ -1716,18 +1716,18 @@
                             ],
                             "src": "1477:9:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49688,
+                        "id": 49691,
                         "nodeType": "FunctionDefinition",
                         "src": "1589:114:78",
                         "nodes": [],
                         "body": {
-                            "id": 49687,
+                            "id": 49690,
                             "nodeType": "Block",
                             "src": "1658:45:78",
                             "nodes": [],
@@ -1735,18 +1735,18 @@
                                 {
                                     "expression": {
                                         "expression": {
-                                            "id": 49684,
+                                            "id": 49687,
                                             "name": "s",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49580,
+                                            "referencedDeclaration": 49583,
                                             "src": "1675:1:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                 "typeString": "struct SubnetRegistryActorStorage storage ref"
                                             }
                                         },
-                                        "id": 49685,
+                                        "id": 49688,
                                         "isConstant": false,
                                         "isLValue": true,
                                         "isPure": false,
@@ -1761,15 +1761,15 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "functionReturnParameters": 49683,
-                                    "id": 49686,
+                                    "functionReturnParameters": 49686,
+                                    "id": 49689,
                                     "nodeType": "Return",
                                     "src": "1668:28:78"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49679,
+                            "id": 49682,
                             "nodeType": "StructuredDocumentation",
                             "src": "1526:58:78",
                             "text": "@notice Returns the address of the SUBNET_GETTER_FACET"
@@ -1781,23 +1781,23 @@
                         "name": "getSubnetActorGetterFacet",
                         "nameLocation": "1598:25:78",
                         "parameters": {
-                            "id": 49680,
+                            "id": 49683,
                             "nodeType": "ParameterList",
                             "parameters": [],
                             "src": "1623:2:78"
                         },
                         "returnParameters": {
-                            "id": 49683,
+                            "id": 49686,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49682,
+                                    "id": 49685,
                                     "mutability": "mutable",
                                     "name": "",
                                     "nameLocation": "-1:-1:-1",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49688,
+                                    "scope": 49691,
                                     "src": "1649:7:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1806,7 +1806,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49681,
+                                        "id": 49684,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1649:7:78",
@@ -1821,18 +1821,18 @@
                             ],
                             "src": "1648:9:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49698,
+                        "id": 49701,
                         "nodeType": "FunctionDefinition",
                         "src": "1773:116:78",
                         "nodes": [],
                         "body": {
-                            "id": 49697,
+                            "id": 49700,
                             "nodeType": "Block",
                             "src": "1843:46:78",
                             "nodes": [],
@@ -1840,18 +1840,18 @@
                                 {
                                     "expression": {
                                         "expression": {
-                                            "id": 49694,
+                                            "id": 49697,
                                             "name": "s",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49580,
+                                            "referencedDeclaration": 49583,
                                             "src": "1860:1:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                 "typeString": "struct SubnetRegistryActorStorage storage ref"
                                             }
                                         },
-                                        "id": 49695,
+                                        "id": 49698,
                                         "isConstant": false,
                                         "isLValue": true,
                                         "isPure": false,
@@ -1866,15 +1866,15 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "functionReturnParameters": 49693,
-                                    "id": 49696,
+                                    "functionReturnParameters": 49696,
+                                    "id": 49699,
                                     "nodeType": "Return",
                                     "src": "1853:29:78"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49689,
+                            "id": 49692,
                             "nodeType": "StructuredDocumentation",
                             "src": "1709:59:78",
                             "text": "@notice Returns the address of the SUBNET_MANAGER_FACET"
@@ -1886,23 +1886,23 @@
                         "name": "getSubnetActorManagerFacet",
                         "nameLocation": "1782:26:78",
                         "parameters": {
-                            "id": 49690,
+                            "id": 49693,
                             "nodeType": "ParameterList",
                             "parameters": [],
                             "src": "1808:2:78"
                         },
                         "returnParameters": {
-                            "id": 49693,
+                            "id": 49696,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49692,
+                                    "id": 49695,
                                     "mutability": "mutable",
                                     "name": "",
                                     "nameLocation": "-1:-1:-1",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49698,
+                                    "scope": 49701,
                                     "src": "1834:7:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -1911,7 +1911,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49691,
+                                        "id": 49694,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "1834:7:78",
@@ -1926,18 +1926,18 @@
                             ],
                             "src": "1833:9:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49709,
+                        "id": 49712,
                         "nodeType": "FunctionDefinition",
                         "src": "1947:128:78",
                         "nodes": [],
                         "body": {
-                            "id": 49708,
+                            "id": 49711,
                             "nodeType": "Block",
                             "src": "2028:47:78",
                             "nodes": [],
@@ -1945,18 +1945,18 @@
                                 {
                                     "expression": {
                                         "expression": {
-                                            "id": 49705,
+                                            "id": 49708,
                                             "name": "s",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49580,
+                                            "referencedDeclaration": 49583,
                                             "src": "2045:1:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                 "typeString": "struct SubnetRegistryActorStorage storage ref"
                                             }
                                         },
-                                        "id": 49706,
+                                        "id": 49709,
                                         "isConstant": false,
                                         "isLValue": true,
                                         "isPure": false,
@@ -1971,15 +1971,15 @@
                                             "typeString": "bytes4[] storage ref"
                                         }
                                     },
-                                    "functionReturnParameters": 49704,
-                                    "id": 49707,
+                                    "functionReturnParameters": 49707,
+                                    "id": 49710,
                                     "nodeType": "Return",
                                     "src": "2038:30:78"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49699,
+                            "id": 49702,
                             "nodeType": "StructuredDocumentation",
                             "src": "1895:47:78",
                             "text": "@notice Returns the subnet getter selectors"
@@ -1991,23 +1991,23 @@
                         "name": "getSubnetActorGetterSelectors",
                         "nameLocation": "1956:29:78",
                         "parameters": {
-                            "id": 49700,
+                            "id": 49703,
                             "nodeType": "ParameterList",
                             "parameters": [],
                             "src": "1985:2:78"
                         },
                         "returnParameters": {
-                            "id": 49704,
+                            "id": 49707,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49703,
+                                    "id": 49706,
                                     "mutability": "mutable",
                                     "name": "",
                                     "nameLocation": "-1:-1:-1",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49709,
+                                    "scope": 49712,
                                     "src": "2011:15:78",
                                     "stateVariable": false,
                                     "storageLocation": "memory",
@@ -2017,7 +2017,7 @@
                                     },
                                     "typeName": {
                                         "baseType": {
-                                            "id": 49701,
+                                            "id": 49704,
                                             "name": "bytes4",
                                             "nodeType": "ElementaryTypeName",
                                             "src": "2011:6:78",
@@ -2026,7 +2026,7 @@
                                                 "typeString": "bytes4"
                                             }
                                         },
-                                        "id": 49702,
+                                        "id": 49705,
                                         "nodeType": "ArrayTypeName",
                                         "src": "2011:8:78",
                                         "typeDescriptions": {
@@ -2039,18 +2039,18 @@
                             ],
                             "src": "2010:17:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49720,
+                        "id": 49723,
                         "nodeType": "FunctionDefinition",
                         "src": "2134:130:78",
                         "nodes": [],
                         "body": {
-                            "id": 49719,
+                            "id": 49722,
                             "nodeType": "Block",
                             "src": "2216:48:78",
                             "nodes": [],
@@ -2058,18 +2058,18 @@
                                 {
                                     "expression": {
                                         "expression": {
-                                            "id": 49716,
+                                            "id": 49719,
                                             "name": "s",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49580,
+                                            "referencedDeclaration": 49583,
                                             "src": "2233:1:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                 "typeString": "struct SubnetRegistryActorStorage storage ref"
                                             }
                                         },
-                                        "id": 49717,
+                                        "id": 49720,
                                         "isConstant": false,
                                         "isLValue": true,
                                         "isPure": false,
@@ -2084,15 +2084,15 @@
                                             "typeString": "bytes4[] storage ref"
                                         }
                                     },
-                                    "functionReturnParameters": 49715,
-                                    "id": 49718,
+                                    "functionReturnParameters": 49718,
+                                    "id": 49721,
                                     "nodeType": "Return",
                                     "src": "2226:31:78"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49710,
+                            "id": 49713,
                             "nodeType": "StructuredDocumentation",
                             "src": "2081:48:78",
                             "text": "@notice Returns the subnet manager selectors"
@@ -2104,23 +2104,23 @@
                         "name": "getSubnetActorManagerSelectors",
                         "nameLocation": "2143:30:78",
                         "parameters": {
-                            "id": 49711,
+                            "id": 49714,
                             "nodeType": "ParameterList",
                             "parameters": [],
                             "src": "2173:2:78"
                         },
                         "returnParameters": {
-                            "id": 49715,
+                            "id": 49718,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49714,
+                                    "id": 49717,
                                     "mutability": "mutable",
                                     "name": "",
                                     "nameLocation": "-1:-1:-1",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49720,
+                                    "scope": 49723,
                                     "src": "2199:15:78",
                                     "stateVariable": false,
                                     "storageLocation": "memory",
@@ -2130,7 +2130,7 @@
                                     },
                                     "typeName": {
                                         "baseType": {
-                                            "id": 49712,
+                                            "id": 49715,
                                             "name": "bytes4",
                                             "nodeType": "ElementaryTypeName",
                                             "src": "2199:6:78",
@@ -2139,7 +2139,7 @@
                                                 "typeString": "bytes4"
                                             }
                                         },
-                                        "id": 49713,
+                                        "id": 49716,
                                         "nodeType": "ArrayTypeName",
                                         "src": "2199:8:78",
                                         "typeDescriptions": {
@@ -2152,18 +2152,18 @@
                             ],
                             "src": "2198:17:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "view",
                         "virtual": false,
                         "visibility": "external"
                     },
                     {
-                        "id": 49786,
+                        "id": 49789,
                         "nodeType": "FunctionDefinition",
                         "src": "2383:770:78",
                         "nodes": [],
                         "body": {
-                            "id": 49785,
+                            "id": 49788,
                             "nodeType": "Block",
                             "src": "2607:546:78",
                             "nodes": [],
@@ -2174,7 +2174,7 @@
                                         "expression": {
                                             "argumentTypes": [],
                                             "expression": {
-                                                "id": 49734,
+                                                "id": 49737,
                                                 "name": "LibDiamond",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
@@ -2185,7 +2185,7 @@
                                                     "typeString": "type(library LibDiamond)"
                                                 }
                                             },
-                                            "id": 49736,
+                                            "id": 49739,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": false,
@@ -2200,7 +2200,7 @@
                                                 "typeString": "function () view"
                                             }
                                         },
-                                        "id": 49737,
+                                        "id": 49740,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
@@ -2216,7 +2216,7 @@
                                             "typeString": "tuple()"
                                         }
                                     },
-                                    "id": 49738,
+                                    "id": 49741,
                                     "nodeType": "ExpressionStatement",
                                     "src": "2617:35:78"
                                 },
@@ -2226,17 +2226,17 @@
                                             "typeIdentifier": "t_address",
                                             "typeString": "address"
                                         },
-                                        "id": 49744,
+                                        "id": 49747,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftExpression": {
-                                            "id": 49739,
+                                            "id": 49742,
                                             "name": "newGetterFacet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49723,
+                                            "referencedDeclaration": 49726,
                                             "src": "2710:14:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -2249,7 +2249,7 @@
                                             "arguments": [
                                                 {
                                                     "hexValue": "30",
-                                                    "id": 49742,
+                                                    "id": 49745,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": true,
@@ -2271,7 +2271,7 @@
                                                         "typeString": "int_const 0"
                                                     }
                                                 ],
-                                                "id": 49741,
+                                                "id": 49744,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -2283,14 +2283,14 @@
                                                     "typeString": "type(address)"
                                                 },
                                                 "typeName": {
-                                                    "id": 49740,
+                                                    "id": 49743,
                                                     "name": "address",
                                                     "nodeType": "ElementaryTypeName",
                                                     "src": "2728:7:78",
                                                     "typeDescriptions": {}
                                                 }
                                             },
-                                            "id": 49743,
+                                            "id": 49746,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": true,
@@ -2312,11 +2312,11 @@
                                             "typeString": "bool"
                                         }
                                     },
-                                    "id": 49749,
+                                    "id": 49752,
                                     "nodeType": "IfStatement",
                                     "src": "2706:85:78",
                                     "trueBody": {
-                                        "id": 49748,
+                                        "id": 49751,
                                         "nodeType": "Block",
                                         "src": "2740:51:78",
                                         "statements": [
@@ -2325,7 +2325,7 @@
                                                     "arguments": [],
                                                     "expression": {
                                                         "argumentTypes": [],
-                                                        "id": 49745,
+                                                        "id": 49748,
                                                         "name": "FacetCannotBeZero",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
@@ -2336,7 +2336,7 @@
                                                             "typeString": "function () pure"
                                                         }
                                                     },
-                                                    "id": 49746,
+                                                    "id": 49749,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -2352,7 +2352,7 @@
                                                         "typeString": "tuple()"
                                                     }
                                                 },
-                                                "id": 49747,
+                                                "id": 49750,
                                                 "nodeType": "RevertStatement",
                                                 "src": "2754:26:78"
                                             }
@@ -2365,17 +2365,17 @@
                                             "typeIdentifier": "t_address",
                                             "typeString": "address"
                                         },
-                                        "id": 49755,
+                                        "id": 49758,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftExpression": {
-                                            "id": 49750,
+                                            "id": 49753,
                                             "name": "newManagerFacet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49725,
+                                            "referencedDeclaration": 49728,
                                             "src": "2804:15:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -2388,7 +2388,7 @@
                                             "arguments": [
                                                 {
                                                     "hexValue": "30",
-                                                    "id": 49753,
+                                                    "id": 49756,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": true,
@@ -2410,7 +2410,7 @@
                                                         "typeString": "int_const 0"
                                                     }
                                                 ],
-                                                "id": 49752,
+                                                "id": 49755,
                                                 "isConstant": false,
                                                 "isLValue": false,
                                                 "isPure": true,
@@ -2422,14 +2422,14 @@
                                                     "typeString": "type(address)"
                                                 },
                                                 "typeName": {
-                                                    "id": 49751,
+                                                    "id": 49754,
                                                     "name": "address",
                                                     "nodeType": "ElementaryTypeName",
                                                     "src": "2823:7:78",
                                                     "typeDescriptions": {}
                                                 }
                                             },
-                                            "id": 49754,
+                                            "id": 49757,
                                             "isConstant": false,
                                             "isLValue": false,
                                             "isPure": true,
@@ -2451,11 +2451,11 @@
                                             "typeString": "bool"
                                         }
                                     },
-                                    "id": 49760,
+                                    "id": 49763,
                                     "nodeType": "IfStatement",
                                     "src": "2800:86:78",
                                     "trueBody": {
-                                        "id": 49759,
+                                        "id": 49762,
                                         "nodeType": "Block",
                                         "src": "2835:51:78",
                                         "statements": [
@@ -2464,7 +2464,7 @@
                                                     "arguments": [],
                                                     "expression": {
                                                         "argumentTypes": [],
-                                                        "id": 49756,
+                                                        "id": 49759,
                                                         "name": "FacetCannotBeZero",
                                                         "nodeType": "Identifier",
                                                         "overloadedDeclarations": [],
@@ -2475,7 +2475,7 @@
                                                             "typeString": "function () pure"
                                                         }
                                                     },
-                                                    "id": 49757,
+                                                    "id": 49760,
                                                     "isConstant": false,
                                                     "isLValue": false,
                                                     "isPure": false,
@@ -2491,7 +2491,7 @@
                                                         "typeString": "tuple()"
                                                     }
                                                 },
-                                                "id": 49758,
+                                                "id": 49761,
                                                 "nodeType": "RevertStatement",
                                                 "src": "2849:26:78"
                                             }
@@ -2500,25 +2500,25 @@
                                 },
                                 {
                                     "expression": {
-                                        "id": 49765,
+                                        "id": 49768,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
                                             "expression": {
-                                                "id": 49761,
+                                                "id": 49764,
                                                 "name": "s",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49580,
+                                                "referencedDeclaration": 49583,
                                                 "src": "2936:1:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                     "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                 }
                                             },
-                                            "id": 49763,
+                                            "id": 49766,
                                             "isConstant": false,
                                             "isLValue": true,
                                             "isPure": false,
@@ -2536,11 +2536,11 @@
                                         "nodeType": "Assignment",
                                         "operator": "=",
                                         "rightHandSide": {
-                                            "id": 49764,
+                                            "id": 49767,
                                             "name": "newGetterFacet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49723,
+                                            "referencedDeclaration": 49726,
                                             "src": "2960:14:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -2553,31 +2553,31 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "id": 49766,
+                                    "id": 49769,
                                     "nodeType": "ExpressionStatement",
                                     "src": "2936:38:78"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49771,
+                                        "id": 49774,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
                                             "expression": {
-                                                "id": 49767,
+                                                "id": 49770,
                                                 "name": "s",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49580,
+                                                "referencedDeclaration": 49583,
                                                 "src": "2984:1:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                     "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                 }
                                             },
-                                            "id": 49769,
+                                            "id": 49772,
                                             "isConstant": false,
                                             "isLValue": true,
                                             "isPure": false,
@@ -2595,11 +2595,11 @@
                                         "nodeType": "Assignment",
                                         "operator": "=",
                                         "rightHandSide": {
-                                            "id": 49770,
+                                            "id": 49773,
                                             "name": "newManagerFacet",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49725,
+                                            "referencedDeclaration": 49728,
                                             "src": "3009:15:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_address",
@@ -2612,31 +2612,31 @@
                                             "typeString": "address"
                                         }
                                     },
-                                    "id": 49772,
+                                    "id": 49775,
                                     "nodeType": "ExpressionStatement",
                                     "src": "2984:40:78"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49777,
+                                        "id": 49780,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
                                             "expression": {
-                                                "id": 49773,
+                                                "id": 49776,
                                                 "name": "s",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49580,
+                                                "referencedDeclaration": 49583,
                                                 "src": "3034:1:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                     "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                 }
                                             },
-                                            "id": 49775,
+                                            "id": 49778,
                                             "isConstant": false,
                                             "isLValue": true,
                                             "isPure": false,
@@ -2654,11 +2654,11 @@
                                         "nodeType": "Assignment",
                                         "operator": "=",
                                         "rightHandSide": {
-                                            "id": 49776,
+                                            "id": 49779,
                                             "name": "newSubnetGetterSelectors",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49728,
+                                            "referencedDeclaration": 49731,
                                             "src": "3060:24:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_array$_t_bytes4_$dyn_calldata_ptr",
@@ -2671,31 +2671,31 @@
                                             "typeString": "bytes4[] storage ref"
                                         }
                                     },
-                                    "id": 49778,
+                                    "id": 49781,
                                     "nodeType": "ExpressionStatement",
                                     "src": "3034:50:78"
                                 },
                                 {
                                     "expression": {
-                                        "id": 49783,
+                                        "id": 49786,
                                         "isConstant": false,
                                         "isLValue": false,
                                         "isPure": false,
                                         "lValueRequested": false,
                                         "leftHandSide": {
                                             "expression": {
-                                                "id": 49779,
+                                                "id": 49782,
                                                 "name": "s",
                                                 "nodeType": "Identifier",
                                                 "overloadedDeclarations": [],
-                                                "referencedDeclaration": 49580,
+                                                "referencedDeclaration": 49583,
                                                 "src": "3094:1:78",
                                                 "typeDescriptions": {
                                                     "typeIdentifier": "t_struct$_SubnetRegistryActorStorage_$45163_storage",
                                                     "typeString": "struct SubnetRegistryActorStorage storage ref"
                                                 }
                                             },
-                                            "id": 49781,
+                                            "id": 49784,
                                             "isConstant": false,
                                             "isLValue": true,
                                             "isPure": false,
@@ -2713,11 +2713,11 @@
                                         "nodeType": "Assignment",
                                         "operator": "=",
                                         "rightHandSide": {
-                                            "id": 49782,
+                                            "id": 49785,
                                             "name": "newSubnetManagerSelectors",
                                             "nodeType": "Identifier",
                                             "overloadedDeclarations": [],
-                                            "referencedDeclaration": 49731,
+                                            "referencedDeclaration": 49734,
                                             "src": "3121:25:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_array$_t_bytes4_$dyn_calldata_ptr",
@@ -2730,14 +2730,14 @@
                                             "typeString": "bytes4[] storage ref"
                                         }
                                     },
-                                    "id": 49784,
+                                    "id": 49787,
                                     "nodeType": "ExpressionStatement",
                                     "src": "3094:52:78"
                                 }
                             ]
                         },
                         "documentation": {
-                            "id": 49721,
+                            "id": 49724,
                             "nodeType": "StructuredDocumentation",
                             "src": "2270:108:78",
                             "text": "@notice Updates references to the subnet contract components\n Only callable by the contract owner"
@@ -2749,17 +2749,17 @@
                         "name": "updateReferenceSubnetContract",
                         "nameLocation": "2392:29:78",
                         "parameters": {
-                            "id": 49732,
+                            "id": 49735,
                             "nodeType": "ParameterList",
                             "parameters": [
                                 {
                                     "constant": false,
-                                    "id": 49723,
+                                    "id": 49726,
                                     "mutability": "mutable",
                                     "name": "newGetterFacet",
                                     "nameLocation": "2439:14:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49786,
+                                    "scope": 49789,
                                     "src": "2431:22:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -2768,7 +2768,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49722,
+                                        "id": 49725,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "2431:7:78",
@@ -2782,12 +2782,12 @@
                                 },
                                 {
                                     "constant": false,
-                                    "id": 49725,
+                                    "id": 49728,
                                     "mutability": "mutable",
                                     "name": "newManagerFacet",
                                     "nameLocation": "2471:15:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49786,
+                                    "scope": 49789,
                                     "src": "2463:23:78",
                                     "stateVariable": false,
                                     "storageLocation": "default",
@@ -2796,7 +2796,7 @@
                                         "typeString": "address"
                                     },
                                     "typeName": {
-                                        "id": 49724,
+                                        "id": 49727,
                                         "name": "address",
                                         "nodeType": "ElementaryTypeName",
                                         "src": "2463:7:78",
@@ -2810,49 +2810,13 @@
                                 },
                                 {
                                     "constant": false,
-                                    "id": 49728,
+                                    "id": 49731,
                                     "mutability": "mutable",
                                     "name": "newSubnetGetterSelectors",
                                     "nameLocation": "2514:24:78",
                                     "nodeType": "VariableDeclaration",
-                                    "scope": 49786,
+                                    "scope": 49789,
                                     "src": "2496:42:78",
-                                    "stateVariable": false,
-                                    "storageLocation": "calldata",
-                                    "typeDescriptions": {
-                                        "typeIdentifier": "t_array$_t_bytes4_$dyn_calldata_ptr",
-                                        "typeString": "bytes4[]"
-                                    },
-                                    "typeName": {
-                                        "baseType": {
-                                            "id": 49726,
-                                            "name": "bytes4",
-                                            "nodeType": "ElementaryTypeName",
-                                            "src": "2496:6:78",
-                                            "typeDescriptions": {
-                                                "typeIdentifier": "t_bytes4",
-                                                "typeString": "bytes4"
-                                            }
-                                        },
-                                        "id": 49727,
-                                        "nodeType": "ArrayTypeName",
-                                        "src": "2496:8:78",
-                                        "typeDescriptions": {
-                                            "typeIdentifier": "t_array$_t_bytes4_$dyn_storage_ptr",
-                                            "typeString": "bytes4[]"
-                                        }
-                                    },
-                                    "visibility": "internal"
-                                },
-                                {
-                                    "constant": false,
-                                    "id": 49731,
-                                    "mutability": "mutable",
-                                    "name": "newSubnetManagerSelectors",
-                                    "nameLocation": "2566:25:78",
-                                    "nodeType": "VariableDeclaration",
-                                    "scope": 49786,
-                                    "src": "2548:43:78",
                                     "stateVariable": false,
                                     "storageLocation": "calldata",
                                     "typeDescriptions": {
@@ -2864,13 +2828,49 @@
                                             "id": 49729,
                                             "name": "bytes4",
                                             "nodeType": "ElementaryTypeName",
-                                            "src": "2548:6:78",
+                                            "src": "2496:6:78",
                                             "typeDescriptions": {
                                                 "typeIdentifier": "t_bytes4",
                                                 "typeString": "bytes4"
                                             }
                                         },
                                         "id": 49730,
+                                        "nodeType": "ArrayTypeName",
+                                        "src": "2496:8:78",
+                                        "typeDescriptions": {
+                                            "typeIdentifier": "t_array$_t_bytes4_$dyn_storage_ptr",
+                                            "typeString": "bytes4[]"
+                                        }
+                                    },
+                                    "visibility": "internal"
+                                },
+                                {
+                                    "constant": false,
+                                    "id": 49734,
+                                    "mutability": "mutable",
+                                    "name": "newSubnetManagerSelectors",
+                                    "nameLocation": "2566:25:78",
+                                    "nodeType": "VariableDeclaration",
+                                    "scope": 49789,
+                                    "src": "2548:43:78",
+                                    "stateVariable": false,
+                                    "storageLocation": "calldata",
+                                    "typeDescriptions": {
+                                        "typeIdentifier": "t_array$_t_bytes4_$dyn_calldata_ptr",
+                                        "typeString": "bytes4[]"
+                                    },
+                                    "typeName": {
+                                        "baseType": {
+                                            "id": 49732,
+                                            "name": "bytes4",
+                                            "nodeType": "ElementaryTypeName",
+                                            "src": "2548:6:78",
+                                            "typeDescriptions": {
+                                                "typeIdentifier": "t_bytes4",
+                                                "typeString": "bytes4"
+                                            }
+                                        },
+                                        "id": 49733,
                                         "nodeType": "ArrayTypeName",
                                         "src": "2548:8:78",
                                         "typeDescriptions": {
@@ -2884,12 +2884,12 @@
                             "src": "2421:176:78"
                         },
                         "returnParameters": {
-                            "id": 49733,
+                            "id": 49736,
                             "nodeType": "ParameterList",
                             "parameters": [],
                             "src": "2607:0:78"
                         },
-                        "scope": 49787,
+                        "scope": 49790,
                         "stateMutability": "nonpayable",
                         "virtual": false,
                         "visibility": "external"
@@ -2901,10 +2901,10 @@
                 "contractDependencies": [],
                 "contractKind": "contract",
                 "fullyImplemented": true,
-                "linearizedBaseContracts": [49787],
+                "linearizedBaseContracts": [49790],
                 "name": "SubnetGetterFacet",
                 "nameLocation": "287:17:78",
-                "scope": 49788,
+                "scope": 49791,
                 "usedErrors": [37000, 37004, 40306]
             }
         ],
