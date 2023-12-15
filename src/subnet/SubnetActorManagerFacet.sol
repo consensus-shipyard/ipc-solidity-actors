@@ -1,26 +1,25 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {BatchWithNoMessages, SubnetAlreadyBootstrapped, MaxMsgsPerBatchExceeded, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughBalanceForRewards, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidBatchEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
+import {InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {BottomUpCheckpoint, BottomUpMsgBatch, BottomUpMsgBatchInfo, CrossMsg} from "../structs/CrossNet.sol";
-import {SubnetID, Validator, ValidatorSet} from "../structs/Subnet.sol";
-import {QuorumObjKind} from "../structs/Quorum.sol";
-import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
+import {BottomUpCheckpoint, CrossMsg} from "../structs/CrossNet.sol";
+import {Validator, ValidatorSet, PermissionMode} from "../structs/Subnet.sol";
+import {Pausable} from "../lib/LibPausable.sol";
+import {LibDiamond} from "../lib/LibDiamond.sol";
 import {MultisignatureChecker} from "../lib/LibMultisignatureChecker.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {SubnetActorModifiers} from "../lib/LibSubnetActorStorage.sol";
-import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {LibValidatorSet, LibStaking} from "../lib/LibStaking.sol";
+import {LibDiamond} from "../lib/LibDiamond.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
 
-contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, ReentrancyGuard {
+contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable, ReentrancyGuard {
     using EnumerableSet for EnumerableSet.AddressSet;
-    using SubnetIDHelper for SubnetID;
     using LibValidatorSet for ValidatorSet;
     using Address for address payable;
 
@@ -29,9 +28,35 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     event NextBottomUpCheckpointExecuted(uint256 epoch, address submitter);
     event SubnetBootstrapped(Validator[]);
 
-    /** @notice submit a checkpoint commitment.
-     *  @dev It triggers the commitment of the checkpoint and any other side-effects that
-     *  need to be triggered by the checkpoint such as relayer reward book keeping.
+    function enforceFederatedValidation() internal view {
+        if (s.validatorSet.permissionMode != PermissionMode.Federated) {
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
+        }
+        return;
+    }
+
+    function enforceCollateralValidation() internal view {
+        if (s.validatorSet.permissionMode != PermissionMode.Collateral) {
+            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
+        }
+        return;
+    }
+
+    /// @notice Pause all methods with `whenNotPaused` modifier
+    function pause() external {
+        LibDiamond.enforceIsContractOwner();
+        _pause();
+    }
+
+    /// @notice Unpause all methods with `whenNotPaused` modifier
+    function unpause() external {
+        LibDiamond.enforceIsContractOwner();
+        _unpause();
+    }
+
+    /** @notice submit a checkpoint for execution.
+     *  @dev It triggers the commitment of the checkpoint and the execution of related cross-net messages,
+     *       and any other side-effects that need to be triggered by the checkpoint such as relayer reward book keeping.
      * @param checkpoint The executed bottom-up checkpoint
      * @param signatories The addresses of the signatories
      * @param signatures The collected checkpoint signatures
@@ -40,7 +65,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         BottomUpCheckpoint calldata checkpoint,
         address[] calldata signatories,
         bytes[] calldata signatures
-    ) external {
+    ) external whenNotPaused {
         // the checkpoint height must be equal to the last bottom-up checkpoint height or
         // the next one
         if (
@@ -183,14 +208,48 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         payable(msg.sender).sendValue(amount);
     }
 
+    /// @notice method that allows the contract owner to set the validators' federated power
+    function setFederatedPower(
+        address[] calldata validators,
+        bytes[] calldata publicKeys,
+        uint256[] calldata powers
+    ) external notKilled {
+        LibDiamond.enforceIsContractOwner();
+
+        enforceFederatedValidation();
+
+        if (validators.length != powers.length) {
+            revert InvalidFederationPayload();
+        }
+
+        if (validators.length != publicKeys.length) {
+            revert InvalidFederationPayload();
+        }
+
+        uint256 length = validators.length;
+        for (uint256 i; i < length; ) {
+            // check addresses
+            address convertedAddress = publicKeyToAddress(publicKeys[i]);
+            if (convertedAddress != validators[i]) {
+                revert NotOwnerOfPublicKey();
+            }
+
+            LibStaking.setFederatedPower({validator: validators[i], metadata: publicKeys[i], amount: powers[i]});
+
+            unchecked {
+                ++i;
+            }
+        }
+    }
+
     /// @notice method that allows a validator to join the subnet
     /// @param publicKey The off-chain 65 byte public key that should be associated with the validator
-    function join(bytes calldata publicKey) external payable nonReentrant notKilled {
+    function join(bytes calldata publicKey) external payable nonReentrant whenNotPaused notKilled {
         // adding this check to prevent new validators from joining
         // after the subnet has been bootstrapped. We will increase the
         // functionality in the future to support explicit permissioning.
-        if (s.bootstrapped && s.permissioned) {
-            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
+        if (s.bootstrapped) {
+            enforceCollateralValidation();
         }
         if (msg.value == 0) {
             revert CollateralIsZero();
@@ -235,12 +294,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice method that allows a validator to increase its stake
-    function stake() external payable notKilled {
+    function stake() external payable whenNotPaused notKilled {
         // disbling validator changes for permissioned subnets (at least for now
         // until a more complex mechanism is implemented).
-        if (s.permissioned) {
-            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
-        }
+        enforceCollateralValidation();
+
         if (msg.value == 0) {
             revert CollateralIsZero();
         }
@@ -259,12 +317,11 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
 
     /// @notice method that allows a validator to unstake a part of its collateral from a subnet
     /// @dev `leave` must be used to unstake the entire stake.
-    function unstake(uint256 amount) external notKilled {
+    function unstake(uint256 amount) external whenNotPaused notKilled {
         // disbling validator changes for permissioned subnets (at least for now
         // until a more complex mechanism is implemented).
-        if (s.permissioned) {
-            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
-        }
+        enforceCollateralValidation();
+
         if (amount == 0) {
             revert CannotReleaseZero();
         }
@@ -288,14 +345,14 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @notice method that allows a validator to leave the subnet
     /// @dev it also return the validators initial balance if the
     /// subnet was not yet bootstrapped.
-    function leave() external notKilled nonReentrant {
+    function leave() external nonReentrant whenNotPaused notKilled {
         // disbling validator changes for permissioned subnets (at least for now
         // until a more complex mechanism is implemented).
         // This means that initial validators won't be able to recover
         // their collateral ever (worth noting in the docs if this ends
         // up sticking around for a while).
-        if (s.bootstrapped && s.permissioned) {
-            revert MethodNotAllowed(ERR_PERMISSIONED_AND_BOOTSTRAPPED);
+        if (s.bootstrapped) {
+            enforceCollateralValidation();
         }
 
         // remove bootstrap nodes added by this validator
@@ -336,17 +393,17 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     }
 
     /// @notice Validator claims their released collateral
-    function claim() external nonReentrant {
+    function claim() external nonReentrant whenNotPaused {
         LibStaking.claimCollateral(msg.sender);
     }
 
     /// @notice Relayer claims its reward
-    function claimRewardForRelayer() external nonReentrant {
+    function claimRewardForRelayer() external nonReentrant whenNotPaused {
         LibStaking.claimRewardForRelayer(msg.sender);
     }
 
     /// @notice add a bootstrap node
-    function addBootstrapNode(string memory netAddress) external {
+    function addBootstrapNode(string memory netAddress) external whenNotPaused {
         if (!s.validatorSet.isActiveValidator(msg.sender)) {
             revert NotValidator(msg.sender);
         }
@@ -361,12 +418,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
     /// @notice reward the relayers for the previous checkpoint after processing the one at height `height`.
     /// @dev The reward includes the fixed relayer reward and accumulated cross-message fees received from the gateway.
     /// @param height height of the checkpoint the relayers are rewarded for
-    /// @param reward The sum of the reward
-    function distributeRewardToRelayers(
-        uint256 height,
-        uint256 reward,
-        QuorumObjKind kind
-    ) external payable onlyGateway {
+    /// @param reward The sum of cross-message fees in the checkpoint
+    function distributeRewardToRelayers(uint64 height, uint256 reward) external payable whenNotPaused onlyGateway {
         if (reward == 0) {
             return;
         }
@@ -425,8 +478,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Reentran
         bytes[] memory signatures
     ) public view {
         // This call reverts if at least one of the signatories (validator) is not in the active validator set.
-        uint256[] memory collaterals = s.validatorSet.getConfirmedCollaterals(signatories);
-        uint256 activeCollateral = s.validatorSet.getActiveCollateral();
+        uint256[] memory collaterals = s.validatorSet.getTotalPowerOfValidators(signatories);
+        uint256 activeCollateral = s.validatorSet.getTotalActivePower();
 
         uint256 threshold = (activeCollateral * s.majorityPercentage) / 100;
 

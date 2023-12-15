@@ -16,6 +16,9 @@ fn main() {
         return;
     }
 
+    // Where are the Solidity artifacts.
+    let output_dir = std::env::var("OUTPUT").expect("OUTPUT env var missing");
+
     let ipc_actors_dir = workspace_dir()
         .parent()
         .unwrap()
@@ -51,7 +54,8 @@ fn main() {
         "LibQuorum",
     ] {
         let module_name = camel_to_snake(contract_name);
-        let input_path = format!("{ipc_actors_dir}/out/{contract_name}.sol/{contract_name}.json");
+        let input_path =
+            format!("{ipc_actors_dir}/{output_dir}/{contract_name}.sol/{contract_name}.json");
         let output_path = format!("{ipc_actors_dir}/binding/src/{}.rs", module_name);
 
         ethers::prelude::Abigen::new(contract_name, &input_path)

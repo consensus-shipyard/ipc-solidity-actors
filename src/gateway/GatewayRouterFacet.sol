@@ -19,8 +19,6 @@ import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {LibQuorum} from "../lib/LibQuorum.sol";
 import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
-import {FvmAddress} from "../structs/FvmAddress.sol";
-import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
 import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
@@ -174,43 +172,37 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         return configurationNumber;
     }
 
-    /// @notice apply cross messages
+    /// @notice Applies top-down crossnet messages locally. This is invoked by IPC nodes when drawing messages from
+    ///         their parent subnet for local execution. That's why the sender is restricted to the system sender,
+    ///         because this method is implicitly invoked by the node during block production.
     function applyCrossMessages(CrossMsg[] calldata crossMsgs) external systemActorOnly {
-        _applyMessages(SubnetID(0, new address[](0)), crossMsgs);
+        _applyMessages(s.networkName.getParentSubnet(), crossMsgs);
     }
 
     /// @notice executes a cross message if its destination is the current network, otherwise adds it to the postbox to be propagated further
-    /// @param forwarder - the subnet that handles the cross message
+    /// @param arrivingFrom - the immediate subnet from which this message is arriving
     /// @param crossMsg - the cross message to be executed
-    function _applyMsg(SubnetID memory forwarder, CrossMsg memory crossMsg) internal {
+    function _applyMsg(SubnetID memory arrivingFrom, CrossMsg memory crossMsg) internal {
         if (crossMsg.message.to.subnetId.isEmpty()) {
             revert InvalidCrossMsgDstSubnet();
-        }
-        if (crossMsg.message.method == METHOD_SEND) {
-            if (crossMsg.message.value > address(this).balance) {
-                revert NotEnoughBalance();
-            }
         }
 
         IPCMsgType applyType = crossMsg.message.applyType(s.networkName);
 
-        // If the cross-message destination is the current network.
+        // If the crossnet destination is the current network (network where the gateway is running).
         if (crossMsg.message.to.subnetId.equals(s.networkName)) {
             if (applyType == IPCMsgType.BottomUp) {
-                if (!forwarder.isEmpty()) {
-                    (bool registered, Subnet storage subnet) = LibGateway.getSubnet(forwarder);
-                    if (!registered) {
-                        revert NotRegisteredSubnet();
-                    }
-                    if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
-                        revert InvalidCrossMsgNonce();
-                    }
-
-                    subnet.appliedBottomUpNonce += 1;
+                // Load the subnet this message is coming from. Ensure that it exists and that the nonce expectation is met.
+                (bool registered, Subnet storage subnet) = LibGateway.getSubnet(arrivingFrom);
+                if (!registered) {
+                    revert NotRegisteredSubnet();
                 }
-            }
-
-            if (applyType == IPCMsgType.TopDown) {
+                if (subnet.appliedBottomUpNonce != crossMsg.message.nonce) {
+                    revert InvalidCrossMsgNonce();
+                }
+                subnet.appliedBottomUpNonce += 1;
+            } else if (applyType == IPCMsgType.TopDown) {
+                // There is no need to load the subnet, as a top-down application means that _we_ are the subnet.
                 if (s.appliedTopDownNonce != crossMsg.message.nonce) {
                     revert InvalidCrossMsgNonce();
                 }
@@ -230,12 +222,12 @@ contract GatewayRouterFacet is GatewayActorModifiers {
 
     /// @notice applies a cross-net messages coming from some other subnet.
     /// The forwarder argument determines the previous subnet that submitted the checkpoint triggering the cross-net message execution.
-    /// @param forwarder - the subnet that handles the messages
+    /// @param arrivingFrom - the immediate subnet from which this message is arriving
     /// @param crossMsgs - the cross-net messages to apply
-    function _applyMessages(SubnetID memory forwarder, CrossMsg[] memory crossMsgs) internal {
+    function _applyMessages(SubnetID memory arrivingFrom, CrossMsg[] memory crossMsgs) internal {
         uint256 crossMsgsLength = crossMsgs.length;
         for (uint256 i; i < crossMsgsLength; ) {
-            _applyMsg(forwarder, crossMsgs[i]);
+            _applyMsg(arrivingFrom, crossMsgs[i]);
             unchecked {
                 ++i;
             }

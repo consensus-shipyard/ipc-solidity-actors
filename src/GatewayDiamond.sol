@@ -6,7 +6,6 @@ import {IDiamond} from "./interfaces/IDiamond.sol";
 import {IDiamondCut} from "./interfaces/IDiamondCut.sol";
 import {IDiamondLoupe} from "./interfaces/IDiamondLoupe.sol";
 import {IERC165} from "./interfaces/IERC165.sol";
-import {FvmAddress} from "./structs/FvmAddress.sol";
 import {Validator, Membership} from "./structs/Subnet.sol";
 import {InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
@@ -16,6 +15,10 @@ import {LibStaking} from "./lib/LibStaking.sol";
 import {BATCH_PERIOD, MAX_MSGS_PER_BATCH} from "./structs/CrossNet.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
+
+bool constant FEATURE_MULTILEVEL_CROSSMSG = false;
+bool constant FEATURE_GENERAL_PUPRPOSE_CROSSMSG = false;
+uint8 constant FEATURE_SUBNET_DEPTH = 2;
 
 contract GatewayDiamond {
     GatewayActorStorage internal s;
@@ -54,11 +57,9 @@ contract GatewayDiamond {
         ds.supportedInterfaces[type(IDiamondLoupe).interfaceId] = true;
 
         // Feature flags
-        s.maxTreeDepth = 2;
-        s.generalPurposeCrossMsg = false;
-        s.multiLevelCrossMsg = false;
-        s.checkpointRelayerRewards = false;
-        s.crossMsgRelayerRewards = false;
+        s.maxTreeDepth = FEATURE_SUBNET_DEPTH;
+        s.generalPurposeCrossMsg = FEATURE_GENERAL_PUPRPOSE_CROSSMSG;
+        s.multiLevelCrossMsg = FEATURE_MULTILEVEL_CROSSMSG;
 
         s.networkName = params.networkName;
         s.minStake = params.minCollateral;
