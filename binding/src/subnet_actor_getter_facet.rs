@@ -68,11 +68,9 @@ pub mod subnet_actor_getter_facet {
                             outputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
                                     ),
                                 },
                             ],
@@ -91,11 +89,9 @@ pub mod subnet_actor_getter_facet {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("epoch"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
                                     ),
                                 },
                             ],
@@ -121,9 +117,10 @@ pub mod subnet_actor_getter_facet {
                                                     ),
                                                 ],
                                             ),
-                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                             ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
+                                            ::ethers::core::abi::ethabi::ParamType::FixedBytes(32usize),
                                         ],
                                     ),
                                     internal_type: ::core::option::Option::Some(
@@ -148,11 +145,9 @@ pub mod subnet_actor_getter_facet {
                             inputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::borrow::ToOwned::to_owned("epoch"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
                                     ),
                                 },
                             ],
@@ -171,30 +166,6 @@ pub mod subnet_actor_getter_facet {
                                     ),
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned("bytes32"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("bottomUpMsgBatchPeriod"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "bottomUpMsgBatchPeriod",
-                            ),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
                                     ),
                                 },
                             ],
@@ -699,38 +670,6 @@ pub mod subnet_actor_getter_facet {
                     ],
                 ),
                 (
-                    ::std::borrow::ToOwned::to_owned(
-                        "hasSubmittedInLastBottomUpMsgBatchHeight",
-                    ),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "hasSubmittedInLastBottomUpMsgBatchHeight",
-                            ),
-                            inputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::borrow::ToOwned::to_owned("validator"),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Address,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("address"),
-                                    ),
-                                },
-                            ],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Bool,
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("bool"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
-                ),
-                (
                     ::std::borrow::ToOwned::to_owned("ipcGatewayAddr"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -837,35 +776,9 @@ pub mod subnet_actor_getter_facet {
                             outputs: ::std::vec![
                                 ::ethers::core::abi::ethabi::Param {
                                     name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                     internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("lastBottomUpMsgBatchHeight"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned(
-                                "lastBottomUpMsgBatchHeight",
-                            ),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
-                                        256usize,
-                                    ),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                        ::std::borrow::ToOwned::to_owned("uint64"),
                                     ),
                                 },
                             ],
@@ -952,26 +865,6 @@ pub mod subnet_actor_getter_facet {
                                     kind: ::ethers::core::abi::ethabi::ParamType::Uint(64usize),
                                     internal_type: ::core::option::Option::Some(
                                         ::std::borrow::ToOwned::to_owned("uint64"),
-                                    ),
-                                },
-                            ],
-                            constant: ::core::option::Option::None,
-                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
-                        },
-                    ],
-                ),
-                (
-                    ::std::borrow::ToOwned::to_owned("permissionMode"),
-                    ::std::vec![
-                        ::ethers::core::abi::ethabi::Function {
-                            name: ::std::borrow::ToOwned::to_owned("permissionMode"),
-                            inputs: ::std::vec![],
-                            outputs: ::std::vec![
-                                ::ethers::core::abi::ethabi::Param {
-                                    name: ::std::string::String::new(),
-                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(8usize),
-                                    internal_type: ::core::option::Option::Some(
-                                        ::std::borrow::ToOwned::to_owned("enum PermissionMode"),
                                     ),
                                 },
                             ],
@@ -1069,35 +962,27 @@ pub mod subnet_actor_getter_facet {
         ///Calls the contract's `bottomUpCheckPeriod` (0x06c46853) function
         pub fn bottom_up_check_period(
             &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([6, 196, 104, 83], ())
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `bottomUpCheckpointAtEpoch` (0x4b27aa72) function
+        ///Calls the contract's `bottomUpCheckpointAtEpoch` (0x6cb2ecee) function
         pub fn bottom_up_checkpoint_at_epoch(
             &self,
-            epoch: ::ethers::core::types::U256,
+            epoch: u64,
         ) -> ::ethers::contract::builders::ContractCall<M, (bool, BottomUpCheckpoint)> {
             self.0
-                .method_hash([75, 39, 170, 114], epoch)
+                .method_hash([108, 178, 236, 238], epoch)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `bottomUpCheckpointHashAtEpoch` (0x4b0694e2) function
+        ///Calls the contract's `bottomUpCheckpointHashAtEpoch` (0x133f74ea) function
         pub fn bottom_up_checkpoint_hash_at_epoch(
             &self,
-            epoch: ::ethers::core::types::U256,
+            epoch: u64,
         ) -> ::ethers::contract::builders::ContractCall<M, (bool, [u8; 32])> {
             self.0
-                .method_hash([75, 6, 148, 226], epoch)
-                .expect("method not found (this should never happen)")
-        }
-        ///Calls the contract's `bottomUpMsgBatchPeriod` (0x69e737fd) function
-        pub fn bottom_up_msg_batch_period(
-            &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
-            self.0
-                .method_hash([105, 231, 55, 253], ())
+                .method_hash([19, 63, 116, 234], epoch)
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `consensus` (0x8ef3f761) function
@@ -1240,15 +1125,6 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([43, 195, 30, 179], validator)
                 .expect("method not found (this should never happen)")
         }
-        ///Calls the contract's `hasSubmittedInLastBottomUpMsgBatchHeight` (0xf75499dc) function
-        pub fn has_submitted_in_last_bottom_up_msg_batch_height(
-            &self,
-            validator: ::ethers::core::types::Address,
-        ) -> ::ethers::contract::builders::ContractCall<M, bool> {
-            self.0
-                .method_hash([247, 84, 153, 220], validator)
-                .expect("method not found (this should never happen)")
-        }
         ///Calls the contract's `ipcGatewayAddr` (0xcfca2824) function
         pub fn ipc_gateway_addr(
             &self,
@@ -1287,17 +1163,9 @@ pub mod subnet_actor_getter_facet {
         ///Calls the contract's `lastBottomUpCheckpointHeight` (0x72d0a0e0) function
         pub fn last_bottom_up_checkpoint_height(
             &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+        ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([114, 208, 160, 224], ())
-                .expect("method not found (this should never happen)")
-        }
-        ///Calls the contract's `lastBottomUpMsgBatchHeight` (0x28d5551d) function
-        pub fn last_bottom_up_msg_batch_height(
-            &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
-            self.0
-                .method_hash([40, 213, 85, 29], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `majorityPercentage` (0x599c7bd1) function
@@ -1330,14 +1198,6 @@ pub mod subnet_actor_getter_facet {
         ) -> ::ethers::contract::builders::ContractCall<M, u64> {
             self.0
                 .method_hash([197, 171, 34, 65], ())
-                .expect("method not found (this should never happen)")
-        }
-        ///Calls the contract's `permissionMode` (0xf0cf6c96) function
-        pub fn permission_mode(
-            &self,
-        ) -> ::ethers::contract::builders::ContractCall<M, u8> {
-            self.0
-                .method_hash([240, 207, 108, 150], ())
                 .expect("method not found (this should never happen)")
         }
         ///Calls the contract's `powerScale` (0xad81e4d6) function
@@ -1392,7 +1252,7 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "bottomUpCheckPeriod", abi = "bottomUpCheckPeriod()")]
     pub struct BottomUpCheckPeriodCall;
-    ///Container type for all input parameters for the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint256)` and selector `0x4b27aa72`
+    ///Container type for all input parameters for the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint64)` and selector `0x6cb2ecee`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1405,12 +1265,12 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(
         name = "bottomUpCheckpointAtEpoch",
-        abi = "bottomUpCheckpointAtEpoch(uint256)"
+        abi = "bottomUpCheckpointAtEpoch(uint64)"
     )]
     pub struct BottomUpCheckpointAtEpochCall {
-        pub epoch: ::ethers::core::types::U256,
+        pub epoch: u64,
     }
-    ///Container type for all input parameters for the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint256)` and selector `0x4b0694e2`
+    ///Container type for all input parameters for the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint64)` and selector `0x133f74ea`
     #[derive(
         Clone,
         ::ethers::contract::EthCall,
@@ -1423,24 +1283,11 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(
         name = "bottomUpCheckpointHashAtEpoch",
-        abi = "bottomUpCheckpointHashAtEpoch(uint256)"
+        abi = "bottomUpCheckpointHashAtEpoch(uint64)"
     )]
     pub struct BottomUpCheckpointHashAtEpochCall {
-        pub epoch: ::ethers::core::types::U256,
+        pub epoch: u64,
     }
-    ///Container type for all input parameters for the `bottomUpMsgBatchPeriod` function with signature `bottomUpMsgBatchPeriod()` and selector `0x69e737fd`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    #[ethcall(name = "bottomUpMsgBatchPeriod", abi = "bottomUpMsgBatchPeriod()")]
-    pub struct BottomUpMsgBatchPeriodCall;
     ///Container type for all input parameters for the `consensus` function with signature `consensus()` and selector `0x8ef3f761`
     #[derive(
         Clone,
@@ -1671,24 +1518,6 @@ pub mod subnet_actor_getter_facet {
     pub struct HasSubmittedInLastBottomUpCheckpointHeightCall {
         pub validator: ::ethers::core::types::Address,
     }
-    ///Container type for all input parameters for the `hasSubmittedInLastBottomUpMsgBatchHeight` function with signature `hasSubmittedInLastBottomUpMsgBatchHeight(address)` and selector `0xf75499dc`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    #[ethcall(
-        name = "hasSubmittedInLastBottomUpMsgBatchHeight",
-        abi = "hasSubmittedInLastBottomUpMsgBatchHeight(address)"
-    )]
-    pub struct HasSubmittedInLastBottomUpMsgBatchHeightCall {
-        pub validator: ::ethers::core::types::Address,
-    }
     ///Container type for all input parameters for the `ipcGatewayAddr` function with signature `ipcGatewayAddr()` and selector `0xcfca2824`
     #[derive(
         Clone,
@@ -1761,19 +1590,6 @@ pub mod subnet_actor_getter_facet {
         abi = "lastBottomUpCheckpointHeight()"
     )]
     pub struct LastBottomUpCheckpointHeightCall;
-    ///Container type for all input parameters for the `lastBottomUpMsgBatchHeight` function with signature `lastBottomUpMsgBatchHeight()` and selector `0x28d5551d`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    #[ethcall(name = "lastBottomUpMsgBatchHeight", abi = "lastBottomUpMsgBatchHeight()")]
-    pub struct LastBottomUpMsgBatchHeightCall;
     ///Container type for all input parameters for the `majorityPercentage` function with signature `majorityPercentage()` and selector `0x599c7bd1`
     #[derive(
         Clone,
@@ -1826,19 +1642,6 @@ pub mod subnet_actor_getter_facet {
     )]
     #[ethcall(name = "minValidators", abi = "minValidators()")]
     pub struct MinValidatorsCall;
-    ///Container type for all input parameters for the `permissionMode` function with signature `permissionMode()` and selector `0xf0cf6c96`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthCall,
-        ::ethers::contract::EthDisplay,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    #[ethcall(name = "permissionMode", abi = "permissionMode()")]
-    pub struct PermissionModeCall;
     ///Container type for all input parameters for the `powerScale` function with signature `powerScale()` and selector `0xad81e4d6`
     #[derive(
         Clone,
@@ -1860,7 +1663,6 @@ pub mod subnet_actor_getter_facet {
         BottomUpCheckPeriod(BottomUpCheckPeriodCall),
         BottomUpCheckpointAtEpoch(BottomUpCheckpointAtEpochCall),
         BottomUpCheckpointHashAtEpoch(BottomUpCheckpointHashAtEpochCall),
-        BottomUpMsgBatchPeriod(BottomUpMsgBatchPeriodCall),
         Consensus(ConsensusCall),
         CrossMsgsHash(CrossMsgsHashCall),
         GenesisBalances(GenesisBalancesCall),
@@ -1879,20 +1681,15 @@ pub mod subnet_actor_getter_facet {
         HasSubmittedInLastBottomUpCheckpointHeight(
             HasSubmittedInLastBottomUpCheckpointHeightCall,
         ),
-        HasSubmittedInLastBottomUpMsgBatchHeight(
-            HasSubmittedInLastBottomUpMsgBatchHeightCall,
-        ),
         IpcGatewayAddr(IpcGatewayAddrCall),
         IsActiveValidator(IsActiveValidatorCall),
         IsWaitingValidator(IsWaitingValidatorCall),
         Killed(KilledCall),
         LastBottomUpCheckpointHeight(LastBottomUpCheckpointHeightCall),
-        LastBottomUpMsgBatchHeight(LastBottomUpMsgBatchHeightCall),
         MajorityPercentage(MajorityPercentageCall),
         MinActivationCollateral(MinActivationCollateralCall),
         MinCrossMsgFee(MinCrossMsgFeeCall),
         MinValidators(MinValidatorsCall),
-        PermissionMode(PermissionModeCall),
         PowerScale(PowerScaleCall),
     }
     impl ::ethers::core::abi::AbiDecode for SubnetActorGetterFacetCalls {
@@ -1924,11 +1721,6 @@ pub mod subnet_actor_getter_facet {
                 data,
             ) {
                 return Ok(Self::BottomUpCheckpointHashAtEpoch(decoded));
-            }
-            if let Ok(decoded) = <BottomUpMsgBatchPeriodCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
-                return Ok(Self::BottomUpMsgBatchPeriod(decoded));
             }
             if let Ok(decoded) = <ConsensusCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2010,11 +1802,6 @@ pub mod subnet_actor_getter_facet {
             ) {
                 return Ok(Self::HasSubmittedInLastBottomUpCheckpointHeight(decoded));
             }
-            if let Ok(decoded) = <HasSubmittedInLastBottomUpMsgBatchHeightCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
-                return Ok(Self::HasSubmittedInLastBottomUpMsgBatchHeight(decoded));
-            }
             if let Ok(decoded) = <IpcGatewayAddrCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
@@ -2040,11 +1827,6 @@ pub mod subnet_actor_getter_facet {
             ) {
                 return Ok(Self::LastBottomUpCheckpointHeight(decoded));
             }
-            if let Ok(decoded) = <LastBottomUpMsgBatchHeightCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
-                return Ok(Self::LastBottomUpMsgBatchHeight(decoded));
-            }
             if let Ok(decoded) = <MajorityPercentageCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
             ) {
@@ -2064,11 +1846,6 @@ pub mod subnet_actor_getter_facet {
                 data,
             ) {
                 return Ok(Self::MinValidators(decoded));
-            }
-            if let Ok(decoded) = <PermissionModeCall as ::ethers::core::abi::AbiDecode>::decode(
-                data,
-            ) {
-                return Ok(Self::PermissionMode(decoded));
             }
             if let Ok(decoded) = <PowerScaleCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2094,9 +1871,6 @@ pub mod subnet_actor_getter_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::BottomUpMsgBatchPeriod(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::Consensus(element) => {
@@ -2147,9 +1921,6 @@ pub mod subnet_actor_getter_facet {
                 Self::HasSubmittedInLastBottomUpCheckpointHeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::HasSubmittedInLastBottomUpMsgBatchHeight(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
                 Self::IpcGatewayAddr(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2163,9 +1934,6 @@ pub mod subnet_actor_getter_facet {
                 Self::LastBottomUpCheckpointHeight(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
-                Self::LastBottomUpMsgBatchHeight(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
                 Self::MajorityPercentage(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2176,9 +1944,6 @@ pub mod subnet_actor_getter_facet {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::MinValidators(element) => {
-                    ::ethers::core::abi::AbiEncode::encode(element)
-                }
-                Self::PermissionMode(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
                 Self::PowerScale(element) => {
@@ -2201,9 +1966,6 @@ pub mod subnet_actor_getter_facet {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::BottomUpCheckpointHashAtEpoch(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::BottomUpMsgBatchPeriod(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::Consensus(element) => ::core::fmt::Display::fmt(element, f),
@@ -2236,9 +1998,6 @@ pub mod subnet_actor_getter_facet {
                 Self::HasSubmittedInLastBottomUpCheckpointHeight(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
-                Self::HasSubmittedInLastBottomUpMsgBatchHeight(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
                 Self::IpcGatewayAddr(element) => ::core::fmt::Display::fmt(element, f),
                 Self::IsActiveValidator(element) => ::core::fmt::Display::fmt(element, f),
                 Self::IsWaitingValidator(element) => {
@@ -2246,9 +2005,6 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::Killed(element) => ::core::fmt::Display::fmt(element, f),
                 Self::LastBottomUpCheckpointHeight(element) => {
-                    ::core::fmt::Display::fmt(element, f)
-                }
-                Self::LastBottomUpMsgBatchHeight(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
                 Self::MajorityPercentage(element) => {
@@ -2259,7 +2015,6 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::MinCrossMsgFee(element) => ::core::fmt::Display::fmt(element, f),
                 Self::MinValidators(element) => ::core::fmt::Display::fmt(element, f),
-                Self::PermissionMode(element) => ::core::fmt::Display::fmt(element, f),
                 Self::PowerScale(element) => ::core::fmt::Display::fmt(element, f),
             }
         }
@@ -2290,12 +2045,6 @@ pub mod subnet_actor_getter_facet {
     for SubnetActorGetterFacetCalls {
         fn from(value: BottomUpCheckpointHashAtEpochCall) -> Self {
             Self::BottomUpCheckpointHashAtEpoch(value)
-        }
-    }
-    impl ::core::convert::From<BottomUpMsgBatchPeriodCall>
-    for SubnetActorGetterFacetCalls {
-        fn from(value: BottomUpMsgBatchPeriodCall) -> Self {
-            Self::BottomUpMsgBatchPeriod(value)
         }
     }
     impl ::core::convert::From<ConsensusCall> for SubnetActorGetterFacetCalls {
@@ -2384,12 +2133,6 @@ pub mod subnet_actor_getter_facet {
             Self::HasSubmittedInLastBottomUpCheckpointHeight(value)
         }
     }
-    impl ::core::convert::From<HasSubmittedInLastBottomUpMsgBatchHeightCall>
-    for SubnetActorGetterFacetCalls {
-        fn from(value: HasSubmittedInLastBottomUpMsgBatchHeightCall) -> Self {
-            Self::HasSubmittedInLastBottomUpMsgBatchHeight(value)
-        }
-    }
     impl ::core::convert::From<IpcGatewayAddrCall> for SubnetActorGetterFacetCalls {
         fn from(value: IpcGatewayAddrCall) -> Self {
             Self::IpcGatewayAddr(value)
@@ -2416,12 +2159,6 @@ pub mod subnet_actor_getter_facet {
             Self::LastBottomUpCheckpointHeight(value)
         }
     }
-    impl ::core::convert::From<LastBottomUpMsgBatchHeightCall>
-    for SubnetActorGetterFacetCalls {
-        fn from(value: LastBottomUpMsgBatchHeightCall) -> Self {
-            Self::LastBottomUpMsgBatchHeight(value)
-        }
-    }
     impl ::core::convert::From<MajorityPercentageCall> for SubnetActorGetterFacetCalls {
         fn from(value: MajorityPercentageCall) -> Self {
             Self::MajorityPercentage(value)
@@ -2441,11 +2178,6 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<MinValidatorsCall> for SubnetActorGetterFacetCalls {
         fn from(value: MinValidatorsCall) -> Self {
             Self::MinValidators(value)
-        }
-    }
-    impl ::core::convert::From<PermissionModeCall> for SubnetActorGetterFacetCalls {
-        fn from(value: PermissionModeCall) -> Self {
-            Self::PermissionMode(value)
         }
     }
     impl ::core::convert::From<PowerScaleCall> for SubnetActorGetterFacetCalls {
@@ -2488,8 +2220,8 @@ pub mod subnet_actor_getter_facet {
         Eq,
         Hash
     )]
-    pub struct BottomUpCheckPeriodReturn(pub ::ethers::core::types::U256);
-    ///Container type for all return fields from the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint256)` and selector `0x4b27aa72`
+    pub struct BottomUpCheckPeriodReturn(pub u64);
+    ///Container type for all return fields from the `bottomUpCheckpointAtEpoch` function with signature `bottomUpCheckpointAtEpoch(uint64)` and selector `0x6cb2ecee`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2504,7 +2236,7 @@ pub mod subnet_actor_getter_facet {
         pub exists: bool,
         pub checkpoint: BottomUpCheckpoint,
     }
-    ///Container type for all return fields from the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint256)` and selector `0x4b0694e2`
+    ///Container type for all return fields from the `bottomUpCheckpointHashAtEpoch` function with signature `bottomUpCheckpointHashAtEpoch(uint64)` and selector `0x133f74ea`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2516,18 +2248,6 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct BottomUpCheckpointHashAtEpochReturn(pub bool, pub [u8; 32]);
-    ///Container type for all return fields from the `bottomUpMsgBatchPeriod` function with signature `bottomUpMsgBatchPeriod()` and selector `0x69e737fd`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct BottomUpMsgBatchPeriodReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `consensus` function with signature `consensus()` and selector `0x8ef3f761`
     #[derive(
         Clone,
@@ -2725,18 +2445,6 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct HasSubmittedInLastBottomUpCheckpointHeightReturn(pub bool);
-    ///Container type for all return fields from the `hasSubmittedInLastBottomUpMsgBatchHeight` function with signature `hasSubmittedInLastBottomUpMsgBatchHeight(address)` and selector `0xf75499dc`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct HasSubmittedInLastBottomUpMsgBatchHeightReturn(pub bool);
     ///Container type for all return fields from the `ipcGatewayAddr` function with signature `ipcGatewayAddr()` and selector `0xcfca2824`
     #[derive(
         Clone,
@@ -2796,19 +2504,7 @@ pub mod subnet_actor_getter_facet {
         Eq,
         Hash
     )]
-    pub struct LastBottomUpCheckpointHeightReturn(pub ::ethers::core::types::U256);
-    ///Container type for all return fields from the `lastBottomUpMsgBatchHeight` function with signature `lastBottomUpMsgBatchHeight()` and selector `0x28d5551d`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct LastBottomUpMsgBatchHeightReturn(pub ::ethers::core::types::U256);
+    pub struct LastBottomUpCheckpointHeightReturn(pub u64);
     ///Container type for all return fields from the `majorityPercentage` function with signature `majorityPercentage()` and selector `0x599c7bd1`
     #[derive(
         Clone,
@@ -2857,18 +2553,6 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct MinValidatorsReturn(pub u64);
-    ///Container type for all return fields from the `permissionMode` function with signature `permissionMode()` and selector `0xf0cf6c96`
-    #[derive(
-        Clone,
-        ::ethers::contract::EthAbiType,
-        ::ethers::contract::EthAbiCodec,
-        Default,
-        Debug,
-        PartialEq,
-        Eq,
-        Hash
-    )]
-    pub struct PermissionModeReturn(pub u8);
     ///Container type for all return fields from the `powerScale` function with signature `powerScale()` and selector `0xad81e4d6`
     #[derive(
         Clone,
@@ -2881,7 +2565,7 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct PowerScaleReturn(pub i8);
-    ///`BottomUpCheckpoint((uint64,address[]),uint256,bytes32,uint64)`
+    ///`BottomUpCheckpoint((uint64,address[]),uint64,bytes32,uint64,bytes32)`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2894,9 +2578,10 @@ pub mod subnet_actor_getter_facet {
     )]
     pub struct BottomUpCheckpoint {
         pub subnet_id: SubnetID,
-        pub block_height: ::ethers::core::types::U256,
+        pub block_height: u64,
         pub block_hash: [u8; 32],
         pub next_configuration_number: u64,
+        pub cross_messages_hash: [u8; 32],
     }
     ///`CrossMsg((((uint64,address[]),(uint8,bytes)),((uint64,address[]),(uint8,bytes)),uint256,uint64,bytes4,bytes,uint256),bool)`
     #[derive(
