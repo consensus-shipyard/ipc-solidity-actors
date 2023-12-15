@@ -532,6 +532,28 @@ pub mod subnet_actor_getter_facet {
                     ],
                 ),
                 (
+                    ::std::borrow::ToOwned::to_owned("getTotalCollateral"),
+                    ::std::vec![
+                        ::ethers::core::abi::ethabi::Function {
+                            name: ::std::borrow::ToOwned::to_owned("getTotalCollateral"),
+                            inputs: ::std::vec![],
+                            outputs: ::std::vec![
+                                ::ethers::core::abi::ethabi::Param {
+                                    name: ::std::string::String::new(),
+                                    kind: ::ethers::core::abi::ethabi::ParamType::Uint(
+                                        256usize,
+                                    ),
+                                    internal_type: ::core::option::Option::Some(
+                                        ::std::borrow::ToOwned::to_owned("uint256"),
+                                    ),
+                                },
+                            ],
+                            constant: ::core::option::Option::None,
+                            state_mutability: ::ethers::core::abi::ethabi::StateMutability::View,
+                        },
+                    ],
+                ),
+                (
                     ::std::borrow::ToOwned::to_owned("getTotalConfirmedCollateral"),
                     ::std::vec![
                         ::ethers::core::abi::ethabi::Function {
@@ -628,6 +650,7 @@ pub mod subnet_actor_getter_facet {
                                     name: ::std::borrow::ToOwned::to_owned("validator"),
                                     kind: ::ethers::core::abi::ethabi::ParamType::Tuple(
                                         ::std::vec![
+                                            ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::Uint(256usize),
                                             ::ethers::core::abi::ethabi::ParamType::Bytes,
@@ -1146,6 +1169,14 @@ pub mod subnet_actor_getter_facet {
                 .method_hash([178, 189, 41, 94], relayer)
                 .expect("method not found (this should never happen)")
         }
+        ///Calls the contract's `getTotalCollateral` (0xd6eb5910) function
+        pub fn get_total_collateral(
+            &self,
+        ) -> ::ethers::contract::builders::ContractCall<M, ::ethers::core::types::U256> {
+            self.0
+                .method_hash([214, 235, 89, 16], ())
+                .expect("method not found (this should never happen)")
+        }
         ///Calls the contract's `getTotalConfirmedCollateral` (0x332a5ac9) function
         pub fn get_total_confirmed_collateral(
             &self,
@@ -1519,6 +1550,19 @@ pub mod subnet_actor_getter_facet {
     pub struct GetRelayerRewardCall {
         pub relayer: ::ethers::core::types::Address,
     }
+    ///Container type for all input parameters for the `getTotalCollateral` function with signature `getTotalCollateral()` and selector `0xd6eb5910`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthCall,
+        ::ethers::contract::EthDisplay,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    #[ethcall(name = "getTotalCollateral", abi = "getTotalCollateral()")]
+    pub struct GetTotalCollateralCall;
     ///Container type for all input parameters for the `getTotalConfirmedCollateral` function with signature `getTotalConfirmedCollateral()` and selector `0x332a5ac9`
     #[derive(
         Clone,
@@ -1786,6 +1830,7 @@ pub mod subnet_actor_getter_facet {
         GetConfigurationNumbers(GetConfigurationNumbersCall),
         GetParent(GetParentCall),
         GetRelayerReward(GetRelayerRewardCall),
+        GetTotalCollateral(GetTotalCollateralCall),
         GetTotalConfirmedCollateral(GetTotalConfirmedCollateralCall),
         GetTotalValidatorCollateral(GetTotalValidatorCollateralCall),
         GetTotalValidatorsNumber(GetTotalValidatorsNumberCall),
@@ -1892,6 +1937,11 @@ pub mod subnet_actor_getter_facet {
                 data,
             ) {
                 return Ok(Self::GetRelayerReward(decoded));
+            }
+            if let Ok(decoded) = <GetTotalCollateralCall as ::ethers::core::abi::AbiDecode>::decode(
+                data,
+            ) {
+                return Ok(Self::GetTotalCollateral(decoded));
             }
             if let Ok(decoded) = <GetTotalConfirmedCollateralCall as ::ethers::core::abi::AbiDecode>::decode(
                 data,
@@ -2032,6 +2082,9 @@ pub mod subnet_actor_getter_facet {
                 Self::GetRelayerReward(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
+                Self::GetTotalCollateral(element) => {
+                    ::ethers::core::abi::AbiEncode::encode(element)
+                }
                 Self::GetTotalConfirmedCollateral(element) => {
                     ::ethers::core::abi::AbiEncode::encode(element)
                 }
@@ -2117,6 +2170,9 @@ pub mod subnet_actor_getter_facet {
                 }
                 Self::GetParent(element) => ::core::fmt::Display::fmt(element, f),
                 Self::GetRelayerReward(element) => ::core::fmt::Display::fmt(element, f),
+                Self::GetTotalCollateral(element) => {
+                    ::core::fmt::Display::fmt(element, f)
+                }
                 Self::GetTotalConfirmedCollateral(element) => {
                     ::core::fmt::Display::fmt(element, f)
                 }
@@ -2241,6 +2297,11 @@ pub mod subnet_actor_getter_facet {
     impl ::core::convert::From<GetRelayerRewardCall> for SubnetActorGetterFacetCalls {
         fn from(value: GetRelayerRewardCall) -> Self {
             Self::GetRelayerReward(value)
+        }
+    }
+    impl ::core::convert::From<GetTotalCollateralCall> for SubnetActorGetterFacetCalls {
+        fn from(value: GetTotalCollateralCall) -> Self {
+            Self::GetTotalCollateral(value)
         }
     }
     impl ::core::convert::From<GetTotalConfirmedCollateralCall>
@@ -2534,6 +2595,18 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct GetRelayerRewardReturn(pub ::ethers::core::types::U256);
+    ///Container type for all return fields from the `getTotalCollateral` function with signature `getTotalCollateral()` and selector `0xd6eb5910`
+    #[derive(
+        Clone,
+        ::ethers::contract::EthAbiType,
+        ::ethers::contract::EthAbiCodec,
+        Default,
+        Debug,
+        PartialEq,
+        Eq,
+        Hash
+    )]
+    pub struct GetTotalCollateralReturn(pub ::ethers::core::types::U256);
     ///Container type for all return fields from the `getTotalConfirmedCollateral` function with signature `getTotalConfirmedCollateral()` and selector `0x332a5ac9`
     #[derive(
         Clone,
@@ -2853,7 +2926,7 @@ pub mod subnet_actor_getter_facet {
         pub addr: ::ethers::core::types::Address,
         pub metadata: ::ethers::core::types::Bytes,
     }
-    ///`ValidatorInfo(uint256,uint256,bytes)`
+    ///`ValidatorInfo(uint256,uint256,uint256,bytes)`
     #[derive(
         Clone,
         ::ethers::contract::EthAbiType,
@@ -2865,6 +2938,7 @@ pub mod subnet_actor_getter_facet {
         Hash
     )]
     pub struct ValidatorInfo {
+        pub federated_power: ::ethers::core::types::U256,
         pub confirmed_collateral: ::ethers::core::types::U256,
         pub total_collateral: ::ethers::core::types::U256,
         pub metadata: ::ethers::core::types::Bytes,
