@@ -69,13 +69,6 @@ library CrossMsgHelper {
         return keccak256(abi.encode(crossMsgs));
     }
 
-    function isEmpty(CrossMsg memory crossMsg) internal pure returns (bool) {
-        return
-            crossMsg.message.nonce == 0 &&
-            crossMsg.message.to.subnetId.root == 0 &&
-            crossMsg.message.from.subnetId.root == 0;
-    }
-
     function execute(CrossMsg calldata crossMsg) public returns (bytes memory) {
         uint256 value = crossMsg.message.value;
         address recipient = crossMsg.message.to.rawAddress.extractEvmAddress().normalize();
