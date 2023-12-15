@@ -129,27 +129,18 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
             revert MethodNotAllowed("propagation not suppported for subnets with ERC20 supply");
         }
 
-        // slither-disable-next-line uninitialized-local
-        bool shouldCommitBottomUp;
-
-        if (applyType == IPCMsgType.BottomUp) {
-            shouldCommitBottomUp = !isLCA;
-        }
-
-        if (shouldCommitBottomUp) {
-            LibGateway.commitBottomUpMsg(crossMessage);
-
-            // gas-opt: original check: value > 0
-            return (shouldBurn = crossMessage.message.value != 0);
-        }
-
-        if (applyType == IPCMsgType.TopDown) {
+        // If the directionality is top-down, or if we're inverting the direction
+        // because we're the LCA, commit a top-down message.
+        if (applyType == IPCMsgType.TopDown || isLCA) {
             ++s.appliedTopDownNonce;
+            LibGateway.commitTopDownMsg(crossMessage);
+            return (shouldBurn = false);
         }
 
-        LibGateway.commitTopDownMsg(crossMessage);
-
-        return (shouldBurn = false);
+        // Else, commit a bottom up message.
+        LibGateway.commitBottomUpMsg(crossMessage);
+        // gas-opt: original check: value > 0
+        return (shouldBurn = crossMessage.message.value != 0);
     }
 
     /**
