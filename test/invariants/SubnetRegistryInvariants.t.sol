@@ -1,27 +1,27 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {StdInvariant, Test} from "forge-std/Test.sol";
+import { StdInvariant, Test } from "forge-std/Test.sol";
 import "forge-std/console.sol";
 
-import {TestUtils} from "../helpers/TestUtils.sol";
-import {ConsensusType} from "../../src/enums/ConsensusType.sol";
-import {IDiamond} from "../../src/interfaces/IDiamond.sol";
-import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "../../src/interfaces/IDiamondLoupe.sol";
-import {SubnetRegistryHandler} from "./handlers/SubnetRegistryHandler.sol";
-import {SubnetRegistryDiamond} from "../../src/SubnetRegistryDiamond.sol";
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
+import { TestUtils } from "../helpers/TestUtils.sol";
+import { ConsensusType } from "../../src/enums/ConsensusType.sol";
+import { IDiamond } from "../../src/interfaces/IDiamond.sol";
+import { IDiamondCut } from "../../src/interfaces/IDiamondCut.sol";
+import { IDiamondLoupe } from "../../src/interfaces/IDiamondLoupe.sol";
+import { SubnetRegistryHandler } from "./handlers/SubnetRegistryHandler.sol";
+import { SubnetRegistryDiamond } from "../../src/SubnetRegistryDiamond.sol";
+import { SubnetIDHelper } from "../../src/lib/SubnetIDHelper.sol";
 
-import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.sol";
-import {SubnetActorManagerFacet} from "../../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
-import {SubnetID} from "../../src/structs/Subnet.sol";
+import { SubnetActorGetterFacet } from "../../src/subnet/SubnetActorGetterFacet.sol";
+import { SubnetActorManagerFacet } from "../../src/subnet/SubnetActorManagerFacet.sol";
+import { SubnetActorDiamond } from "../../src/SubnetActorDiamond.sol";
+import { SubnetID } from "../../src/structs/Subnet.sol";
 
-import {RegisterSubnetFacet} from "../../src/subnetregistry/RegisterSubnetFacet.sol";
-import {SubnetGetterFacet} from "../../src/subnetregistry/SubnetGetterFacet.sol";
-import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
+import { RegisterSubnetFacet } from "../../src/subnetregistry/RegisterSubnetFacet.sol";
+import { SubnetGetterFacet } from "../../src/subnetregistry/SubnetGetterFacet.sol";
+import { DiamondLoupeFacet } from "../../src/diamond/DiamondLoupeFacet.sol";
+import { DiamondCutFacet } from "../../src/diamond/DiamondCutFacet.sol";
 
 contract SubnetRegistryInvariants is StdInvariant, Test {
     using SubnetIDHelper for SubnetID;
@@ -128,7 +128,7 @@ contract SubnetRegistryInvariants is StdInvariant, Test {
         bytes4[] memory fuzzSelectors = new bytes4[](1);
         fuzzSelectors[0] = SubnetRegistryHandler.deploySubnetActorFromRegistry.selector;
 
-        targetSelector(FuzzSelector({addr: address(registryHandler), selectors: fuzzSelectors}));
+        targetSelector(FuzzSelector({ addr: address(registryHandler), selectors: fuzzSelectors }));
         targetContract(address(registryHandler));
     }
 

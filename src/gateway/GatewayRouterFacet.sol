@@ -1,28 +1,28 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
-import {CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, CheckpointInfo} from "../structs/Checkpoint.sol";
-import {Status} from "../enums/Status.sol";
-import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {SubnetID, Subnet, Validator, ValidatorInfo, ValidatorSet} from "../structs/Subnet.sol";
-import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {Membership} from "../structs/Subnet.sol";
-import {NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint} from "../errors/IPCErrors.sol";
-import {InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory} from "../errors/IPCErrors.sol";
-import {NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight} from "../errors/IPCErrors.sol";
-import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
-import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
-import {LibGateway} from "../lib/LibGateway.sol";
-import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
-import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {StakingChangeRequest, ParentValidatorsTracker} from "../structs/Subnet.sol";
-import {LibValidatorTracking, LibValidatorSet} from "../lib/LibStaking.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import { ISubnetActor } from "../interfaces/ISubnetActor.sol";
+import { GatewayActorModifiers } from "../lib/LibGatewayActorStorage.sol";
+import { CrossMsg, StorableMsg, ParentFinality, BottomUpCheckpoint, CheckpointInfo } from "../structs/Checkpoint.sol";
+import { Status } from "../enums/Status.sol";
+import { IPCMsgType } from "../enums/IPCMsgType.sol";
+import { SubnetID, Subnet, Validator, ValidatorInfo, ValidatorSet } from "../structs/Subnet.sol";
+import { IPCMsgType } from "../enums/IPCMsgType.sol";
+import { Membership } from "../structs/Subnet.sol";
+import { NotEnoughSubnetCircSupply, InvalidCheckpointEpoch, InvalidSignature, NotAuthorized, SignatureReplay, InvalidRetentionHeight, FailedRemoveIncompleteCheckpoint } from "../errors/IPCErrors.sol";
+import { InvalidCheckpointSource, InvalidCrossMsgNonce, InvalidCrossMsgDstSubnet, CheckpointAlreadyExists, CheckpointAlreadyProcessed, FailedAddIncompleteCheckpoint, FailedAddSignatory } from "../errors/IPCErrors.sol";
+import { NotRegisteredSubnet, SubnetNotActive, SubnetNotFound, InvalidSubnet, CheckpointNotCreated, ZeroMembershipWeight } from "../errors/IPCErrors.sol";
+import { SubnetIDHelper } from "../lib/SubnetIDHelper.sol";
+import { CrossMsgHelper } from "../lib/CrossMsgHelper.sol";
+import { LibGateway } from "../lib/LibGateway.sol";
+import { StorableMsgHelper } from "../lib/StorableMsgHelper.sol";
+import { FilAddress } from "fevmate/utils/FilAddress.sol";
+import { ECDSA } from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
+import { MerkleProof } from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
+import { EnumerableSet } from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import { StakingChangeRequest, ParentValidatorsTracker } from "../structs/Subnet.sol";
+import { LibValidatorTracking, LibValidatorSet } from "../lib/LibStaking.sol";
+import { Address } from "openzeppelin-contracts/utils/Address.sol";
 
 contract GatewayRouterFacet is GatewayActorModifiers {
     using FilAddress for address;
@@ -126,14 +126,14 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         for (uint256 i; i < vLength; ) {
             address addr = validators[i];
             ValidatorInfo storage info = s.validatorsTracker.validators.validators[addr];
-            vs[i] = Validator({weight: info.confirmedCollateral, addr: addr, metadata: info.metadata});
+            vs[i] = Validator({ weight: info.confirmedCollateral, addr: addr, metadata: info.metadata });
             unchecked {
                 ++i;
             }
         }
 
         // update membership with the applied changes
-        LibGateway.updateMembership(Membership({configurationNumber: configurationNumber, validators: vs}));
+        LibGateway.updateMembership(Membership({ configurationNumber: configurationNumber, validators: vs }));
         return configurationNumber;
     }
 
@@ -235,7 +235,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         // The validator is allowed to send a signature if it was in the membership at the target height
         // Constructing leaf: https://github.com/OpenZeppelin/merkle-tree#leaf-hash
         bytes32 validatorLeaf = keccak256(bytes.concat(keccak256(abi.encode(recoveredSignatory, weight))));
-        bool valid = MerkleProof.verify({proof: membershipProof, root: checkpointInfo.rootHash, leaf: validatorLeaf});
+        bool valid = MerkleProof.verify({ proof: membershipProof, root: checkpointInfo.rootHash, leaf: validatorLeaf });
         if (!valid) {
             revert NotAuthorized(recoveredSignatory);
         }

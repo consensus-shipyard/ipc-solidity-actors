@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {SubnetID, IPCAddress} from "./Subnet.sol";
+import { SubnetID, IPCAddress } from "./Subnet.sol";
 
 /// @notice The parent finality for IPC parent at certain height.
 struct ParentFinality {

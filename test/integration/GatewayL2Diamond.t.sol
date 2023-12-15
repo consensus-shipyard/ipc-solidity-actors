@@ -4,26 +4,26 @@ pragma solidity 0.8.19;
 import "forge-std/Test.sol";
 
 import "../../src/errors/IPCErrors.sol";
-import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../../src/constants/Constants.sol";
-import {CrossMsg, StorableMsg} from "../../src/structs/Checkpoint.sol";
-import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {SubnetID, Subnet, IPCAddress, Validator} from "../../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
-import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
-import {CrossMsgHelper} from "../../src/lib/CrossMsgHelper.sol";
-import {StorableMsgHelper} from "../../src/lib/StorableMsgHelper.sol";
-import {GatewayDiamond, FEATURE_MULTILEVEL_CROSSMSG} from "../../src/GatewayDiamond.sol";
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
-import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
-import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
-import {GatewayRouterFacet} from "../../src/gateway/GatewayRouterFacet.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
-import {GatewayMessengerFacet} from "../../src/gateway/GatewayMessengerFacet.sol";
-import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
-import {TestUtils} from "../helpers/TestUtils.sol";
-import {IntegrationTestBase} from "../IntegrationTestBase.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import { EMPTY_BYTES, METHOD_SEND, EMPTY_HASH } from "../../src/constants/Constants.sol";
+import { CrossMsg, StorableMsg } from "../../src/structs/Checkpoint.sol";
+import { FvmAddress } from "../../src/structs/FvmAddress.sol";
+import { SubnetID, Subnet, IPCAddress, Validator } from "../../src/structs/Subnet.sol";
+import { SubnetIDHelper } from "../../src/lib/SubnetIDHelper.sol";
+import { FvmAddressHelper } from "../../src/lib/FvmAddressHelper.sol";
+import { CrossMsgHelper } from "../../src/lib/CrossMsgHelper.sol";
+import { StorableMsgHelper } from "../../src/lib/StorableMsgHelper.sol";
+import { GatewayDiamond, FEATURE_MULTILEVEL_CROSSMSG } from "../../src/GatewayDiamond.sol";
+import { SubnetActorDiamond } from "../../src/SubnetActorDiamond.sol";
+import { GatewayGetterFacet } from "../../src/gateway/GatewayGetterFacet.sol";
+import { GatewayManagerFacet } from "../../src/gateway/GatewayManagerFacet.sol";
+import { GatewayRouterFacet } from "../../src/gateway/GatewayRouterFacet.sol";
+import { DiamondCutFacet } from "../../src/diamond/DiamondCutFacet.sol";
+import { GatewayMessengerFacet } from "../../src/gateway/GatewayMessengerFacet.sol";
+import { DiamondLoupeFacet } from "../../src/diamond/DiamondLoupeFacet.sol";
+import { DiamondCutFacet } from "../../src/diamond/DiamondCutFacet.sol";
+import { TestUtils } from "../helpers/TestUtils.sol";
+import { IntegrationTestBase } from "../IntegrationTestBase.sol";
+import { FilAddress } from "fevmate/utils/FilAddress.sol";
 
 contract GatewayL2ActorDiamondTest is Test, IntegrationTestBase {
     using SubnetIDHelper for SubnetID;
@@ -53,7 +53,7 @@ contract GatewayL2ActorDiamondTest is Test, IntegrationTestBase {
         path2[1] = CHILD_NETWORK_ADDRESS_2;
 
         GatewayDiamond.ConstructorParams memory params = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path2}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: path2 }),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -80,8 +80,8 @@ contract GatewayL2ActorDiamondTest is Test, IntegrationTestBase {
         for (uint64 i = 0; i < n; i++) {
             topDownMsgs[i] = CrossMsg({
                 message: StorableMsg({
-                    from: IPCAddress({subnetId: id, rawAddress: FvmAddressHelper.from(address(this))}),
-                    to: IPCAddress({subnetId: id, rawAddress: FvmAddressHelper.from(address(this))}),
+                    from: IPCAddress({ subnetId: id, rawAddress: FvmAddressHelper.from(address(this)) }),
+                    to: IPCAddress({ subnetId: id, rawAddress: FvmAddressHelper.from(address(this)) }),
                     value: 0,
                     nonce: i,
                     method: this.callback.selector,
@@ -116,7 +116,7 @@ contract GatewayL2ActorDiamondTest is Test, IntegrationTestBase {
 
         vm.expectCall(caller, 1 ether - gwGetter.crossMsgFee(), new bytes(0), 1);
         vm.prank(caller);
-        gwMessenger.propagate{value: 1 ether}(postboxId);
+        gwMessenger.propagate{ value: 1 ether }(postboxId);
 
         require(caller.balance == 1 ether - gwGetter.crossMsgFee(), "unexpected balance");
     }
@@ -137,7 +137,7 @@ contract GatewayL2ActorDiamondTest is Test, IntegrationTestBase {
 
         vm.prank(caller);
         vm.expectCall(caller, 0, EMPTY_BYTES, 0);
-        gwMessenger.propagate{value: fee}(postboxId);
+        gwMessenger.propagate{ value: fee }(postboxId);
         require(caller.balance == 0, "unexpected balance");
     }
 

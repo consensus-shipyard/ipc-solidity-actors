@@ -1,12 +1,12 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {IDiamond} from "../interfaces/IDiamond.sol";
-import {SubnetActorDiamond} from "../SubnetActorDiamond.sol";
-import {SubnetRegistryActorStorage} from "../lib/LibSubnetRegistryStorage.sol";
+import { IDiamond } from "../interfaces/IDiamond.sol";
+import { SubnetActorDiamond } from "../SubnetActorDiamond.sol";
+import { SubnetRegistryActorStorage } from "../lib/LibSubnetRegistryStorage.sol";
 
-import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
-import {WrongGateway} from "../errors/IPCErrors.sol";
+import { ReentrancyGuard } from "../lib/LibReentrancyGuard.sol";
+import { WrongGateway } from "../errors/IPCErrors.sol";
 
 contract RegisterSubnetFacet is ReentrancyGuard {
     SubnetRegistryActorStorage internal s;

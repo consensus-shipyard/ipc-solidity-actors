@@ -1,16 +1,16 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity 0.8.19;
 
-import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
-import {BURNT_FUNDS_ACTOR} from "../constants/Constants.sol";
-import {CrossMsg, StorableMsg} from "../structs/Checkpoint.sol";
-import {IPCMsgType} from "../enums/IPCMsgType.sol";
-import {SubnetID} from "../structs/Subnet.sol";
-import {InvalidCrossMsgFromSubnet, InvalidCrossMsgDstSubnet, CannotSendCrossMsgToItself, InvalidCrossMsgValue, MethodNotAllowed} from "../errors/IPCErrors.sol";
-import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
-import {LibGateway} from "../lib/LibGateway.sol";
-import {StorableMsgHelper} from "../lib/StorableMsgHelper.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
+import { GatewayActorModifiers } from "../lib/LibGatewayActorStorage.sol";
+import { BURNT_FUNDS_ACTOR } from "../constants/Constants.sol";
+import { CrossMsg, StorableMsg } from "../structs/Checkpoint.sol";
+import { IPCMsgType } from "../enums/IPCMsgType.sol";
+import { SubnetID } from "../structs/Subnet.sol";
+import { InvalidCrossMsgFromSubnet, InvalidCrossMsgDstSubnet, CannotSendCrossMsgToItself, InvalidCrossMsgValue, MethodNotAllowed } from "../errors/IPCErrors.sol";
+import { SubnetIDHelper } from "../lib/SubnetIDHelper.sol";
+import { LibGateway } from "../lib/LibGateway.sol";
+import { StorableMsgHelper } from "../lib/StorableMsgHelper.sol";
+import { FilAddress } from "fevmate/utils/FilAddress.sol";
 
 string constant ERR_GENERAL_CROSS_MSG_DISABLED = "Support for general-purpose cross-net messages is disabled";
 string constant ERR_MULTILEVEL_CROSS_MSG_DISABLED = "Support for multi-level cross-net messages is disabled";
@@ -45,7 +45,7 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         // commit cross-message for propagation
         bool shouldBurn = _commitCrossMessage(crossMsg);
 
-        _crossMsgSideEffects({v: crossMsg.message.value, shouldBurn: shouldBurn});
+        _crossMsgSideEffects({ v: crossMsg.message.value, shouldBurn: shouldBurn });
     }
 
     /**
@@ -67,7 +67,7 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         uint256 v = crossMsg.message.value;
         delete s.postbox[msgCid];
 
-        _crossMsgSideEffects({v: v, shouldBurn: shouldBurn});
+        _crossMsgSideEffects({ v: v, shouldBurn: shouldBurn });
 
         uint256 feeRemainder = msg.value - s.minCrossMsgFee;
 

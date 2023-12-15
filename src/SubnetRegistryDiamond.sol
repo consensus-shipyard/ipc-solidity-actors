@@ -1,13 +1,13 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {IDiamond} from "./interfaces/IDiamond.sol";
-import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "./interfaces/IDiamondLoupe.sol";
-import {IERC165} from "./interfaces/IERC165.sol";
-import {SubnetRegistryActorStorage} from "./lib/LibSubnetRegistryStorage.sol";
-import {GatewayCannotBeZero, FacetCannotBeZero} from "./errors/IPCErrors.sol";
-import {LibDiamond} from "./lib/LibDiamond.sol";
+import { IDiamond } from "./interfaces/IDiamond.sol";
+import { IDiamondCut } from "../src/interfaces/IDiamondCut.sol";
+import { IDiamondLoupe } from "./interfaces/IDiamondLoupe.sol";
+import { IERC165 } from "./interfaces/IERC165.sol";
+import { SubnetRegistryActorStorage } from "./lib/LibSubnetRegistryStorage.sol";
+import { GatewayCannotBeZero, FacetCannotBeZero } from "./errors/IPCErrors.sol";
+import { LibDiamond } from "./lib/LibDiamond.sol";
 error FunctionNotFound(bytes4 _functionSelector);
 
 contract SubnetRegistryDiamond {
@@ -33,7 +33,7 @@ contract SubnetRegistryDiamond {
         }
 
         LibDiamond.setContractOwner(msg.sender);
-        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
+        LibDiamond.diamondCut({ _diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0) });
 
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         // adding ERC165 data

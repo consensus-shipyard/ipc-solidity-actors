@@ -4,20 +4,20 @@ pragma solidity 0.8.19;
 import "forge-std/console.sol";
 import "forge-std/StdUtils.sol";
 import "forge-std/StdCheats.sol";
-import {CommonBase} from "forge-std/Base.sol";
+import { CommonBase } from "forge-std/Base.sol";
 
-import {RegisterSubnetFacet} from "../../../src/subnetregistry/RegisterSubnetFacet.sol";
-import {SubnetGetterFacet} from "../../../src/subnetregistry/SubnetGetterFacet.sol";
-import {SubnetActorDiamond} from "../../../src/SubnetActorDiamond.sol";
-import {SubnetRegistryDiamond} from "../../../src/SubnetRegistryDiamond.sol";
+import { RegisterSubnetFacet } from "../../../src/subnetregistry/RegisterSubnetFacet.sol";
+import { SubnetGetterFacet } from "../../../src/subnetregistry/SubnetGetterFacet.sol";
+import { SubnetActorDiamond } from "../../../src/SubnetActorDiamond.sol";
+import { SubnetRegistryDiamond } from "../../../src/SubnetRegistryDiamond.sol";
 
-import {ConsensusType} from "../../../src/enums/ConsensusType.sol";
-import {SubnetID, PermissionMode} from "../../../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../../../src/lib/SubnetIDHelper.sol";
+import { ConsensusType } from "../../../src/enums/ConsensusType.sol";
+import { SubnetID, PermissionMode } from "../../../src/structs/Subnet.sol";
+import { SubnetIDHelper } from "../../../src/lib/SubnetIDHelper.sol";
 
-import {TestUtils} from "../../helpers/TestUtils.sol";
+import { TestUtils } from "../../helpers/TestUtils.sol";
 
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import { EnumerableSet } from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 contract SubnetRegistryHandler is CommonBase, StdCheats, StdUtils {
     using EnumerableSet for EnumerableSet.AddressSet;
@@ -116,7 +116,7 @@ contract SubnetRegistryHandler is CommonBase, StdCheats, StdUtils {
         }
 
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            parentId: SubnetID({ root: ROOTNET_CHAINID, route: path }),
             ipcGatewayAddr: registerGetterFacet.getGateway(),
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: _minCollateral,

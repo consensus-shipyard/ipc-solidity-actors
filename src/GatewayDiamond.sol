@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
-import {IDiamond} from "./interfaces/IDiamond.sol";
-import {IDiamondCut} from "./interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "./interfaces/IDiamondLoupe.sol";
-import {IERC165} from "./interfaces/IERC165.sol";
-import {Validator, Membership} from "./structs/Subnet.sol";
-import {InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
-import {LibDiamond} from "./lib/LibDiamond.sol";
-import {LibGateway} from "./lib/LibGateway.sol";
-import {SubnetID} from "./structs/Subnet.sol";
-import {LibStaking} from "./lib/LibStaking.sol";
+import { GatewayActorStorage } from "./lib/LibGatewayActorStorage.sol";
+import { IDiamond } from "./interfaces/IDiamond.sol";
+import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
+import { IDiamondLoupe } from "./interfaces/IDiamondLoupe.sol";
+import { IERC165 } from "./interfaces/IERC165.sol";
+import { Validator, Membership } from "./structs/Subnet.sol";
+import { InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage } from "./errors/IPCErrors.sol";
+import { LibDiamond } from "./lib/LibDiamond.sol";
+import { LibGateway } from "./lib/LibGateway.sol";
+import { SubnetID } from "./structs/Subnet.sol";
+import { LibStaking } from "./lib/LibStaking.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
@@ -47,7 +47,7 @@ contract GatewayDiamond {
         }
 
         LibDiamond.setContractOwner(msg.sender);
-        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
+        LibDiamond.diamondCut({ _diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0) });
 
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         // adding ERC165 data
@@ -74,7 +74,7 @@ contract GatewayDiamond {
         // empty validator change logs
         s.validatorsTracker.changes.startConfigurationNumber = LibStaking.INITIAL_CONFIGURATION_NUMBER;
         // set initial validators and update membership
-        Membership memory initial = Membership({configurationNumber: 0, validators: params.genesisValidators});
+        Membership memory initial = Membership({ configurationNumber: 0, validators: params.genesisValidators });
         LibGateway.updateMembership(initial);
     }
 

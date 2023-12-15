@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
+import { BottomUpCheckpoint, CrossMsg } from "../structs/Checkpoint.sol";
 
 /// @title Subnet Actor interface
 /// @author LimeChain team

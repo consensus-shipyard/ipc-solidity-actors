@@ -1,4 +1,3 @@
-import { ethers } from 'hardhat'
 import {
     getFacets,
     getBytecodeFromFacet,
@@ -7,6 +6,7 @@ import {
     upgradeFacet,
     logMissingFacetInfo,
 } from './util'
+import { ethers } from 'hardhat'
 
 /**
  * Upgrade the Subnet Registry Diamond.

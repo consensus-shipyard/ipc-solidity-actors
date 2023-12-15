@@ -4,34 +4,34 @@ pragma solidity 0.8.19;
 import "forge-std/Test.sol";
 
 import "../../src/errors/IPCErrors.sol";
-import {NumberContractFacetSeven, NumberContractFacetEight} from "../helpers/NumberContract.sol";
-import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../../src/constants/Constants.sol";
-import {Status} from "../../src/enums/Status.sol";
-import {IERC165} from "../../src/interfaces/IERC165.sol";
-import {IDiamond} from "../../src/interfaces/IDiamond.sol";
-import {IDiamondLoupe} from "../../src/interfaces/IDiamondLoupe.sol";
-import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
-import {CheckpointInfo} from "../../src/structs/Checkpoint.sol";
-import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../../src/structs/Checkpoint.sol";
-import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {SubnetID, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
-import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
-import {CrossMsgHelper} from "../../src/lib/CrossMsgHelper.sol";
-import {StorableMsgHelper} from "../../src/lib/StorableMsgHelper.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {GatewayDiamond, FunctionNotFound} from "../../src/GatewayDiamond.sol";
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
-import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
-import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
-import {GatewayRouterFacet} from "../../src/gateway/GatewayRouterFacet.sol";
-import {GatewayMessengerFacet, ERR_GENERAL_CROSS_MSG_DISABLED, ERR_MULTILEVEL_CROSS_MSG_DISABLED} from "../../src/gateway/GatewayMessengerFacet.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
-import {LibDiamond} from "../../src/lib/LibDiamond.sol";
-import {MerkleTreeHelper} from "../helpers/MerkleTreeHelper.sol";
+import { NumberContractFacetSeven, NumberContractFacetEight } from "../helpers/NumberContract.sol";
+import { EMPTY_BYTES, METHOD_SEND, EMPTY_HASH } from "../../src/constants/Constants.sol";
+import { Status } from "../../src/enums/Status.sol";
+import { IERC165 } from "../../src/interfaces/IERC165.sol";
+import { IDiamond } from "../../src/interfaces/IDiamond.sol";
+import { IDiamondLoupe } from "../../src/interfaces/IDiamondLoupe.sol";
+import { IDiamondCut } from "../../src/interfaces/IDiamondCut.sol";
+import { CheckpointInfo } from "../../src/structs/Checkpoint.sol";
+import { CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality } from "../../src/structs/Checkpoint.sol";
+import { FvmAddress } from "../../src/structs/FvmAddress.sol";
+import { SubnetID, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation } from "../../src/structs/Subnet.sol";
+import { SubnetIDHelper } from "../../src/lib/SubnetIDHelper.sol";
+import { FvmAddressHelper } from "../../src/lib/FvmAddressHelper.sol";
+import { CrossMsgHelper } from "../../src/lib/CrossMsgHelper.sol";
+import { StorableMsgHelper } from "../../src/lib/StorableMsgHelper.sol";
+import { FilAddress } from "fevmate/utils/FilAddress.sol";
+import { GatewayDiamond, FunctionNotFound } from "../../src/GatewayDiamond.sol";
+import { SubnetActorDiamond } from "../../src/SubnetActorDiamond.sol";
+import { GatewayGetterFacet } from "../../src/gateway/GatewayGetterFacet.sol";
+import { GatewayManagerFacet } from "../../src/gateway/GatewayManagerFacet.sol";
+import { GatewayRouterFacet } from "../../src/gateway/GatewayRouterFacet.sol";
+import { GatewayMessengerFacet, ERR_GENERAL_CROSS_MSG_DISABLED, ERR_MULTILEVEL_CROSS_MSG_DISABLED } from "../../src/gateway/GatewayMessengerFacet.sol";
+import { DiamondCutFacet } from "../../src/diamond/DiamondCutFacet.sol";
+import { LibDiamond } from "../../src/lib/LibDiamond.sol";
+import { MerkleTreeHelper } from "../helpers/MerkleTreeHelper.sol";
 
-import {TestUtils} from "../helpers/TestUtils.sol";
-import {IntegrationTestBase} from "../IntegrationTestBase.sol";
+import { TestUtils } from "../helpers/TestUtils.sol";
+import { IntegrationTestBase } from "../IntegrationTestBase.sol";
 
 contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     using SubnetIDHelper for SubnetID;
@@ -51,7 +51,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(gwGetter.crossMsgFee() == DEFAULT_CROSS_MSG_FEE, "unexpected crossMsgFee");
         require(gwGetter.bottomUpCheckPeriod() == DEFAULT_CHECKPOINT_PERIOD, "unexpected bottomUpCheckPeriod");
         require(
-            gwGetter.getNetworkName().equals(SubnetID({root: ROOTNET_CHAINID, route: new address[](0)})),
+            gwGetter.getNetworkName().equals(SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) })),
             "unexpected getNetworkName"
         );
         require(gwGetter.majorityPercentage() == DEFAULT_MAJORITY_PERCENTAGE, "unexpected majorityPercentage");
@@ -155,7 +155,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         GatewayRouterFacet depRouter = new GatewayRouterFacet();
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
             bottomUpCheckPeriod: checkpointPeriod,
             msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -193,7 +193,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         GatewayRouterFacet depRouter = new GatewayRouterFacet();
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: path }),
             bottomUpCheckPeriod: checkpointPeriod,
             msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -288,7 +288,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
         vm.expectRevert(NotEnoughCollateral.selector);
 
-        gwManager.register{value: collateral}(0);
+        gwManager.register{ value: collateral }(0);
     }
 
     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
@@ -296,7 +296,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.expectRevert(AlreadyRegisteredSubnet.selector);
 
-        gwManager.register{value: DEFAULT_COLLATERAL_AMOUNT}(0);
+        gwManager.register{ value: DEFAULT_COLLATERAL_AMOUNT }(0);
     }
 
     function testGatewayDiamond_AddStake_Works_SingleStaking(uint256 stakeAmount, uint256 registerAmount) public {
@@ -389,13 +389,13 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.expectRevert(NotEnoughFunds.selector);
 
-        gwManager.addStake{value: 0}();
+        gwManager.addStake{ value: 0 }();
     }
 
     function testGatewayDiamond_AddStake_Fail_SubnetNotExists() public {
         vm.expectRevert(NotRegisteredSubnet.selector);
 
-        gwManager.addStake{value: 1}();
+        gwManager.addStake{ value: 1 }();
     }
 
     function testGatewayDiamond_ReleaseStake_Works_FullAmount(uint256 stakeAmount) public {
@@ -546,15 +546,15 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE - 1}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE - 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({
-                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        subnetId: SubnetID({ root: 0, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     value: 1,
@@ -570,15 +570,15 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // vm.expectRevert(NotEnoughFee.selector);
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE + 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({
-                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        subnetId: SubnetID({ root: 0, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     value: 1,
@@ -601,15 +601,15 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, caller);
 
         vm.expectRevert();
-        gwMessenger.sendUserXnetMessage{value: fee - 1}(
+        gwMessenger.sendUserXnetMessage{ value: fee - 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({
-                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        subnetId: SubnetID({ root: 0, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     value: 1,
@@ -665,7 +665,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
 
         vm.expectRevert(InvalidCrossMsgValue.selector);
-        gwManager.fund{value: 0}(subnetId, FvmAddressHelper.from(funderAddress));
+        gwManager.fund{ value: 0 }(subnetId, FvmAddressHelper.from(funderAddress));
     }
 
     function testGatewayDiamond_Fund_Works_MultipleFundings(uint8 numberOfFunds) public {
@@ -699,7 +699,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
         vm.prank(funderAddress);
-        gwManager.fund{value: amount}(subnetId, FvmAddressHelper.from(msg.sender));
+        gwManager.fund{ value: amount }(subnetId, FvmAddressHelper.from(msg.sender));
     }
 
     function testGatewayDiamond_Fund_Fails_NotRegistered() public {
@@ -721,13 +721,13 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(funderAddress);
 
-        SubnetID memory wrongSubnetId = SubnetID({root: ROOTNET_CHAINID, route: wrongSubnetPath});
+        SubnetID memory wrongSubnetId = SubnetID({ root: ROOTNET_CHAINID, route: wrongSubnetPath });
 
         vm.expectRevert(NotRegisteredSubnet.selector);
-        gwManager.fund{value: fundAmount}(wrongSubnetId, FvmAddressHelper.from(msg.sender));
+        gwManager.fund{ value: fundAmount }(wrongSubnetId, FvmAddressHelper.from(msg.sender));
 
         vm.expectRevert(NotRegisteredSubnet.selector);
-        gwManager.fund{value: fundAmount}(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
+        gwManager.fund{ value: fundAmount }(SubnetID(ROOTNET_CHAINID, wrongPath), FvmAddressHelper.from(msg.sender));
     }
 
     function testGatewayDiamond_Fund_Works_BLSAccountSingleFunding() public {
@@ -765,7 +765,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         path[1] = address(2);
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: path }),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -784,7 +784,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         vm.deal(callerAddress, 1 ether);
         vm.expectRevert(InvalidCrossMsgValue.selector);
 
-        gwManager.release{value: 0 ether}(FvmAddressHelper.from(msg.sender));
+        gwManager.release{ value: 0 ether }(FvmAddressHelper.from(msg.sender));
     }
 
     function testGatewayDiamond_Release_Works_BLSAccount(uint256 releaseAmount, uint256 crossMsgFee) public {
@@ -797,7 +797,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         path[1] = makeAddr("subnet_one");
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: path }),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -828,7 +828,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         path[1] = makeAddr("subnet_one");
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: path }),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -860,7 +860,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         path[1] = makeAddr("subnet_one");
 
         GatewayDiamond.ConstructorParams memory constructorParams = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: path }),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: crossMsgFee,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -893,15 +893,15 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // vm.expectRevert(InvalidCrossMsgDstSubnet.selector);
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE + 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     to: IPCAddress({
-                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        subnetId: SubnetID({ root: 0, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
                     value: 1,
@@ -925,14 +925,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // vm.expectRevert(CannotSendCrossMsgToItself.selector);
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE + 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
+                    to: IPCAddress({ subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller) }),
                     value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -954,14 +954,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // vm.expectRevert(InvalidCrossMsgValue.selector);
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE + 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
+                    to: IPCAddress({ subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller) }),
                     value: 5,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -985,14 +985,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE + 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
+                    to: IPCAddress({ subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller) }),
                     value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1014,14 +1014,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // vm.expectRevert(InvalidCrossMsgFromSubnet.selector);
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE + 1}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE + 1 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: 0, route: new address[](0)}),
+                        subnetId: SubnetID({ root: 0, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller)}),
+                    to: IPCAddress({ subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(caller) }),
                     value: 1,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1043,14 +1043,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // vm.expectRevert(NotEnoughFee.selector);
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: DEFAULT_CROSS_MSG_FEE}(
+        gwMessenger.sendUserXnetMessage{ value: DEFAULT_CROSS_MSG_FEE }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(0))}),
+                    to: IPCAddress({ subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(0)) }),
                     value: 0,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1072,14 +1072,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // vm.expectRevert(NotEnoughFunds.selector);
         // General-purpose cross-net messages are currenlty disabled.
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_GENERAL_CROSS_MSG_DISABLED));
-        gwMessenger.sendUserXnetMessage{value: 0}(
+        gwMessenger.sendUserXnetMessage{ value: 0 }(
             CrossMsg({
                 message: StorableMsg({
                     from: IPCAddress({
-                        subnetId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+                        subnetId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
                         rawAddress: FvmAddressHelper.from(caller)
                     }),
-                    to: IPCAddress({subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(0))}),
+                    to: IPCAddress({ subnetId: destinationSubnet, rawAddress: FvmAddressHelper.from(address(0)) }),
                     value: 0,
                     nonce: 0,
                     method: METHOD_SEND,
@@ -1102,7 +1102,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         vm.prank(caller);
         vm.expectRevert(NotSystemActor.selector);
 
-        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        ParentFinality memory finality = ParentFinality({ height: block.number, blockHash: bytes32(0) });
 
         gwRouter.commitParentFinality(finality);
     }
@@ -1116,11 +1116,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         changes[0] = StakingChangeRequest({
             configurationNumber: 1,
-            change: StakingChange({validator: val1, op: StakingOperation.Deposit, payload: abi.encode(amount)})
+            change: StakingChange({ validator: val1, op: StakingOperation.Deposit, payload: abi.encode(amount) })
         });
         changes[1] = StakingChangeRequest({
             configurationNumber: 2,
-            change: StakingChange({validator: val2, op: StakingOperation.Deposit, payload: abi.encode(amount)})
+            change: StakingChange({ validator: val2, op: StakingOperation.Deposit, payload: abi.encode(amount) })
         });
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -1139,7 +1139,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         changes[0] = StakingChangeRequest({
             configurationNumber: 3,
-            change: StakingChange({validator: val1, op: StakingOperation.Withdraw, payload: abi.encode(amount)})
+            change: StakingChange({ validator: val1, op: StakingOperation.Withdraw, payload: abi.encode(amount) })
         });
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -1173,7 +1173,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
-        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        ParentFinality memory finality = ParentFinality({ height: block.number, blockHash: bytes32(0) });
 
         gwRouter.commitParentFinality(finality);
         ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
@@ -1314,7 +1314,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(exist, "subnet does not exist");
         require(subnetInfo.circSupply == 0, "unexpected initial circulation supply");
 
-        gwManager.fund{value: DEFAULT_COLLATERAL_AMOUNT}(subnetId, FvmAddressHelper.from(address(caller)));
+        gwManager.fund{ value: DEFAULT_COLLATERAL_AMOUNT }(subnetId, FvmAddressHelper.from(address(caller)));
         (, subnetInfo) = gwGetter.getSubnet(subnetId);
         require(subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT, "unexpected circulation supply after funding");
 

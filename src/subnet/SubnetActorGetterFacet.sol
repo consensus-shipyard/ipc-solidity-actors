@@ -1,15 +1,15 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {ConsensusType} from "../enums/ConsensusType.sol";
-import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
-import {SubnetID} from "../structs/Subnet.sol";
-import {SubnetID, ValidatorInfo, Validator} from "../structs/Subnet.sol";
-import {SubnetActorStorage} from "../lib/LibSubnetActorStorage.sol";
-import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {LibStaking} from "../lib/LibStaking.sol";
+import { ConsensusType } from "../enums/ConsensusType.sol";
+import { BottomUpCheckpoint, CrossMsg } from "../structs/Checkpoint.sol";
+import { SubnetID } from "../structs/Subnet.sol";
+import { SubnetID, ValidatorInfo, Validator } from "../structs/Subnet.sol";
+import { SubnetActorStorage } from "../lib/LibSubnetActorStorage.sol";
+import { SubnetIDHelper } from "../lib/SubnetIDHelper.sol";
+import { Address } from "openzeppelin-contracts/utils/Address.sol";
+import { EnumerableSet } from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import { LibStaking } from "../lib/LibStaking.sol";
 
 contract SubnetActorGetterFacet {
     using EnumerableSet for EnumerableSet.AddressSet;

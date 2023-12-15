@@ -1,20 +1,20 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
-import {IGateway} from "../interfaces/IGateway.sol";
-import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
-import {BottomUpCheckpoint, CrossMsg} from "../structs/Checkpoint.sol";
-import {Validator, ValidatorSet, PermissionMode} from "../structs/Subnet.sol";
-import {Pausable} from "../lib/LibPausable.sol";
-import {LibDiamond} from "../lib/LibDiamond.sol";
-import {MultisignatureChecker} from "../lib/LibMultisignatureChecker.sol";
-import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
-import {SubnetActorModifiers} from "../lib/LibSubnetActorStorage.sol";
-import {LibValidatorSet, LibStaking} from "../lib/LibStaking.sol";
-import {LibDiamond} from "../lib/LibDiamond.sol";
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import { InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidCheckpointMessagesHash, InvalidPublicKeyLength, MethodNotAllowed } from "../errors/IPCErrors.sol";
+import { IGateway } from "../interfaces/IGateway.sol";
+import { ISubnetActor } from "../interfaces/ISubnetActor.sol";
+import { BottomUpCheckpoint, CrossMsg } from "../structs/Checkpoint.sol";
+import { Validator, ValidatorSet, PermissionMode } from "../structs/Subnet.sol";
+import { Pausable } from "../lib/LibPausable.sol";
+import { LibDiamond } from "../lib/LibDiamond.sol";
+import { MultisignatureChecker } from "../lib/LibMultisignatureChecker.sol";
+import { ReentrancyGuard } from "../lib/LibReentrancyGuard.sol";
+import { SubnetActorModifiers } from "../lib/LibSubnetActorStorage.sol";
+import { LibValidatorSet, LibStaking } from "../lib/LibStaking.sol";
+import { LibDiamond } from "../lib/LibDiamond.sol";
+import { EnumerableSet } from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import { Address } from "openzeppelin-contracts/utils/Address.sol";
 
 string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
 
@@ -83,7 +83,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
 
         if (checkpoint.blockHeight == s.lastBottomUpCheckpointHeight + s.bottomUpCheckPeriod) {
             // validate signatures and quorum threshold, revert if validation fails
-            validateActiveQuorumSignatures({signatories: signatories, hash: checkpointHash, signatures: signatures});
+            validateActiveQuorumSignatures({ signatories: signatories, hash: checkpointHash, signatures: signatures });
 
             // If the checkpoint height is the next expected height then this is a new checkpoint which must be executed
             // in the Gateway Actor, the checkpoint and the relayer must be stored, last bottom-up checkpoint updated.
@@ -187,7 +187,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
                 revert NotOwnerOfPublicKey();
             }
 
-            LibStaking.setFederatedPower({validator: validators[i], metadata: publicKeys[i], amount: powers[i]});
+            LibStaking.setFederatedPower({ validator: validators[i], metadata: publicKeys[i], amount: powers[i] });
 
             unchecked {
                 ++i;
@@ -235,7 +235,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
                     emit SubnetBootstrapped(s.genesisValidators);
 
                     // register adding the genesis circulating supply (if it exists)
-                    IGateway(s.ipcGatewayAddr).register{value: totalCollateral + s.genesisCircSupply}(
+                    IGateway(s.ipcGatewayAddr).register{ value: totalCollateral + s.genesisCircSupply }(
                         s.genesisCircSupply
                     );
                 }

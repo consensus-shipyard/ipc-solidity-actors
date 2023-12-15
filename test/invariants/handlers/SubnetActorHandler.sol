@@ -4,20 +4,20 @@ pragma solidity 0.8.19;
 import "forge-std/console.sol";
 import "forge-std/StdUtils.sol";
 import "forge-std/StdCheats.sol";
-import {CommonBase} from "forge-std/Base.sol";
+import { CommonBase } from "forge-std/Base.sol";
 
-import {SubnetActorDiamond} from "../../../src/SubnetActorDiamond.sol";
-import {SubnetActorManagerFacet} from "../../../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorGetterFacet} from "../../../src/subnet/SubnetActorGetterFacet.sol";
-import {SubnetActorManagerFacetMock} from "../../mocks/SubnetActor.sol";
+import { SubnetActorDiamond } from "../../../src/SubnetActorDiamond.sol";
+import { SubnetActorManagerFacet } from "../../../src/subnet/SubnetActorManagerFacet.sol";
+import { SubnetActorGetterFacet } from "../../../src/subnet/SubnetActorGetterFacet.sol";
+import { SubnetActorManagerFacetMock } from "../../mocks/SubnetActor.sol";
 
-import {ConsensusType} from "../../../src/enums/ConsensusType.sol";
-import {SubnetID} from "../../../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../../../src/lib/SubnetIDHelper.sol";
+import { ConsensusType } from "../../../src/enums/ConsensusType.sol";
+import { SubnetID } from "../../../src/structs/Subnet.sol";
+import { SubnetIDHelper } from "../../../src/lib/SubnetIDHelper.sol";
 
-import {TestUtils} from "../../helpers/TestUtils.sol";
+import { TestUtils } from "../../helpers/TestUtils.sol";
 
-import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
+import { EnumerableSet } from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
 
 uint256 constant ETH_SUPPLY = 129_590_000 ether;
 
@@ -89,7 +89,7 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
 
         _pay(validator, amount);
         vm.prank(validator);
-        managerFacet.join{value: amount}(publicKey);
+        managerFacet.join{ value: amount }(publicKey);
         managerFacet.confirmNextChange();
 
         ghost_stakedSum += amount;
@@ -103,7 +103,7 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
         _pay(validator, amount);
 
         vm.prank(validator);
-        managerFacet.stake{value: amount}();
+        managerFacet.stake{ value: amount }();
         managerFacet.confirmNextChange();
 
         ghost_stakedSum += amount;
@@ -142,7 +142,7 @@ contract SubnetActorHandler is CommonBase, StdCheats, StdUtils {
     }
 
     function _pay(address to, uint256 amount) internal {
-        (bool s, ) = to.call{value: amount}("");
+        (bool s, ) = to.call{ value: amount }("");
         require(s, "pay() failed");
     }
 

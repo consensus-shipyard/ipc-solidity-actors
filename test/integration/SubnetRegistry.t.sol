@@ -1,30 +1,30 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {EMPTY_BYTES} from "../../src/constants/Constants.sol";
-import {ConsensusType} from "../../src/enums/ConsensusType.sol";
+import { EMPTY_BYTES } from "../../src/constants/Constants.sol";
+import { ConsensusType } from "../../src/enums/ConsensusType.sol";
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
-import {TestUtils} from "../helpers/TestUtils.sol";
-import {IERC165} from "../../src/interfaces/IERC165.sol";
-import {IDiamond} from "../../src/interfaces/IDiamond.sol";
-import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "../../src/interfaces/IDiamondLoupe.sol";
-import {LibDiamond} from "../../src/lib/LibDiamond.sol";
+import { TestUtils } from "../helpers/TestUtils.sol";
+import { IERC165 } from "../../src/interfaces/IERC165.sol";
+import { IDiamond } from "../../src/interfaces/IDiamond.sol";
+import { IDiamondCut } from "../../src/interfaces/IDiamondCut.sol";
+import { IDiamondLoupe } from "../../src/interfaces/IDiamondLoupe.sol";
+import { LibDiamond } from "../../src/lib/LibDiamond.sol";
 
-import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.sol";
-import {SubnetActorManagerFacet} from "../../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
-import {SubnetID, PermissionMode} from "../../src/structs/Subnet.sol";
-import {SubnetRegistryDiamond} from "../../src/SubnetRegistryDiamond.sol";
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
+import { SubnetActorGetterFacet } from "../../src/subnet/SubnetActorGetterFacet.sol";
+import { SubnetActorManagerFacet } from "../../src/subnet/SubnetActorManagerFacet.sol";
+import { SubnetActorDiamond } from "../../src/SubnetActorDiamond.sol";
+import { SubnetID, PermissionMode } from "../../src/structs/Subnet.sol";
+import { SubnetRegistryDiamond } from "../../src/SubnetRegistryDiamond.sol";
+import { SubnetIDHelper } from "../../src/lib/SubnetIDHelper.sol";
 
 //facets
-import {RegisterSubnetFacet} from "../../src/subnetregistry/RegisterSubnetFacet.sol";
-import {SubnetGetterFacet} from "../../src/subnetregistry/SubnetGetterFacet.sol";
-import {DiamondLoupeFacet} from "../../src/diamond/DiamondLoupeFacet.sol";
-import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
+import { RegisterSubnetFacet } from "../../src/subnetregistry/RegisterSubnetFacet.sol";
+import { SubnetGetterFacet } from "../../src/subnetregistry/SubnetGetterFacet.sol";
+import { DiamondLoupeFacet } from "../../src/diamond/DiamondLoupeFacet.sol";
+import { DiamondCutFacet } from "../../src/diamond/DiamondCutFacet.sol";
 
 contract SubnetRegistryTest is Test {
     using SubnetIDHelper for SubnetID;
@@ -258,7 +258,7 @@ contract SubnetRegistryTest is Test {
 
     function test_Registry_Deployment_DifferentGateway() public {
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            parentId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
             ipcGatewayAddr: address(1),
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
@@ -277,7 +277,7 @@ contract SubnetRegistryTest is Test {
     function test_Registry_LatestSubnetDeploy_Revert() public {
         vm.startPrank(DEFAULT_SENDER);
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            parentId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
             ipcGatewayAddr: DEFAULT_IPC_GATEWAY_ADDR,
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
@@ -297,7 +297,7 @@ contract SubnetRegistryTest is Test {
     function test_Registry_GetSubnetDeployedByNonce_Revert() public {
         vm.startPrank(DEFAULT_SENDER);
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            parentId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
             ipcGatewayAddr: DEFAULT_IPC_GATEWAY_ADDR,
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: DEFAULT_MIN_VALIDATOR_STAKE,
@@ -348,7 +348,7 @@ contract SubnetRegistryTest is Test {
         }
 
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: path}),
+            parentId: SubnetID({ root: ROOTNET_CHAINID, route: path }),
             ipcGatewayAddr: DEFAULT_IPC_GATEWAY_ADDR,
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: _minCollateral,
@@ -437,7 +437,7 @@ contract SubnetRegistryTest is Test {
     ) public {
         vm.startPrank(DEFAULT_SENDER);
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            parentId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
             ipcGatewayAddr: _ipcGatewayAddr,
             consensus: _consensus,
             minActivationCollateral: _minActivationCollateral,

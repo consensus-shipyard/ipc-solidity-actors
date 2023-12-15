@@ -6,8 +6,8 @@ pragma solidity 0.8.19;
 * EIP-2535 Diamonds: https://eips.ethereum.org/EIPS/eip-2535
 /******************************************************************************/
 
-import {IDiamondCut} from "../interfaces/IDiamondCut.sol";
-import {LibDiamond} from "../lib/LibDiamond.sol";
+import { IDiamondCut } from "../interfaces/IDiamondCut.sol";
+import { LibDiamond } from "../lib/LibDiamond.sol";
 
 contract DiamondCutFacet is IDiamondCut {
     /// @notice Add/replace/remove any number of functions and optionally execute
@@ -18,6 +18,6 @@ contract DiamondCutFacet is IDiamondCut {
     ///                  _calldata is executed with delegatecall on _init
     function diamondCut(FacetCut[] calldata _diamondCut, address _init, bytes calldata _calldata) external override {
         LibDiamond.enforceIsContractOwner();
-        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: _init, _calldata: _calldata});
+        LibDiamond.diamondCut({ _diamondCut: _diamondCut, _init: _init, _calldata: _calldata });
     }
 }

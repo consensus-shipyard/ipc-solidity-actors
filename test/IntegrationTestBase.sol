@@ -5,39 +5,39 @@ import "forge-std/Test.sol";
 import "forge-std/StdInvariant.sol";
 
 import "../src/errors/IPCErrors.sol";
-import {NumberContractFacetSeven, NumberContractFacetEight} from "./helpers/NumberContract.sol";
-import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
-import {ConsensusType} from "../src/enums/ConsensusType.sol";
-import {Status} from "../src/enums/Status.sol";
-import {IERC165} from "../src/interfaces/IERC165.sol";
-import {IDiamond} from "../src/interfaces/IDiamond.sol";
-import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
-import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
-import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
-import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
-import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
-import {FvmAddress} from "../src/structs/FvmAddress.sol";
-import {SubnetID, PermissionMode, PermissionMode, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
-import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
-import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
-import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
-import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {GatewayDiamond, FunctionNotFound} from "../src/GatewayDiamond.sol";
-import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
-import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
-import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
-import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
-import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
-import {SubnetActorManagerFacetMock} from "./mocks/SubnetActor.sol";
-import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
-import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
-import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
-import {LibDiamond} from "../src/lib/LibDiamond.sol";
-import {MerkleTreeHelper} from "./helpers/MerkleTreeHelper.sol";
+import { NumberContractFacetSeven, NumberContractFacetEight } from "./helpers/NumberContract.sol";
+import { EMPTY_BYTES, METHOD_SEND, EMPTY_HASH } from "../src/constants/Constants.sol";
+import { ConsensusType } from "../src/enums/ConsensusType.sol";
+import { Status } from "../src/enums/Status.sol";
+import { IERC165 } from "../src/interfaces/IERC165.sol";
+import { IDiamond } from "../src/interfaces/IDiamond.sol";
+import { IDiamondLoupe } from "../src/interfaces/IDiamondLoupe.sol";
+import { IDiamondCut } from "../src/interfaces/IDiamondCut.sol";
+import { ISubnetActor } from "../src/interfaces/ISubnetActor.sol";
+import { CheckpointInfo } from "../src/structs/Checkpoint.sol";
+import { CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality } from "../src/structs/Checkpoint.sol";
+import { FvmAddress } from "../src/structs/FvmAddress.sol";
+import { SubnetID, PermissionMode, PermissionMode, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation } from "../src/structs/Subnet.sol";
+import { SubnetIDHelper } from "../src/lib/SubnetIDHelper.sol";
+import { FvmAddressHelper } from "../src/lib/FvmAddressHelper.sol";
+import { CrossMsgHelper } from "../src/lib/CrossMsgHelper.sol";
+import { StorableMsgHelper } from "../src/lib/StorableMsgHelper.sol";
+import { FilAddress } from "fevmate/utils/FilAddress.sol";
+import { GatewayDiamond, FunctionNotFound } from "../src/GatewayDiamond.sol";
+import { SubnetActorDiamond } from "../src/SubnetActorDiamond.sol";
+import { GatewayGetterFacet } from "../src/gateway/GatewayGetterFacet.sol";
+import { GatewayMessengerFacet } from "../src/gateway/GatewayMessengerFacet.sol";
+import { GatewayManagerFacet } from "../src/gateway/GatewayManagerFacet.sol";
+import { GatewayRouterFacet } from "../src/gateway/GatewayRouterFacet.sol";
+import { SubnetActorManagerFacetMock } from "./mocks/SubnetActor.sol";
+import { SubnetActorManagerFacet } from "../src/subnet/SubnetActorManagerFacet.sol";
+import { SubnetActorGetterFacet } from "../src/subnet/SubnetActorGetterFacet.sol";
+import { DiamondLoupeFacet } from "../src/diamond/DiamondLoupeFacet.sol";
+import { DiamondCutFacet } from "../src/diamond/DiamondCutFacet.sol";
+import { LibDiamond } from "../src/lib/LibDiamond.sol";
+import { MerkleTreeHelper } from "./helpers/MerkleTreeHelper.sol";
 
-import {TestUtils} from "./helpers/TestUtils.sol";
+import { TestUtils } from "./helpers/TestUtils.sol";
 
 contract IntegrationTestBase is Test {
     using SubnetIDHelper for SubnetID;
@@ -139,7 +139,7 @@ contract IntegrationTestBase is Test {
         address gw
     ) internal pure virtual returns (SubnetActorDiamond.ConstructorParams memory) {
         SubnetActorDiamond.ConstructorParams memory params = SubnetActorDiamond.ConstructorParams({
-            parentId: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            parentId: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
             ipcGatewayAddr: gw,
             consensus: ConsensusType.Fendermint,
             minActivationCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -169,7 +169,7 @@ contract IntegrationTestBase is Test {
 
     function defaultGatewayParams() internal pure virtual returns (GatewayDiamond.ConstructorParams memory) {
         GatewayDiamond.ConstructorParams memory params = GatewayDiamond.ConstructorParams({
-            networkName: SubnetID({root: ROOTNET_CHAINID, route: new address[](0)}),
+            networkName: SubnetID({ root: ROOTNET_CHAINID, route: new address[](0) }),
             bottomUpCheckPeriod: DEFAULT_CHECKPOINT_PERIOD,
             msgFee: DEFAULT_CROSS_MSG_FEE,
             minCollateral: DEFAULT_COLLATERAL_AMOUNT,
@@ -467,7 +467,7 @@ contract IntegrationTestBase is Test {
         weights[1] = 100;
         weights[2] = 100;
 
-        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        ParentFinality memory finality = ParentFinality({ height: block.number, blockHash: bytes32(0) });
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
         gwRouter.commitParentFinality(finality);
@@ -518,7 +518,7 @@ contract IntegrationTestBase is Test {
         weights[0] = weight;
 
         vm.deal(validator, 1);
-        ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
+        ParentFinality memory finality = ParentFinality({ height: block.number, blockHash: bytes32(0) });
         // uint64 n = gwGetter.getLastConfigurationNumber() + 1;
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
@@ -541,7 +541,7 @@ contract IntegrationTestBase is Test {
 
         require(gwGetter.crossMsgFee() > 0, "crossMsgFee is 0");
 
-        gwManager.fund{value: fundAmount}(subnetId, FvmAddressHelper.from(funderAddress));
+        gwManager.fund{ value: fundAmount }(subnetId, FvmAddressHelper.from(funderAddress));
 
         (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(saManager));
 
@@ -554,7 +554,7 @@ contract IntegrationTestBase is Test {
     function join(address validatorAddress, bytes memory pubkey) public {
         vm.prank(validatorAddress);
         vm.deal(validatorAddress, DEFAULT_COLLATERAL_AMOUNT + 1);
-        saManager.join{value: DEFAULT_COLLATERAL_AMOUNT}(pubkey);
+        saManager.join{ value: DEFAULT_COLLATERAL_AMOUNT }(pubkey);
     }
 
     function confirmChange(address validator, uint256 privKey) internal {
@@ -636,7 +636,7 @@ contract IntegrationTestBase is Test {
 
     function release(uint256 releaseAmount) public {
         uint256 expectedNonce = gwGetter.bottomUpNonce() + 1;
-        gwManager.release{value: releaseAmount}(FvmAddressHelper.from(msg.sender));
+        gwManager.release{ value: releaseAmount }(FvmAddressHelper.from(msg.sender));
         require(gwGetter.bottomUpNonce() == expectedNonce, "gwGetter.bottomUpNonce() == expectedNonce");
     }
 
@@ -645,7 +645,7 @@ contract IntegrationTestBase is Test {
 
         (, uint256 stakedBefore, , , , ) = getSubnet(subnetAddress);
 
-        gwManager.addStake{value: stakeAmount}();
+        gwManager.addStake{ value: stakeAmount }();
 
         uint256 balanceAfter = subnetAddress.balance;
         (, uint256 stakedAfter, , , , ) = getSubnet(subnetAddress);
@@ -657,7 +657,7 @@ contract IntegrationTestBase is Test {
     function registerSubnetGW(uint256 collateral, address subnetAddress, GatewayDiamond gw) public {
         GatewayManagerFacet manager = GatewayManagerFacet(address(gw));
 
-        manager.register{value: collateral}(0);
+        manager.register{ value: collateral }(0);
 
         (SubnetID memory id, uint256 stake, uint256 topDownNonce, , uint256 circSupply, Status status) = getSubnetGW(
             subnetAddress,

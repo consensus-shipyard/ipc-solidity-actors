@@ -2,23 +2,23 @@
 pragma solidity 0.8.19;
 
 import "../../src/errors/IPCErrors.sol";
-import {StdInvariant} from "forge-std/Test.sol";
-import {TestUtils} from "../helpers/TestUtils.sol";
-import {SubnetID, Subnet} from "../../src/structs/Subnet.sol";
-import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
-import {GatewayDiamond} from "../../src/GatewayDiamond.sol";
-import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
-import {GatewayMessengerFacet} from "../../src/gateway/GatewayMessengerFacet.sol";
-import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
-import {GatewayRouterFacet} from "../../src/gateway/GatewayRouterFacet.sol";
-import {SubnetActorHandler, ETH_SUPPLY} from "./handlers/SubnetActorHandler.sol";
-import {SubnetActorManagerFacetMock} from "../mocks/SubnetActor.sol";
-import {SubnetActorManagerFacet} from "../../src/subnet/SubnetActorManagerFacet.sol";
-import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.sol";
+import { StdInvariant } from "forge-std/Test.sol";
+import { TestUtils } from "../helpers/TestUtils.sol";
+import { SubnetID, Subnet } from "../../src/structs/Subnet.sol";
+import { SubnetIDHelper } from "../../src/lib/SubnetIDHelper.sol";
+import { GatewayDiamond } from "../../src/GatewayDiamond.sol";
+import { GatewayGetterFacet } from "../../src/gateway/GatewayGetterFacet.sol";
+import { GatewayMessengerFacet } from "../../src/gateway/GatewayMessengerFacet.sol";
+import { GatewayManagerFacet } from "../../src/gateway/GatewayManagerFacet.sol";
+import { GatewayRouterFacet } from "../../src/gateway/GatewayRouterFacet.sol";
+import { SubnetActorHandler, ETH_SUPPLY } from "./handlers/SubnetActorHandler.sol";
+import { SubnetActorManagerFacetMock } from "../mocks/SubnetActor.sol";
+import { SubnetActorManagerFacet } from "../../src/subnet/SubnetActorManagerFacet.sol";
+import { SubnetActorGetterFacet } from "../../src/subnet/SubnetActorGetterFacet.sol";
 
-import {IntegrationTestBase} from "../IntegrationTestBase.sol";
+import { IntegrationTestBase } from "../IntegrationTestBase.sol";
 
-import {console} from "forge-std/console.sol";
+import { console } from "forge-std/console.sol";
 
 contract SubnetActorInvariants is StdInvariant, IntegrationTestBase {
     using SubnetIDHelper for SubnetID;
@@ -50,7 +50,7 @@ contract SubnetActorInvariants is StdInvariant, IntegrationTestBase {
         fuzzSelectors[2] = SubnetActorHandler.stake.selector;
         fuzzSelectors[3] = SubnetActorHandler.unstake.selector;
 
-        targetSelector(FuzzSelector({addr: address(subnetActorHandler), selectors: fuzzSelectors}));
+        targetSelector(FuzzSelector({ addr: address(subnetActorHandler), selectors: fuzzSelectors }));
         targetContract(address(subnetActorHandler));
     }
 

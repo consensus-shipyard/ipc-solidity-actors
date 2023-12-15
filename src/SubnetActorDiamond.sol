@@ -1,17 +1,17 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {SubnetActorStorage} from "./lib/LibSubnetActorStorage.sol";
-import {ConsensusType} from "./enums/ConsensusType.sol";
-import {IDiamond} from "./interfaces/IDiamond.sol";
-import {IDiamondCut} from "./interfaces/IDiamondCut.sol";
-import {IDiamondLoupe} from "./interfaces/IDiamondLoupe.sol";
-import {IERC165} from "./interfaces/IERC165.sol";
-import {GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod, InvalidCollateral, InvalidMajorityPercentage, InvalidPowerScale} from "./errors/IPCErrors.sol";
-import {LibDiamond} from "./lib/LibDiamond.sol";
-import {SubnetID, PermissionMode} from "./structs/Subnet.sol";
-import {SubnetIDHelper} from "./lib/SubnetIDHelper.sol";
-import {LibStaking} from "./lib/LibStaking.sol";
+import { SubnetActorStorage } from "./lib/LibSubnetActorStorage.sol";
+import { ConsensusType } from "./enums/ConsensusType.sol";
+import { IDiamond } from "./interfaces/IDiamond.sol";
+import { IDiamondCut } from "./interfaces/IDiamondCut.sol";
+import { IDiamondLoupe } from "./interfaces/IDiamondLoupe.sol";
+import { IERC165 } from "./interfaces/IERC165.sol";
+import { GatewayCannotBeZero, NotGateway, InvalidSubmissionPeriod, InvalidCollateral, InvalidMajorityPercentage, InvalidPowerScale } from "./errors/IPCErrors.sol";
+import { LibDiamond } from "./lib/LibDiamond.sol";
+import { SubnetID, PermissionMode } from "./structs/Subnet.sol";
+import { SubnetIDHelper } from "./lib/SubnetIDHelper.sol";
+import { LibStaking } from "./lib/LibStaking.sol";
 
 error FunctionNotFound(bytes4 _functionSelector);
 
@@ -53,7 +53,7 @@ contract SubnetActorDiamond {
         }
 
         LibDiamond.setContractOwner(msg.sender);
-        LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
+        LibDiamond.diamondCut({ _diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0) });
 
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
         // adding ERC165 data

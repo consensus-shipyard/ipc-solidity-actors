@@ -3,9 +3,9 @@ pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
 import "forge-std/console.sol";
-import {MerkleTreeHelper} from "../helpers/MerkleTreeHelper.sol";
-import {MerkleProof} from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
-import {Merkle} from "murky/Merkle.sol";
+import { MerkleTreeHelper } from "../helpers/MerkleTreeHelper.sol";
+import { MerkleProof } from "openzeppelin-contracts/utils/cryptography/MerkleProof.sol";
+import { Merkle } from "murky/Merkle.sol";
 
 contract MerkleTree is Test {
     Merkle merkleTree;
@@ -31,11 +31,11 @@ contract MerkleTree is Test {
         bytes32 leaf;
 
         leaf = keccak256(bytes.concat(keccak256(abi.encode(addrs[0], weights[0]))));
-        valid = MerkleProof.verify({proof: proofs[0], root: root, leaf: leaf});
+        valid = MerkleProof.verify({ proof: proofs[0], root: root, leaf: leaf });
         require(valid, "the valid leaf in the tree");
 
         leaf = keccak256(bytes.concat(keccak256(abi.encode(addrs[0], weights[1]))));
-        valid = MerkleProof.verify({proof: proofs[0], root: root, leaf: leaf});
+        valid = MerkleProof.verify({ proof: proofs[0], root: root, leaf: leaf });
         require(!valid, "invalid leaf is not in the tree");
     }
 }
