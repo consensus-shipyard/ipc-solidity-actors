@@ -5,8 +5,9 @@ import {SupplySource, SupplyKind} from "../structs/Subnet.sol";
 import {IERC20} from "openzeppelin-contracts/token/ERC20/IERC20.sol";
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {SafeERC20} from "openzeppelin-contracts/token/ERC20/utils/SafeERC20.sol";
+import {SubnetActorGetterFacet} from "../subnet/SubnetActorGetterFacet.sol";
 
-/// @notice Helpers to deal with a supply strategy.
+/// @notice Helpers to deal with a supply source.
 library SupplySourceHelper {
     using SafeERC20 for IERC20;
 
@@ -15,6 +16,13 @@ library SupplySourceHelper {
     error InsufficientValueReceived();
     error UnexpectedSupplySource();
     error UnknownSupplySource();
+
+    /// @notice Assumes that the address provided belongs to a subnet rooted on this network,
+    ///         and checks if its supply kind matches the provided one.
+    ///         It reverts if the address does not correspond to a subnet actor.
+    function hasSupplyOfKind(address subnet, SupplyKind compare) internal view returns (bool) {
+        return SubnetActorGetterFacet(subnet).supplySource().kind == compare;
+    }
 
     /// @notice Checks that a given supply strategy is correctly formed and its preconditions are met.
     ///         It reverts if conditions are not met.
