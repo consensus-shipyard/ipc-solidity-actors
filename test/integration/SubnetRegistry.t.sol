@@ -32,9 +32,7 @@ contract SubnetRegistryTest is Test, IntegrationTestBase {
     SubnetRegistryDiamond registryDiamond;
     bytes4[] empty;
 
-    address private constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
-
-    function setUp() public override {
+    function setUp() public virtual override {
         bytes4[] memory mockedSelectors = new bytes4[](1);
         mockedSelectors[0] = 0x6cb2ecee;
 

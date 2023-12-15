@@ -71,6 +71,8 @@ contract IntegrationTestBase is Test {
     uint64 constant ROOTNET_CHAINID = 123;
     address constant ROOTNET_ADDRESS = address(1);
 
+    address constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
+
     address constant TOPDOWN_VALIDATOR_1 = address(12);
 
     bytes4[] registerSubnetFacetSelectors;
