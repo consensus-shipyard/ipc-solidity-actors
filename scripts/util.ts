@@ -1,7 +1,7 @@
 import { SignerWithAddress } from '@nomiclabs/hardhat-ethers/signers'
 import { providers, Wallet, ContractFactory, Contract } from 'ethers'
 import { Contract, ethers } from 'hardhat'
-import ganache from 'ganache-core'
+import ganache from 'ganache'
 import * as linker from 'solc/linker'
 const { getSelectors, FacetCutAction } = require('./js/diamond.js')
 const fs = require('fs')
@@ -379,7 +379,7 @@ export async function upgradeFacet(
 
         const onChainFunctionSelectors =
             onChainFacets[
-                getDeployedFacetAddressFromName(facet.name, deployments)
+            getDeployedFacetAddressFromName(facet.name, deployments)
             ]
 
         const newFacet = await upgradeFacetOnChain(
