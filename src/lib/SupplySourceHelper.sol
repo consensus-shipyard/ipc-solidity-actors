@@ -11,9 +11,7 @@ import {SubnetActorGetterFacet} from "../subnet/SubnetActorGetterFacet.sol";
 library SupplySourceHelper {
     using SafeERC20 for IERC20;
 
-    error UnusedAllowance();
     error InvalidERC20Address();
-    error InsufficientValueReceived();
     error UnexpectedSupplySource();
     error UnknownSupplySource();
 
@@ -33,7 +31,7 @@ library SupplySourceHelper {
             }
             // We require that the ERC20 token contract exists beforehand.
             // The call to balanceOf will revert if the supplied address does not exist, or if it's not an ERC20 contract.
-            // Ideally we'd be able to use ERC165 to check if the contract implements the ERC20 standard, but the latter does not support supportsInterface().
+            // Ideally we'd use ERC165 to check if the contract implements the ERC20 standard, but the latter does not support supportsInterface().
             IERC20 token = IERC20(supplySource.tokenAddress);
             token.balanceOf(address(this));
         }
@@ -50,9 +48,6 @@ library SupplySourceHelper {
     function lock(SupplySource memory supplySource, address from, uint256 value) internal {
         if (supplySource.kind == SupplyKind.ERC20) {
             IERC20 token = IERC20(supplySource.tokenAddress);
-            if (token.allowance({owner: from, spender: address(this)}) != value) {
-                // Ensure we're using the full allowance, as otherwise
-            }
             token.safeTransferFrom({from: from, to: address(this), value: value});
         }
         // Do nothing for native.
@@ -64,38 +59,36 @@ library SupplySourceHelper {
             Address.sendValue(payable(recipient), value);
         } else if (supplySource.kind == SupplyKind.ERC20) {
             IERC20(supplySource.tokenAddress).safeTransfer({to: recipient, value: value});
-        } else {
-            revert UnknownSupplySource();
         }
     }
 
     /// @notice Calls the target with the specified data, ensuring it receives the specified value.
-    function call(SupplySource memory supplySource, address payable target, bytes memory data, uint256 value) internal returns (bytes memory) {
+    function call(SupplySource memory supplySource, address payable target, bytes memory data, uint256 value) internal returns (bytes memory ret) {
         // If value is zero, we can just go ahead and call the function.
         if (value == 0) {
-            return Address.functionCall(target, data);
+            ret = Address.functionCall(target, data);
         }
 
         // Otherwise, we need to do something different.
         if (supplySource.kind == SupplyKind.Native) {
             // Use the optimized path to send value along with the call.
-            return Address.functionCallWithValue({target: target, data: data, value: value});
+            ret = Address.functionCallWithValue({target: target, data: data, value: value});
         } else if (supplySource.kind == SupplyKind.ERC20) {
             // Transfer the tokens first, _then_ perform the call.
             IERC20(supplySource.tokenAddress).safeTransfer({to: target, value: value});
-            return Address.functionCall(target, data);
+            ret = Address.functionCall(target, data);
         }
-        revert UnknownSupplySource();
+        return ret;
     }
 
     /// @notice Gets the balance in our treasury.
-    function balance(SupplySource memory supplySource) internal view returns (uint256) {
+    function balance(SupplySource memory supplySource) internal view returns (uint256 ret) {
         if (supplySource.kind == SupplyKind.Native) {
-            return address(this).balance;
+            ret = address(this).balance;
         } else if (supplySource.kind == SupplyKind.ERC20) {
-            return IERC20(supplySource.tokenAddress).balanceOf(address(this));
+            ret = IERC20(supplySource.tokenAddress).balanceOf(address(this));
         }
-        revert UnknownSupplySource();
+        return ret;
     }
 
     function native() internal pure returns (SupplySource memory) {
