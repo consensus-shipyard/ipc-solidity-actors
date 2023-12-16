@@ -41,6 +41,7 @@ jobs:
       run: |
         export PATH="$PATH:/home/runner/.config/.foundry/bin"
         npx ganache-cli -g0 -p1337 &
+        sleep 5
         make
 
 
