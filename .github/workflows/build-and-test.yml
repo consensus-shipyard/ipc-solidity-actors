@@ -1,6 +1,11 @@
 name: Build and Test Workflow
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+      - dev
+  pull_request:
 
 jobs:
   build:
@@ -17,6 +22,12 @@ jobs:
 
     - name: Install dependencies
       run: npm install
+
+    - name: Install Foundry
+      run: |
+        curl -L https://foundry.paradigm.xyz | bash
+        source ~/.profile
+        foundryup
 
     - name: Start Ganache CLI
       run: npx ganache-cli -g0 -p1337 &
