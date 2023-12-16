@@ -326,7 +326,6 @@ task(
     },
 )
 
-console.log(process.env)
 /** @type import('hardhat/config').HardhatUserConfig */
 const config: HardhatUserConfig = {
     defaultNetwork: 'calibrationnet',
