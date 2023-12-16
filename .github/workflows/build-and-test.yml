@@ -32,7 +32,7 @@ jobs:
 
 
     - name: Start Ganache CLI
-      run: npx ganache-cli -g0 -p1337 &
+      run: nohup npx ganache-cli -g0 -p1337 &
       shell: bash
 
     - name: Generate Ethereum Private Key and Create .env File
