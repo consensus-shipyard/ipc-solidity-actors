@@ -18,7 +18,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14' # Adjust this as needed for your project
+        node-version: '18' # Adjust this as needed for your project
 
     - name: Install dependencies
       run: npm install
@@ -42,6 +42,8 @@ jobs:
         echo "export CHAIN_ID=1337" >> .env
 
     - name: Run make
-      run: make
+      run: |
+        export PATH="$PATH:/home/runner/.config/.foundry/bin"
+        make
 
 
