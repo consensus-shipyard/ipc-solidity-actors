@@ -34,7 +34,7 @@ jobs:
       run: |
         PRIVATE_KEY=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
         echo "export PRIVATE_KEY=0x$PRIVATE_KEY" > .env
-        echo "export RPC_URL=http://localhost:1337" >> .env
+        echo "export RPC_URL=http://127.0.0.1:1337" >> .env
         echo "export CHAIN_ID=1337" >> .env
         export PATH="$PATH:/home/runner/.config/.foundry/bin"
         npx ganache-cli -g0 -p1337 &
