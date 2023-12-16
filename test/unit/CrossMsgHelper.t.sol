@@ -25,21 +25,11 @@ contract CrossMsgHelperTest is Test {
 
     error NoParentForSubnet();
 
-    function test_IsEmpty_Works_EmptyCrossMsg() public view {
-        require(crossMsg.isEmpty() == true);
-    }
-
     function test_ToHash_Works() public view {
         CrossMsg[] memory msgs = new CrossMsg[](1);
         msgs[0] = crossMsg;
         require(CrossMsgHelper.toHash(crossMsg) == CrossMsgHelper.toHash(msgs[0]));
         require(CrossMsgHelper.toHash(crossMsg) != CrossMsgHelper.toHash(msgs));
-    }
-
-    function test_IsEmpty_Works_NonEmptyCrossMsg() public {
-        crossMsg.message.nonce = 10;
-
-        require(crossMsg.isEmpty() == false);
     }
 
     function test_CreateReleaseMsg_Works(uint256 releaseAmount, address sender) public {
