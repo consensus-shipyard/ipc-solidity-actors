@@ -30,11 +30,6 @@ jobs:
         foundryup
         forge install
 
-
-    - name: Start Ganache CLI
-      run: nohup npx ganache-cli -g0 -p1337 &
-      shell: bash
-
     - name: Generate Ethereum Private Key and Create .env File
       run: |
         PRIVATE_KEY=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
@@ -45,6 +40,7 @@ jobs:
     - name: Run make
       run: |
         export PATH="$PATH:/home/runner/.config/.foundry/bin"
+        npx ganache-cli -g0 -p1337 &
         make
 
 
