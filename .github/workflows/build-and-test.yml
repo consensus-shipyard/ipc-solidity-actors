@@ -13,7 +13,7 @@ jobs:
     - name: Set up Node.js
       uses: actions/setup-node@v2
       with:
-        node-version: '14' # Specify the Node.js version you need
+        node-version: '14' # Adjust this as needed for your project
 
     - name: Install dependencies
       run: npm install
@@ -22,6 +22,15 @@ jobs:
       run: npx ganache-cli -g0 -p1337 &
       shell: bash
 
+    - name: Generate Ethereum Private Key and Create .env File
+      run: |
+        npm install eth-utils
+        PRIVATE_KEY=$(node -e "console.log(require('eth-utils').bufferToHex(require('crypto').randomBytes(32)))")
+        echo "export PRIVATE_KEY=${PRIVATE_KEY}" > .env
+        echo "export RPC_URL=http://localhost:1337" >> .env
+        echo "export CHAIN_ID=1337" >> .env
+
     - name: Run make
       run: make
+
 
