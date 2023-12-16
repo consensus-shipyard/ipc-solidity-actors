@@ -26,8 +26,8 @@ jobs:
     - name: Install Foundry
       run: |
         curl -L https://foundry.paradigm.xyz | bash
-        source /home/runner/.bashrc
-        foundryup
+        source /home/runner/.bashrc && foundryup
+
 
     - name: Start Ganache CLI
       run: npx ganache-cli -g0 -p1337 &
