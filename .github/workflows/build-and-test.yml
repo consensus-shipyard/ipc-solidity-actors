@@ -24,9 +24,8 @@ jobs:
 
     - name: Generate Ethereum Private Key and Create .env File
       run: |
-        npm install eth-utils
-        PRIVATE_KEY=$(node -e "console.log(require('eth-utils').bufferToHex(require('crypto').randomBytes(32)))")
-        echo "export PRIVATE_KEY=${PRIVATE_KEY}" > .env
+        PRIVATE_KEY=$(node -e "console.log(require('crypto').randomBytes(32).toString('hex'))")
+        echo "export PRIVATE_KEY=0x$PRIVATE_KEY" > .env
         echo "export RPC_URL=http://localhost:1337" >> .env
         echo "export CHAIN_ID=1337" >> .env
 
