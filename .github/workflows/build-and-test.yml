@@ -26,6 +26,7 @@ jobs:
     - name: Install Foundry
       run: |
         curl -L https://foundry.paradigm.xyz | bash
+        cat /home/runner/.bashrc
         source /home/runner/.bashrc && foundryup
 
 
