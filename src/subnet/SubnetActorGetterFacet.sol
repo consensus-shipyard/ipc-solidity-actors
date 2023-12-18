@@ -25,7 +25,7 @@ contract SubnetActorGetterFacet {
     }
 
     function permissionMode() external view returns (PermissionMode) {
-        return s.permissionMode;
+        return s.validatorSet.permissionMode;
     }
 
     function ipcGatewayAddr() external view returns (address) {

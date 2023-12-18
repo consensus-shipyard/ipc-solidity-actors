@@ -72,7 +72,7 @@ contract SubnetActorDiamond {
         s.powerScale = params.powerScale;
         s.minCrossMsgFee = params.minCrossMsgFee;
         s.currentSubnetHash = s.parentId.createSubnetId(address(this)).toHash();
-        s.permissionMode = params.permissionMode;
+        s.validatorSet.permissionMode = params.permissionMode;
 
         // BottomUpMsgBatch config parameters.
         // NOTE: Let's fix them for now, but we could make them configurable
