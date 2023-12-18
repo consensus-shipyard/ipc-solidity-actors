@@ -43,7 +43,7 @@ contract SubnetActorDiamond {
         if (params.bottomUpCheckPeriod == 0) {
             revert InvalidSubmissionPeriod();
         }
-        if (params.minActivationCollateral == 0) {
+        if (params.permissionMode != PermissionMode.Federated && params.minActivationCollateral == 0) {
             revert InvalidCollateral();
         }
         if (params.majorityPercentage < 51 || params.majorityPercentage > 100) {
@@ -61,6 +61,11 @@ contract SubnetActorDiamond {
         ds.supportedInterfaces[type(IERC165).interfaceId] = true;
         ds.supportedInterfaces[type(IDiamondCut).interfaceId] = true;
         ds.supportedInterfaces[type(IDiamondLoupe).interfaceId] = true;
+
+        if (params.permissionMode == PermissionMode.Federated) {
+            // ignore min activation collateral for now
+            params.minActivationCollateral = 0;
+        }
 
         s.parentId = params.parentId;
         s.ipcGatewayAddr = params.ipcGatewayAddr;

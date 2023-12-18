@@ -1288,6 +1288,105 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         saManager.setFederatedPower(validators, publicKeys, powers);
     }
 
+    function testSubnetActorDiamond_FederatedValidation_bootstrapWorks() public {
+        gatewayAddress = address(gatewayDiamond);
+
+        createSubnetActor(
+            gatewayAddress,
+            ConsensusType.Fendermint,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
+            PermissionMode.Federated,
+            2
+        );
+
+        (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(2);
+
+        uint256[] memory powers = new uint256[](2);
+        powers[0] = 10000;
+        powers[1] = 20000;
+
+        saManager.setFederatedPower(validators, publicKeys, powers);
+        require(saGetter.isActiveValidator(validators[0]), "not active validator 1");
+        require(saGetter.isActiveValidator(validators[1]), "not active validator 2");
+    }
+
+    function testSubnetActorDiamond_FederatedValidation_bootstrapNotOwnerOfPublicKeys() public {
+        gatewayAddress = address(gatewayDiamond);
+
+        createSubnetActor(
+            gatewayAddress,
+            ConsensusType.Fendermint,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
+            PermissionMode.Federated,
+            2
+        );
+
+        (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(2);
+        publicKeys[1] = publicKeys[0];
+
+        uint256[] memory powers = new uint256[](2);
+        powers[0] = 10000;
+        powers[1] = 20000;
+
+        vm.expectRevert(abi.encodeWithSelector(NotOwnerOfPublicKey.selector));
+        saManager.setFederatedPower(validators, publicKeys, powers);
+    }
+
+    function testSubnetActorDiamond_FederatedValidation_bootstrapNotEnoughValidators() public {
+        gatewayAddress = address(gatewayDiamond);
+
+        createSubnetActor(
+            gatewayAddress,
+            ConsensusType.Fendermint,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
+            PermissionMode.Federated,
+            2
+        );
+
+        (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(1);
+
+        uint256[] memory powers = new uint256[](1);
+        powers[0] = 10000;
+
+        vm.expectRevert(abi.encodeWithSelector(NotEnoughGenesisValidators.selector));
+        saManager.setFederatedPower(validators, publicKeys, powers);
+    }
+
+    function testSubnetActorDiamond_FederatedValidation_bootstrapDuplicates() public {
+        gatewayAddress = address(gatewayDiamond);
+
+        createSubnetActor(
+            gatewayAddress,
+            ConsensusType.Fendermint,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
+            PermissionMode.Federated,
+            2
+        );
+
+        (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(2);
+        validators[1] = validators[0];
+        publicKeys[1] = publicKeys[0];
+
+        uint256[] memory powers = new uint256[](2);
+        powers[0] = 10000;
+        powers[1] = 20000;
+
+        vm.expectRevert(abi.encodeWithSelector(DuplicatedGenesisValidator.selector));
+        saManager.setFederatedPower(validators, publicKeys, powers);
+    }
+
     function testSubnetActorDiamond_FederatedValidation_cannotJoin() public {
         gatewayAddress = address(gatewayDiamond);
 
@@ -1302,13 +1401,17 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
             2
         );
 
-        (address validator1, bytes memory publicKey1) = TestUtils.deriveValidatorAddress(100);
-        vm.deal(validator1, DEFAULT_MIN_VALIDATOR_STAKE * 2);
-        vm.startPrank(validator1);
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+        (address[] memory validators, , bytes[] memory publicKeys) = TestUtils.newValidators(2);
+        uint256[] memory powers = new uint256[](2);
+        powers[0] = 10000;
+        powers[1] = 20000;
 
+        saManager.setFederatedPower(validators, publicKeys, powers);
+
+        vm.deal(validators[0], DEFAULT_MIN_VALIDATOR_STAKE * 2);
+        vm.startPrank(validators[0]);
         vm.expectRevert(abi.encodeWithSelector(MethodNotAllowed.selector, ERR_PERMISSIONED_AND_BOOTSTRAPPED));
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKey1);
+        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKeys[0]);
     }
 
     function testSubnetActorDiamond_FederatedValidation_works() public {
@@ -1333,17 +1436,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         powers[1] = 20000;
         powers[2] = 5000; // we only have 2 active validators, validator 2 does not have enough power
 
-        vm.deal(validators[0], DEFAULT_MIN_VALIDATOR_STAKE * 2);
-        vm.startPrank(validators[0]);
-        saManager.join{value: DEFAULT_MIN_VALIDATOR_STAKE}(publicKeys[0]);
-        vm.stopPrank();
-
         saManager.setFederatedPower(validators, publicKeys, powers);
-
-        require(!saGetter.isActiveValidator(validators[1]), "1 should not be active validator");
-        require(!saGetter.isActiveValidator(validators[2]), "2 should not be active validator");
-
-        confirmChange(validators[0], privKeys[0]);
 
         require(saGetter.isActiveValidator(validators[0]), "not active validator 0");
         require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
