@@ -2,12 +2,9 @@
 pragma solidity 0.8.19;
 
 import "../../src/errors/IPCErrors.sol";
-
 import "forge-std/Test.sol";
-import "forge-std/console.sol";
 
 import {ConsensusType} from "../../src/enums/ConsensusType.sol";
-
 import {TestUtils} from "../helpers/TestUtils.sol";
 import {IERC165} from "../../src/interfaces/IERC165.sol";
 import {IDiamond} from "../../src/interfaces/IDiamond.sol";
