@@ -39,7 +39,7 @@ contract GatewayL2ActorDiamondTest is Test, IntegrationTestBase {
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
         gwMessenger = GatewayMessengerFacet(address(gatewayDiamond));
         gwLouper = DiamondLoupeFacet(address(gatewayDiamond));
-        gwCutFacet = DiamondCutFacet(address(gatewayDiamond));
+        gwCutter = DiamondCutFacet(address(gatewayDiamond));
     }
 
     function defaultGatewayParams() internal pure override returns (GatewayDiamond.ConstructorParams memory) {
