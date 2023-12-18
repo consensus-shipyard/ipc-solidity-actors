@@ -105,7 +105,7 @@ contract GatewayDiamondTokenTest is Test, IntegrationTestBase {
         gwManager.fundWithToken(subnet.id, FvmAddressHelper.from(caller), 1);
     }
 
-    function test_fundWithToken_Succeeds() public {
+    function test_fundWithToken() public {
         Subnet memory subnet = createTokenSubnet(address(token));
 
         address caller = vm.addr(1);
@@ -113,25 +113,91 @@ contract GatewayDiamondTokenTest is Test, IntegrationTestBase {
         token.transfer(caller, 100);
         vm.startPrank(caller);
 
-        // caller approves the gateway to spend funds on their behalf.
-        token.approve(address(gatewayDiamond), 100);
+        // Caller approves the gateway to spend funds on their behalf.
+        token.approve(address(gatewayDiamond), 10);
 
-        // funding now succeeds.
-        vm.expectEmit(true, false, false, false, address(gatewayDiamond));
-        // TODO check value, address, etc.
-        CrossMsg memory dummy;
-        emit LibGateway.NewTopDownMessage(address(saDiamond), dummy);
-        gwManager.fundWithToken(subnet.id, FvmAddressHelper.from(caller), 1);
+        // Funding succeeds and the right event is emitted.
+        CrossMsg memory expected = CrossMsgHelper.createFundMsg(
+            subnet.id,
+            caller,
+            FvmAddressHelper.from(caller),
+            10,
+            0
+        );
+        vm.expectEmit(true, true, true, true, address(gatewayDiamond));
+        emit LibGateway.NewTopDownMessage(address(saDiamond), expected);
+        gwManager.fundWithToken(subnet.id, FvmAddressHelper.from(caller), 10);
 
+        // Assert post-conditions.
         (, Subnet memory subnetAfter) = gwGetter.getSubnet(subnet.id);
-        assertEq(subnetAfter.circSupply, 1);
+        assertEq(subnetAfter.circSupply, 10);
         assertEq(subnetAfter.topDownNonce, 1);
+
+        // A new funding attempt with exhausted token balance should fail.
+        vm.expectRevert();
+        gwManager.fundWithToken(subnet.id, FvmAddressHelper.from(caller), 10);
+
+        // And the subnet's state should not have been updated.
+        (, subnetAfter) = gwGetter.getSubnet(subnet.id);
+        assertEq(subnetAfter.circSupply, 10);
+        assertEq(subnetAfter.topDownNonce, 1);
+
+        // After topping up it succeeds again.
+        token.approve(address(gatewayDiamond), 5);
+        gwManager.fundWithToken(subnet.id, FvmAddressHelper.from(caller), 5);
+
+        // And the subnet's bookkeeping is correct.
+        (, subnetAfter) = gwGetter.getSubnet(subnet.id);
+        assertEq(subnetAfter.circSupply, 15);
+        assertEq(subnetAfter.topDownNonce, 2);
     }
 
-    function test_withdrawal() public {
-        // TODO:
-        // 1. Test successful withdrawal.
-        // 2. Test withdrawal attempt beyond subnet's circulating supply.
+    event Transfer(address indexed from, address indexed to, uint256 value);
+
+    function test_withdrawToken_Parent() public {
+        Subnet memory subnet = createTokenSubnet(address(token));
+
+        // Fund an account in the subnet.
+        address caller = vm.addr(1);
+        token.transfer(caller, 100);
+        vm.prank(caller);
+        token.approve(address(gatewayDiamond), 15);
+        vm.prank(caller);
+        gwManager.fundWithToken(subnet.id, FvmAddressHelper.from(caller), 15);
+
+        // Now create a new recipient on the parent.
+        address recipient = vm.addr(42);
+
+        // Commit the withdrawal message on the parent.
+        CrossMsg[] memory msgs = new CrossMsg[](1);
+        uint256 value = 8;
+        msgs[0] = CrossMsgHelper.createReleaseMsg(subnet.id, caller, FvmAddressHelper.from(recipient), value, 0);
+
+        BottomUpMsgBatch memory batch = BottomUpMsgBatch({
+            subnetID: subnet.id,
+            blockHeight: gwGetter.bottomUpMsgBatchPeriod(),
+            msgs: msgs
+        });
+
+        vm.prank(address(saDiamond));
+        vm.expectEmit(true, true, true, true, address(token));
+        emit Transfer(address(gatewayDiamond), recipient, value);
+        gwRouter.execBottomUpMsgBatch(batch);
+
+        // Assert post-conditions.
+        (, Subnet memory subnetAfter) = gwGetter.getSubnet(subnet.id);
+        assertEq(subnetAfter.circSupply, 7);
+        assertEq(subnetAfter.topDownNonce, 1);
+        assertEq(subnetAfter.appliedBottomUpNonce, 1);
+
+        // Now attempt to withdraw beyond the circulating supply.
+        // This would be a malicious message.
+        batch.msgs[0].message.value = 10;
+
+        // This reverts.
+        vm.prank(address(saDiamond));
+        vm.expectRevert();
+        gwRouter.execBottomUpMsgBatch(batch);
     }
 
     function test_generalMessagePassing() public {
