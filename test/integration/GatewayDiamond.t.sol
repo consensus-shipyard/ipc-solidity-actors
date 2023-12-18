@@ -69,10 +69,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     }
 
     function testGatewayDiamond_LoupeFunction() public view {
-        require(gwLouper.facets().length == 6, "unexpected length");
-        require(gwLouper.supportsInterface(type(IERC165).interfaceId) == true, "IERC165 not supported");
-        require(gwLouper.supportsInterface(type(IDiamondCut).interfaceId) == true, "IDiamondCut not supported");
-        require(gwLouper.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
+        require(gwLoupeFacet.facets().length == 6, "unexpected length");
+        require(gwLoupeFacet.supportsInterface(type(IERC165).interfaceId) == true, "IERC165 not supported");
+        require(gwLoupeFacet.supportsInterface(type(IDiamondCut).interfaceId) == true, "IDiamondCut not supported");
+        require(gwLoupeFacet.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
     }
 
     function testGatewayDiamond_DiamondCut() public {
@@ -280,13 +280,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(gwGetter.totalSubnets() == numberOfSubnets, "unexpected total subnets");
         Subnet[] memory subnets = gwGetter.listSubnets();
         require(subnets.length == numberOfSubnets, "unexpected length");
-    }
-
-    function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
-        vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
-        vm.expectRevert(NotEnoughCollateral.selector);
-
-        gwManager.register{value: collateral}(0);
     }
 
     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
@@ -2095,7 +2088,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT - 10 * DEFAULT_CROSS_MSG_FEE - 10 * amount,
             "unexpected circulation supply"
         );
-        vm.stopPrank();
     }
 
     function testGatewayDiamond_execMsgBatch_Fails_WrongNumberMessages() public {
@@ -2149,7 +2141,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         vm.prank(caller);
         vm.expectRevert(BatchWithNoMessages.selector);
         gwRouter.execBottomUpMsgBatch(batch);
-        vm.stopPrank();
     }
 
     function testGatewayDiamond_PopulateBottomUpMsgBatch_Works() public {

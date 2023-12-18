@@ -26,9 +26,14 @@ import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
 import {SubnetActorManagerFacetMock} from "./mocks/SubnetActor.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
+import {SubnetRegistryDiamond} from "../src/SubnetRegistryDiamond.sol";
+import {RegisterSubnetFacet} from "../src/subnetregistry/RegisterSubnetFacet.sol";
+import {SubnetGetterFacet} from "../src/subnetregistry/SubnetGetterFacet.sol";
 import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
 import {SupplySourceHelper} from "../src/lib/SupplySourceHelper.sol";
+
+import "forge-std/console.sol";
 
 import {TestUtils} from "./helpers/TestUtils.sol";
 
@@ -60,14 +65,24 @@ contract IntegrationTestBase is Test {
     uint64 constant ROOTNET_CHAINID = 123;
     address constant ROOTNET_ADDRESS = address(1);
 
+    address constant DEFAULT_IPC_GATEWAY_ADDR = address(1024);
+
     address constant TOPDOWN_VALIDATOR_1 = address(12);
+
+    bytes4[] registerSubnetFacetSelectors;
+    bytes4[] registerSubnetGetterFacetSelectors;
+
+    DiamondLoupeFacet registryLoupeFacet;
+    DiamondCutFacet registryCutFacet;
+    RegisterSubnetFacet registrySubnetFacet;
+    SubnetGetterFacet registrySubnetGetterFacet;
 
     bytes4[] gwRouterSelectors;
     bytes4[] gwManagerSelectors;
     bytes4[] gwGetterSelectors;
     bytes4[] gwMessengerSelectors;
     bytes4[] cutFacetSelectors;
-    bytes4[] louperSelectors;
+    bytes4[] loupeFacetSelectors;
 
     GatewayDiamond gatewayDiamond;
     GatewayManagerFacet gwManager;
@@ -75,7 +90,7 @@ contract IntegrationTestBase is Test {
     GatewayRouterFacet gwRouter;
     GatewayMessengerFacet gwMessenger;
     DiamondCutFacet gwCutFacet;
-    DiamondLoupeFacet gwLouper;
+    DiamondLoupeFacet gwLoupeFacet;
 
     bytes4[] saGetterSelectors;
     bytes4[] saManagerSelectors;
@@ -85,7 +100,9 @@ contract IntegrationTestBase is Test {
     SubnetActorManagerFacetMock saMockedManager;
     SubnetActorGetterFacet saGetter;
     DiamondCutFacet saCutFacet;
-    DiamondLoupeFacet saLouper;
+    DiamondLoupeFacet saLoupeFacet;
+
+    event SubnetRegistryCreated(address indexed subnetRegistryAddress);
 
     constructor() {
         saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
@@ -98,7 +115,10 @@ contract IntegrationTestBase is Test {
         gwMessengerSelectors = TestUtils.generateSelectors(vm, "GatewayMessengerFacet");
 
         cutFacetSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
-        louperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
+        loupeFacetSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
+
+        registerSubnetFacetSelectors = TestUtils.generateSelectors(vm, "RegisterSubnetFacet");
+        registerSubnetGetterFacetSelectors = TestUtils.generateSelectors(vm, "SubnetGetterFacet");
     }
 
     function setUp() public virtual {
@@ -112,7 +132,7 @@ contract IntegrationTestBase is Test {
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
         gwMessenger = GatewayMessengerFacet(address(gatewayDiamond));
-        gwLouper = DiamondLoupeFacet(address(gatewayDiamond));
+        gwLoupeFacet = DiamondLoupeFacet(address(gatewayDiamond));
         gwCutFacet = DiamondCutFacet(address(gatewayDiamond));
 
         // create a subnet actor in the root network.
@@ -123,7 +143,7 @@ contract IntegrationTestBase is Test {
         saDiamond = createSubnetActor(saConstructorParams);
         saManager = SubnetActorManagerFacet(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
-        saLouper = DiamondLoupeFacet(address(saDiamond));
+        saLoupeFacet = DiamondLoupeFacet(address(saDiamond));
         saCutFacet = DiamondCutFacet(address(saDiamond));
 
         addValidator(TOPDOWN_VALIDATOR_1, 100);
@@ -223,7 +243,7 @@ contract IntegrationTestBase is Test {
             IDiamond.FacetCut({
                 facetAddress: address(louper),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: louperSelectors
+                functionSelectors: loupeFacetSelectors
             })
         );
 
@@ -303,7 +323,7 @@ contract IntegrationTestBase is Test {
             IDiamond.FacetCut({
                 facetAddress: address(louper),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: louperSelectors
+                functionSelectors: loupeFacetSelectors
             })
         );
 
@@ -347,7 +367,7 @@ contract IntegrationTestBase is Test {
         saManager = new SubnetActorManagerFacet();
         saGetter = new SubnetActorGetterFacet();
         saCutFacet = new DiamondCutFacet();
-        saLouper = new DiamondLoupeFacet();
+        saLoupeFacet = new DiamondLoupeFacet();
 
         IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](4);
 
@@ -377,9 +397,9 @@ contract IntegrationTestBase is Test {
 
         diamondCut[3] = (
             IDiamond.FacetCut({
-                facetAddress: address(saLouper),
+                facetAddress: address(saLoupeFacet),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: louperSelectors
+                functionSelectors: loupeFacetSelectors
             })
         );
 
@@ -404,7 +424,7 @@ contract IntegrationTestBase is Test {
         saManager = SubnetActorManagerFacet(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
         saCutFacet = DiamondCutFacet(address(saDiamond));
-        saLouper = DiamondLoupeFacet(address(saDiamond));
+        saLoupeFacet = DiamondLoupeFacet(address(saDiamond));
     }
 
     function createMockedSubnetActorWithGateway(address gw) public returns (SubnetActorDiamond) {
@@ -434,6 +454,51 @@ contract IntegrationTestBase is Test {
         SubnetActorDiamond d = new SubnetActorDiamond(diamondCut, params);
 
         return d;
+    }
+
+    // Creates a new SubnetRegistry contract.
+    function createSubnetRegistry(
+        SubnetRegistryDiamond.ConstructorParams memory params
+    ) public returns (SubnetRegistryDiamond) {
+        IDiamond.FacetCut[] memory diamondCut = new IDiamond.FacetCut[](4);
+
+        DiamondCutFacet regCutFacet = new DiamondCutFacet();
+        DiamondLoupeFacet regLoupeFacet = new DiamondLoupeFacet();
+        RegisterSubnetFacet regSubnetFacet = new RegisterSubnetFacet();
+        SubnetGetterFacet regGetterFacet = new SubnetGetterFacet();
+
+        diamondCut[0] = (
+            IDiamond.FacetCut({
+                facetAddress: address(regLoupeFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: loupeFacetSelectors
+            })
+        );
+        diamondCut[1] = (
+            IDiamond.FacetCut({
+                facetAddress: address(regCutFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: cutFacetSelectors
+            })
+        );
+        diamondCut[2] = (
+            IDiamond.FacetCut({
+                facetAddress: address(regSubnetFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: registerSubnetFacetSelectors
+            })
+        );
+        diamondCut[3] = (
+            IDiamond.FacetCut({
+                facetAddress: address(regGetterFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: registerSubnetGetterFacetSelectors
+            })
+        );
+
+        SubnetRegistryDiamond newSubnetRegistry = new SubnetRegistryDiamond(diamondCut, params);
+        emit SubnetRegistryCreated(address(newSubnetRegistry));
+        return newSubnetRegistry;
     }
 
     function totalWeight(uint256[] memory weights) public pure returns (uint256 sum) {

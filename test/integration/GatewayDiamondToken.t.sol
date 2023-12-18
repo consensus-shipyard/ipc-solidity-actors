@@ -157,7 +157,7 @@ contract GatewayDiamondTokenTest is Test, IntegrationTestBase {
         saDiamond = createSubnetActor(saConstructorParams);
         saManager = SubnetActorManagerFacet(address(saDiamond));
         saGetter = SubnetActorGetterFacet(address(saDiamond));
-        saLouper = DiamondLoupeFacet(address(saDiamond));
+        saLoupeFacet = DiamondLoupeFacet(address(saDiamond));
         saCutFacet = DiamondCutFacet(address(saDiamond));
 
         addValidator(TOPDOWN_VALIDATOR_1, 100);
