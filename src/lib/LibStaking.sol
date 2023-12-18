@@ -403,6 +403,14 @@ library LibStaking {
         return s.validatorSet.waitingValidators.contains(validator);
     }
 
+    /// @notice Checks if the provided address is a validator (active or waiting) based on its collateral.
+    /// @param addr The address to check for validator status.
+    /// @return A boolean indicating whether the address is a validator.
+    function isValidator(address addr) internal view returns (bool) {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        return s.validatorSet.validators[addr].totalCollateral != 0;
+    }
+
     /// @notice Checks if the validator has staked before
     function hasStaked(address validator) internal view returns (bool) {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();

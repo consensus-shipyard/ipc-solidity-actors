@@ -17,6 +17,7 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
+string constant ERR_BOOTSTRAPPED_AND_JOINED = "Method not allowed if subnet bootstrapped and validator has already joined";
 
 // The length of the public key that is associated with a validator.
 uint256 constant VALIDATOR_SECP256K1_PUBLIC_KEY_LENGTH = 65;
@@ -281,9 +282,12 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
                     );
                 }
             }
-        } else {
+        } else if (!LibStaking.isValidator(msg.sender)) {
+            // Join only if the sender's address is not already linked to a validator that has joined.
             LibStaking.setValidatorMetadata(msg.sender, publicKey);
             LibStaking.deposit(msg.sender, msg.value);
+        } else {
+            revert MethodNotAllowed(ERR_BOOTSTRAPPED_AND_JOINED);
         }
     }
 
