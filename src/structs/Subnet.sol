@@ -153,8 +153,11 @@ struct Membership {
     uint64 configurationNumber;
 }
 
+/// @title Defines the supply source of a subnet on its parent subnet.
 struct SupplySource {
+    /// @notice The kind of supply.
     SupplyKind kind;
+    /// @notice The address of the ERC20 token if that supply kind is selected.
     address tokenAddress;
 }
 
