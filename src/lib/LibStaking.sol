@@ -403,7 +403,7 @@ library LibStaking {
         return s.validatorSet.waitingValidators.contains(validator);
     }
 
-    /// @notice Checks if the provided address is a validator (active or waiting) based on its collateral.
+    /// @notice Checks if the provided address is a validator (active or waiting) based on its total collateral.
     /// @param addr The address to check for validator status.
     /// @return A boolean indicating whether the address is a validator.
     function isValidator(address addr) internal view returns (bool) {
