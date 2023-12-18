@@ -33,7 +33,7 @@ library SupplySourceHelper {
             // The call to balanceOf will revert if the supplied address does not exist, or if it's not an ERC20 contract.
             // Ideally we'd use ERC165 to check if the contract implements the ERC20 standard, but the latter does not support supportsInterface().
             IERC20 token = IERC20(supplySource.tokenAddress);
-            token.balanceOf(address(this));
+            token.balanceOf(address(0));
         }
     }
 
