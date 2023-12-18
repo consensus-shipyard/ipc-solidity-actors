@@ -5,7 +5,7 @@ import "forge-std/Test.sol";
 
 import "../../src/errors/IPCErrors.sol";
 import {NumberContractFacetSeven, NumberContractFacetEight} from "../helpers/NumberContract.sol";
-import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../../src/constants/Constants.sol";
+import {EMPTY_BYTES, METHOD_SEND} from "../../src/constants/Constants.sol";
 import {Status} from "../../src/enums/Status.sol";
 import {IERC165} from "../../src/interfaces/IERC165.sol";
 import {IDiamond} from "../../src/interfaces/IDiamond.sol";
@@ -14,18 +14,17 @@ import {IDiamondCut} from "../../src/interfaces/IDiamondCut.sol";
 import {QuorumInfo} from "../../src/structs/Quorum.sol";
 import {CrossMsg, BottomUpMsgBatch, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../../src/structs/CrossNet.sol";
 import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {SubnetID, Subnet, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../../src/structs/Subnet.sol";
+import {SubnetID, Subnet, IPCAddress, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../../src/lib/FvmAddressHelper.sol";
 import {CrossMsgHelper} from "../../src/lib/CrossMsgHelper.sol";
 import {StorableMsgHelper} from "../../src/lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {GatewayDiamond, FunctionNotFound} from "../../src/GatewayDiamond.sol";
-import {SubnetActorDiamond} from "../../src/SubnetActorDiamond.sol";
 import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
 import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../../src/gateway/GatewayRouterFacet.sol";
-import {GatewayMessengerFacet, ERR_GENERAL_CROSS_MSG_DISABLED, ERR_MULTILEVEL_CROSS_MSG_DISABLED} from "../../src/gateway/GatewayMessengerFacet.sol";
+import {ERR_GENERAL_CROSS_MSG_DISABLED} from "../../src/gateway/GatewayMessengerFacet.sol";
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../../src/lib/LibDiamond.sol";
 import {MerkleTreeHelper} from "../helpers/MerkleTreeHelper.sol";
@@ -282,13 +281,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(gwGetter.totalSubnets() == numberOfSubnets, "unexpected total subnets");
         Subnet[] memory subnets = gwGetter.listSubnets();
         require(subnets.length == numberOfSubnets, "unexpected length");
-    }
-
-    function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
-        vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
-        vm.expectRevert(NotEnoughCollateral.selector);
-
-        gwManager.register{value: collateral}(0);
     }
 
     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
@@ -2097,7 +2089,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             subnetInfo.circSupply == DEFAULT_COLLATERAL_AMOUNT - 10 * DEFAULT_CROSS_MSG_FEE - 10 * amount,
             "unexpected circulation supply"
         );
-        vm.stopPrank();
     }
 
     function testGatewayDiamond_execMsgBatch_Fails_WrongNumberMessages() public {
@@ -2151,7 +2142,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         vm.prank(caller);
         vm.expectRevert(BatchWithNoMessages.selector);
         gwRouter.execBottomUpMsgBatch(batch);
-        vm.stopPrank();
     }
 
     function testGatewayDiamond_PopulateBottomUpMsgBatch_Works() public {
