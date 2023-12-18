@@ -28,6 +28,7 @@ import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../../src/gateway/GatewayRouterFacet.sol";
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../../src/lib/LibDiamond.sol";
+import {LibGateway} from "../../src/lib/LibGateway.sol";
 import {MerkleTreeHelper} from "../helpers/MerkleTreeHelper.sol";
 import {TestUtils} from "../helpers/TestUtils.sol";
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
@@ -88,21 +89,27 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // account has native balance but no tokens, reverts.
         (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
-        vm.expectRevert(bytes(""));
+        vm.expectRevert(abi.encode(""));
+        vm.mockCallRevert(token, abi.encodeWithSelector(IERC20.transferFrom.selector), abi.encode(""));
         gwManager.fundWithToken(subnetId, FvmAddressHelper.from(caller), 1);
 
         vm.clearMockedCalls();
+
+        // now succeeds.
         vm.mockCall(
             token,
-            abi.encodeWithSelector(IERC20.allowance.selector, address(caller), address(gatewayDiamond)),
-            abi.encode(1)
-        );
-        vm.mockCall(
-            token,
-            abi.encodeWithSelector(IERC20.transferFrom.selector, address(caller), address(gatewayDiamond), 1),
+            abi.encodeWithSelector(IERC20.transferFrom.selector, caller, gatewayDiamond, 1),
             abi.encode()
         );
+        vm.expectEmit(true, false, false, false, address(gatewayDiamond));
+        // TODO check value, address, etc.
+        CrossMsg memory dummy;
+        emit LibGateway.NewTopDownMessage(address(saDiamond), dummy);
         gwManager.fundWithToken(subnetId, FvmAddressHelper.from(caller), 1);
+
+        (, , uint256 nonce, , uint256 circSupply, ) = getSubnet(address(saManager));
+        assertEq(circSupply, 1);
+        assertEq(nonce, 1);
     }
 
     function createTokenSubnet(address tokenAddress) internal {
