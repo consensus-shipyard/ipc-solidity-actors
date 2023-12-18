@@ -533,6 +533,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
                 revert NotOwnerOfPublicKey();
             }
 
+            // performing deduplication
+            // validator should have no power when first added
             if (LibStaking.getPower(validators[i]) > 0) {
                 revert DuplicatedGenesisValidator();
             }
@@ -540,13 +542,14 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
             LibStaking.setMetadataWithConfirm(validators[i], publicKeys[i]);
             LibStaking.setFederatedPowerWithConfirm(validators[i], powers[i]);
 
-            s.genesisValidators.push(Validator({addr: validators[0], weight: powers[i], metadata: publicKeys[i]}));
+            s.genesisValidators.push(Validator({addr: validators[i], weight: powers[i], metadata: publicKeys[i]}));
 
             unchecked {
                 ++i;
             }
         }
 
+        // check duplication first then check length
         if (length <= s.minValidators) {
             revert NotEnoughGenesisValidators();
         }

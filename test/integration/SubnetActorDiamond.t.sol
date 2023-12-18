@@ -1465,6 +1465,51 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         require(!saGetter.isActiveValidator(validators[2]), "2 should not be active validator");
     }
 
+    function testSubnetActorDiamond_FederatedValidation_worksWithDuplicates() public {
+        gatewayAddress = address(gatewayDiamond);
+
+        createSubnetActor(
+            gatewayAddress,
+            ConsensusType.Fendermint,
+            DEFAULT_MIN_VALIDATOR_STAKE,
+            DEFAULT_MIN_VALIDATORS,
+            DEFAULT_CHECKPOINT_PERIOD,
+            DEFAULT_MAJORITY_PERCENTAGE,
+            PermissionMode.Federated,
+            2
+        );
+
+        (address[] memory validators, uint256[] memory privKeys, bytes[] memory publicKeys) = TestUtils.newValidators(
+            3
+        );
+        uint256[] memory powers = new uint256[](3);
+        powers[0] = 10000;
+        powers[1] = 20000;
+        powers[2] = 5000; // we only have 2 active validators, validator 2 does not have enough power
+
+        saManager.setFederatedPower(validators, publicKeys, powers);
+
+        require(saGetter.isActiveValidator(validators[0]), "not active validator 0");
+        require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
+        require(!saGetter.isActiveValidator(validators[2]), "2 should not be active validator");
+
+        // change in validator power
+        address prevV = validators[0];
+        uint256 prevPrivateKey = privKeys[0];
+
+        validators[0] = validators[2];
+        publicKeys[0] = publicKeys[2];
+        powers[2] = 10001;
+
+        saManager.setFederatedPower(validators, publicKeys, powers);
+
+        confirmChange(prevV, prevPrivateKey, validators[1], privKeys[1]);
+
+        require(!saGetter.isActiveValidator(prevV), "0 should not be active validator");
+        require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
+        require(saGetter.isActiveValidator(validators[2]), "not active validator 2");
+    }
+
     function testSubnetActorDiamond_Pausable_SetPaused() public {
         saManager.pause();
         require(saManager.paused());
