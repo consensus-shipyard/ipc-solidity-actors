@@ -44,6 +44,8 @@ import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../../src/lib/LibDiamond.sol";
 
 import {IERC20} from "openzeppelin-contracts/token/ERC20/IERC20.sol";
+import {ERC20PresetFixedSupply} from "../helpers/ERC20PresetFixedSupply.sol";
+import {IERC20Errors} from "openzeppelin-contracts/interfaces/draft-IERC6093.sol";
 
 contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     using SubnetIDHelper for SubnetID;
@@ -51,14 +53,15 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     using StorableMsgHelper for StorableMsg;
     using FvmAddressHelper for FvmAddress;
 
+    IERC20 private token;
+
     function setUp() public override {
         super.setUp();
+
+        token = new ERC20PresetFixedSupply("TestToken", "TEST", 1_000_000, address(this));
     }
 
     function test_revertConstruction() public {
-        (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        join(validatorAddress, publicKey);
-
         address caller = vm.addr(1);
         vm.deal(caller, 100);
 
@@ -69,37 +72,31 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
     function testFail_InexistentToken() public {
         // Reverts because the token doesn't exist at that address.
-        address token = vm.addr(999);
-        createTokenSubnet(token);
+        address addr = vm.addr(999);
+        createTokenSubnet(addr);
     }
 
     function test_fundWithToken() public {
-        address token = vm.addr(999);
-        vm.mockCall(token, abi.encodeWithSelector(IERC20.balanceOf.selector), abi.encode(0));
-        createTokenSubnet(token);
-
-        (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
-        join(validatorAddress, publicKey);
+        createTokenSubnet(address(token));
 
         address caller = vm.addr(1);
         vm.deal(caller, 100);
 
-        vm.startPrank(caller);
-
         // account has native balance but no tokens, reverts.
         (SubnetID memory subnetId, , , , , ) = getSubnet(address(saManager));
-        vm.expectRevert(abi.encode(""));
-        vm.mockCallRevert(token, abi.encodeWithSelector(IERC20.transferFrom.selector), abi.encode(""));
+        vm.prank(caller);
+        vm.expectRevert(
+            abi.encodeWithSelector(IERC20Errors.ERC20InsufficientAllowance.selector, address(gatewayDiamond), 0, 1)
+        );
         gwManager.fundWithToken(subnetId, FvmAddressHelper.from(caller), 1);
 
-        vm.clearMockedCalls();
+        // ghive the caller some funds
+        token.transfer(caller, 100);
+
+        vm.startPrank(caller);
+        token.approve(address(gatewayDiamond), 100);
 
         // now succeeds.
-        vm.mockCall(
-            token,
-            abi.encodeWithSelector(IERC20.transferFrom.selector, caller, gatewayDiamond, 1),
-            abi.encode()
-        );
         vm.expectEmit(true, false, false, false, address(gatewayDiamond));
         // TODO check value, address, etc.
         CrossMsg memory dummy;
@@ -126,5 +123,8 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         saCutFacet = DiamondCutFacet(address(saDiamond));
 
         addValidator(TOPDOWN_VALIDATOR_1, 100);
+
+        (address validatorAddress, bytes memory publicKey) = TestUtils.deriveValidatorAddress(100);
+        join(validatorAddress, publicKey);
     }
 }
