@@ -18,8 +18,8 @@ library SupplySourceHelper {
     /// @notice Assumes that the address provided belongs to a subnet rooted on this network,
     ///         and checks if its supply kind matches the provided one.
     ///         It reverts if the address does not correspond to a subnet actor.
-    function hasSupplyOfKind(address subnet, SupplyKind compare) internal view returns (bool) {
-        return SubnetActorGetterFacet(subnet).supplySource().kind == compare;
+    function hasSupplyOfKind(address subnetActor, SupplyKind compare) internal view returns (bool) {
+        return SubnetActorGetterFacet(subnetActor).supplySource().kind == compare;
     }
 
     /// @notice Checks that a given supply strategy is correctly formed and its preconditions are met.
