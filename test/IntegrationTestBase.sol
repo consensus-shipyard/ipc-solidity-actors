@@ -5,25 +5,19 @@ import "forge-std/Test.sol";
 import "forge-std/StdInvariant.sol";
 
 import "../src/errors/IPCErrors.sol";
-import {NumberContractFacetSeven, NumberContractFacetEight} from "./helpers/NumberContract.sol";
-import {EMPTY_BYTES, METHOD_SEND, EMPTY_HASH} from "../src/constants/Constants.sol";
+import {EMPTY_BYTES, METHOD_SEND} from "../src/constants/Constants.sol";
 import {ConsensusType} from "../src/enums/ConsensusType.sol";
 import {Status} from "../src/enums/Status.sol";
-import {IERC165} from "../src/interfaces/IERC165.sol";
 import {IDiamond} from "../src/interfaces/IDiamond.sol";
-import {IDiamondLoupe} from "../src/interfaces/IDiamondLoupe.sol";
-import {IDiamondCut} from "../src/interfaces/IDiamondCut.sol";
-import {ISubnetActor} from "../src/interfaces/ISubnetActor.sol";
-import {CheckpointInfo} from "../src/structs/Checkpoint.sol";
-import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/Checkpoint.sol";
+import {CrossMsg, BottomUpCheckpoint, StorableMsg, ParentFinality} from "../src/structs/CrossNet.sol";
 import {FvmAddress} from "../src/structs/FvmAddress.sol";
-import {SubnetID, SupplyKind, PermissionMode, PermissionMode, Subnet, SupplySource, IPCAddress, Membership, Validator, StakingChange, StakingChangeRequest, StakingOperation} from "../src/structs/Subnet.sol";
+import {SubnetID, SupplyKind, PermissionMode, PermissionMode, Subnet, SupplySource, IPCAddress, Validator} from "../src/structs/Subnet.sol";
 import {SubnetIDHelper} from "../src/lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../src/lib/FvmAddressHelper.sol";
 import {CrossMsgHelper} from "../src/lib/CrossMsgHelper.sol";
 import {StorableMsgHelper} from "../src/lib/StorableMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
-import {GatewayDiamond, FunctionNotFound} from "../src/GatewayDiamond.sol";
+import {GatewayDiamond} from "../src/GatewayDiamond.sol";
 import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
 import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
@@ -34,9 +28,8 @@ import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
-import {LibDiamond} from "../src/lib/LibDiamond.sol";
-import {MerkleTreeHelper} from "./helpers/MerkleTreeHelper.sol";
 import {SupplySourceHelper} from "../src/lib/SupplySourceHelper.sol";
+
 import {TestUtils} from "./helpers/TestUtils.sol";
 
 contract IntegrationTestBase is Test {
@@ -541,7 +534,6 @@ contract IntegrationTestBase is Test {
     function fund(address funderAddress, uint256 fundAmount, SupplyKind mode) public {
         // funding subnets is free, we do not need cross msg fee
         (SubnetID memory subnetId, , uint256 nonceBefore, , uint256 circSupplyBefore, ) = getSubnet(address(saManager));
-        console.log(circSupplyBefore);
 
         uint256 expectedTopDownMsgsLength = gwGetter.getSubnetTopDownMsgsLength(subnetId) + 1;
         uint256 expectedNonce = nonceBefore + 1;
@@ -617,18 +609,15 @@ contract IntegrationTestBase is Test {
 
         bytes[] memory signatures = new bytes[](n);
 
-        CrossMsg[] memory msgs = new CrossMsg[](0);
-
         (uint64 nextConfigNum, ) = saGetter.getConfigurationNumbers();
 
-        uint64 h = saGetter.lastBottomUpCheckpointHeight() + saGetter.bottomUpCheckPeriod();
+        uint256 h = saGetter.lastBottomUpCheckpointHeight() + saGetter.bottomUpCheckPeriod();
 
         BottomUpCheckpoint memory checkpoint = BottomUpCheckpoint({
             subnetID: saGetter.getParent().createSubnetId(address(saDiamond)),
             blockHeight: h,
             blockHash: keccak256(abi.encode(h)),
-            nextConfigurationNumber: nextConfigNum - 1,
-            crossMessagesHash: keccak256(abi.encode(msgs))
+            nextConfigurationNumber: nextConfigNum - 1
         });
 
         vm.deal(address(saDiamond), 100 ether);
@@ -642,7 +631,7 @@ contract IntegrationTestBase is Test {
 
         for (uint256 i = 0; i < n; i++) {
             vm.prank(validators[i]);
-            saManager.submitCheckpoint(checkpoint, msgs, validators, signatures);
+            saManager.submitCheckpoint(checkpoint, validators, signatures);
         }
     }
 

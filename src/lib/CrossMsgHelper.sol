@@ -2,7 +2,7 @@
 pragma solidity 0.8.19;
 
 import {METHOD_SEND, EMPTY_BYTES} from "../constants/Constants.sol";
-import {StorableMsg, CrossMsg} from "../structs/Checkpoint.sol";
+import {StorableMsg, CrossMsg} from "../structs/CrossNet.sol";
 import {SubnetID, IPCAddress} from "../structs/Subnet.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {FvmAddressHelper} from "../lib/FvmAddressHelper.sol";
@@ -26,7 +26,7 @@ library CrossMsgHelper {
         FvmAddress calldata to,
         uint256 value,
         uint256 fee
-    ) external pure returns (CrossMsg memory) {
+    ) public pure returns (CrossMsg memory) {
         return
             CrossMsg({
                 message: StorableMsg({
@@ -48,7 +48,7 @@ library CrossMsgHelper {
         FvmAddress calldata to,
         uint256 value,
         uint256 fee
-    ) external pure returns (CrossMsg memory) {
+    ) public pure returns (CrossMsg memory) {
         return
             CrossMsg({
                 message: StorableMsg({
@@ -64,22 +64,22 @@ library CrossMsgHelper {
             });
     }
 
-    function toHash(CrossMsg memory crossMsg) external pure returns (bytes32) {
+    function toHash(CrossMsg memory crossMsg) internal pure returns (bytes32) {
         return keccak256(abi.encode(crossMsg));
     }
 
-    function toHash(CrossMsg[] memory crossMsgs) external pure returns (bytes32) {
+    function toHash(CrossMsg[] memory crossMsgs) public pure returns (bytes32) {
         return keccak256(abi.encode(crossMsgs));
     }
 
-    function isEmpty(CrossMsg memory crossMsg) external pure returns (bool) {
+    function isEmpty(CrossMsg memory crossMsg) internal pure returns (bool) {
         return
             crossMsg.message.nonce == 0 &&
             crossMsg.message.to.subnetId.root == 0 &&
             crossMsg.message.from.subnetId.root == 0;
     }
 
-    function execute(CrossMsg calldata crossMsg, SupplySource memory supplySource) external returns (bytes memory) {
+    function execute(CrossMsg calldata crossMsg, SupplySource memory supplySource) public returns (bytes memory) {
         uint256 value = crossMsg.message.value;
         address recipient = crossMsg.message.to.rawAddress.extractEvmAddress().normalize();
 
