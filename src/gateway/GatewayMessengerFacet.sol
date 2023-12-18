@@ -110,12 +110,9 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         // TODO IPC does not implement fault handling yet, so if the message fails
         //  to propagate, the user won't be able to reclaim funds. That's one of the
         //  reasons xnet messages are disabled by default.
+
         bool reject;
-        if (isLCA) {
-            // We're connecting both networks, so we check them directly.
-            reject = from.getActor().hasSupplyOfKind(SupplyKind.ERC20);
-            reject = reject || to.getActor().hasSupplyOfKind(SupplyKind.ERC20);
-        } else if (applyType == IPCMsgType.BottomUp) {
+        if (applyType == IPCMsgType.BottomUp) {
             // We're traversing up, so if we're the first hop, we reject if the subnet was ERC20.
             // If we're not the first hop, a child propagated this to us, they made a mistake and
             // and we don't have enough info to evaluate.
