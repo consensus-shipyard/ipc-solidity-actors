@@ -151,6 +151,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
             // prevent spamming if there's no value to fund.
             revert InvalidCrossMsgValue();
         }
+        // slither-disable-next-line unused-return
         (bool registered, ) = LibGateway.getSubnet(subnetId);
         if (!registered) {
             revert NotRegisteredSubnet();

@@ -111,7 +111,7 @@ contract GatewayMessengerFacet is GatewayActorModifiers {
         //  to propagate, the user won't be able to reclaim funds. That's one of the
         //  reasons xnet messages are disabled by default.
 
-        bool reject;
+        bool reject = false;
         if (applyType == IPCMsgType.BottomUp) {
             // We're traversing up, so if we're the first hop, we reject if the subnet was ERC20.
             // If we're not the first hop, a child propagated this to us, they made a mistake and

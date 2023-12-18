@@ -197,6 +197,7 @@ contract GatewayRouterFacet is GatewayActorModifiers {
         }
 
         // Now, let's find out the directionality of this message and act accordingly.
+        // slither-disable-next-line uninitialized-local
         SupplySource memory supplySource;
         IPCMsgType applyType = crossMsg.message.applyType(s.networkName);
         if (applyType == IPCMsgType.BottomUp) {
