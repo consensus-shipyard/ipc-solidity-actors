@@ -440,6 +440,12 @@ library LibStaking {
 
     // =============== Operations directly confirm =============
 
+    /// @notice Set the validator federated power directly without queueing the request
+    function setFederatedPowerWithConfirm(address validator, uint256 power) internal {
+        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
+        s.validatorSet.confirmFederatedPower(validator, power);
+    }
+
     /// @notice Set the validator metadata directly without queueing the request
     function setMetadataWithConfirm(address validator, bytes calldata metadata) internal {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
