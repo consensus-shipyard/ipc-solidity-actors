@@ -200,9 +200,39 @@ contract GatewayDiamondTokenTest is Test, IntegrationTestBase {
         gwRouter.execBottomUpMsgBatch(batch);
     }
 
-    function test_generalMessagePassing() public {
-        // TODO:
-        // 1. Test ERC20 that child-to-parent GMP where child is ERC20 results in transfer + call.
+    function test_childToParentCall() public {
+        Subnet memory subnet = createTokenSubnet(address(token));
+
+        // Fund an account in the subnet.
+        address caller = vm.addr(1);
+        token.transfer(caller, 100);
+        vm.prank(caller);
+        token.approve(address(gatewayDiamond), 15);
+        vm.prank(caller);
+        gwManager.fundWithToken(subnet.id, FvmAddressHelper.from(caller), 15);
+
+        // Now create a new recipient on the parent.
+        address recipient = vm.addr(42);
+
+        // Commit a xnet message that isn't a simple bare transfer.
+        CrossMsg[] memory msgs = new CrossMsg[](1);
+        uint256 value = 8;
+        msgs[0] = CrossMsgHelper.createReleaseMsg(subnet.id, caller, FvmAddressHelper.from(recipient), value, 0);
+        msgs[0].message.method = bytes4(0x11223344);
+        msgs[0].message.params = bytes("hello");
+
+        BottomUpMsgBatch memory batch = BottomUpMsgBatch({
+            subnetID: subnet.id,
+            blockHeight: gwGetter.bottomUpMsgBatchPeriod(),
+            msgs: msgs
+        });
+
+        // Verify that we received the call and that the recipient has the tokens.
+        vm.prank(address(saDiamond));
+        vm.etch(recipient, bytes("foo")); // set some code at the destination address to trick Solidity into calling the contract.
+        vm.expectCall(recipient, bytes.concat(bytes4(0x11223344), bytes("hello")));
+        gwRouter.execBottomUpMsgBatch(batch);
+        assertEq(token.balanceOf(recipient), 8);
     }
 
     function test_propagation() public {
