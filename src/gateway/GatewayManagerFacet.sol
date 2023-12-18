@@ -181,7 +181,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         supplySource.expect(SupplyKind.ERC20);
 
         // Lock the specified amount into custody.
-        supplySource.lock({from: msg.sender, value: amount});
+        supplySource.lock({value: amount});
 
         // Create the top-down message to mint the supply in the subnet.
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg({

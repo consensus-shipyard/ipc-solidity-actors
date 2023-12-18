@@ -44,11 +44,11 @@ library SupplySourceHelper {
         }
     }
 
-    /// @notice Locks the specified amount into custody.
-    function lock(SupplySource memory supplySource, address from, uint256 value) internal {
+    /// @notice Locks the specified amount sent by the msg.sender into custody.
+    function lock(SupplySource memory supplySource, uint256 value) internal {
         if (supplySource.kind == SupplyKind.ERC20) {
             IERC20 token = IERC20(supplySource.tokenAddress);
-            token.safeTransferFrom({from: from, to: address(this), value: value});
+            token.safeTransferFrom({from: msg.sender, to: address(this), value: value});
         }
         // Do nothing for native.
     }
