@@ -96,7 +96,7 @@ library CrossMsgHelper {
 
         bytes memory data = bytes.concat(crossMsg.message.method, params);
 
-        return supplySource.call({target: payable(recipient), data: data, value: value});
+        return supplySource.performCall({target: payable(recipient), data: data, value: value});
     }
 
     // checks whether the cross messages are sorted in ascending order or not
