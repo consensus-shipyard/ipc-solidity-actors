@@ -137,6 +137,11 @@ contract SubnetActorGetterFacet {
     }
 
     /// @notice Checks if the validator address is an active validator
+    function getPower(address validator) external view returns (uint256) {
+        return LibStaking.getPower(validator);
+    }
+
+    /// @notice Checks if the validator address is an active validator
     function isActiveValidator(address validator) external view returns (bool) {
         return LibStaking.isActiveValidator(validator);
     }
