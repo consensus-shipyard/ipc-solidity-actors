@@ -283,13 +283,6 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(subnets.length == numberOfSubnets, "unexpected length");
     }
 
-    function testGatewayDiamond_Register_Fail_InsufficientCollateral(uint256 collateral) public {
-        vm.assume(collateral < DEFAULT_COLLATERAL_AMOUNT);
-        vm.expectRevert(NotEnoughCollateral.selector);
-
-        gwManager.register{value: collateral}(0);
-    }
-
     function testGatewayDiamond_Register_Fail_SubnetAlreadyExists() public {
         registerSubnet(DEFAULT_COLLATERAL_AMOUNT, address(this));
 

@@ -518,6 +518,8 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
         }
     }
 
+    /// @notice method that allows the contract owner to set the validators' federated power before
+    /// @notice subnet has already been bootstrapped.
     function preBootstrapSetFederatedPower(
         address[] calldata validators,
         bytes[] calldata publicKeys,
