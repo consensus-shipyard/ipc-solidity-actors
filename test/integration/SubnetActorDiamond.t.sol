@@ -1493,18 +1493,25 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
         require(!saGetter.isActiveValidator(validators[2]), "2 should not be active validator");
 
-        // change in validator power
+        // change in validator power, changing validator 2's power to 10001.
+
+        // store validator 0's data in new variables
         address prevV = validators[0];
         uint256 prevPrivateKey = privKeys[0];
 
+        // creating duplicates of validator 2's data
         validators[0] = validators[2];
         publicKeys[0] = publicKeys[2];
-        powers[2] = 10001;
+
+        // the latest validator 2's power, so we have a duplicate of validator 2's power
+        powers[0] = 9999; // lower than validator 0's power, will not kick validator 1 off
+        powers[2] = 10001; // higher than validator 0's power, will kick validator 1 off
 
         saManager.setFederatedPower(validators, publicKeys, powers);
 
         confirmChange(prevV, prevPrivateKey, validators[1], privKeys[1]);
 
+        // we should see validator 0 kicked off
         require(!saGetter.isActiveValidator(prevV), "0 should not be active validator");
         require(saGetter.isActiveValidator(validators[1]), "not active validator 1");
         require(saGetter.isActiveValidator(validators[2]), "not active validator 2");
