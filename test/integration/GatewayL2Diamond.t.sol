@@ -2,7 +2,6 @@
 pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
-
 import "../../src/errors/IPCErrors.sol";
 import {EMPTY_BYTES, METHOD_SEND} from "../../src/constants/Constants.sol";
 import {CrossMsg, StorableMsg} from "../../src/structs/CrossNet.sol";
@@ -39,7 +38,7 @@ contract GatewayL2ActorDiamondTest is Test, IntegrationTestBase {
         gwRouter = GatewayRouterFacet(address(gatewayDiamond));
         gwMessenger = GatewayMessengerFacet(address(gatewayDiamond));
         gwLouper = DiamondLoupeFacet(address(gatewayDiamond));
-        gwCutFacet = DiamondCutFacet(address(gatewayDiamond));
+        gwCutter = DiamondCutFacet(address(gatewayDiamond));
     }
 
     function defaultGatewayParams() internal pure override returns (GatewayDiamond.ConstructorParams memory) {

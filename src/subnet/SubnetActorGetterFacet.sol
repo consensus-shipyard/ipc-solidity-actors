@@ -26,7 +26,7 @@ contract SubnetActorGetterFacet {
 
     /// @notice Returns the permission mode.
     function permissionMode() external view returns (PermissionMode) {
-        return s.permissionMode;
+        return s.validatorSet.permissionMode;
     }
 
     /// @notice Returns the gateway address.
@@ -161,6 +161,11 @@ contract SubnetActorGetterFacet {
 
     /// @notice Checks if the validator address is in an active state.
     /// @param validator The address of the checked validator
+    function getPower(address validator) external view returns (uint256) {
+        return LibStaking.getPower(validator);
+    }
+
+    /// @notice Checks if the validator address is an active validator
     function isActiveValidator(address validator) external view returns (bool) {
         return LibStaking.isActiveValidator(validator);
     }

@@ -12,9 +12,8 @@ contract SubnetGetterFacet {
     /// @param owner The address of the user whose latest subnet deployment is queried.
     function latestSubnetDeployed(address owner) external view returns (address subnet) {
         uint64 nonce = s.userNonces[owner];
-        // need unchecked when nonce == 0 or else will underflow
-        unchecked {
-            nonce -= 1;
+        if (nonce == 0) {
+            revert CannotFindSubnet();
         }
 
         subnet = s.subnets[owner][nonce];
@@ -27,6 +26,9 @@ contract SubnetGetterFacet {
     /// @param owner The address of the user whose subnet deployment is queried.
     /// @param nonce The specific nonce associated with the subnet deployment.
     function getSubnetDeployedByNonce(address owner, uint64 nonce) external view returns (address subnet) {
+        if (nonce == 0) {
+            revert CannotFindSubnet();
+        }
         subnet = s.subnets[owner][nonce];
         if (subnet == address(0)) {
             revert CannotFindSubnet();
@@ -37,6 +39,9 @@ contract SubnetGetterFacet {
     /// @param user The address of the user whose last nonce is being queried.
     function getUserLastNonce(address user) external view returns (uint64 nonce) {
         nonce = s.userNonces[user];
+        if (nonce == 0) {
+            revert CannotFindSubnet();
+        }
     }
 
     /// @notice Returns the gateway.
