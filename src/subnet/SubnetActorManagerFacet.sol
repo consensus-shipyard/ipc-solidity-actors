@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {NotValidator, InvalidBatchEpoch, NotEnoughGenesisValidators, DuplicatedGenesisValidator, MaxMsgsPerBatchExceeded, BatchWithNoMessages, InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
+import {InvalidBatchEpoch, NotEnoughGenesisValidators, DuplicatedGenesisValidator, MaxMsgsPerBatchExceeded, BatchWithNoMessages, InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {QuorumObjKind} from "../structs/Quorum.sol";
@@ -18,6 +18,7 @@ import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
 string constant ERR_VALIDATOR_JOINED = "Method not allowed if validator has already joined";
+string constant ERR_VALIDATOR_NOT_JOINED = "Method not allowed if validator has not joined";
 
 // The length of the public key that is associated with a validator.
 uint256 constant VALIDATOR_SECP256K1_PUBLIC_KEY_LENGTH = 65;
@@ -291,13 +292,13 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
             // confirm validators deposit immediately
             LibStaking.setMetadataWithConfirm(msg.sender, publicKey);
             LibStaking.depositWithConfirm(msg.sender, msg.value);
+
+            _bootstrapSubnetIfNeeded();
         } else {
             // if the subnet has been bootstrapped, join with postponed confirmation.
             LibStaking.setValidatorMetadata(msg.sender, publicKey);
             LibStaking.deposit(msg.sender, msg.value);
         }
-
-        _bootstrapSubnetIfNeeded();
     }
 
     /// @notice method that allows a validator to increase its stake.
@@ -313,15 +314,16 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
         }
 
         if (!LibStaking.isValidator(msg.sender)) {
-            revert NotValidator(msg.sender);
+            revert MethodNotAllowed(ERR_VALIDATOR_NOT_JOINED);
         }
 
         if (!s.bootstrapped) {
             LibStaking.depositWithConfirm(msg.sender, msg.value);
+
+            _bootstrapSubnetIfNeeded();
         } else {
             LibStaking.deposit(msg.sender, msg.value);
         }
-        _bootstrapSubnetIfNeeded();
     }
 
     /// @notice method that allows a validator to unstake a part of its collateral from a subnet
