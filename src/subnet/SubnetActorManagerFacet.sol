@@ -1,7 +1,7 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
-import {InvalidBatchEpoch, NotEnoughGenesisValidators, DuplicatedGenesisValidator, MaxMsgsPerBatchExceeded, BatchWithNoMessages, InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
+import {NotValidator, InvalidBatchEpoch, NotEnoughGenesisValidators, DuplicatedGenesisValidator, MaxMsgsPerBatchExceeded, BatchWithNoMessages, InvalidFederationPayload, SubnetAlreadyBootstrapped, NotEnoughFunds, CollateralIsZero, CannotReleaseZero, NotOwnerOfPublicKey, EmptyAddress, NotEnoughBalance, NotEnoughCollateral, NotValidator, NotAllValidatorsHaveLeft, NotStakedBefore, InvalidSignatureErr, InvalidCheckpointEpoch, InvalidPublicKeyLength, MethodNotAllowed} from "../errors/IPCErrors.sol";
 import {IGateway} from "../interfaces/IGateway.sol";
 import {ISubnetActor} from "../interfaces/ISubnetActor.sol";
 import {QuorumObjKind} from "../structs/Quorum.sol";
@@ -17,7 +17,7 @@ import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.
 import {Address} from "openzeppelin-contracts/utils/Address.sol";
 
 string constant ERR_PERMISSIONED_AND_BOOTSTRAPPED = "Method not allowed if permissioned is enabled and subnet bootstrapped";
-string constant ERR_BOOTSTRAPPED_AND_JOINED = "Method not allowed if subnet bootstrapped and validator has already joined";
+string constant ERR_VALIDATOR_JOINED = "Method not allowed if validator has already joined";
 
 // The length of the public key that is associated with a validator.
 uint256 constant VALIDATOR_SECP256K1_PUBLIC_KEY_LENGTH = 65;
@@ -237,7 +237,26 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
         }
     }
 
-    /// @notice method that allows a validator to join the subnet
+    /// @dev This function is used to bootstrap the subnet,
+    ///     if its total collateral is greater than minimum activation collateral.
+    function _bootstrapSubnetIfNeeded() internal {
+        uint256 totalCollateral = LibStaking.getTotalConfirmedCollateral();
+
+        if (totalCollateral >= s.minActivationCollateral) {
+            if (LibStaking.totalActiveValidators() >= s.minValidators) {
+                s.bootstrapped = true;
+                emit SubnetBootstrapped(s.genesisValidators);
+
+                // register adding the genesis circulating supply (if it exists)
+                IGateway(s.ipcGatewayAddr).register{value: totalCollateral + s.genesisCircSupply}(s.genesisCircSupply);
+            }
+        }
+    }
+
+    /// @notice method that allows a validator to join the subnet.
+    ///         If the total confirmed collateral of the subnet is greater
+    ///         or equal to minimum activation collateral as a result of this operation,
+    ///         then  subnet will be registered.
     /// @param publicKey The off-chain 65 byte public key that should be associated with the validator
     function join(bytes calldata publicKey) external payable nonReentrant whenNotPaused notKilled {
         // adding this check to prevent new validators from joining
@@ -248,6 +267,10 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
         }
         if (msg.value == 0) {
             revert CollateralIsZero();
+        }
+
+        if (LibStaking.isValidator(msg.sender)) {
+            revert MethodNotAllowed(ERR_VALIDATOR_JOINED);
         }
 
         if (publicKey.length != VALIDATOR_SECP256K1_PUBLIC_KEY_LENGTH) {
@@ -268,48 +291,37 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
             // confirm validators deposit immediately
             LibStaking.setMetadataWithConfirm(msg.sender, publicKey);
             LibStaking.depositWithConfirm(msg.sender, msg.value);
-
-            uint256 totalCollateral = LibStaking.getTotalConfirmedCollateral();
-
-            if (totalCollateral >= s.minActivationCollateral) {
-                if (LibStaking.totalActiveValidators() >= s.minValidators) {
-                    s.bootstrapped = true;
-                    emit SubnetBootstrapped(s.genesisValidators);
-
-                    // register adding the genesis circulating supply (if it exists)
-                    IGateway(s.ipcGatewayAddr).register{value: totalCollateral + s.genesisCircSupply}(
-                        s.genesisCircSupply
-                    );
-                }
-            }
-        } else if (!LibStaking.isValidator(msg.sender)) {
-            // Join only if the sender's address is not already linked to a validator that has joined.
+        } else {
+            // if the subnet has been bootstrapped, join with postponed confirmation.
             LibStaking.setValidatorMetadata(msg.sender, publicKey);
             LibStaking.deposit(msg.sender, msg.value);
-        } else {
-            revert MethodNotAllowed(ERR_BOOTSTRAPPED_AND_JOINED);
         }
+
+        _bootstrapSubnetIfNeeded();
     }
 
-    /// @notice method that allows a validator to increase its stake
+    /// @notice method that allows a validator to increase its stake.
+    ///         If the total confirmed collateral of the subnet is greater
+    ///         or equal to minimum activation collateral as a result of this operation,
+    ///         then  subnet will be registered.
     function stake() external payable whenNotPaused notKilled {
-        // disbling validator changes for federated subnets (at least for now
+        // disabling validator changes for federated subnets (at least for now
         // until a more complex mechanism is implemented).
         enforceCollateralValidation();
         if (msg.value == 0) {
             revert CollateralIsZero();
         }
 
-        if (!LibStaking.hasStaked(msg.sender)) {
-            revert NotStakedBefore();
+        if (!LibStaking.isValidator(msg.sender)) {
+            revert NotValidator(msg.sender);
         }
 
         if (!s.bootstrapped) {
             LibStaking.depositWithConfirm(msg.sender, msg.value);
-            return;
+        } else {
+            LibStaking.deposit(msg.sender, msg.value);
         }
-
-        LibStaking.deposit(msg.sender, msg.value);
+        _bootstrapSubnetIfNeeded();
     }
 
     /// @notice method that allows a validator to unstake a part of its collateral from a subnet

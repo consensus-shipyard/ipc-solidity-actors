@@ -407,11 +407,12 @@ library LibStaking {
     /// @param addr The address to check for validator status.
     /// @return A boolean indicating whether the address is a validator.
     function isValidator(address addr) internal view returns (bool) {
-        SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
-        return s.validatorSet.validators[addr].totalCollateral != 0;
+        return hasStaked(addr);
     }
 
-    /// @notice Checks if the validator has staked before
+    /// @notice Checks if the validator has staked before.
+    /// @param validator The address to check for staking status.
+    /// @return A boolean indicating whether the validator has staked.
     function hasStaked(address validator) internal view returns (bool) {
         SubnetActorStorage storage s = LibSubnetActorStorage.appStorage();
 
