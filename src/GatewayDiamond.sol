@@ -5,7 +5,6 @@ import {GatewayActorStorage} from "./lib/LibGatewayActorStorage.sol";
 import {IDiamond} from "./interfaces/IDiamond.sol";
 import {IDiamondCut} from "./interfaces/IDiamondCut.sol";
 import {IDiamondLoupe} from "./interfaces/IDiamondLoupe.sol";
-import {IERC165} from "./interfaces/IERC165.sol";
 import {Validator, Membership} from "./structs/Subnet.sol";
 import {InvalidCollateral, InvalidSubmissionPeriod, InvalidMajorityPercentage} from "./errors/IPCErrors.sol";
 import {LibDiamond} from "./lib/LibDiamond.sol";
@@ -53,10 +52,6 @@ contract GatewayDiamond {
         LibDiamond.diamondCut({_diamondCut: _diamondCut, _init: address(0), _calldata: new bytes(0)});
 
         LibDiamond.DiamondStorage storage ds = LibDiamond.diamondStorage();
-        // adding ERC165 data
-        ds.supportedInterfaces[type(IERC165).interfaceId] = true;
-        ds.supportedInterfaces[type(IDiamondCut).interfaceId] = true;
-        ds.supportedInterfaces[type(IDiamondLoupe).interfaceId] = true;
 
         // Feature flags
         s.maxTreeDepth = FEATURE_SUBNET_DEPTH;
