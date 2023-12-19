@@ -10,7 +10,7 @@ import {METHOD_SEND} from "../../src/constants/Constants.sol";
 import {ConsensusType} from "../../src/enums/ConsensusType.sol";
 import {BottomUpMsgBatch, CrossMsg, BottomUpCheckpoint, StorableMsg} from "../../src/structs/CrossNet.sol";
 import {FvmAddress} from "../../src/structs/FvmAddress.sol";
-import {SubnetID, PermissionMode, IPCAddress, Subnet, ValidatorInfo} from "../../src/structs/Subnet.sol";
+import {SubnetID, PermissionMode, IPCAddress, Subnet, SupplySource, ValidatorInfo} from "../../src/structs/Subnet.sol";
 import {IERC165} from "../../src/interfaces/IERC165.sol";
 import {IGateway} from "../../src/interfaces/IGateway.sol";
 import {IDiamond} from "../../src/interfaces/IDiamond.sol";
@@ -29,6 +29,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {LibStaking} from "../../src/lib/LibStaking.sol";
 import {LibDiamond} from "../../src/lib/LibDiamond.sol";
 import {Pausable} from "../../src/lib/LibPausable.sol";
+import {SupplySourceHelper} from "../../src/lib/SupplySourceHelper.sol";
 
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
 
@@ -47,7 +48,9 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
 
     function testSubnetActorDiamond_NewSubnetActorWithDefaultParams() public view {
         SubnetID memory _parentId = SubnetID(ROOTNET_CHAINID, new address[](0));
-        SubnetActorDiamond.ConstructorParams memory params = defaultSubnetActorParamsWithRootGateway();
+        SubnetActorDiamond.ConstructorParams memory params = defaultSubnetActorParamsWithGateway(
+            address(gatewayDiamond)
+        );
 
         require(saGetter.ipcGatewayAddr() == params.ipcGatewayAddr, "unexpected gateway");
         require(saGetter.minActivationCollateral() == params.minActivationCollateral, "unexpected collateral");
@@ -63,10 +66,10 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
     }
 
     function testSubnetActorDiamondReal_LoupeFunction() public view {
-        require(saLoupeFacet.facets().length == 4, "unexpected length");
-        require(saLoupeFacet.supportsInterface(type(IERC165).interfaceId) == true, "IERC165 not supported");
-        require(saLoupeFacet.supportsInterface(type(IDiamondCut).interfaceId) == true, "IDiamondCut not supported");
-        require(saLoupeFacet.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
+        require(saLouper.facets().length == 4, "unexpected length");
+        require(saLouper.supportsInterface(type(IERC165).interfaceId) == true, "IERC165 not supported");
+        require(saLouper.supportsInterface(type(IDiamondCut).interfaceId) == true, "IDiamondCut not supported");
+        require(saLouper.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
     }
 
     /// @notice Testing the basic join, stake, leave lifecycle of validators
@@ -295,6 +298,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         SubnetActorManagerFacet saDupMangerFaucet = new SubnetActorManagerFacet();
 
         SubnetActorGetterFacet saDupGetterFaucet = new SubnetActorGetterFacet();
+        SupplySource memory native = SupplySourceHelper.native();
 
         vm.expectRevert(GatewayCannotBeZero.selector);
         createSubnetActorDiamondWithFaucets(
@@ -309,7 +313,8 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
                 activeValidatorsLimit: 100,
                 powerScale: 12,
                 permissionMode: PermissionMode.Collateral,
-                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE
+                minCrossMsgFee: DEFAULT_CROSS_MSG_FEE,
+                supplySource: native
             }),
             address(saDupGetterFaucet),
             address(saDupMangerFaucet)

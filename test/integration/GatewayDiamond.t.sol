@@ -28,7 +28,6 @@ import {ERR_GENERAL_CROSS_MSG_DISABLED} from "../../src/gateway/GatewayMessenger
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
 import {LibDiamond} from "../../src/lib/LibDiamond.sol";
 import {MerkleTreeHelper} from "../helpers/MerkleTreeHelper.sol";
-
 import {TestUtils} from "../helpers/TestUtils.sol";
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
 
@@ -70,10 +69,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
     }
 
     function testGatewayDiamond_LoupeFunction() public view {
-        require(gwLoupeFacet.facets().length == 6, "unexpected length");
-        require(gwLoupeFacet.supportsInterface(type(IERC165).interfaceId) == true, "IERC165 not supported");
-        require(gwLoupeFacet.supportsInterface(type(IDiamondCut).interfaceId) == true, "IDiamondCut not supported");
-        require(gwLoupeFacet.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
+        require(gwLouper.facets().length == 6, "unexpected length");
+        require(gwLouper.supportsInterface(type(IERC165).interfaceId) == true, "IERC165 not supported");
+        require(gwLouper.supportsInterface(type(IDiamondCut).interfaceId) == true, "IDiamondCut not supported");
+        require(gwLouper.supportsInterface(type(IDiamondLoupe).interfaceId) == true, "IDiamondLoupe not supported");
     }
 
     function testGatewayDiamond_DiamondCut() public {
