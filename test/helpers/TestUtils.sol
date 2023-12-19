@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT OR Apache-2.0
 pragma solidity 0.8.19;
 
+import "./VmTryFfi.sol";
+
 import "forge-std/Test.sol";
 import "elliptic-curve-solidity/contracts/EllipticCurve.sol";
 
@@ -10,6 +12,10 @@ library TestUtils {
     uint256 public constant AA = 0;
     uint256 public constant BB = 7;
     uint256 public constant PP = 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEFFFFFC2F;
+
+    address constant HEVM_ADDRESS = address(bytes20(uint160(uint256(keccak256("hevm cheat code")))));
+
+    VmTryFfi constant vmTry = VmTryFfi(HEVM_ADDRESS);
 
     function derivePubKey(uint256 privKey) external pure returns (uint256, uint256) {
         return EllipticCurve.ecMul(privKey, GX, GY, AA, PP);
@@ -34,8 +40,10 @@ library TestUtils {
         inputs[1] = "scripts/python/get_selectors.py";
         inputs[2] = facetName;
 
-        bytes memory res = vm.ffi(inputs);
-        facetSelectors = abi.decode(res, (bytes4[]));
+        VmTryFfi.FfiResult memory f = vmTry.tryFfi(inputs);
+        require(f.exitCode == 0, "ffi failed");
+
+        facetSelectors = abi.decode(f.stdout, (bytes4[]));
     }
 
     function getFourValidators(
