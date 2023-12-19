@@ -915,7 +915,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
 
         DiamondCutFacet saDiamondCutter = DiamondCutFacet(address(saDiamond));
         IDiamond.FacetCut[] memory saDiamondCut = new IDiamond.FacetCut[](1);
-        bytes4[] memory ncGetterSelectors = TestUtils.generateSelectors(vm, "NumberContractFacetSeven");
+        bytes4[] memory ncGetterSelectors = TestUtils.generateSelectors("NumberContractFacetSeven");
 
         saDiamondCut[0] = (
             IDiamond.FacetCut({
@@ -934,7 +934,7 @@ contract SubnetActorDiamondTest is Test, IntegrationTestBase {
         NumberContractFacetSeven saNumberContract = NumberContractFacetSeven(address(saDiamond));
         assert(saNumberContract.getNum() == 7);
 
-        ncGetterSelectors = TestUtils.generateSelectors(vm, "NumberContractFacetEight");
+        ncGetterSelectors = TestUtils.generateSelectors("NumberContractFacetEight");
         saDiamondCut[0] = (
             IDiamond.FacetCut({
                 facetAddress: address(ncFacetB),

@@ -34,14 +34,22 @@ library TestUtils {
         return abi.encodePacked(uint8(0x4), pubKeyX, pubKeyY);
     }
 
-    function generateSelectors(Vm vm, string memory facetName) internal returns (bytes4[] memory facetSelectors) {
+    function generateSelectors(string memory facetName) internal returns (bytes4[] memory facetSelectors) {
         string[] memory inputs = new string[](3);
         inputs[0] = "python3";
         inputs[1] = "scripts/python/get_selectors.py";
         inputs[2] = facetName;
 
-        VmTryFfi.FfiResult memory f = vmTry.tryFfi(inputs);
-        require(f.exitCode == 0, "ffi failed");
+        VmTryFfi.FfiResult memory f;
+        uint256 nRetries = 10;
+        for (uint256 i = 0; i < nRetries; i++) {
+            f = vmTry.tryFfi(inputs);
+            if (f.exitCode == 0) {
+                break;
+            } else if (i == nRetries - 1) {
+                revert("ffi failed after 10 retries");
+            }
+        }
 
         facetSelectors = abi.decode(f.stdout, (bytes4[]));
     }
