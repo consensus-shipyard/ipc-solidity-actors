@@ -190,7 +190,7 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
     /// @notice method to remove funds from the initial balance of a subnet.
     /// @dev This method can be used by users looking to recover part of their
     /// initial balance before the subnet bootstraps.
-    /// @amount The amount to remove.
+    /// @param amount The amount to remove.
     function preRelease(uint256 amount) external nonReentrant {
         if (amount == 0) {
             revert NotEnoughFunds();
