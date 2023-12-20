@@ -54,23 +54,23 @@ export async function deploy(libs: { [key in string]: string }) {
         StorableMsgHelper: libs['StorableMsgHelper'],
     }
 
-    const checkpointManagementFacetLibs: Libraries = {
+    const checkpointingFacetLibs: Libraries = {
         AccountHelper: libs['AccountHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
     }
 
-    const crossMessageApplicationFacetLibs: Libraries = {
+    const crossMessagingFacetLibs: Libraries = {
         AccountHelper: libs['AccountHelper'],
         CrossMsgHelper: libs['CrossMsgHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
         StorableMsgHelper: libs['StorableMsgHelper'],
     }
 
-    const finalityManagementFacetLibs: Libraries = {
+    const finalityFacetLibs: Libraries = {
         AccountHelper: libs['AccountHelper'],
     }
 
-    const messageBatchManagementFacetLibs: Libraries = {
+    const bottomUpRouterFacetLibs: Libraries = {
         CrossMsgHelper: libs['CrossMsgHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
         AccountHelper: libs['AccountHelper'],
@@ -84,17 +84,17 @@ export async function deploy(libs: { [key in string]: string }) {
         { name: 'GatewayManagerFacet', libs: managerFacetLibs },
         { name: 'GatewayMessengerFacet', libs: messengerFacetLibs },
         {
-            name: 'CheckpointManagementFacet',
-            libs: checkpointManagementFacetLibs,
+            name: 'CheckpointingFacet',
+            libs: checkpointingFacetLibs,
         },
         {
-            name: 'CrossMessageApplicationFacet',
-            libs: crossMessageApplicationFacetLibs,
+            name: 'CrossMessagingFacet',
+            libs: crossMessagingFacetLibs,
         },
-        { name: 'FinalityManagementFacet', libs: finalityManagementFacetLibs },
+        { name: 'FinalityFacet', libs: finalityFacetLibs },
         {
-            name: 'MessageBatchManagementFacet',
-            libs: messageBatchManagementFacetLibs,
+            name: 'BottomUpRouterFacet',
+            libs: bottomUpRouterFacetLibs,
         },
     ]
 
