@@ -72,10 +72,10 @@ contract TestRegistry is Test, TestParams {
     SubnetGetterFacet registrySubnetGetterFacet;
 
     constructor() {
-        registerSubnetFacetSelectors = SelectorLibrary.generateSelectors("RegisterSubnetFacet");
-        registerSubnetGetterFacetSelectors = SelectorLibrary.generateSelectors("SubnetGetterFacet");
-        registerCutterSelectors = SelectorLibrary.generateSelectors("DiamondCutFacet");
-        registerLouperSelectors = SelectorLibrary.generateSelectors("DiamondLoupeFacet");
+        registerSubnetFacetSelectors = SelectorLibrary.resolveSelectors("RegisterSubnetFacet");
+        registerSubnetGetterFacetSelectors = SelectorLibrary.resolveSelectors("SubnetGetterFacet");
+        registerCutterSelectors = SelectorLibrary.resolveSelectors("DiamondCutFacet");
+        registerLouperSelectors = SelectorLibrary.resolveSelectors("DiamondLoupeFacet");
     }
 }
 
@@ -96,12 +96,12 @@ contract TestGatewayActor is Test, TestParams {
     DiamondLoupeFacet gwLouper;
 
     constructor() {
-        gwRouterSelectors = SelectorLibrary.generateSelectors("GatewayRouterFacet");
-        gwGetterSelectors = SelectorLibrary.generateSelectors("GatewayGetterFacet");
-        gwManagerSelectors = SelectorLibrary.generateSelectors("GatewayManagerFacet");
-        gwMessengerSelectors = SelectorLibrary.generateSelectors("GatewayMessengerFacet");
-        gwCutterSelectors = SelectorLibrary.generateSelectors("DiamondCutFacet");
-        gwLoupeSelectors = SelectorLibrary.generateSelectors("DiamondLoupeFacet");
+        gwRouterSelectors = SelectorLibrary.resolveSelectors("GatewayRouterFacet");
+        gwGetterSelectors = SelectorLibrary.resolveSelectors("GatewayGetterFacet");
+        gwManagerSelectors = SelectorLibrary.resolveSelectors("GatewayManagerFacet");
+        gwMessengerSelectors = SelectorLibrary.resolveSelectors("GatewayMessengerFacet");
+        gwCutterSelectors = SelectorLibrary.resolveSelectors("DiamondCutFacet");
+        gwLoupeSelectors = SelectorLibrary.resolveSelectors("DiamondLoupeFacet");
     }
 
     function defaultGatewayParams() internal pure virtual returns (GatewayDiamond.ConstructorParams memory) {
@@ -134,11 +134,11 @@ contract TestSubnetActor is Test, TestParams {
     DiamondLoupeFacet saLouper;
 
     constructor() {
-        saGetterSelectors = SelectorLibrary.generateSelectors("SubnetActorGetterFacet");
-        saManagerSelectors = SelectorLibrary.generateSelectors("SubnetActorManagerFacet");
-        saManagerMockedSelectors = SelectorLibrary.generateSelectors("SubnetActorManagerFacetMock");
-        saCutterSelectors = SelectorLibrary.generateSelectors("DiamondCutFacet");
-        saLouperSelectors = SelectorLibrary.generateSelectors("DiamondLoupeFacet");
+        saGetterSelectors = SelectorLibrary.resolveSelectors("SubnetActorGetterFacet");
+        saManagerSelectors = SelectorLibrary.resolveSelectors("SubnetActorManagerFacet");
+        saManagerMockedSelectors = SelectorLibrary.resolveSelectors("SubnetActorManagerFacetMock");
+        saCutterSelectors = SelectorLibrary.resolveSelectors("DiamondCutFacet");
+        saLouperSelectors = SelectorLibrary.resolveSelectors("DiamondLoupeFacet");
     }
 
     function defaultSubnetActorParamsWithGateway(

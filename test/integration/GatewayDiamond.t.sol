@@ -88,7 +88,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         DiamondCutFacet gwDiamondCutter = DiamondCutFacet(address(gatewayDiamond));
         IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](1);
-        bytes4[] memory ncGetterSelectors = SelectorLibrary.generateSelectors("NumberContractFacetSeven");
+        bytes4[] memory ncGetterSelectors = SelectorLibrary.resolveSelectors("NumberContractFacetSeven");
 
         gwDiamondCut[0] = (
             IDiamond.FacetCut({
@@ -107,7 +107,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         NumberContractFacetSeven gwNumberContract = NumberContractFacetSeven(address(gatewayDiamond));
         assert(gwNumberContract.getNum() == 7);
 
-        ncGetterSelectors = SelectorLibrary.generateSelectors("NumberContractFacetEight");
+        ncGetterSelectors = SelectorLibrary.resolveSelectors("NumberContractFacetEight");
 
         gwDiamondCut[0] = (
             IDiamond.FacetCut({
