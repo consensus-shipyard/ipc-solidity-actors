@@ -102,6 +102,10 @@ make coverage-for-mac: | forge
 
 prepare: fmt lint test slither
 
+
+build-selector-library: | forge
+	python scripts/python/build_selector_library.py
+
 # Forge is used by the ipc-solidity-actors compilation steps.
 .PHONY: forge
 forge:

@@ -23,7 +23,7 @@ import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
 import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
-import {SubnetActorManagerFacetMock} from "./mocks/SubnetActor.sol";
+import {SubnetActorManagerFacetMock} from "./mocks/SubnetActorManagerFacetMock.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
 import {SubnetRegistryDiamond} from "../src/SubnetRegistryDiamond.sol";
@@ -33,6 +33,7 @@ import {DiamondLoupeFacet} from "../src/diamond/DiamondLoupeFacet.sol";
 import {DiamondCutFacet} from "../src/diamond/DiamondCutFacet.sol";
 import {SupplySourceHelper} from "../src/lib/SupplySourceHelper.sol";
 import {TestUtils} from "./helpers/TestUtils.sol";
+import {SelectorLibrary} from "./helpers/SelectorLibrary.sol";
 
 contract TestParams {
     uint64 constant MAX_NONCE = type(uint64).max;
@@ -71,10 +72,10 @@ contract TestRegistry is Test, TestParams {
     SubnetGetterFacet registrySubnetGetterFacet;
 
     constructor() {
-        registerSubnetFacetSelectors = TestUtils.generateSelectors(vm, "RegisterSubnetFacet");
-        registerSubnetGetterFacetSelectors = TestUtils.generateSelectors(vm, "SubnetGetterFacet");
-        registerCutterSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
-        registerLouperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
+        registerSubnetFacetSelectors = SelectorLibrary.generateSelectors("RegisterSubnetFacet");
+        registerSubnetGetterFacetSelectors = SelectorLibrary.generateSelectors("SubnetGetterFacet");
+        registerCutterSelectors = SelectorLibrary.generateSelectors("DiamondCutFacet");
+        registerLouperSelectors = SelectorLibrary.generateSelectors("DiamondLoupeFacet");
     }
 }
 
@@ -95,12 +96,12 @@ contract TestGatewayActor is Test, TestParams {
     DiamondLoupeFacet gwLouper;
 
     constructor() {
-        gwRouterSelectors = TestUtils.generateSelectors(vm, "GatewayRouterFacet");
-        gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
-        gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
-        gwMessengerSelectors = TestUtils.generateSelectors(vm, "GatewayMessengerFacet");
-        gwCutterSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
-        gwLoupeSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
+        gwRouterSelectors = SelectorLibrary.generateSelectors("GatewayRouterFacet");
+        gwGetterSelectors = SelectorLibrary.generateSelectors("GatewayGetterFacet");
+        gwManagerSelectors = SelectorLibrary.generateSelectors("GatewayManagerFacet");
+        gwMessengerSelectors = SelectorLibrary.generateSelectors("GatewayMessengerFacet");
+        gwCutterSelectors = SelectorLibrary.generateSelectors("DiamondCutFacet");
+        gwLoupeSelectors = SelectorLibrary.generateSelectors("DiamondLoupeFacet");
     }
 
     function defaultGatewayParams() internal pure virtual returns (GatewayDiamond.ConstructorParams memory) {
@@ -133,11 +134,11 @@ contract TestSubnetActor is Test, TestParams {
     DiamondLoupeFacet saLouper;
 
     constructor() {
-        saGetterSelectors = TestUtils.generateSelectors(vm, "SubnetActorGetterFacet");
-        saManagerSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacet");
-        saManagerMockedSelectors = TestUtils.generateSelectors(vm, "SubnetActorManagerFacetMock");
-        saCutterSelectors = TestUtils.generateSelectors(vm, "DiamondCutFacet");
-        saLouperSelectors = TestUtils.generateSelectors(vm, "DiamondLoupeFacet");
+        saGetterSelectors = SelectorLibrary.generateSelectors("SubnetActorGetterFacet");
+        saManagerSelectors = SelectorLibrary.generateSelectors("SubnetActorManagerFacet");
+        saManagerMockedSelectors = SelectorLibrary.generateSelectors("SubnetActorManagerFacetMock");
+        saCutterSelectors = SelectorLibrary.generateSelectors("DiamondCutFacet");
+        saLouperSelectors = SelectorLibrary.generateSelectors("DiamondLoupeFacet");
     }
 
     function defaultSubnetActorParamsWithGateway(
