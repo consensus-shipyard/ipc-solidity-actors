@@ -1,4 +1,5 @@
-pragma solidity ^0.8.19;
+// SPDX-License-Identifier: MIT OR Apache-2.0
+pragma solidity 0.8.19;
 
 import {ISubnetActor} from "../../interfaces/ISubnetActor.sol";
 import {GatewayActorModifiers} from "../../lib/LibGatewayActorStorage.sol";
