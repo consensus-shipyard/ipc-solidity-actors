@@ -54,7 +54,23 @@ export async function deploy(libs: { [key in string]: string }) {
         StorableMsgHelper: libs['StorableMsgHelper'],
     }
 
-    const routerFacetLibs: Libraries = {
+    const checkpointManagementFacetLibs: Libraries = {
+        AccountHelper: libs['AccountHelper'],
+        SubnetIDHelper: libs['SubnetIDHelper'],
+    }
+
+    const crossMessageApplicationFacetLibs: Libraries = {
+        AccountHelper: libs['AccountHelper'],
+        CrossMsgHelper: libs['CrossMsgHelper'],
+        SubnetIDHelper: libs['SubnetIDHelper'],
+        StorableMsgHelper: libs['StorableMsgHelper'],
+    }
+
+    const finalityManagementFacetLibs: Libraries = {
+        AccountHelper: libs['AccountHelper'],
+    }
+
+    const messageBatchManagementFacetLibs: Libraries = {
         CrossMsgHelper: libs['CrossMsgHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
         AccountHelper: libs['AccountHelper'],
@@ -67,7 +83,19 @@ export async function deploy(libs: { [key in string]: string }) {
         { name: 'DiamondCutFacet', libs: {} },
         { name: 'GatewayManagerFacet', libs: managerFacetLibs },
         { name: 'GatewayMessengerFacet', libs: messengerFacetLibs },
-        { name: 'GatewayRouterFacet', libs: routerFacetLibs },
+        {
+            name: 'CheckpointManagementFacet',
+            libs: checkpointManagementFacetLibs,
+        },
+        {
+            name: 'CrossMessageApplicationFacet',
+            libs: crossMessageApplicationFacetLibs,
+        },
+        { name: 'FinalityManagementFacet', libs: finalityManagementFacetLibs },
+        {
+            name: 'MessageBatchManagementFacet',
+            libs: messageBatchManagementFacetLibs,
+        },
     ]
 
     for (const facet of facets) {
