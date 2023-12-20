@@ -64,25 +64,53 @@ def get_selectors(contract):
 
 def main():
     contract_selectors = {}
-    directories = ['src/', 'test/mocks/', 'test/helpers/']  # Directories to search for .sol files
+    filepaths_to_target = [
+         'src/GatewayDiamond.sol',
+         'src/SubnetActorDiamond.sol',
+         'src/SubnetRegistryDiamond.sol',
+         'src/constants/Constants.sol',
+         'src/diamond/DiamondCutFacet.sol',
+         'src/diamond/DiamondLoupeFacet.sol',
+         'src/enums/ConsensusType.sol',
+         'src/enums/Status.sol',
+         'src/gateway/GatewayGetterFacet.sol',
+         'src/gateway/GatewayManagerFacet.sol',
+         'src/gateway/GatewayMessengerFacet.sol',
+         'src/gateway/GatewayRouterFacet.sol',
+         'src/structs/CrossNet.sol',
+         'src/structs/FvmAddress.sol',
+         'src/structs/Quorum.sol',
+         'src/structs/Subnet.sol',
+         'src/subnet/SubnetActorGetterFacet.sol',
+         'src/subnet/SubnetActorManagerFacet.sol',
+         'src/subnetregistry/RegisterSubnetFacet.sol',
+         'src/subnetregistry/SubnetGetterFacet.sol',
+         'test/helpers/ERC20PresetFixedSupply.sol',
+         'test/helpers/NumberContractFacetEight.sol',
+         'test/helpers/NumberContractFacetSeven.sol',
+         'test/helpers/SelectorLibrary.sol',
+         'test/helpers/TestUtils.sol',
+         'test/mocks/SubnetActorManagerFacetMock.sol',
+     ]
 
-    for directory in directories:
-        for filepath in glob.glob(directory + '**/*.sol', recursive=True):
-            # Extract just the contract name (without path and .sol extension)
-            contract_name = os.path.splitext(os.path.basename(filepath))[0]
+    for filepath in filepaths_to_target:
 
-            #skip lib or interfaces
-            if contract_name.startswith("Lib") or contract_name.startswith("I") or contract_name.endswith("Helper"):
-                continue
+        # Extract just the contract name (without path and .sol extension)
+        contract_name = os.path.splitext(os.path.basename(filepath))[0]
 
-            # Format full path
-            # Call get_selectors for each contract
-            try:
-                selectors = get_selectors(filepath + ':' + contract_name)
-                if selectors:
-                    contract_selectors[contract_name] = selectors
-            except Exception as oops:
-                print(f"Error processing {filepath}: {oops}")
+        #skip lib or interfaces
+        if contract_name.startswith("Lib") or contract_name.startswith("I") or contract_name.endswith("Helper"):
+            continue
+
+        print(filepath)
+        # Format full path
+        # Call get_selectors for each contract
+        try:
+            selectors = get_selectors(filepath + ':' + contract_name)
+            if selectors:
+                contract_selectors[contract_name] = selectors
+        except Exception as oops:
+            print(f"Error processing {filepath}: {oops}")
 
 
     # Print the final JSON
