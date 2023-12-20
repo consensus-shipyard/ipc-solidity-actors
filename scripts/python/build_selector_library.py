@@ -1,8 +1,9 @@
-import subprocess
 import argparse
+import glob
 import json
 import os
-import glob
+import subprocess
+import sys
 from eth_abi import encode
 from json.decoder import JSONDecodeError
 
@@ -52,7 +53,8 @@ def get_selectors(contract):
     except JSONDecodeError as e:
         print("failed to load JSON:", e)
         print("forge output:", res)
-        return None
+        print("contract:", contract)
+        sys.exit(1)
 
     selectors = []
     for signature in res:
@@ -68,19 +70,12 @@ def main():
          'src/GatewayDiamond.sol',
          'src/SubnetActorDiamond.sol',
          'src/SubnetRegistryDiamond.sol',
-         'src/constants/Constants.sol',
          'src/diamond/DiamondCutFacet.sol',
          'src/diamond/DiamondLoupeFacet.sol',
-         'src/enums/ConsensusType.sol',
-         'src/enums/Status.sol',
          'src/gateway/GatewayGetterFacet.sol',
          'src/gateway/GatewayManagerFacet.sol',
          'src/gateway/GatewayMessengerFacet.sol',
          'src/gateway/GatewayRouterFacet.sol',
-         'src/structs/CrossNet.sol',
-         'src/structs/FvmAddress.sol',
-         'src/structs/Quorum.sol',
-         'src/structs/Subnet.sol',
          'src/subnet/SubnetActorGetterFacet.sol',
          'src/subnet/SubnetActorManagerFacet.sol',
          'src/subnetregistry/RegisterSubnetFacet.sol',
@@ -102,7 +97,6 @@ def main():
         if contract_name.startswith("Lib") or contract_name.startswith("I") or contract_name.endswith("Helper"):
             continue
 
-        print(filepath)
         # Format full path
         # Call get_selectors for each contract
         try:
