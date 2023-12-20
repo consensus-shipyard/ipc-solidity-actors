@@ -24,10 +24,10 @@ import {GatewayDiamond, FunctionNotFound} from "../../src/GatewayDiamond.sol";
 import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
 import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
 
-import {CheckpointManagementFacet} from "../../src/gateway/router/CheckpointManagementFacet.sol";
-import {CrossMessageApplicationFacet} from "../../src/gateway/router/CrossMessageApplicationFacet.sol";
-import {FinalityManagementFacet} from "../../src/gateway/router/FinalityManagementFacet.sol";
-import {MessageBatchManagementFacet} from "../../src/gateway/router/MessageBatchManagementFacet.sol";
+import {CheckpointingFacet} from "../../src/gateway/router/CheckpointingFacet.sol";
+import {CrossMessagingFacet} from "../../src/gateway/router/CrossMessagingFacet.sol";
+import {FinalityFacet} from "../../src/gateway/router/FinalityFacet.sol";
+import {BottomUpRouterFacet} from "../../src/gateway/router/BottomUpRouterFacet.sol";
 
 import {ERR_GENERAL_CROSS_MSG_DISABLED} from "../../src/gateway/GatewayMessengerFacet.sol";
 import {DiamondCutFacet} from "../../src/diamond/DiamondCutFacet.sol";
@@ -761,10 +761,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
 
-        gwCheckpointManagementFacet = CheckpointManagementFacet(address(gatewayDiamond));
-        gwCrossMessageApplicationFacet = CrossMessageApplicationFacet(address(gatewayDiamond));
-        gwFinalityManagementFacet = FinalityManagementFacet(address(gatewayDiamond));
-        gwMessageBatchManagementFacet = MessageBatchManagementFacet(address(gatewayDiamond));
+        gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
+        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -796,10 +796,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
-        gwCheckpointManagementFacet = CheckpointManagementFacet(address(gatewayDiamond));
-        gwCrossMessageApplicationFacet = CrossMessageApplicationFacet(address(gatewayDiamond));
-        gwFinalityManagementFacet = FinalityManagementFacet(address(gatewayDiamond));
-        gwMessageBatchManagementFacet = MessageBatchManagementFacet(address(gatewayDiamond));
+        gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
+        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         vm.roll(0);
         vm.warp(0);
@@ -830,10 +830,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
-        gwCheckpointManagementFacet = CheckpointManagementFacet(address(gatewayDiamond));
-        gwCrossMessageApplicationFacet = CrossMessageApplicationFacet(address(gatewayDiamond));
-        gwFinalityManagementFacet = FinalityManagementFacet(address(gatewayDiamond));
-        gwMessageBatchManagementFacet = MessageBatchManagementFacet(address(gatewayDiamond));
+        gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
+        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -865,10 +865,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
-        gwCheckpointManagementFacet = CheckpointManagementFacet(address(gatewayDiamond));
-        gwCrossMessageApplicationFacet = CrossMessageApplicationFacet(address(gatewayDiamond));
-        gwFinalityManagementFacet = FinalityManagementFacet(address(gatewayDiamond));
-        gwMessageBatchManagementFacet = MessageBatchManagementFacet(address(gatewayDiamond));
+        gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
+        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
 
@@ -1101,7 +1101,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwFinalityManagementFacet.commitParentFinality(finality);
+        gwFinalityFacet.commitParentFinality(finality);
     }
 
     function testGatewayDiamond_applyFinality_works() public {
@@ -1122,8 +1122,8 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
-        gwFinalityManagementFacet.storeValidatorChanges(changes);
-        uint64 configNumber = gwFinalityManagementFacet.applyFinalityChanges();
+        gwFinalityFacet.storeValidatorChanges(changes);
+        uint64 configNumber = gwFinalityFacet.applyFinalityChanges();
         require(configNumber == 2, "wrong config number after applying finality");
         require(gwGetter.getCurrentMembership().validators.length == 2, "current membership should be 2");
         require(gwGetter.getCurrentConfigurationNumber() == 2, "unexpected config number");
@@ -1141,8 +1141,8 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
-        gwFinalityManagementFacet.storeValidatorChanges(changes);
-        configNumber = gwFinalityManagementFacet.applyFinalityChanges();
+        gwFinalityFacet.storeValidatorChanges(changes);
+        configNumber = gwFinalityFacet.applyFinalityChanges();
         require(configNumber == 3, "wrong config number after applying finality");
         require(gwGetter.getLastConfigurationNumber() == 2, "apply result: unexpected last config number");
         require(gwGetter.getCurrentConfigurationNumber() == 3, "apply result: unexpected config number");
@@ -1150,7 +1150,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(gwGetter.getLastMembership().validators.length == 2, "last membership should be 2");
 
         // no changes
-        configNumber = gwFinalityManagementFacet.applyFinalityChanges();
+        configNumber = gwFinalityFacet.applyFinalityChanges();
         require(configNumber == 0, "wrong config number after applying finality");
         require(gwGetter.getLastConfigurationNumber() == 2, "no changes: unexpected last config number");
         require(gwGetter.getCurrentConfigurationNumber() == 3, "no changes: unexpected config number");
@@ -1172,7 +1172,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwFinalityManagementFacet.commitParentFinality(finality);
+        gwFinalityFacet.commitParentFinality(finality);
         ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
 
         require(committedFinality.height == finality.height, "heights are not equal");
@@ -1204,22 +1204,18 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // failed to create a checkpoint with zero membership weight
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(ZeroMembershipWeight.selector);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 0);
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 0);
         vm.stopPrank();
 
         // failed create a processed checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(QuorumAlreadyProcessed.selector);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(old, membershipRoot, weights[0] + weights[1] + weights[2]);
+        gwCheckpointingFacet.createBottomUpCheckpoint(old, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(
-            checkpoint,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         BottomUpCheckpoint memory recv = gwGetter.bottomUpCheckpoint(gwGetter.bottomUpCheckPeriod());
@@ -1237,11 +1233,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(CheckpointAlreadyExists.selector);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(
-            checkpoint,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // failed to create a checkpoint with the height not multiple to checkpoint period
@@ -1254,11 +1246,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(InvalidCheckpointEpoch.selector);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(
-            checkpoint,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         (bool ok, uint256 e, ) = gwGetter.getCurrentBottomUpCheckpoint();
@@ -1275,7 +1263,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         });
 
         vm.expectRevert(InvalidCheckpointSource.selector);
-        gwCheckpointManagementFacet.commitCheckpoint(checkpoint);
+        gwCheckpointingFacet.commitCheckpoint(checkpoint);
     }
 
     function testGatewayDiamond_commitBottomUpCheckpoint_Works_NoMessages() public {
@@ -1295,7 +1283,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         });
 
         vm.prank(caller);
-        gwCheckpointManagementFacet.commitCheckpoint(checkpoint);
+        gwCheckpointingFacet.commitCheckpoint(checkpoint);
     }
 
     function testGatewayDiamond_listIncompleteCheckpoints() public {
@@ -1319,12 +1307,12 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(
+        gwCheckpointingFacet.createBottomUpCheckpoint(
             checkpoint1,
             membershipRoot,
             weights[0] + weights[1] + weights[2]
         );
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(
+        gwCheckpointingFacet.createBottomUpCheckpoint(
             checkpoint2,
             membershipRoot,
             weights[0] + weights[1] + weights[2]
@@ -1374,11 +1362,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(
-            checkpoint,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // adds signatures
@@ -1393,7 +1377,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             signature = abi.encodePacked(r, s, v);
 
             vm.startPrank(vm.addr(privKeys[i]));
-            gwCheckpointManagementFacet.addCheckpointSignature(
+            gwCheckpointingFacet.addCheckpointSignature(
                 checkpoint.blockHeight,
                 membershipProofs[i],
                 weights[i],
@@ -1434,11 +1418,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(
-            checkpoint,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // adds signatures
@@ -1453,7 +1433,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             signature = abi.encodePacked(r, s, v);
 
             vm.startPrank(vm.addr(privKeys[i]));
-            gwCheckpointManagementFacet.addCheckpointSignature(
+            gwCheckpointingFacet.addCheckpointSignature(
                 checkpoint.blockHeight,
                 membershipProofs[i],
                 weights[i],
@@ -1472,12 +1452,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         signature = abi.encodePacked(r, s, v);
 
         vm.startPrank(vm.addr(privKeys[2]));
-        gwCheckpointManagementFacet.addCheckpointSignature(
-            checkpoint.blockHeight,
-            membershipProofs[2],
-            weights[2],
-            signature
-        );
+        gwCheckpointingFacet.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[2], weights[2], signature);
         vm.stopPrank();
 
         info = gwGetter.getCheckpointInfo(checkpoint.blockHeight);
@@ -1492,12 +1467,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         signature = abi.encodePacked(r, s, v);
 
         vm.startPrank(vm.addr(privKeys[3]));
-        gwCheckpointManagementFacet.addCheckpointSignature(
-            checkpoint.blockHeight,
-            membershipProofs[3],
-            weights[3],
-            signature
-        );
+        gwCheckpointingFacet.addCheckpointSignature(checkpoint.blockHeight, membershipProofs[3], weights[3], signature);
         vm.stopPrank();
     }
 
@@ -1516,7 +1486,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
         vm.stopPrank();
 
         uint8 v;
@@ -1530,7 +1500,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         uint256 h = gwGetter.bottomUpCheckPeriod();
         vm.startPrank(vm.addr(privKeys[1]));
         vm.expectRevert(abi.encodeWithSelector(NotAuthorized.selector, vm.addr(privKeys[0])));
-        gwCheckpointManagementFacet.addCheckpointSignature(h, membershipProofs[2], weights[2], signature);
+        gwCheckpointingFacet.addCheckpointSignature(h, membershipProofs[2], weights[2], signature);
         vm.stopPrank();
     }
 
@@ -1549,7 +1519,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
         vm.stopPrank();
 
         uint8 v;
@@ -1565,14 +1535,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // send incorrect signature
         vm.expectRevert(InvalidSignature.selector);
-        gwCheckpointManagementFacet.addCheckpointSignature(h, membershipProofs[0], weights[0], new bytes(0));
+        gwCheckpointingFacet.addCheckpointSignature(h, membershipProofs[0], weights[0], new bytes(0));
 
         // send correct signature
-        gwCheckpointManagementFacet.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
+        gwCheckpointingFacet.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
 
         // replay the previous signature
         vm.expectRevert(SignatureReplay.selector);
-        gwCheckpointManagementFacet.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
+        gwCheckpointingFacet.addCheckpointSignature(h, membershipProofs[0], weights[0], signature);
 
         vm.stopPrank();
     }
@@ -1592,7 +1562,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a checkpoint
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+        gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
         vm.stopPrank();
 
         uint8 v;
@@ -1607,11 +1577,11 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // send correct signature for incorrect height
         vm.expectRevert(QuorumAlreadyProcessed.selector);
-        gwCheckpointManagementFacet.addCheckpointSignature(0, membershipProofs[0], weights[0], signature);
+        gwCheckpointingFacet.addCheckpointSignature(0, membershipProofs[0], weights[0], signature);
 
         // send correct signature for incorrect height
         vm.expectRevert(CheckpointNotCreated.selector);
-        gwCheckpointManagementFacet.addCheckpointSignature(100, membershipProofs[0], weights[0], signature);
+        gwCheckpointingFacet.addCheckpointSignature(100, membershipProofs[0], weights[0], signature);
 
         vm.stopPrank();
     }
@@ -1637,7 +1607,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                 nextConfigurationNumber: 1
             });
 
-            gwCheckpointManagementFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
+            gwCheckpointingFacet.createBottomUpCheckpoint(checkpoint, membershipRoot, 10);
         }
         vm.stopPrank();
 
@@ -1648,7 +1618,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(heights.length == n, "heights.len is not n");
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwCheckpointManagementFacet.pruneBottomUpCheckpoints(4);
+        gwCheckpointingFacet.pruneBottomUpCheckpoints(4);
         vm.stopPrank();
 
         index = gwGetter.getCheckpointRetentionHeight();
@@ -1678,22 +1648,18 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // failed to create a batch with zero membership weight
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(ZeroMembershipWeight.selector);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(batch, membershipRoot, 0);
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, 0);
         vm.stopPrank();
 
         // failed create a processed batch
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(QuorumAlreadyProcessed.selector);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(old, membershipRoot, weights[0] + weights[1] + weights[2]);
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(old, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // create a batch that hasn't been fully filled (trigger at the batch period).
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         BottomUpMsgBatch memory recv = gwGetter.bottomUpMsgBatch(gwGetter.bottomUpMsgBatchPeriod());
@@ -1702,11 +1668,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         // failed to create a batch with the same height
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(BatchAlreadyExists.selector);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // failed to create a batch with the height not multiple of the batch period
@@ -1719,11 +1681,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(InvalidBatchEpoch.selector);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         BottomUpMsgBatch memory b = gwGetter.bottomUpMsgBatch(2 * d);
@@ -1734,11 +1692,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(BatchWithNoMessages.selector);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // failed to create a batch with too many messages
@@ -1750,11 +1704,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
         vm.expectRevert(MaxMsgsPerBatchExceeded.selector);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
     }
 
@@ -1766,7 +1716,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         });
 
         vm.expectRevert(InvalidBatchSource.selector);
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
     }
 
     function testGatewayDiamond_commitCheckpoint_Fails_NoMessages() public {
@@ -1786,7 +1736,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.prank(caller);
         vm.expectRevert(BatchWithNoMessages.selector);
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
     }
 
     function testGatewayDiamond_listIncompleteMsgBatches() public {
@@ -1810,16 +1760,8 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a batch
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch1,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch2,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch1, membershipRoot, weights[0] + weights[1] + weights[2]);
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch2, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         uint256[] memory heights = gwGetter.getIncompleteMsgBatchHeights();
@@ -1864,11 +1806,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a batch
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // adds signatures
@@ -1882,7 +1820,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             signature = abi.encodePacked(r, s, v);
 
             vm.startPrank(vm.addr(privKeys[i]));
-            gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(
+            gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(
                 batch.blockHeight,
                 membershipProofs[i],
                 weights[i],
@@ -1924,11 +1862,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a batch
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(
-            batch,
-            membershipRoot,
-            weights[0] + weights[1] + weights[2]
-        );
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, weights[0] + weights[1] + weights[2]);
         vm.stopPrank();
 
         // adds signatures
@@ -1943,7 +1877,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
             signature = abi.encodePacked(r, s, v);
 
             vm.startPrank(vm.addr(privKeys[i]));
-            gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(
+            gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(
                 batch.blockHeight,
                 membershipProofs[i],
                 weights[i],
@@ -1962,7 +1896,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         signature = abi.encodePacked(r, s, v);
 
         vm.startPrank(vm.addr(privKeys[2]));
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(
             batch.blockHeight,
             membershipProofs[2],
             weights[2],
@@ -1982,7 +1916,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         signature = abi.encodePacked(r, s, v);
 
         vm.startPrank(vm.addr(privKeys[3]));
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(
             batch.blockHeight,
             membershipProofs[3],
             weights[3],
@@ -2007,7 +1941,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a batch
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
         vm.stopPrank();
 
         uint8 v;
@@ -2020,7 +1954,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(vm.addr(privKeys[1]));
         vm.expectRevert(abi.encodeWithSelector(NotAuthorized.selector, vm.addr(privKeys[0])));
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(d, membershipProofs[2], weights[2], signature);
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(d, membershipProofs[2], weights[2], signature);
         vm.stopPrank();
     }
 
@@ -2040,7 +1974,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a batch
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
         vm.stopPrank();
 
         uint8 v;
@@ -2055,14 +1989,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // send incorrect signature
         vm.expectRevert(InvalidSignature.selector);
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], new bytes(0));
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], new bytes(0));
 
         // send correct signature
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], signature);
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], signature);
 
         // replay the previous signature
         vm.expectRevert(SignatureReplay.selector);
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], signature);
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], signature);
 
         vm.stopPrank();
     }
@@ -2083,7 +2017,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // create a batch
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
+        gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
         vm.stopPrank();
 
         uint8 v;
@@ -2098,13 +2032,13 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         // send correct signature for incorrect height
         vm.expectRevert(QuorumAlreadyProcessed.selector);
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(0, membershipProofs[0], weights[0], signature);
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(0, membershipProofs[0], weights[0], signature);
 
         // send correct signature for incorrect height
         vm.expectRevert(BatchNotCreated.selector);
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(d + 1, membershipProofs[0], weights[0], signature);
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(d + 1, membershipProofs[0], weights[0], signature);
 
-        gwMessageBatchManagementFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], signature);
+        gwBottomUpRouterFacet.addBottomUpMsgBatchSignature(d, membershipProofs[0], weights[0], signature);
 
         vm.stopPrank();
     }
@@ -2131,7 +2065,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
                 msgs: newListOfMessages(10)
             });
 
-            gwMessageBatchManagementFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
+            gwBottomUpRouterFacet.createBottomUpMsgBatch(batch, membershipRoot, 10);
         }
         vm.stopPrank();
 
@@ -2142,7 +2076,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(heights.length == n, "heights.len is not n");
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwMessageBatchManagementFacet.pruneBottomUpMsgBatches(4);
+        gwBottomUpRouterFacet.pruneBottomUpMsgBatches(4);
         vm.stopPrank();
 
         index = gwGetter.getBottomUpMsgRetentionHeight();
@@ -2191,7 +2125,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         BottomUpMsgBatch memory batch = BottomUpMsgBatch({subnetID: subnetId, blockHeight: d, msgs: msgs});
 
         vm.prank(caller);
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
 
         (, subnetInfo) = gwGetter.getSubnet(subnetId);
         require(
@@ -2243,14 +2177,14 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.prank(caller);
         vm.expectRevert(MaxMsgsPerBatchExceeded.selector);
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
 
         // fail with no messages
         batch = BottomUpMsgBatch({subnetID: subnetId, blockHeight: d, msgs: new CrossMsg[](0)});
 
         vm.prank(caller);
         vm.expectRevert(BatchWithNoMessages.selector);
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
     }
 
     function testGatewayDiamond_PopulateBottomUpMsgBatch_Works() public {
@@ -2273,10 +2207,10 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gatewayDiamond = createGatewayDiamond(constructorParams);
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
-        gwCheckpointManagementFacet = CheckpointManagementFacet(address(gatewayDiamond));
-        gwCrossMessageApplicationFacet = CrossMessageApplicationFacet(address(gatewayDiamond));
-        gwFinalityManagementFacet = FinalityManagementFacet(address(gatewayDiamond));
-        gwMessageBatchManagementFacet = MessageBatchManagementFacet(address(gatewayDiamond));
+        gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
+        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         uint256 d = gwGetter.bottomUpMsgBatchPeriod();
 

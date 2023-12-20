@@ -180,7 +180,7 @@ contract GatewayDiamondTokenTest is Test, IntegrationTestBase {
         vm.prank(address(saDiamond));
         vm.expectEmit(true, true, true, true, address(token));
         emit Transfer(address(gatewayDiamond), recipient, value);
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
 
         // Assert post-conditions.
         (, Subnet memory subnetAfter) = gwGetter.getSubnet(subnet.id);
@@ -195,7 +195,7 @@ contract GatewayDiamondTokenTest is Test, IntegrationTestBase {
         // This reverts.
         vm.prank(address(saDiamond));
         vm.expectRevert();
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
     }
 
     function test_childToParentCall() public {
@@ -229,7 +229,7 @@ contract GatewayDiamondTokenTest is Test, IntegrationTestBase {
         vm.prank(address(saDiamond));
         vm.etch(recipient, bytes("foo")); // set some code at the destination address to trick Solidity into calling the contract.
         vm.expectCall(recipient, bytes.concat(bytes4(0x11223344), bytes("hello")));
-        gwMessageBatchManagementFacet.execBottomUpMsgBatch(batch);
+        gwBottomUpRouterFacet.execBottomUpMsgBatch(batch);
         assertEq(token.balanceOf(recipient), 8);
     }
 

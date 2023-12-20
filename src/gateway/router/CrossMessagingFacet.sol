@@ -18,7 +18,7 @@ import {InvalidCrossMsgNonce, InvalidCrossMsgNonce, NotRegisteredSubnet, Invalid
 
 import {StorableMsgHelper} from "../../lib/StorableMsgHelper.sol";
 
-contract CrossMessageApplicationFacet is GatewayActorModifiers {
+contract CrossMessagingFacet is GatewayActorModifiers {
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
     using SupplySourceHelper for SupplySource;

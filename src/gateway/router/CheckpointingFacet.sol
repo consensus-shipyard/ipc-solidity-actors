@@ -18,7 +18,7 @@ import {BatchNotCreated, InvalidBatchEpoch, BatchAlreadyExists, NotEnoughSubnetC
 import {SubnetID} from "../../structs/CrossNet.sol";
 import {SubnetIDHelper} from "../../lib/SubnetIDHelper.sol";
 
-contract CheckpointManagementFacet is GatewayActorModifiers {
+contract CheckpointingFacet is GatewayActorModifiers {
     using SubnetIDHelper for SubnetID;
 
     /// @notice submit a verified checkpoint in the gateway to trigger side-effects.

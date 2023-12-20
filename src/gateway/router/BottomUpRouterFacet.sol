@@ -24,7 +24,7 @@ import {SubnetIDHelper} from "../../lib/SubnetIDHelper.sol";
 import {StorableMsgHelper} from "../../lib/StorableMsgHelper.sol";
 import {StorableMsg} from "../../structs/CrossNet.sol";
 
-contract MessageBatchManagementFacet is GatewayActorModifiers {
+contract BottomUpRouterFacet is GatewayActorModifiers {
     using SubnetIDHelper for SubnetID;
     using CrossMsgHelper for CrossMsg;
     using SupplySourceHelper for SupplySource;
