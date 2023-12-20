@@ -22,7 +22,12 @@ import {SubnetActorDiamond} from "../src/SubnetActorDiamond.sol";
 import {GatewayGetterFacet} from "../src/gateway/GatewayGetterFacet.sol";
 import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
-import {GatewayRouterFacet} from "../src/gateway/GatewayRouterFacet.sol";
+
+import {CheckpointManagementFacet} from "../src/gateway/router/CheckpointManagementFacet.sol";
+import {CrossMessageApplicationFacet} from "../src/gateway/router/CrossMessageApplicationFacet.sol";
+import {FinalityManagementFacet} from "../src/gateway/router/FinalityManagementFacet.sol";
+import {MessageBatchManagementFacet} from "../src/gateway/router/MessageBatchManagementFacet.sol";
+
 import {SubnetActorManagerFacetMock} from "./mocks/SubnetActor.sol";
 import {SubnetActorManagerFacet} from "../src/subnet/SubnetActorManagerFacet.sol";
 import {SubnetActorGetterFacet} from "../src/subnet/SubnetActorGetterFacet.sol";
@@ -79,7 +84,11 @@ contract TestRegistry is Test, TestParams {
 }
 
 contract TestGatewayActor is Test, TestParams {
-    bytes4[] gwRouterSelectors;
+    bytes4[] gwCheckpointManagementFacetSelectors;
+    bytes4[] gwCrossMessageApplicationFacetSelectors;
+    bytes4[] gwFinalityManagementFacetSelectors;
+    bytes4[] gwMessageBatchManagementFacetSelectors;
+
     bytes4[] gwManagerSelectors;
     bytes4[] gwGetterSelectors;
     bytes4[] gwMessengerSelectors;
@@ -89,13 +98,21 @@ contract TestGatewayActor is Test, TestParams {
     GatewayDiamond gatewayDiamond;
     GatewayManagerFacet gwManager;
     GatewayGetterFacet gwGetter;
-    GatewayRouterFacet gwRouter;
+    CheckpointManagementFacet gwCheckpointManagementFacet;
+    CrossMessageApplicationFacet gwCrossMessageApplicationFacet;
+    FinalityManagementFacet gwFinalityManagementFacet;
+    MessageBatchManagementFacet gwMessageBatchManagementFacet;
+
     GatewayMessengerFacet gwMessenger;
     DiamondCutFacet gwCutter;
     DiamondLoupeFacet gwLouper;
 
     constructor() {
-        gwRouterSelectors = TestUtils.generateSelectors(vm, "GatewayRouterFacet");
+        gwCheckpointManagementFacetSelectors = TestUtils.generateSelectors(vm, "CheckpointManagementFacet");
+        gwCrossMessageApplicationFacetSelectors = TestUtils.generateSelectors(vm, "CrossMessageApplicationFacet");
+        gwFinalityManagementFacetSelectors = TestUtils.generateSelectors(vm, "FinalityManagementFacet");
+        gwMessageBatchManagementFacetSelectors = TestUtils.generateSelectors(vm, "MessageBatchManagementFacet");
+
         gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
         gwManagerSelectors = TestUtils.generateSelectors(vm, "GatewayManagerFacet");
         gwMessengerSelectors = TestUtils.generateSelectors(vm, "GatewayMessengerFacet");
@@ -181,9 +198,13 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         // create the root gateway actor.
         GatewayDiamond.ConstructorParams memory gwConstructorParams = defaultGatewayParams();
         gatewayDiamond = createGatewayDiamond(gwConstructorParams);
+
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
-        gwRouter = GatewayRouterFacet(address(gatewayDiamond));
+        gwCheckpointManagementFacet = CheckpointManagementFacet(address(gatewayDiamond));
+        gwCrossMessageApplicationFacet = CrossMessageApplicationFacet(address(gatewayDiamond));
+        gwFinalityManagementFacet = FinalityManagementFacet(address(gatewayDiamond));
+        gwMessageBatchManagementFacet = MessageBatchManagementFacet(address(gatewayDiamond));
         gwMessenger = GatewayMessengerFacet(address(gatewayDiamond));
         gwLouper = DiamondLoupeFacet(address(gatewayDiamond));
         gwCutter = DiamondCutFacet(address(gatewayDiamond));
@@ -203,20 +224,48 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
     }
 
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
-        GatewayRouterFacet router = new GatewayRouterFacet();
+        CheckpointManagementFacet checkpointManagementFacet = new CheckpointManagementFacet();
+        CrossMessageApplicationFacet crossMessageApplicationFacet = new CrossMessageApplicationFacet();
+        FinalityManagementFacet finalityManagementFacet = new FinalityManagementFacet();
+        MessageBatchManagementFacet messageBatchManagementFacet = new MessageBatchManagementFacet();
+
         GatewayManagerFacet manager = new GatewayManagerFacet();
         GatewayGetterFacet getter = new GatewayGetterFacet();
         GatewayMessengerFacet messenger = new GatewayMessengerFacet();
         DiamondCutFacet cutter = new DiamondCutFacet();
         DiamondLoupeFacet louper = new DiamondLoupeFacet();
 
-        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](6);
+        IDiamond.FacetCut[] memory gwDiamondCut = new IDiamond.FacetCut[](9);
 
         gwDiamondCut[0] = (
             IDiamond.FacetCut({
-                facetAddress: address(router),
+                facetAddress: address(checkpointManagementFacet),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwRouterSelectors
+                functionSelectors: gwCheckpointManagementFacetSelectors
+            })
+        );
+
+        gwDiamondCut[6] = (
+            IDiamond.FacetCut({
+                facetAddress: address(crossMessageApplicationFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: gwCrossMessageApplicationFacetSelectors
+            })
+        );
+
+        gwDiamondCut[7] = (
+            IDiamond.FacetCut({
+                facetAddress: address(finalityManagementFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: gwFinalityManagementFacetSelectors
+            })
+        );
+
+        gwDiamondCut[8] = (
+            IDiamond.FacetCut({
+                facetAddress: address(MessageBatchManagementFacet),
+                action: IDiamond.FacetCutAction.Add,
+                functionSelectors: gwMessageBatchManagementFacetSelectors
             })
         );
 
