@@ -27,7 +27,6 @@ contract SubnetActorManagerFacet is ISubnetActor, SubnetActorModifiers, Pausable
     event BottomUpCheckpointSubmitted(BottomUpCheckpoint checkpoint, address submitter);
     event BottomUpCheckpointExecuted(uint256 epoch, address submitter);
     event NextBottomUpCheckpointExecuted(uint256 epoch, address submitter);
-    event SubnetBootstrapped(Validator[]);
 
     /// @notice Pauses all contract functions with the `whenNotPaused` modifier.
     function pause() external {
