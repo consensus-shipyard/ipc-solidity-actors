@@ -263,7 +263,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
 
         gwDiamondCut[8] = (
             IDiamond.FacetCut({
-                facetAddress: address(MessageBatchManagementFacet),
+                facetAddress: address(messageBatchManagementFacet),
                 action: IDiamond.FacetCutAction.Add,
                 functionSelectors: gwMessageBatchManagementFacetSelectors
             })
@@ -586,7 +586,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.commitParentFinality(finality);
+        gwFinalityManagementFacet.commitParentFinality(finality);
     }
 
     function setupWhiteListMethod(address caller, address src) public returns (bytes32) {
@@ -618,7 +618,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         // addValidator(caller, 1000);
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.applyCrossMessages(msgs);
+        gwCrossMessageApplicationFacet.applyCrossMessages(msgs);
 
         return crossMsg.toHash();
     }
@@ -638,7 +638,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         // uint64 n = gwGetter.getLastConfigurationNumber() + 1;
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwRouter.commitParentFinality(finality);
+        gwFinalityManagementFacet.commitParentFinality(finality);
         vm.stopPrank();
     }
 
@@ -804,7 +804,6 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         address subnetAddress,
         GatewayDiamond gw
     ) public returns (SubnetID memory, uint256, uint256, uint256, uint256, Status) {
-        gwRouter = GatewayRouterFacet(address(gw));
         gwManager = GatewayManagerFacet(address(gw));
         gwGetter = GatewayGetterFacet(address(gw));
 
