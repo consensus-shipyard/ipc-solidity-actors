@@ -100,7 +100,7 @@ make coverage-for-mac: | forge
 	genhtml -o coverage_report lcov.info --branch-coverage --ignore-errors category
 	./tools/check_coverage.sh
 
-prepare: fmt build-selector-library lint test slither
+prepare: build-selector-library fmt lint test slither
 
 
 build-selector-library: | forge
