@@ -1,3 +1,6 @@
+// SPDX-License-Identifier: MIT OR Apache-2.0
+pragma solidity ^0.8.19;
+
 library SelectorLibrary {
     function generateSelectors(string memory facetName) public pure returns (bytes4[] memory facetSelectors) {
         if (keccak256(abi.encodePacked(facetName)) == keccak256(abi.encodePacked("GatewayDiamond"))) {

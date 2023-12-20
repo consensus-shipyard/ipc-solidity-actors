@@ -16,8 +16,8 @@ def writeToFile(selector_storage_content):
 
 
 def generate_solidity_function(contract_selectors):
-    solidity_code = "pragma solidity ^0.8.19;\n"
-    solidity_code = "library SelectorLibrary {\n"
+    solidity_code = "// SPDX-License-Identifier: MIT OR Apache-2.0\npragma solidity ^0.8.19;\n"
+    solidity_code += "library SelectorLibrary {\n"
     solidity_code += "    function generateSelectors(string memory facetName) public pure returns (bytes4[] memory facetSelectors) {\n"
 
     for contract_name, selectors in contract_selectors.items():
