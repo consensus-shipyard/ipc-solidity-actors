@@ -86,8 +86,8 @@ abstract contract Pausable {
      * - The contract must not be paused.
      */
     function _pause() internal {
-        PausableStorage storage s = pausableStorage();
         _requireNotPaused();
+        PausableStorage storage s = pausableStorage();
         s.paused = true;
         emit Paused(msg.sender);
     }
@@ -100,8 +100,8 @@ abstract contract Pausable {
      * - The contract must be paused.
      */
     function _unpause() internal  {
-        PausableStorage storage s = pausableStorage();
         _requirePaused();
+        PausableStorage storage s = pausableStorage();
         s.paused = false;
         emit Unpaused(msg.sender);
     }
