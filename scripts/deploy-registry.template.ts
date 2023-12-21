@@ -31,9 +31,7 @@ export async function deploy() {
     const managerFacet = await deployContractWithDeployer(
         deployer,
         'SubnetActorManagerFacet',
-        {
-            LibStaking: LIBMAP['LibStaking'],
-        },
+        {},
         txArgs,
     )
     const managerSelectors = getSelectors(managerFacet)
