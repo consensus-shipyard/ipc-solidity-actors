@@ -16,6 +16,9 @@ fn main() {
         return;
     }
 
+    // Where are the Solidity artifacts.
+    let output_dir = std::env::var("OUTPUT").expect("OUTPUT env var missing");
+
     let ipc_actors_dir = workspace_dir()
         .parent()
         .unwrap()
@@ -32,21 +35,30 @@ fn main() {
     // so we need bindings for the facets, but well (I think) use the same address with all of them.
     for contract_name in [
         "IDiamond",
+        "DiamondLoupeFacet",
+        "DiamondCutFacet",
         "GatewayDiamond",
         "GatewayManagerFacet",
         "GatewayGetterFacet",
-        "GatewayRouterFacet",
+        "BottomUpRouterFacet",
+        "CheckpointingFacet",
+        "TopDownFinalityFacet",
+        "XnetMessagingFacet",
         "GatewayMessengerFacet",
         "SubnetActorDiamond",
         "SubnetActorGetterFacet",
         "SubnetActorManagerFacet",
-        "SubnetRegistry",
+        "SubnetRegistryDiamond",
+        "RegisterSubnetFacet",
+        "SubnetGetterFacet",
         "LibStaking",
         "LibStakingChangeLog",
         "LibGateway",
+        "LibQuorum",
     ] {
         let module_name = camel_to_snake(contract_name);
-        let input_path = format!("{ipc_actors_dir}/out/{contract_name}.sol/{contract_name}.json");
+        let input_path =
+            format!("{ipc_actors_dir}/{output_dir}/{contract_name}.sol/{contract_name}.json");
         let output_path = format!("{ipc_actors_dir}/binding/src/{}.rs", module_name);
 
         ethers::prelude::Abigen::new(contract_name, &input_path)
@@ -69,7 +81,8 @@ fn main() {
     let fvm_address_conversion = vec![
         "GatewayManagerFacet",
         "GatewayGetterFacet",
-        "GatewayRouterFacet",
+        "BottomUpRouterFacet",
+        "XnetMessagingFacet",
         "GatewayMessengerFacet",
         "SubnetActorManagerFacet",
         "LibGateway",
@@ -87,7 +100,9 @@ fn main() {
     .unwrap();
     let common_type_conversion = vec![
         ("GatewayGetterFacet", "SubnetActorManagerFacet"),
-        ("SubnetActorGetterFacet", "GatewayRouterFacet"),
+        ("SubnetActorGetterFacet", "BottomUpRouterFacet"),
+        ("SubnetActorGetterFacet", "CheckpointingFacet"),
+        ("SubnetActorGetterFacet", "XnetMessagingFacet"),
     ];
     for (contract1, contract2) in common_type_conversion {
         writeln!(

@@ -1,8 +1,8 @@
 /* global ethers */
-/* eslint prefer-const: "off" */
 
-import hre, { ethers } from 'hardhat'
+/* eslint prefer-const: "off" */
 import { deployContractWithDeployer, getTransactionFees } from './util'
+import hre, { ethers } from 'hardhat'
 
 const { getSelectors, FacetCutAction } = require('./js/diamond.js')
 
@@ -42,6 +42,7 @@ export async function deploy(libs: { [key in string]: string }) {
 
     const getterFacetLibs: Libraries = {
         SubnetIDHelper: libs['SubnetIDHelper'],
+        LibQuorum: libs['LibQuorum'],
     }
 
     const managerFacetLibs: Libraries = {
@@ -53,11 +54,26 @@ export async function deploy(libs: { [key in string]: string }) {
         StorableMsgHelper: libs['StorableMsgHelper'],
     }
 
-    const routerFacetLibs: Libraries = {
+    const checkpointingFacetLibs: Libraries = {
+        AccountHelper: libs['AccountHelper'],
+        SubnetIDHelper: libs['SubnetIDHelper'],
+    }
+
+    const xnetMessagingFacetLibs: Libraries = {
+        AccountHelper: libs['AccountHelper'],
+        CrossMsgHelper: libs['CrossMsgHelper'],
+        SubnetIDHelper: libs['SubnetIDHelper'],
+        StorableMsgHelper: libs['StorableMsgHelper'],
+    }
+
+    const topDownFinalityFacetLibs: Libraries = {
+        AccountHelper: libs['AccountHelper'],
+    }
+
+    const bottomUpRouterFacetLibs: Libraries = {
         CrossMsgHelper: libs['CrossMsgHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
         AccountHelper: libs['AccountHelper'],
-        CheckpointHelper: libs['CheckpointHelper'],
         StorableMsgHelper: libs['StorableMsgHelper'],
     }
 
@@ -67,7 +83,19 @@ export async function deploy(libs: { [key in string]: string }) {
         { name: 'DiamondCutFacet', libs: {} },
         { name: 'GatewayManagerFacet', libs: managerFacetLibs },
         { name: 'GatewayMessengerFacet', libs: messengerFacetLibs },
-        { name: 'GatewayRouterFacet', libs: routerFacetLibs },
+        {
+            name: 'CheckpointingFacet',
+            libs: checkpointingFacetLibs,
+        },
+        {
+            name: 'XnetMessagingFacet',
+            libs: xnetMessagingFacetLibs,
+        },
+        { name: 'TopDownFinalityFacet', libs: topDownFinalityFacetLibs },
+        {
+            name: 'BottomUpRouterFacet',
+            libs: bottomUpRouterFacetLibs,
+        },
     ]
 
     for (const facet of facets) {

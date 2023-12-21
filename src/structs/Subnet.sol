@@ -3,11 +3,10 @@ pragma solidity 0.8.19;
 
 import {SubnetID} from "./Subnet.sol";
 import {FvmAddress} from "./FvmAddress.sol";
-import {BottomUpCheckpoint, CrossMsg} from "./Checkpoint.sol";
-import {Status} from "../enums/Status.sol";
 import {MaxPQ} from "../lib/priority/LibMaxPQ.sol";
 import {MinPQ} from "../lib/priority/LibMinPQ.sol";
 
+/// @notice A subnet identity type.
 struct SubnetID {
     /// @notice chainID of the root subnet
     uint64 root;
@@ -15,37 +14,38 @@ struct SubnetID {
     address[] route;
 }
 
+/// @notice A Subnet type.
 struct Subnet {
     uint256 stake;
     uint256 genesisEpoch;
     uint256 circSupply;
     uint64 topDownNonce;
     uint64 appliedBottomUpNonce;
-    Status status;
     SubnetID id;
 }
 
-// ======== Subnet Staking =======
+/// @notice Subnet staking operations.
 enum StakingOperation {
     Deposit,
     Withdraw,
-    SetMetadata
+    SetMetadata,
+    SetFederatedPower
 }
 
-/// The change request to validator staking
+/// @notice The change request to validator staking.
 struct StakingChange {
     StakingOperation op;
     bytes payload;
     address validator;
 }
 
-/// The change associated with its corresponding configuration number
+/// @notice The change associated with its corresponding configuration number.
 struct StakingChangeRequest {
     StakingChange change;
     uint64 configurationNumber;
 }
 
-/// The collection of staking changes
+/// @notice The collection of staking changes.
 struct StakingChangeLog {
     /// @notice The next configuration number to assign to new changes.
     uint64 nextConfigurationNumber;
@@ -55,7 +55,7 @@ struct StakingChangeLog {
     mapping(uint64 => StakingChange) changes;
 }
 
-/// Each staking release amount and time
+/// @notice Each staking release amount and time.
 struct StakingRelease {
     /// @notice The block number that this fund can be released
     uint256 releaseAt;
@@ -63,15 +63,16 @@ struct StakingRelease {
     uint256 amount;
 }
 
-/// Tracks the staking releases of an address. Mimics the implementation of array in solidity, this
-/// way is more aligned with our use case.
+/// @notice Tracks the staking releases of an address.
+/// @dev    Mimics the implementation of array in solidity,
+///         this way is more aligned with our use case.
 struct AddressStakingReleases {
     uint16 length;
     uint16 startIdx;
     mapping(uint16 => StakingRelease) releases;
 }
 
-/// Manages the staking release queue
+/// @notice Manages the staking release queue.
 struct StakingReleaseQueue {
     /// @notice The number of blocks that locks the collateral.
     uint256 lockingDuration;
@@ -79,10 +80,13 @@ struct StakingReleaseQueue {
     mapping(address => AddressStakingReleases) releases;
 }
 
-/// Keeping track of the validator information. There are two types of collaterals:
-///     - Confirmed: The amount of collateral actually confirmed in child subnet
+/// @notice Keeping track of the validator information.
+/// @dev There are two types of collaterals:
+///     - Confirmed: The amount of collateral actually confirmed in child subnet;
 ///     - Total: Aside from Confirmed, there is also the collateral has been supplied, but not yet confirmed in child.
 struct ValidatorInfo {
+    /// The power set by contract admin
+    uint256 federatedPower;
     uint256 confirmedCollateral;
     uint256 totalCollateral;
     /// The metadata associated with the validator, i.e. off-chain network address.
@@ -91,7 +95,18 @@ struct ValidatorInfo {
     bytes metadata;
 }
 
-/// Keeping track of the list of validators. There are two types of validators:
+/// @notice Determines the permission mode for validators.
+enum PermissionMode {
+    /// Validator power is determined by the collateral staked
+    Collateral,
+    /// Validator power is assigned by the owner of the subnet
+    Federated,
+    /// Validator power is determined by the initial collateral staked and does not change anymore
+    Static
+}
+
+/// @notice Keeping track of the list of validators.
+/// @dev There are two types of validators:
 ///     - Active
 ///     - Waiting
 /// Active validators are those that are producing blocks in the child subnet.
@@ -103,6 +118,8 @@ struct ValidatorInfo {
 /// With each validator staking change, waiting validators can be promoted to active validators
 /// and active validators can be knocked off.
 struct ValidatorSet {
+    /// The permission mode for validators
+    PermissionMode permissionMode;
     /// The total number of active validators allowed.
     uint16 activeLimit;
     /// The total collateral confirmed.
@@ -115,26 +132,41 @@ struct ValidatorSet {
     MaxPQ waitingValidators;
 }
 
-/// Tracks the parent validator changes and apply them in the child
+/// @notice Tracks the parent validator changes and apply them in the child.
 struct ParentValidatorsTracker {
     ValidatorSet validators;
     StakingChangeLog changes;
 }
 
+/// @notice An IPC address type.
 struct IPCAddress {
     SubnetID subnetId;
     FvmAddress rawAddress;
 }
 
-// Validator struct stored in the gateway.
+/// @notice Validator struct stored in the gateway.
 struct Validator {
     uint256 weight;
     address addr;
     bytes metadata;
 }
 
-// Membership information stored in the gateway
+/// @notice Membership information stored in the gateway.
 struct Membership {
     Validator[] validators;
     uint64 configurationNumber;
+}
+
+/// @notice Defines the supply source of a subnet on its parent subnet.
+struct SupplySource {
+    /// @notice The kind of supply.
+    SupplyKind kind;
+    /// @notice The address of the ERC20 token if that supply kind is selected.
+    address tokenAddress;
+}
+
+/// @notice Determines the type of supply used by the subnet.
+enum SupplyKind {
+    Native,
+    ERC20
 }

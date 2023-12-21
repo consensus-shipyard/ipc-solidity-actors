@@ -2,32 +2,43 @@
 pragma solidity 0.8.19;
 
 import {GatewayActorModifiers} from "../lib/LibGatewayActorStorage.sol";
+import {SubnetActorGetterFacet} from "../subnet/SubnetActorGetterFacet.sol";
 import {BURNT_FUNDS_ACTOR} from "../constants/Constants.sol";
-import {CrossMsg} from "../structs/Checkpoint.sol";
-import {Status} from "../enums/Status.sol";
+import {CrossMsg} from "../structs/CrossNet.sol";
 import {FvmAddress} from "../structs/FvmAddress.sol";
-import {SubnetID, Subnet} from "../structs/Subnet.sol";
-import {Membership} from "../structs/Subnet.sol";
-import {AlreadyRegisteredSubnet, CannotReleaseZero, NotEnoughFunds, NotEnoughFundsToRelease, NotEmptySubnetCircSupply, NotRegisteredSubnet} from "../errors/IPCErrors.sol";
+import {SubnetID, Subnet, SupplySource} from "../structs/Subnet.sol";
+import {Membership, SupplyKind} from "../structs/Subnet.sol";
+import {AlreadyRegisteredSubnet, CannotReleaseZero, MethodNotAllowed, NotEnoughFunds, NotEnoughFundsToRelease, NotEnoughCollateral, NotEmptySubnetCircSupply, NotRegisteredSubnet, InvalidCrossMsgValue} from "../errors/IPCErrors.sol";
 import {LibGateway} from "../lib/LibGateway.sol";
 import {SubnetIDHelper} from "../lib/SubnetIDHelper.sol";
 import {CrossMsgHelper} from "../lib/CrossMsgHelper.sol";
 import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
+import {IERC20} from "openzeppelin-contracts/token/ERC20/IERC20.sol";
+import {Address} from "openzeppelin-contracts/utils/Address.sol";
+import {SupplySourceHelper} from "../lib/SupplySourceHelper.sol";
+
+string constant ERR_CHILD_SUBNET_NOT_ALLOWED = "Subnet does not allow child subnets";
 
 contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
     using FilAddress for address payable;
     using SubnetIDHelper for SubnetID;
+    using SupplySourceHelper for SupplySource;
 
     /// @notice register a subnet in the gateway. It is called by a subnet when it reaches the threshold stake
     /// @dev The subnet can optionally pass a genesis circulating supply that would be pre-allocated in the
     /// subnet from genesis (without having to wait for the subnet to be spawned to propagate the funds).
     function register(uint256 genesisCircSupply) external payable {
-        uint256 collateral = msg.value - genesisCircSupply;
-        if (collateral < s.minStake) {
-            revert NotEnoughFunds();
+        // If L2+ support is not enabled, only allow the registration of new
+        // subnets in the root
+        if (s.networkName.route.length + 1 >= s.maxTreeDepth) {
+            revert MethodNotAllowed(ERR_CHILD_SUBNET_NOT_ALLOWED);
         }
 
+        if (msg.value < genesisCircSupply) {
+            revert NotEnoughFunds();
+        }
+        uint256 collateral = msg.value - genesisCircSupply;
         SubnetID memory subnetId = s.networkName.createSubnetId(msg.sender);
 
         (bool registered, Subnet storage subnet) = LibGateway.getSubnet(subnetId);
@@ -38,7 +49,6 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
 
         subnet.id = subnetId;
         subnet.stake = collateral;
-        subnet.status = Status.Active;
         subnet.genesisEpoch = block.number;
         subnet.circSupply = genesisCircSupply;
 
@@ -49,7 +59,7 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
 
     /// @notice addStake - add collateral for an existing subnet
     function addStake() external payable {
-        if (msg.value <= 0) {
+        if (msg.value == 0) {
             revert NotEnoughFunds();
         }
 
@@ -60,17 +70,11 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         }
 
         subnet.stake += msg.value;
-
-        if (subnet.status == Status.Inactive) {
-            if (subnet.stake >= s.minStake) {
-                subnet.status = Status.Active;
-            }
-        }
     }
 
-    /// @notice release amount for an existing subnet
-    /// @dev it can be used to release the stake or reward of the validator
-    /// @notice release collateral for an existing subnet
+    /// @notice release collateral for an existing subnet.
+    /// @dev it can be used to release the stake or reward of the validator.
+    /// @param amount The amount of stake to be released.
     function releaseStake(uint256 amount) external nonReentrant {
         if (amount == 0) {
             revert CannotReleaseZero();
@@ -87,12 +91,14 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
 
         subnet.stake -= amount;
 
-        if (subnet.stake < s.minStake) {
-            subnet.status = Status.Inactive;
-        }
         payable(subnet.id.getActor()).sendValue(amount);
     }
 
+    /// @notice Releases a reward to the relayer.
+    /// @dev This function sends the specified reward amount to the actor associated with the sender's subnet.
+    ///     It checks for subnet registration and also ensures the reward amount is non-zero.
+    ///     This function is protected against re-entrancy attack.
+    /// @param amount The amount of the reward to be released.
     function releaseRewardForRelayer(uint256 amount) external nonReentrant {
         if (amount == 0) {
             revert CannotReleaseZero();
@@ -106,7 +112,8 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         payable(subnet.id.getActor()).sendValue(amount);
     }
 
-    /// @notice kill an existing subnet. It's balance must be empty
+    /// @notice kill an existing subnet.
+    /// @dev The subnet's balance must be empty.
     function kill() external {
         (bool registered, Subnet storage subnet) = LibGateway.getSubnet(msg.sender);
 
@@ -127,30 +134,85 @@ contract GatewayManagerFacet is GatewayActorModifiers, ReentrancyGuard {
         payable(msg.sender).sendValue(stake);
     }
 
-    /// @notice fund - commit a top-down message releasing funds in a child subnet. There is an associated fee that gets distributed to validators in the subnet as well
-    /// @param subnetId - subnet to fund
-    /// @param to - the address to send funds to
+    /// @notice credits the received value to the specified address in the specified child subnet.
+    ///
+    /// @dev There may be an associated fee that gets distributed to validators in the subnet. Currently this fee is zero,
+    ///     i.e. funding a subnet is free.
+    ///
+    /// @param subnetId: the destination subnet for the funds.
+    /// @param to: the address to which to credit funds in the destination subnet.
     function fund(SubnetID calldata subnetId, FvmAddress calldata to) external payable {
+        if (msg.value == 0) {
+            // prevent spamming if there's no value to fund.
+            revert InvalidCrossMsgValue();
+        }
+        // slither-disable-next-line unused-return
+        (bool registered, ) = LibGateway.getSubnet(subnetId);
+        if (!registered) {
+            revert NotRegisteredSubnet();
+        }
+
+        // Validate that the supply strategy is native.
+        SupplySource memory supplySource = SubnetActorGetterFacet(subnetId.getActor()).supplySource();
+        supplySource.expect(SupplyKind.Native);
+
         CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg({
             subnet: subnetId,
             signer: msg.sender,
             to: to,
             value: msg.value,
-            fee: 0 // injecting funds into a subnet should is free
+            fee: 0 // injecting funds into a subnet is free
         });
 
         // commit top-down message.
         LibGateway.commitTopDownMsg(crossMsg);
     }
 
-    /// @notice release method locks funds in the current subnet and sends a cross message up the hierarchy to the parent gateway to release the funds
-    function release(FvmAddress calldata to, uint256 fee) external payable validFee(fee) {
+    /// @notice Sends funds to a specified subnet receiver using ERC20 tokens.
+    /// @dev This function locks the amount of ERC20 tokens into custody and then mints the supply in the specified subnet.
+    ///     It checks if the subnet's supply strategy is ERC20 and if not, the operation is reverted.
+    ///     It allows for free injection of funds into a subnet and is protected against reentrancy.
+    /// @param subnetId The ID of the subnet where the funds will be sent to.
+    /// @param to The funded address.
+    /// @param amount The amount of ERC20 tokens to be sent.
+    function fundWithToken(SubnetID calldata subnetId, FvmAddress calldata to, uint256 amount) external nonReentrant {
+        // Check that the supply strategy is ERC20.
+        // There is no need to check whether the subnet exists. If it doesn't exist, the call to getter will revert.
+        // LibGateway.commitTopDownMsg will also revert if the subnet doesn't exist.
+        SupplySource memory supplySource = SubnetActorGetterFacet(subnetId.getActor()).supplySource();
+        supplySource.expect(SupplyKind.ERC20);
+
+        // Lock the specified amount into custody.
+        supplySource.lock({value: amount});
+
+        // Create the top-down message to mint the supply in the subnet.
+        CrossMsg memory crossMsg = CrossMsgHelper.createFundMsg({
+            subnet: subnetId,
+            signer: msg.sender,
+            to: to,
+            value: amount,
+            fee: 0 // injecting funds into a subnet is free
+        });
+
+        // Commit top-down message.
+        LibGateway.commitTopDownMsg(crossMsg);
+    }
+
+    /// @notice release() burns the received value locally in subnet and commits a bottom-up message to release the assets in the parent.
+    ///         The local supply of a subnet is always the native coin, so this method doesn't have to deal with tokens.
+    ///
+    /// @param to: the address to which to credit funds in the parent subnet.
+    function release(FvmAddress calldata to) external payable {
+        if (msg.value == 0) {
+            // prevent spamming if there's no value to release.
+            revert InvalidCrossMsgValue();
+        }
         CrossMsg memory crossMsg = CrossMsgHelper.createReleaseMsg({
             subnet: s.networkName,
             signer: msg.sender,
             to: to,
-            value: msg.value - fee,
-            fee: fee
+            value: msg.value,
+            fee: 0 // making releases free of fee (at least for now)
         });
 
         LibGateway.commitBottomUpMsg(crossMsg);

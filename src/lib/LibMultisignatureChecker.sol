@@ -5,13 +5,12 @@ import {ECDSA} from "openzeppelin-contracts/utils/cryptography/ECDSA.sol";
 
 /// @title Multi-signature ECDSA verification helper.
 library MultisignatureChecker {
-    uint8 public constant SIGNATURE_LENGTH = 65;
+    uint8 private constant SIGNATURE_LENGTH = 65;
 
     enum Error {
         Nil,
         InvalidArrayLength,
         EmptySignatures,
-        InvalidSignatureLength,
         InvalidSignatory,
         InvalidSignature,
         WeightsSumLessThanThreshold
@@ -47,7 +46,7 @@ library MultisignatureChecker {
             return (!valid, Error.InvalidArrayLength);
         }
 
-        for (uint256 i = 0; i < signaturesNumber; ) {
+        for (uint256 i; i < signaturesNumber; ) {
             (address recovered, ECDSA.RecoverError ecdsaErr, ) = ECDSA.tryRecover({
                 hash: hash,
                 signature: signatures[i]

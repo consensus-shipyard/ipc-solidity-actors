@@ -1,5 +1,5 @@
-import hre, { ethers } from 'hardhat'
 import { deployContractWithDeployer, getTransactionFees } from './util'
+import hre, { ethers } from 'hardhat'
 
 const { getSelectors, FacetCutAction } = require('./js/diamond.js')
 
@@ -23,7 +23,6 @@ async function deploySubnetActorDiamond(
     }
 
     const getterFacetLibs: Libraries = {
-        CheckpointHelper: libs['CheckpointHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
     }
 

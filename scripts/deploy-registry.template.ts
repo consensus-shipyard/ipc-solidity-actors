@@ -1,5 +1,5 @@
-import { ethers } from 'hardhat'
 import { deployContractWithDeployer, getTransactionFees } from './util'
+import { ethers } from 'hardhat'
 
 const { getSelectors, FacetCutAction } = require('./js/diamond.js')
 
@@ -21,7 +21,6 @@ export async function deploy() {
         deployer,
         'SubnetActorGetterFacet',
         {
-            CheckpointHelper: LIBMAP['CheckpointHelper'],
             SubnetIDHelper: LIBMAP['SubnetIDHelper'],
         },
         txArgs,
