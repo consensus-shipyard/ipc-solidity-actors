@@ -11,7 +11,7 @@ import {FilAddress} from "fevmate/utils/FilAddress.sol";
 import {ParentValidatorsTracker, ValidatorSet} from "../../structs/Subnet.sol";
 import {LibValidatorTracking, LibValidatorSet} from "../../lib/LibStaking.sol";
 
-contract FinalityFacet is GatewayActorModifiers {
+contract TopDownFinalityFacet is GatewayActorModifiers {
     using FilAddress for address;
     using LibValidatorTracking for ParentValidatorsTracker;
     using LibValidatorSet for ValidatorSet;

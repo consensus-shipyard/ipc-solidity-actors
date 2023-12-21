@@ -66,7 +66,7 @@ export async function deploy(libs: { [key in string]: string }) {
         StorableMsgHelper: libs['StorableMsgHelper'],
     }
 
-    const finalityFacetLibs: Libraries = {
+    const topDownFinalityFacetLibs: Libraries = {
         AccountHelper: libs['AccountHelper'],
     }
 
@@ -91,7 +91,7 @@ export async function deploy(libs: { [key in string]: string }) {
             name: 'CrossMessagingFacet',
             libs: crossMessagingFacetLibs,
         },
-        { name: 'FinalityFacet', libs: finalityFacetLibs },
+        { name: 'TopDownFinalityFacet', libs: topDownFinalityFacetLibs },
         {
             name: 'BottomUpRouterFacet',
             libs: bottomUpRouterFacetLibs,

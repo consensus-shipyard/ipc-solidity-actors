@@ -26,7 +26,7 @@ import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
 
 import {CheckpointingFacet} from "../../src/gateway/router/CheckpointingFacet.sol";
 import {CrossMessagingFacet} from "../../src/gateway/router/CrossMessagingFacet.sol";
-import {FinalityFacet} from "../../src/gateway/router/FinalityFacet.sol";
+import {TopDownFinalityFacet} from "../../src/gateway/router/TopDownFinalityFacet.sol";
 import {BottomUpRouterFacet} from "../../src/gateway/router/BottomUpRouterFacet.sol";
 
 import {ERR_GENERAL_CROSS_MSG_DISABLED} from "../../src/gateway/GatewayMessengerFacet.sol";
@@ -763,7 +763,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
         gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
-        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
@@ -798,7 +798,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
         gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
-        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         vm.roll(0);
@@ -832,7 +832,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
         gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
-        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
@@ -867,7 +867,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
         gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
-        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         address callerAddress = address(100);
@@ -1101,7 +1101,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwFinalityFacet.commitParentFinality(finality);
+        gwTopDownFinalityFacet.commitParentFinality(finality);
     }
 
     function testGatewayDiamond_applyFinality_works() public {
@@ -1122,8 +1122,8 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
-        gwFinalityFacet.storeValidatorChanges(changes);
-        uint64 configNumber = gwFinalityFacet.applyFinalityChanges();
+        gwTopDownFinalityFacet.storeValidatorChanges(changes);
+        uint64 configNumber = gwTopDownFinalityFacet.applyFinalityChanges();
         require(configNumber == 2, "wrong config number after applying finality");
         require(gwGetter.getCurrentMembership().validators.length == 2, "current membership should be 2");
         require(gwGetter.getCurrentConfigurationNumber() == 2, "unexpected config number");
@@ -1141,8 +1141,8 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
 
-        gwFinalityFacet.storeValidatorChanges(changes);
-        configNumber = gwFinalityFacet.applyFinalityChanges();
+        gwTopDownFinalityFacet.storeValidatorChanges(changes);
+        configNumber = gwTopDownFinalityFacet.applyFinalityChanges();
         require(configNumber == 3, "wrong config number after applying finality");
         require(gwGetter.getLastConfigurationNumber() == 2, "apply result: unexpected last config number");
         require(gwGetter.getCurrentConfigurationNumber() == 3, "apply result: unexpected config number");
@@ -1150,7 +1150,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         require(gwGetter.getLastMembership().validators.length == 2, "last membership should be 2");
 
         // no changes
-        configNumber = gwFinalityFacet.applyFinalityChanges();
+        configNumber = gwTopDownFinalityFacet.applyFinalityChanges();
         require(configNumber == 0, "wrong config number after applying finality");
         require(gwGetter.getLastConfigurationNumber() == 2, "no changes: unexpected last config number");
         require(gwGetter.getCurrentConfigurationNumber() == 3, "no changes: unexpected config number");
@@ -1172,7 +1172,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
 
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
-        gwFinalityFacet.commitParentFinality(finality);
+        gwTopDownFinalityFacet.commitParentFinality(finality);
         ParentFinality memory committedFinality = gwGetter.getParentFinality(block.number);
 
         require(committedFinality.height == finality.height, "heights are not equal");
@@ -2209,7 +2209,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
         gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
-        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
         uint256 d = gwGetter.bottomUpMsgBatchPeriod();

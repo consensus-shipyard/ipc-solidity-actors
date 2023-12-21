@@ -25,7 +25,7 @@ import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 
 import {CheckpointingFacet} from "../src/gateway/router/CheckpointingFacet.sol";
 import {CrossMessagingFacet} from "../src/gateway/router/CrossMessagingFacet.sol";
-import {FinalityFacet} from "../src/gateway/router/FinalityFacet.sol";
+import {TopDownFinalityFacet} from "../src/gateway/router/TopDownFinalityFacet.sol";
 import {BottomUpRouterFacet} from "../src/gateway/router/BottomUpRouterFacet.sol";
 
 import {SubnetActorManagerFacetMock} from "./mocks/SubnetActor.sol";
@@ -86,7 +86,7 @@ contract TestRegistry is Test, TestParams {
 contract TestGatewayActor is Test, TestParams {
     bytes4[] gwCheckpointingFacetSelectors;
     bytes4[] gwCrossMessagingFacetSelectors;
-    bytes4[] gwFinalityFacetSelectors;
+    bytes4[] gwTopDownFinalityFacetSelectors;
     bytes4[] gwBottomUpRouterFacetSelectors;
 
     bytes4[] gwManagerSelectors;
@@ -101,7 +101,7 @@ contract TestGatewayActor is Test, TestParams {
     GatewayGetterFacet gwGetter;
     CheckpointingFacet gwCheckpointingFacet;
     CrossMessagingFacet gwCrossMessagingFacet;
-    FinalityFacet gwFinalityFacet;
+    TopDownFinalityFacet gwTopDownFinalityFacet;
     BottomUpRouterFacet gwBottomUpRouterFacet;
     GatewayMessengerFacet gwMessenger;
     DiamondCutFacet gwCutter;
@@ -110,7 +110,7 @@ contract TestGatewayActor is Test, TestParams {
     constructor() {
         gwCheckpointingFacetSelectors = TestUtils.generateSelectors(vm, "CheckpointingFacet");
         gwCrossMessagingFacetSelectors = TestUtils.generateSelectors(vm, "CrossMessagingFacet");
-        gwFinalityFacetSelectors = TestUtils.generateSelectors(vm, "FinalityFacet");
+        gwTopDownFinalityFacetSelectors = TestUtils.generateSelectors(vm, "TopDownFinalityFacet");
         gwBottomUpRouterFacetSelectors = TestUtils.generateSelectors(vm, "BottomUpRouterFacet");
 
         gwGetterSelectors = TestUtils.generateSelectors(vm, "GatewayGetterFacet");
@@ -203,7 +203,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
         gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
-        gwFinalityFacet = FinalityFacet(address(gatewayDiamond));
+        gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
         gwMessenger = GatewayMessengerFacet(address(gatewayDiamond));
         gwLouper = DiamondLoupeFacet(address(gatewayDiamond));
@@ -226,7 +226,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         CheckpointingFacet checkpointingFacet = new CheckpointingFacet();
         CrossMessagingFacet crossMessagingFacet = new CrossMessagingFacet();
-        FinalityFacet finalityFacet = new FinalityFacet();
+        TopDownFinalityFacet topDownFinalityFacet = new TopDownFinalityFacet();
         BottomUpRouterFacet bottomUpRouterFacet = new BottomUpRouterFacet();
 
         GatewayManagerFacet manager = new GatewayManagerFacet();
@@ -255,9 +255,9 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
 
         gwDiamondCut[7] = (
             IDiamond.FacetCut({
-                facetAddress: address(finalityFacet),
+                facetAddress: address(topDownFinalityFacet),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwFinalityFacetSelectors
+                functionSelectors: gwTopDownFinalityFacetSelectors
             })
         );
 
@@ -586,7 +586,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         ParentFinality memory finality = ParentFinality({height: block.number, blockHash: bytes32(0)});
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        gwFinalityFacet.commitParentFinality(finality);
+        gwTopDownFinalityFacet.commitParentFinality(finality);
     }
 
     function setupWhiteListMethod(address caller, address src) public returns (bytes32) {
@@ -638,7 +638,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         // uint64 n = gwGetter.getLastConfigurationNumber() + 1;
 
         vm.startPrank(FilAddress.SYSTEM_ACTOR);
-        gwFinalityFacet.commitParentFinality(finality);
+        gwTopDownFinalityFacet.commitParentFinality(finality);
         vm.stopPrank();
     }
 
