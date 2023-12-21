@@ -43,9 +43,21 @@ abstract contract Pausable {
     }
 
     /**
+     * @dev Modifier to make a function callable only when the contract is paused.
+     *
+     * Requirements:
+     *
+     * - The contract must be paused.
+     */
+    modifier whenPaused() {
+        _requirePaused();
+        _;
+    }
+
+    /**
      * @dev Throws if the contract is paused.
      */
-    function _requireNotPaused() internal view virtual {
+    function _requireNotPaused() internal view {
         if (_paused()) {
             revert EnforcedPause();
         }
@@ -54,7 +66,7 @@ abstract contract Pausable {
     /**
      * @dev Throws if the contract is not paused.
      */
-    function _requirePaused() internal view virtual {
+    function _requirePaused() internal view {
         if (!_paused()) {
             revert ExpectedPause();
         }
@@ -73,8 +85,9 @@ abstract contract Pausable {
      *
      * - The contract must not be paused.
      */
-    function _pause() internal whenNotPaused {
+    function _pause() internal {
         PausableStorage storage s = pausableStorage();
+        _requireNotPaused();
         s.paused = true;
         emit Paused(msg.sender);
     }
@@ -86,9 +99,9 @@ abstract contract Pausable {
      *
      * - The contract must be paused.
      */
-    function _unpause() internal {
-        _requirePaused();
+    function _unpause() internal  {
         PausableStorage storage s = pausableStorage();
+        _requirePaused();
         s.paused = false;
         emit Unpaused(msg.sender);
     }
