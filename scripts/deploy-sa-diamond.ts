@@ -26,22 +26,13 @@ async function deploySubnetActorDiamond(
         SubnetIDHelper: libs['SubnetIDHelper'],
     }
 
-    const managerFacetLibs: Libraries = {
-        LibStaking: libs['LibStaking'],
-    }
+    const managerFacetLibs: Libraries = {}
 
-    const rewarderFacetLibs: Libraries = {
-        LibStaking: libs['LibStaking'],
-    }
+    const rewarderFacetLibs: Libraries = {}
 
-    const pauserFacetLibs: Libraries = {
-        LibDiamond: libs['LibDiamond'],
-        LibPausable: libs['LibPausable'],
-    }
+    const pauserFacetLibs: Libraries = {}
 
-    const checkpointerFacetLibs: Libraries = {
-        LibStaking: libs['LibStaking'],
-    }
+    const checkpointerFacetLibs: Libraries = {}
 
     const facets = [
         { name: 'DiamondLoupeFacet', libs: {} },

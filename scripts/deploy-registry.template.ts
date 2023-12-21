@@ -39,6 +39,30 @@ export async function deploy() {
     const managerSelectors = getSelectors(managerFacet)
     // console.log("manager address:", managerFacet.address);
 
+    const pauserFacet = await deployContractWithDeployer(
+        deployer,
+        'SubnetActorPauseFacet',
+        {},
+        txArgs,
+    )
+    const pauserSelectors = getSelectors(pauserFacet)
+
+    const rewarderFacet = await deployContractWithDeployer(
+        deployer,
+        'SubnetActorRewardFacet',
+        {},
+        txArgs,
+    )
+    const rewarderSelectors = getSelectors(rewarderFacet)
+
+    const checkpointerFacet = await deployContractWithDeployer(
+        deployer,
+        'SubnetActorCheckpointingFacet',
+        {},
+        txArgs,
+    )
+    const checkpointerSelectors = getSelectors(checkpointerFacet)
+
     //deploy subnet registry diamond
     const registry = await ethers.getContractFactory('SubnetRegistryDiamond', {
         signer: deployer,
@@ -48,8 +72,14 @@ export async function deploy() {
         gateway: gatewayAddress,
         getterFacet: getterFacet.address,
         managerFacet: managerFacet.address,
+        rewarderFacet: rewarderFacet.address,
+        pauserFacet: pauserFacet.address,
+        checkpointerFacet: checkpointerFacet.address,
         subnetGetterSelectors: getterSelectors,
         subnetManagerSelectors: managerSelectors,
+        checkpointerSelectors: checkpointerSelectors,
+        pauserSelectors: pauserSelectors,
+        rewarderSelectors: rewarderSelectors,
     }
 
     const facetCuts = [] //TODO

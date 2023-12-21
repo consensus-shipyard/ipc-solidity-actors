@@ -17,7 +17,7 @@ contract SubnetActorPauseFacet is Pausable {
         _unpause();
     }
 
-    /// @notice Unpauses all contract functions with the `whenNotPaused` modifier.
+    /// @notice Returns true if the SubnetActor contract is paused.
     function paused() external view returns (bool) {
         return _paused();
     }
