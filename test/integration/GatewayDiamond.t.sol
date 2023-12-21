@@ -25,7 +25,7 @@ import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
 import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
 
 import {CheckpointingFacet} from "../../src/gateway/router/CheckpointingFacet.sol";
-import {CrossMessagingFacet} from "../../src/gateway/router/CrossMessagingFacet.sol";
+import {XnetMessagingFacet} from "../../src/gateway/router/XnetMessagingFacet.sol";
 import {TopDownFinalityFacet} from "../../src/gateway/router/TopDownFinalityFacet.sol";
 import {BottomUpRouterFacet} from "../../src/gateway/router/BottomUpRouterFacet.sol";
 
@@ -762,7 +762,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
 
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
-        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwXnetMessagingFacet = XnetMessagingFacet(address(gatewayDiamond));
         gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
@@ -797,7 +797,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
-        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwXnetMessagingFacet = XnetMessagingFacet(address(gatewayDiamond));
         gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
@@ -831,7 +831,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
-        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwXnetMessagingFacet = XnetMessagingFacet(address(gatewayDiamond));
         gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
@@ -866,7 +866,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
-        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwXnetMessagingFacet = XnetMessagingFacet(address(gatewayDiamond));
         gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 
@@ -2208,7 +2208,7 @@ contract GatewayActorDiamondTest is Test, IntegrationTestBase {
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
-        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwXnetMessagingFacet = XnetMessagingFacet(address(gatewayDiamond));
         gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
 

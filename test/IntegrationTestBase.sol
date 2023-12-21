@@ -24,7 +24,7 @@ import {GatewayMessengerFacet} from "../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayManagerFacet} from "../src/gateway/GatewayManagerFacet.sol";
 
 import {CheckpointingFacet} from "../src/gateway/router/CheckpointingFacet.sol";
-import {CrossMessagingFacet} from "../src/gateway/router/CrossMessagingFacet.sol";
+import {XnetMessagingFacet} from "../src/gateway/router/XnetMessagingFacet.sol";
 import {TopDownFinalityFacet} from "../src/gateway/router/TopDownFinalityFacet.sol";
 import {BottomUpRouterFacet} from "../src/gateway/router/BottomUpRouterFacet.sol";
 
@@ -85,7 +85,7 @@ contract TestRegistry is Test, TestParams {
 
 contract TestGatewayActor is Test, TestParams {
     bytes4[] gwCheckpointingFacetSelectors;
-    bytes4[] gwCrossMessagingFacetSelectors;
+    bytes4[] gwXnetMessagingFacetSelectors;
     bytes4[] gwTopDownFinalityFacetSelectors;
     bytes4[] gwBottomUpRouterFacetSelectors;
 
@@ -100,7 +100,7 @@ contract TestGatewayActor is Test, TestParams {
     GatewayManagerFacet gwManager;
     GatewayGetterFacet gwGetter;
     CheckpointingFacet gwCheckpointingFacet;
-    CrossMessagingFacet gwCrossMessagingFacet;
+    XnetMessagingFacet gwXnetMessagingFacet;
     TopDownFinalityFacet gwTopDownFinalityFacet;
     BottomUpRouterFacet gwBottomUpRouterFacet;
     GatewayMessengerFacet gwMessenger;
@@ -109,7 +109,7 @@ contract TestGatewayActor is Test, TestParams {
 
     constructor() {
         gwCheckpointingFacetSelectors = TestUtils.generateSelectors(vm, "CheckpointingFacet");
-        gwCrossMessagingFacetSelectors = TestUtils.generateSelectors(vm, "CrossMessagingFacet");
+        gwXnetMessagingFacetSelectors = TestUtils.generateSelectors(vm, "XnetMessagingFacet");
         gwTopDownFinalityFacetSelectors = TestUtils.generateSelectors(vm, "TopDownFinalityFacet");
         gwBottomUpRouterFacetSelectors = TestUtils.generateSelectors(vm, "BottomUpRouterFacet");
 
@@ -202,7 +202,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         gwGetter = GatewayGetterFacet(address(gatewayDiamond));
         gwManager = GatewayManagerFacet(address(gatewayDiamond));
         gwCheckpointingFacet = CheckpointingFacet(address(gatewayDiamond));
-        gwCrossMessagingFacet = CrossMessagingFacet(address(gatewayDiamond));
+        gwXnetMessagingFacet = XnetMessagingFacet(address(gatewayDiamond));
         gwTopDownFinalityFacet = TopDownFinalityFacet(address(gatewayDiamond));
         gwBottomUpRouterFacet = BottomUpRouterFacet(address(gatewayDiamond));
         gwMessenger = GatewayMessengerFacet(address(gatewayDiamond));
@@ -225,7 +225,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
 
     function createGatewayDiamond(GatewayDiamond.ConstructorParams memory params) public returns (GatewayDiamond) {
         CheckpointingFacet checkpointingFacet = new CheckpointingFacet();
-        CrossMessagingFacet crossMessagingFacet = new CrossMessagingFacet();
+        XnetMessagingFacet xnetMessagingFacet = new XnetMessagingFacet();
         TopDownFinalityFacet topDownFinalityFacet = new TopDownFinalityFacet();
         BottomUpRouterFacet bottomUpRouterFacet = new BottomUpRouterFacet();
 
@@ -247,9 +247,9 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
 
         gwDiamondCut[6] = (
             IDiamond.FacetCut({
-                facetAddress: address(crossMessagingFacet),
+                facetAddress: address(xnetMessagingFacet),
                 action: IDiamond.FacetCutAction.Add,
-                functionSelectors: gwCrossMessagingFacetSelectors
+                functionSelectors: gwXnetMessagingFacetSelectors
             })
         );
 
@@ -618,7 +618,7 @@ contract IntegrationTestBase is Test, TestParams, TestRegistry, TestSubnetActor,
         // addValidator(caller, 1000);
 
         vm.prank(FilAddress.SYSTEM_ACTOR);
-        gwCrossMessagingFacet.applyCrossMessages(msgs);
+        gwXnetMessagingFacet.applyCrossMessages(msgs);
 
         return crossMsg.toHash();
     }

@@ -59,7 +59,7 @@ export async function deploy(libs: { [key in string]: string }) {
         SubnetIDHelper: libs['SubnetIDHelper'],
     }
 
-    const crossMessagingFacetLibs: Libraries = {
+    const xnetMessagingFacetLibs: Libraries = {
         AccountHelper: libs['AccountHelper'],
         CrossMsgHelper: libs['CrossMsgHelper'],
         SubnetIDHelper: libs['SubnetIDHelper'],
@@ -88,8 +88,8 @@ export async function deploy(libs: { [key in string]: string }) {
             libs: checkpointingFacetLibs,
         },
         {
-            name: 'CrossMessagingFacet',
-            libs: crossMessagingFacetLibs,
+            name: 'XnetMessagingFacet',
+            libs: xnetMessagingFacetLibs,
         },
         { name: 'TopDownFinalityFacet', libs: topDownFinalityFacetLibs },
         {
