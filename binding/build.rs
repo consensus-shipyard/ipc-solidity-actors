@@ -40,7 +40,10 @@ fn main() {
         "GatewayDiamond",
         "GatewayManagerFacet",
         "GatewayGetterFacet",
-        "GatewayRouterFacet",
+        "BottomUpRouterFacet",
+        "CheckpointingFacet",
+        "TopDownFinalityFacet",
+        "XnetMessagingFacet",
         "GatewayMessengerFacet",
         "SubnetActorDiamond",
         "SubnetActorGetterFacet",
@@ -51,6 +54,7 @@ fn main() {
         "LibStaking",
         "LibStakingChangeLog",
         "LibGateway",
+        "LibQuorum",
     ] {
         let module_name = camel_to_snake(contract_name);
         let input_path =
@@ -77,7 +81,8 @@ fn main() {
     let fvm_address_conversion = vec![
         "GatewayManagerFacet",
         "GatewayGetterFacet",
-        "GatewayRouterFacet",
+        "BottomUpRouterFacet",
+        "XnetMessagingFacet",
         "GatewayMessengerFacet",
         "SubnetActorManagerFacet",
         "LibGateway",
@@ -95,7 +100,9 @@ fn main() {
     .unwrap();
     let common_type_conversion = vec![
         ("GatewayGetterFacet", "SubnetActorManagerFacet"),
-        ("SubnetActorGetterFacet", "GatewayRouterFacet"),
+        ("SubnetActorGetterFacet", "BottomUpRouterFacet"),
+        ("SubnetActorGetterFacet", "CheckpointingFacet"),
+        ("SubnetActorGetterFacet", "XnetMessagingFacet"),
     ];
     for (contract1, contract2) in common_type_conversion {
         writeln!(

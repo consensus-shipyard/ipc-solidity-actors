@@ -27,7 +27,6 @@ contract GatewayDiamond {
     struct ConstructorParams {
         SubnetID networkName;
         uint256 bottomUpCheckPeriod;
-        uint256 minCollateral;
         // deprecated (for now): no `msgFee` currenlty charged for cross-net messages
         uint256 msgFee;
         uint8 majorityPercentage;
@@ -36,9 +35,6 @@ contract GatewayDiamond {
     }
 
     constructor(IDiamond.FacetCut[] memory _diamondCut, ConstructorParams memory params) {
-        if (params.minCollateral == 0) {
-            revert InvalidCollateral();
-        }
         // The bottomUpCheckPeriod should be non-zero for now.
         if (params.bottomUpCheckPeriod == 0) {
             revert InvalidSubmissionPeriod();
@@ -61,7 +57,6 @@ contract GatewayDiamond {
         s.crossMsgRelayerRewards = FEATURE_CROSSMSG_RELAYER_REWARDS;
 
         s.networkName = params.networkName;
-        s.minStake = params.minCollateral;
         s.bottomUpCheckPeriod = params.bottomUpCheckPeriod;
         s.minCrossMsgFee = params.msgFee;
         s.majorityPercentage = params.majorityPercentage;
