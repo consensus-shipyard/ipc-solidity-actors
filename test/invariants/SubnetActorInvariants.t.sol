@@ -10,7 +10,7 @@ import {GatewayGetterFacet} from "../../src/gateway/GatewayGetterFacet.sol";
 import {GatewayMessengerFacet} from "../../src/gateway/GatewayMessengerFacet.sol";
 import {GatewayManagerFacet} from "../../src/gateway/GatewayManagerFacet.sol";
 import {SubnetActorHandler, ETH_SUPPLY} from "./handlers/SubnetActorHandler.sol";
-import {SubnetActorManagerFacetMock} from "../mocks/SubnetActor.sol";
+import {SubnetActorManagerFacetMock} from "../mocks/SubnetActorManagerFacetMock.sol";
 import {SubnetActorGetterFacet} from "../../src/subnet/SubnetActorGetterFacet.sol";
 import {IntegrationTestBase} from "../IntegrationTestBase.sol";
 import {SupplySourceHelper} from "../../src/lib/SupplySourceHelper.sol";
