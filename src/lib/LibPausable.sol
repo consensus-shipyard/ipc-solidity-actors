@@ -16,7 +16,7 @@ abstract contract Pausable {
     event Paused(address account);
 
     /**
-     * @dev Emitted when the pause is lifted by `account`.
+     * @dev Emitted when the unpause is lifted by `account`.
      */
     event Unpaused(address account);
 
@@ -46,7 +46,7 @@ abstract contract Pausable {
      * @dev Throws if the contract is paused.
      */
     function _requireNotPaused() internal view virtual {
-        if (paused()) {
+        if (_paused()) {
             revert EnforcedPause();
         }
     }
@@ -55,13 +55,13 @@ abstract contract Pausable {
      * @dev Throws if the contract is not paused.
      */
     function _requirePaused() internal view virtual {
-        if (!paused()) {
+        if (!_paused()) {
             revert ExpectedPause();
         }
     }
 
-    /// @notice sets if to pause the contract
-    function paused() public view returns(bool) {
+    /// @notice returns true if the contract is paused
+    function _paused() internal view returns(bool) {
         PausableStorage storage s = pausableStorage();
         return s.paused;
     }
@@ -76,7 +76,7 @@ abstract contract Pausable {
     function _pause() internal whenNotPaused {
         PausableStorage storage s = pausableStorage();
         s.paused = true;
-        emit Unpaused(msg.sender);
+        emit Paused(msg.sender);
     }
 
     /**
