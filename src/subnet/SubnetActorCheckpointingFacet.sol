@@ -5,20 +5,17 @@ import {InvalidBatchEpoch, MaxMsgsPerBatchExceeded, BatchWithNoMessages, Invalid
 import {IGateway} from "../interfaces/IGateway.sol";
 import {BottomUpCheckpoint, BottomUpMsgBatch, BottomUpMsgBatchInfo} from "../structs/CrossNet.sol";
 import {Validator, ValidatorSet} from "../structs/Subnet.sol";
-import {LibDiamond} from "../lib/LibDiamond.sol";
 import {MultisignatureChecker} from "../lib/LibMultisignatureChecker.sol";
 import {ReentrancyGuard} from "../lib/LibReentrancyGuard.sol";
 import {SubnetActorModifiers} from "../lib/LibSubnetActorStorage.sol";
 import {LibValidatorSet, LibStaking} from "../lib/LibStaking.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {Address} from "openzeppelin-contracts/utils/Address.sol";
 import {LibSubnetActor} from "../lib/LibSubnetActor.sol";
 import {Pausable} from "../lib/LibPausable.sol";
 
 contract SubnetActorCheckpointingFacet is SubnetActorModifiers, ReentrancyGuard, Pausable {
     using EnumerableSet for EnumerableSet.AddressSet;
     using LibValidatorSet for ValidatorSet;
-    using Address for address payable;
 
     /// @notice Submits a checkpoint commitment for execution.
     ///  @dev   It triggers the commitment of the checkpoint and any other side-effects that
