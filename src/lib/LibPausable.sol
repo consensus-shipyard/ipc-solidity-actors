@@ -16,7 +16,7 @@ abstract contract Pausable {
     event Paused(address account);
 
     /**
-     * @dev Emitted when the unpause is lifted by `account`.
+     * @dev Emitted when the unpause is triggered by `account`.
      */
     event Unpaused(address account);
 
