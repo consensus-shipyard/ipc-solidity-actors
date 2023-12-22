@@ -4,12 +4,10 @@ pragma solidity 0.8.19;
 import "forge-std/StdUtils.sol";
 import "forge-std/StdCheats.sol";
 import {CommonBase} from "forge-std/Base.sol";
-import {SubnetActorDiamond} from "../../../src/SubnetActorDiamond.sol";
+import {GatewayDiamond} from "../../../src/GatewayDiamond.sol";
 import {BottomUpRouterFacet} from "../../../src/gateway/router/BottomUpRouterFacet.sol";
 import {GatewayManagerFacet} from "../../../src/gateway/GatewayManagerFacet.sol";
-import {TestUtils} from "../../helpers/TestUtils.sol";
 import {EnumerableSet} from "openzeppelin-contracts/utils/structs/EnumerableSet.sol";
-import {GatewayDiamond} from "../../../src/GatewayDiamond.sol";
 
 uint256 constant ETH_SUPPLY = 129_590_000 ether;
 

@@ -2,7 +2,6 @@
 pragma solidity 0.8.19;
 
 import "forge-std/Test.sol";
-import "forge-std/StdInvariant.sol";
 import "../src/errors/IPCErrors.sol";
 
 import {EMPTY_BYTES, METHOD_SEND} from "../src/constants/Constants.sol";
