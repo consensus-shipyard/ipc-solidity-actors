@@ -1,3 +1,6 @@
+> [!IMPORTANT]  
+> This repo has been archived and its code merged into https://github.com/consensus-shipyard/ipc
+
 # IPC Solidity Actors
 
 [![SAST](https://github.com/consensus-shipyard/ipc-solidity-actors/actions/workflows/sast.yaml/badge.svg)](https://github.com/consensus-shipyard/ipc-solidity-actors/actions/workflows/sast.yaml)
